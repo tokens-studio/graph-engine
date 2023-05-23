@@ -3,6 +3,7 @@
     "version": "0.0.0",
     "description": "An execution engine to handle Token Studios generators and resolvers",
     "author": "andrew@hyma.io",
+    "license": "MIT",
     "type": "module",
     "exports": {
         "./nodes/": {
