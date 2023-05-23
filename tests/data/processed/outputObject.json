@@ -1,0 +1,51 @@
+{
+    "nodes": [
+        {
+            "id": "3a2f6a06-c2a5-4b82-9f93-f9afa00aaacf",
+            "data": {
+                "mappings": [
+                    {
+                        "key": "a48afe67-79c5-4b0a-8fda-50548b3a2759",
+                        "name": "out"
+                    }
+                ]
+            },
+            "type": "studio.tokens.generic.output"
+        },
+        {
+            "id": "ef251584-99f2-4976-8f0e-e265a12223ce",
+            "data": {},
+            "type": "studio.tokens.css.map"
+        },
+        {
+            "id": "4afda872-881c-4e2b-905c-b5995ad0ebda",
+            "data": {
+                "values": {
+                    "background": "red"
+                },
+                "definition": {
+                    "background": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "studio.tokens.generic.input"
+        }
+    ],
+    "edges": [
+        {
+            "id": "fb30fe1b-d0b8-42cc-9a45-72e3f7c3508f",
+            "target": "ef251584-99f2-4976-8f0e-e265a12223ce",
+            "source": "4afda872-881c-4e2b-905c-b5995ad0ebda",
+            "sourceHandle": "background",
+            "targetHandle": "background"
+        },
+        {
+            "id": "304fd36b-b922-4f51-b10a-ea892c2a62e4",
+            "target": "3a2f6a06-c2a5-4b82-9f93-f9afa00aaacf",
+            "source": "ef251584-99f2-4976-8f0e-e265a12223ce",
+            "sourceHandle": "output",
+            "targetHandle": "a48afe67-79c5-4b0a-8fda-50548b3a2759"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "tsconfig": "./tsconfig.prod.json",
+  "entryPoints": ["./src/index.ts"],
+  "cleanOutputDir": true
+}
