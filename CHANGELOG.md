@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 0.0.3
+
+### Patch Changes
+
+- a4f784f: Remove husky as postinstall script. It was affecting downstream users
+
 ## 0.0.2
 
 ### Patch Changes
