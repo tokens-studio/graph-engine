@@ -1,90 +1,90 @@
 {
-    "nodes": [
-        {
-            "id": "4e629553-6fe2-444a-8a29-9b30abe26e1b",
-            "data": {
-                "value": 0.5,
-                "space": "srgb",
-                "modifierType": "mix"
-            },
-            "type": "studio.tokens.color.blend"
-        },
-        {
-            "id": "734907ed-5f93-4b34-b24c-f262709470ac",
-            "data": {
-                "title": "",
-                "tokens": [
-                    {
-                        "name": "colors.text",
-                        "value": "#000000",
-                        "type": "color"
-                    },
-                    {
-                        "name": "colors.bg",
-                        "value": "#ffffff",
-                        "type": "color"
-                    },
-                    {
-                        "name": "colors.primary",
-                        "value": "#f56565",
-                        "type": "color"
-                    },
-                    {
-                        "name": "colors.secondary",
-                        "value": "#48bb78",
-                        "type": "color"
-                    },
-                    {
-                        "name": "colors.tertiary",
-                        "value": "#4299e1",
-                        "type": "color"
-                    }
-                ]
-            },
-            "type": "studio.tokens.sets.inline"
-        },
-        {
-            "id": "5531dd87-f2a0-4e2a-89b9-9d382cd793d9",
-            "data": {
-                "mappings": [
-                    {
-                        "key": "0991991c-90a0-4b18-ad96-d459c1544c9c",
-                        "name": "value"
-                    }
-                ]
-            },
-            "type": "studio.tokens.generic.output"
-        },
-        {
-            "id": "c645c45e-1294-4785-a603-b740c8a2dc93",
-            "data": {
-                "values": {},
-                "definition": {}
-            },
-            "type": "studio.tokens.generic.input"
-        }
-    ],
-    "edges": [
-        {
-            "id": "6104246b-7ad2-40cb-929c-4feb140ea737",
-            "target": "5531dd87-f2a0-4e2a-89b9-9d382cd793d9",
-            "source": "4e629553-6fe2-444a-8a29-9b30abe26e1b",
-            "sourceHandle": "output",
-            "targetHandle": "0991991c-90a0-4b18-ad96-d459c1544c9c"
-        },
-        {
-            "id": "8ee49455-5f31-4e25-aa70-d0229f7ed29d",
-            "target": "4e629553-6fe2-444a-8a29-9b30abe26e1b",
-            "source": "734907ed-5f93-4b34-b24c-f262709470ac",
-            "sourceHandle": "colors.tertiary",
-            "targetHandle": "mixColor"
-        },
-        {
-            "id": "09fbf39d-9a51-44c4-b182-b9d71490e006",
-            "target": "4e629553-6fe2-444a-8a29-9b30abe26e1b",
-            "source": "734907ed-5f93-4b34-b24c-f262709470ac",
-            "sourceHandle": "colors.primary",
-            "targetHandle": "color"
-        }
-    ]
+  "nodes": [
+    {
+      "id": "4e629553-6fe2-444a-8a29-9b30abe26e1b",
+      "data": {
+        "value": 0.5,
+        "space": "srgb",
+        "modifierType": "mix"
+      },
+      "type": "studio.tokens.color.blend"
+    },
+    {
+      "id": "734907ed-5f93-4b34-b24c-f262709470ac",
+      "data": {
+        "title": "",
+        "tokens": [
+          {
+            "name": "colors.text",
+            "value": "#000000",
+            "type": "color"
+          },
+          {
+            "name": "colors.bg",
+            "value": "#ffffff",
+            "type": "color"
+          },
+          {
+            "name": "colors.primary",
+            "value": "#f56565",
+            "type": "color"
+          },
+          {
+            "name": "colors.secondary",
+            "value": "#48bb78",
+            "type": "color"
+          },
+          {
+            "name": "colors.tertiary",
+            "value": "#4299e1",
+            "type": "color"
+          }
+        ]
+      },
+      "type": "studio.tokens.sets.inline"
+    },
+    {
+      "id": "5531dd87-f2a0-4e2a-89b9-9d382cd793d9",
+      "data": {
+        "mappings": [
+          {
+            "key": "0991991c-90a0-4b18-ad96-d459c1544c9c",
+            "name": "value"
+          }
+        ]
+      },
+      "type": "studio.tokens.generic.output"
+    },
+    {
+      "id": "c645c45e-1294-4785-a603-b740c8a2dc93",
+      "data": {
+        "values": {},
+        "definition": {}
+      },
+      "type": "studio.tokens.generic.input"
+    }
+  ],
+  "edges": [
+    {
+      "id": "6104246b-7ad2-40cb-929c-4feb140ea737",
+      "target": "5531dd87-f2a0-4e2a-89b9-9d382cd793d9",
+      "source": "4e629553-6fe2-444a-8a29-9b30abe26e1b",
+      "sourceHandle": "output",
+      "targetHandle": "0991991c-90a0-4b18-ad96-d459c1544c9c"
+    },
+    {
+      "id": "8ee49455-5f31-4e25-aa70-d0229f7ed29d",
+      "target": "4e629553-6fe2-444a-8a29-9b30abe26e1b",
+      "source": "734907ed-5f93-4b34-b24c-f262709470ac",
+      "sourceHandle": "colors.tertiary",
+      "targetHandle": "mixColor"
+    },
+    {
+      "id": "09fbf39d-9a51-44c4-b182-b9d71490e006",
+      "target": "4e629553-6fe2-444a-8a29-9b30abe26e1b",
+      "source": "734907ed-5f93-4b34-b24c-f262709470ac",
+      "sourceHandle": "colors.primary",
+      "targetHandle": "color"
+    }
+  ]
 }

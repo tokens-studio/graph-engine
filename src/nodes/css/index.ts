@@ -1,5 +1,3 @@
-
-
-import { node as map } from './map.js';
+import { node as map } from "./map.js";
 
 export default [map];

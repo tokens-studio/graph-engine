@@ -1,13 +1,13 @@
 {
-    "nodes": [
-        {
-            "id": "f9fc7c80-d054-4f76-962a-fa7c28cc68cd",
-            "data": {
-                "values": {},
-                "definition": {}
-            },
-            "type": "studio.tokens.generic.input"
-        }
-    ],
-    "edges": []
+  "nodes": [
+    {
+      "id": "f9fc7c80-d054-4f76-962a-fa7c28cc68cd",
+      "data": {
+        "values": {},
+        "definition": {}
+      },
+      "type": "studio.tokens.generic.input"
+    }
+  ],
+  "edges": []
 }
