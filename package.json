@@ -30,7 +30,7 @@
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint --ext .tsx,.ts,.js,.html . --fix",
     "format:prettier": "prettier \"**/*.{ts,js,md,json}\" --write",
-    "postinstall": "husky install",
+    "prepare": "husky install",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "lint-staged": "npx lint-staged",
