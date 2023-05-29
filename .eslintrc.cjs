@@ -9,6 +9,8 @@ module.exports = {
 	parser: '@typescript-eslint/parser',
 	plugins: ['sort-imports-es6-autofix', 'jest', '@typescript-eslint'],
 	rules: {
+		// There are multiple valid uses cases for this 
+		"@typescript-eslint/no-explicit-any": "off",
 		'react/jsx-key': 'off',
 		//If we do this, it must be a good reason
 		'@typescript-eslint/ban-ts-comment': 'off',

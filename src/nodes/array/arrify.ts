@@ -14,7 +14,7 @@ export type MappedInput = {
  * @param input
  * @param state
  */
-export const mapInput = (input): MappedInput => {
+export const mapInput = (input: Record<string, any>): MappedInput => {
   const values = Object.entries(input).sort((a, b) => {
     return a[0].localeCompare(b[0]);
   });

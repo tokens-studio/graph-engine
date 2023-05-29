@@ -1,6 +1,6 @@
 import { NodeDefinition, NodeTypes } from "../../types.js";
 import { TokenTypes } from "@tokens-studio/types";
-import { sortEntriesAlphabetically, sortEntriesNumerically } from "../utils.js";
+import { sortEntriesNumerically } from "../utils.js";
 
 export const type = NodeTypes.REMAP;
 
@@ -19,7 +19,7 @@ export const defaults = {
  * @param input
  * @param state
  */
-export const mapInput = (input, state) => {
+export const mapInput = (input) => {
   const values = sortEntriesNumerically(Object.entries(input));
 
   //Returns the expected array of inputs

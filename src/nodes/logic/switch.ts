@@ -15,7 +15,7 @@ export const defaults = {
  * @param state
  * @returns
  */
-export const process = (input, state) => {
+export const process = (input) => {
   const candidate = input[input.condition];
 
   //TODO I don't like this but we'd need to change the input mapping which will break this node

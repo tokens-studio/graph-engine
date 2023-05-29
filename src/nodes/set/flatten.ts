@@ -19,7 +19,7 @@ type Input = {
  * @param input
  * @param state
  */
-export const mapInput = (input, state) => {
+export const mapInput = (input) => {
   const { inputs } = sortEntriesNumerically(Object.entries(input)).reduce(
     (acc, [key, value]) => {
       if (key.startsWith("inputs")) {
@@ -39,7 +39,7 @@ export const mapInput = (input, state) => {
   };
 };
 
-export const process = (input, state) => {
+export const process = (input) => {
   const { vals } = input.inputs
     .flatMap((x) => x.value)
     .reduceRight(

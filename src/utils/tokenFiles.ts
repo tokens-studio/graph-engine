@@ -28,6 +28,10 @@ export const readFile = async (file: File): Promise<IResolvedToken[]> => {
       const flattenedTokens = flatten(pojo);
       resolve(flattenedTokens);
     };
+    reader.onerror = (event) => {
+      reject(event);
+    };
+
     reader.readAsText(file);
   });
 };

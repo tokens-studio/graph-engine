@@ -23,7 +23,7 @@ export const validateInputs = (inputs) => {
  * @param input
  * @param state
  */
-export const mapInput = (input, state): MappedInput => {
+export const mapInput = (input): MappedInput => {
   const values = Object.entries(input).sort((a, b) => {
     return a[0].localeCompare(b[0]);
   });

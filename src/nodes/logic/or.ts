@@ -11,7 +11,7 @@ export const type = NodeTypes.OR;
  * @param state
  * @returns
  */
-export const process = (input: MappedInput, state) => {
+export const process = (input: MappedInput) => {
   return input.inputs.reduce((acc, x) => {
     //coerce to bool
     return acc || !!x.value;

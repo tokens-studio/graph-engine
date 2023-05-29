@@ -13,7 +13,7 @@ import { mapInput, validateInputs } from "./common.js";
  * @param state
  * @returns
  */
-export const process = (input: MappedInput, state) => {
+export const process = (input: MappedInput) => {
   return input.inputs.reduce((acc, x) => {
     if (isNaN(x.value)) {
       throw new Error("Invalid input");
