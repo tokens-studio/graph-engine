@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { NodeDefinition } from './types.js';
+import { ExternalLoader, NodeDefinition } from './types.js';
 import { NodeTypes } from './types.js';
 import graphlib from 'graphlib';
 import isPromise from 'is-promise';
@@ -7,19 +7,19 @@ import type { Edge, Node } from 'reactflow';
 
 const { Graph, alg } = graphlib;
 
-type FlowGraph = {
+export type FlowGraph = {
     nodes: Node[],
     edges: Edge[],
     state: Record<string, any>
 }
 
-type MinimizedNode = {
+export type MinimizedNode = {
     id: string,
     type: string,
     data: any
 }
 
-type MinimizedEdge = {
+export type MinimizedEdge = {
     id: string,
     source: string,
     target: string,
@@ -93,17 +93,30 @@ const flowGraphToEdgeLookup = (graph: MinimizedFlowGraph): Record<string, Minimi
 
 export const minimizeFlowGraph = (graph: FlowGraph): MinimizedFlowGraph => {
     const state = graph.state || {};
+
+    const nodeLookup = {};
+
+    const nodes = graph.nodes.map(x => {
+        //This is all thats required to be stored. We don't care about the rest of the graph.
+
+        nodeLookup[x.id] = true
+        return {
+            id: x.id,
+            data: state[x.id] || {},
+            type: x.type
+        } as MinimizedNode
+    })
+
     return {
-        nodes: graph.nodes.map(x => {
-            //This is all thats required to be stored. We don't care about the rest of the graph.
-            return {
-                id: x.id,
-                data: state[x.id] || {},
-                type: x.type
-            } as MinimizedNode
-        }),
-        edges: graph.edges.map(x => {
-            return {
+        nodes,
+        edges: graph.edges.reduce((acc, x) => {
+
+            if (!nodeLookup[x.source] || !nodeLookup[x.target]) {
+                console.warn('Edge is not connected to a node. Ignoring...', x);
+                return acc;
+            }
+
+            acc.push({
                 id: x.id,
                 target: x.target,
                 source: x.source,
@@ -111,8 +124,12 @@ export const minimizeFlowGraph = (graph: FlowGraph): MinimizedFlowGraph => {
                 sourceHandle: x.sourceHandle,
                 targetHandle: x.targetHandle
 
-            } as MinimizedEdge
-        })
+            } as MinimizedEdge)
+
+            return acc;
+
+
+        }, [] as MinimizedEdge[])
     }
 }
 
@@ -125,6 +142,10 @@ export interface ExecuteOptions {
     graph: MinimizedFlowGraph,
     inputValues: Record<string, any>,
     nodes: NodeDefinition<any, any, any>[]
+    /**
+     * A function responsible for loading externally requested data. This can be used to source token sets, etc
+     */
+    externalLoader?: ExternalLoader
 }
 
 // Map inputs 
@@ -173,12 +194,18 @@ export const execute = async (opts: ExecuteOptions) => {
             output: {}
         }
         return acc;
-    }, {})
+    }, {});
+
     for (let i = 0, c = topologic.length; i < c; i++) {
 
 
         const nodeId = topologic[i];
         const node = nodeLookup[nodeId] as MinimizedNode;
+
+        // Might happen with graphs that have not cleaned up their edges to nowhere 
+        if (!node) {
+            continue;
+        }
 
         //Attempt to find the node in the lookup
         const nodeType = lookup[node.type];
@@ -215,8 +242,23 @@ export const execute = async (opts: ExecuteOptions) => {
             }
         }
 
+        if (nodeType.external && !opts.externalLoader) {
+            throw new Error(`Node ${nodeId} of type ${node.type} requires an external loader`);
+        }
 
-        let output = nodeType.process(mappedInput, node.data);
+        let ephemeral = null;
+        if (nodeType.external && opts.externalLoader) {
+
+            const ephemeralRequest = nodeType.external(mappedInput, node.data);
+            ephemeral = await exports.externalLoader({
+                type: nodeType.type,
+                id: nodeId,
+                data: ephemeralRequest
+            });
+        }
+
+
+        let output = nodeType.process(mappedInput, node.data, ephemeral);
 
         //Wait for it to fully resolve
         //@ts-ignore
@@ -228,7 +270,7 @@ export const execute = async (opts: ExecuteOptions) => {
         const mapOutput = nodeType.mapOutput || defaultMapOutput;
         //Now map the output to named handles 
         //This should give us a lookup via the handle name to the output value
-        output = mapOutput(mappedInput, node.data, output);
+        output = mapOutput(mappedInput, node.data, output, ephemeral);
         //Store the output
         stateTracker[nodeId].output = output;
 
@@ -246,8 +288,13 @@ export const execute = async (opts: ExecuteOptions) => {
 
             //Retrieve the data from the output according to the sourcHandle
             const outputValue = output[edgeData.sourceHandle];
-            //Now place it as a named input 
-            stateTracker[edge.w].input[edgeData.targetHandle] = outputValue;
+            const affectedNode = stateTracker[edge.w];
+            //This would only happen if the graph we were given had an edge that was not connected to a node.
+            //In this case we choose to ignore it 
+            if (affectedNode) {
+                affectedNode.input[edgeData.targetHandle] = outputValue;
+            }
+
         });
     }
 

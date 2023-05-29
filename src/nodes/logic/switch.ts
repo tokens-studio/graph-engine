@@ -16,7 +16,14 @@ export const defaults = {
  * @returns 
  */
 export const process = (input, state) => {
+
     const candidate = input[input.condition];
+
+    //TODO I don't like this but we'd need to change the input mapping which will break this node
+    if (candidate === undefined) {
+        return input.default;
+    }
+
     return candidate;
 }
 

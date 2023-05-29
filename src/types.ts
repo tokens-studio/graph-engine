@@ -1,12 +1,24 @@
-export type NodeDefinition<MappedInput extends Record<string, any> = Record<string, any>, State = object, Output = any> = {
+
+export type ExternalLoadOptions = { type: string, id: string, data: any }
+export type ExternalLoader = (opts: ExternalLoadOptions) => Promise<any> | any;
+
+
+export type NodeDefinition<MappedInput extends Record<string, any> = Record<string, any>, State = object, Output = any, Ephemeral = object, ExternalRequest = object> = {
     /**
      * Reverse domain name notation for the node
      */
     type: string,
     /**
-     * Defaults of the state value
+     * Defaults of the state value. This is used to initialize the state of the node. State of the node is not persisted across executions,.
      */
     defaults?: undefined | Partial<State>,
+
+    /**
+     * An external function that causes a side effect to load ephemeral data. It is up to the node to expose the data to the user. Ephmeral data is not persisted across executions and will be requested to load each time. It is up to the user to cache the data if needed.
+     * @param state 
+     * @returns 
+     */
+    external?: (mappedInput: MappedInput, state: Partial<State>) => ExternalRequest,
     /**
      * Takes in the names inputs of the source handles and coerces the final mapped Input state
      * @param input 
@@ -27,7 +39,7 @@ export type NodeDefinition<MappedInput extends Record<string, any> = Record<stri
      * @param state 
      * @returns 
      */
-    process: (input: MappedInput, state: State) => Output | Promise<Output>,
+    process: (input: MappedInput, state: State, ephemeral: Ephemeral) => Output | Promise<Output>,
     /**
      *  Maps the output to the final output
      * @param input 
@@ -35,8 +47,7 @@ export type NodeDefinition<MappedInput extends Record<string, any> = Record<stri
      * @param output 
      * @returns 
      */
-    mapOutput?: (input: MappedInput, state: State, output: Output) => Record<string, any>
-
+    mapOutput?: (input: MappedInput, state: State, output: Output, ephemeral: Ephemeral) => Record<string, any>
 }
 
 export enum NodeTypes {
@@ -84,6 +95,7 @@ export enum NodeTypes {
     SCALE = 'studio.tokens.color.scale',
     BLEND = 'studio.tokens.color.blend',
     CREATE_COLOR = 'studio.tokens.color.create',
+    TRANSFORM_COLOR = 'studio.tokens.color.transform',
 
     //Sets 
     FLATTEN = 'studio.tokens.sets.flatten',

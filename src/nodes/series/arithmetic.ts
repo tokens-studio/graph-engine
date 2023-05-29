@@ -6,6 +6,7 @@ export const type = NodeTypes.ARITHMETIC_SERIES;
 
 export const defaults = {
     base: 16,
+    stepsDown: 0,
     steps: 1,
     increment: 1
 }
@@ -19,6 +20,15 @@ export const process = (input, state) => {
     }
 
     const sizes: Output = [];
+
+
+    for (let i = Math.abs(final.stepsDown); i > 0; i--) {
+        const value = final.base - (final.increment * i);
+        sizes.push({
+            step: 0 - i,
+            size: value
+        });
+    }
 
     for (let i = 0; i < Math.abs(final.steps); i++) {
 
@@ -39,7 +49,7 @@ export type Output = {
 
 export const mapOutput = (input, state, processed) => {
 
-    const mapped = { asArray: processed };
+    const mapped = { asArray: processed.map((item) => item.size) };
 
     processed.forEach((item) => {
         mapped[`${item.step}`] = item.size;
