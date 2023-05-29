@@ -238,7 +238,7 @@ export const execute = async (opts: ExecuteOptions) => {
       );
     }
 
-    let ephemeral = null;
+    let ephemeral = {};
     if (nodeType.external && opts.externalLoader) {
       const ephemeralRequest = nodeType.external(mappedInput, node.data);
       ephemeral = await exports.externalLoader({
