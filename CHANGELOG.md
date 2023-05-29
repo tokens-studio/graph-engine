@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 0.0.2
+
+### Patch Changes
+
+- f5bff7c: Adds support for external load side effect with ephemeral data as well as protecting against dangling edges
+
 ## 0.0.1
 
 ### Patch Changes
