@@ -8,7 +8,7 @@ If the node depends on prior inputs, the system will create an object as a key v
 
 2. Map inputs
 
-Key values stores are not always appropriate data structures. Some nodes might want to change the input to rather be in the form of an array. They do so using the mapInputs function on the nodeDefinition which allows them to transform their inputs. This is an optional step. 
+Key values stores are not always appropriate data structures. Some nodes might want to change the input to rather be in the form of an array. They do so using the mapInputs function on the nodeDefinition which allows them to transform their inputs. This is an optional step.
 
 Mapping might depend on the configuration of the node, hence the state can be used during this phase.
 
@@ -24,7 +24,7 @@ This step is never cached internally as remote data might change and we rely on 
 
 5. Processing
 
-All the data from the prior steps is now available to the node to perform processing. 
+All the data from the prior steps is now available to the node to perform processing.
 
 6. Output mapping
 
