@@ -14,12 +14,19 @@ export const defaults = {
   >,
 };
 
+type MappedInput = {
+  input: {
+    key: string,
+    value: any
+  }[]
+};
+
 /**
  * Pure function
  * @param input
  * @param state
  */
-export const mapInput = (input) => {
+export const mapInput = (input): MappedInput => {
   const values = sortEntriesNumerically(Object.entries(input));
 
   //Returns the expected array of inputs
