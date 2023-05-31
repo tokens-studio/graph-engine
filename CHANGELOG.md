@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 0.0.4
+
+### Patch Changes
+
+- 16716d0: Fixed issue with remap not respecting the input key and rather using the index
+
 ## 0.0.3
 
 ### Patch Changes
