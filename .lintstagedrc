@@ -1,7 +1,7 @@
 {
-  "*.js": ["eslint --fix", "prettier --write"],
-  "*.tsx": ["eslint --fix", "prettier --write"],
-  "*.ts": ["eslint --fix", "prettier --write"],
+  "*.js": ["eslint --resolve-plugins-relative-to . --fix", "prettier --write"],
+  "*.tsx": ["eslint --resolve-plugins-relative-to . --fix", "prettier --write"],
+  "*.ts": ["eslint --resolve-plugins-relative-to . --fix", "prettier --write"],
   "*.md": ["prettier --write"],
   "package.json": ["npx prettier-package-json --write package.json"]
 }
