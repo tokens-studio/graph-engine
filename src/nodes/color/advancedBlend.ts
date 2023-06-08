@@ -39,11 +39,10 @@ export type State = {
  * @param state
  */
 export const mapInput = (input: Record<string, string>): MappedInput => {
-	const values = Object.entries(input || {})
-		.sort((a, b) => {
-			return a[0].localeCompare(b[0]);
-		})
-		.map(([key, value]) => ({ key, value }));
+	const vals = Object.entries(input || {}).sort((a, b) => {
+		return a[0].localeCompare(b[0]);
+	});
+	const values = vals.map(([key, value]) => ({ key, value }));
 
 	//Returns the expected array of inputs
 	return {
@@ -63,11 +62,7 @@ const process = (input: MappedInput, state: State) => {
 		return undefined;
 	}
 
-	console.log(cols);
-
 	const blended = blend(cols, state.blendType);
-
-	console.log('blended', blended, state.blendType);
 
 	return {
 		color: formatHex(blended),

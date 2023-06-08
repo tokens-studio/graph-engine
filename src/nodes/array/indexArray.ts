@@ -1,22 +1,35 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { NodeDefinition, NodeTypes } from '../../types.js';
 
 const type = NodeTypes.ARRAY_INDEX;
 
+export type Input = {
+	array: any[];
+	index: number;
+};
+
+export type State = {
+	index: number;
+	monad: boolean;
+};
+
 export const defaults = {
-  index: 0,
+	index: 0,
+	monad: false
 };
 
-const process = (input, state) => {
-  const final = {
-    ...state,
-    ...input,
-  };
+const process = (input: Input, state: State) => {
+	const final = {
+		...state,
+		...input
+	};
 
-  return final.array[final.index];
+	const value = final.array[final.index];
+
+	return final.monad ? [value] : value;
 };
 
-export const node: NodeDefinition = {
-  type,
-  defaults,
-  process,
+export const node: NodeDefinition<Input, State> = {
+	type,
+	defaults,
+	process
 };

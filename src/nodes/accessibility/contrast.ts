@@ -1,13 +1,32 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
-import { calcAPCA } from "apca-w3";
+import { NodeDefinition, NodeTypes } from '../../types.js';
+import { calcAPCA } from 'apca-w3';
 
 const type = NodeTypes.CONTRAST;
 
-const process = (input) => {
-  return calcAPCA(input.a, input.b);
+type Inputs = {
+	/**
+	 * Color
+	 */
+	a: string;
+	/**
+	 * Color
+	 */
+	b: string;
+
+	absolute?: boolean;
 };
 
-export const node: NodeDefinition = {
-  type,
-  process,
+const process = (input: Inputs, state) => {
+	const final = {
+		...state,
+		...input
+	};
+	const calculated = calcAPCA(final.a, final.b);
+
+	return final.absolute ? Math.abs(calculated) : calculated;
+};
+
+export const node: NodeDefinition<Inputs> = {
+	type,
+	process
 };

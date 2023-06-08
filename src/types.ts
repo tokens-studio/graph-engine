@@ -87,6 +87,9 @@ export enum NodeTypes {
 	//Array
 	ARRAY_INDEX = 'studio.tokens.array.index',
 	ARRIFY = 'studio.tokens.array.arrify',
+	REVERSE = 'studio.tokens.array.reverse',
+	SLICE = 'studio.tokens.array.slice',
+	JOIN = 'studio.tokens.array.join',
 
 	// Math
 	ADD = 'studio.tokens.math.add',
@@ -100,6 +103,7 @@ export enum NodeTypes {
 	TAN = 'studio.tokens.math.tan',
 	LERP = 'studio.tokens.math.lerp',
 	CLAMP = 'studio.tokens.math.clamp',
+	MOD = 'studio.tokens.math.mod',
 	RANDOM = 'studio.tokens.math.random',
 	COUNT = 'studio.tokens.math.count',
 
@@ -108,6 +112,7 @@ export enum NodeTypes {
 	BLEND = 'studio.tokens.color.blend',
 	ADVANCED_BLEND = 'studio.tokens.color.blendAdv',
 	CREATE_COLOR = 'studio.tokens.color.create',
+	EXTRACT = 'studio.tokens.color.extract',
 	TRANSFORM_COLOR = 'studio.tokens.color.transform',
 
 	//Sets
@@ -116,6 +121,7 @@ export enum NodeTypes {
 	REMAP = 'studio.tokens.sets.remap',
 	INLINE_SET = 'studio.tokens.sets.inline',
 	SET = 'studio.tokens.sets.external',
+	INVERT_SET = 'studio.tokens.sets.invert',
 
 	//Series
 	ARITHMETIC_SERIES = 'studio.tokens.sets.arithmetic',
@@ -127,5 +133,6 @@ export enum NodeTypes {
 	REGEX = 'studio.tokens.string.regex',
 	PASS_UNIT = 'studio.tokens.typing.passUnit',
 	//Accessibility
-	CONTRAST = 'studio.tokens.accessibility.contrast'
+	CONTRAST = 'studio.tokens.accessibility.contrast',
+	COLOR_BLINDNESS = 'studio.tokens.accessibility.colorBlindness'
 }
