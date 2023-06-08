@@ -1,5 +1,12 @@
 # @tokens-studio/graph-engine
 
+## 0.1.0
+
+### Minor Changes
+
+- 4e36db5: Add more test nodes and fix culori problem
+- d30d954: Added Advanced blend node, fixe bugs in remap and added step down in the harmonic
+
 ## 0.0.4
 
 ### Patch Changes
