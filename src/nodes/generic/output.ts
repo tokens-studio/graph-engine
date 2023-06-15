@@ -1,3 +1,9 @@
+/**
+ * Acts as an output node for the graph. There can only be a single output node per graph.
+ *
+ * @packageDocumentation
+ */
+
 import { NodeDefinition, NodeTypes } from "../../types.js";
 
 const type = NodeTypes.OUTPUT;

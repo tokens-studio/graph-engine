@@ -1,17 +1,23 @@
-import { NodeDefinition, NodeTypes } from '../../types.js';
+/**
+ * Reverses a given array without mutating the original
+ *
+ * @packageDocumentation
+ */
+
+import { NodeDefinition, NodeTypes } from "../../types.js";
 
 const type = NodeTypes.REVERSE;
 
 export type NamedInput = {
-	array: any[];
+  array: any[];
 };
 
 export const process = (input: NamedInput) => {
-	//Normal reverse mutates the array. We don't want that.
-	return [...input.array].reverse();
+  //Normal reverse mutates the array. We don't want that.
+  return [...input.array].reverse();
 };
 
 export const node: NodeDefinition<NamedInput> = {
-	type,
-	process
+  type,
+  process,
 };

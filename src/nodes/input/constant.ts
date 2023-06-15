@@ -1,4 +1,10 @@
-import { NodeDefinition, NodeTypes } from '../../types.js';
+/**
+ * Provides a defined constant for the graph
+ *
+ * @packageDocumentation
+ */
+
+import { NodeDefinition, NodeTypes } from "../../types.js";
 
 export const type = NodeTypes.CONSTANT;
 
@@ -6,8 +12,8 @@ export const type = NodeTypes.CONSTANT;
  * Defines the starting state of the node
  */
 export const defaults = {
-	input: '',
-	type: 'string'
+  input: "",
+  type: "string",
 };
 
 /**
@@ -19,11 +25,11 @@ export const defaults = {
  * @returns
  */
 export const process = (input, state) => {
-	return state.input;
+  return state.input;
 };
 
 export const node: NodeDefinition = {
-	type,
-	defaults,
-	process
+  type,
+  defaults,
+  process,
 };

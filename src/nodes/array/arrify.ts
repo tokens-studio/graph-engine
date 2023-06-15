@@ -1,12 +1,18 @@
-import { NodeDefinition, NodeTypes } from '../../types.js';
+/**
+ * Allows creation of the an array from a series of inputs
+ *
+ * @packageDocumentation
+ */
+
+import { NodeDefinition, NodeTypes } from "../../types.js";
 
 const type = NodeTypes.ARRIFY;
 
 export type MappedInput = {
-	inputs: {
-		key: string;
-		value: any;
-	}[];
+  inputs: {
+    key: string;
+    value: any;
+  }[];
 };
 
 /**
@@ -15,25 +21,22 @@ export type MappedInput = {
  * @param state
  */
 export const mapInput = (input: Record<string, any>): MappedInput => {
-	const values = Object.entries(input).sort((a, b) => {
-		return a[0].localeCompare(b[0]);
-	});
+  const values = Object.entries(input).sort((a, b) => {
+    return a[0].localeCompare(b[0]);
+  });
 
-	//Returns the expected array of inputs
-	return {
-		inputs: values.map(([key, value]) => ({ key, value }))
-	} as MappedInput;
+  //Returns the expected array of inputs
+  return {
+    inputs: values.map(([key, value]) => ({ key, value })),
+  } as MappedInput;
 };
 
 export const process = (input: MappedInput) => {
-	return input.inputs.map(input => input.value);
+  return input.inputs.map((input) => input.value);
 };
 
-/**
- * Allows creation of the an array from a series of inputs
- */
 export const node: NodeDefinition<MappedInput> = {
-	mapInput,
-	type,
-	process
+  mapInput,
+  type,
+  process,
 };
