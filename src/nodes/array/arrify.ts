@@ -29,6 +29,9 @@ export const process = (input: MappedInput) => {
 	return input.inputs.map(input => input.value);
 };
 
+/**
+ * Allows creation of the an array from a series of inputs
+ */
 export const node: NodeDefinition<MappedInput> = {
 	mapInput,
 	type,

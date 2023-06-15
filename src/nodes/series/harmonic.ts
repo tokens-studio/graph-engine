@@ -10,7 +10,7 @@ export const defaults = {
 	notes: 1
 };
 
-type HarmonicTypographyValue = {
+type HarmonicValue = {
 	size: number;
 	frequency: number;
 	note: number;
@@ -22,24 +22,24 @@ export const process = (input, state) => {
 		...input
 	};
 
-	const fontSizes: HarmonicTypographyValue[] = [];
+	const values: HarmonicValue[] = [];
 
 	for (let i = 0 - final.stepsDown; i < final.steps; i++) {
 		for (let j = 0; j < final.notes; j++) {
-			const fontSize =
+			const size =
 				final.base * Math.pow(final.ratio, (i * final.notes + j) / final.notes);
-			fontSizes.push({
-				size: fontSize,
+			values.push({
+				size,
 				frequency: i,
 				note: j
 			});
 		}
 	}
 
-	return fontSizes;
+	return values;
 };
 
-export const mapOutput = (input, state, processed) => {
+export const mapOutput = (input, state, processed: HarmonicValue[]) => {
 	const mapped = { asArray: processed };
 
 	processed.forEach(item => {

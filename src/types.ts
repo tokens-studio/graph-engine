@@ -1,13 +1,13 @@
 export type ExternalLoadOptions = { type: string; id: string; data: any };
 export type ExternalLoader = (opts: ExternalLoadOptions) => Promise<any> | any;
 
-export type NodeDefinition<
+export interface NodeDefinition<
 	MappedInput = Record<string, any>,
 	State = object,
 	Output = any,
 	Ephemeral = object,
 	ExternalRequest = object
-> = {
+> {
 	/**
 	 * Reverse domain name notation for the node
 	 */
@@ -64,7 +64,7 @@ export type NodeDefinition<
 		output: Output,
 		ephemeral: Ephemeral
 	) => Record<string, any>;
-};
+}
 
 export enum NodeTypes {
 	INPUT = 'studio.tokens.generic.input',
@@ -73,6 +73,7 @@ export enum NodeTypes {
 	ENUMERATED_INPUT = 'studio.tokens.input.enumerated-constant',
 	CONSTANT = 'studio.tokens.input.constant',
 	SLIDER = 'studio.tokens.input.slider',
+	SPREAD = 'studio.tokens.input.extract',
 
 	CSS_MAP = 'studio.tokens.css.map',
 
@@ -126,6 +127,7 @@ export enum NodeTypes {
 	//Series
 	ARITHMETIC_SERIES = 'studio.tokens.sets.arithmetic',
 	HARMONIC_SERIES = 'studio.tokens.sets.harmonic',
+	GEOMETRIC_SERIES = 'studio.tokens.sets.geometric',
 
 	//String
 	UPPERCASE = 'studio.tokens.string.uppercase',

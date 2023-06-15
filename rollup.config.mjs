@@ -1,6 +1,6 @@
 import cleanupDir from 'rollup-plugin-cleanup-dir';
-import typescript from 'rollup-plugin-typescript2';
 import swcImport from 'rollup-plugin-swc'
+import typescript from 'rollup-plugin-typescript2';
 
 
 const swc = swcImport.default;
@@ -29,6 +29,9 @@ const defaultEntries = [
                 tsconfig: 'tsconfig.prod.json'
             }),
             swc({
+                env: {
+                    dynamicImport: true,
+                },
                 jsc: {
                     parser: {
                         syntax: 'typescript',

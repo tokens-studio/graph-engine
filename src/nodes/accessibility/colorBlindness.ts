@@ -63,6 +63,9 @@ const process = (input: Inputs, state: STATE) => {
 	return processed;
 };
 
+/**
+ * Converts provided colors to the colors as perceived by the specified color blindness type.
+ */
 export const node: NodeDefinition<Inputs, STATE> = {
 	defaults,
 	type,

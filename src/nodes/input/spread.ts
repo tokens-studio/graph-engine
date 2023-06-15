@@ -1,13 +1,9 @@
 import { NodeDefinition, NodeTypes } from '../../types.js';
 
-export const type = NodeTypes.CONSTANT;
+const type = NodeTypes.SPREAD;
 
-/**
- * Defines the starting state of the node
- */
-export const defaults = {
-	input: '',
-	type: 'string'
+export type Input = {
+	input: any;
 };
 
 /**
@@ -18,12 +14,16 @@ export const defaults = {
  * @param state
  * @returns
  */
-export const process = (input, state) => {
-	return state.input;
+const process = (input: Input) => {
+	return input.input;
 };
 
-export const node: NodeDefinition = {
+const mapOutput = (input, state, processed) => {
+	return processed;
+};
+
+export const node: NodeDefinition<Input> = {
 	type,
-	defaults,
-	process
+	process,
+	mapOutput
 };

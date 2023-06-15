@@ -26,6 +26,9 @@ const process = (input: Inputs, state) => {
 	return final.absolute ? Math.abs(calculated) : calculated;
 };
 
+/**
+ * Performs a contrast calculation between two colors using APCA-W3 calcs
+ */
 export const node: NodeDefinition<Inputs> = {
 	type,
 	process

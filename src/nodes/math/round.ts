@@ -1,10 +1,17 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { NodeDefinition, NodeTypes } from '../../types.js';
 
 export const type = NodeTypes.ROUND;
 
-export const defaults = {
-  value: 0,
-  precision: 0,
+export type Options = {
+	value: number;
+	precision: number;
+	radix: number;
+};
+
+export const defaults: Options = {
+	value: 0,
+	precision: 0,
+	radix: 1
 };
 
 /**
@@ -15,19 +22,19 @@ export const defaults = {
  * @param state
  * @returns
  */
-export const process = (input, state) => {
-  //Override with state if defined
-  const final = {
-    ...state,
-    ...input,
-  };
+export const process = (input: Options, state: Options) => {
+	//Override with state if defined
+	const final = {
+		...state,
+		...input
+	};
 
-  const shift = 10 ** final.precision;
-  return Math.round(final.value * shift) / shift;
+	const shift = 10 ** final.precision;
+	return Math.round(final.value * shift) / shift;
 };
 
-export const node: NodeDefinition = {
-  type,
-  defaults,
-  process,
+export const node: NodeDefinition<Options, Options> = {
+	type,
+	defaults,
+	process
 };

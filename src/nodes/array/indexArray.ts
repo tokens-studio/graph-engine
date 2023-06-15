@@ -28,6 +28,9 @@ const process = (input: Input, state: State) => {
 	return final.monad ? [value] : value;
 };
 
+/**
+ * Extracts a value from an array at a given index
+ */
 export const node: NodeDefinition<Input, State> = {
 	type,
 	defaults,
