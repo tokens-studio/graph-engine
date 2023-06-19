@@ -60,3 +60,5 @@ export const node: NodeDefinition = {
   defaults,
   process,
 };
+
+export { ColorModifierTypes } from "@tokens-studio/types";

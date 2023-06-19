@@ -10,7 +10,7 @@ export const type = NodeTypes.SUBTRACT;
  */
 export const validateInputs = (inputs) => {
   if (inputs.inputs.length < 2) {
-    throw new Error("Not enough inputs ");
+    throw new Error("Not enough inputs");
   }
   inputs.inputs.forEach((x) => {
     if (isNaN(x.value)) {

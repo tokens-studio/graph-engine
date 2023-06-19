@@ -1,0 +1,64 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Test current file",
+      "program": "${workspaceRoot}/node_modules/jest/bin/jest",
+      "args": [
+        "--config=./jest.config.ts",
+        "--coverage=false",
+        "--testPathPattern=${fileBasenameNoExtension}"
+      ],
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug tests",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run-script",
+        "test",
+        "--",
+        "--inspect-brk=9229"
+      ],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug transformer tests",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run-script",
+        "test",
+        "--",
+        "--inspect-brk=9229"
+      ],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/token-transformer",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Test current file",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/jest",
+      "args": [
+        "--testPathPattern=${fileBasenameNoExtension}",
+        "--no-cache",
+        "--coverage=false"
+      ],
+      "cwd": "${workspaceFolder}",
+      "sourceMaps": true,
+      "console": "integratedTerminal"
+    }
+  ]
+}

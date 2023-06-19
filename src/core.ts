@@ -145,6 +145,64 @@ export interface ExecuteOptions {
   externalLoader?: ExternalLoader;
 }
 
+export interface NodeExecutionOptions {
+  nodeId: string;
+  node: NodeDefinition<any, any, any>;
+  input: any;
+  state: Record<string, any>;
+  externalLoader?: ExternalLoader;
+}
+
+export const executeNode = async (opts: NodeExecutionOptions) => {
+  const { input, node, nodeId, state, externalLoader } = opts;
+
+  let mappedInput = input;
+  if (node.mapInput) {
+    //Map the input to the node
+    mappedInput = node.mapInput(input, state);
+  }
+  //Validate the input
+  if (node.validateInputs) {
+    try {
+      node.validateInputs(mappedInput, state);
+    } catch (e) {
+      //Todo add flow trace
+      throw new Error(
+        `Validation failed for node "${nodeId}" of type "${node.type}" with error "${e}"`
+      );
+    }
+  }
+
+  if (node.external && !externalLoader) {
+    throw new Error(
+      `Node "${nodeId}" of type "${node.type}" requires an external loader`
+    );
+  }
+
+  let ephemeral = {};
+  if (node.external && externalLoader) {
+    const ephemeralRequest = node.external(mappedInput, state);
+    ephemeral = await externalLoader({
+      type: node.type,
+      id: nodeId,
+      data: ephemeralRequest,
+    });
+  }
+
+  let output = node.process(mappedInput, state, ephemeral);
+
+  //Wait for it to fully resolve
+  //@ts-ignore
+  if (isPromise(output)) {
+    output = await output;
+  }
+
+  const mapOutput = node.mapOutput || defaultMapOutput;
+  //Now map the output to named handles
+  //This should give us a lookup via the handle name to the output value
+  return mapOutput(mappedInput, state, output, ephemeral);
+};
+
 // Map inputs
 // Perform unboxing //TODO
 // Validate inputs
@@ -214,52 +272,15 @@ export const execute = async (opts: ExecuteOptions) => {
 
     //Input to the node
     const { input } = stateTracker[nodeId];
-    let mappedInput = input;
 
-    if (nodeType.mapInput) {
-      //Map the input to the node
-      mappedInput = nodeType.mapInput(input, node.data);
-    }
-    //Validate the input
-    if (nodeType.validateInputs) {
-      try {
-        nodeType.validateInputs(mappedInput, node.data);
-      } catch (e) {
-        //Todo add flow trace
-        throw new Error(
-          `Validation failed for node ${nodeId} of type ${node.type} with error ${e}`
-        );
-      }
-    }
+    const output = await executeNode({
+      nodeId,
+      node: nodeType,
+      input,
+      state: node.data,
+      externalLoader: opts.externalLoader,
+    });
 
-    if (nodeType.external && !opts.externalLoader) {
-      throw new Error(
-        `Node ${nodeId} of type ${node.type} requires an external loader`
-      );
-    }
-
-    let ephemeral = {};
-    if (nodeType.external && opts.externalLoader) {
-      const ephemeralRequest = nodeType.external(mappedInput, node.data);
-      ephemeral = await exports.externalLoader({
-        type: nodeType.type,
-        id: nodeId,
-        data: ephemeralRequest,
-      });
-    }
-
-    let output = nodeType.process(mappedInput, node.data, ephemeral);
-
-    //Wait for it to fully resolve
-    //@ts-ignore
-    if (isPromise(output)) {
-      output = await output;
-    }
-
-    const mapOutput = nodeType.mapOutput || defaultMapOutput;
-    //Now map the output to named handles
-    //This should give us a lookup via the handle name to the output value
-    output = mapOutput(mappedInput, node.data, output, ephemeral);
     //Store the output
     stateTracker[nodeId].output = output;
 
