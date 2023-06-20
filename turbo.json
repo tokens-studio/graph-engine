@@ -19,6 +19,9 @@
     "format": {
       "outputs": []
     },
+    "docs": {
+      "outputs": []
+    },
     "test": {
       "dependsOn": [
         "^build"
