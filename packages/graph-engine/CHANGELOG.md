@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 0.2.0
+
+### Minor Changes
+
+- c95ee97: Removed graphlib dependency and swapped it out for an internal representation
+
 ## 0.1.0
 
 ### Minor Changes
