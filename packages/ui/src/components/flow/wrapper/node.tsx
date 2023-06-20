@@ -95,7 +95,7 @@ const applyFilters = (
 
 const zoomSelector = (s) => s.transform[2] >= 0.5;
 
-export const Collapser = ({ children, collapsed, showContent }) => {
+export const Collapser = ({ icon, children, collapsed, showContent }) => {
   const styling = useMemo(() => {
     if (collapsed) {
       return {

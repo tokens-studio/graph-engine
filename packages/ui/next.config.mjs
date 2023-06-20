@@ -33,8 +33,6 @@ const config = {
     //Issue with colorjs.io
     // config.optimization.providedExports = true;
     return config;
-
-
   }
 };
 

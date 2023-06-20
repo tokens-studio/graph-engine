@@ -76,6 +76,9 @@ jobs:
       - name: Install dependencies
         run: yarn  --frozen-lockfile --prefer-offline
 
+      - name: Build site
+        run: yarn run build:ui
+
       - name: Import Secrets
         id: secrets
         uses: hashicorp/vault-action@v2
@@ -97,4 +100,4 @@ jobs:
           aws-region: us-east-1
       - name: Copy files to the production website with the AWS CLI
         run: |
-          aws s3 sync ./out ${{ vars.DEV_SITE_BUCKET_NAME }}
+          aws s3 sync ./packages/ui/out ${{ vars.DEV_SITE_BUCKET_NAME }}

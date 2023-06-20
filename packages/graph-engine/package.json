@@ -51,7 +51,7 @@
     "get-pixels": "^3.3.3",
     "is-promise": "^4.0.0",
     "postcss-value-parser": "^4.2.0",
-    "reactflow": "^11.7.2",
+    "reactflow": "11.7.0",
     "token-transformer": "^0.0.32"
   },
   "devDependencies": {

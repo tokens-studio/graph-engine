@@ -17,6 +17,12 @@ const defaults = {
   definition: {},
 };
 
+export type TypeDefinition = {
+  type: "string" | "number" | "boolean" | "integer";
+  enum?: string[];
+  modifier?: boolean;
+};
+
 /**
  * Optional validation function.
  * @param inputs
