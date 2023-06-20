@@ -10,6 +10,7 @@ import { node as multiply } from "./multiply.js";
 import { node as random } from "./random.js";
 import { node as round } from "./round.js";
 import { node as sin } from "./sin.js";
+import { node as pow } from "./pow.js";
 import { node as subtract } from "./subtract.js";
 import { node as tan } from "./tan.js";
 
@@ -22,6 +23,7 @@ export const nodes = [
   divide,
   lerp,
   mod,
+  pow,
   multiply,
   random,
   round,

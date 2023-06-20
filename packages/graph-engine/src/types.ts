@@ -107,6 +107,7 @@ export enum NodeTypes {
   MOD = "studio.tokens.math.mod",
   RANDOM = "studio.tokens.math.random",
   COUNT = "studio.tokens.math.count",
+  POW = "studio.tokens.math.pow",
 
   // Color
   SCALE = "studio.tokens.color.scale",

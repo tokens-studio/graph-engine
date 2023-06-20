@@ -283,6 +283,11 @@ const types = {
       icon: '?',
       text: 'Random',
     },
+    {
+      type: NodeTypes.POW,
+      icon: 'a^b',
+      text: 'Power',
+    },
   ],
   array: [
     {
