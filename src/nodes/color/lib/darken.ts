@@ -25,6 +25,15 @@ export function darken(
       color.set("oklch.c", newChroma);
       return color;
     }
+
+    case ColorSpaceTypes.OKLAB: {
+      const lightness = color.oklab.l;
+      const difference = lightness;
+      const newLightness = Math.max(0, lightness - difference * amount);
+      color.set("oklab.l", newLightness);
+      return color;
+    }
+
     case ColorSpaceTypes.HSL: {
       const lightness = color.hsl.l;
       const difference = lightness;

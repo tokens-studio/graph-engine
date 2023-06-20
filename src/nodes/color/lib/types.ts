@@ -1,6 +1,7 @@
 import { ColorModifierTypes } from "@tokens-studio/types";
 
 export enum ColorSpaceTypes {
+  OKLAB = "oklab",
   OKLCH = "oklch",
   LCH = "lch",
   SRGB = "srgb",
