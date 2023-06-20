@@ -20,5 +20,6 @@
         "javascriptreact",
         "typescript",
         "typescriptreact"
-    ]
+    ],
+    "adrManager.adrDirectory": "adrs"
 }

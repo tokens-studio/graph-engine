@@ -1,0 +1,20 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: graph-engine
+  title: Graph Engine
+  description: Graph engine for resolvers and generators
+  links:
+    - url: https://resolver.dev.tokens.studio/
+      title: Demo site
+      icon: dashboard
+    - url: https://www.npmjs.com/package/@tokens-studio/graph-engine
+      title: "@tokens-studio/graph-engine on npm"
+      icon: Npm
+  annotations:
+    github.com/project-slug: tokens-studio/graph-engine
+spec:
+  type: library 
+  lifecycle: production
+  system: tokens-studio-system
+  owner: user:default/andrew@hyma.io
