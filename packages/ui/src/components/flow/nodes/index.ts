@@ -47,6 +47,7 @@ import extract from './color/extract.tsx';
 import geometricNode from './series/geometricNode.tsx';
 import modNode from './math/modNode.tsx';
 import randomNode from './math/randomNode.tsx';
+import powerNode from './math/powNode.tsx';
 import roundNode from './math/roundNode.tsx';
 import sliderNode from './input/sliderNode.tsx';
 import spreadNode from './input/spreadNode.tsx';
@@ -113,6 +114,7 @@ export const { nodeTypes, stateInitializer } = processTypes([
   EnumeratedInputNode,
   CountNode,
   RemapNode,
+  powerNode,
   HarmonicNode,
   ArithmeticNode,
   PassUnitNode,
