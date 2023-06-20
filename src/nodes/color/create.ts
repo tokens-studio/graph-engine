@@ -10,6 +10,8 @@ export const colorSpaces = [
 	'hsi',
 	'lab',
 	'lch',
+	'oklab',
+	'oklch',
 	'hcl',
 	'cmyk',
 	'gl'

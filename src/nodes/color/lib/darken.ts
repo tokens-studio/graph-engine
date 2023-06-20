@@ -16,6 +16,15 @@ export function darken(
       color.set("lch.c", newChroma);
       return color;
     }
+    case ColorSpaceTypes.OKLCH: {
+      const lightness = color.oklch.l;
+      const difference = lightness;
+      const newChroma = Math.max(0, color.oklch.c - amount * color.oklch.c);
+      const newLightness = Math.max(0, lightness - difference * amount);
+      color.set("oklch.l", newLightness);
+      color.set("oklch.c", newChroma);
+      return color;
+    }
     case ColorSpaceTypes.HSL: {
       const lightness = color.hsl.l;
       const difference = lightness;
