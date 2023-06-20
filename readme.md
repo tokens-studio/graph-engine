@@ -1,6 +1,10 @@
 # Tokens Studio Graph Engine Monorepo
 
+![NPM version badge](https://img.shields.io/npm/v/@tokens-studio/graph-engine) ![License badge](https://img.shields.io/github/license/tokens-studio/types)
+
 This is the monorepo for the full Tokens Studio ecosystem powered by [Turborepo](https://turbo.build/)
+
+See the Graph-Engine library [here](./packages/graph-engine/readme.md)
 
 ## Quickstart
 
@@ -37,6 +41,10 @@ which will run live dev for studio and its deps and update the dependencies
 ## Developer documentation
 
 See additional developer documentation [here](./developer-documentation/index.md) for specifics on how the graph engine works
+
+## API
+
+See the developer API [here](https://tokens-studio.github.io/graph-engine/)
 
 ## Dependency graphs
 

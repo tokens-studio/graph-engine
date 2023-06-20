@@ -13,6 +13,7 @@
     "dev:engine": "turbo run dev --filter=...@tokens-studio/graph-engine",
     "dev:ui": "turbo run dev --filter=...@tokens-studio/graph-engine-ui",
     "dev:ui:live": "turbo run dev --filter=@tokens-studio/graph-engine-ui...",
+    "docs": "turbo run docs",
     "format": "turbo run format --parallel --continue",
     "postinstall": "husky install",
     "lint": "turbo run lint",
