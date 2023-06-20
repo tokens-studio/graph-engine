@@ -1,0 +1,81 @@
+.react-flow__node {
+  position: absolute;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  pointer-events: all;
+  transform-origin: 0 0;
+  box-sizing: content-box;
+  padding: 0;
+  cursor: -webkit-grab;
+  cursor: grab;
+  border: none;
+  background: transparent;
+  width: initial;
+  border-radius: var(--radii-medium);
+  transition: box-shadow 0.3s ease-in-out;
+  background: var(--colors-bgDefault);
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+.react-flow__node.filtered  {
+  opacity:0.25
+}
+
+.react-flow__node.selectable.selected,
+.react-flow__node.selectable:focus {
+  box-shadow: 0px 2px 24px -4px rgba(0, 0, 0, 0.15), 0px 2px 4px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 4px rgba(0, 0, 150, 0.05);
+}
+
+
+
+.react-flow__edge.selected .react-flow__edge-path, .react-flow__edge:focus .react-flow__edge-path, .react-flow__edge:focus-visible .react-flow__edge-path {
+  stroke: var(--colors-bgSubtle);
+}
+
+.group-color-picker{
+  display: none;
+  position: absolute;
+  top:100%;
+  margin-top:1em; 
+}
+
+.react-flow__node.selectable.selected .group-color-picker{
+  display: block;
+}
+
+.react-flow__node-studio_tokens_group{
+  background: transparent;
+}
+
+.react-flow__minimap {
+  background: var(--colors-bgSurface);
+}
+
+#__next .react-flow__minimap-mask {
+  fill: var(--colors-borderDefault)
+}
+
+.react-flow__handle-right {
+  right: -1.3em
+}
+
+.react-flow__handle-left {
+  left: -1.3em
+}
+
+#drop-panel {
+  margin: 0;
+  height: 100%
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+
+.react-flow__edge.selected .react-flow__edge-path, .react-flow__edge:focus .react-flow__edge-path, .react-flow__edge:focus-visible .react-flow__edge-path {
+
+  stroke: var(--colors-fgDefault);
+}
