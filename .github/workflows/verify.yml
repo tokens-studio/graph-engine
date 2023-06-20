@@ -7,7 +7,10 @@ jobs:
     name: Verify changes
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
@@ -22,4 +25,4 @@ jobs:
         run: npm run lint
         
       - name: Test
-        run: npm run test
+        run: npm run test:ci

@@ -56,3 +56,48 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ steps.secrets.outputs.NPM_TOKEN }}
+  release-ui:
+    # Prevents changesets action from creating a PR on forks
+    if: github.repository == 'tokens-studio/graph-engine'
+    environment:
+      name: dev
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn  --frozen-lockfile --prefer-offline
+
+      - name: Build site
+        run: yarn run build:ui
+
+      - name: Import Secrets
+        id: secrets
+        uses: hashicorp/vault-action@v2
+        with:
+          url: ${{ vars.VAULT_URL }}
+          role: ${{ vars.VAULT_DEPLOY_ROLE }}
+          method: jwt
+          namespace: admin
+          secrets: |
+            aws/dev/creds/${{ vars.DEV_SITE_DEPLOY_ROLE }} access_key | AWS_ACCESS_KEY_ID ;
+            aws/dev/creds/${{ vars.DEV_SITE_DEPLOY_ROLE }} secret_key | AWS_SECRET_ACCESS_KEY ;
+            aws/dev/creds/${{ vars.DEV_SITE_DEPLOY_ROLE }} security_token |  AWS_SESSION_TOKEN;
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ steps.secrets.outputs.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ steps.secrets.outputs.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ steps.secrets.outputs.AWS_SESSION_TOKEN }}
+          aws-region: us-east-1
+      - name: Copy files to the production website with the AWS CLI
+        run: |
+          aws s3 sync ./packages/ui/out ${{ vars.DEV_SITE_BUCKET_NAME }}

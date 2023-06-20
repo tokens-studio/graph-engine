@@ -7,18 +7,6 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Test current file",
-      "program": "${workspaceRoot}/node_modules/jest/bin/jest",
-      "args": [
-        "--config=./jest.config.ts",
-        "--coverage=false",
-        "--testPathPattern=${fileBasenameNoExtension}"
-      ],
-      "console": "integratedTerminal"
-    },
-    {
-      "type": "node",
-      "request": "launch",
       "name": "Debug tests",
       "runtimeExecutable": "npm",
       "runtimeArgs": [
@@ -34,30 +22,13 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug transformer tests",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "run-script",
-        "test",
-        "--",
-        "--inspect-brk=9229"
-      ],
-      "console": "integratedTerminal",
-      "cwd": "${workspaceFolder}/token-transformer",
-      "internalConsoleOptions": "neverOpen"
-    },
-    {
       "name": "Test current file",
-      "type": "node",
-      "request": "launch",
-      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/jest",
+      "program": "${workspaceRoot}/node_modules/jest/bin/jest",
       "args": [
-        "--testPathPattern=${fileBasenameNoExtension}",
-        "--no-cache",
-        "--coverage=false"
+        "--config=./jest.config.ts",
+        "--coverage=false",
+        "--testPathPattern=${fileBasenameNoExtension}"
       ],
-      "cwd": "${workspaceFolder}",
-      "sourceMaps": true,
       "console": "integratedTerminal"
     }
   ]

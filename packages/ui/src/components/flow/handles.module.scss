@@ -1,0 +1,16 @@
+.handle {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.expanded {
+    min-height: 1em;
+}
+
+.collapsed {
+    height: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+}
