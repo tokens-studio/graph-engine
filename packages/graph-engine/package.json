@@ -32,8 +32,6 @@
     "format:prettier": "prettier \"**/*.{ts,js,md,json}\" --write",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "lint-staged": "npx lint-staged",
-    "prepare": "husky install",
     "release": "npm run build && changeset publish",
     "test": "jest"
   },
