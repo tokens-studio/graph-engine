@@ -86,7 +86,6 @@ export const useHotkeys = ({ onEdgesDeleted }) => {
           nodes,
         };
 
-        console.log(values);
         copy(JSON.stringify(values, null, 2), {
           debug: true,
           format: 'application/json',

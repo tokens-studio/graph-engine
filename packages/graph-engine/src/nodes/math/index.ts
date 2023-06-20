@@ -13,7 +13,7 @@ import { node as sin } from "./sin.js";
 import { node as subtract } from "./subtract.js";
 import { node as tan } from "./tan.js";
 
-export default [
+export const nodes = [
   abs,
   add,
   clamp,

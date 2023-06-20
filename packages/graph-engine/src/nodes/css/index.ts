@@ -1,3 +1,3 @@
 import { node as map } from "./map.js";
 
-export default [map];
+export const nodes = [map];

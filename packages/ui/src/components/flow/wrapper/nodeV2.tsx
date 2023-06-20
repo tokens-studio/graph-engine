@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Edge, useReactFlow } from 'reactflow';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Node } from './node.tsx';

@@ -5,4 +5,4 @@ import { node as not } from "./not.js";
 import { node as or } from "./or.js";
 import { node as switchNode } from "./switch.js";
 
-export default [and, compare, ifNode, not, or, switchNode];
+export const nodes = [and, compare, ifNode, not, or, switchNode];

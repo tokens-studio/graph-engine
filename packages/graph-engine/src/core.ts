@@ -1,8 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ExternalLoader, NodeDefinition } from "./types.js";
 import {
-  FlowGraph,
-  MinimizedEdge,
   MinimizedFlowGraph,
   MinimizedNode,
   convertFlowGraphToGraphlib,

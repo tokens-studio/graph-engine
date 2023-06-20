@@ -1,18 +1,17 @@
 import { NodeDefinition } from "../types.js";
-import accessibility from "./accessibility/index.js";
-import array from "./array/index.js";
-import color from "./color/index.js";
-import css from "./css/index.js";
-import generic from "./generic/index.js";
-import input from "./input/index.js";
-import logic from "./logic/index.js";
-import math from "./math/index.js";
-import series from "./series/index.js";
-import sets from "./set/index.js";
-import string from "./string/index.js";
-import typing from "./typing/index.js";
+import { nodes as accessibility } from "./accessibility/index.js";
+import { nodes as array } from "./array/index.js";
+import { nodes as color } from "./color/index.js";
+import { nodes as css } from "./css/index.js";
+import { nodes as generic } from "./generic/index.js";
+import { nodes as input } from "./input/index.js";
+import { nodes as logic } from "./logic/index.js";
+import { nodes as math } from "./math/index.js";
+import { nodes as series } from "./series/index.js";
+import { nodes as sets } from "./set/index.js";
+import { nodes as string } from "./string/index.js";
+import { nodes as typing } from "./typing/index.js";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const nodes: NodeDefinition<any>[] = (
   [] as NodeDefinition<any, any, any>[]
 ).concat(

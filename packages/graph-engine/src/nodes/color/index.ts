@@ -4,4 +4,4 @@ import { node as create } from "./create.js";
 import { node as extract } from "./extract.js";
 import { node as scale } from "./scale.js";
 
-export default [blend, scale, create, advancedBlend, extract];
+export const nodes = [blend, scale, create, advancedBlend, extract];

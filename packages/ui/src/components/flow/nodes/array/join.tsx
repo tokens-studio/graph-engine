@@ -16,8 +16,6 @@ const JoinNode = () => {
     }));
   }, []);
 
-  console.log(output);
-
   return (
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">

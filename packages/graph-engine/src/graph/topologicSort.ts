@@ -12,7 +12,7 @@ import { Graph, Node } from "./graph.js";
  */
 export function topologicalSort(graph: Graph): string[] {
   const visited = new Set();
-  const stack = [];
+  const stack: string[] = [];
 
   function dfs(node: string) {
     visited.add(node);

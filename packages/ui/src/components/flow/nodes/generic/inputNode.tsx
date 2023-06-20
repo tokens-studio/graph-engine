@@ -105,8 +105,6 @@ const Option = ({ name, value, def }: OptionProps) => {
   const onEnumChange = useCallback(
     (ev) => {
       const key = ev.currentTarget.dataset.key;
-
-      console.log(name, key);
       setState((state) => ({
         ...state,
         values: {

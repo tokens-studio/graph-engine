@@ -28,19 +28,13 @@
   },
   "workspaces": {
     "packages": [
-      "apps/*",
       "packages/*"
     ],
     "nohoist": [
       "**/next-export-i18n"
     ]
   },
-  "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.59.1",
-    "eslint-plugin-jest": "^27.2.1",
-    "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
-    "rimraf": "^5.0.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "eslint": "^8.30.0",
     "eslint-config-custom": "*",
