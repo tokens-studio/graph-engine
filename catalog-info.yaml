@@ -18,3 +18,21 @@ spec:
   lifecycle: production
   system: tokens-studio-system
   owner: user:default/andrew@hyma.io
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: graph-docs
+  title: Graph engine docs
+  description: Internal Documentation site
+  links:
+    - url: https://docs.graph.tokens.studio
+      title: Site
+      icon: dashboard
+  annotations:
+    github.com/project-slug: tokens-studio/graph-engine-docs
+    tokens.studio/perimeter: public
+spec:
+  type: website
+  lifecycle: production
+  owner: user/default:andrew@hyma.io
