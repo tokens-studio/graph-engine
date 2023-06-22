@@ -136,16 +136,7 @@ const InlineSetNode: FC<NodeProps<TokenSetData>> = ({ id, data }) => {
     e.stopPropagation();
     const file = e.dataTransfer.files[0];
     const data = await processTokensFile(file);
-
-    // flow.setNodes(nodes => nodes.map(node => {
-    //     if (node.id === id) {
-    //         return {
-    //             ...node,
-    //             data
-    //         };
-    //     }
-    //     return node
-    // }));
+    setState(() => data);
   }, []);
 
   useEffect(() => {

@@ -67,6 +67,9 @@ const getValue = (value, def: TypeDefinition) => {
 };
 
 const Option = ({ name, value, def }: OptionProps) => {
+  //Fix for non existent defs from legacy
+  //@ts-ignore
+  def || (def = { type: 'unknown' });
   const { setState } = useNode();
   const [open, setOpen] = useState(false);
   const [addEnum, setAddEnum] = useState('');
@@ -133,6 +136,7 @@ const Option = ({ name, value, def }: OptionProps) => {
       setState((state) => ({
         ...state,
         definition: {
+          ...state.definition,
           [name]: {
             ...state.definition[name],
             enum: checked ? [] : undefined,
@@ -169,16 +173,18 @@ const Option = ({ name, value, def }: OptionProps) => {
       return;
     }
 
-    setState((state) => ({
-      ...state,
-      definition: {
-        ...state.definition,
-        [name]: {
-          ...state.definition[name],
-          enum: [...state.definition[name].enum, addEnum],
+    setState((state) => {
+      return {
+        ...state,
+        definition: {
+          ...state.definition,
+          [name]: {
+            ...state.definition[name],
+            enum: [...state.definition[name].enum, addEnum],
+          },
         },
-      },
-    }));
+      };
+    });
     setAddEnum('');
   }, [addEnum, name, setState]);
 
@@ -243,7 +249,7 @@ const Option = ({ name, value, def }: OptionProps) => {
       default:
         if (def.enum) {
           return (
-            <DropdownMenu>
+            <DropdownMenu id={name}>
               <DropdownMenu.Trigger asChild>
                 <Button
                   data-key={name}
