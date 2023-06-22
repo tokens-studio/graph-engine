@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 0.2.1
+
+### Patch Changes
+
+- ec4a20a: Fix exposure of graph controls
+
 ## 0.2.0
 
 ### Minor Changes
