@@ -1,0 +1,15 @@
+{
+    "add": "Add",
+    "substract": "Substract",
+    "multiply": "Multiply",
+    "divide": "Divide",
+    "modulo": "Modulo",
+    "sin": "Sin",
+    "cos": "Cos",
+    "tan": "Tan",
+    "absolute": "Absolute",
+    "lerp": "Lerp",
+    "clamp": "Clamp",
+    "round": "Round",
+    "random": "Random"
+}

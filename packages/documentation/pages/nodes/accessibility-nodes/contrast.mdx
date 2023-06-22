@@ -1,0 +1,24 @@
+# Purpose
+
+The contrast node uses [APCA-W3](https://github.com/Myndex/apca-w3/) calculations to calculate a numeric value that represents the contrast between two colors. The higher the value, the higher the contrast. Colors without significant contrast will be difficult to distinguish for people with color blindness.
+
+![Contrast](/images/contrast.png)
+
+## Inputs
+
+| Name | Type         | Description                           | Required |
+| :--- | :----------- | :------------------------------------ | -------- |
+| Text | `Color`      | The color of the simulated text       |          |
+| Text | `Background` | The color of the simulated background |          |
+
+## Properties
+
+| Name     | Type      | Description                                     | Required |
+| :------- | :-------- | :---------------------------------------------- | -------- |
+| Absolute | `Boolean` | Whether to absolute the returned contrast value | True     |
+
+## Output
+
+| Name   | Type     | Description                  |
+| :----- | :------- | :--------------------------- |
+| Output | `Number` | The perceived contrast ratio |

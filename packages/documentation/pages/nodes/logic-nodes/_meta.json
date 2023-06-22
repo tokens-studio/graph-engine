@@ -1,0 +1,8 @@
+{
+    "if": "If",
+    "switch": "Switch",
+    "not": "Not",
+    "and": "And",
+    "or": "Or",
+    "compare": "Compare"
+}
