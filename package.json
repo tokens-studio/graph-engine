@@ -21,7 +21,7 @@
     "lint": "turbo run lint",
     "lint-staged": "npx lint-staged",
     "prepare": "husky install",
-    "release": "turbo run build && changeset publish",
+    "release": "turbo run build:engine && changeset publish",
     "test": "turbo run test",
     "test:ci": "turbo run test --filter=[origin/master...origin/$GITHUB_HEAD_REF]",
     "test:recent": "turbo run test --filter=[HEAD^1] ",
