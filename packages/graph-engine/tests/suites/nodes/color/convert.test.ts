@@ -14,14 +14,12 @@ describe("color/convert", () => {
     });
 
     expect(output).toStrictEqual({
-      output: {
-        a: 1,
-        b: 0,
-        c: 0,
-        channels: [1, 0, 0, undefined],
-        d: undefined,
-        labels: ["r", "g", "b", "alpha"],
-      },
+      a: 1,
+      b: 0,
+      c: 0,
+      channels: [1, 0, 0, undefined],
+      d: undefined,
+      labels: ["r", "g", "b", "alpha"],
     });
   });
 
@@ -38,19 +36,17 @@ describe("color/convert", () => {
     });
 
     expect(output).toStrictEqual({
-      output: {
-        a: 0.513799063361875,
-        b: 0.9363407960900638,
-        c: 0.3440788676962286,
-        channels: [
-          0.513799063361875,
-          0.9363407960900638,
-          0.3440788676962286,
-          undefined,
-        ],
-        d: undefined,
-        labels: ["r", "g", "b", "alpha"],
-      },
+      a: 0.513799063361875,
+      b: 0.9363407960900638,
+      c: 0.3440788676962286,
+      channels: [
+        0.513799063361875,
+        0.9363407960900638,
+        0.3440788676962286,
+        undefined,
+      ],
+      d: undefined,
+      labels: ["r", "g", "b", "alpha"],
     });
   });
 
@@ -67,19 +63,17 @@ describe("color/convert", () => {
     });
 
     expect(output).toStrictEqual({
-      output: {
-        a: 0.8446731133698594,
-        b: -0.19979243108966394,
-        c: 0.16178227223673358,
-        channels: [
-          0.8446731133698594,
-          -0.19979243108966394,
-          0.16178227223673358,
-          undefined,
-        ],
-        d: undefined,
-        labels: ["l", "a", "b", "alpha"],
-      },
+      a: 0.8446731133698594,
+      b: -0.19979243108966394,
+      c: 0.16178227223673358,
+      channels: [
+        0.8446731133698594,
+        -0.19979243108966394,
+        0.16178227223673358,
+        undefined,
+      ],
+      d: undefined,
+      labels: ["l", "a", "b", "alpha"],
     });
   });
 
@@ -95,19 +89,17 @@ describe("color/convert", () => {
     });
 
     expect(output).toStrictEqual({
-      output: {
-        a: -11.61375995607493,
-        b: 0.7511787849960817,
-        c: 0.2469609193911593,
-        channels: [
-          -11.61375995607493,
-          0.7511787849960817,
-          0.2469609193911593,
-          undefined,
-        ],
-        d: undefined,
-        labels: ["h", "s", "l", "alpha"],
-      },
+      a: -11.61375995607493,
+      b: 0.7511787849960817,
+      c: 0.2469609193911593,
+      channels: [
+        -11.61375995607493,
+        0.7511787849960817,
+        0.2469609193911593,
+        undefined,
+      ],
+      d: undefined,
+      labels: ["h", "s", "l", "alpha"],
     });
   });
 });
