@@ -111,6 +111,7 @@ export enum NodeTypes {
 
   // Color
   SCALE = "studio.tokens.color.scale",
+  CONVERT_COLOR = "studio.tokens.color.convert",
   BLEND = "studio.tokens.color.blend",
   ADVANCED_BLEND = "studio.tokens.color.blendAdv",
   CREATE_COLOR = "studio.tokens.color.create",

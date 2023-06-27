@@ -3,5 +3,6 @@ import { node as blend } from "./blend.js";
 import { node as create } from "./create.js";
 import { node as extract } from "./extract.js";
 import { node as scale } from "./scale.js";
+import { node as convert } from "./convert.js";
 
-export const nodes = [blend, scale, create, advancedBlend, extract];
+export const nodes = [blend, scale, create, advancedBlend, extract, convert];
