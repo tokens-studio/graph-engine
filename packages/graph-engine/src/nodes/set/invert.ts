@@ -7,8 +7,6 @@ type Input = {
   array: SingleToken[];
 };
 
-export const TOKEN_PREFIX = "token.";
-
 export const process = (input: Input) => {
   const array = input.array;
   return array.map((x, i) => {

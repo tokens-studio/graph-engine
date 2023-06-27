@@ -395,6 +395,11 @@ const types = {
       text: 'Create Color',
     },
     {
+      type: NodeTypes.CONVERT_COLOR,
+      icon: <ColorWheelIcon />,
+      text: 'Convert Color',
+    },
+    {
       type: NodeTypes.BLEND,
       icon: <BlendingModeIcon />,
       text: 'Blend',
