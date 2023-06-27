@@ -15,6 +15,7 @@ export const colorSpaces = [
   "oklab",
 
   //RGB like
+  "gl",
   "a98",
   "p3",
   "prophoto",
@@ -58,7 +59,13 @@ const process = (input: ColorData, state) => {
     ...input,
   };
 
-  const convert = converter(final.space);
+  let space = final.space;
+  if (space === "gl") {
+    //No supported gl variant of rgb in color, so we convert to rgb
+    space = "rgb";
+  }
+
+  const convert = converter(space);
 
   const output = convert(final.color);
 
@@ -67,8 +74,16 @@ const process = (input: ColorData, state) => {
     case "p3":
     case "prophoto":
     case "rec2020":
+    case "gl":
     case "rgb": {
       const col: Rgb = output as unknown as Rgb;
+
+      //Culori doesn't support gl, but it does output normalized rgb values so we denormalize them
+      if (final.space === "rgb") {
+        col.r *= 255;
+        col.g *= 255;
+        col.b *= 255;
+      }
       return {
         a: col.r,
         b: col.g,

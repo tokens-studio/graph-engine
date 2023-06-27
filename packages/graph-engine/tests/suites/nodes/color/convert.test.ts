@@ -1,12 +1,33 @@
-import { colorSpaces, node } from "#/nodes/color/convert.js";
+import { node } from "#/nodes/color/convert.js";
 import { executeNode } from "#/core.js";
 
 describe("color/convert", () => {
-  it("converts colors correctly", async () => {
+  it("converts csslike colors to rgb", async () => {
     const output = await executeNode({
       input: {
         color: "red",
         space: "rgb",
+      },
+      node,
+      state: {},
+      nodeId: "",
+    });
+
+    expect(output).toStrictEqual({
+      a: 255,
+      b: 0,
+      c: 0,
+      channels: [255, 0, 0, undefined],
+      d: undefined,
+      labels: ["r", "g", "b", "alpha"],
+    });
+  });
+
+  it("converts csslike colors to gl", async () => {
+    const output = await executeNode({
+      input: {
+        color: "red",
+        space: "gl",
       },
       node,
       state: {},
