@@ -1,14 +1,14 @@
 import compact from 'just-compact';
 import { Octokit } from '@octokit/rest';
 
-import { GitTokenStorage } from './git.ts';
+import { GitTokenStorage } from '../git.ts';
 import { joinPath } from '#/utils/joinPath.ts';
-import { FILE_TYPE } from '../types/files.ts';
+import { FILE_TYPE } from '../../types/files.ts';
 import { GeneratorGraph } from '#/types/index.ts';
 import {
   RemoteGraphStorageErrorMessage,
   RemoteGraphStorageFile,
-} from '../types/index.ts';
+} from '../../types/index.ts';
 
 type ExtendedOctokitClient = Omit<Octokit, 'repos'> & {
   repos: Octokit['repos'] & {

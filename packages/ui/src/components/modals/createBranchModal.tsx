@@ -4,15 +4,12 @@ import { GitBranchIcon } from '@primer/octicons-react';
 import Modal from '../Modal';
 import useRemoteTokens from '../../store/remoteTokens';
 import {
-  activeThemeSelector,
-  apiSelector,
-  localApiStateSelector,
-  usedTokenSetSelector,
+  activeThemeSelector, apiSelector, localApiStateSelector, usedTokenSetSelector,
 } from '@/selectors';
 import { isGitProvider } from '@/utils/is';
 import type { StorageTypeCredentials } from '@/types/StorageType';
 import { ErrorMessage } from '../ErrorMessage';
-import { Heading, Stack, TextInput, Button } from '@tokens-studio/ui';
+import { Heading, Stack,TextInput,Button } from '@tokens-studio/ui';
 
 type Props = {
   isOpen: boolean;
@@ -23,18 +20,15 @@ type Props = {
 };
 
 type FormData = {
-  branch: string;
+  branch: string
 };
 
 export default function CreateBranchModal({
-  isOpen,
-  onClose,
-  onSuccess,
-  startBranch,
-  isCurrentChanges,
+  isOpen, onClose, onSuccess, startBranch, isCurrentChanges,
 }: Props) {
-  const { addNewBranch, pushTokens, fetchBranches, pullTokens } =
-    useRemoteTokens();
+  const {
+    addNewBranch, pushTokens, fetchBranches, pullTokens,
+  } = useRemoteTokens();
 
   const localApiState = useSelector(localApiStateSelector);
   const apiData = useSelector(apiSelector);
@@ -46,74 +40,60 @@ export default function CreateBranchModal({
   const branchInputRef = React.useRef<HTMLInputElement | null>(null);
 
   /* @lifecycle
-   ** set focus on input
-   */
+  ** set focus on input
+  */
   React.useEffect(() => {
     setTimeout(() => {
       branchInputRef.current?.focus();
     }, 200);
   }, []);
 
-  const isBranchNameValid = React.useMemo(
-    () => !/\s/.test(formFields.branch),
-    [formFields],
-  );
+  const isBranchNameValid = React.useMemo(() => !/\s/.test(formFields.branch), [formFields]);
 
-  const handleChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setFormFields({ ...formFields, [e.target.name]: e.target.value });
-    },
-    [formFields],
-  );
+  const handleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormFields({ ...formFields, [e.target.name]: e.target.value });
+  }, [formFields]);
 
-  const handleSubmit = React.useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
+  const handleSubmit = React.useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-      const { branch } = formFields;
+    const { branch } = formFields;
 
-      setHasErrored(false);
+    setHasErrored(false);
 
-      if (isGitProvider(localApiState) && isGitProvider(apiData)) {
-        // type casting because of "name" error - ignoring because not important
-        const response = await addNewBranch(
-          localApiState as StorageTypeCredentials,
-          branch,
-          startBranch ?? undefined,
-        );
-        const branches = await fetchBranches(
-          localApiState as StorageTypeCredentials,
-        );
-        if (response) {
-          onSuccess(branch, branches ?? []);
-          if (!isCurrentChanges) {
-            await pullTokens({
-              context: { ...apiData, branch },
-              usedTokenSet,
-              activeTheme,
-            });
-          }
-        } else {
-          setHasErrored(true);
+    if (
+      isGitProvider(localApiState)
+      && isGitProvider(apiData)
+    ) {
+      // type casting because of "name" error - ignoring because not important
+      const response = await addNewBranch(localApiState as StorageTypeCredentials, branch, startBranch ?? undefined);
+      const branches = await fetchBranches(localApiState as StorageTypeCredentials);
+      if (response) {
+        onSuccess(branch, branches ?? []);
+        if (!isCurrentChanges) {
+          await pullTokens({
+            context: { ...apiData, branch }, usedTokenSet, activeTheme,
+          });
         }
-
-        if (isCurrentChanges) {
-          await pushTokens({ ...apiData, branch });
-        }
+      } else {
+        setHasErrored(true);
       }
-    },
-    [
-      formFields,
-      localApiState,
-      apiData,
-      addNewBranch,
-      isCurrentChanges,
-      fetchBranches,
-      pushTokens,
-      onSuccess,
-      startBranch,
-    ],
-  );
+
+      if (isCurrentChanges) {
+        await pushTokens({ ...apiData, branch });
+      }
+    }
+  }, [
+    formFields,
+    localApiState,
+    apiData,
+    addNewBranch,
+    isCurrentChanges,
+    fetchBranches,
+    pushTokens,
+    onSuccess,
+    startBranch,
+  ]);
 
   const handleModalClose = React.useCallback(() => onClose(false), [onClose]);
 
@@ -122,20 +102,19 @@ export default function CreateBranchModal({
       <form onSubmit={handleSubmit}>
         <Stack direction="column" gap={4}>
           <Heading>
-            Create a new branch from{' '}
-            {isCurrentChanges ? (
-              'current changes'
-            ) : (
-              <>
-                <GitBranchIcon size={12} />
-                {` ${startBranch}`}
-              </>
-            )}
+            Create a new branch from
+            {' '}
+            {isCurrentChanges
+              ? 'current changes'
+              : (
+                <>
+                  <GitBranchIcon size={12} />
+                  {` ${startBranch}`}
+                </>
+              )}
           </Heading>
           <TextInput
             required
-            full
-            autofocus
             type="text"
             label="Branch name"
             value={formFields.branch}
@@ -144,20 +123,18 @@ export default function CreateBranchModal({
             name="branch"
             inputRef={branchInputRef}
           />
-          {!isBranchNameValid && (
-            <ErrorMessage data-cy="provider-modal-error">
-              Branch name cannot contain spaces
-            </ErrorMessage>
-          )}
+          {
+            !isBranchNameValid && (
+              <ErrorMessage data-cy="provider-modal-error">
+                Branch name cannot contain spaces
+              </ErrorMessage>
+            )
+          }
           <Stack direction="row" gap={4}>
             <Button variant="secondary" size="large" onClick={handleModalClose}>
               Cancel
             </Button>
-            <Button
-              variant="primary"
-              type="submit"
-              disabled={!('branch' in formFields && isBranchNameValid)}
-            >
+            <Button variant="primary" type="submit" disabled={!('branch' in formFields && isBranchNameValid)}>
               Save
             </Button>
           </Stack>

@@ -1,6 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useCallback, useMemo } from 'react';
-import { Dispatch } from '@/app/store';
 import useConfirm from '@/app/hooks/useConfirm';
 import usePushDialog from '@/app/hooks/usePushDialog';
 import { notifyToUI } from '@/plugin/notifiers';
@@ -19,11 +18,12 @@ import {
   StorageTypeCredentials,
   StorageTypeFormValues,
 } from '@/types/StorageType';
-import { StorageProviderType } from '@/constants/StorageProviderType';
 import { RemoteResponseData } from '@/types/RemoteResponseData';
 import { ErrorMessages } from '@/constants/ErrorMessages';
 import { applyTokenSetOrder } from '@/utils/tokenset';
 import { saveLastSyncedState } from '@/utils/saveLastSyncedState';
+import { StorageProviderType } from '#/types/storageType.ts';
+import { useDispatch } from '#/hooks/useDispatch.ts';
 
 type GithubCredentials = Extract<
   StorageTypeCredentials,
@@ -39,7 +39,7 @@ export function useGitHub() {
   const themes = useSelector(themesListSelector);
   const localApiState = useSelector(localApiStateSelector);
   const usedTokenSet = useSelector(usedTokenSetSelector);
-  const dispatch = useDispatch<Dispatch>();
+  const dispatch = useDispatch();
   const { confirm } = useConfirm();
   const { pushDialog, closePushDialog } = usePushDialog();
 

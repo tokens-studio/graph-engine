@@ -1,4 +1,5 @@
 import { GeneratorGraph } from '#/types/index.ts';
+import { FILE_TYPE } from './files.ts';
 
 export type RemoteTokenStorageMetadata = {};
 
@@ -37,7 +38,7 @@ export type RemoteResponseData<Metadata = unknown> =
   | RemoteResponseFailure;
 
 export interface RemoteGraphStorageSingleGraphFile {
-  type: 'graph-generator';
+  type: FILE_TYPE.GRAPH;
   path: string;
   name: string;
   data: GeneratorGraph;
