@@ -8,15 +8,22 @@ export type Tab = {
 };
 
 export interface UIState {
-  currentTab?: Tab;
+  currentTab: Tab;
   tabs: Tab[];
   theme: string;
 }
 
+const starting = [
+  {
+    name: 'Card',
+    id: '0',
+  },
+];
+
 export const uiState = createModel<RootModel>()({
   state: {
-    currentTab: undefined,
-    tabs: [],
+    currentTab: starting[0],
+    tabs: starting,
     theme: 'dark',
   } as UIState,
   reducers: {
@@ -52,14 +59,12 @@ export const uiState = createModel<RootModel>()({
   effects: (dispatch) => ({
     addTab(tab: string) {
       const id = uuidv4();
-      const newTab = {
+      dispatch.ui._addTab({
         id,
         name: tab,
-      };
+      });
 
-      dispatch.ui._addTab(newTab);
-
-      return newTab;
+      return id;
     },
     toggleTheme(_, state) {
       dispatch.ui.setTheme(state.ui.theme === 'light' ? 'dark' : 'light');

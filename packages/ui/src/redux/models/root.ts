@@ -3,6 +3,7 @@ import { inputState } from './input.ts';
 import { nodeState } from './node.ts';
 import { outputState } from './output.ts';
 import { uiState } from './ui.ts';
+import { journeyState } from './journey.ts';
 
 export interface RootModel extends Models<RootModel> {
   ui: typeof uiState;
@@ -10,4 +11,5 @@ export interface RootModel extends Models<RootModel> {
   //@ts-ignore
   node: typeof nodeState;
   input: typeof inputState;
+  journey: typeof journeyState;
 }

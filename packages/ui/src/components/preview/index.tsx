@@ -7,12 +7,14 @@ import selectors from '#/redux/selectors/index.ts';
 export const Preview = () => {
   const output = useSelector(selectors.output);
   return (
-    <OutputProvider value={output}>
-      <TokenContextProvider context={output}>
-        <div style={{ padding: '1.5em', overflow: 'hidden' }}>
-          <LivePreview />
-        </div>
-      </TokenContextProvider>
-    </OutputProvider>
+    <div id="preview">
+      <OutputProvider value={output}>
+        <TokenContextProvider context={output}>
+          <div style={{ padding: '1.5em', overflow: 'hidden' }}>
+            <LivePreview />
+          </div>
+        </TokenContextProvider>
+      </OutputProvider>
+    </div>
   );
 };

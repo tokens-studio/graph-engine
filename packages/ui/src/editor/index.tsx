@@ -283,7 +283,11 @@ export const Editor = React.forwardRef<ImperativeEditor, EditorProps>(
 
     return (
       <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
-        <div style={{ height: '100%' }} ref={reactFlowWrapper}>
+        <div
+          className="editor"
+          style={{ height: '100%' }}
+          ref={reactFlowWrapper}
+        >
           <ForceUpdateProvider value={forceUpdate}>
             {/* @ts-ignore */}
             <ReactFlow
