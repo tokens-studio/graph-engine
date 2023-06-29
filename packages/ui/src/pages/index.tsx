@@ -18,7 +18,7 @@ import { code, scope } from '#/components/preview/scope.tsx';
 import { useDispatch } from '#/hooks/index.ts';
 import { useResizable } from 'react-resizable-layout';
 import { useSelector } from 'react-redux';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import darkLogo from '../assets/svgs/tokensstudio-complete-dark.svg';
 import logo from '../assets/svgs/tokensstudio-complete.svg';
 import selectors from '#/redux/selectors/index.ts';
@@ -26,6 +26,9 @@ import selectors from '#/redux/selectors/index.ts';
 import { Preview as ComponentPreview } from '#/components/preview/index.tsx';
 // @ts-ignore
 import { themes } from 'prism-react-renderer';
+
+//import the example
+import { example } from '#/examples/card.json';
 
 import {
   CheckIcon,
@@ -119,7 +122,7 @@ const Wrapper = () => {
     e.stopPropagation();
 
     if (!tabs.find((x) => x.name === resolverName)) {
-      const id = dispatch.ui.addTab(resolverName);
+      const id = dispatch.ui.addTab(resolverName).id;
       //Create the new ref to attach
       setRefs((refs) => ({
         ...refs,
@@ -172,50 +175,74 @@ const Wrapper = () => {
   }, [currentTab, dispatch.node, refs]);
 
   const onClear = useCallback(() => {
-    refs[currentTab.id]?.current?.clear();
+    if (currentTab) {
+      refs[currentTab.id]?.current?.clear();
+    }
   }, [currentTab, refs]);
   const onLoad = useCallback(
     (e) => {
-      const current = refs[currentTab.id]?.current;
-      if (!current) {
-        alert('No attached tab found');
-        return;
+      if (currentTab) {
+        const current = refs[currentTab.id]?.current;
+        if (!current) {
+          alert('No attached tab found');
+          return;
+        }
+
+        // create an input element
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.addEventListener('change', function (event) {
+          //@ts-ignore
+          const files = event?.target?.files;
+          const file = files[0];
+
+          // do something with the file, like reading its contents
+          const reader = new FileReader();
+          reader.onload = function () {
+            const resolver = JSON.parse(reader.result as string);
+
+            const { state, code, ...rest } = resolver;
+
+            if (code !== undefined) {
+              setTheCode(code);
+            }
+
+            //Set the state
+            dispatch.node.setState(state || {});
+
+            current.load({
+              ...rest,
+            });
+          };
+          reader.readAsText(file);
+        });
+
+        // simulate a click on the input element to trigger the file picker dialog
+        input.click();
       }
-
-      // create an input element
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.addEventListener('change', function (event) {
-        //@ts-ignore
-        const files = event?.target?.files;
-        const file = files[0];
-
-        // do something with the file, like reading its contents
-        const reader = new FileReader();
-        reader.onload = function () {
-          const resolver = JSON.parse(reader.result as string);
-
-          const { state, code, ...rest } = resolver;
-
-          if (code !== undefined) {
-            setTheCode(code);
-          }
-
-          //Set the state
-          dispatch.node.setState(state || {});
-
-          current.load({
-            ...rest,
-          });
-        };
-        reader.readAsText(file);
-      });
-
-      // simulate a click on the input element to trigger the file picker dialog
-      input.click();
     },
     [currentTab, dispatch.node, refs],
   );
+
+  useEffect(() => {
+    //Create a new tab
+    dispatch.ui.addTab('Example');
+
+    const resolver = JSON.parse(example);
+
+    const { state, code, ...rest } = resolver;
+
+    if (code !== undefined) {
+      setTheCode(code);
+    }
+
+    //Set the state
+    dispatch.node.setState(state || {});
+
+    current.load({
+      ...rest,
+    });
+  });
 
   const onForceUpdate = useCallback(() => {
     const current = refs[currentTab.id]?.current;
@@ -240,7 +267,7 @@ const Wrapper = () => {
             position: 'absolute',
             width: '100%',
             top: 0,
-            display: currentTab.id === x.id ? 'initial' : 'none',
+            display: currentTab?.id === x.id ? 'initial' : 'none',
           }}
         >
           <ReactFlowProvider>
@@ -249,7 +276,7 @@ const Wrapper = () => {
         </Tabs.Content>
       );
     });
-  }, [currentTab.id, refs, tabs]);
+  }, [currentTab?.id, refs, tabs]);
 
   const onEnter = useOnEnter(isCreating ? addTab : undefined);
 
@@ -301,7 +328,7 @@ const Wrapper = () => {
             </PageHeader.Actions>
           </PageHeader>
           <Tabs
-            value={currentTab.id}
+            value={currentTab?.id}
             onValueChange={onTabChange}
             style={{
               display: 'flex',
