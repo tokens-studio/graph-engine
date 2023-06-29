@@ -28,6 +28,7 @@ export const store = init({
 
 export type Dispatch = RematchDispatch<RootModel>;
 export type RootState = {
+  storage: StorageState;
   ui: UIState;
   journey: JourneyState;
   editorOutput: OutputState;
