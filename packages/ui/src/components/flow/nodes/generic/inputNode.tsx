@@ -433,7 +433,7 @@ const SourceNode = () => {
         [addLabel]: '',
       },
       definition: {
-        ...state.values,
+        ...state.definition,
         [addLabel]: {
           type: 'string',
         },

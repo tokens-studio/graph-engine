@@ -15,12 +15,8 @@ export interface UIState {
 
 const starting = [
   {
-    name: 'Button',
-    id: '0',
-  },
-  {
     name: 'Card',
-    id: '1',
+    id: '0',
   },
 ];
 

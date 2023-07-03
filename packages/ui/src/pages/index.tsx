@@ -18,14 +18,25 @@ import { code, scope } from '#/components/preview/scope.tsx';
 import { useDispatch } from '#/hooks/index.ts';
 import { useResizable } from 'react-resizable-layout';
 import { useSelector } from 'react-redux';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react';
 import darkLogo from '../assets/svgs/tokensstudio-complete-dark.svg';
 import logo from '../assets/svgs/tokensstudio-complete.svg';
-import selectors from '#/redux/selectors/index.ts';
+import selectors, { showJourneySelector } from '#/redux/selectors/index.ts';
+import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
+import { useMount, useSetState } from 'react-use';
 //@ts-ignore This is the correct import
 import { Preview as ComponentPreview } from '#/components/preview/index.tsx';
 // @ts-ignore
 import { themes } from 'prism-react-renderer';
+
+//import the example
+import example from '#/examples/card.json';
 
 import {
   CheckIcon,
@@ -36,8 +47,10 @@ import {
 } from '@radix-ui/react-icons';
 import { useOnEnter } from '#/hooks/onEnter.ts';
 import { useTheme } from '#/hooks/useTheme.tsx';
+import { useJourney } from '#/journeys/basic.tsx';
+import { JoyrideTooltip } from '#/components/joyride/tooltip.tsx';
 
-const Preview = ({ style, codeRef }) => {
+const Preview = ({ style, codeRef, ...rest }) => {
   const { position, separatorProps } = useResizable({
     axis: 'x',
     initial: 250,
@@ -45,7 +58,12 @@ const Preview = ({ style, codeRef }) => {
   });
 
   return (
-    <Stack direction="row" style={style} css={{ background: '$bgSurface' }}>
+    <Stack
+      direction="row"
+      style={style}
+      css={{ background: '$bgSurface' }}
+      {...rest}
+    >
       <Stack
         direction="row"
         style={{ flex: 1 }}
@@ -83,9 +101,10 @@ const Wrapper = () => {
   const tabs = useSelector(selectors.tabs);
   // const reactFlowInstance = useReactFlow();
   const [theCode, setTheCode] = useState(code);
+  const [loadedExample, setLoadedExample] = useState(false);
   const dispatch = useDispatch();
+  const showJourney = useSelector(showJourneySelector);
   const theme = useTheme();
-
   const initRefs = useCallback(() => {
     return tabs.reduce((acc, x) => {
       acc[x.id] = React.createRef();
@@ -119,7 +138,7 @@ const Wrapper = () => {
     e.stopPropagation();
 
     if (!tabs.find((x) => x.name === resolverName)) {
-      const id = dispatch.ui.addTab(resolverName);
+      const id = dispatch.ui.addTab(resolverName).id;
       //Create the new ref to attach
       setRefs((refs) => ({
         ...refs,
@@ -136,6 +155,9 @@ const Wrapper = () => {
   };
 
   const onSave = useCallback(() => {
+    if (!currentTab) {
+      return;
+    }
     const current = refs[currentTab.id]?.current;
     if (!current) {
       alert('No attached tab found');
@@ -172,50 +194,73 @@ const Wrapper = () => {
   }, [currentTab, dispatch.node, refs]);
 
   const onClear = useCallback(() => {
-    refs[currentTab.id]?.current?.clear();
+    if (currentTab) {
+      refs[currentTab.id]?.current?.clear();
+    }
   }, [currentTab, refs]);
   const onLoad = useCallback(
     (e) => {
-      const current = refs[currentTab.id]?.current;
-      if (!current) {
-        alert('No attached tab found');
-        return;
+      if (currentTab) {
+        const current = refs[currentTab.id]?.current;
+        if (!current) {
+          alert('No attached tab found');
+          return;
+        }
+
+        // create an input element
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.addEventListener('change', function (event) {
+          //@ts-ignore
+          const files = event?.target?.files;
+          const file = files[0];
+
+          // do something with the file, like reading its contents
+          const reader = new FileReader();
+          reader.onload = function () {
+            const resolver = JSON.parse(reader.result as string);
+
+            const { state, code, ...rest } = resolver;
+
+            if (code !== undefined) {
+              setTheCode(code);
+            }
+
+            //Set the state
+            dispatch.node.setState(state || {});
+
+            current.load({
+              ...rest,
+            });
+          };
+          reader.readAsText(file);
+        });
+
+        // simulate a click on the input element to trigger the file picker dialog
+        input.click();
       }
-
-      // create an input element
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.addEventListener('change', function (event) {
-        //@ts-ignore
-        const files = event?.target?.files;
-        const file = files[0];
-
-        // do something with the file, like reading its contents
-        const reader = new FileReader();
-        reader.onload = function () {
-          const resolver = JSON.parse(reader.result as string);
-
-          const { state, code, ...rest } = resolver;
-
-          if (code !== undefined) {
-            setTheCode(code);
-          }
-
-          //Set the state
-          dispatch.node.setState(state || {});
-
-          current.load({
-            ...rest,
-          });
-        };
-        reader.readAsText(file);
-      });
-
-      // simulate a click on the input element to trigger the file picker dialog
-      input.click();
     },
     [currentTab, dispatch.node, refs],
   );
+
+  useEffect(() => {
+    if (!loadedExample) {
+      const { state, code, ...rest } = example;
+      const current = refs[currentTab.id]?.current;
+
+      if (code !== undefined) {
+        setTheCode(code);
+      }
+
+      //Set the state
+      dispatch.node.setState(state || {});
+
+      current.load({
+        ...rest,
+      });
+      setLoadedExample(true);
+    }
+  }, [refs]);
 
   const onForceUpdate = useCallback(() => {
     const current = refs[currentTab.id]?.current;
@@ -240,7 +285,7 @@ const Wrapper = () => {
             position: 'absolute',
             width: '100%',
             top: 0,
-            display: currentTab.id === x.id ? 'initial' : 'none',
+            display: currentTab?.id === x.id ? 'initial' : 'none',
           }}
         >
           <ReactFlowProvider>
@@ -249,20 +294,43 @@ const Wrapper = () => {
         </Tabs.Content>
       );
     });
-  }, [currentTab.id, refs, tabs]);
+  }, [currentTab?.id, refs, tabs]);
 
   const onEnter = useOnEnter(isCreating ? addTab : undefined);
 
+  const [{ steps }] = useJourney();
+
+  console.log(showJourney);
+
+  const handleJoyrideCallback = (data: CallBackProps) => {
+    const { status, type } = data;
+    const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
+
+    if (finishedStatuses.includes(status)) {
+      dispatch.journey.setShowJourney(false);
+    }
+  };
+
   return (
-    <LiveProvider
-      code={theCode}
-      scope={scope}
-      theme={theme === 'light' ? themes.vsLight : themes.vsDark}
-      noInline={true}
-      enableTypeScript={true}
-      language="jsx"
-    >
-      <div style={{ height: '100vh' }}>
+    <>
+      {/* @ts-ignore */}
+      <Joyride
+        callback={handleJoyrideCallback}
+        continuous
+        hideCloseButton
+        run={showJourney}
+        tooltipComponent={JoyrideTooltip}
+        scrollToFirstStep
+        showProgress
+        showSkipButton
+        steps={steps}
+        styles={{
+          options: {
+            zIndex: 10000,
+          },
+        }}
+      />
+      <div style={{ height: '100vh', overflow: 'hidden' }}>
         <Stack
           direction="column"
           css={{ height: '100%', background: '$bgSurface' }}
@@ -282,12 +350,14 @@ const Wrapper = () => {
                 <Text size="small">
                   Mess around with the resolver prototype
                 </Text>
-                <Link href="https://docs.graph.tokens.studio/">
+                {/* @ts-ignore */}
+                <Link id="more-help" href="https://docs.graph.tokens.studio/">
                   <Button size="small">Docs</Button>
                 </Link>
               </Stack>
             </PageHeader.Description>
-            <PageHeader.Actions>
+            {/* @ts-ignore */}
+            <PageHeader.Actions id="toolbar">
               <Button
                 icon={theme === 'light' ? <MoonIcon /> : <SunIcon />}
                 variant="invisible"
@@ -301,7 +371,7 @@ const Wrapper = () => {
             </PageHeader.Actions>
           </PageHeader>
           <Tabs
-            value={currentTab.id}
+            value={currentTab?.id}
             onValueChange={onTabChange}
             style={{
               display: 'flex',
@@ -351,10 +421,23 @@ const Wrapper = () => {
             <div style={{ flex: 1, position: 'relative' }}>{tabContents}</div>
           </Tabs>
           <Splitter {...separatorProps} />
-          <Preview codeRef={ref} style={{ height: position }} />
+          <LiveProvider
+            code={theCode}
+            scope={scope}
+            theme={theme === 'light' ? themes.vsLight : themes.vsDark}
+            noInline={true}
+            enableTypeScript={true}
+            language="jsx"
+          >
+            <Preview
+              id="code-editor"
+              codeRef={ref}
+              style={{ height: position }}
+            />
+          </LiveProvider>
         </Stack>
       </div>
-    </LiveProvider>
+    </>
   );
 };
 

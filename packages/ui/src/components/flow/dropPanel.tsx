@@ -483,7 +483,7 @@ const DropPanel = () => {
   };
 
   return (
-    <Panel>
+    <Panel id="drop-panel">
       <Stack direction="column" gap={1} css={{ width: '100%' }}>
         <Box css={{ padding: '$4' }}>
           <TextInput placeholder="Search" value={search} onChange={onSearch} />
