@@ -159,8 +159,8 @@ const InlineSetNode: FC<NodeProps<TokenSetData>> = ({ id, data }) => {
   }, [onCopyClipboard, onDownload]);
 
   useEffect(() => {
-    state.title && setTitle(state.title);
-  }, [state.title]);
+    state?.title && setTitle(state.title);
+  }, [state?.title]);
 
   return (
     <div onDragOver={onDragOver} onDrop={onDrop}>

@@ -82,6 +82,10 @@ type EditorState = {
 };
 
 type ImperativeEditor = {
+  /**
+   * Clears the editor of all nodes and edges
+   * @returns
+   */
   clear: () => void;
   save: () => void;
   forceUpdate: () => void;
