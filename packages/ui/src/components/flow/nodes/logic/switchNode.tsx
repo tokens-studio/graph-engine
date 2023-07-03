@@ -32,9 +32,9 @@ const SwitchNode = () => {
       <HandleContainer type="target">
         <Handle id="condition">
           <Text>Condition</Text>
-          <Text>{input.condition}</Text>
+          <Text>{input?.condition}</Text>
         </Handle>
-        {state.order.map((key) => {
+        {state?.order.map((key) => {
           return (
             <Handle id={key} key={key}>
               <Text>{key}</Text>

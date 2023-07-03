@@ -222,16 +222,19 @@ const Wrapper = () => {
 
             const { state, code, ...rest } = resolver;
 
-            if (code !== undefined) {
-              setTheCode(code);
-            }
-
-            //Set the state
-            dispatch.node.setState(state || {});
-
-            current.load({
-              ...rest,
-            });
+            onClear();
+            //TODO , this needs a refactor. We need to wait for the clear to finish
+            // as the nodes still get one final update by the dispatch before they are removed which
+            // causes nulls to occur everywhere. They need to be unmounted
+            setTimeout(() => {
+              if (code !== undefined) {
+                setTheCode(code);
+              }
+              dispatch.node.setState(state || {});
+              current.load({
+                ...rest,
+              });
+            }, 0);
           };
           reader.readAsText(file);
         });
