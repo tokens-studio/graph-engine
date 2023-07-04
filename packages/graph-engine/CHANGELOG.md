@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 0.2.2
+
+### Patch Changes
+
+- a67b830: Some nodes were not exported, namely the convert node from color
+
 ## 0.2.1
 
 ### Patch Changes
