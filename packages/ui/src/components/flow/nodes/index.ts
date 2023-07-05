@@ -52,6 +52,7 @@ import roundNode from './math/roundNode.tsx';
 import sliderNode from './input/sliderNode.tsx';
 import spreadNode from './input/spreadNode.tsx';
 import convertNode from './color/convertNode.tsx';
+import wheelNode from './color/wheelNode.tsx';
 
 const processTypes = (types: WrappedNodeDefinition[]) => {
   const nodeTypes = types.reduce((acc, type) => {
@@ -124,4 +125,5 @@ export const { nodeTypes, stateInitializer } = processTypes([
   cssMapNode,
   InputNode,
   OutputNode,
+  wheelNode,
 ]);
