@@ -1,4 +1,4 @@
-import { node } from "#/nodes/color/contrasting.js";
+import { node, WcagVersion } from "#/nodes/color/contrasting.js";
 import { executeNode } from "#/core.js";
 
 describe("color/blend", () => {
@@ -8,7 +8,7 @@ describe("color/blend", () => {
         a: "#000000",
         b: "#ffffff",
         background: "#ffffff",
-        wcag: 3,
+        wcag: WcagVersion.V3,
         threshold: 60
       },
       node,
@@ -29,7 +29,7 @@ describe("color/blend", () => {
         a: "#000000",
         b: "#ffffff",
         background: "#000000",
-        wcag: 2,
+        wcag: WcagVersion.V2,
         threshold: 4.5
       },
       node,
@@ -40,7 +40,7 @@ describe("color/blend", () => {
     expect(output).toEqual({
       color: "#ffffff",
       sufficient: true, // assuming contrast value is above 4.5
-      contrast: 107.88473318309848
+      contrast: 21
     });
   });
 
@@ -50,7 +50,7 @@ describe("color/blend", () => {
         a: "#dddddd",
         b: "#bbbbbb",
         background: "#ffffff",
-        wcag: 3,
+        wcag: WcagVersion.V3,
         threshold: 60
       },
       node,
