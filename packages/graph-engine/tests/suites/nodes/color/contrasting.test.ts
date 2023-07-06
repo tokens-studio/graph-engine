@@ -19,7 +19,7 @@ describe("color/blend", () => {
     expect(output).toEqual({
       color: "#000000",
       sufficient: true, // assuming contrast value is above 60
-      contrast: expect.any(Number)
+      contrast: 106.04067321268862
     });
   });
 
@@ -40,7 +40,7 @@ describe("color/blend", () => {
     expect(output).toEqual({
       color: "#ffffff",
       sufficient: true, // assuming contrast value is above 4.5
-      contrast: expect.any(Number)
+      contrast: 107.88473318309848
     });
   });
 

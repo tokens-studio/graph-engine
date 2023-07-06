@@ -14,7 +14,7 @@ export type State = {
     a: string,
     b: string,
     background: string,
-    wcag: number,
+    wcag: WcagVersion,
     threshold: number,
     contrast: number
 }
@@ -25,11 +25,16 @@ type contrastingValues = {
     contrast: number
 }
 
+export enum WcagVersion {
+    V2 = "2.1",
+    V3 = "3.0"
+}
+
 export const defaults: State = {
     a: "#000000",
     b: "#ffffff",
     background: "#ffffff",
-    wcag: 3,
+    wcag: WcagVersion.V3,
     threshold: 60,
     contrast: 0
 }
@@ -42,7 +47,7 @@ export const process = (input, state: State): contrastingValues => {
 
     let a,b;
 
-    if (final.wcag == 2) {
+    if (final.wcag == WcagVersion.V2) {
         a = chroma.contrast(final.a, final.background);
         b = chroma.contrast(final.b, final.background);
 

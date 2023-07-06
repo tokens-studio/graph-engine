@@ -2,7 +2,7 @@ import { Button, DropdownMenu, Label, Stack, Text, TextInput } from '@tokens-stu
 import { Handle, HandleContainer } from '#/components/flow/handles.tsx';
 import { PreviewColor } from '../../preview/color.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
-import { node } from '@tokens-studio/graph-engine/nodes/color/contrasting.js';
+import { node, WcagVersion } from '@tokens-studio/graph-engine/nodes/color/contrasting.js';
 import PreviewNumber from '../../preview/number.tsx';
 import React, {useCallback} from 'react';
 import {PreviewBoolean} from "../../preview/boolean.tsx";
@@ -11,10 +11,10 @@ import {PreviewAny} from "../../preview/any.tsx";
 const ContrastingNode = () => {
   const { input, output, state, setState } = useNode();
   const setWcag = useCallback((ev) => {
-    const key = ev.currentTarget.dataset.key;
+    const version = WcagVersion[ev.currentTarget.dataset.key as keyof typeof WcagVersion];
     setState((state) => ({
       ...state,
-      wcag: key,
+      wcag: version,
     }));
   }, [setState]);
 
@@ -48,7 +48,7 @@ const ContrastingNode = () => {
           </Text>
         </Handle>
         <Handle id="wcag">
-          <Label>WCAG</Label>
+          <Label>WCAG Version</Label>
 
           {input.wcag !== undefined ? (
             <Text>{input.wcag}</Text>
@@ -62,12 +62,11 @@ const ContrastingNode = () => {
 
               <DropdownMenu.Portal>
                 <DropdownMenu.Content>
-                  <DropdownMenu.Item onClick={setWcag} data-key="3">
-                    3
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item onClick={setWcag} data-key="2">
-                    2
-                  </DropdownMenu.Item>
+                  {Object.entries(WcagVersion).map(([key, value]) => (
+                    <DropdownMenu.Item key={key} onClick={setWcag} data-key={key}>
+                      {value}
+                    </DropdownMenu.Item>
+                  ))}
                 </DropdownMenu.Content>
               </DropdownMenu.Portal>
             </DropdownMenu>
@@ -75,9 +74,7 @@ const ContrastingNode = () => {
         </Handle>
         <Handle id="threshold">
           <Stack direction="row" justify="between" gap={3} align="center">
-            <span style={{ whiteSpace: 'nowrap' }}>
-              <Label css={{ whiteSpace: 'no-wrap' }}>Threshold</Label>
-            </span>
+            <Label>Threshold</Label>
             {input.threshold !== undefined ? (
               <PreviewNumber value={input.threshold} />
             ) : (
