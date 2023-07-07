@@ -419,6 +419,11 @@ const types = {
       icon: <ImageIcon />,
       text: 'Extract',
     },
+    {
+      type: NodeTypes.WHEEL,
+      icon: <ColorWheelIcon />,
+      text: 'Generate Color Wheel',
+    },
   ],
   accessibility: [
     {

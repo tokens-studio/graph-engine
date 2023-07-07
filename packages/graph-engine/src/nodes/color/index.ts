@@ -5,5 +5,15 @@ import { node as create } from "./create.js";
 import { node as extract } from "./extract.js";
 import { node as scale } from "./scale.js";
 import { node as convert } from "./convert.js";
+import { node as wheel } from "./wheel.js";
 
-export const nodes = [blend, scale, contrasting, create, advancedBlend, extract, convert];
+export const nodes = [
+  blend,
+  scale,
+  contrasting,
+  create,
+  advancedBlend,
+  extract,
+  convert,
+  wheel,
+];

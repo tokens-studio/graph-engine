@@ -41,6 +41,7 @@ import groupNode from '#/components/flow/groupNode.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
+const panOnDrag = [1, 2];
 
 const fullNodeTypes = {
   ...nodeTypes,
@@ -312,6 +313,8 @@ export const Editor = React.forwardRef<ImperativeEditor, EditorProps>(
               onDrop={onDrop}
               selectNodesOnDrag={false}
               defaultEdgeOptions={defaultEdgeOptions}
+              panOnScroll={true}
+              panOnDrag={panOnDrag}
               selectionMode={SelectionMode.Partial}
               onDragOver={onDragOver}
               selectionOnDrag={true}
