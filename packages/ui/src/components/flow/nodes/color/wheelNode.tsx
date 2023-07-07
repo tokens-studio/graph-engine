@@ -30,15 +30,14 @@ const WheelNode = () => {
       let label;
       try {
         label = chroma(value).css('hsl');
-      }
-      catch (err) {
+      } catch (err) {
         label = 'invalid';
       }
       return (
         <Handle id={key} key={key}>
           <Label>{key}</Label>
           <Tooltip label={label}>
-              <PreviewColor value={value} />
+            <PreviewColor value={value} />
           </Tooltip>
         </Handle>
       );
@@ -53,7 +52,11 @@ const WheelNode = () => {
           {input.hueAmount ? (
             <PreviewNumber value={input.hueAmount} />
           ) : (
-            <TextInput data-key="hueAmount" value={state.hueAmount} onChange={onChange} />
+            <TextInput
+              data-key="hueAmount"
+              value={state.hueAmount}
+              onChange={onChange}
+            />
           )}
         </Handle>
         <Handle id="hueAngle">
@@ -113,9 +116,7 @@ const WheelNode = () => {
             </LabelNoWrap>
           </Stack>
         </Handle>
-        <Tooltip.Provider>
-          {outputHandles}
-        </Tooltip.Provider>
+        <Tooltip.Provider>{outputHandles}</Tooltip.Provider>
       </HandleContainer>
     </Stack>
   );

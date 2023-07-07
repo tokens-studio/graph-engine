@@ -110,6 +110,7 @@ export enum NodeTypes {
   POW = "studio.tokens.math.pow",
 
   // Color
+  CONTRASTING = "studio.tokens.color.contrasting",
   SCALE = "studio.tokens.color.scale",
   CONVERT_COLOR = "studio.tokens.color.convert",
   BLEND = "studio.tokens.color.blend",
@@ -137,6 +138,7 @@ export enum NodeTypes {
   LOWER = "studio.tokens.string.lowercase",
   REGEX = "studio.tokens.string.regex",
   PASS_UNIT = "studio.tokens.typing.passUnit",
+
   //Accessibility
   CONTRAST = "studio.tokens.accessibility.contrast",
   COLOR_BLINDNESS = "studio.tokens.accessibility.colorBlindness",

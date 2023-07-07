@@ -9,6 +9,7 @@ import ColorBlindness from './accessibility/ColorBlindNessNode.tsx';
 import CompareNode from './logic/compare.tsx';
 import ConstantNode from './input/constantNode.tsx';
 import ContrastNode from './accessibility/contrastNode.tsx';
+import ContrastingNode from './color/contrastingNode.tsx';
 import CosNode from './math/cosNode.tsx';
 import CountNode from './math/countNode.tsx';
 import CreateColorNode from './color/createColorNode.tsx';
@@ -109,6 +110,7 @@ export const { nodeTypes, stateInitializer } = processTypes([
   ResolveAliasesNode,
   ArrifyNode,
   ContrastNode,
+  ContrastingNode,
   SquashNode,
   blendNode,
   modNode,

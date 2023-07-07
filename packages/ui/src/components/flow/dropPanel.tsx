@@ -385,6 +385,11 @@ const types = {
   ],
   color: [
     {
+      type: NodeTypes.CONTRASTING,
+      icon: <Half2Icon />,
+      text: 'Contrasting Color',
+    },
+    {
       type: NodeTypes.SCALE,
       icon: '...',
       text: 'Generate Scale',
