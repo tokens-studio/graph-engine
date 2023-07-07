@@ -59,10 +59,8 @@ const ClampNode = (props) => {
       </HandleContainer>
       <HandleContainer type="source">
         <Handle id="output">
-          <Stack direction="row" justify="between" gap={4}>
-            <Text>Output</Text>
-            <PreviewNumber value={output?.output} />
-          </Stack>
+          <Text>Output</Text>
+          <PreviewNumber value={output?.output} />
         </Handle>
       </HandleContainer>
     </Stack>

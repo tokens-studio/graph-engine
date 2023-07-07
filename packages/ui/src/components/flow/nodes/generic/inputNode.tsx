@@ -14,6 +14,7 @@ import {
   DotsVerticalIcon,
   MixerHorizontalIcon,
   PlusIcon,
+  ChevronDownIcon,
   TrashIcon,
 } from '@radix-ui/react-icons';
 import { CheckedState } from '@radix-ui/react-checkbox';
@@ -255,13 +256,14 @@ const Option = ({ name, value, def }: OptionProps) => {
                   data-key={name}
                   variant="invisible"
                   size="small"
-                  css={{ flex: 1 }}
+                  css={{ flex: 1, justifyContent: 'flex-end' }}
                 >
-                  {value}
+                  <span>{value}</span>
+                  <ChevronDownIcon />
                 </Button>
               </DropdownMenu.Trigger>
               <DropdownMenu.Portal>
-                <DropdownMenu.Content>
+                <DropdownMenu.Content align="right">
                   {def.enum.map((item) => {
                     return (
                       <DropdownMenu.Item

@@ -74,6 +74,7 @@ export enum NodeTypes {
   CONSTANT = "studio.tokens.input.constant",
   SLIDER = "studio.tokens.input.slider",
   SPREAD = "studio.tokens.input.extract",
+  OBJECTIFY = "studio.tokens.input.objectify",
 
   CSS_MAP = "studio.tokens.css.map",
 
@@ -91,6 +92,7 @@ export enum NodeTypes {
   REVERSE = "studio.tokens.array.reverse",
   SLICE = "studio.tokens.array.slice",
   JOIN = "studio.tokens.array.join",
+  DOT_PROP = "studio.tokens.array.dotProp",
 
   // Math
   ADD = "studio.tokens.math.add",

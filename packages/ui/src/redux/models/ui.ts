@@ -43,7 +43,7 @@ export const uiState = createModel<RootModel>()({
         currentTab,
       };
     },
-    _addTab(state, tab: Tab) {
+    addTab(state, tab: Tab) {
       return {
         ...state,
         tabs: [...state.tabs, tab],
@@ -57,15 +57,6 @@ export const uiState = createModel<RootModel>()({
     },
   },
   effects: (dispatch) => ({
-    addTab(tab: string) {
-      const id = uuidv4();
-      dispatch.ui._addTab({
-        id,
-        name: tab,
-      });
-
-      return id;
-    },
     toggleTheme(_, state) {
       dispatch.ui.setTheme(state.ui.theme === 'light' ? 'dark' : 'light');
     },
