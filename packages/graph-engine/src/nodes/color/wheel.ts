@@ -22,16 +22,21 @@ export const defaults: State = {
 type colorValue = {
   index: number;
   value: string;
-}
-
+};
 
 export type Input = {
-  hueAmount: number,
-  hueAngle: number,
-  saturation: number,
-  lightness: number,
-  colors: number,
+  hueAmount: number;
+  hueAngle: number;
+  saturation: number;
+  lightness: number;
+  colors: number;
 } & State;
+
+const validateInputs = (input: Input, state: State) => {
+  if (input.colors < 0 || state.colors < 0) {
+    throw new Error("Colors must be greater than 0");
+  }
+};
 
 export const process = (input: Input, state: State): colorValue[] => {
   const final = {
@@ -42,8 +47,12 @@ export const process = (input: Input, state: State): colorValue[] => {
   const colorList: colorValue[] = [];
 
   let step;
-  for( step = 0; step < final.colors; step++ ) {
-    const hue = (parseFloat(final.hueAngle as any) + (step * parseFloat(final.hueAmount as any) / parseInt(final.colors as any))) % 360;
+  for (step = 0; step < final.colors; step++) {
+    const hue =
+      (parseFloat(final.hueAngle as any) +
+        (step * parseFloat(final.hueAmount as any)) /
+          parseInt(final.colors as any)) %
+      360;
     const color = chroma.hsl(hue, final.saturation, final.lightness);
     colorList.push({
       index: step,
@@ -65,6 +74,7 @@ export const mapOutput = (input, state, processed: colorValue[]) => {
 
 export const node: NodeDefinition<Input, State, colorValue[]> = {
   type,
+  validateInputs,
   defaults,
   process,
   mapOutput,
