@@ -1,27 +1,29 @@
 import { NodeDefinition, NodeTypes } from "../../types.js";
 
-export const type = NodeTypes.SLIDER;
+const type = NodeTypes.SLIDER;
+
+export type Input = {
+  input: any;
+};
 
 /**
- * The other values are used for the UI control
+ * Core logic for the node. Will only be called if all inputs are valid.
+ * Return undefined if the node is not ready to execute.
+ * Execution can also be optionally delayed by returning a promise.
+ * @param input
+ * @param state
+ * @returns
  */
-export const defaults = {
-  value: 0.5,
-  max: 1,
-  step: 0.01,
+const process = (input: Input) => {
+  return input.input;
 };
 
-export const process = (input, state) => {
-  return state.value;
+const mapOutput = (input, state, processed) => {
+  return processed;
 };
 
-export const mapOutput = (input, state, processed) => {
-  return { output: processed };
-};
-
-export const node: NodeDefinition = {
+export const node: NodeDefinition<Input> = {
   type,
-  defaults,
   process,
   mapOutput,
 };

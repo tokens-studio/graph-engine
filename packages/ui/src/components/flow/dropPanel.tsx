@@ -173,6 +173,11 @@ const types = {
       text: 'Constant',
     },
     {
+      type: NodeTypes.OBJECTIFY,
+      icon: '{ }',
+      text: 'Objectify',
+    },
+    {
       type: NodeTypes.SPREAD,
       icon: '...',
       text: 'Spread',
@@ -290,6 +295,11 @@ const types = {
     },
   ],
   array: [
+    {
+      type: NodeTypes.DOT_PROP,
+      icon: '[x,y]',
+      text: 'Access Array',
+    },
     {
       type: NodeTypes.ARRIFY,
       icon: '[]',

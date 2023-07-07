@@ -1,4 +1,4 @@
-import { getBezierPath } from 'reactflow';
+import { getSmoothStepPath } from 'reactflow';
 import React from 'react';
 
 export default function CustomEdge({
@@ -13,7 +13,7 @@ export default function CustomEdge({
   data,
   markerEnd,
 }) {
-  const [edgePath] = getBezierPath({
+  const [edgePath] = getSmoothStepPath({
     sourceX,
     sourceY,
     sourcePosition,

@@ -28,8 +28,8 @@ import React, {
 import darkLogo from '../assets/svgs/tokensstudio-complete-dark.svg';
 import logo from '../assets/svgs/tokensstudio-complete.svg';
 import selectors, { showJourneySelector } from '#/redux/selectors/index.ts';
-import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
-import { useMount, useSetState } from 'react-use';
+import Joyride, { CallBackProps, STATUS } from 'react-joyride';
+import { v4 as uuidv4 } from 'uuid';
 //@ts-ignore This is the correct import
 import { Preview as ComponentPreview } from '#/components/preview/index.tsx';
 // @ts-ignore
@@ -138,17 +138,21 @@ const Wrapper = () => {
     e.stopPropagation();
 
     if (!tabs.find((x) => x.name === resolverName)) {
-      const id = dispatch.ui.addTab(resolverName).id;
+      const id = uuidv4();
+      dispatch.ui.addTab({ name: resolverName, id });
+
       //Create the new ref to attach
       setRefs((refs) => ({
         ...refs,
         [id]: React.createRef(),
       }));
+      //Reset the resolver name
       setResolverName('Untitled');
     }
     toggleCreating();
   };
 
+  console.log(refs);
   const removeTab = (ev) => {
     const id = ev.currentTarget.dataset.key;
     dispatch.ui.removeTab(id);
@@ -302,8 +306,6 @@ const Wrapper = () => {
   const onEnter = useOnEnter(isCreating ? addTab : undefined);
 
   const [{ steps }] = useJourney();
-
-  console.log(showJourney);
 
   const handleJoyrideCallback = (data: CallBackProps) => {
     const { status, type } = data;
