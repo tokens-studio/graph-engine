@@ -153,7 +153,6 @@ const Wrapper = () => {
     toggleCreating();
   };
 
-  console.log(refs);
   const removeTab = (ev) => {
     const id = ev.currentTarget.dataset.key;
     dispatch.ui.removeTab(id);

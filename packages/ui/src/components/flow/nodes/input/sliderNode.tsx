@@ -1,5 +1,5 @@
 import { Handle, HandleContainer } from '../../handles.tsx';
-import { Label, Stack, TextInput } from '@tokens-studio/ui';
+import { Box, Label, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { Slider } from '#/components/slider/index.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/input/slider.js';
@@ -7,7 +7,7 @@ import React, { useCallback } from 'react';
 
 const SliderNode = () => {
   const { state, setState } = useNode();
-  const { value, max, step } = state;
+  const { value = 50, max = 100, step = 1 } = state;
 
   const onChange = useCallback((newValue: [number]) => {
     setState((state) => ({ ...state, value: newValue }));
@@ -38,7 +38,17 @@ const SliderNode = () => {
               <Slider.Range />
             </Slider.Track>
             <Slider.Thumb>
-              <Slider.ValueLabel>{value}</Slider.ValueLabel>
+              <Slider.ValueLabel>
+                <Box
+                  css={{
+                    padding: '$3',
+                    border: '1px solid $borderMuted',
+                    borderRadius: '$medium',
+                  }}
+                >
+                  <Label> {value}</Label>
+                </Box>
+              </Slider.ValueLabel>
             </Slider.Thumb>
           </Slider>
         </Handle>
