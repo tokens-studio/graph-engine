@@ -11,6 +11,7 @@ import NoSSR from 'react-no-ssr';
 import PageLayout from '#/layout/page.tsx';
 import React from 'react';
 import Store from '../redux/index.tsx';
+import { Tooltip } from '@tokens-studio/ui';
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -22,11 +23,13 @@ export default function App(props: AppProps) {
       value={{ 'light-theme': light, 'dark-theme': dark }}
       body={
         <NoSSR>
-          <Store>
-            <PageLayout>
-              <Component {...pageProps} />
-            </PageLayout>
-          </Store>
+          <Tooltip.Provider>
+            <Store>
+              <PageLayout>
+                <Component {...pageProps} />
+              </PageLayout>
+            </Store>
+          </Tooltip.Provider>
         </NoSSR>
       }
     />

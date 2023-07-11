@@ -69,6 +69,7 @@
     "reactflow": "11.7.0",
     "redux": "4.2.1",
     "redux-persist": "6.0.0",
+    "reselect": "4.1.8",
     "sass": "1.62.1",
     "sentence-case": "3.0.4",
     "uuid": "9.0.0",

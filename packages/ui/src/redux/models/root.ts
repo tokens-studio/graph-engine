@@ -4,6 +4,7 @@ import { nodeState } from './node.ts';
 import { outputState } from './output.ts';
 import { uiState } from './ui.ts';
 import { journeyState } from './journey.ts';
+import { settingsState } from './settings.ts';
 
 export interface RootModel extends Models<RootModel> {
   ui: typeof uiState;
@@ -12,4 +13,5 @@ export interface RootModel extends Models<RootModel> {
   node: typeof nodeState;
   input: typeof inputState;
   journey: typeof journeyState;
+  settings: typeof settingsState;
 }

@@ -7,11 +7,12 @@ import { UIState } from './models/ui.ts';
 import persistPlugin from '@rematch/persist';
 import storage from 'redux-persist/lib/storage';
 import { JourneyState } from './models/journey.ts';
+import { SettingsState } from './models/settings.ts';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['journey'],
+  whitelist: ['journey', 'settings'],
 };
 
 export const store = init({
@@ -33,4 +34,5 @@ export type RootState = {
   input: InputState;
   ui: UIState;
   journey: JourneyState;
+  settings: SettingsState;
 };

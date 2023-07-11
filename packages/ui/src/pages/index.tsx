@@ -1,6 +1,8 @@
 import {
   Box,
   Button,
+  Dialog,
+  DropdownMenu,
   IconButton,
   Label,
   Link,
@@ -18,17 +20,15 @@ import { code, scope } from '#/components/preview/scope.tsx';
 import { useDispatch } from '#/hooks/index.ts';
 import { useResizable } from 'react-resizable-layout';
 import { useSelector } from 'react-redux';
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import darkLogo from '../assets/svgs/tokensstudio-complete-dark.svg';
 import logo from '../assets/svgs/tokensstudio-complete.svg';
-import selectors, { showJourneySelector } from '#/redux/selectors/index.ts';
-import Joyride, { CallBackProps, STATUS } from 'react-joyride';
+import {
+  showJourneySelector,
+  tabs as tabsSelector,
+  currentTab as currentTabSelector,
+} from '#/redux/selectors/index.ts';
+import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
 import { v4 as uuidv4 } from 'uuid';
 //@ts-ignore This is the correct import
 import { Preview as ComponentPreview } from '#/components/preview/index.tsx';
@@ -49,6 +49,7 @@ import { useOnEnter } from '#/hooks/onEnter.ts';
 import { useTheme } from '#/hooks/useTheme.tsx';
 import { useJourney } from '#/journeys/basic.tsx';
 import { JoyrideTooltip } from '#/components/joyride/tooltip.tsx';
+import { Settings } from '#/components/settings/index.tsx';
 
 const Preview = ({ style, codeRef, ...rest }) => {
   const { position, separatorProps } = useResizable({
@@ -97,8 +98,8 @@ const Preview = ({ style, codeRef, ...rest }) => {
 };
 
 const Wrapper = () => {
-  const currentTab = useSelector(selectors.currentTab);
-  const tabs = useSelector(selectors.tabs);
+  const currentTab = useSelector(currentTabSelector);
+  const tabs = useSelector(tabsSelector);
   // const reactFlowInstance = useReactFlow();
   const [theCode, setTheCode] = useState(code);
   const [loadedExample, setLoadedExample] = useState(false);
@@ -306,7 +307,6 @@ const Wrapper = () => {
   const onEnter = useOnEnter(isCreating ? addTab : undefined);
 
   const [{ steps }] = useJourney();
-
   const handleJoyrideCallback = (data: CallBackProps) => {
     const { status, type } = data;
     const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
@@ -373,6 +373,7 @@ const Wrapper = () => {
               <Button onClick={onClear}>Clear</Button>
               <Button onClick={onSave}>Save</Button>
               <Button onClick={onLoad}>Load</Button>
+              <Settings />
             </PageHeader.Actions>
           </PageHeader>
           <Tabs
