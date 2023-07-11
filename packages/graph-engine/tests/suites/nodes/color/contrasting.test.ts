@@ -9,7 +9,7 @@ describe("color/blend", () => {
         b: "#ffffff",
         background: "#ffffff",
         wcag: WcagVersion.V3,
-        threshold: 60
+        threshold: 60,
       },
       node,
       state: node.defaults,
@@ -19,7 +19,7 @@ describe("color/blend", () => {
     expect(output).toEqual({
       color: "#000000",
       sufficient: true, // assuming contrast value is above 60
-      contrast: 106.04067321268862
+      contrast: 106.04067321268862,
     });
   });
 
@@ -30,7 +30,7 @@ describe("color/blend", () => {
         b: "#ffffff",
         background: "#000000",
         wcag: WcagVersion.V2,
-        threshold: 4.5
+        threshold: 4.5,
       },
       node,
       state: node.defaults,
@@ -40,7 +40,7 @@ describe("color/blend", () => {
     expect(output).toEqual({
       color: "#ffffff",
       sufficient: true, // assuming contrast value is above 4.5
-      contrast: 21
+      contrast: 21,
     });
   });
 
@@ -51,7 +51,7 @@ describe("color/blend", () => {
         b: "#bbbbbb",
         background: "#ffffff",
         wcag: WcagVersion.V3,
-        threshold: 60
+        threshold: 60,
       },
       node,
       state: node.defaults,
@@ -61,7 +61,7 @@ describe("color/blend", () => {
     expect(output).toEqual({
       color: "#bbbbbb",
       sufficient: false, // assuming contrast value is below 60
-      contrast: 36.717456545363994
+      contrast: 36.717456545363994,
     });
   });
 });

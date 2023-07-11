@@ -1,30 +1,47 @@
-import { Button, DropdownMenu, Label, Stack, Text, TextInput } from '@tokens-studio/ui';
+import {
+  Button,
+  DropdownMenu,
+  Label,
+  Stack,
+  Text,
+  TextInput,
+} from '@tokens-studio/ui';
 import { Handle, HandleContainer } from '#/components/flow/handles.tsx';
 import { PreviewColor } from '../../preview/color.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
-import { node, WcagVersion } from '@tokens-studio/graph-engine/nodes/color/contrasting.js';
+import {
+  node,
+  WcagVersion,
+} from '@tokens-studio/graph-engine/nodes/color/contrasting.js';
 import PreviewNumber from '../../preview/number.tsx';
-import React, {useCallback} from 'react';
-import {PreviewBoolean} from "../../preview/boolean.tsx";
-import {PreviewAny} from "../../preview/any.tsx";
+import React, { useCallback } from 'react';
+import { PreviewBoolean } from '../../preview/boolean.tsx';
+import { PreviewAny } from '../../preview/any.tsx';
 
 const ContrastingNode = () => {
   const { input, output, state, setState } = useNode();
-  const setWcag = useCallback((ev) => {
-    const version = WcagVersion[ev.currentTarget.dataset.key as keyof typeof WcagVersion];
-    setState((state) => ({
-      ...state,
-      wcag: version,
-    }));
-  }, [setState]);
+  const setWcag = useCallback(
+    (ev) => {
+      const version =
+        WcagVersion[ev.currentTarget.dataset.key as keyof typeof WcagVersion];
+      setState((state) => ({
+        ...state,
+        wcag: version,
+      }));
+    },
+    [setState],
+  );
 
-  const setThreshold = useCallback((ev) => {
-    const threshold = ev.target.value;
-    setState((state) => ({
-      ...state,
-      threshold,
-    }));
-  }, [setState]);
+  const setThreshold = useCallback(
+    (ev) => {
+      const threshold = ev.target.value;
+      setState((state) => ({
+        ...state,
+        threshold,
+      }));
+    },
+    [setState],
+  );
 
   return (
     <Stack direction="row" gap={4}>
@@ -63,7 +80,11 @@ const ContrastingNode = () => {
               <DropdownMenu.Portal>
                 <DropdownMenu.Content>
                   {Object.entries(WcagVersion).map(([key, value]) => (
-                    <DropdownMenu.Item key={key} onClick={setWcag} data-key={key}>
+                    <DropdownMenu.Item
+                      key={key}
+                      onClick={setWcag}
+                      data-key={key}
+                    >
                       {value}
                     </DropdownMenu.Item>
                   ))}

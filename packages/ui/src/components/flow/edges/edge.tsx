@@ -1,5 +1,13 @@
-import { getSmoothStepPath } from 'reactflow';
+import {
+  getBezierPath,
+  getSimpleBezierPath,
+  getSmoothStepPath,
+  getStraightPath,
+} from 'reactflow';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { edgeType as edgeTypeSelector } from '#/redux/selectors/edgeType.ts';
+import { EdgeType } from '#/redux/models/settings.ts';
 
 export default function CustomEdge({
   id,
@@ -13,7 +21,27 @@ export default function CustomEdge({
   data,
   markerEnd,
 }) {
-  const [edgePath] = getSmoothStepPath({
+  const edgeType = useSelector(edgeTypeSelector);
+
+  let edgeFn;
+  switch (edgeType) {
+    case EdgeType.bezier:
+      edgeFn = getBezierPath;
+      break;
+    case EdgeType.simpleBezier:
+      edgeFn = getSimpleBezierPath;
+      break;
+    case EdgeType.smoothStep:
+      edgeFn = getSmoothStepPath;
+      break;
+    case EdgeType.straight:
+      edgeFn = getStraightPath;
+      break;
+    default:
+      edgeFn = getBezierPath;
+  }
+
+  const [edgePath] = edgeFn({
     sourceX,
     sourceY,
     sourcePosition,
