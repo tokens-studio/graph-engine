@@ -1,5 +1,17 @@
 # @tokens-studio/graph-engine
 
+## 0.3.0
+
+### Minor Changes
+
+- be38194: Add new node for contrasting color supporting wcag 2.1 and 3.0
+- b1a09fd: Add Color Wheel node
+- 823ac1e: Added Objectify and Dotprop nodes
+
+### Patch Changes
+
+- 122c050: Fixed issue with slider not working as expected
+
 ## 0.2.2
 
 ### Patch Changes
