@@ -8,6 +8,7 @@ import {
   Text,
   TextInput,
 } from '@tokens-studio/ui';
+import { Dialog } from '#/components/dialog/index.tsx';
 import {
   CheckIcon,
   Cross1Icon,
@@ -18,7 +19,6 @@ import {
   TrashIcon,
 } from '@radix-ui/react-icons';
 import { CheckedState } from '@radix-ui/react-checkbox';
-import { Dialog } from '#/components/dialog/index.tsx';
 import { Handle, HandleContainer } from '../../handles.tsx';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import {
@@ -36,10 +36,12 @@ type OptionProps = {
   value: any;
 };
 
-const types = ['string', 'number', 'integer', 'boolean'];
+const types = ['string', 'number', 'integer', 'boolean', 'tokenSet'];
 
 const getDefinitionName = (type: string) => {
   switch (type) {
+    case 'tokenSet':
+      return 'Token Set';
     case 'boolean':
       return 'Boolean';
     case 'integer':
@@ -53,8 +55,10 @@ const getDefinitionName = (type: string) => {
   }
 };
 
-const getValue = (value, def: TypeDefinition) => {
+const getValueForConversion = (value, def: TypeDefinition) => {
   switch (def.type) {
+    case 'tokenSet':
+      return undefined;
     case 'boolean':
       return !!value;
     case 'integer':
@@ -196,7 +200,7 @@ const Option = ({ name, value, def }: OptionProps) => {
         ...state,
         values: {
           ...state.values,
-          [name]: getValue(value, def),
+          [name]: getValueForConversion(value, def),
         },
         definition: {
           ...state.definition,
@@ -233,8 +237,56 @@ const Option = ({ name, value, def }: OptionProps) => {
 
   const onEnter = useOnEnter(createEnum);
 
+  const loadInput = useCallback(
+    (e) => {
+      // create an input element
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      input.addEventListener('change', function (event) {
+        //@ts-ignore
+        const files = event?.target?.files;
+        const file = files[0];
+
+        // do something with the file, like reading its contents
+        const reader = new FileReader();
+        reader.onload = function () {
+          const tokenSet = JSON.parse(reader.result as string);
+          setState((state) => ({
+            ...state,
+            values: {
+              ...state.values,
+              [name]: {
+                name: file.name,
+                tokens: tokenSet,
+              },
+            },
+          }));
+        };
+        reader.readAsText(file);
+      });
+
+      // simulate a click on the input element to trigger the file picker dialog
+      input.click();
+    },
+    [name, setState],
+  );
+
   const input = useMemo(() => {
     switch (def.type) {
+      case 'tokenSet':
+        return (
+          <Stack width="full" justify="end" align="center" gap={4}>
+            <Label>{value?.name}</Label>
+            <IconButton
+              variant="secondary"
+              size="small"
+              onClick={loadInput}
+              icon={<PlusIcon />}
+            />
+          </Stack>
+        );
+
       case 'boolean':
         return <Checkbox onCheckedChange={onCheckedChange} checked={value} />;
       case 'number':
@@ -424,7 +476,7 @@ const Option = ({ name, value, def }: OptionProps) => {
 };
 
 const SourceNode = () => {
-  const { output, state, setState } = useNode();
+  const { state, setState } = useNode();
   const [addLabel, setAddLabel] = useState('');
 
   const onClick = useCallback(() => {
@@ -462,7 +514,7 @@ const SourceNode = () => {
     <Stack direction="column" gap={2}>
       <Stack direction="column" gap={2}>
         <HandleContainer type="source" full>
-          {Object.entries(output || {}).map(([key, value]) => (
+          {Object.entries(state?.values || {}).map(([key, value]) => (
             <Option
               name={key}
               key={key}

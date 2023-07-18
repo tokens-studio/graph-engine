@@ -4,7 +4,9 @@
  * @packageDocumentation
  */
 
+import { IResolvedToken, flatten } from "#/utils/index.js";
 import { NodeDefinition, NodeTypes } from "../../types.js";
+import { DeepKeyTokenMap } from "@tokens-studio/types";
 
 const type = NodeTypes.INPUT;
 
@@ -17,11 +19,27 @@ const defaults = {
   definition: {},
 };
 
+export type TokenSet = {
+  name: string;
+  tokens: DeepKeyTokenMap;
+};
+
 export type TypeDefinition = {
-  type: "string" | "number" | "boolean" | "integer";
+  type: "string" | "number" | "boolean" | "integer" | "tokenSet" | "json";
   enum?: string[];
+  /**
+   * Json schema for the type. Only used if the type is json
+   */
+  schema?: string;
   modifier?: boolean;
 };
+
+export type State = {
+  values: Record<string, any>;
+  definition: Record<string, TypeDefinition>;
+};
+
+export type Input = Record<string, any>;
 
 /**
  * Optional validation function.
@@ -40,6 +58,10 @@ const validateInputs = (inputs, state) => {
      */
     if (typeof definition == "object") {
       switch (definition.type) {
+        case "tokenSet":
+          if (typeof inputs[key] !== "object") {
+            throw new Error("Expected object for input: " + key);
+          }
         case "string":
           if (typeof inputs[key] !== "string") {
             throw new Error("Expected string for input: " + key);
@@ -57,19 +79,31 @@ const validateInputs = (inputs, state) => {
  * @param state
  * @returns
  */
-const process = (input, state) => {
+const process = (input: Input, state: State) => {
   const final = {
     ...state.values,
     ...input,
   };
-  return final;
+
+  //We need to process the values
+  return Object.fromEntries(
+    Object.entries(final).map(([key, value]) => {
+      const definition = state.definition[key];
+      switch (definition.type) {
+        case "tokenSet":
+          return [key, flatten(value.tokens || {}, [])];
+        default:
+          return [key, value];
+      }
+    })
+  );
 };
 
 const mapOutput = (input, state, processed) => {
   return processed;
 };
 
-export const node: NodeDefinition = {
+export const node: NodeDefinition<Input, State> = {
   type,
   defaults,
   validateInputs,

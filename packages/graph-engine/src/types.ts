@@ -75,6 +75,7 @@ export enum NodeTypes {
   SLIDER = "studio.tokens.input.slider",
   SPREAD = "studio.tokens.input.extract",
   OBJECTIFY = "studio.tokens.input.objectify",
+  JSON = "studio.tokens.input.json",
 
   CSS_MAP = "studio.tokens.css.map",
 
@@ -140,6 +141,7 @@ export enum NodeTypes {
   LOWER = "studio.tokens.string.lowercase",
   REGEX = "studio.tokens.string.regex",
   PASS_UNIT = "studio.tokens.typing.passUnit",
+  PARSE_UNIT = "studio.tokens.typing.parseUnit",
 
   //Accessibility
   CONTRAST = "studio.tokens.accessibility.contrast",

@@ -105,12 +105,11 @@ const StyledRawHandle = styled(RawHandle, {
 });
 
 export const Handle = (props) => {
+  const { children, error, ...rest } = props;
   const { position, type } = useHandle();
   const isValidConnection = useIsValidConnection();
   const { collapsed, hide } = useContext(HandleContainerContext);
   const { onConnect } = useNode();
-
-  const { children, error, ...rest } = props;
 
   return (
     <Box
@@ -125,6 +124,7 @@ export const Handle = (props) => {
         isConnected={isValidConnection}
         type={type}
         position={position}
+        data={{ eg: '1' }}
         hide={hide}
         isValidConnection={isValidConnection}
         {...rest}

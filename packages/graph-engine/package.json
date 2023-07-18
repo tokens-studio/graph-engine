@@ -39,6 +39,7 @@
   "types": "./dist/esm/index.d.ts",
   "dependencies": {
     "@tokens-studio/types": "^0.2.3",
+    "ajv": "^8.12.0",
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
     "color-blind": "^0.1.3",

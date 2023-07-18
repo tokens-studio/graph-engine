@@ -187,6 +187,16 @@ const types = {
       icon: 'px',
       text: 'Pass Unit',
     },
+    {
+      type: NodeTypes.PARSE_UNIT,
+      icon: '{}px',
+      text: 'Parse Unit',
+    },
+    {
+      type: NodeTypes.JSON,
+      icon: '{/}',
+      text: 'JSON',
+    },
   ],
   tokens: [
     {

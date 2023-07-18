@@ -2,9 +2,13 @@ import { Edge, useReactFlow } from 'reactflow';
 import { Graph, alg } from 'graphlib';
 import { useCallback } from 'react';
 
-export const useIsValidConnection = (
-  postProcessor?: (params: Edge) => boolean,
-) => {
+export interface IuseIsValidConnection {
+  postProcessor?: (params: Edge) => boolean;
+}
+
+export const useIsValidConnection = ({
+  postProcessor,
+}: IuseIsValidConnection = {}) => {
   const flow = useReactFlow();
   return useCallback(
     (params: Edge) => {
