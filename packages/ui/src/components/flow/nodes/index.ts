@@ -56,6 +56,8 @@ import sliderNode from './input/sliderNode.tsx';
 import spreadNode from './input/spreadNode.tsx';
 import convertNode from './color/convertNode.tsx';
 import wheelNode from './color/wheelNode.tsx';
+import parseUnit from './generic/parseUnit.tsx';
+import jsonNode from './generic/jsonNode.tsx';
 
 const processTypes = (types: WrappedNodeDefinition[]) => {
   const nodeTypes = types.reduce((acc, type) => {
@@ -93,6 +95,7 @@ export const { nodeTypes, stateInitializer } = processTypes([
   TokenSetNode,
   roundNode,
   UpperNode,
+  parseUnit,
   LowerCaseNode,
   randomNode,
   OrNode,
@@ -103,6 +106,7 @@ export const { nodeTypes, stateInitializer } = processTypes([
   CosNode,
   ReverseArrayNode,
   TanNode,
+  jsonNode,
   ClampNode,
   LerpNode,
   IfNode,
@@ -133,5 +137,3 @@ export const { nodeTypes, stateInitializer } = processTypes([
   OutputNode,
   wheelNode,
 ]);
-
-console.log(nodeTypes);

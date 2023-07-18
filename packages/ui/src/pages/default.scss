@@ -85,3 +85,11 @@ body {
   stroke-width: 5 !important;
   stroke: var(--colors-focus);
 }
+
+.react-flow__handle.react-flow__handle-connecting:after {
+  background: #ff6060 ;
+}
+
+.react-flow__handle.react-flow__handle-valid:after {
+  background: #55dd99 !important;
+}

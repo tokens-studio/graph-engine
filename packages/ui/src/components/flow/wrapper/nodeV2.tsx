@@ -34,6 +34,7 @@ export type INodeContext<Input = any, State = any, Output = any> = {
   setState: (state: any) => void;
   input: Input;
   output: Output;
+  error: Error | null;
   /**
    * Creates a new value connection. Useful when generating a new dynamic handle
    * @param key
@@ -52,6 +53,7 @@ const NodeContext = createContext<INodeContext>({
   setTitle: noop,
   setControls: noop,
   createInput: noop,
+  error: null,
   state: {},
   input: {},
   output: undefined,
@@ -77,7 +79,7 @@ export const WrapNode = (
   nodeDef: UiNodeDefinition,
 ): WrappedNodeDefinition => {
   const WrappedNode = (data) => {
-    const [error, setError] = useState(false);
+    const [error, setError] = useState<Error | null>(null);
     const [title, setTitle] = useState<string>(nodeDef.title || '');
     const [isLoading, setIsLoading] = useState(false);
     const flow = useReactFlow();
@@ -141,7 +143,7 @@ export const WrapNode = (
             value,
             {},
           );
-          setError(false);
+          setError(null);
           setIsLoading(false);
 
           if (nodeDef.type === NodeTypes.OUTPUT) {
@@ -151,7 +153,7 @@ export const WrapNode = (
         }
       } catch (err) {
         console.error(err);
-        setError(true);
+        setError(err as Error);
         //Clear the output
         setOutput(undefined);
       }
@@ -187,6 +189,7 @@ export const WrapNode = (
 
     const values = useMemo(() => {
       return {
+        error,
         setTitle,
         setControls,
         createInput,
@@ -198,6 +201,7 @@ export const WrapNode = (
         onConnect,
       };
     }, [
+      error,
       mappedInput,
       state,
       setState,

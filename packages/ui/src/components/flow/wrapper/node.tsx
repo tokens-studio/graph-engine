@@ -35,7 +35,7 @@ interface NodeProps {
   id: string;
   icon?: React.ReactNode;
   title: string;
-  error?: boolean;
+  error: Error | null;
   isAsync?: boolean;
   children?: React.ReactNode;
   controls?: React.ReactNode;

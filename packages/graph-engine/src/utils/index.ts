@@ -43,16 +43,19 @@ export interface IResolvedToken {
   description?: string;
 }
 
+/**
+ * Takes in a nested object of tokens and returns a flattened array of tokens
+ * @param nested
+ * @param keyPath Optional key path to prefix the name of the token
+ * @returns
+ */
 export const flatten = (
   nested: Record<string, IResolvedToken>,
   keyPath: string[] = []
 ): IResolvedToken[] => {
   return Object.entries(nested).reduce((acc, [key, val]) => {
     //Check if leaf node
-    if (
-      val &&
-      typeof val.value !== "undefined" // &&            typeof val.type !== "undefined"
-    ) {
+    if (val && typeof val.value !== "undefined") {
       acc.push({
         name: [...keyPath, key].join("."),
         value: val.value,
@@ -73,6 +76,12 @@ export const flatten = (
   }, [] as IResolvedToken[]);
 };
 
+/**
+ * Takes in an array of tokens and returns a map of tokens.
+ * This only works if the tokens are flat, meaning they do not have nested tokens
+ * @param tokens
+ * @returns
+ */
 export const flatTokensToMap = (tokens: IResolvedToken[]) => {
   return tokens.reduce((acc, token) => {
     acc[token.name] = token;
@@ -80,6 +89,11 @@ export const flatTokensToMap = (tokens: IResolvedToken[]) => {
   }, {} as Record<string, IResolvedToken>);
 };
 
+/**
+ * Takes an array of tokens and returns a map of tokens. This does result in nested tokens
+ * @param tokens
+ * @returns
+ */
 export const flatTokensRestoreToMap = (tokens: IResolvedToken[]) => {
   const returning = {};
   tokens.forEach((token) => {

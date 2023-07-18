@@ -9,6 +9,7 @@ import { node } from '@tokens-studio/graph-engine/nodes/css/map.js';
 const keys = [
   'animation',
   'aspectRatio',
+  'align-items',
   'background',
   'border',
   'borderBottom',
