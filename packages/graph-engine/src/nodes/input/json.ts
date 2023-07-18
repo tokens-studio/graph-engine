@@ -71,6 +71,7 @@ export const process = (input: Input, state: Input) => {
     throw new ValidationError("Invalid JSON for schema");
   }
 
+  // @ts-ignore This is a weird error with typing
   const ajv = new Ajv();
   const validate = ajv.compile(schema);
 
