@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "compilerOptions": {
+    "outDir": "dist",
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "inlineSources": false,
+    "isolatedModules": true,
+    "moduleResolution": "Node",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "jsx": "react",
+    "module": "ESNext",
+    "target": "esnext",
+    "composite": true,
+		"baseUrl": ".",
+		"paths": {
+			"#/*": ["./src/*"]
+		},
+    "noImplicitAny": false,
+    "rootDir": "src",
+    "experimentalDecorators": true,
+    "allowImportingTsExtensions": true,
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable"
+    ],
+    "emitDeclarationOnly": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "incremental": true,    
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    
+  }
+}
