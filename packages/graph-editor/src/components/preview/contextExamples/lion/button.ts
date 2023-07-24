@@ -3,6 +3,7 @@ import { LitElement, html } from 'lit';
 import { consume } from '@lit-labs/context';
 import { customElement, property } from 'lit/decorators.js';
 import { tokensContext } from './context.ts';
+import React from 'react';
 
 @customElement('wc-button')
 export class Button extends LitElement {

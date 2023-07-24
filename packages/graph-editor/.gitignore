@@ -41,3 +41,4 @@ yarn-error.log*
 graphs/*.pdf
 
 *.tsbuildinfo
+*.rollup.cache

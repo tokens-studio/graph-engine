@@ -1,4 +1,5 @@
 import { Text } from '@tokens-studio/ui';
+import React from 'react';
 
 export const PreviewArray = ({ value }) => {
   if (!value) {

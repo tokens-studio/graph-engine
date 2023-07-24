@@ -14,6 +14,7 @@ import {
 } from '@tokens-studio/graph-engine/nodes/input/json.js';
 import { PreviewAny } from '../../preview/any.tsx';
 import { useCallback } from 'react';
+import React from 'react';
 
 const JsonNode = (props) => {
   const { input, error, output, state, setState } = useNode();

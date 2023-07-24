@@ -1,5 +1,6 @@
 import { ButtonIcon } from '@radix-ui/react-icons';
 import { NodeTypes } from '@tokens-studio/graph-engine';
+import React from 'react';
 
 export default {
   [NodeTypes.INPUT]: <ButtonIcon />,

@@ -3,6 +3,8 @@ import { Handle, HandleContainer } from '../../handles.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/typing/parseUnit.js';
 import { PreviewAny } from '../../preview/any.tsx';
+import React from 'react';
+
 const ParseUnit = (props) => {
   const { input, output } = useNode();
 

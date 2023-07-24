@@ -6,7 +6,7 @@ import {
   useReactFlow,
   useStore,
 } from 'reactflow';
-import { useEffect } from 'react';
+import React from 'react';
 import dagre from 'dagre';
 
 // the layout direction (T = top, R = right, B = bottom, L = left, TB = top to bottom, ...)

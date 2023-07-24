@@ -1,5 +1,6 @@
 import { Box, Button, Stack, Text } from '@tokens-studio/ui';
 import { GithubPicker } from 'react-color';
+import React from 'react';
 import {
   NodeProps,
   NodeToolbar,

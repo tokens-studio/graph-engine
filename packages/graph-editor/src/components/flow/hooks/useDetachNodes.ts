@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useReactFlow, useStoreApi } from 'reactflow';
+import React from 'react';
 
 function useDetachNodes() {
   const { setNodes } = useReactFlow();

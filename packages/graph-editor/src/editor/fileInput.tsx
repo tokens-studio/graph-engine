@@ -4,6 +4,7 @@ import { NodeTypes } from '@tokens-studio/graph-engine';
 import { processJson, processTokensFile } from '#/utils/tokenFiles.ts';
 import { v4 as uuidv4 } from 'uuid';
 import JSZip from 'jszip';
+import React from 'react';
 
 type DropOptions = {
   reactFlowInstance: ReactFlowInstance;

@@ -1,5 +1,6 @@
 import { Controls, MiniMap } from 'reactflow';
 import { styled } from '#/lib/stitches/index.ts';
+import React from 'react';
 
 export const ControlsStyled = styled(Controls, {
   button: {

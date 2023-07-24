@@ -1,5 +1,6 @@
 import * as SliderPrimitive from '@radix-ui/react-slider';
 import { styled } from '#/lib/stitches/index.ts';
+import React from 'react';
 
 const Root = styled(SliderPrimitive.Root, {
   position: 'relative',

@@ -6,6 +6,7 @@ import {
   Text,
   Separator,
 } from '@tokens-studio/ui';
+import React from 'react';
 
 export const JoyrideTooltip = ({
   continuous,

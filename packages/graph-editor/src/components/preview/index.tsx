@@ -3,6 +3,7 @@ import { OutputProvider } from './scope.tsx';
 import { TokenContextProvider } from './contextExamples/lion/index.ts';
 import { useSelector } from 'react-redux';
 import { output as outputSelector } from '#/redux/selectors/roots.ts';
+import React from 'react';
 
 export const Preview = () => {
   const output = useSelector(outputSelector);

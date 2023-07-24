@@ -8,6 +8,7 @@ import persistPlugin from '@rematch/persist';
 import storage from 'redux-persist/lib/storage';
 import { JourneyState } from './models/journey.ts';
 import { SettingsState } from './models/settings.ts';
+import React from 'react';
 
 const persistConfig = {
   key: 'root',

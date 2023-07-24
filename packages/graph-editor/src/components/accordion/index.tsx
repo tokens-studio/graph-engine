@@ -1,5 +1,6 @@
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { styled } from '#/lib/stitches/index.ts';
+import React from 'react';
 
 const Root = styled(AccordionPrimitive.Root, {
   userSelect: 'none',

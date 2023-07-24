@@ -1,4 +1,5 @@
 import { Box } from '@tokens-studio/ui';
+import React from 'react';
 
 export function NodeDynamicHandle({
   text,

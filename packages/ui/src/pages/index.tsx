@@ -12,7 +12,7 @@ import {
   Text,
   TextInput,
 } from '@tokens-studio/ui';
-import { Editor } from '#/editor/index.tsx';
+import { Editor } from '@tokens-studio/graph-editor/dist/esm/editor/index.js';
 import { LiveEditor, LiveError, LiveProvider } from 'react-live';
 import { ReactFlowProvider } from 'reactflow';
 import { Splitter } from '#/components/splitter.tsx';

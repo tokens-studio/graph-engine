@@ -1,6 +1,7 @@
 import { PreviewBoolean } from './boolean.tsx';
 import { Text } from '@tokens-studio/ui';
 import PreviewNumber from './number.tsx';
+import React from 'react';
 
 export const PreviewAny = ({ value }) => {
   if (value == undefined) {

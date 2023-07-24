@@ -1,5 +1,6 @@
 import { Edge, Node } from 'reactflow';
 import { NodeTypes } from './types.tsx';
+import React from 'react';
 
 export const getOutgoingEdges = (node: Node | undefined, edges: Edge[]) => {
   if (!node) {

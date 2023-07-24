@@ -8,6 +8,7 @@ import {
   useStoreApi,
 } from 'reactflow';
 import { NodeTypes } from '../types.tsx';
+import React from 'react';
 
 import { getId } from '../utils.ts';
 

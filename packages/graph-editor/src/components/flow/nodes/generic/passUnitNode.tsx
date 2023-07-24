@@ -3,6 +3,8 @@ import { Handle, HandleContainer } from '../../handles.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/typing/passUnit.js';
 import { useCallback } from 'react';
+import React from 'react';
+
 const PassUnit = (props) => {
   const { input, output, state, setState } = useNode();
   const setFallback = useCallback((ev) => {
