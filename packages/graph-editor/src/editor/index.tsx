@@ -290,7 +290,7 @@ export const Editor = React.forwardRef<ImperativeEditor, EditorProps>(
       <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
         <div
           className="editor"
-          style={{ height: '100%' }}
+          style={{ height: '100%', border: '1px solid #ddd' }}
           ref={reactFlowWrapper}
         >
           <ForceUpdateProvider value={forceUpdate}>
