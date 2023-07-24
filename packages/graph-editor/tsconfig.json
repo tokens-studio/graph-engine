@@ -7,8 +7,6 @@
     "node_modules"
   ],
   "compilerOptions": {
-    "outDir": "dist",
-    "declarationMap": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "inlineSources": false,
@@ -22,7 +20,7 @@
     "jsx": "react",
     "module": "ESNext",
     "target": "esnext",
-    "composite": true,
+
 		"baseUrl": ".",
 		"paths": {
 			"#/*": ["./src/*"]
