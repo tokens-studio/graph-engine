@@ -7,13 +7,16 @@
     "node_modules"
   ],
   "compilerOptions": {
+    "composite": false,
+    "declaration": true,
+    "declarationMap": true,
     "esModuleInterop": true,
+    "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "inlineSources": false,
     "isolatedModules": true,
-    "moduleResolution": "Node",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "preserveWatchOutput": true,
@@ -41,6 +44,6 @@
     "incremental": true,    
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    
+    "outDir": "dist",
   }
 }

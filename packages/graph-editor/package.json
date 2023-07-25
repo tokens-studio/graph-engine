@@ -3,7 +3,8 @@
   "name": "@tokens-studio/graph-editor",
   "version": "1.0.1",
   "description": "UI for the graph engine",
-  "main": "dist/esm/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "author": "pop@hyma.io",
   "type": "module",
   "scripts": {
@@ -30,8 +31,6 @@
     "@reactflow/node-resizer": "2.1.0",
     "@rematch/core": "2.2.0",
     "@rematch/persist": "^2.1.2",
-    "@rollup/plugin-node-resolve": "^15.1.0",
-    "@rollup/plugin-typescript": "^11.1.2",
     "@stitches/react": "1.2.8",
     "@tokens-studio/graph-engine": "*",
     "@tokens-studio/tokens": "0.0.21",
@@ -66,6 +65,9 @@
     "@types/graphlib": "2.1.8",
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",
-    "prettier": "2.8.7"
+    "prettier": "2.8.7",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-typescript": "^11.1.2",
+    "rollup": "^3.10.1"
   }
 }
