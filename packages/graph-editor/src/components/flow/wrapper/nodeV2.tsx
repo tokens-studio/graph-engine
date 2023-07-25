@@ -7,7 +7,10 @@ import {
   defaultMapOutput,
 } from '@tokens-studio/graph-engine';
 import { getOutgoingEdges } from '../utils.ts';
-import { inputSelector, stateSelector } from '../../../redux/selectors/index.ts';
+import {
+  inputSelector,
+  stateSelector,
+} from '../../../redux/selectors/index.ts';
 import { useDispatch } from '../../../hooks/index.ts';
 import { useInvalidator } from '../../../editor/forceUpdateContext.tsx';
 import { useSelector } from 'react-redux';
@@ -90,7 +93,7 @@ export const WrapNode = (
     //We have access to our child state
     const input = useSelector(inputSelector(data.id));
 
-    const state = useSelector(stateSelector(data.id));    
+    const state = useSelector(stateSelector(data.id));
 
     const [output, setOutput] = useState<any>(undefined);
 
@@ -148,7 +151,7 @@ export const WrapNode = (
           setIsLoading(false);
 
           if (nodeDef.type === NodeTypes.OUTPUT) {
-            dispatch.output.setCurrentOutput(mappedOutput);
+            // dispatch.output.setCurrentOutput(mappedOutput);
           }
           setOutput(mappedOutput);
         }

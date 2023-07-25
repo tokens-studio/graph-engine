@@ -100,10 +100,10 @@ const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           reactFlowInstance.setNodes([]);
           reactFlowInstance.setEdges([]);
 
-          dispatch.output.set({
-            name,
-            value: undefined,
-          });
+          // dispatch.output.set({
+          //   name,
+          //   value: undefined,
+          // });
         },
         save: () => ({
           nodes: reactFlowInstance.getNodes(),
@@ -130,7 +130,7 @@ const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           }, 1);
         },
       }),
-      [reactFlowInstance, name, dispatch.input, dispatch.output],
+      [reactFlowInstance, name, dispatch.input],
     );
 
     const onConnect = useCallback((params) => {
