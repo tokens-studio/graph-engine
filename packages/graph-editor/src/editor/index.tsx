@@ -14,7 +14,7 @@ import {
   useReactFlow,
   useStoreApi,
 } from 'reactflow';
-import { ControlsStyled, MiniMapStyled } from '../components/flow/controls.tsx';
+import { CustomControls, MiniMapStyled } from '../components/flow/controls.tsx';
 import { NodeTypes as EditorNodeTypes } from '../components/flow/types.tsx';
 import { ForceUpdateProvider } from './forceUpdateContext.tsx';
 import { GlobalHotKeys } from 'react-hotkeys';
@@ -36,9 +36,11 @@ import React, {
   useRef,
 } from 'react';
 import ReactFlow from 'reactflow';
-import {ReduxProvider} from '../redux/index.tsx';
+import { ReduxProvider } from '../redux/index.tsx';
 import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.tsx';
 import groupNode from '../components/flow/groupNode.tsx';
+import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
+import { Tooltip } from '@tokens-studio/ui';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -67,34 +69,7 @@ const defaultEdgeOptions = {
   },
 };
 
-export interface InitialSet {
-  urn: string;
-  parentNode: string;
-  name: string;
-}
-
-type EditorProps = {
-  id: string;
-  name: string;
-};
-
-type EditorState = {
-  nodes: Node[];
-  edges: Edge[];
-};
-
-type ImperativeEditor = {
-  /**
-   * Clears the editor of all nodes and edges
-   * @returns
-   */
-  clear: () => void;
-  save: () => void;
-  forceUpdate: () => void;
-  load: (state: EditorState) => void;
-};
-
-const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
+const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
     const { id, name } = props;
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
@@ -116,6 +91,8 @@ const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
+    const nodeState = dispatch.node.getState();
+
     useImperativeHandle(
       ref,
       () => ({
@@ -131,17 +108,19 @@ const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
         save: () => ({
           nodes: reactFlowInstance.getNodes(),
           edges: reactFlowInstance.getEdges(),
+          nodeState,
         }),
         forceUpdate: () => {
           setForceUpdate((prev) => prev + 1);
         },
-        load: ({ nodes, edges }) => {
+        load: ({ nodes, edges, nodeState }) => {
           const input = nodes.reduce((acc, node) => {
             acc[node.id] = {};
             return acc;
           }, {});
 
           dispatch.input.setState(input);
+          dispatch.node.setState(nodeState);
 
           reactFlowInstance.setNodes(() => nodes);
           reactFlowInstance.setEdges(() => edges);
@@ -291,7 +270,7 @@ const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
       <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
         <div
           className="editor"
-          style={{ height: '100%', border: '1px solid #ddd' }}
+          style={{ height: '100%' }}
           ref={reactFlowWrapper}
         >
           <ForceUpdateProvider value={forceUpdate}>
@@ -327,7 +306,7 @@ const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
               proOptions={proOptions}
             >
               <SelectedNodesToolbar />
-              <ControlsStyled position="top-right"></ControlsStyled>
+              <CustomControls position="top-right" />
               <Panel id="drop-panel" position="top-left">
                 <DropPanel />
               </Panel>
@@ -347,12 +326,14 @@ const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
   },
 );
 
-
-export const Editor = React.forwardRef<ImperativeEditor, EditorProps>(
+export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
     return (
       <ReduxProvider>
-        <EditorApp {...props} ref={ref} />
+        <Tooltip.Provider>
+          <EditorApp {...props} ref={ref} />
+        </Tooltip.Provider>
       </ReduxProvider>
     );
-  });
+  },
+);

@@ -1,10 +1,6 @@
 import {
-  Box,
   Button,
-  Dialog,
-  DropdownMenu,
   IconButton,
-  Label,
   Link,
   PageHeader,
   Stack,
@@ -12,15 +8,27 @@ import {
   Text,
   TextInput,
 } from '@tokens-studio/ui';
-import { Editor } from '@tokens-studio/graph-editor';
-import { LiveEditor, LiveError, LiveProvider } from 'react-live';
+
+import {
+  Editor,
+  ImperativeEditorRef,
+  EditorEdge,
+  EditorNode,
+} from '@tokens-studio/graph-editor';
+import { LiveProvider } from 'react-live';
 import { ReactFlowProvider } from 'reactflow';
 import { Splitter } from '#/components/splitter.tsx';
 import { code, scope } from '#/components/preview/scope.tsx';
 import { useDispatch } from '#/hooks/index.ts';
 import { useResizable } from 'react-resizable-layout';
 import { useSelector } from 'react-redux';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import darkLogo from '../assets/svgs/tokensstudio-complete-dark.svg';
 import logo from '../assets/svgs/tokensstudio-complete.svg';
 import {
@@ -30,8 +38,6 @@ import {
 } from '#/redux/selectors/index.ts';
 import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
 import { v4 as uuidv4 } from 'uuid';
-//@ts-ignore This is the correct import
-import { Preview as ComponentPreview } from '#/components/preview/index.tsx';
 // @ts-ignore
 import { themes } from 'prism-react-renderer';
 
@@ -49,53 +55,14 @@ import { useOnEnter } from '#/hooks/onEnter.ts';
 import { useTheme } from '#/hooks/useTheme.tsx';
 import { useJourney } from '#/journeys/basic.tsx';
 import { JoyrideTooltip } from '#/components/joyride/tooltip.tsx';
-import { Settings } from '#/components/settings/index.tsx';
+import { Preview } from '#/components/Preview.tsx';
 
-const Preview = ({ style, codeRef, ...rest }) => {
-  const { position, separatorProps } = useResizable({
-    axis: 'x',
-    initial: 250,
-    min: 100,
-  });
-
-  return (
-    <Stack
-      direction="row"
-      style={style}
-      css={{ background: '$bgSurface' }}
-      {...rest}
-    >
-      <Stack
-        direction="row"
-        style={{ flex: 1 }}
-        css={{ background: '$bgSurface' }}
-      >
-        <Stack direction="column" style={{ width: position }}>
-          <Box css={{ flexGrow: 1 }}>
-            <ComponentPreview />
-          </Box>
-        </Stack>
-        <Splitter direction="vertical" {...separatorProps} />
-        <Stack direction="column" css={{ padding: '$4', flex: 1 }}>
-          <Label>Editor</Label>
-          <Box
-            css={{
-              fontSize: '$xsmall',
-              fontFamily: 'monospace',
-              overflow: 'auto',
-              flex: 1,
-            }}
-          >
-            <div ref={codeRef}>
-              <LiveEditor />
-            </div>
-            <LiveError />
-          </Box>
-        </Stack>
-      </Stack>
-    </Stack>
-  );
-};
+interface ResolverData {
+  nodes: EditorNode[];
+  edges: EditorEdge[];
+  state: Record<string, any>;
+  code: string;
+}
 
 const Wrapper = () => {
   const currentTab = useSelector(currentTabSelector);
@@ -112,7 +79,8 @@ const Wrapper = () => {
       return acc;
     }, {});
   }, []);
-  const [refs, setRefs] = useState(initRefs);
+  const [refs, setRefs] =
+    useState<Record<string, MutableRefObject<ImperativeEditorRef>>>(initRefs);
 
   const ref = React.useRef<HTMLDivElement>(null);
   const [isCreating, setIsCreating] = useState(false);
@@ -158,47 +126,43 @@ const Wrapper = () => {
     dispatch.ui.removeTab(id);
   };
 
-  // const onSave = useCallback(() => {
-  //   if (!currentTab) {
-  //     return;
-  //   }
-  //   const current = refs[currentTab.id]?.current;
-  //   if (!current) {
-  //     alert('No attached tab found');
-  //     return;
-  //   }
+  const onSave = useCallback(() => {
+    if (!currentTab) {
+      return;
+    }
+    const current = refs[currentTab.id]?.current;
+    if (!current) {
+      alert('No attached tab found');
+      return;
+    }
 
-  //   const { nodes, edges } = current.save();
-  //   const state = dispatch.node.getState();
+    const { nodes, edges, nodeState } = current.save();
 
-  //   console.log(state);
-    
+    const finalState = nodes.reduce((acc, node) => {
+      acc[node.id] = nodeState[node.id];
+      return acc;
+    }, {});
 
-  //   const finalState = nodes.reduce((acc, node) => {
-  //     acc[node.id] = state[node.id];
-  //     return acc;
-  //   }, {});
+    const fileContent = JSON.stringify({
+      nodes,
+      edges,
+      state: finalState,
+      code: ref.current?.textContent,
+    });
 
-  //   const fileContent = JSON.stringify({
-  //     nodes,
-  //     edges,
-  //     state: finalState,
-  //     code: ref.current?.textContent,
-  //   });
+    const blob = new Blob([fileContent], { type: 'application/json' });
 
-  //   const blob = new Blob([fileContent], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${currentTab.name}.json`;
+    document.body.appendChild(link);
+    link.click();
 
-  //   const url = URL.createObjectURL(blob);
-  //   const link = document.createElement('a');
-  //   link.href = url;
-  //   link.download = `${currentTab.name}.json`;
-  //   document.body.appendChild(link);
-  //   link.click();
-
-  //   // Clean up the URL and link
-  //   URL.revokeObjectURL(url);
-  //   document.body.removeChild(link);
-  // }, [currentTab, dispatch.node, refs]);
+    // Clean up the URL and link
+    URL.revokeObjectURL(url);
+    document.body.removeChild(link);
+  }, [currentTab, dispatch.node, refs]);
 
   const onClear = useCallback(() => {
     if (currentTab) {
@@ -206,72 +170,72 @@ const Wrapper = () => {
     }
   }, [currentTab, refs]);
 
-  // const onLoad = useCallback(
-  //   (e) => {
-  //     if (currentTab) {
-  //       const current = refs[currentTab.id]?.current;
-  //       if (!current) {
-  //         alert('No attached tab found');
-  //         return;
-  //       }
+  const onLoad = useCallback(() => {
+    if (currentTab) {
+      const current = refs[currentTab.id]?.current;
+      if (!current) {
+        alert('No attached tab found');
+        return;
+      }
 
-  //       // create an input element
-  //       const input = document.createElement('input');
-  //       input.type = 'file';
-  //       input.addEventListener('change', function (event) {
-  //         //@ts-ignore
-  //         const files = event?.target?.files;
-  //         const file = files[0];
+      // create an input element
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.addEventListener('change', function (event) {
+        //@ts-ignore
+        const files = event?.target?.files;
+        const file = files[0];
 
-  //         // do something with the file, like reading its contents
-  //         const reader = new FileReader();
-  //         reader.onload = function () {
-  //           const resolver = JSON.parse(reader.result as string);
+        // do something with the file, like reading its contents
+        const reader = new FileReader();
+        reader.onload = function () {
+          const resolver = JSON.parse(reader.result as string) as ResolverData;
 
-  //           const { state, code, ...rest } = resolver;
+          const { state, code, nodes, edges } = resolver;
 
-  //           onClear();
-  //           //TODO , this needs a refactor. We need to wait for the clear to finish
-  //           // as the nodes still get one final update by the dispatch before they are removed which
-  //           // causes nulls to occur everywhere. They need to be unmounted
-  //           setTimeout(() => {
-  //             if (code !== undefined) {
-  //               setTheCode(code);
-  //             }
-  //             dispatch.node.setState(state || {});
-  //             current.load({
-  //               ...rest,
-  //             });
-  //           }, 0);
-  //         };
-  //         reader.readAsText(file);
-  //       });
+          onClear();
+          //TODO , this needs a refactor. We need to wait for the clear to finish
+          // as the nodes still get one final update by the dispatch before they are removed which
+          // causes nulls to occur everywhere. They need to be unmounted
+          setTimeout(() => {
+            if (code !== undefined) {
+              setTheCode(code);
+            }
 
-  //       // simulate a click on the input element to trigger the file picker dialog
-  //       input.click();
-  //     }
-  //   },
-  //   [currentTab, dispatch.node, refs],
-  // );
+            current.load({
+              nodes,
+              edges,
+              nodeState: state,
+            });
+          }, 0);
+        };
+        reader.readAsText(file);
+      });
 
-  // useEffect(() => {
-  //   if (!loadedExample) {
-  //     const { state, code, ...rest } = example;
-  //     const current = refs[currentTab.id]?.current;
+      // simulate a click on the input element to trigger the file picker dialog
+      input.click();
+    }
+  }, [currentTab, dispatch.node, refs]);
 
-  //     if (code !== undefined) {
-  //       setTheCode(code);
-  //     }
+  useEffect(() => {
+    if (!loadedExample) {
+      const exampleData = example as ResolverData;
 
-  //     //Set the state
-  //     dispatch.node.setState(state || {});
+      const { state, code, edges, nodes } = exampleData;
+      const current = refs[currentTab.id]?.current;
 
-  //     current.load({
-  //       ...rest,
-  //     });
-  //     setLoadedExample(true);
-  //   }
-  // }, [refs]);
+      if (code !== undefined) {
+        setTheCode(code);
+      }
+
+      current.load({
+        nodes: nodes,
+        edges: edges,
+        nodeState: state,
+      });
+      setLoadedExample(true);
+    }
+  }, [refs]);
 
   const onForceUpdate = useCallback(() => {
     const current = refs[currentTab.id]?.current;
@@ -374,9 +338,8 @@ const Wrapper = () => {
               ></Button>
               <Button onClick={onForceUpdate}>Force Update</Button>
               <Button onClick={onClear}>Clear</Button>
-              {/* <Button onClick={onSave}>Save</Button>
-              <Button onClick={onLoad}>Load</Button> */}
-              <Settings />
+              <Button onClick={onSave}>Save</Button>
+              <Button onClick={onLoad}>Load</Button>
             </PageHeader.Actions>
           </PageHeader>
           <Tabs

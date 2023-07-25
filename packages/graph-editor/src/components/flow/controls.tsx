@@ -1,6 +1,7 @@
-import { Controls, MiniMap } from 'reactflow';
+import { ControlButton, ControlProps, Controls, MiniMap } from 'reactflow';
 import { styled } from '#/lib/stitches/index.ts';
 import React from 'react';
+import { Settings } from '../Settings';
 
 export const ControlsStyled = styled(Controls, {
   button: {
@@ -26,3 +27,15 @@ export const MiniMapStyled = styled(MiniMap, {
     stroke: 'none',
   },
 });
+
+
+
+export const CustomControls = (props: ControlProps) => {
+  return (
+    <ControlsStyled {...props}>
+      <ControlButton onClick={() => console.log('action')} title="action">
+        <Settings />
+      </ControlButton>
+    </ControlsStyled>
+  );
+}

@@ -90,10 +90,7 @@ export const WrapNode = (
     //We have access to our child state
     const input = useSelector(inputSelector(data.id));
 
-    const state = useSelector(stateSelector(data.id));
-
-    console.log(state);
-    
+    const state = useSelector(stateSelector(data.id));    
 
     const [output, setOutput] = useState<any>(undefined);
 

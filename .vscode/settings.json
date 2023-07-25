@@ -21,5 +21,8 @@
         "typescript",
         "typescriptreact"
     ],
-    "adrManager.adrDirectory": "adrs"
+    "adrManager.adrDirectory": "adrs",
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }
