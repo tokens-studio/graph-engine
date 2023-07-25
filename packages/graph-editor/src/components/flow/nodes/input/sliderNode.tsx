@@ -1,6 +1,6 @@
 import { Handle, HandleContainer } from '../../handles.tsx';
 import { Box, Label, Stack, Text, TextInput } from '@tokens-studio/ui';
-import { Slider } from '#/components/slider/index.tsx';
+import { Slider } from '../../../../components/slider/index.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/input/slider.js';
 import React, { useCallback } from 'react';

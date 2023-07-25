@@ -3,7 +3,7 @@
   "name": "@tokens-studio/graph-editor",
   "version": "1.0.1",
   "description": "UI for the graph engine",
-  "main": "src/index.ts",
+  "main": "dist/esm/index.js",
   "author": "pop@hyma.io",
   "type": "module",
   "scripts": {
@@ -30,6 +30,7 @@
     "@reactflow/node-resizer": "2.1.0",
     "@rematch/core": "2.2.0",
     "@rematch/persist": "^2.1.2",
+    "@rollup/plugin-node-resolve": "^15.1.0",
     "@rollup/plugin-typescript": "^11.1.2",
     "@stitches/react": "1.2.8",
     "@tokens-studio/graph-engine": "*",

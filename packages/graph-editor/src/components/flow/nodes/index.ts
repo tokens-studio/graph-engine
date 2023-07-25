@@ -1,4 +1,4 @@
-import { WrappedNodeDefinition } from '#/components/flow/wrapper/nodeV2.tsx';
+import { WrappedNodeDefinition } from '../../../components/flow/wrapper/nodeV2.tsx';
 import AbsNode from './math/absNode.tsx';
 import AddNode from './math/addNode.tsx';
 import AndNode from './logic/andNode.tsx';

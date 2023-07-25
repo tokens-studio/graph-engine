@@ -1,6 +1,6 @@
 import { Handle, HandleContainer } from '../../handles.tsx';
 import { Label, Stack, Text, TextInput } from '@tokens-studio/ui';
-import { LabelNoWrap } from '#/components/label.tsx';
+import { LabelNoWrap } from '../../../../components/label.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/series/arithmetic.js';
 import { sortEntriesNumerically } from '@tokens-studio/graph-engine/nodes/utils.js';

@@ -10,7 +10,7 @@ import {
   ColorBlindnessTypes,
   node,
 } from '@tokens-studio/graph-engine/nodes/accessibility/colorBlindness.js';
-import { Handle, HandleContainer } from '#/components/flow/handles.tsx';
+import { Handle, HandleContainer } from '../../../../components/flow/handles.tsx';
 import { PreviewColor } from '../../preview/color.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { sentenceCase } from 'sentence-case';

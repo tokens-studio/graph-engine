@@ -4,7 +4,7 @@ import { useDispatch } from '#/hooks/useDispatch.ts';
 import { useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import copy from 'copy-to-clipboard';
-import useAutoLayout from '#/components/flow/nodes/layouts/dagre.tsx';
+import useAutoLayout from '../components/flow/nodes/layouts/dagre.tsx';
 
 export const keyMap = {
   AUTO_LAYOUT: 'ctrl+alt+f',

@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Handle, HandleContainer } from '../../handles.tsx';
-import { LabelNoWrap } from '#/components/label.tsx';
+import { LabelNoWrap } from '../../../../components/label.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/set/resolve.js';
 

@@ -14,21 +14,21 @@ import {
   useReactFlow,
   useStoreApi,
 } from 'reactflow';
-import { ControlsStyled, MiniMapStyled } from '#/components/flow/controls.tsx';
-import { NodeTypes as EditorNodeTypes } from '#/components/flow/types.tsx';
+import { ControlsStyled, MiniMapStyled } from '../components/flow/controls.tsx';
+import { NodeTypes as EditorNodeTypes } from '../components/flow/types.tsx';
 import { ForceUpdateProvider } from './forceUpdateContext.tsx';
 import { GlobalHotKeys } from 'react-hotkeys';
 import {
   getNodePositionInsideParent,
   sortNodes,
-} from '#/components/flow/utils.ts';
+} from '../components/flow/utils.ts';
 import { handleDrop } from './fileInput.tsx';
 import { keyMap, useHotkeys } from './hotkeys.ts';
-import { nodeTypes, stateInitializer } from '#/components/flow/nodes/index.ts';
-import { useDispatch } from '#/hooks/index.ts';
+import { nodeTypes, stateInitializer } from '../components/flow/nodes/index.ts';
+import { useDispatch } from '../hooks/index.ts';
 import { v4 as uuidv4 } from 'uuid';
-import CustomEdge from '#/components/flow/edges/edge.tsx';
-import DropPanel from '#/components/flow/dropPanel.tsx';
+import CustomEdge from '../components/flow/edges/edge.tsx';
+import DropPanel from '../components/flow/dropPanel.tsx';
 import React, {
   MouseEvent,
   useCallback,
@@ -37,8 +37,8 @@ import React, {
 } from 'react';
 import ReactFlow from 'reactflow';
 import {ReduxProvider} from '../redux/index.tsx';
-import SelectedNodesToolbar from '#/components/flow/toolbar/selectedNodesToolbar.tsx';
-import groupNode from '#/components/flow/groupNode.tsx';
+import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.tsx';
+import groupNode from '../components/flow/groupNode.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };

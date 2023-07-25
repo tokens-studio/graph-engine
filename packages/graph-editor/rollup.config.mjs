@@ -1,9 +1,10 @@
 import postcss from 'rollup-plugin-postcss';
+import {nodeResolve} from '@rollup/plugin-node-resolve';
 import tsPlugin from '@rollup/plugin-typescript';
 
 const defaultEntries = [
 	{
-		input: './src/index.ts',
+		input: './src/index.tsx',
 		output: [
 			{
 				preserveModules: true,
@@ -26,7 +27,12 @@ const defaultEntries = [
 			}),
 			postcss({
 				extract: true
-			})
+			}),
+			// nodeResolve({
+			// 	alias: {
+			// 	  '#': __dirname + '/src',
+			// 	},
+			//   }),
 		],
 		cache: false
 	}

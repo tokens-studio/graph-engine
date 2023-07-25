@@ -14,7 +14,7 @@ import {
   BlendTypes,
   node,
 } from '@tokens-studio/graph-engine/nodes/color/advancedBlend.js';
-import { LabelNoWrap } from '#/components/label.tsx';
+import { LabelNoWrap } from '../../../../components/label.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import PreviewNumber from '../../preview/number.tsx';
 

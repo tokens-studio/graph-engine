@@ -1,4 +1,4 @@
-import { Dispatch } from '#/redux/store.tsx';
+import { Dispatch } from '../redux/store.tsx';
 import { Node, ReactFlowInstance } from 'reactflow';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import { processJson, processTokensFile } from '#/utils/tokenFiles.ts';

@@ -6,7 +6,7 @@ import {
   Text,
   TextInput,
 } from '@tokens-studio/ui';
-import { Handle, HandleContainer } from '#/components/flow/handles.tsx';
+import { Handle, HandleContainer } from '../../../../components/flow/handles.tsx';
 import { PreviewColor } from '../../preview/color.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import {

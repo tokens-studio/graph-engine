@@ -22,11 +22,12 @@
     "jsx": "react",
     "module": "ESNext",
     "target": "esnext",
-
 		"baseUrl": ".",
-		"paths": {
-			"#/*": ["./src/*"]
-		},
+    "paths": {
+      "#/*": [
+        "src/*"
+      ]
+    },
     "noImplicitAny": false,
     "rootDir": "src",
     "experimentalDecorators": true,

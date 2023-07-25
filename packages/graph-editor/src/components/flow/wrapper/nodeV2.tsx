@@ -7,9 +7,9 @@ import {
   defaultMapOutput,
 } from '@tokens-studio/graph-engine';
 import { getOutgoingEdges } from '../utils.ts';
-import { inputSelector, stateSelector } from '#/redux/selectors/index.ts';
-import { useDispatch } from '#/hooks/index.ts';
-import { useInvalidator } from '#/editor/forceUpdateContext.tsx';
+import { inputSelector, stateSelector } from '../../../redux/selectors/index.ts';
+import { useDispatch } from '../../../hooks/index.ts';
+import { useInvalidator } from '../../../editor/forceUpdateContext.tsx';
 import { useSelector } from 'react-redux';
 import React, {
   createContext,
