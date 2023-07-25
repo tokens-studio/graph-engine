@@ -17,8 +17,11 @@ export const outputState = createModel<RootModel>()({
   },
   effects: (dispatch) => ({
     setCurrentOutput(payload: any, rootState) {
+      console.log('intr aaci in graph editor');
+
       dispatch.output.set({
-        name: rootState.ui.currentTab.name,
+        // TODO: fix this
+        name: 'rootState.ui.currentTab.name',
         value: payload,
       });
     },

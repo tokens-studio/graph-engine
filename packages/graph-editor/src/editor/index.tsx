@@ -36,6 +36,7 @@ import React, {
   useRef,
 } from 'react';
 import ReactFlow from 'reactflow';
+import {ReduxProvider} from '../redux/index.tsx';
 import SelectedNodesToolbar from '#/components/flow/toolbar/selectedNodesToolbar.tsx';
 import groupNode from '#/components/flow/groupNode.tsx';
 
@@ -93,7 +94,7 @@ type ImperativeEditor = {
   load: (state: EditorState) => void;
 };
 
-export const Editor = React.forwardRef<ImperativeEditor, EditorProps>(
+const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
   (props: EditorProps, ref) => {
     const { id, name } = props;
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
@@ -345,3 +346,13 @@ export const Editor = React.forwardRef<ImperativeEditor, EditorProps>(
     );
   },
 );
+
+
+export const Editor = React.forwardRef<ImperativeEditor, EditorProps>(
+  (props: EditorProps, ref) => {
+    return (
+      <ReduxProvider>
+        <EditorApp {...props} ref={ref} />
+      </ReduxProvider>
+    );
+  });

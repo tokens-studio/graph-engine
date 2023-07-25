@@ -9,15 +9,15 @@ import {
 } from '@tokens-studio/ui';
 import { ChevronDownIcon, SettingsIcon } from '@iconicicons/react';
 import { useSelector } from 'react-redux';
-import { edgeType as edgeTypeSelector } from '#/redux/selectors/edgeType.ts';
+// import { edgeType as edgeTypeSelector } from '#/redux/selectors/edgeType.ts';
 import { useDispatch } from '#/hooks/useDispatch.ts';
-import { EdgeType } from '#/redux/models/settings.ts';
+// import { EdgeType } from '#/redux/models/settings.ts';
 
-const EdgeValues = Object.values(EdgeType);
+// const EdgeValues = Object.values(EdgeType);
 
 export const Settings = () => {
-  const edgeType = useSelector(edgeTypeSelector);
-  const dispatch = useDispatch();
+  // const edgeType = useSelector(edgeTypeSelector);
+  // const dispatch = useDispatch();
 
   return (
     <Dialog>
@@ -34,11 +34,11 @@ export const Settings = () => {
             <DropdownMenu>
               <DropdownMenu.Trigger asChild>
                 <Button variant="secondary" asDropdown size="small">
-                  {edgeType}
+                  {/* {edgeType} */}
                 </Button>
               </DropdownMenu.Trigger>
               <DropdownMenu.Content side="top">
-                {EdgeValues.map((value, index) => {
+                {/* {EdgeValues.map((value, index) => {
                   return (
                     <DropdownMenu.Item
                       key={index}
@@ -47,7 +47,7 @@ export const Settings = () => {
                       {value}
                     </DropdownMenu.Item>
                   );
-                })}
+                })} */}
                 <DropdownMenu.Item></DropdownMenu.Item>
               </DropdownMenu.Content>
             </DropdownMenu>

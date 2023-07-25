@@ -158,116 +158,120 @@ const Wrapper = () => {
     dispatch.ui.removeTab(id);
   };
 
-  const onSave = useCallback(() => {
-    if (!currentTab) {
-      return;
-    }
-    const current = refs[currentTab.id]?.current;
-    if (!current) {
-      alert('No attached tab found');
-      return;
-    }
+  // const onSave = useCallback(() => {
+  //   if (!currentTab) {
+  //     return;
+  //   }
+  //   const current = refs[currentTab.id]?.current;
+  //   if (!current) {
+  //     alert('No attached tab found');
+  //     return;
+  //   }
 
-    const { nodes, edges } = current.save();
-    const state = dispatch.node.getState();
+  //   const { nodes, edges } = current.save();
+  //   const state = dispatch.node.getState();
 
-    const finalState = nodes.reduce((acc, node) => {
-      acc[node.id] = state[node.id];
-      return acc;
-    }, {});
+  //   console.log(state);
+    
 
-    const fileContent = JSON.stringify({
-      nodes,
-      edges,
-      state: finalState,
-      code: ref.current?.textContent,
-    });
+  //   const finalState = nodes.reduce((acc, node) => {
+  //     acc[node.id] = state[node.id];
+  //     return acc;
+  //   }, {});
 
-    const blob = new Blob([fileContent], { type: 'application/json' });
+  //   const fileContent = JSON.stringify({
+  //     nodes,
+  //     edges,
+  //     state: finalState,
+  //     code: ref.current?.textContent,
+  //   });
 
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${currentTab.name}.json`;
-    document.body.appendChild(link);
-    link.click();
+  //   const blob = new Blob([fileContent], { type: 'application/json' });
 
-    // Clean up the URL and link
-    URL.revokeObjectURL(url);
-    document.body.removeChild(link);
-  }, [currentTab, dispatch.node, refs]);
+  //   const url = URL.createObjectURL(blob);
+  //   const link = document.createElement('a');
+  //   link.href = url;
+  //   link.download = `${currentTab.name}.json`;
+  //   document.body.appendChild(link);
+  //   link.click();
+
+  //   // Clean up the URL and link
+  //   URL.revokeObjectURL(url);
+  //   document.body.removeChild(link);
+  // }, [currentTab, dispatch.node, refs]);
 
   const onClear = useCallback(() => {
     if (currentTab) {
       refs[currentTab.id]?.current?.clear();
     }
   }, [currentTab, refs]);
-  const onLoad = useCallback(
-    (e) => {
-      if (currentTab) {
-        const current = refs[currentTab.id]?.current;
-        if (!current) {
-          alert('No attached tab found');
-          return;
-        }
 
-        // create an input element
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.addEventListener('change', function (event) {
-          //@ts-ignore
-          const files = event?.target?.files;
-          const file = files[0];
+  // const onLoad = useCallback(
+  //   (e) => {
+  //     if (currentTab) {
+  //       const current = refs[currentTab.id]?.current;
+  //       if (!current) {
+  //         alert('No attached tab found');
+  //         return;
+  //       }
 
-          // do something with the file, like reading its contents
-          const reader = new FileReader();
-          reader.onload = function () {
-            const resolver = JSON.parse(reader.result as string);
+  //       // create an input element
+  //       const input = document.createElement('input');
+  //       input.type = 'file';
+  //       input.addEventListener('change', function (event) {
+  //         //@ts-ignore
+  //         const files = event?.target?.files;
+  //         const file = files[0];
 
-            const { state, code, ...rest } = resolver;
+  //         // do something with the file, like reading its contents
+  //         const reader = new FileReader();
+  //         reader.onload = function () {
+  //           const resolver = JSON.parse(reader.result as string);
 
-            onClear();
-            //TODO , this needs a refactor. We need to wait for the clear to finish
-            // as the nodes still get one final update by the dispatch before they are removed which
-            // causes nulls to occur everywhere. They need to be unmounted
-            setTimeout(() => {
-              if (code !== undefined) {
-                setTheCode(code);
-              }
-              dispatch.node.setState(state || {});
-              current.load({
-                ...rest,
-              });
-            }, 0);
-          };
-          reader.readAsText(file);
-        });
+  //           const { state, code, ...rest } = resolver;
 
-        // simulate a click on the input element to trigger the file picker dialog
-        input.click();
-      }
-    },
-    [currentTab, dispatch.node, refs],
-  );
+  //           onClear();
+  //           //TODO , this needs a refactor. We need to wait for the clear to finish
+  //           // as the nodes still get one final update by the dispatch before they are removed which
+  //           // causes nulls to occur everywhere. They need to be unmounted
+  //           setTimeout(() => {
+  //             if (code !== undefined) {
+  //               setTheCode(code);
+  //             }
+  //             dispatch.node.setState(state || {});
+  //             current.load({
+  //               ...rest,
+  //             });
+  //           }, 0);
+  //         };
+  //         reader.readAsText(file);
+  //       });
 
-  useEffect(() => {
-    if (!loadedExample) {
-      const { state, code, ...rest } = example;
-      const current = refs[currentTab.id]?.current;
+  //       // simulate a click on the input element to trigger the file picker dialog
+  //       input.click();
+  //     }
+  //   },
+  //   [currentTab, dispatch.node, refs],
+  // );
 
-      if (code !== undefined) {
-        setTheCode(code);
-      }
+  // useEffect(() => {
+  //   if (!loadedExample) {
+  //     const { state, code, ...rest } = example;
+  //     const current = refs[currentTab.id]?.current;
 
-      //Set the state
-      dispatch.node.setState(state || {});
+  //     if (code !== undefined) {
+  //       setTheCode(code);
+  //     }
 
-      current.load({
-        ...rest,
-      });
-      setLoadedExample(true);
-    }
-  }, [refs]);
+  //     //Set the state
+  //     dispatch.node.setState(state || {});
+
+  //     current.load({
+  //       ...rest,
+  //     });
+  //     setLoadedExample(true);
+  //   }
+  // }, [refs]);
 
   const onForceUpdate = useCallback(() => {
     const current = refs[currentTab.id]?.current;
@@ -370,8 +374,8 @@ const Wrapper = () => {
               ></Button>
               <Button onClick={onForceUpdate}>Force Update</Button>
               <Button onClick={onClear}>Clear</Button>
-              <Button onClick={onSave}>Save</Button>
-              <Button onClick={onLoad}>Load</Button>
+              {/* <Button onClick={onSave}>Save</Button>
+              <Button onClick={onLoad}>Load</Button> */}
               <Settings />
             </PageHeader.Actions>
           </PageHeader>

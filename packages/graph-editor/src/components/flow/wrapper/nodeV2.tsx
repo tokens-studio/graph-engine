@@ -91,6 +91,10 @@ export const WrapNode = (
     const input = useSelector(inputSelector(data.id));
 
     const state = useSelector(stateSelector(data.id));
+
+    console.log(state);
+    
+
     const [output, setOutput] = useState<any>(undefined);
 
     const disconnectInput = useCallback((key) => {

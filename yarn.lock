@@ -3140,7 +3140,7 @@
   resolved "https://registry.yarnpkg.com/@rematch/core/-/core-2.2.0.tgz#c4e6cc9d369d341afe2345842f43c255b7a44e90"
   integrity sha512-Sj3nC/2X+bOBZeOf4jdJ00nhCcx9wLbVK9SOs6eFR4Y1qKXqRY0hGigbQgfTpCdjRFlwTHHfN3m41MlNvMhDgw==
 
-"@rematch/persist@2.1.2":
+"@rematch/persist@2.1.2", "@rematch/persist@^2.1.2":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@rematch/persist/-/persist-2.1.2.tgz#1d4b0e91a301e6564c4a80799cc7e98f5b60780f"
   integrity sha512-QiXo3pKCZFv8WW6zeMtBXGOXXp+BuUnoYNpr6p8Euah6gWThoWtbDS8NmlbKj3igmG9TtowuBVSxJCAgFk45zQ==
