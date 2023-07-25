@@ -3,7 +3,7 @@ import tsPlugin from '@rollup/plugin-typescript';
 
 const defaultEntries = [
 	{
-		input: './src/index.tsx',
+		input: './src/index.ts',
 		output: [
 			{
 				preserveModules: true,

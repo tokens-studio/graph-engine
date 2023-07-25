@@ -9,6 +9,8 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "inlineSources": false,
     "isolatedModules": true,
     "moduleResolution": "Node",
@@ -28,13 +30,11 @@
     "noImplicitAny": false,
     "rootDir": "src",
     "experimentalDecorators": true,
-    "allowImportingTsExtensions": true,
     "lib": [
       "esnext",
       "dom",
       "dom.iterable"
     ],
-    "emitDeclarationOnly": true,
     "allowJs": true,
     "sourceMap": true,
     "incremental": true,    

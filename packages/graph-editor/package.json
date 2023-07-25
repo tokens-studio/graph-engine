@@ -3,6 +3,7 @@
   "name": "@tokens-studio/graph-editor",
   "version": "1.0.1",
   "description": "UI for the graph engine",
+  "main": "src/index.ts",
   "author": "pop@hyma.io",
   "type": "module",
   "scripts": {
