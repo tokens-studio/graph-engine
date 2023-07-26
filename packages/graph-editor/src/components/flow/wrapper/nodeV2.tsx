@@ -23,6 +23,7 @@ import React, {
   useState,
 } from 'react';
 import isPromise from 'is-promise';
+import { useOnOutputChange } from '#/context/OutputContext.tsx';
 
 export type UiNodeDefinition = {
   //Name of the Node
@@ -82,6 +83,7 @@ export const WrapNode = (
   nodeDef: UiNodeDefinition,
 ): WrappedNodeDefinition => {
   const WrappedNode = (data) => {
+    const { onOutputChange } = useOnOutputChange();
     const [error, setError] = useState<Error | null>(null);
     const [title, setTitle] = useState<string>(nodeDef.title || '');
     const [isLoading, setIsLoading] = useState(false);
@@ -151,7 +153,7 @@ export const WrapNode = (
           setIsLoading(false);
 
           if (nodeDef.type === NodeTypes.OUTPUT) {
-            // dispatch.output.setCurrentOutput(mappedOutput);
+            onOutputChange(mappedOutput);
           }
           setOutput(mappedOutput);
         }

@@ -167,6 +167,11 @@ const Wrapper = () => {
   const onClear = useCallback(() => {
     if (currentTab) {
       refs[currentTab.id]?.current?.clear();
+
+      dispatch.editorOutput.set({
+        name: currentTab.name,
+        value: undefined,
+      });
     }
   }, [currentTab, refs]);
 
@@ -237,6 +242,13 @@ const Wrapper = () => {
     }
   }, [refs]);
 
+  const onEditorOutputChange = (output: Record<string, unknown>) => {
+    dispatch.editorOutput.set({
+      name: currentTab.name,
+      value: output,
+    });
+  };
+
   const onForceUpdate = useCallback(() => {
     const current = refs[currentTab.id]?.current;
     if (!current) {
@@ -264,7 +276,12 @@ const Wrapper = () => {
           }}
         >
           <ReactFlowProvider>
-            <Editor id={x.id} name={x.name} ref={ref} />
+            <Editor
+              id={x.id}
+              name={x.name}
+              ref={ref}
+              onOutputChange={onEditorOutputChange}
+            />
           </ReactFlowProvider>
         </Tabs.Content>
       );

@@ -9,6 +9,7 @@ export interface InitialSet {
   export type EditorProps = {
     id: string;
     name: string;
+    onOutputChange: (output: Record<string, unknown>) => void;
   };
   
   export type EditorState = {

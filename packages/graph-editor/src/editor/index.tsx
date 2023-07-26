@@ -41,6 +41,7 @@ import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolba
 import groupNode from '../components/flow/groupNode.tsx';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
 import { Tooltip } from '@tokens-studio/ui';
+import { OnOutputChangeContextProvider } from '#/context/OutputContext.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -71,7 +72,7 @@ const defaultEdgeOptions = {
 
 const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
-    const { id, name } = props;
+    const { id, name, onOutputChange } = props;
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
     const reactFlowInstance = useReactFlow();
     const dispatch = useDispatch();
@@ -99,11 +100,6 @@ const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
         clear: () => {
           reactFlowInstance.setNodes([]);
           reactFlowInstance.setEdges([]);
-
-          // dispatch.output.set({
-          //   name,
-          //   value: undefined,
-          // });
         },
         save: () => ({
           nodes: reactFlowInstance.getNodes(),
@@ -130,7 +126,7 @@ const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           }, 1);
         },
       }),
-      [reactFlowInstance, name, dispatch.input],
+      [reactFlowInstance, dispatch.input],
     );
 
     const onConnect = useCallback((params) => {
@@ -330,9 +326,11 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
     return (
       <ReduxProvider>
-        <Tooltip.Provider>
-          <EditorApp {...props} ref={ref} />
-        </Tooltip.Provider>
+        <OnOutputChangeContextProvider onOutputChange={props.onOutputChange}>
+          <Tooltip.Provider>
+            <EditorApp {...props} ref={ref} />
+          </Tooltip.Provider>
+        </OnOutputChangeContextProvider>
       </ReduxProvider>
     );
   },
