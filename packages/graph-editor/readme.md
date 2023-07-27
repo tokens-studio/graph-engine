@@ -37,7 +37,7 @@ export default App;
 
 ## API
 
-The Editor component allows you to build and manage graphs in your application. It provides an API that allows you to use a ref to imperatively call save(), load(), and retrieve the editor state containing nodes, edges, and node states. Below is an example of how to use the Editor component along with its API.
+The Editor component allows you to build and manage token resolver graphs in your application. Below is an example of how to use the Editor component along with its API.
 
 ```jsx
 import React, { useRef } from 'react';
