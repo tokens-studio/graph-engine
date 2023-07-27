@@ -1,7 +1,7 @@
 // https://nextjs.org/docs/advanced-features/custom-app
 import '../scripts/wdyr';
-import 'reactflow/dist/style.css';
-//
+import '@tokens-studio/graph-editor/dist/index.css';
+
 import './default.scss';
 import { AppProps } from 'next/app.ts';
 import { Head } from '#/components/next/index.ts';

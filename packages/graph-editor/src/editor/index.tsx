@@ -1,4 +1,7 @@
 /* eslint-disable react/display-name */
+// import 'reactflow/dist/style.css';
+import '../index.css';
+
 import {
   Background,
   BackgroundVariant,
@@ -13,6 +16,7 @@ import {
   useNodesState,
   useReactFlow,
   useStoreApi,
+  ReactFlowProvider,
 } from 'reactflow';
 import { CustomControls, MiniMapStyled } from '../components/flow/controls.tsx';
 import { NodeTypes as EditorNodeTypes } from '../components/flow/types.tsx';
@@ -326,11 +330,13 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
     return (
       <ReduxProvider>
-        <OnOutputChangeContextProvider onOutputChange={props.onOutputChange}>
-          <Tooltip.Provider>
-            <EditorApp {...props} ref={ref} />
-          </Tooltip.Provider>
-        </OnOutputChangeContextProvider>
+        <ReactFlowProvider>
+          <OnOutputChangeContextProvider onOutputChange={props.onOutputChange}>
+            <Tooltip.Provider>
+              <EditorApp {...props} ref={ref} />
+            </Tooltip.Provider>
+          </OnOutputChangeContextProvider>
+        </ReactFlowProvider>
       </ReduxProvider>
     );
   },

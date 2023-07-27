@@ -16,7 +16,6 @@ import {
   EditorNode,
 } from '@tokens-studio/graph-editor';
 import { LiveProvider } from 'react-live';
-import { ReactFlowProvider } from 'reactflow';
 import { Splitter } from '#/components/splitter.tsx';
 import { code, scope } from '#/components/preview/scope.tsx';
 import { useDispatch } from '#/hooks/index.ts';
@@ -67,7 +66,7 @@ interface ResolverData {
 const Wrapper = () => {
   const currentTab = useSelector(currentTabSelector);
   const tabs = useSelector(tabsSelector);
-  // const reactFlowInstance = useReactFlow();
+
   const [theCode, setTheCode] = useState(code);
   const [loadedExample, setLoadedExample] = useState(false);
   const dispatch = useDispatch();
@@ -275,14 +274,12 @@ const Wrapper = () => {
             display: currentTab?.id === x.id ? 'initial' : 'none',
           }}
         >
-          <ReactFlowProvider>
-            <Editor
-              id={x.id}
-              name={x.name}
-              ref={ref}
-              onOutputChange={onEditorOutputChange}
-            />
-          </ReactFlowProvider>
+          <Editor
+            id={x.id}
+            name={x.name}
+            ref={ref}
+            onOutputChange={onEditorOutputChange}
+          />
         </Tabs.Content>
       );
     });
