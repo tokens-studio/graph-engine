@@ -2309,7 +2309,7 @@
     "@radix-ui/react-use-callback-ref" "1.0.1"
     "@radix-ui/react-use-layout-effect" "1.0.1"
 
-"@radix-ui/react-checkbox@^1.0.1", "@radix-ui/react-checkbox@^1.0.4":
+"@radix-ui/react-checkbox@^1.0.1":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-checkbox/-/react-checkbox-1.0.4.tgz#98f22c38d5010dd6df4c5744cac74087e3275f4b"
   integrity sha512-CBuGQa52aAYnADZVt/KBQzXrwx6TqnlwtcIPGtVt5JkkzQwMOLJjPukimhfKEr4GQNd43C+djUh5Ikopj8pSLg==
@@ -3087,21 +3087,6 @@
     d3-zoom "^3.0.0"
     zustand "^4.3.1"
 
-"@reactflow/core@^11.7.4":
-  version "11.7.4"
-  resolved "https://registry.yarnpkg.com/@reactflow/core/-/core-11.7.4.tgz#1a7e4d6cabbd2ea888547133d507f1ab24896520"
-  integrity sha512-nt0T8ERp8TE7YCDQViaoEY9lb0StDPrWHVx3zBjhStFYET3wc88t8QRasZdf99xRTmyNtI3U3M40M5EBLNUpMw==
-  dependencies:
-    "@types/d3" "^7.4.0"
-    "@types/d3-drag" "^3.0.1"
-    "@types/d3-selection" "^3.0.3"
-    "@types/d3-zoom" "^3.0.1"
-    classcat "^5.0.3"
-    d3-drag "^3.0.0"
-    d3-selection "^3.0.0"
-    d3-zoom "^3.0.0"
-    zustand "^4.3.1"
-
 "@reactflow/minimap@11.5.0":
   version "11.5.0"
   resolved "https://registry.yarnpkg.com/@reactflow/minimap/-/minimap-11.5.0.tgz#ddce263a41c2e65dd2febc09c26e93764ce76bfc"
@@ -3140,7 +3125,7 @@
   resolved "https://registry.yarnpkg.com/@rematch/core/-/core-2.2.0.tgz#c4e6cc9d369d341afe2345842f43c255b7a44e90"
   integrity sha512-Sj3nC/2X+bOBZeOf4jdJ00nhCcx9wLbVK9SOs6eFR4Y1qKXqRY0hGigbQgfTpCdjRFlwTHHfN3m41MlNvMhDgw==
 
-"@rematch/persist@2.1.2", "@rematch/persist@^2.1.2":
+"@rematch/persist@2.1.2":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@rematch/persist/-/persist-2.1.2.tgz#1d4b0e91a301e6564c4a80799cc7e98f5b60780f"
   integrity sha512-QiXo3pKCZFv8WW6zeMtBXGOXXp+BuUnoYNpr6p8Euah6gWThoWtbDS8NmlbKj3igmG9TtowuBVSxJCAgFk45zQ==

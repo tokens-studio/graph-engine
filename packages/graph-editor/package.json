@@ -35,7 +35,6 @@
     "@rematch/persist": "2.1.2",
     "@stitches/react": "1.2.8",
     "@tokens-studio/graph-engine": "*",
-    "@tokens-studio/graph-editor": "*",
     "@tokens-studio/tokens": "0.0.21",
     "@tokens-studio/types": "0.2.3",
     "@tokens-studio/ui": "0.3.0",
@@ -82,12 +81,13 @@
     "wc-context": "0.14.0"
   },
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-typescript": "^11.1.2",
     "@types/graphlib": "2.1.8",
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",
     "prettier": "2.8.7",
-    "@rollup/plugin-node-resolve": "^15.1.0",
-    "@rollup/plugin-typescript": "^11.1.2",
-    "rollup": "^3.10.1"
+    "rollup": "^3.10.1",
+    "rollup-plugin-postcss": "^4.0.2"
   }
 }
