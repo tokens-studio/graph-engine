@@ -1,6 +1,5 @@
 import postcss from 'rollup-plugin-postcss';
-import {nodeResolve} from '@rollup/plugin-node-resolve';
-import tsPlugin from '@rollup/plugin-typescript';
+import typescript from '@rollup/plugin-typescript';
 
 const defaultEntries = [
     {
@@ -15,7 +14,7 @@ const defaultEntries = [
             }
         ],
         plugins: [			
-            tsPlugin({
+            typescript({
                 tsconfig: 'tsconfig.json'
             }),
             postcss({

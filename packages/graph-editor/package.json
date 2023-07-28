@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "@tokens-studio/graph-editor",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "UI for the graph engine",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -52,9 +52,6 @@
     "json5": "2.2.3",
     "jszip": "3.10.1",
     "lit": "2.7.3",
-    "memfs": "4.2.0",
-    "next": "13.3.0",
-    "next-themes": "0.2.1",
     "patch-package": "7.0.0",
     "postcss-value-parser": "4.2.0",
     "prism-react-renderer": "2.0.3",
@@ -65,7 +62,6 @@
     "react-error-boundary": "4.0.4",
     "react-folder-tree": "5.1.1",
     "react-hotkeys": "2.0.0",
-    "react-joyride": "2.5.4",
     "react-live": "4.0.1",
     "react-no-ssr": "1.1.0",
     "react-redux": "8.0.5",
@@ -81,13 +77,13 @@
     "wc-context": "0.14.0"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^15.1.0",
     "@rollup/plugin-typescript": "^11.1.2",
+    "rollup-plugin-postcss": "^4.0.2",
     "@types/graphlib": "2.1.8",
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",
     "prettier": "2.8.7",
     "rollup": "^3.10.1",
-    "rollup-plugin-postcss": "^4.0.2"
+    "typescript": "5.0.4"
   }
 }
