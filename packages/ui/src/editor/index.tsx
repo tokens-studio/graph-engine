@@ -89,7 +89,7 @@ type ImperativeEditor = {
    */
   clear: () => void;
   save: () => void;
-  forceUpdate: () => void;
+  forceUpdate: () => EditorState;
   load: (state: EditorState) => void;
 };
 
