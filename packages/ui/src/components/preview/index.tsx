@@ -1,11 +1,13 @@
 import { LivePreview } from 'react-live';
 import { OutputProvider } from './scope.tsx';
-import { TokenContextProvider } from './contextExamples/lion/index.ts';
 import { useSelector } from 'react-redux';
-import { output as outputSelector } from '#/redux/selectors/roots.ts';
+import React from 'react';
+import { outputSelector } from '#/redux/selectors/index.ts';
+import { TokenContextProvider } from './contextExamples/lion/context.ts';
 
 export const Preview = () => {
   const output = useSelector(outputSelector);
+
   return (
     <div id="preview">
       <OutputProvider value={output}>
