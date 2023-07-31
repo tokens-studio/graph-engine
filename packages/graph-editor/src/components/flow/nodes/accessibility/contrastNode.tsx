@@ -1,5 +1,8 @@
 import { Checkbox, Label, Stack, Text } from '@tokens-studio/ui';
-import { Handle, HandleContainer } from '../../../../components/flow/handles.tsx';
+import {
+  Handle,
+  HandleContainer,
+} from '../../../../components/flow/handles.tsx';
 import { PreviewColor } from '../../preview/color.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/accessibility/contrast.js';

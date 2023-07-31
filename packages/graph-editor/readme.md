@@ -5,7 +5,7 @@
 
 ## Description
 
-Graph editor component 
+Graph editor component
 
 ## Installation
 
@@ -16,11 +16,13 @@ npm install @tokens-studio/graph-editor
 ```
 
 ## Basic Usage
+
 To use the exported editor component, make sure to import the global styles as well:
 
 ```jsx
 import React from 'react';
 import { Editor } from '@tokens-studio/graph-editor';
+//Load the required styles
 import '@tokens-studio/graph-editor/dist/index.css';
 
 function App() {
@@ -32,7 +34,6 @@ function App() {
 }
 
 export default App;
-
 ```
 
 ## API
@@ -42,7 +43,7 @@ The Editor component allows you to build and manage token resolver graphs in you
 ```jsx
 import React, { useRef } from 'react';
 import { Editor } from '@tokens-studio/graph-editor';
-import '@tokens-studio/graph-editor/dist/index.css'; // Make sure to import the global styles
+import '@tokens-studio/graph-editor/index.css'; // Make sure to import the global styles
 
 function MyGraphEditor() {
   const editorRef = useRef(null);

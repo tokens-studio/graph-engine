@@ -28,14 +28,12 @@ export const MiniMapStyled = styled(MiniMap, {
   },
 });
 
-
-
 export const CustomControls = (props: ControlProps) => {
   return (
     <ControlsStyled {...props}>
-      <ControlButton onClick={() => console.log('action')} title="action">
+      <ControlButton title="action">
         <Settings />
       </ControlButton>
     </ControlsStyled>
   );
-}
+};

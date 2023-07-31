@@ -6,7 +6,7 @@ import { outputState } from './output.tsx';
 export const models: RootModel = {
   ui: uiState,
   journey: journeyState,
-  editorOutput: outputState
+  editorOutput: outputState,
 };
 
 export type { RootModel } from './root.ts';

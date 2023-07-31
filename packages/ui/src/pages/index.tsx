@@ -270,6 +270,7 @@ const Wrapper = () => {
             height: '100%',
             position: 'absolute',
             width: '100%',
+            background: '$bgCanvas',
             top: 0,
             display: currentTab?.id === x.id ? 'initial' : 'none',
           }}

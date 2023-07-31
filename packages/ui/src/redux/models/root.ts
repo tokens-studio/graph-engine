@@ -6,5 +6,5 @@ import { outputState } from './output.tsx';
 export interface RootModel extends Models<RootModel> {
   ui: typeof uiState;
   journey: typeof journeyState;
-  editorOutput: typeof outputState
+  editorOutput: typeof outputState;
 }
