@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "@tokens-studio/graph-editor",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "UI for the graph engine",
   "author": "pop@hyma.io",
   "type": "module",
