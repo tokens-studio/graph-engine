@@ -1,5 +1,6 @@
 import react from 'react';
 const OutputContext = react.createContext({});
+import React from 'react';
 
 export const OutputProvider = ({ children, value = {} }) => {
   return (

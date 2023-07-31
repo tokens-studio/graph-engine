@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import {
   execute,
   nodes,
@@ -28,7 +28,20 @@ import {
   State,
 } from '@tokens-studio/graph-engine/nodes/generic/input.js';
 import { scope } from '#/components/preview/scope.tsx';
-import { InformationIcon } from '@iconicicons/react';
+import { DndProvider, useDrag, useDrop } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import {
+  createColumnHelper,
+  flexRender,
+  Table,
+  Column,
+  Header,
+  getCoreRowModel,
+  ColumnOrderState,
+  useReactTable,
+} from '@tanstack/react-table';
+
+import { InformationIcon, PauseIcon } from '@iconicicons/react';
 
 type DefinitionMap = Record<string, TypeDefinition>;
 
@@ -60,53 +73,159 @@ function getGraphInput(graphData: GraphFile): DefinitionMap | null {
   }
 }
 
-const CheckboxGroup = ({ name, options, onCheckboxChange }) => (
-  <Box
-    css={{
-      border: '1px solid $borderMuted',
-      borderRadius: '$medium',
-      minWidth: '300px',
-      padding: '$3',
-    }}
-  >
-    <Stack direction="column" gap={2}>
-      <Heading size="medium">{name}</Heading>
-      <Separator orientation="horizontal" />
-      {options.map((option) => (
+const CheckboxGroup = ({ name, options, onCheckboxChange }) => {
+  const allSelected = options.every((option) => option.selected);
+
+  const onAllCheckboxChange = (value) => {
+    options.forEach((option) => {
+      onCheckboxChange(value, option.name, name);
+    });
+  };
+
+  return (
+    <Box
+      css={{
+        border: '1px solid $borderMuted',
+        borderRadius: '$medium',
+        minWidth: '300px',
+        padding: '$3',
+      }}
+    >
+      <Stack direction="column" gap={2}>
+        <Heading size="medium">{name}</Heading>
+        <Separator orientation="horizontal" />
+        {options.map((option) => (
+          <Stack align="center" gap={3}>
+            <Checkbox
+              id={`${name}-${option.name}`}
+              checked={option.selected}
+              onCheckedChange={(e) => onCheckboxChange(e, option.name, name)}
+            />
+            <Label key={option.name} htmlFor={`${name}-${option.name}`}>
+              {option.name}
+            </Label>
+          </Stack>
+        ))}
+        <Separator orientation="horizontal" />
         <Stack align="center" gap={3}>
           <Checkbox
-            id={`${name}-${option.name}`}
-            checked={option.selected}
-            onCheckedChange={(e) => onCheckboxChange(e, option.name, name)}
+            id={`${name}--select-all`}
+            checked={allSelected}
+            onCheckedChange={onAllCheckboxChange}
           />
-          <Label key={option.name} htmlFor={`${name}-${option.name}`}>
-            {option.name}
+          <Label key={`${name}--select-all`} htmlFor={`${name}--select-all`}>
+            Select all
           </Label>
         </Stack>
-      ))}
-      <Separator orientation="horizontal" />
-      {/* <Stack align='center' gap={3}>
-                <Checkbox
-                id={`${name}--select-all`}
-                checked={option.selected}
-                onCheckedChange={(e) =>    onCheckboxChange(e,option.name, name)}
-            />
-                <Label key={option.name}  htmlFor={option.name}>{option.name}
-                </Label>
-            </Stack> */}
-    </Stack>
-  </Box>
-);
+      </Stack>
+    </Box>
+  );
+};
+
+const inputValuesToName = (options) => {
+  return Object.entries(options)
+    .reduce((acc, [key, value]) => {
+      acc.push(`${key}=${value}`);
+      return acc;
+    })
+    .join(', ');
+};
 
 type OptionValue = { name: string; selected: boolean };
 
+type PermutationType = {
+  inputValues: Record<string, string>;
+  result: any;
+};
+
+const columnHelper = createColumnHelper<PermutationType>();
+
+const columns = [
+  columnHelper.accessor('inputValues', {
+    header: () => <span>Input Values</span>,
+    cell: (info) => inputValuesToName(info.getValue()),
+  }),
+  columnHelper.accessor('result', {
+    header: () => <span>Preview</span>,
+    cell: (info) => (
+      <OutputProvider value={info.getValue()}>
+        <TokenContextProvider context={info.getValue()}>
+          <LivePreview />
+        </TokenContextProvider>
+      </OutputProvider>
+    ),
+  }),
+];
+
+const reorderColumn = (
+  draggedColumnId: string,
+  targetColumnId: string,
+  columnOrder: string[],
+): ColumnOrderState => {
+  columnOrder.splice(
+    columnOrder.indexOf(targetColumnId),
+    0,
+    columnOrder.splice(columnOrder.indexOf(draggedColumnId), 1)[0] as string,
+  );
+  return [...columnOrder];
+};
+
+const DraggableColumnHeader: React.FC<{
+  header: Header<PermutationType, unknown>;
+  table: Table<PermutationType>;
+}> = ({ header, table }) => {
+  const { getState, setColumnOrder } = table;
+  const { columnOrder } = getState();
+  const { column } = header;
+
+  const [, dropRef] = useDrop({
+    accept: 'column',
+    drop: (draggedColumn: Column<PermutationType>) => {
+      const newColumnOrder = reorderColumn(
+        draggedColumn.id,
+        column.id,
+        columnOrder,
+      );
+      setColumnOrder(newColumnOrder);
+    },
+  });
+
+  const [{ isDragging }, dragRef, previewRef] = useDrag({
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+    item: () => column,
+    type: 'column',
+  });
+
+  return (
+    <th
+      ref={dropRef}
+      colSpan={header.colSpan}
+      style={{ opacity: isDragging ? 0.5 : 1 }}
+    >
+      <div ref={previewRef}>
+        {header.isPlaceholder
+          ? null
+          : flexRender(header.column.columnDef.header, header.getContext())}
+        <button ref={dragRef}>
+          <PauseIcon />
+        </button>
+      </div>
+    </th>
+  );
+};
+
 function Permutate() {
   const [permutations, setPermutations] = useState(0);
-  const [results, setResults] = useState<any>([]);
+  const [results, setResults] = useState<PermutationType[]>([]);
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, OptionValue[]>
   >({});
   const [loading, setLoading] = useState(false);
+  const [columnOrder, setColumnOrder] = React.useState<ColumnOrderState>(
+    columns.map((column) => column.id as string), //must start out with populated columnOrder so we can splice
+  );
 
   const [graph, setGraph] = useState<GraphFile | null>(null);
   const [graphInfo, setGraphInfo] = useState<DefinitionMap | null>(null);
@@ -182,17 +301,18 @@ function Permutate() {
 
   const handleCheckboxChange = useCallback(
     (selected, key, groupKey) => {
-      const newOptions = {
-        ...selectedOptions,
-        [groupKey]: selectedOptions[groupKey].map((option) =>
-          option.name === key ? { ...option, selected } : option,
-        ),
-      };
-
-      setSelectedOptions(newOptions);
-      calculatePermutations(newOptions);
+      setSelectedOptions((selectedOptions) => {
+        const newOptions = {
+          ...selectedOptions,
+          [groupKey]: selectedOptions[groupKey].map((option) =>
+            option.name === key ? { ...option, selected } : option,
+          ),
+        };
+        calculatePermutations(newOptions);
+        return newOptions;
+      });
     },
-    [calculatePermutations, selectedOptions],
+    [calculatePermutations],
   );
 
   const onPermutate = useCallback(async () => {
@@ -234,11 +354,26 @@ function Permutate() {
         nodes,
       });
 
-      setResults((results) => [...results, result]);
+      const final = {
+        inputValues,
+        result,
+      };
+
+      setResults((results) => [...results, final]);
     });
     await Promise.all(promises);
     setLoading(false);
   }, [graph, loading, selectedOptions]);
+
+  const table = useReactTable<PermutationType>({
+    data: results,
+    columns,
+    state: {
+      columnOrder,
+    },
+    onColumnOrderChange: setColumnOrder,
+    getCoreRowModel: getCoreRowModel(),
+  });
 
   return (
     <Stack
@@ -259,15 +394,13 @@ function Permutate() {
         language="jsx"
       >
         <Stack justify="between">
-          <Heading style={{ paddingLeft: '2rem' }}>
-            Total Permutations: {permutations}
-          </Heading>
+          <Heading>Total Permutations: {permutations}</Heading>
           <Box>
             <Button onClick={onUpload}>Upload Graph</Button>
           </Box>
         </Stack>
         {graphInfo && (
-          <Stack gap={2}>
+          <Stack gap={4}>
             {Object.keys(graphInfo).map((key) => (
               <CheckboxGroup
                 key={key}
@@ -309,16 +442,6 @@ function Permutate() {
                     </Box>
                   </Accordion.Content>
                 </Accordion.Item>
-
-                {/* //         <Accordion.Item value={key}>
-            //     <StyledAccordingTrigger>
-            //       {key.charAt(0).toUpperCase() + key.slice(1)}
-            //       <Separator orientation="horizontal" />
-            //     </StyledAccordingTrigger>
-            //     <Accordion.Content>
-            //       <EntryGroup>{vals}</EntryGroup>
-            //     </Accordion.Content>
-            //   </Accordion.Item> */}
               </Accordion>
             </Box>
           )}
@@ -330,18 +453,70 @@ function Permutate() {
             </Button>
           </Stack>
         </Box>
-        {!!results.length && (
-          <>
-            <Heading size="medium">Results</Heading>
+        <DndProvider backend={HTML5Backend}>
+          {!!results.length && (
+            <>
+              <Heading size="medium">Results</Heading>
+              <table>
+                <thead>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <tr key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => (
+                        <DraggableColumnHeader
+                          key={header.id}
+                          header={header}
+                          table={table}
+                        />
+                      ))}
+                    </tr>
+                  ))}
+                </thead>
+                <tbody>
+                  {table.getRowModel().rows.map((row) => (
+                    <tr key={row.id}>
+                      {row.getVisibleCells().map((cell) => (
+                        <td key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  {table.getFooterGroups().map((footerGroup) => (
+                    <tr key={footerGroup.id}>
+                      {footerGroup.headers.map((header) => (
+                        <th key={header.id} colSpan={header.colSpan}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.footer,
+                                header.getContext(),
+                              )}
+                        </th>
+                      ))}
+                    </tr>
+                  ))}
+                </tfoot>
+              </table>
+
+              {/* 
             {results.map((result, index) => (
-              <OutputProvider value={result}>
+              <Stack>
+                <Label>{inputValuesToName(result.inputValues)}</Label>
+              <OutputProvider value={result.result}>
                 <TokenContextProvider context={result}>
                   <LivePreview />
                 </TokenContextProvider>
               </OutputProvider>
-            ))}
-          </>
-        )}
+              </Stack>
+            ))} */}
+            </>
+          )}
+        </DndProvider>
       </LiveProvider>
     </Stack>
   );
