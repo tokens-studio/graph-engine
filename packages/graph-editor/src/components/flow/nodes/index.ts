@@ -58,6 +58,8 @@ import convertNode from './color/convertNode.tsx';
 import wheelNode from './color/wheelNode.tsx';
 import parseUnit from './generic/parseUnit.tsx';
 import jsonNode from './generic/jsonNode.tsx';
+import cssBox from './css/boxNode.tsx';
+import concat from './array/concat.tsx';
 
 const processTypes = (types: WrappedNodeDefinition[]) => {
   const nodeTypes = types.reduce((acc, type) => {
@@ -136,4 +138,6 @@ export const { nodeTypes, stateInitializer } = processTypes([
   InputNode,
   OutputNode,
   wheelNode,
+  cssBox,
+  concat,
 ]);

@@ -36,12 +36,27 @@ import {
   Table,
   Column,
   Header,
+  GroupingState,
+  SortingState,
+  getExpandedRowModel,
+  getFilteredRowModel,
+  getSortedRowModel,
+  getGroupedRowModel,
   getCoreRowModel,
   ColumnOrderState,
+  ColumnResizeMode,
   useReactTable,
 } from '@tanstack/react-table';
 
-import { InformationIcon, PauseIcon } from '@iconicicons/react';
+import {
+  ChevronDownIcon,
+  ChevronRightIcon,
+  ChevronUpIcon,
+  FolderMinusIcon,
+  FolderPlusIcon,
+  InformationIcon,
+  PauseIcon,
+} from '@iconicicons/react';
 
 type DefinitionMap = Record<string, TypeDefinition>;
 
@@ -122,15 +137,6 @@ const CheckboxGroup = ({ name, options, onCheckboxChange }) => {
   );
 };
 
-const inputValuesToName = (options) => {
-  return Object.entries(options)
-    .reduce((acc, [key, value]) => {
-      acc.push(`${key}=${value}`);
-      return acc;
-    })
-    .join(', ');
-};
-
 type OptionValue = { name: string; selected: boolean };
 
 type PermutationType = {
@@ -139,23 +145,6 @@ type PermutationType = {
 };
 
 const columnHelper = createColumnHelper<PermutationType>();
-
-const columns = [
-  columnHelper.accessor('inputValues', {
-    header: () => <span>Input Values</span>,
-    cell: (info) => inputValuesToName(info.getValue()),
-  }),
-  columnHelper.accessor('result', {
-    header: () => <span>Preview</span>,
-    cell: (info) => (
-      <OutputProvider value={info.getValue()}>
-        <TokenContextProvider context={info.getValue()}>
-          <LivePreview />
-        </TokenContextProvider>
-      </OutputProvider>
-    ),
-  }),
-];
 
 const reorderColumn = (
   draggedColumnId: string,
@@ -175,8 +164,9 @@ const DraggableColumnHeader: React.FC<{
   table: Table<PermutationType>;
 }> = ({ header, table }) => {
   const { getState, setColumnOrder } = table;
-  const { columnOrder } = getState();
+  const state = getState();
   const { column } = header;
+  const { columnOrder } = state;
 
   const [, dropRef] = useDrop({
     accept: 'column',
@@ -202,33 +192,110 @@ const DraggableColumnHeader: React.FC<{
     <th
       ref={dropRef}
       colSpan={header.colSpan}
-      style={{ opacity: isDragging ? 0.5 : 1 }}
+      style={{ opacity: isDragging ? 0.5 : 1, width: header.getSize() }}
     >
       <div ref={previewRef}>
-        {header.isPlaceholder
-          ? null
-          : flexRender(header.column.columnDef.header, header.getContext())}
-        <button ref={dragRef}>
-          <PauseIcon />
-        </button>
+        <Stack align="center" justify="between" gap={4}>
+          {header.isPlaceholder ? null : (
+            <Stack gap={2} align="center">
+              {header.column.getCanGroup() ? (
+                // If the header can be grouped, let's add a toggle
+                <IconButton
+                  variant="invisible"
+                  onClick={header.column.getToggleGroupingHandler()}
+                  icon={
+                    header.column.getIsGrouped() ? (
+                      <FolderMinusIcon />
+                    ) : (
+                      <FolderPlusIcon />
+                    )
+                  }
+                />
+              ) : null}
+              <Stack
+                align="center"
+                gap={2}
+                {...{
+                  className: header.column.getCanSort()
+                    ? 'cursor-pointer select-none'
+                    : '',
+                  onClick: header.column.getToggleSortingHandler(),
+                }}
+              >
+                <Label>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </Label>
+                {{
+                  asc: <ChevronUpIcon />,
+                  desc: <ChevronDownIcon />,
+                }[header.column.getIsSorted() as string] ?? null}
+              </Stack>
+            </Stack>
+          )}
+          <IconButton ref={dragRef} variant="invisible" icon={<PauseIcon />} />
+        </Stack>
       </div>
+      <div
+        {...{
+          onMouseDown: header.getResizeHandler(),
+          onTouchStart: header.getResizeHandler(),
+          className: `resizer ${
+            header.column.getIsResizing() ? 'isResizing' : ''
+          }`,
+        }}
+      />
     </th>
   );
 };
 
 function Permutate() {
+  const [graph, setGraph] = useState<GraphFile | null>(null);
+  const [graphInfo, setGraphInfo] = useState<DefinitionMap | null>(null);
   const [permutations, setPermutations] = useState(0);
   const [results, setResults] = useState<PermutationType[]>([]);
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, OptionValue[]>
   >({});
   const [loading, setLoading] = useState(false);
-  const [columnOrder, setColumnOrder] = React.useState<ColumnOrderState>(
-    columns.map((column) => column.id as string), //must start out with populated columnOrder so we can splice
-  );
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [grouping, setGrouping] = React.useState<GroupingState>([]);
 
-  const [graph, setGraph] = useState<GraphFile | null>(null);
-  const [graphInfo, setGraphInfo] = useState<DefinitionMap | null>(null);
+  const [columnResizeMode, setColumnResizeMode] =
+    React.useState<ColumnResizeMode>('onChange');
+  const [columnOrder, setColumnOrder] = React.useState<ColumnOrderState>([]);
+
+  const columns = useMemo(() => {
+    if (!graphInfo) return [];
+
+    const initial = Object.keys(graphInfo).map((key) => {
+      return columnHelper.accessor((x) => x.inputValues[key], {
+        id: key,
+        header: () => <span>{key}</span>,
+        aggregatedCell: ({ getValue }) => getValue(),
+        cell: (info) => info.getValue(),
+      });
+    });
+
+    setColumnOrder([...(initial.map((x) => x.id) as string[]), 'result']);
+    return [
+      ...initial,
+      columnHelper.accessor('result', {
+        header: () => <span>Preview</span>,
+        enableGrouping: false,
+        enableSorting: false,
+        cell: (info) => (
+          <OutputProvider value={info.getValue()}>
+            <TokenContextProvider context={info.getValue()}>
+              <LivePreview />
+            </TokenContextProvider>
+          </OutputProvider>
+        ),
+      }),
+    ];
+  }, [graphInfo]);
 
   const onUpload = useCallback(() => {
     // create an input element
@@ -347,7 +414,6 @@ function Permutate() {
         result[key] = value;
         return result;
       }, {});
-
       const result = await execute({
         graph: minimizedGraph,
         inputValues: inputValues,
@@ -358,21 +424,29 @@ function Permutate() {
         inputValues,
         result,
       };
-
       setResults((results) => [...results, final]);
-    });
+    }, 1);
+
     await Promise.all(promises);
     setLoading(false);
   }, [graph, loading, selectedOptions]);
-
   const table = useReactTable<PermutationType>({
     data: results,
     columns,
+    columnResizeMode,
     state: {
+      grouping,
+      sorting,
       columnOrder,
     },
+    onGroupingChange: setGrouping,
+    onSortingChange: setSorting,
     onColumnOrderChange: setColumnOrder,
+    getExpandedRowModel: getExpandedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getCoreRowModel: getCoreRowModel(),
+    getGroupedRowModel: getGroupedRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   return (
@@ -448,7 +522,7 @@ function Permutate() {
 
           <Stack gap={3}>
             <Button onClick={onReset}>Reset</Button>
-            <Button loading={loading} onClick={onPermutate} variant="primary">
+            <Button disabled={!graph} loading={loading} onClick={onPermutate}>
               Generate Permutations
             </Button>
           </Stack>
@@ -472,48 +546,77 @@ function Permutate() {
                   ))}
                 </thead>
                 <tbody>
-                  {table.getRowModel().rows.map((row) => (
-                    <tr key={row.id}>
-                      {row.getVisibleCells().map((cell) => (
-                        <td key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-                <tfoot>
-                  {table.getFooterGroups().map((footerGroup) => (
-                    <tr key={footerGroup.id}>
-                      {footerGroup.headers.map((header) => (
-                        <th key={header.id} colSpan={header.colSpan}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.footer,
-                                header.getContext(),
-                              )}
-                        </th>
-                      ))}
-                    </tr>
-                  ))}
-                </tfoot>
-              </table>
+                  {table.getRowModel().rows.map((row) => {
+                    return (
+                      <tr key={row.id}>
+                        {row.getVisibleCells().map((cell) => {
+                          let borderColor = 'var(--colors-borderDefault)';
+                          if (cell.getIsGrouped()) {
+                            borderColor = 'var(--colors-successBorder)';
+                          } else if (cell.getIsAggregated()) {
+                            borderColor = 'var(--colors-borderSubtle)';
+                          } else if (cell.getIsPlaceholder()) {
+                            borderColor = 'var(--colors-borderMuted)';
+                          }
 
-              {/* 
-            {results.map((result, index) => (
-              <Stack>
-                <Label>{inputValuesToName(result.inputValues)}</Label>
-              <OutputProvider value={result.result}>
-                <TokenContextProvider context={result}>
-                  <LivePreview />
-                </TokenContextProvider>
-              </OutputProvider>
-              </Stack>
-            ))} */}
+                          return (
+                            <td
+                              {...{
+                                key: cell.id,
+                                style: {
+                                  boxShadow: `inset 0 0 0 1px ${borderColor}`,
+                                },
+                              }}
+                            >
+                              {cell.getIsGrouped() ? (
+                                // If it's a grouped cell, add an expander and row count
+                                <>
+                                  <Button
+                                    variant="invisible"
+                                    {...{
+                                      onClick: row.getToggleExpandedHandler(),
+                                      style: {
+                                        cursor: row.getCanExpand()
+                                          ? 'pointer'
+                                          : 'normal',
+                                      },
+                                    }}
+                                  >
+                                    {row.getIsExpanded() ? (
+                                      <ChevronDownIcon />
+                                    ) : (
+                                      <ChevronRightIcon />
+                                    )}{' '}
+                                    {flexRender(
+                                      cell.column.columnDef.cell,
+                                      cell.getContext(),
+                                    )}{' '}
+                                    ({row.subRows.length})
+                                  </Button>
+                                </>
+                              ) : cell.getIsAggregated() ? (
+                                // If the cell is aggregated, use the Aggregated
+                                // renderer for cell
+                                flexRender(
+                                  cell.column.columnDef.aggregatedCell ??
+                                    cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )
+                              ) : cell.getIsPlaceholder() ? null : ( // For cells with repeated values, render null
+                                // Otherwise, just render the regular cell
+                                flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )
+                              )}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </>
           )}
         </DndProvider>

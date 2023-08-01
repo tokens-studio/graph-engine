@@ -78,6 +78,7 @@ export enum NodeTypes {
   JSON = "studio.tokens.input.json",
 
   CSS_MAP = "studio.tokens.css.map",
+  CSS_BOX = "studio.tokens.css.box",
 
   //Logic
   IF = "studio.tokens.logic.if",
@@ -93,6 +94,7 @@ export enum NodeTypes {
   REVERSE = "studio.tokens.array.reverse",
   SLICE = "studio.tokens.array.slice",
   JOIN = "studio.tokens.array.join",
+  CONCAT = "studio.tokens.array.concat",
   DOT_PROP = "studio.tokens.array.dotProp",
 
   // Math

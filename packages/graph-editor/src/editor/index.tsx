@@ -157,7 +157,7 @@ export const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
           }, 1);
         },
       }),
-      [reactFlowInstance, dispatch.input],
+      [reactFlowInstance, nodeState, dispatch.input, dispatch.node],
     );
 
     const onConnect = useCallback((params) => {

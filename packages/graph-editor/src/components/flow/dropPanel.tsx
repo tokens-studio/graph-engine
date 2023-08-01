@@ -21,6 +21,7 @@ import {
 } from '@radix-ui/react-icons';
 import { flatten } from '#/utils/index.ts';
 import icons from './icons.tsx';
+import { BoxIcon } from '@iconicicons/react';
 
 //@ts-ignore
 const presetFlattened = flatten(preset);
@@ -156,6 +157,11 @@ const types = {
       type: NodeTypes.CSS_MAP,
       icon: './x',
       text: 'CSS Map',
+    },
+    {
+      type: NodeTypes.CSS_BOX,
+      icon: <BoxIcon />,
+      text: 'CSS Box',
     },
     {
       type: NodeTypes.OUTPUT,
@@ -340,6 +346,11 @@ const types = {
       icon: '[,]',
       text: 'Join Array',
     },
+    {
+      type: NodeTypes.CONCAT,
+      icon: '[][]',
+      text: 'Concat Array',
+    },
   ],
   sets: [
     {
@@ -495,19 +506,15 @@ const types = {
 
 const DropPanel = () => {
   const [search, setSearch] = React.useState('');
-  const [defaultValue, setDefaultValue] = React.useState<string | string[]>(
+  const [defaultValue, setDefaultValue] = React.useState<string | string[]>([
     'generic',
-  );
-
-  const [type, setType] = React.useState('multiple');
+  ]);
 
   const onSearch = (e) => {
     setSearch(e.target.value);
     if (e.target.value === '') {
-      setType('single');
       setDefaultValue('generic');
     } else {
-      setType('multiple');
       setDefaultValue(Object.keys(types));
     }
   };
@@ -518,7 +525,11 @@ const DropPanel = () => {
         <Box css={{ padding: '$4' }}>
           <TextInput placeholder="Search" value={search} onChange={onSearch} />
         </Box>
-        <Accordion type={type} collapsible={false} defaultValue={defaultValue}>
+        <Accordion
+          type="multiple"
+          collapsible={false}
+          defaultValue={defaultValue}
+        >
           {Object.entries(types).map(([key, values]) => {
             const vals = values
               .filter((item) =>

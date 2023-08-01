@@ -5,3 +5,5 @@ docs
 site
 cypress
 cli
+.rollup.cache
+.turbo
