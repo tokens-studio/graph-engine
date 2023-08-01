@@ -1,5 +1,15 @@
 # @tokens-studio/graph-engine
 
+## 0.6.0
+
+### Minor Changes
+
+- 732f6ee: - Adds a parse Unit node.
+  - Adds `align-items` to the exposed UI
+  - Adds native supports for tokenSets in input
+  - Adds Json node (alpha)
+- 732f6ee: Added new nodes for array concatenation and css box models
+
 ## 0.5.0
 
 ### Minor Changes

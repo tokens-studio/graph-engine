@@ -1,5 +1,18 @@
 # @tokens-studio/graph-editor
 
+## 1.2.0
+
+### Minor Changes
+
+- 732f6ee: Added new nodes for array concatenation and css box models
+
+### Patch Changes
+
+- 732f6ee: Fix changeset
+- Updated dependencies [732f6ee]
+- Updated dependencies [732f6ee]
+  - @tokens-studio/graph-engine@0.6.0
+
 ## 1.1.0
 
 ### Minor Changes
