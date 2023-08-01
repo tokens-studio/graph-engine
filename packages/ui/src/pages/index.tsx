@@ -35,7 +35,7 @@ import {
   tabs as tabsSelector,
   currentTab as currentTabSelector,
 } from '#/redux/selectors/index.ts';
-import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
+import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 import { v4 as uuidv4 } from 'uuid';
 // @ts-ignore
 import { themes } from 'prism-react-renderer';

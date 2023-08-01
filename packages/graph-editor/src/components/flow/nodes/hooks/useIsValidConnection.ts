@@ -6,6 +6,10 @@ export interface IuseIsValidConnection {
   postProcessor?: (params: Edge) => boolean;
 }
 
+export interface IuseIsValidConnection {
+  postProcessor?: (params: Edge) => boolean;
+}
+
 export const useIsValidConnection = ({
   postProcessor,
 }: IuseIsValidConnection = {}) => {

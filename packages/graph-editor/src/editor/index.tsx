@@ -74,7 +74,34 @@ const defaultEdgeOptions = {
   },
 };
 
-const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
+export interface InitialSet {
+  urn: string;
+  parentNode: string;
+  name: string;
+}
+
+type EditorProps = {
+  id: string;
+  name: string;
+};
+
+type EditorState = {
+  nodes: Node[];
+  edges: Edge[];
+};
+
+type ImperativeEditor = {
+  /**
+   * Clears the editor of all nodes and edges
+   * @returns
+   */
+  clear: () => void;
+  save: () => void;
+  forceUpdate: () => EditorState;
+  load: (state: EditorState) => void;
+};
+
+export const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
   (props: EditorProps, ref) => {
     const { id, name, onOutputChange } = props;
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
@@ -130,7 +157,7 @@ const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           }, 1);
         },
       }),
-      [reactFlowInstance, dispatch.input],
+      [reactFlowInstance, nodeState, dispatch.input, dispatch.node],
     );
 
     const onConnect = useCallback((params) => {

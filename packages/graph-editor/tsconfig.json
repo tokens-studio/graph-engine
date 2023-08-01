@@ -10,7 +10,6 @@
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "allowImportingTsExtensions": true,
-    "noEmit": true,
     "inlineSources": false,
     "isolatedModules": true,
     "noUnusedLocals": false,

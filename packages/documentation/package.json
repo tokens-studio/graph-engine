@@ -1,18 +1,18 @@
 {
-  "name": "@tokens-studio/graph-engine-docs",
   "private": true,
+  "name": "@tokens-studio/graph-engine-docs",
   "version": "1.0.0",
   "description": "Graph engine documentation",
+  "license": "MIT",
   "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
+    "build": "next build && next export",
+    "dev": "next",
     "format": "prettier --ignore-path .gitignore \"pages/**/*.+(ts|js|tsx|mdx)\" --write",
     "format:check": "prettier -c .",
-    "dev": "next",
-    "start": "next start",
-    "build": "next build && next export"
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "start": "next start"
   },
-  "license": "MIT",
   "dependencies": {
     "autoprefixer": "^10.4.2",
     "next": "^13.1.2",

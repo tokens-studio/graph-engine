@@ -1,0 +1,17 @@
+# Purpose
+
+The concatenation node allows for joining multiple arrays together into a single array.
+
+You could use it to join together the results of multiple series for example to create a single series. Note that the order of the arrays is important as the output will be in the same order.
+
+## Inputs
+
+| Name              | Type         | Description      | Required |
+| :---------------- | :----------- | :--------------- | -------- |
+| < Dynamic index > | `array<any>` | An array to join | False    |
+
+## Output
+
+| Name   | Type         | Description                                   |
+| :----- | :----------- | :-------------------------------------------- |
+| Output | `array<any>` | The new array with all values joined together |
