@@ -80,11 +80,6 @@ export interface InitialSet {
   name: string;
 }
 
-type EditorProps = {
-  id: string;
-  name: string;
-};
-
 type EditorState = {
   nodes: Node[];
   edges: Edge[];
@@ -103,7 +98,6 @@ type ImperativeEditor = {
 
 export const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
   (props: EditorProps, ref) => {
-    const { id, name, onOutputChange } = props;
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
     const reactFlowInstance = useReactFlow();
     const dispatch = useDispatch();
