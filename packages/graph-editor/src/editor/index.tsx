@@ -32,7 +32,7 @@ import { nodeTypes, stateInitializer } from '../components/flow/nodes/index.ts';
 import { useDispatch } from '../hooks/index.ts';
 import { v4 as uuidv4 } from 'uuid';
 import CustomEdge from '../components/flow/edges/edge.tsx';
-import DropPanel from '../components/flow/dropPanel.tsx';
+import { DropPanel } from '../components/flow/DropPanel/Panel.tsx';
 import React, {
   MouseEvent,
   useCallback,
@@ -80,23 +80,8 @@ export interface InitialSet {
   name: string;
 }
 
-type EditorState = {
-  nodes: Node[];
-  edges: Edge[];
-};
 
-type ImperativeEditor = {
-  /**
-   * Clears the editor of all nodes and edges
-   * @returns
-   */
-  clear: () => void;
-  save: () => void;
-  forceUpdate: () => EditorState;
-  load: (state: EditorState) => void;
-};
-
-export const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
+export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
     const reactFlowInstance = useReactFlow();
@@ -291,7 +276,7 @@ export const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
       <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
         <div
           className="editor"
-          style={{ height: '100%' }}
+          style={{ height: '100%', border: '1px solid red' }}
           ref={reactFlowWrapper}
         >
           <ForceUpdateProvider value={forceUpdate}>
@@ -329,7 +314,7 @@ export const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
               <SelectedNodesToolbar />
               <CustomControls position="top-right" />
               <Panel id="drop-panel" position="top-left">
-                <DropPanel />
+                <DropPanel loadTokenSets={props.loadTokenSets} />
               </Panel>
               {showMinimap && <MiniMapStyled />}
               {showGrid && (

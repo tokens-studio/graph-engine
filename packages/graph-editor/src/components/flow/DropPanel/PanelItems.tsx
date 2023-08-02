@@ -1,15 +1,3 @@
-import { Box, Separator, Stack, Text, TextInput } from '@tokens-studio/ui';
-import { NodeTypes } from '@tokens-studio/graph-engine';
-import { styled } from '#/lib/stitches/index.ts';
-import { useCallback } from 'react';
-import React from 'react';
-
-import preset from '#/data/preset.ts';
-import tinyCore from '#/data/tiny/core.ts';
-import tinyCoreDark from '#/data/tiny/dark.ts';
-import tinyCoreLight from '#/data/tiny/light.ts';
-
-import { Accordion } from '../accordion/index.tsx';
 import {
   BlendingModeIcon,
   ButtonIcon,
@@ -19,129 +7,26 @@ import {
   ImageIcon,
   PlusIcon,
 } from '@radix-ui/react-icons';
-import { flatten } from '#/utils/index.ts';
-import icons from './icons.tsx';
-import { BoxIcon } from '@iconicicons/react';
+import icons from "../icons";
+import { NodeTypes } from '@tokens-studio/graph-engine';
+import React, { ReactNode } from "react";
+import { BoxIcon } from "@iconicicons/react";
+import { SingleToken } from '@tokens-studio/types';
 
-//@ts-ignore
-const presetFlattened = flatten(preset);
-//@ts-ignore
-const tinyCoreFlattened = flatten(tinyCore);
-//@ts-ignore
-const tinyCoreLightFlattened = flatten(tinyCoreLight);
-//@ts-ignore
-const tinyCoreDarkFlattened = flatten(tinyCoreDark);
-
-const Panel = styled('div', {
-  borderRight: '1px solid',
-  backgroundColor: '$bgSurface',
-  borderColor: '$borderMuted',
-  marginBottom: '-5px',
-  overflow: 'auto',
-  padding: '0',
-  display: 'flex',
-  position: 'relative',
-  height: '100%',
-  flexShrink: '0',
-  width: '200px',
-});
-
-type DragItemProps = {
-  data?: any;
+type PanelItem = {
   type: NodeTypes;
-  children: React.ReactNode;
-};
-
-const EntryGroup = ({ children }) => {
-  return (
-    <Stack direction="column" css={{ padding: 0 }} gap={1}>
-      {children}
-    </Stack>
-  );
-};
-
-const DragItem = ({ data, type, children }: DragItemProps) => {
-  const onDragStart = useCallback(
-    (event) => {
-      event.dataTransfer.setData(
-        'application/reactflow',
-        JSON.stringify({
-          type,
-          data,
-        }),
-      );
-      event.dataTransfer.effectAllowed = 'move';
-    },
-    [data, type],
-  );
-
-  return (
-    <Item onDragStart={onDragStart} draggable>
-      {children}
-    </Item>
-  );
-};
-
-const StyledAccordingTrigger = styled(Accordion.Trigger, {
-  display: 'flex',
-  flexDirection: 'column',
-  border: '4px solid $bgSurface',
-  borderRadius: '$medium',
-  alignItems: 'flex-start',
-  width: '100%',
-  fontWeight: '$sansBold',
-  fontSize: '$xsmall',
-  '&:not(:first-of-type)': {
-    marginTop: '$6',
-  },
-});
-
-const IconHolder = styled('div', {
-  display: 'flex',
-  width: '32px',
-  height: '32px',
-  fontSize: '$xxsmall',
-  padding: '$3',
-  borderRadius: '$medium',
-  border: '1px solid $borderSubtle',
-  userSelect: 'none',
-  cursor: 'pointer',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
-
-const Item = styled('div', {
-  userSelect: 'none',
-  cursor: 'pointer',
-  borderRadius: '$medium',
-  border: '1px solid',
-  borderColor: 'transparent',
-  padding: '0',
-  '&:hover': {
-    [`${IconHolder}`]: {
-      borderColor: 'transparent',
-    },
-    backgroundColor: '$buttonSecondaryBgHover',
-    borderColor: '$borderSubtle',
-  },
-});
-
-const NodeEntry = ({
-  icon,
-  text,
-}: {
-  icon: React.ReactNode | string;
+  icon: ReactNode | string;
   text: string;
-}) => {
-  return (
-    <Stack direction="row" gap={2} justify="start" align="center">
-      <IconHolder>{icon}</IconHolder>
-      <Text size="xsmall">{text}</Text>
-    </Stack>
-  );
+  data?: {
+    tokens: SingleToken[];
+  };
 };
 
-const types = {
+type PanelItemsKeys = 'generic' | 'tokens' | 'math' | 'array' | 'sets' | 'logic' | 'color' | 'accessibility' | 'series' | 'string';
+
+export type PanelItems = Record<PanelItemsKeys, PanelItem[]>;
+
+export const panelItems: PanelItems = {
   generic: [
     {
       type: NodeTypes.INPUT,
@@ -205,38 +90,7 @@ const types = {
     },
   ],
   tokens: [
-    {
-      type: NodeTypes.INLINE_SET,
-      data: {
-        tokens: tinyCoreFlattened,
-      },
-      icon: <PlusIcon />,
-      text: 'Tiny Core',
-    },
-    {
-      type: NodeTypes.INLINE_SET,
-      data: {
-        tokens: tinyCoreLightFlattened,
-      },
-      icon: <PlusIcon />,
-      text: 'Tiny Light',
-    },
-    {
-      type: NodeTypes.INLINE_SET,
-      data: {
-        tokens: tinyCoreDarkFlattened,
-      },
-      icon: <PlusIcon />,
-      text: 'Tiny Dark',
-    },
-    {
-      type: NodeTypes.INLINE_SET,
-      data: {
-        tokens: presetFlattened,
-      },
-      icon: <PlusIcon />,
-      text: 'Preset Tokens',
-    },
+    // this data will be dinamically loaded & added to the panel
   ],
   math: [
     {
@@ -503,63 +357,3 @@ const types = {
     },
   ],
 };
-
-const DropPanel = () => {
-  const [search, setSearch] = React.useState('');
-  const [defaultValue, setDefaultValue] = React.useState<string | string[]>([
-    'generic',
-  ]);
-
-  const onSearch = (e) => {
-    setSearch(e.target.value);
-    if (e.target.value === '') {
-      setDefaultValue('generic');
-    } else {
-      setDefaultValue(Object.keys(types));
-    }
-  };
-
-  return (
-    <Panel id="drop-panel">
-      <Stack direction="column" gap={1} css={{ width: '100%' }}>
-        <Box css={{ padding: '$4' }}>
-          <TextInput placeholder="Search" value={search} onChange={onSearch} />
-        </Box>
-        <Accordion
-          type="multiple"
-          collapsible={false}
-          defaultValue={defaultValue}
-        >
-          {Object.entries(types).map(([key, values]) => {
-            const vals = values
-              .filter((item) =>
-                item.text.toLowerCase().includes(search.toLowerCase()),
-              )
-              .map((item) => (
-                // @ts-ignore
-                <DragItem type={item.type} data={item.data || null}>
-                  <NodeEntry icon={item.icon} text={item.text} />
-                </DragItem>
-              ));
-
-            if (vals.length === 0) return null;
-
-            return (
-              <Accordion.Item value={key}>
-                <StyledAccordingTrigger>
-                  {key.charAt(0).toUpperCase() + key.slice(1)}
-                  <Separator orientation="horizontal" />
-                </StyledAccordingTrigger>
-                <Accordion.Content>
-                  <EntryGroup>{vals}</EntryGroup>
-                </Accordion.Content>
-              </Accordion.Item>
-            );
-          })}
-        </Accordion>
-      </Stack>
-    </Panel>
-  );
-};
-
-export default DropPanel;
