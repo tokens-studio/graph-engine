@@ -1,4 +1,4 @@
-import { Box, Separator, Spinner, Stack, TextInput } from '@tokens-studio/ui';
+import { Box, Scroll, Separator, Spinner, Stack, TextInput } from '@tokens-studio/ui';
 import { styled } from '#/lib/stitches/index.ts';
 import React, { useEffect, useState } from 'react';
 import { Accordion } from '../../accordion/index.tsx';
@@ -88,12 +88,14 @@ export const DropPanel = ({ loadTokenSets }: DropPanelProps) => {
 
   return (
     <StyledPanel id="drop-panel">
-      <Stack direction="column" gap={1} css={{ width: '100%' }}>
-        <Box css={{ padding: '$4' }}>
-          <TextInput placeholder="Search" value={search} onChange={onSearch} />
-        </Box>
-        {accordionItems}
-      </Stack>
+      <Scroll height='100%'>
+        <Stack direction="column" gap={1} css={{ width: '100%' }}>
+          <Box css={{ padding: '$4' }}>
+            <TextInput placeholder="Search" value={search} onChange={onSearch} />
+          </Box>
+          {accordionItems}
+        </Stack>
+      </Scroll>
     </StyledPanel>
   );
 };
