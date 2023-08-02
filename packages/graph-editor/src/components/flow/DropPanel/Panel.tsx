@@ -2,7 +2,7 @@ import { Box, Scroll, Separator, Spinner, Stack, TextInput } from '@tokens-studi
 import { styled } from '#/lib/stitches/index.ts';
 import React, { useEffect, useState } from 'react';
 import { Accordion } from '../../accordion/index.tsx';
-import { PanelItems, panelItems } from './PanelItems.tsx';
+import { PanelItems, items } from './PanelItems.tsx';
 import { DragItem } from './DragItem.tsx';
 import { NodeEntry } from './NodeEntry.tsx';
 import { NodeTypes } from '@tokens-studio/graph-engine';
@@ -17,7 +17,7 @@ interface DropPanelProps {
 }
 
 export const DropPanel = ({ loadTokenSets }: DropPanelProps) => {
-  const [items, setItems] = useState<PanelItems>(panelItems)
+  const [panelItems, setPanelItems] = useState<PanelItems>(items)
   const [loading, setLoading] = useState(false)
   const [search, setSearch] = React.useState('');
   const [defaultValue, setDefaultValue] = React.useState<string[]>([
@@ -29,8 +29,8 @@ export const DropPanel = ({ loadTokenSets }: DropPanelProps) => {
       if (loadTokenSets) {
         setLoading(true)
         const sets = await loadTokenSets();
-        setItems((prev) => {
-          prev.tokens = sets.map((set) => ({ type: NodeTypes.INLINE_SET, data: { tokens: [] }, icon: <PlusIcon />, text: set.name }));
+        setPanelItems((prev) => {
+          prev.tokens = sets.map((set) => ({ type: NodeTypes.SET, data: { tokens: [], urn: set.urn, title: set.name }, icon: <PlusIcon />, text: set.name }));
           return prev
         })
         setLoading(false)
@@ -46,7 +46,7 @@ export const DropPanel = ({ loadTokenSets }: DropPanelProps) => {
     if (e.target.value === '') {
       setDefaultValue(['generic']);
     } else {
-      setDefaultValue(Object.keys(items));
+      setDefaultValue(Object.keys(panelItems));
     }
   };
 
@@ -55,7 +55,7 @@ export const DropPanel = ({ loadTokenSets }: DropPanelProps) => {
       type="multiple"
       defaultValue={defaultValue}
     >
-      {Object.entries(items).map(([key, values]) => {
+      {Object.entries(panelItems).map(([key, values]) => {
         const filteredValues = values
           .filter((item) =>
             item.text.toLowerCase().includes(search.toLowerCase()),

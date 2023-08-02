@@ -9,24 +9,40 @@ import {
 } from '@radix-ui/react-icons';
 import icons from "../icons";
 import { NodeTypes } from '@tokens-studio/graph-engine';
-import React, { ReactNode } from "react";
+import React from "react";
 import { BoxIcon } from "@iconicicons/react";
-import { SingleToken } from '@tokens-studio/types';
+import preset from '#/data/preset.ts';
+import tinyCore from '#/data/tiny/core.ts';
+import tinyCoreDark from '#/data/tiny/dark.ts';
+import tinyCoreLight from '#/data/tiny/light.ts';
 
-type PanelItem = {
+import { flatten } from '#/utils/index.ts';
+
+//@ts-ignore
+const presetFlattened = flatten(preset);
+//@ts-ignore
+const tinyCoreFlattened = flatten(tinyCore);
+//@ts-ignore
+const tinyCoreLightFlattened = flatten(tinyCoreLight);
+//@ts-ignore
+const tinyCoreDarkFlattened = flatten(tinyCoreDark);
+
+
+export interface PanelItem {
   type: NodeTypes;
-  icon: ReactNode | string;
+  icon: string | JSX.Element;
   text: string;
   data?: {
-    tokens: SingleToken[];
+    urn?: string;
+    tokens?: any[];
   };
-};
+}
 
 type PanelItemsKeys = 'generic' | 'tokens' | 'math' | 'array' | 'sets' | 'logic' | 'color' | 'accessibility' | 'series' | 'string';
 
 export type PanelItems = Record<PanelItemsKeys, PanelItem[]>;
 
-export const panelItems: PanelItems = {
+export const items = {
   generic: [
     {
       type: NodeTypes.INPUT,
@@ -89,8 +105,46 @@ export const panelItems: PanelItems = {
       text: 'JSON',
     },
   ],
+  inline: [
+    {
+      type: NodeTypes.INLINE_SET,
+      data: {
+        tokens: tinyCoreFlattened,
+        title: 'Tiny Core'
+      },
+      icon: <PlusIcon />,
+      text: 'Tiny Core',
+    },
+    {
+      type: NodeTypes.INLINE_SET,
+      data: {
+        tokens: tinyCoreLightFlattened,
+        title: 'Tiny Light'
+      },
+      icon: <PlusIcon />,
+      text: 'Tiny Light',
+    },
+    {
+      type: NodeTypes.INLINE_SET,
+      data: {
+        tokens: tinyCoreDarkFlattened,
+        title: 'Tiny Dark'
+      },
+      icon: <PlusIcon />,
+      text: 'Tiny Dark',
+    },
+    {
+      type: NodeTypes.INLINE_SET,
+      data: {
+        tokens: presetFlattened,
+        title: 'Preset tokens'
+      },
+      icon: <PlusIcon />,
+      text: 'Preset Tokens',
+    },
+  ],
   tokens: [
-    // this data will be dinamically loaded & added to the panel
+    // these will be dinamically loaded
   ],
   math: [
     {

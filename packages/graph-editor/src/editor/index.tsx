@@ -56,6 +56,9 @@ const fullNodeTypes = {
   [EditorNodeTypes.GROUP]: groupNode,
 };
 
+console.log(fullNodeTypes);
+
+
 const edgeTypes = {
   custom: CustomEdge,
 } as unknown as EdgeTypes;
@@ -228,6 +231,9 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           stateInitializer,
         });
 
+        console.log({ processed });
+
+
         reactFlowInstance.setNodes((nodes) => [...nodes, ...processed]);
       },
       [reactFlowInstance],
@@ -276,7 +282,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
         <div
           className="editor"
-          style={{ height: '100%', border: '1px solid red' }}
+          style={{ height: '100%', }}
           ref={reactFlowWrapper}
         >
           <ForceUpdateProvider value={forceUpdate}>

@@ -28,6 +28,9 @@ export const handleDrop = async (event, opts: DropOptions): Promise<Node[]> => {
   let processed: Node[] = [];
 
   function process(nodeRequest, offset = { x: 0, y: 0 }) {
+
+    console.log(nodeRequest);
+
     const position = reactFlowInstance?.project({
       x: event.clientX - reactFlowBounds.left + (offset?.x || 0),
       y: event.clientY - reactFlowBounds.top + (offset?.y || 0),
@@ -53,11 +56,15 @@ export const handleDrop = async (event, opts: DropOptions): Promise<Node[]> => {
       return null;
     }
     const id = uuidv4();
+    console.log(stateInitializer);
+
     const initialState = stateInitializer[nodeRequest.type];
 
     if (initialState === undefined) {
       throw new Error(`No initial state for ${nodeRequest.type}`);
     }
+    console.log('aci intra?');
+
     dispatch.node.set({
       id,
       value: {
@@ -135,13 +142,18 @@ export const handleDrop = async (event, opts: DropOptions): Promise<Node[]> => {
       }),
     );
   } else {
+    // console.log('aci intra pe ales');
+
     const dropData = event.dataTransfer.getData('application/reactflow');
+    // console.log(dropData);
 
     // check if the dropped element is valid
     if (typeof dropData === 'undefined' || !dropData) {
       return [];
     }
     const parsed = JSON.parse(dropData);
+
+    // console.log(parsed);
 
     //@ts-ignore
     processed = [

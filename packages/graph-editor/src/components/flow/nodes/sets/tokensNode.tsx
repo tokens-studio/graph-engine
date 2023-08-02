@@ -16,36 +16,9 @@ import {
 } from '@tokens-studio/graph-engine/nodes/set/inlineTokens.js';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { processTokensFile } from '#/utils/tokenFiles.ts';
-import PreviewToken from '../../preview/token.tsx';
 import copy from 'copy-to-clipboard';
+import { TokenSetHandles } from './tokensHandles.tsx';
 
-const getTypographyValue = (data) => {
-  if (typeof data.value == 'string') {
-    return data.value;
-  }
-  return `<Complex Typography>`;
-};
-const getNodeValue = (data) => {
-  switch (data.type) {
-    case 'typography':
-      return getTypographyValue(data);
-    case 'composition':
-      return 'Composition';
-    case 'border':
-      return 'Border';
-    case 'boxShadow':
-      return 'Shadow';
-    default:
-      return data.value;
-  }
-};
-const getToolTipData = (data) => {
-  if (typeof data == 'object') {
-    return JSON.stringify(data, null, 4);
-  }
-
-  return data.value;
-};
 
 type TokenSetData = {
   tokens: IResolvedToken[];
@@ -82,50 +55,6 @@ const InlineSetNode: FC<NodeProps<TokenSetData>> = ({ id, data }) => {
     }
   }, [tokens]);
 
-  const handles = useMemo(() => {
-    if (!tokens) {
-      return null;
-    }
-
-    return tokens.map((token) => {
-      return (
-        <Stack
-          direction="row"
-          css={{ width: '100%' }}
-          key={token.name}
-          align="center"
-        >
-          <Box
-            css={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              flexGrow: 1,
-              alignItems: 'center',
-              gap: '$2',
-              overflow: 'hidden',
-              width: '100%',
-            }}
-          >
-            <PreviewToken token={token} />
-          </Box>
-          <Handle id={token.name}>
-            <Box
-              title={getToolTipData(token)}
-              style={{
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                maxWidth: '200px',
-                textOverflow: 'ellipsis',
-              }}
-            >
-              {getNodeValue(token)}
-            </Box>
-          </Handle>
-        </Stack>
-      );
-    });
-  }, [tokens]);
-
   const onDragOver = useCallback((event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
@@ -160,10 +89,10 @@ const InlineSetNode: FC<NodeProps<TokenSetData>> = ({ id, data }) => {
 
   useEffect(() => {
     state?.title && setTitle(state.title);
-  }, [state?.title]);
+  }, [state?.title, setTitle]);
 
   return (
-    <div onDragOver={onDragOver} onDrop={onDrop}>
+    <div onDragOver={onDragOver} onDrop={onDrop} style={{ border: '1px solid #BADA55' }}>
       <Stack direction="row" gap={2}>
         <HandleContainer type="target">
           <Handle id="input">
@@ -181,7 +110,7 @@ const InlineSetNode: FC<NodeProps<TokenSetData>> = ({ id, data }) => {
         </HandleContainer>
       </Stack>
       <HandleContainer full type="source">
-        {handles}
+        <TokenSetHandles tokens={tokens} />
       </HandleContainer>
     </div>
   );

@@ -82,6 +82,7 @@ export const WrapNode = (
   InnerNode,
   nodeDef: UiNodeDefinition,
 ): WrappedNodeDefinition => {
+
   const WrappedNode = (data) => {
     const { onOutputChange } = useOnOutputChange();
     const [error, setError] = useState<Error | null>(null);
@@ -98,7 +99,6 @@ export const WrapNode = (
     const state = useSelector(stateSelector(data.id));
 
     const [output, setOutput] = useState<any>(undefined);
-
     const disconnectInput = useCallback((key) => {
       //Remove the value form the input
       dispatch.input.remove({
@@ -136,7 +136,9 @@ export const WrapNode = (
       setIsLoading(true);
       try {
         if (mappedInput !== undefined) {
+
           let value = nodeDef.process(mappedInput, state, {});
+
           //@ts-ignore
           const asyncProcess = isPromise(value);
           if (asyncProcess) {

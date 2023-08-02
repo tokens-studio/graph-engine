@@ -9,6 +9,7 @@ export interface InitialSet {
 
 export interface TokenSet {
   name: string;
+  urn: string;
 }
 
 export type EditorProps = {

@@ -60,6 +60,7 @@ import parseUnit from './generic/parseUnit.tsx';
 import jsonNode from './generic/jsonNode.tsx';
 import cssBox from './css/boxNode.tsx';
 import concat from './array/concat.tsx';
+import ExternalSetNode from './sets/ExternalSetNode.tsx';
 
 const processTypes = (types: WrappedNodeDefinition[]) => {
   const nodeTypes = types.reduce((acc, type) => {
@@ -140,4 +141,5 @@ export const { nodeTypes, stateInitializer } = processTypes([
   wheelNode,
   cssBox,
   concat,
+  ExternalSetNode
 ]);
