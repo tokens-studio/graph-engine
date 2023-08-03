@@ -14,7 +14,7 @@ export const NodeEntry = ({
     return (
         <Stack direction="row" gap={2} justify="start" align="center" title={text}>
             <IconHolder>{icon}</IconHolder>
-            <Text size="xsmall" css={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: '120px' }} >{text}</Text>
+            <Text size="xsmall" css={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: '180px' }} >{text}</Text>
         </Stack>
     );
 };
