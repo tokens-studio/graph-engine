@@ -320,7 +320,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
               <SelectedNodesToolbar />
               <CustomControls position="top-right" />
               <Panel id="drop-panel" position="top-left">
-                <DropPanel loadTokenSets={props.loadTokenSets} />
+                <DropPanel tokenSets={props.tokenSets} loadingTokenSets={props.loadingTokenSets} />
               </Panel>
               {showMinimap && <MiniMapStyled />}
               {showGrid && (

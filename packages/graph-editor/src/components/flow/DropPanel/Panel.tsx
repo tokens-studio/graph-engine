@@ -11,35 +11,30 @@ import { PlusIcon } from '@iconicicons/react';
 import { Loading } from './Loading.tsx';
 import { StyledPanel } from './StyledPanel.tsx';
 import { StyledAccordingTrigger } from './StyledAccordionTrigger.tsx';
+import { TokenSet } from '@tokens-studio/sdk';
 
 interface DropPanelProps {
-  loadTokenSets?: EditorProps['loadTokenSets']
+  tokenSets?: TokenSet[]
+  loadingTokenSets: boolean
 }
 
-export const DropPanel = ({ loadTokenSets }: DropPanelProps) => {
+export const DropPanel = ({ tokenSets, loadingTokenSets }: DropPanelProps) => {
   const [panelItems, setPanelItems] = useState<PanelItems>(items)
-  const [loading, setLoading] = useState(false)
   const [search, setSearch] = React.useState('');
   const [defaultValue, setDefaultValue] = React.useState<string[]>([
     'generic',
   ]);
 
   useEffect(() => {
-    const getTokenSets = async () => {
-      if (loadTokenSets) {
-        setLoading(true)
-        const sets = await loadTokenSets();
-        setPanelItems((prev) => {
-          prev.tokens = sets.map((set) => ({ type: NodeTypes.SET, data: { tokens: [], urn: set.urn, title: set.name }, icon: <PlusIcon />, text: set.name }));
-          return prev
-        })
-        setLoading(false)
-      }
+    if (tokenSets) {
+      setPanelItems((prev) => {
+        const newPanelItems = { ...prev };
+        newPanelItems.tokens = tokenSets.map((set) => ({ type: NodeTypes.SET, data: { tokens: [], urn: set.urn ?? '', title: set.name ?? '' }, icon: <PlusIcon />, text: set.name ?? '' }));
+        return newPanelItems
+      })
     }
 
-    getTokenSets()
-
-  }, [loadTokenSets])
+  }, [tokenSets])
 
   const onSearch = (e) => {
     setSearch(e.target.value);
@@ -50,7 +45,7 @@ export const DropPanel = ({ loadTokenSets }: DropPanelProps) => {
     }
   };
 
-  const accordionItems = loading ? <Loading /> : (
+  const accordionItems = loadingTokenSets ? <Loading /> : (
     <Accordion
       type="multiple"
       defaultValue={defaultValue}

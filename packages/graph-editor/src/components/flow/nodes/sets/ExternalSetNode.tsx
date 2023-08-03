@@ -107,4 +107,5 @@ const ExternalSetNode: FC<NodeProps<ExternalSetData>> = () => {
 
 export default WrapNode(ExternalSetNode, {
     ...node,
+    external: true,
 });

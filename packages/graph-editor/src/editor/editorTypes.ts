@@ -1,4 +1,4 @@
-import { SingleToken } from '@tokens-studio/types';
+import { TokenSet } from '@tokens-studio/sdk';
 import { Edge, Node } from 'reactflow';
 
 export interface InitialSet {
@@ -7,16 +7,13 @@ export interface InitialSet {
   name: string;
 }
 
-export interface TokenSet {
-  name: string;
-  urn: string;
-}
 
 export type EditorProps = {
   id: string;
   name: string;
   onOutputChange: (output: Record<string, unknown>) => void;
-  loadTokenSets?: () => Promise<TokenSet[]>
+  tokenSets?: TokenSet[],
+  loadingTokenSets: boolean
 };
 
 export type EditorState = {
