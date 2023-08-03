@@ -94,7 +94,6 @@ const process = (input: Input, state: State) => {
       const definition = state.definition[key];
       switch (definition.type) {
         case "tokenSet":
-          console.log("flattenned 1", flatten(value.tokens || {}, []), value)
           return [key, flatten(value.tokens || {}, [])];
         default:
           return [key, value];
