@@ -284,7 +284,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           <ForceUpdateProvider value={forceUpdate}>
             {/* @ts-ignore */}
             <ReactFlow
-              fitView
+              // TODO: this should be true only when loading an existing graph
+              // fitView
               nodes={nodes}
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
