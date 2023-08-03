@@ -59,8 +59,11 @@ const validateInputs = (inputs, state) => {
     if (typeof definition == "object") {
       switch (definition.type) {
         case "tokenSet":
-          if (typeof inputs[key] !== "object") {
-            throw new Error("Expected object for input: " + key);
+          {
+            if (typeof inputs[key] !== "object") {
+              throw new Error("Expected object for input: " + key);
+            }
+            break;
           }
         case "string":
           if (typeof inputs[key] !== "string") {
@@ -91,6 +94,7 @@ const process = (input: Input, state: State) => {
       const definition = state.definition[key];
       switch (definition.type) {
         case "tokenSet":
+          console.log("flattenned 1", flatten(value.tokens || {}, []), value)
           return [key, flatten(value.tokens || {}, [])];
         default:
           return [key, value];
