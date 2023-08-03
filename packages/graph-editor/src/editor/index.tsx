@@ -46,6 +46,7 @@ import groupNode from '../components/flow/groupNode.tsx';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
 import { Tooltip } from '@tokens-studio/ui';
 import { OnOutputChangeContextProvider } from '#/context/OutputContext.tsx';
+import { ExternalDataContextProvider } from '#/context/ExternalDataContext.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -55,8 +56,6 @@ const fullNodeTypes = {
   ...nodeTypes,
   [EditorNodeTypes.GROUP]: groupNode,
 };
-
-console.log(fullNodeTypes);
 
 
 const edgeTypes = {
@@ -229,10 +228,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           reactFlowWrapper,
           dispatch,
           stateInitializer,
-        });
-
-        console.log({ processed });
-
+        })
 
         reactFlowInstance.setNodes((nodes) => [...nodes, ...processed]);
       },
@@ -320,7 +316,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
               <SelectedNodesToolbar />
               <CustomControls position="top-right" />
               <Panel id="drop-panel" position="top-left">
-                <DropPanel tokenSets={props.tokenSets} loadingTokenSets={props.loadingTokenSets} />
+                <DropPanel />
               </Panel>
               {showMinimap && <MiniMapStyled />}
               {showGrid && (
@@ -340,14 +336,17 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
 export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
+    const { onOutputChange, loadingTokenSets, tokenSets, loadSetTokens } = props;
     return (
       <ReduxProvider>
         <ReactFlowProvider>
-          <OnOutputChangeContextProvider onOutputChange={props.onOutputChange}>
-            <Tooltip.Provider>
-              <EditorApp {...props} ref={ref} />
-            </Tooltip.Provider>
-          </OnOutputChangeContextProvider>
+          <ExternalDataContextProvider loadSetTokens={loadSetTokens} loadingTokenSets={loadingTokenSets} tokenSets={tokenSets} >
+            <OnOutputChangeContextProvider onOutputChange={onOutputChange}>
+              <Tooltip.Provider>
+                <EditorApp {...props} ref={ref} />
+              </Tooltip.Provider>
+            </OnOutputChangeContextProvider>
+          </ExternalDataContextProvider>
         </ReactFlowProvider>
       </ReduxProvider>
     );

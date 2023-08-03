@@ -1,5 +1,5 @@
-import React, { FC, useCallback, useEffect } from 'react';
-import { IconButton, Stack, Text } from '@tokens-studio/ui';
+import React, { FC, useCallback, useEffect, useState } from 'react';
+import { IconButton, Spinner, Stack, Text } from '@tokens-studio/ui';
 import {
     ClipboardCopyIcon,
     DownloadIcon,
@@ -8,12 +8,13 @@ import { Handle, HandleContainer } from '../../handles.tsx';
 import { flatTokensRestoreToMap } from '#/utils/index.ts';
 import { NodeProps } from 'reactflow';
 import {
-    SET_ID,
+    EXTERNAL_SET_ID,
     node,
 } from '@tokens-studio/graph-engine/nodes/set/externalTokens.js';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import copy from 'copy-to-clipboard';
 import { TokenSetHandles } from './tokensHandles.tsx';
+import { useExternalData } from '#/context/ExternalDataContext.tsx';
 
 
 type ExternalSetData = {
@@ -22,9 +23,12 @@ type ExternalSetData = {
 };
 
 const ExternalSetNode: FC<NodeProps<ExternalSetData>> = () => {
-    const { setControls, setTitle, state, output } = useNode();
+    const { setControls, setTitle, state, output, setState } = useNode();
+    const { loadSetTokens } = useExternalData();
+    const [loading, setLoading] = useState(false);
 
-    const tokens = output && output[SET_ID];
+    const tokens = output && output[EXTERNAL_SET_ID];
+
 
     const onDownload = useCallback(() => {
         const fileContent = JSON.stringify(flatTokensRestoreToMap(tokens), null, 4);
@@ -56,7 +60,6 @@ const ExternalSetNode: FC<NodeProps<ExternalSetData>> = () => {
         event.dataTransfer.dropEffect = 'move';
     }, []);
 
-
     useEffect(() => {
         setControls(
             <>
@@ -80,18 +83,32 @@ const ExternalSetNode: FC<NodeProps<ExternalSetData>> = () => {
         state?.title && setTitle(state.title);
     }, [state?.title, setTitle]);
 
+    useEffect(() => {
+        const getTokens = async () => {
+            setLoading(true);
+            const tokens = await loadSetTokens(state.urn);
+            setState({ ...state, tokens })
+            setLoading(false);
+        }
+
+        if (state.urn) {
+            getTokens()
+        }
+    }, [state.urn, loadSetTokens]);
+
+    if (loading) {
+        return (
+            <Stack css={{ width: '100%', padding: '$2' }} dir='row' align='center' justify='center'>
+                <Spinner />
+            </Stack>
+        )
+    }
+
     return (
         <div onDragOver={onDragOver}>
-            <Stack direction="row" gap={2}>
-                <HandleContainer type="target">
-                    <Handle id="input">
-                        <Text>
-                            <i>Input</i>{' '}
-                        </Text>
-                    </Handle>
-                </HandleContainer>
+            <Stack direction="row" gap={2} justify='end'>
                 <HandleContainer type="source">
-                    <Handle id={SET_ID}>
+                    <Handle id={EXTERNAL_SET_ID}>
                         <Text>
                             <i>As Set</i>{' '}
                         </Text>
@@ -99,13 +116,13 @@ const ExternalSetNode: FC<NodeProps<ExternalSetData>> = () => {
                 </HandleContainer>
             </Stack>
             <HandleContainer full type="source">
-                <TokenSetHandles tokens={tokens} />
+                {<TokenSetHandles tokens={tokens} />}
             </HandleContainer>
+
         </div>
     );
 };
 
 export default WrapNode(ExternalSetNode, {
     ...node,
-    external: true,
 });

@@ -9,14 +9,11 @@ import { PlusIcon } from '@iconicicons/react';
 import { Loading } from './Loading.tsx';
 import { StyledPanel } from './StyledPanel.tsx';
 import { StyledAccordingTrigger } from './StyledAccordionTrigger.tsx';
-import { TokenSet } from '@tokens-studio/sdk';
+import { useExternalData } from '#/context/ExternalDataContext.tsx';
 
-interface DropPanelProps {
-  tokenSets?: TokenSet[]
-  loadingTokenSets: boolean
-}
 
-export const DropPanel = ({ tokenSets, loadingTokenSets }: DropPanelProps) => {
+export const DropPanel = () => {
+  const { tokenSets, loadingTokenSets } = useExternalData();
   const [panelItems, setPanelItems] = useState<PanelItems>(items)
   const [search, setSearch] = React.useState('');
   const [defaultValue, setDefaultValue] = React.useState<string[]>([

@@ -27,7 +27,6 @@ type TokenSetData = {
 
 const InlineSetNode: FC<NodeProps<TokenSetData>> = ({ id, data }) => {
   const { setControls, setTitle, state, output, setState } = useNode();
-
   const tokens = output && output[SET_ID];
 
   const onDownload = useCallback(() => {
@@ -92,7 +91,7 @@ const InlineSetNode: FC<NodeProps<TokenSetData>> = ({ id, data }) => {
   }, [state?.title, setTitle]);
 
   return (
-    <div onDragOver={onDragOver} onDrop={onDrop} style={{ border: '1px solid #BADA55' }}>
+    <div onDragOver={onDragOver} onDrop={onDrop}>
       <Stack direction="row" gap={2}>
         <HandleContainer type="target">
           <Handle id="input">
