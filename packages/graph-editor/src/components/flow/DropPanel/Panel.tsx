@@ -1,12 +1,10 @@
-import { Box, Scroll, Separator, Spinner, Stack, TextInput } from '@tokens-studio/ui';
-import { styled } from '#/lib/stitches/index.ts';
+import { Box, Scroll, Separator, Stack, TextInput } from '@tokens-studio/ui';
 import React, { useEffect, useState } from 'react';
 import { Accordion } from '../../accordion/index.tsx';
 import { PanelItems, items } from './PanelItems.tsx';
 import { DragItem } from './DragItem.tsx';
 import { NodeEntry } from './NodeEntry.tsx';
 import { NodeTypes } from '@tokens-studio/graph-engine';
-import { EditorProps } from '#/editor/editorTypes.ts';
 import { PlusIcon } from '@iconicicons/react';
 import { Loading } from './Loading.tsx';
 import { StyledPanel } from './StyledPanel.tsx';
