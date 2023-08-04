@@ -17,7 +17,9 @@ export const defaults: State = {
 };
 
 export const EXTERNAL_SET_ID = "as Set";
-
+const external = (_,state)=>{
+   return state;
+}
 export const process = (input: Input, state: State) => {
   return state.tokens;
 };
