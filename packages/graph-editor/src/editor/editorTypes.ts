@@ -8,13 +8,18 @@ export interface InitialSet {
   name: string;
 }
 
+export interface ExternalSet {
+  tokens: SingleToken[];
+  title?: string
+}
+
 export type EditorProps = {
   id: string;
   name: string;
   onOutputChange: (output: Record<string, unknown>) => void;
   tokenSets?: TokenSet[],
   loadingTokenSets: boolean,
-  loadSetTokens: (urn: string) => Promise<SingleToken[]>
+  loadSetTokens: (urn: string) => Promise<ExternalSet>
 };
 
 export type EditorState = {

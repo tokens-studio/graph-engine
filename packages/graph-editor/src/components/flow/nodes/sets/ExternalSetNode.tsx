@@ -86,8 +86,8 @@ const ExternalSetNode: FC<NodeProps<ExternalSetData>> = () => {
     useEffect(() => {
         const getTokens = async () => {
             setLoading(true);
-            const tokens = await loadSetTokens(state.urn);
-            setState({ ...state, tokens })
+            const set = await loadSetTokens(state.urn);
+            setState({ ...state, tokens: set.tokens })
             setLoading(false);
         }
 

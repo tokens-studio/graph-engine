@@ -1,11 +1,12 @@
 import { TokenSet } from '@tokens-studio/sdk';
 import { SingleToken } from '@tokens-studio/types';
 import React, { createContext, useContext, useMemo } from 'react';
+import { ExternalSet } from '../editor/editorTypes';
 
 type ExternalDataContextType = {
   tokenSets?: TokenSet[]
   loadingTokenSets: boolean,
-  loadSetTokens: (urn: string) => Promise<SingleToken[]>
+  loadSetTokens: (urn: string) => Promise<ExternalSet>
 };
 
 const ExternalDataContext = createContext<ExternalDataContextType | undefined>(
@@ -21,7 +22,7 @@ function ExternalDataContextProvider({
   children: React.ReactNode;
   tokenSets?: TokenSet[]
   loadingTokenSets: boolean,
-  loadSetTokens: (urn: string) => Promise<SingleToken[]>
+  loadSetTokens: (urn: string) => Promise<ExternalSet>
 }) {
   const providerValue = useMemo(() => ({ tokenSets, loadSetTokens, loadingTokenSets }), [tokenSets, loadSetTokens, loadingTokenSets]);
 
