@@ -59,8 +59,11 @@ const validateInputs = (inputs, state) => {
     if (typeof definition == "object") {
       switch (definition.type) {
         case "tokenSet":
-          if (typeof inputs[key] !== "object") {
-            throw new Error("Expected object for input: " + key);
+          {
+            if (typeof inputs[key] !== "object") {
+              throw new Error("Expected object for input: " + key);
+            }
+            break;
           }
         case "string":
           if (typeof inputs[key] !== "string") {
