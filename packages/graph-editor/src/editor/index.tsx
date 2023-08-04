@@ -46,7 +46,6 @@ import groupNode from '../components/flow/groupNode.tsx';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
 import { Tooltip } from '@tokens-studio/ui';
 import { OnOutputChangeContextProvider } from '#/context/OutputContext.tsx';
-import { ExternalDataContextProvider } from '#/context/ExternalDataContext.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -330,17 +329,15 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
 export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
-    const { onOutputChange, loadingTokenSets, tokenSets, loadSetTokens } = props;
+    const { onOutputChange } = props;
     return (
       <ReduxProvider>
         <ReactFlowProvider>
-          <ExternalDataContextProvider loadSetTokens={loadSetTokens} loadingTokenSets={loadingTokenSets} tokenSets={tokenSets} >
-            <OnOutputChangeContextProvider onOutputChange={onOutputChange}>
-              <Tooltip.Provider>
-                <EditorApp {...props} ref={ref} />
-              </Tooltip.Provider>
-            </OnOutputChangeContextProvider>
-          </ExternalDataContextProvider>
+          <OnOutputChangeContextProvider onOutputChange={onOutputChange}>
+            <Tooltip.Provider>
+              <EditorApp {...props} ref={ref} />
+            </Tooltip.Provider>
+          </OnOutputChangeContextProvider>
         </ReactFlowProvider>
       </ReduxProvider>
     );

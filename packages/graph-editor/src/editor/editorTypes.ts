@@ -1,4 +1,3 @@
-import { TokenSet } from '@tokens-studio/sdk';
 import { SingleToken } from '@tokens-studio/types';
 import { Edge, Node } from 'reactflow';
 
@@ -17,9 +16,6 @@ export type EditorProps = {
   id: string;
   name: string;
   onOutputChange: (output: Record<string, unknown>) => void;
-  tokenSets?: TokenSet[],
-  loadingTokenSets: boolean,
-  loadSetTokens: (urn: string) => Promise<ExternalSet>
 };
 
 export type EditorState = {

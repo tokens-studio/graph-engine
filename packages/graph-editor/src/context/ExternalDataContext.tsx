@@ -9,8 +9,12 @@ type ExternalDataContextType = {
   loadSetTokens: (urn: string) => Promise<ExternalSet>
 };
 
-const ExternalDataContext = createContext<ExternalDataContextType | undefined>(
-  undefined,
+const ExternalDataContext = createContext<ExternalDataContextType>(
+  {
+    tokenSets: undefined,
+    loadingTokenSets: false,
+    loadSetTokens: async () => ({ tokens: [] }),
+  },
 );
 
 function ExternalDataContextProvider({
@@ -37,9 +41,7 @@ function useExternalData() {
   const context = useContext(ExternalDataContext);
 
   if (context === undefined) {
-    throw new Error(
-      'useExternalData must be used within a ExternalDataContextProvider',
-    );
+    console.error('useExternalData must be used within a ExternalDataContextProvider')
   }
   return context;
 }
