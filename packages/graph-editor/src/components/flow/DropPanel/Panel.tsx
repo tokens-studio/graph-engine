@@ -40,41 +40,47 @@ export const DropPanel = () => {
     }
   };
 
-  const accordionItems = loadingTokenSets ? <Loading /> : (
-    <Accordion
-      type="multiple"
-      defaultValue={defaultValue}
-    >
-      {Object.entries(panelItems).map(([key, values]) => {
-        const filteredValues = values
-          .filter((item) =>
-            item.text.toLowerCase().includes(search.toLowerCase()),
-          )
-          .map((item) => (
-            //@ts-ignore
-            <DragItem type={item.type} data={item.data || null} key={item.key}>
-              <NodeEntry icon={item.icon} text={item.text} />
-            </DragItem>
-          ));
+  const accordionItems = React.useMemo(() => {
+    if (loadingTokenSets) {
+      return <Loading />;
+    }
 
-        if (filteredValues.length === 0) return null;
+    return (
+      <Accordion type="multiple" defaultValue={defaultValue}>
+        {Object.entries(panelItems).map(([key, values]) => {
+          const filteredValues = values
+            .filter((item) =>
+              item.text.toLowerCase().includes(search.toLowerCase()),
+            )
+            .map((item) => (
+              <DragItem
+                type={item.type}
+                data={item.data || null}
+                key={item.text}
+              >
+                <NodeEntry icon={item.icon} text={item.text} />
+              </DragItem>
+            ));
 
-        return (
-          <Accordion.Item value={key}>
-            <StyledAccordingTrigger>
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-              <Separator orientation="horizontal" />
-            </StyledAccordingTrigger>
-            <Accordion.Content>
-              <Stack direction="column" css={{ padding: 0 }} gap={1}>
-                {filteredValues}
-              </Stack>
-            </Accordion.Content>
-          </Accordion.Item>
-        );
-      })}
-    </Accordion>
-  )
+          if (filteredValues.length === 0) return null;
+
+          return (
+            <Accordion.Item value={key}>
+              <StyledAccordingTrigger>
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+                <Separator orientation="horizontal" />
+              </StyledAccordingTrigger>
+              <Accordion.Content>
+                <Stack direction="column" css={{ padding: 0 }} gap={1}>
+                  {filteredValues}
+                </Stack>
+              </Accordion.Content>
+            </Accordion.Item>
+          );
+        })}
+      </Accordion>
+    );
+  }, [loadingTokenSets, defaultValue, panelItems, search]);
 
   return (
     <StyledPanel id="drop-panel">
