@@ -14,8 +14,6 @@ import {
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import copy from 'copy-to-clipboard';
 import { TokenSetHandles } from './tokensHandles.tsx';
-import { useExternalData } from '#/context/ExternalDataContext.tsx';
-
 
 type ExternalSetData = {
     urn: string
@@ -23,9 +21,7 @@ type ExternalSetData = {
 };
 
 const ExternalSetNode: FC<NodeProps<ExternalSetData>> = () => {
-    const { setControls, setTitle, state, output, setState } = useNode();
-    const { loadSetTokens } = useExternalData();
-    const [loading, setLoading] = useState(false);
+    const { setControls, setTitle, state, output, loadingEphemeralData } = useNode();
 
     const tokens = output && output[EXTERNAL_SET_ID];
 
@@ -83,20 +79,8 @@ const ExternalSetNode: FC<NodeProps<ExternalSetData>> = () => {
         state?.title && setTitle(state.title);
     }, [state?.title, setTitle]);
 
-    useEffect(() => {
-        const getTokens = async () => {
-            setLoading(true);
-            const set = await loadSetTokens(state.urn);
-            setState({ ...state, tokens: set.tokens })
-            setLoading(false);
-        }
 
-        if (state.urn) {
-            getTokens()
-        }
-    }, [state.urn, loadSetTokens]);
-
-    if (loading) {
+    if (loadingEphemeralData) {
         return (
             <Stack css={{ width: '100%', padding: '$2' }} dir='row' align='center' justify='center'>
                 <Spinner />

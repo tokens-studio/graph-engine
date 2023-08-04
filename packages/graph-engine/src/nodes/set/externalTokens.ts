@@ -7,25 +7,30 @@ type Input = Record<string, any>;
 
 type State = {
   title: string;
-  tokens: SingleToken[];
+  urn: string
 };
 
-//This would be populated by a request to an external source
+type Ephemeral = Record<string, any>;
+
 export const defaults: State = {
   title: "",
-  tokens: [],
+  urn: "",
 };
 
 export const EXTERNAL_SET_ID = "as Set";
+
 const external = (_,state)=>{
    return state;
 }
-export const process = (input: Input, state: State) => {
-  return state.tokens;
+
+export const process = (input: Input, state: State, ephemeral: Ephemeral) => {
+  return ephemeral.tokens;
 };
 
-export const mapOutput = (input: Input, state, processed: SingleToken[]) => {
-  const map = processed.reduce((acc, item) => {
+export const mapOutput = (input: Input, state, tokens: SingleToken[]) => {
+  if (!tokens) return {}
+  
+  const map = tokens.reduce((acc, item) => {
     //Some protection against undefined which can happen if the user deletes a token
     if (!item) {
       return acc;
@@ -35,7 +40,7 @@ export const mapOutput = (input: Input, state, processed: SingleToken[]) => {
   }, {});
 
   return {
-    [EXTERNAL_SET_ID]: processed,
+    [EXTERNAL_SET_ID]: tokens,
     ...map,
   };
 };
@@ -45,4 +50,5 @@ export const node: NodeDefinition<Input, State, SingleToken[]> = {
   process,
   defaults,
   mapOutput,
+  external
 };

@@ -47,6 +47,7 @@ export interface NodeExecutionOptions {
 export const executeNode = async (opts: NodeExecutionOptions) => {
   const { input, node, nodeId, state, externalLoader } = opts;
 
+  
   let mappedInput = input;
   if (node.mapInput) {
     //Map the input to the node

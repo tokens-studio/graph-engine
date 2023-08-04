@@ -24,6 +24,7 @@ import React, {
 } from 'react';
 import isPromise from 'is-promise';
 import { useOnOutputChange } from '#/context/OutputContext.tsx';
+import { useExternalData } from '#/context/ExternalDataContext.tsx';
 
 export type UiNodeDefinition = {
   //Name of the Node
@@ -48,6 +49,9 @@ export type INodeContext<Input = any, State = any, Output = any> = {
   createInput: (key: string, value?: any) => void;
   disconnectInput: (key: string) => void;
   onConnect: (edge: Edge) => void;
+  ephemeralState: object,
+  setEphemeralState: (state: object) => void,
+  loadingEphemeralData: boolean
 };
 const noop = () => {
   /** Do nothing */
@@ -64,6 +68,9 @@ const NodeContext = createContext<INodeContext>({
   onConnect: noop,
   disconnectInput: noop,
   setState: noop,
+  ephemeralState: {},
+  setEphemeralState: noop,
+  loadingEphemeralData: false
 });
 
 export type WrappedNodeDefinition = {
@@ -84,6 +91,9 @@ export const WrapNode = (
 ): WrappedNodeDefinition => {
 
   const WrappedNode = (data) => {
+    const { loadSetTokens } = useExternalData()
+    const [ephemeralState, setEphemeralState] = useState({});
+    const [loadingEphemeralData, setLoadingEphemeralData] = useState(false);
     const { onOutputChange } = useOnOutputChange();
     const [error, setError] = useState<Error | null>(null);
     const [title, setTitle] = useState<string>(nodeDef.title || '');
@@ -132,12 +142,28 @@ export const WrapNode = (
       return input;
     }, [input, state]);
 
+    useEffect(() => {
+      if (nodeDef.type === NodeTypes.SET) {
+        const getTokens = async () => {
+          setLoadingEphemeralData(true);
+          const set = await loadSetTokens(state.urn);
+          setEphemeralState(set)
+          setLoadingEphemeralData(false);
+        }
+
+        if (state.urn) {
+          getTokens()
+        }
+      }
+
+    }, [state.urn, loadSetTokens]);
+
     useMemo(async () => {
       setIsLoading(true);
       try {
         if (mappedInput !== undefined) {
 
-          let value = nodeDef.process(mappedInput, state, {});
+          let value = nodeDef.process(mappedInput, state, ephemeralState);
 
           //@ts-ignore
           const asyncProcess = isPromise(value);
@@ -149,7 +175,6 @@ export const WrapNode = (
             mappedInput,
             state,
             value,
-            {},
           );
           setError(null);
           setIsLoading(false);
@@ -166,7 +191,7 @@ export const WrapNode = (
         setOutput(undefined);
       }
       setIsLoading(false);
-    }, [mappedInput, state, forceUpdate]);
+    }, [mappedInput, state, forceUpdate, ephemeralState, onOutputChange]);
 
     const onConnect = useCallback(
       async (params) => {
@@ -207,6 +232,9 @@ export const WrapNode = (
         output,
         disconnectInput,
         onConnect,
+        ephemeralState,
+        setEphemeralState,
+        loadingEphemeralData
       };
     }, [
       error,
@@ -217,6 +245,9 @@ export const WrapNode = (
       disconnectInput,
       onConnect,
       createInput,
+      ephemeralState,
+      setEphemeralState,
+      loadingEphemeralData
     ]);
 
     useEffect(() => {
