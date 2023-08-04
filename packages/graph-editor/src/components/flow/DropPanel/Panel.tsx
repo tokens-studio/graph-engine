@@ -65,7 +65,7 @@ export const DropPanel = () => {
           if (filteredValues.length === 0) return null;
 
           return (
-            <Accordion.Item value={key}>
+            <Accordion.Item value={key} key={key}>
               <StyledAccordingTrigger>
                 {key.charAt(0).toUpperCase() + key.slice(1)}
                 <Separator orientation="horizontal" />
