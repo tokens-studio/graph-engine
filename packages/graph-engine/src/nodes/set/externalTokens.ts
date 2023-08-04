@@ -19,10 +19,6 @@ export const defaults: State = {
 export const EXTERNAL_SET_ID = "as Set";
 
 export const process = (input: Input, state: State) => {
-  //Override with state if defined
-  if (input.input) {
-    return input.input;
-  }
   return state.tokens;
 };
 
