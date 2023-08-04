@@ -76,13 +76,6 @@ const defaultEdgeOptions = {
   },
 };
 
-export interface InitialSet {
-  urn: string;
-  parentNode: string;
-  name: string;
-}
-
-
 export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
     const reactFlowWrapper = useRef<HTMLDivElement>(null);

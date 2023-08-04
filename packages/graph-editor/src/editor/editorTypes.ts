@@ -8,7 +8,6 @@ export interface InitialSet {
   name: string;
 }
 
-
 export type EditorProps = {
   id: string;
   name: string;
