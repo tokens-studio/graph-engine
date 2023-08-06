@@ -35,7 +35,7 @@ export const keyMap = {
 };
 
 export const useHotkeys = ({ onEdgesDeleted }) => {
-  const [showGrid, setShowGrid] = useState(false);
+  const [showGrid, setShowGrid] = useState(true);
   const [showMinimap, setShowMinimap] = useState(true);
   const [snapGrid, setSnapGrid] = useState(true);
   const [hideZoom, setHideZoom] = useState(true);

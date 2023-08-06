@@ -17,7 +17,7 @@ export const MiniMapStyled = styled(MiniMap, {
   backgroundColor: '$bgSubtle',
 
   '.react-flow__minimap-mask': {
-    fill: '$contextMenuFgMuted',
+    fill: '$bgSubtle !important',
   },
 
   '.react-flow__minimap-node': {

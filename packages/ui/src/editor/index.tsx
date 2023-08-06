@@ -330,11 +330,12 @@ export const Editor = React.forwardRef<ImperativeEditor, EditorProps>(
               <Panel id="drop-panel" position="top-left">
                 <DropPanel />
               </Panel>
-              {showMinimap && <MiniMapStyled />}
+              {showMinimap && <MiniMapStyled maskStrokeWidth={4} maskStrokeColor="#ff0000" pannable zoomStep={1} zoomable maskColor="rgb(240, 242, 243, 0.7)" nodeColor="var(--colors-borderSubtle)"/>}
               {showGrid && (
-                <Background
-                  color="#aaa"
+                 <Background
+                  color="var(--colors-borderMuted)"
                   gap={16}
+                  size={2}
                   variant={BackgroundVariant.Dots}
                 />
               )}

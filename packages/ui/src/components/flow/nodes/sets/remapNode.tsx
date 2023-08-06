@@ -181,7 +181,7 @@ const RemapNode = () => {
         <HandleContainer type="source">
           <Handle id={SET_ID}>
             <Label>
-              <i>As Set</i>
+              <i>As Setxx</i>
             </Label>
           </Handle>
         </HandleContainer>

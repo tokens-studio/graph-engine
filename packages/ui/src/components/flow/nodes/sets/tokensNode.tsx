@@ -175,7 +175,7 @@ const InlineSetNode: FC<NodeProps<TokenSetData>> = ({ id, data }) => {
         <HandleContainer type="source">
           <Handle id={SET_ID}>
             <Text>
-              <i>As Set</i>{' '}
+              <i>As Setxx</i>{' '}
             </Text>
           </Handle>
         </HandleContainer>

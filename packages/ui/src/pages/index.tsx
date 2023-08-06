@@ -6,11 +6,13 @@ import {
   IconButton,
   Label,
   Link,
+  NavList,
   PageHeader,
   Stack,
   Tabs,
   Text,
   TextInput,
+  ToggleGroup,
 } from '@tokens-studio/ui';
 import { Editor } from '#/editor/index.tsx';
 import { LiveEditor, LiveError, LiveProvider } from 'react-live';
@@ -50,50 +52,57 @@ import { useTheme } from '#/hooks/useTheme.tsx';
 import { useJourney } from '#/journeys/basic.tsx';
 import { JoyrideTooltip } from '#/components/joyride/tooltip.tsx';
 import { Settings } from '#/components/settings/index.tsx';
+import { ChevronDownIcon, ChevronUpIcon, CodeIcon, VideoIcon } from '@iconicicons/react';
 
 const Preview = ({ style, codeRef, ...rest }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [visibleTab, setVisibleTab] = useState("preview");
+
   const { position, separatorProps } = useResizable({
     axis: 'x',
     initial: 250,
     min: 100,
   });
 
+  const handleToggleVisible = useCallback(() => {
+    setIsVisible(!isVisible);
+  }, [isVisible, setIsVisible]);
+
   return (
-    <Stack
-      direction="row"
-      style={style}
-      css={{ background: '$bgSurface' }}
-      {...rest}
-    >
-      <Stack
-        direction="row"
-        style={{ flex: 1 }}
-        css={{ background: '$bgSurface' }}
+      <Box
+        css={{ position: 'absolute', bottom: '$4', left: '$4', }}
+        {...rest}
       >
-        <Stack direction="column" style={{ width: position }}>
-          <Box css={{ flexGrow: 1 }}>
-            <ComponentPreview />
-          </Box>
-        </Stack>
-        <Splitter direction="vertical" {...separatorProps} />
-        <Stack direction="column" css={{ padding: '$4', flex: 1 }}>
-          <Label>Editor</Label>
-          <Box
-            css={{
-              fontSize: '$xsmall',
-              fontFamily: 'monospace',
-              overflow: 'auto',
-              flex: 1,
-            }}
-          >
-            <div ref={codeRef}>
-              <LiveEditor />
-            </div>
-            <LiveError />
-          </Box>
-        </Stack>
-      </Stack>
-    </Stack>
+        <Box css={{display: 'flex', flexDirection: 'column', maxHeight: '40vh', maxWidth: '40vw', backgroundColor: '$bgSurface', borderRadius: '$medium', border: '1px solid', boxShadow: '$small', borderColor: '$borderMuted', padding: isVisible ? '$3' : 0}}>
+          <Stack direction="row" justify="between" align="center">
+            <Button onClick={handleToggleVisible} icon={isVisible ? <ChevronDownIcon /> : <ChevronUpIcon />} variant="invisible">
+              Preview
+            </Button>
+            {isVisible && <ToggleGroup type="single" value={visibleTab} onValueChange={setVisibleTab}>
+              <ToggleGroup.Item value="preview"><VideoIcon /></ToggleGroup.Item>
+              <ToggleGroup.Item value="editor"><CodeIcon /></ToggleGroup.Item>
+            </ToggleGroup>}
+          </Stack>
+          {isVisible &&
+          <Box css={{overflowY: 'scroll', flexGrow: 1}}>
+            {visibleTab === "preview" && <Box css={{width: '100%', display: 'flex'}}><ComponentPreview /></Box>}
+            {visibleTab === "editor" && <Box
+              css={{
+                fontSize: '$xsmall',
+                fontFamily: 'monospace',
+                overflowY: 'scroll',
+                maxHeight: '100%',
+                flex: 1,
+              }}
+            >
+              <div ref={codeRef}>
+                <LiveEditor />
+              </div>
+              <LiveError />
+            </Box>}
+            </Box>}
+        </Box>
+    </Box>
   );
 };
 
@@ -283,7 +292,7 @@ const Wrapper = () => {
       const ref = refs[x.id];
 
       return (
-        <Tabs.Content
+        <Box
           value={x.id}
           key={x.id}
           forceMount
@@ -298,7 +307,7 @@ const Wrapper = () => {
           <ReactFlowProvider>
             <Editor id={x.id} name={x.name} ref={ref} />
           </ReactFlowProvider>
-        </Tabs.Content>
+        </Box>
       );
     });
   }, [currentTab?.id, refs, tabs]);
@@ -351,13 +360,8 @@ const Wrapper = () => {
             <PageHeader.Title>Resolver Playground</PageHeader.Title>
             <PageHeader.Description>
               <Stack direction="row" gap={4} align="center">
-                <Text size="small">
-                  Mess around with the resolver prototype
-                </Text>
                 {/* @ts-ignore */}
-                <Link id="more-help" href="https://docs.graph.tokens.studio/">
-                  <Button size="small">Docs</Button>
-                </Link>
+                <Button id="more-help" as={Link} target="_blank" href="https://docs.graph.tokens.studio/" size="small">Docs</Button>
               </Stack>
             </PageHeader.Description>
             {/* @ts-ignore */}
@@ -375,57 +379,18 @@ const Wrapper = () => {
               <Settings />
             </PageHeader.Actions>
           </PageHeader>
-          <Tabs
+          <Box
             value={currentTab?.id}
             onValueChange={onTabChange}
             style={{
               display: 'flex',
-              flexDirection: 'column',
+              flexDirection: 'row',
               flex: 1,
               background: '$bgSurface',
             }}
           >
-            <Tabs.List css={{ alignItems: 'center', background: '$bgSurface' }}>
-              {tabs.map((x) => (
-                <Stack direction="row" gap={2} align="center" key={x.id}>
-                  <Tabs.Trigger css={{ fontSize: '$xsmall' }} value={x.id}>
-                    {x.name}
-                  </Tabs.Trigger>
-                  <IconButton
-                    icon={<Cross1Icon />}
-                    variant="invisible"
-                    size="small"
-                    data-key={x.id}
-                    onClick={removeTab}
-                  ></IconButton>
-                </Stack>
-              ))}
-              {isCreating ? (
-                <Stack direction="row" gap={2}>
-                  <TextInput
-                    onKeyUp={onEnter}
-                    value={resolverName}
-                    onChange={(e) => setResolverName(e.target.value)}
-                  />
-                  <IconButton
-                    onClick={addTab}
-                    variant="invisible"
-                    icon={<CheckIcon />}
-                    size="small"
-                  />
-                </Stack>
-              ) : (
-                <IconButton
-                  onClick={toggleCreating}
-                  size="small"
-                  icon={<PlusIcon />}
-                  variant="invisible"
-                />
-              )}
-            </Tabs.List>
             <div style={{ flex: 1, position: 'relative' }}>{tabContents}</div>
-          </Tabs>
-          <Splitter {...separatorProps} />
+          </Box>
           <LiveProvider
             code={theCode}
             scope={scope}

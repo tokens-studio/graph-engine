@@ -173,12 +173,11 @@ export const Node = (props: NodeProps) => {
 
   return (
     <Box
-      style={{
+      css={{
         minWidth: '300px',
         position: 'relative',
-        borderRadius: '3px',
-      }}
-      css={{ background: error ? '$dangerBg' : '$bgDefault' }}
+        borderRadius: '$medium',
+        background: error ? '$dangerBg' : '$bgDefault' }}
     >
       <NodeToolbar className="nodrag">
         <Stack direction="row" gap={2}>
