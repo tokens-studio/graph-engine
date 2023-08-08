@@ -143,13 +143,9 @@ export const WrapNode = (
     }, [input, state]);
 
     useEffect(() => {
-      console.log(nodeDef);
-
       if (nodeDef.type === NodeTypes.SET) {
         const getTokens = async () => {
           setLoadingEphemeralData(true);
-          console.log({ state });
-
           const set = await loadSetTokens(state.identifier);
           setEphemeralState(set)
           setLoadingEphemeralData(false);
