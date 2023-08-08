@@ -53,11 +53,13 @@ export const handleDrop = async (event, opts: DropOptions): Promise<Node[]> => {
       return null;
     }
     const id = uuidv4();
+
     const initialState = stateInitializer[nodeRequest.type];
 
     if (initialState === undefined) {
       throw new Error(`No initial state for ${nodeRequest.type}`);
     }
+
     dispatch.node.set({
       id,
       value: {
@@ -136,13 +138,11 @@ export const handleDrop = async (event, opts: DropOptions): Promise<Node[]> => {
     );
   } else {
     const dropData = event.dataTransfer.getData('application/reactflow');
-
     // check if the dropped element is valid
     if (typeof dropData === 'undefined' || !dropData) {
       return [];
     }
     const parsed = JSON.parse(dropData);
-
     //@ts-ignore
     processed = [
       //@ts-ignore

@@ -32,7 +32,7 @@ import { nodeTypes, stateInitializer } from '../components/flow/nodes/index.ts';
 import { useDispatch } from '../hooks/index.ts';
 import { v4 as uuidv4 } from 'uuid';
 import CustomEdge from '../components/flow/edges/edge.tsx';
-import DropPanel from '../components/flow/dropPanel.tsx';
+import { DropPanel } from '../components/flow/DropPanel/Panel.tsx';
 import React, {
   MouseEvent,
   useCallback,
@@ -56,6 +56,7 @@ const fullNodeTypes = {
   [EditorNodeTypes.GROUP]: groupNode,
 };
 
+
 const edgeTypes = {
   custom: CustomEdge,
 } as unknown as EdgeTypes;
@@ -74,29 +75,7 @@ const defaultEdgeOptions = {
   },
 };
 
-export interface InitialSet {
-  urn: string;
-  parentNode: string;
-  name: string;
-}
-
-type EditorState = {
-  nodes: Node[];
-  edges: Edge[];
-};
-
-type ImperativeEditor = {
-  /**
-   * Clears the editor of all nodes and edges
-   * @returns
-   */
-  clear: () => void;
-  save: () => void;
-  forceUpdate: () => EditorState;
-  load: (state: EditorState) => void;
-};
-
-export const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
+export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
     const reactFlowInstance = useReactFlow();
@@ -241,7 +220,7 @@ export const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
           reactFlowWrapper,
           dispatch,
           stateInitializer,
-        });
+        })
 
         reactFlowInstance.setNodes((nodes) => [...nodes, ...processed]);
       },
@@ -291,13 +270,14 @@ export const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
       <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
         <div
           className="editor"
-          style={{ height: '100%' }}
+          style={{ height: '100%', }}
           ref={reactFlowWrapper}
         >
           <ForceUpdateProvider value={forceUpdate}>
             {/* @ts-ignore */}
             <ReactFlow
-              fitView
+              // TODO: this should be true only when loading an existing graph
+              // fitView
               nodes={nodes}
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
@@ -349,10 +329,11 @@ export const EditorApp = React.forwardRef<ImperativeEditor, EditorProps>(
 
 export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
+    const { onOutputChange } = props;
     return (
       <ReduxProvider>
         <ReactFlowProvider>
-          <OnOutputChangeContextProvider onOutputChange={props.onOutputChange}>
+          <OnOutputChangeContextProvider onOutputChange={onOutputChange}>
             <Tooltip.Provider>
               <EditorApp {...props} ref={ref} />
             </Tooltip.Provider>

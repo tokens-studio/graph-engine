@@ -1,11 +1,5 @@
 import { Edge, Node } from 'reactflow';
 
-export interface InitialSet {
-  urn: string;
-  parentNode: string;
-  name: string;
-}
-
 export type EditorProps = {
   id: string;
   name: string;
