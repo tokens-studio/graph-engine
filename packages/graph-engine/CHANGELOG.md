@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 0.6.1
+
+### Patch Changes
+
+- f077533: Fixed input validation for tokenset input
+
 ## 0.6.0
 
 ### Minor Changes
