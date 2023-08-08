@@ -33,8 +33,9 @@ export interface PanelItem {
   icon: string | JSX.Element;
   text: string;
   data?: {
-    urn?: string;
+    identifier?: string;
     tokens?: any[];
+    title?: string;
   };
 }
 

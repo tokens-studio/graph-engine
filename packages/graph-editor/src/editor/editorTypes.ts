@@ -1,16 +1,4 @@
-import { SingleToken } from '@tokens-studio/types';
 import { Edge, Node } from 'reactflow';
-
-export interface InitialSet {
-  urn: string;
-  parentNode: string;
-  name: string;
-}
-
-export interface ExternalSet {
-  tokens: SingleToken[];
-  title?: string
-}
 
 export type EditorProps = {
   id: string;

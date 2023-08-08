@@ -24,7 +24,7 @@ export const DropPanel = () => {
     if (tokenSets) {
       setPanelItems((prev) => {
         const newPanelItems = { ...prev };
-        newPanelItems.tokens = tokenSets.map((set) => ({ type: NodeTypes.SET, data: { tokens: [], urn: set.urn ?? '', title: set.name ?? '' }, icon: <PlusIcon />, text: set.name ?? '' }));
+        newPanelItems.tokens = tokenSets.map((set) => ({ type: NodeTypes.SET, data: { identifier: set.identifier, title: set.name }, icon: <PlusIcon />, text: set.name }));
         return newPanelItems
       })
     }

@@ -14,13 +14,9 @@ import {
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import copy from 'copy-to-clipboard';
 import { TokenSetHandles } from './tokensHandles.tsx';
+import { EditorExternalSet } from '#/context/ExternalDataContext.tsx';
 
-type ExternalSetData = {
-    urn: string
-    name: string;
-};
-
-const ExternalSetNode: FC<NodeProps<ExternalSetData>> = () => {
+const ExternalSetNode: FC<NodeProps<EditorExternalSet>> = () => {
     const { setControls, setTitle, state, output, loadingEphemeralData } = useNode();
 
     const tokens = output && output[EXTERNAL_SET_ID];

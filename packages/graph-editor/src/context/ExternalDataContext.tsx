@@ -1,21 +1,25 @@
-import { TokenSet } from '@tokens-studio/sdk';
-import { SingleToken } from '@tokens-studio/types';
 import React, { createContext, useContext, useMemo } from 'react';
-import { ExternalSet } from '../editor/editorTypes';
+
+interface ExternalSetData {
+  tokens: Record<string, unknown>[];
+}
+
+export interface EditorExternalSet {
+  name: string;
+  identifier: string;
+}
 
 type ExternalDataContextType = {
-  tokenSets?: TokenSet[]
-  loadingTokenSets: boolean,
-  loadSetTokens: (urn: string) => Promise<ExternalSet>
+  tokenSets?: EditorExternalSet[];
+  loadingTokenSets: boolean;
+  loadSetTokens: (identifier: string) => Promise<ExternalSetData>;
 };
 
-const ExternalDataContext = createContext<ExternalDataContextType>(
-  {
-    tokenSets: undefined,
-    loadingTokenSets: false,
-    loadSetTokens: async () => ({ tokens: [] }),
-  },
-);
+const ExternalDataContext = createContext<ExternalDataContextType>({
+  tokenSets: undefined,
+  loadingTokenSets: false,
+  loadSetTokens: async () => ({ tokens: [] }),
+});
 
 function ExternalDataContextProvider({
   children,
@@ -24,11 +28,14 @@ function ExternalDataContextProvider({
   loadingTokenSets,
 }: {
   children: React.ReactNode;
-  tokenSets?: TokenSet[]
-  loadingTokenSets: boolean,
-  loadSetTokens: (urn: string) => Promise<ExternalSet>
+  tokenSets?: EditorExternalSet[];
+  loadingTokenSets: boolean;
+  loadSetTokens: (identifier: string) => Promise<ExternalSetData>;
 }) {
-  const providerValue = useMemo(() => ({ tokenSets, loadSetTokens, loadingTokenSets }), [tokenSets, loadSetTokens, loadingTokenSets]);
+  const providerValue = useMemo(
+    () => ({ tokenSets, loadSetTokens, loadingTokenSets }),
+    [tokenSets, loadSetTokens, loadingTokenSets],
+  );
 
   return (
     <ExternalDataContext.Provider value={providerValue}>
@@ -41,7 +48,9 @@ function useExternalData() {
   const context = useContext(ExternalDataContext);
 
   if (context === undefined) {
-    console.error('useExternalData must be used within a ExternalDataContextProvider')
+    console.error(
+      'useExternalData must be used within a ExternalDataContextProvider',
+    );
   }
   return context;
 }
