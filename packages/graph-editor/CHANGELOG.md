@@ -1,5 +1,11 @@
 # @tokens-studio/graph-editor
 
+## 1.2.1
+
+### Patch Changes
+
+- bbd381e: Fixed issue with exposing exports correctly
+
 ## 1.2.0
 
 ### Minor Changes
