@@ -28,6 +28,8 @@ import FocusTrap from 'focus-trap-react';
 import React, { useCallback, useMemo, useState } from 'react';
 import classNames from 'classnames/dedupe.js';
 import useDetachNodes from '../hooks/useDetachNodes.ts';
+import { useSelector } from 'react-redux';
+import { obscureDistance } from '#/redux/selectors/settings.ts';
 
 const CollapserContainer = styled('div', {});
 
@@ -130,7 +132,13 @@ export const Node = (props: NodeProps) => {
   const { id, icon, title, error, isAsync, children, controls, ...rest } =
     props;
   const flow = useReactFlow();
-  const showContent = useStore(zoomSelector);
+  const obscureDistanceValue = useSelector(obscureDistance);
+  const limiter = useCallback(
+    (s) => s.transform[2] >= obscureDistanceValue,
+    [obscureDistanceValue],
+  );
+
+  const showContent = useStore(limiter);
 
   const [collapsed, setCollapsed] = useState(false);
 

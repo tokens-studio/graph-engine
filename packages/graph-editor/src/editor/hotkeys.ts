@@ -4,7 +4,17 @@ import { useDispatch } from '#/hooks/useDispatch.ts';
 import { useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import copy from 'copy-to-clipboard';
-import useAutoLayout from '../components/flow/nodes/layouts/dagre.tsx';
+import useAutoLayout from '../components/flow/layouts/dagre.tsx';
+import {
+  elkForceOptions,
+  elkLayeredOptions,
+  elkRectOptions,
+  elkStressOptions,
+  useElkLayout,
+} from '#/components/flow/layouts/elk.tsx';
+import { layoutType as layoutTypeSelector } from '#/redux/selectors/settings.ts';
+import { useSelector } from 'react-redux';
+import { LayoutType } from '#/redux/models/settings.ts';
 
 export const keyMap = {
   AUTO_LAYOUT: 'ctrl+alt+f',
@@ -39,14 +49,33 @@ export const useHotkeys = ({ onEdgesDeleted }) => {
   const [showMinimap, setShowMinimap] = useState(true);
   const [snapGrid, setSnapGrid] = useState(true);
   const [hideZoom, setHideZoom] = useState(true);
-  const autoLayout = useAutoLayout();
+  const dagreAutoLayout = useAutoLayout();
+  const elkLayout = useElkLayout();
   const dispatch = useDispatch();
+
+  const layoutType = useSelector(layoutTypeSelector);
 
   const reactFlowInstance = useReactFlow();
   const handlers = useMemo(
     () => ({
       AUTO_LAYOUT: () => {
-        autoLayout();
+        switch (layoutType) {
+          case LayoutType.dagre:
+            dagreAutoLayout();
+            break;
+          case LayoutType.elkForce:
+            elkLayout(elkForceOptions);
+            break;
+          case LayoutType.elkRect:
+            elkLayout(elkRectOptions);
+            break;
+          case LayoutType.elkLayered:
+            elkLayout(elkLayeredOptions);
+            break;
+          case LayoutType.elkStress:
+            elkLayout(elkStressOptions);
+            break;
+        }
       },
       TOGGLE_HIDE: () => {
         setHideZoom((x) => !x);
@@ -171,9 +200,11 @@ export const useHotkeys = ({ onEdgesDeleted }) => {
       },
     }),
     [
-      autoLayout,
+      dagreAutoLayout,
       dispatch.input,
       dispatch.node,
+      elkLayout,
+      layoutType,
       onEdgesDeleted,
       reactFlowInstance,
     ],

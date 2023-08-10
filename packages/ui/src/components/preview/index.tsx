@@ -9,7 +9,8 @@ export const Preview = () => {
   const output = useSelector(outputSelector);
 
   return (
-    <div id="preview">
+    // Note we are explicitly setting the font-family to 'initial' here because otherwise the value might leak into the preview from a higher level
+    <div id="preview" style={{ fontFamily: 'initial' }}>
       <OutputProvider value={output}>
         <TokenContextProvider context={output}>
           <div style={{ padding: '1.5em', overflow: 'hidden' }}>

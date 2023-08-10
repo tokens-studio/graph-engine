@@ -31,7 +31,7 @@ export const MiniMapStyled = styled(MiniMap, {
 export const CustomControls = (props: ControlProps) => {
   return (
     <ControlsStyled {...props}>
-      <ControlButton title="action">
+      <ControlButton title="Settings">
         <Settings />
       </ControlButton>
     </ControlsStyled>

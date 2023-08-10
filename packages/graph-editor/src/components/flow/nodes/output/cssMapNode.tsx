@@ -49,6 +49,7 @@ const keys = [
   'fontWeight',
   'gap',
   'height',
+  'justify-content',
   'left',
   'letterSpacing',
   'lineBreak',
