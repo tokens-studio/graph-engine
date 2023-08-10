@@ -3,7 +3,6 @@ import { NodeState } from './models/node.ts';
 import { RematchDispatch, init } from '@rematch/core';
 import { RootModel, models } from './models/index.ts';
 import { SettingsState } from './models/settings.ts';
-import React from 'react';
 
 export const store = init({
   models,

@@ -17,8 +17,6 @@ import {
   Label,
   Separator,
   Stack,
-  Text,
-  Tooltip,
 } from '@tokens-studio/ui';
 import { OutputProvider } from '#/components/preview/scope.tsx';
 import { TokenContextProvider } from '#/components/preview/contextExamples/lion/context.ts';

@@ -6,7 +6,6 @@ import {
   useReactFlow,
   useStore,
 } from 'reactflow';
-import React from 'react';
 import dagre from 'dagre';
 
 // the layout direction (T = top, R = right, B = bottom, L = left, TB = top to bottom, ...)
@@ -74,9 +73,6 @@ function useAutoLayout(options: Options | undefined = { direction: 'LR' }) {
       }),
     );
   };
-  // useEffect(() => {
-
-  // }, [nodeCount, nodesInitialized, getNodes, getEdges, setNodes, setEdges, fitView, direction]);
 }
 
 export default useAutoLayout;

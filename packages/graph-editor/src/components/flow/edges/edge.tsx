@@ -6,7 +6,7 @@ import {
 } from 'reactflow';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { edgeType as edgeTypeSelector } from '../../../redux/selectors/edgeType.ts';
+import { edgeType as edgeTypeSelector } from '../../../redux/selectors/settings.ts';
 import { EdgeType } from '../../../redux/models/settings.ts';
 
 export default function CustomEdge({
