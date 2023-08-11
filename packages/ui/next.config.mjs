@@ -20,7 +20,6 @@ const config = {
   },
   webpack: (config, { dev, isServer }) => {
 
-
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>
       rule.test?.test?.('.svg'),

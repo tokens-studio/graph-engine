@@ -1,3 +1,4 @@
+import { StorageProviderType } from '#/types/storageType.ts';
 import { FILE_TYPE } from '../types/files.ts';
 import {
   RemoteGraphStorageData,
@@ -6,12 +7,21 @@ import {
   RemoteResponseData,
 } from '../types/index.ts';
 
-export abstract class RemoteStorage<Metadata = unknown, SaveOptions = unknown> {
+export abstract class RemoteStorage<
+  Metadata = unknown,
+  SaveOptions = unknown,
+  ReadOptions = unknown,
+> {
+  public name: string = 'abstract';
+  public type: StorageProviderType = StorageProviderType.LOCAL;
+
   public abstract write(
     files: RemoteGraphStorageFile<Metadata>[],
     saveOptions?: SaveOptions,
   ): Promise<boolean>;
-  public abstract read(): Promise<
+  public abstract read(
+    readOptions?: ReadOptions,
+  ): Promise<
     RemoteGraphStorageFile<Metadata>[] | RemoteGraphStorageErrorMessage
   >;
 

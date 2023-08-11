@@ -10,10 +10,8 @@ import { graphState } from './graphs.ts';
 export const models: RootModel = {
   ui: uiState,
   output: outputState,
-  node: nodeState,
   branch: branchState,
   storage: storageState,
-  input: inputState,
   journey: journeyState,
   editorOutput: outputState,
   refs: refState,

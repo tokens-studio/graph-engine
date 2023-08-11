@@ -1,4 +1,3 @@
-import { StorageType } from '#/types/storageType.ts';
 import { useCallback } from 'react';
 import { useDispatch } from './useDispatch.ts';
 

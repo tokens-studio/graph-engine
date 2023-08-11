@@ -1,7 +1,9 @@
-export enum StorageProviderType {
-  LOCAL = 'local',
-  GITHUB = 'github',
-}
+import { StorageProviderType } from '#/types/storageType.ts';
+
+export type OptionalPartial<
+  Incomplete extends boolean,
+  T,
+> = Incomplete extends true ? Partial<T> : T;
 
 /**
  * StorageTypes are meant to define the parameters of a storage provider
@@ -19,8 +21,6 @@ export type GenericStorageType<
         internalId: string;
       });
 
-export type LocalStorageType = GenericStorageType<StorageProviderType.LOCAL>;
-
 export type GitHubStorageType = GenericStorageType<
   StorageProviderType.GITHUB,
   {
@@ -33,11 +33,16 @@ export type GitHubStorageType = GenericStorageType<
   }
 >;
 
-export type StorageType = LocalStorageType | GitHubStorageType;
-
 export type StorageTypeCredential<
   T extends GenericStorageType,
   Required extends boolean = true,
 > = T & (Required extends true ? { secret: string } : { secret?: string });
 
 export type StorageTypeCredentials = StorageTypeCredential<GitHubStorageType>;
+
+export type StorageTypeFormValues<Incomplete extends boolean = false> =
+  | ({ new?: boolean; provider: StorageProviderType.GITHUB } & OptionalPartial<
+      Incomplete,
+      Omit<StorageTypeCredential<GitHubStorageType>, 'provider'>
+    >)
+  | { new?: boolean; provider: StorageProviderType.LOCAL };

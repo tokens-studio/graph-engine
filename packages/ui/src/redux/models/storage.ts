@@ -1,16 +1,25 @@
+import { LocalStorage } from '#/storage/adapters/local.ts';
+import { RemoteStorage } from '#/storage/interfaces/remoteStorage.ts';
 import { StorageProviderType } from '#/types/storageType.ts';
 import { RootModel } from './root.ts';
 import { createModel } from '@rematch/core';
 
 export type StorageState = {
-  type: StorageProviderType;
+  /**
+   * JSON representation of the state
+   */
+  lastSynccedState: string;
+  hasUnsavedChanges: boolean;
+  provider: RemoteStorage;
   config: Record<string, any>;
   showPullDialog: string | false;
 };
 
 export const storageState = createModel<RootModel>()({
   state: {
-    type: StorageProviderType.LOCAL,
+    lastSynccedState: '{}',
+    hasUnsavedChanges: false,
+    provider: new LocalStorage(),
     showPullDialog: false,
   } as StorageState,
   reducers: {

@@ -42,6 +42,8 @@ const octokitClientDefaultHeaders = {
 };
 
 export class GithubTokenStorage extends GitTokenStorage {
+  public name = 'github';
+
   private octokitClient: ExtendedOctokitClient;
 
   constructor(
