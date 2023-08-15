@@ -7,7 +7,7 @@ import React, { createContext, useContext } from 'react';
 import classNames from 'classnames';
 import styles from './handles.module.scss';
 
-const HandleContext = createContext<{
+export const HandleContext = createContext<{
   position: Position;
   type: 'source' | 'target';
 }>({
