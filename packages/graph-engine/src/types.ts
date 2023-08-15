@@ -69,6 +69,7 @@ export interface NodeDefinition<
 export enum NodeTypes {
   INPUT = "studio.tokens.generic.input",
   OUTPUT = "studio.tokens.generic.output",
+  PASS_THROUGH = "studio.tokens.generic.passthrough",
 
   ENUMERATED_INPUT = "studio.tokens.input.enumerated-constant",
   CONSTANT = "studio.tokens.input.constant",

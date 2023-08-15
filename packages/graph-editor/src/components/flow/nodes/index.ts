@@ -57,6 +57,7 @@ import spreadNode from './input/spreadNode.tsx';
 import convertNode from './color/convertNode.tsx';
 import wheelNode from './color/wheelNode.tsx';
 import parseUnit from './generic/parseUnit.tsx';
+import portalNode from './generic/portalNode.tsx';
 import jsonNode from './generic/jsonNode.tsx';
 import cssBox from './css/boxNode.tsx';
 import concat from './array/concat.tsx';
@@ -86,6 +87,7 @@ export const { nodeTypes, stateInitializer } = processTypes([
   geometricNode,
   ColorBlindness,
   AbsNode,
+  portalNode,
   spreadNode,
   dotProp,
   objectify,
@@ -141,5 +143,5 @@ export const { nodeTypes, stateInitializer } = processTypes([
   wheelNode,
   cssBox,
   concat,
-  ExternalSetNode
+  ExternalSetNode,
 ]);

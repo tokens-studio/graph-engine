@@ -22,6 +22,7 @@ export interface SettingsState {
   obscureDistance: number;
   edgeType: EdgeType;
   layoutType: LayoutType;
+  debugMode: boolean;
 }
 
 export const settingsState = createModel<RootModel>()({
@@ -29,8 +30,15 @@ export const settingsState = createModel<RootModel>()({
     obscureDistance: 0.5,
     edgeType: EdgeType.bezier,
     layoutType: LayoutType.dagre,
+    debugMode: true,
   } as SettingsState,
   reducers: {
+    setDebugMode(state, debugMode: boolean) {
+      return {
+        ...state,
+        debugMode,
+      };
+    },
     setObscureDistance(state, obscureDistance: number) {
       return {
         ...state,

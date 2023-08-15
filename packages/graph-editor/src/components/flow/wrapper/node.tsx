@@ -6,6 +6,7 @@ import {
   Separator,
   Spinner,
   Stack,
+  Text,
 } from '@tokens-studio/ui';
 import {
   ChevronDownIcon,
@@ -29,9 +30,13 @@ import React, { useCallback, useMemo, useState } from 'react';
 import classNames from 'classnames/dedupe.js';
 import useDetachNodes from '../hooks/useDetachNodes.ts';
 import { useSelector } from 'react-redux';
-import { obscureDistance } from '#/redux/selectors/settings.ts';
+import { debugMode, obscureDistance } from '#/redux/selectors/settings.ts';
 
 const CollapserContainer = styled('div', {});
+
+interface Stats {
+  executionTime: number;
+}
 
 interface NodeProps {
   id: string;
@@ -42,6 +47,7 @@ interface NodeProps {
   children?: React.ReactNode;
   controls?: React.ReactNode;
   style?: React.CSSProperties;
+  stats: Stats;
 }
 
 const convertToGraph = (flow: ReactFlowInstance) => {
@@ -95,8 +101,6 @@ const applyFilters = (
   );
 };
 
-const zoomSelector = (s) => s.transform[2] >= 0.5;
-
 export const Collapser = ({ icon, children, collapsed, showContent }) => {
   const styling = useMemo(() => {
     if (collapsed) {
@@ -133,6 +137,7 @@ export const Node = (props: NodeProps) => {
     props;
   const flow = useReactFlow();
   const obscureDistanceValue = useSelector(obscureDistance);
+  const debugModeValue = useSelector(debugMode);
   const limiter = useCallback(
     (s) => s.transform[2] >= obscureDistanceValue,
     [obscureDistanceValue],
@@ -249,6 +254,11 @@ export const Node = (props: NodeProps) => {
             >
               {children}
             </Collapser>
+            {debugModeValue && (
+              <Text css={{ position: 'absolute', top: 'calc(100% + 10px)' }}>
+                {props.stats.executionTime}ms
+              </Text>
+            )}
           </Stack>
         </FocusTrap>
       </HandleContainerContext.Provider>

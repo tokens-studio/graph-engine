@@ -9,3 +9,5 @@ export const obscureDistance = createSelector(
   settings,
   (state) => state.obscureDistance,
 );
+
+export const debugMode = createSelector(settings, (state) => state.debugMode);

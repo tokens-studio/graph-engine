@@ -46,6 +46,8 @@ import groupNode from '../components/flow/groupNode.tsx';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
 import { Tooltip } from '@tokens-studio/ui';
 import { OnOutputChangeContextProvider } from '#/context/OutputContext.tsx';
+import { createNode } from './create.ts';
+import { NodeTypes } from '@tokens-studio/graph-engine';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -55,7 +57,6 @@ const fullNodeTypes = {
   ...nodeTypes,
   [EditorNodeTypes.GROUP]: groupNode,
 };
-
 
 const edgeTypes = {
   custom: CustomEdge,
@@ -220,12 +221,75 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           reactFlowWrapper,
           dispatch,
           stateInitializer,
-        })
+        });
 
         reactFlowInstance.setNodes((nodes) => [...nodes, ...processed]);
       },
       [reactFlowInstance],
     );
+
+    const onEdgeDblClick = useCallback((event, clickedEdge) => {
+      event.stopPropagation();
+
+      const reactFlowBounds =
+        reactFlowWrapper!.current!.getBoundingClientRect();
+
+      const position = reactFlowInstance?.project({
+        x: event.clientX - reactFlowBounds.left,
+        y: event.clientY - reactFlowBounds.top,
+      });
+
+      const newNode = createNode({
+        nodeRequest: {
+          type: NodeTypes.PASS_THROUGH,
+        },
+        stateInitializer,
+        dispatch,
+        position,
+      });
+
+      //Set the initial value
+      dispatch.input.copyInputKey({
+        id: newNode.id,
+        key: 'input',
+        source: clickedEdge.target,
+        sourceKey: clickedEdge.targetHandle,
+      });
+
+      setEdges((eds) => {
+        //Remove the old edge
+        const filtered = eds.filter((edge) => {
+          return !(
+            edge.target == clickedEdge.target &&
+            edge.targetHandle == clickedEdge.targetHandle
+          );
+        });
+        //Add a new edge from the old target to the new node
+        const newEdge = {
+          source: clickedEdge.source,
+          sourceHandle: clickedEdge.sourceHandle,
+          target: newNode.id,
+          targetHandle: 'input',
+          id: uuidv4(),
+          type: 'custom',
+        };
+        //Create another edge from the new node to the old target
+        const newEdge2 = {
+          source: newNode.id,
+          sourceHandle: 'output',
+          target: clickedEdge.target,
+          targetHandle: clickedEdge.targetHandle,
+          id: uuidv4(),
+          type: 'custom',
+        };
+
+        return [...filtered, newEdge, newEdge2];
+      });
+
+      //Create a proxy node
+      setNodes((nds) => [...nds, newNode]);
+      console.log(newNode);
+    }, []);
 
     const onNodeDrag = useCallback(
       (_: MouseEvent, node: Node) => {
@@ -270,7 +334,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
         <div
           className="editor"
-          style={{ height: '100%', }}
+          style={{ height: '100%' }}
           ref={reactFlowWrapper}
         >
           <ForceUpdateProvider value={forceUpdate}>
@@ -281,6 +345,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
               nodes={nodes}
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
+              onEdgeDoubleClick={onEdgeDblClick}
               onEdgesDelete={onEdgesDeleted}
               edges={edges}
               elevateNodesOnSelect={false}
