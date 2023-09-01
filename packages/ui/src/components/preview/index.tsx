@@ -1,14 +1,17 @@
 import { LivePreview } from 'react-live';
 import { OutputProvider } from './scope.tsx';
-import { TokenContextProvider } from './contextExamples/lion/index.ts';
 import { useSelector } from 'react-redux';
-import { output as outputSelector } from '#/redux/selectors/roots.ts';
 import { Box } from '@tokens-studio/ui';
+import React from 'react';
+import { outputSelector } from '#/redux/selectors/index.ts';
+import { TokenContextProvider } from './contextExamples/lion/context.ts';
 
 export const Preview = () => {
   const output = useSelector(outputSelector);
+
   return (
-    <div id="preview">
+    // Note we are explicitly setting the font-family to 'initial' here because otherwise the value might leak into the preview from a higher level
+    <div id="preview" style={{ fontFamily: 'initial' }}>
       <OutputProvider value={output}>
         <TokenContextProvider context={output}>
           <Box css={{ padding: '$2', overflow: 'hidden' }}>

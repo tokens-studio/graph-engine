@@ -1,5 +1,40 @@
 # @tokens-studio/graph-engine
 
+## 0.6.1
+
+### Patch Changes
+
+- f077533: Fixed input validation for tokenset input
+
+## 0.6.0
+
+### Minor Changes
+
+- 732f6ee: - Adds a parse Unit node.
+  - Adds `align-items` to the exposed UI
+  - Adds native supports for tokenSets in input
+  - Adds Json node (alpha)
+- 732f6ee: Added new nodes for array concatenation and css box models
+
+## 0.5.0
+
+### Minor Changes
+
+- 7644d05: - Adds a parse Unit node.
+  - Adds `align-items` to the exposed UI
+  - Adds native supports for tokenSets in input
+  - Adds Json node (alpha)
+- 7644d05: Added new nodes for array concatenation and css box models
+
+## 0.4.0
+
+### Minor Changes
+
+- 745e1a2: - Adds a parse Unit node.
+  - Adds `align-items` to the exposed UI
+  - Adds native supports for tokenSets in input
+  - Adds Json node (alpha)
+
 ## 0.3.0
 
 ### Minor Changes

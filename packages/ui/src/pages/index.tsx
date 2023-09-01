@@ -1,10 +1,7 @@
 import {
   Box,
   Button,
-  Dialog,
-  DropdownMenu,
   IconButton,
-  Label,
   Link,
   NavList,
   PageHeader,
@@ -14,15 +11,26 @@ import {
   TextInput,
   ToggleGroup,
 } from '@tokens-studio/ui';
-import { Editor } from '#/editor/index.tsx';
-import { LiveEditor, LiveError, LiveProvider } from 'react-live';
-import { ReactFlowProvider } from 'reactflow';
+
+import {
+  Editor,
+  ImperativeEditorRef,
+  EditorEdge,
+  EditorNode,
+} from '@tokens-studio/graph-editor';
+import { LiveProvider } from 'react-live';
 import { Splitter } from '#/components/splitter.tsx';
 import { code, scope } from '#/components/preview/scope.tsx';
 import { useDispatch } from '#/hooks/index.ts';
 import { useResizable } from 'react-resizable-layout';
 import { useSelector } from 'react-redux';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import darkLogo from '../assets/svgs/tokensstudio-complete-dark.svg';
 import logo from '../assets/svgs/tokensstudio-complete.svg';
 import {
@@ -30,10 +38,8 @@ import {
   tabs as tabsSelector,
   currentTab as currentTabSelector,
 } from '#/redux/selectors/index.ts';
-import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
+import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 import { v4 as uuidv4 } from 'uuid';
-//@ts-ignore This is the correct import
-import { Preview as ComponentPreview } from '#/components/preview/index.tsx';
 // @ts-ignore
 import { themes } from 'prism-react-renderer';
 
@@ -51,65 +57,19 @@ import { useOnEnter } from '#/hooks/onEnter.ts';
 import { useTheme } from '#/hooks/useTheme.tsx';
 import { useJourney } from '#/journeys/basic.tsx';
 import { JoyrideTooltip } from '#/components/joyride/tooltip.tsx';
-import { Settings } from '#/components/settings/index.tsx';
-import { ChevronDownIcon, ChevronUpIcon, CodeIcon, VideoIcon } from '@iconicicons/react';
+import { Preview } from '#/components/Preview.tsx';
 
-const Preview = ({ style, codeRef, ...rest }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [visibleTab, setVisibleTab] = useState("preview");
-
-  const { position, separatorProps } = useResizable({
-    axis: 'x',
-    initial: 250,
-    min: 100,
-  });
-
-  const handleToggleVisible = useCallback(() => {
-    setIsVisible(!isVisible);
-  }, [isVisible, setIsVisible]);
-
-  return (
-      <Box
-        css={{ position: 'absolute', bottom: '$4', left: '$4', }}
-        {...rest}
-      >
-        <Box css={{display: 'flex', flexDirection: 'column', maxHeight: '40vh', maxWidth: '40vw', backgroundColor: '$bgSurface', borderRadius: '$medium', border: '1px solid', boxShadow: '$small', borderColor: '$borderMuted', padding: isVisible ? '$3' : 0}}>
-          <Stack direction="row" justify="between" align="center">
-            <Button onClick={handleToggleVisible} icon={isVisible ? <ChevronDownIcon /> : <ChevronUpIcon />} variant="invisible">
-              Preview
-            </Button>
-            {isVisible && <ToggleGroup type="single" value={visibleTab} onValueChange={setVisibleTab}>
-              <ToggleGroup.Item value="preview"><VideoIcon /></ToggleGroup.Item>
-              <ToggleGroup.Item value="editor"><CodeIcon /></ToggleGroup.Item>
-            </ToggleGroup>}
-          </Stack>
-          {isVisible &&
-          <Box css={{overflowY: 'scroll', flexGrow: 1}}>
-            {visibleTab === "preview" && <Box css={{width: '100%', display: 'flex'}}><ComponentPreview /></Box>}
-            {visibleTab === "editor" && <Box
-              css={{
-                fontSize: '$xsmall',
-                fontFamily: 'monospace',
-                overflowY: 'scroll',
-                maxHeight: '100%',
-                flex: 1,
-              }}
-            >
-              <div ref={codeRef}>
-                <LiveEditor />
-              </div>
-              <LiveError />
-            </Box>}
-            </Box>}
-        </Box>
-    </Box>
-  );
-};
+interface ResolverData {
+  nodes: EditorNode[];
+  edges: EditorEdge[];
+  state: Record<string, any>;
+  code: string;
+}
 
 const Wrapper = () => {
   const currentTab = useSelector(currentTabSelector);
   const tabs = useSelector(tabsSelector);
-  // const reactFlowInstance = useReactFlow();
+
   const [theCode, setTheCode] = useState(code);
   const [loadedExample, setLoadedExample] = useState(false);
   const dispatch = useDispatch();
@@ -121,7 +81,8 @@ const Wrapper = () => {
       return acc;
     }, {});
   }, []);
-  const [refs, setRefs] = useState(initRefs);
+  const [refs, setRefs] =
+    useState<Record<string, MutableRefObject<ImperativeEditorRef>>>(initRefs);
 
   const ref = React.useRef<HTMLDivElement>(null);
   const [isCreating, setIsCreating] = useState(false);
@@ -177,11 +138,10 @@ const Wrapper = () => {
       return;
     }
 
-    const { nodes, edges } = current.save();
-    const state = dispatch.node.getState();
+    const { nodes, edges, nodeState } = current.save();
 
     const finalState = nodes.reduce((acc, node) => {
-      acc[node.id] = state[node.id];
+      acc[node.id] = nodeState[node.id];
       return acc;
     }, {});
 
@@ -209,74 +169,87 @@ const Wrapper = () => {
   const onClear = useCallback(() => {
     if (currentTab) {
       refs[currentTab.id]?.current?.clear();
+
+      dispatch.editorOutput.set({
+        name: currentTab.name,
+        value: undefined,
+      });
     }
   }, [currentTab, refs]);
-  const onLoad = useCallback(
-    (e) => {
-      if (currentTab) {
-        const current = refs[currentTab.id]?.current;
-        if (!current) {
-          alert('No attached tab found');
-          return;
-        }
 
-        // create an input element
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.addEventListener('change', function (event) {
-          //@ts-ignore
-          const files = event?.target?.files;
-          const file = files[0];
-
-          // do something with the file, like reading its contents
-          const reader = new FileReader();
-          reader.onload = function () {
-            const resolver = JSON.parse(reader.result as string);
-
-            const { state, code, ...rest } = resolver;
-
-            onClear();
-            //TODO , this needs a refactor. We need to wait for the clear to finish
-            // as the nodes still get one final update by the dispatch before they are removed which
-            // causes nulls to occur everywhere. They need to be unmounted
-            setTimeout(() => {
-              if (code !== undefined) {
-                setTheCode(code);
-              }
-              dispatch.node.setState(state || {});
-              current.load({
-                ...rest,
-              });
-            }, 0);
-          };
-          reader.readAsText(file);
-        });
-
-        // simulate a click on the input element to trigger the file picker dialog
-        input.click();
+  const onLoad = useCallback(() => {
+    if (currentTab) {
+      const current = refs[currentTab.id]?.current;
+      if (!current) {
+        alert('No attached tab found');
+        return;
       }
-    },
-    [currentTab, dispatch.node, refs],
-  );
+
+      // create an input element
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.addEventListener('change', function (event) {
+        //@ts-ignore
+        const files = event?.target?.files;
+        const file = files[0];
+
+        // do something with the file, like reading its contents
+        const reader = new FileReader();
+        reader.onload = function () {
+          const resolver = JSON.parse(reader.result as string) as ResolverData;
+
+          const { state, code, nodes, edges } = resolver;
+
+          onClear();
+          //TODO , this needs a refactor. We need to wait for the clear to finish
+          // as the nodes still get one final update by the dispatch before they are removed which
+          // causes nulls to occur everywhere. They need to be unmounted
+          setTimeout(() => {
+            if (code !== undefined) {
+              setTheCode(code);
+            }
+
+            current.load({
+              nodes,
+              edges,
+              nodeState: state,
+            });
+          }, 0);
+        };
+        reader.readAsText(file);
+      });
+
+      // simulate a click on the input element to trigger the file picker dialog
+      input.click();
+    }
+  }, [currentTab, dispatch.node, refs]);
 
   useEffect(() => {
     if (!loadedExample) {
-      const { state, code, ...rest } = example;
+      const exampleData = example as ResolverData;
+
+      const { state, code, edges, nodes } = exampleData;
       const current = refs[currentTab.id]?.current;
 
       if (code !== undefined) {
         setTheCode(code);
       }
 
-      //Set the state
-      dispatch.node.setState(state || {});
-
       current.load({
-        ...rest,
+        nodes: nodes,
+        edges: edges,
+        nodeState: state,
       });
       setLoadedExample(true);
     }
   }, [refs]);
+
+  const onEditorOutputChange = (output: Record<string, unknown>) => {
+    dispatch.editorOutput.set({
+      name: currentTab.name,
+      value: output,
+    });
+  };
 
   const onForceUpdate = useCallback(() => {
     const current = refs[currentTab.id]?.current;
@@ -300,12 +273,13 @@ const Wrapper = () => {
             height: '100%',
             position: 'absolute',
             width: '100%',
+            background: '$bgCanvas',
             top: 0,
             display: currentTab?.id === x.id ? 'initial' : 'none',
           }}
         >
           <ReactFlowProvider>
-            <Editor id={x.id} name={x.name} ref={ref} />
+            <Editor id={x.id} name={x.name} ref={ref} onOutputChange={onEditorOutputChange} />
           </ReactFlowProvider>
         </Box>
       );
@@ -376,7 +350,6 @@ const Wrapper = () => {
               <Button onClick={onClear}>Clear</Button>
               <Button onClick={onSave}>Save</Button>
               <Button onClick={onLoad}>Load</Button>
-              <Settings />
             </PageHeader.Actions>
           </PageHeader>
           <Box
