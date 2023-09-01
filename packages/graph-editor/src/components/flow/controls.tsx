@@ -4,8 +4,17 @@ import React from 'react';
 import { Settings } from '../Settings';
 
 export const ControlsStyled = styled(Controls, {
+  display: 'flex',
+  flexDirection: 'row',
+  padding: '$2',
+  backgroundColor: '$bgSubtle',
+  borderRadius: '$medium',
   button: {
-    backgroundColor: '$bgSurface',
+    width: 24,
+    height: 24,
+    borderRadius: '$small',
+    backgroundColor: '$bgSubtle',
+    borderBottom: 'transparent',
     '&:hover': {
       backgroundColor: '$bgSubtle',
     },
@@ -30,10 +39,10 @@ export const MiniMapStyled = styled(MiniMap, {
 
 export const CustomControls = (props: ControlProps) => {
   return (
-    <ControlsStyled {...props}>
-      <ControlButton title="Settings">
+    <ControlsStyled showInteractive={false} {...props}>
+      <ControlButton>
         <Settings />
-      </ControlButton>
+      </ControlButton>             
     </ControlsStyled>
   );
 };

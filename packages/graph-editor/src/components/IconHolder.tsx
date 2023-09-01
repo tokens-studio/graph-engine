@@ -2,12 +2,11 @@ import { styled } from "#/lib/stitches";
 
 export const IconHolder = styled('div', {
     display: 'flex',
-    width: '32px',
-    height: '32px',
+    width: '24px',
+    height: '24px',
     fontSize: '$xxsmall',
-    padding: '$3',
     borderRadius: '$medium',
-    border: '1px solid $borderSubtle',
+    color: '$fgSubtle',
     userSelect: 'none',
     cursor: 'pointer',
     alignItems: 'center',

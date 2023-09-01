@@ -2,15 +2,19 @@ import { styled } from "#/lib/stitches";
 
 
 export const StyledPanel = styled('div', {
-    borderRight: '1px solid',
-    backgroundColor: '$bgSurface',
-    borderColor: '$borderMuted',
-    marginBottom: '-5px',
+    position: 'absolute',
+    top: '$8',
+    left: '$3',
+    maxHeight: '80vh',
+    height: 'auto',
+    backgroundColor: '$bgSubtle',
+    borderRadius: '$medium',
+    border: '1px solid',
+    borderColor: '$borderSubtle',
     overflow: 'auto',
-    padding: '0',
+    padding: '$1',
     display: 'flex',
-    position: 'relative',
-    height: '100%',
-    flexShrink: '0',
-    width: '250px',
+    flexDirection: 'column',
+    maxWidth: '250px',
+    zIndex: 50,
 });

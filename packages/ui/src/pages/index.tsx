@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  DropdownMenu,
   IconButton,
   Link,
   NavList,
@@ -58,6 +59,7 @@ import { useTheme } from '#/hooks/useTheme.tsx';
 import { useJourney } from '#/journeys/basic.tsx';
 import { JoyrideTooltip } from '#/components/joyride/tooltip.tsx';
 import { Preview } from '#/components/Preview.tsx';
+import { DotsHorizontalIcon, FloppyDiscIcon, FolderIcon, TrashIcon } from '@iconicicons/react';
 
 interface ResolverData {
   nodes: EditorNode[];
@@ -273,18 +275,16 @@ const Wrapper = () => {
             height: '100%',
             position: 'absolute',
             width: '100%',
-            background: '$bgCanvas',
+            background: '$bgSurface',
             top: 0,
             display: currentTab?.id === x.id ? 'initial' : 'none',
           }}
         >
-          <ReactFlowProvider>
-            <Editor id={x.id} name={x.name} ref={ref} onOutputChange={onEditorOutputChange} />
-          </ReactFlowProvider>
+          <Editor id={x.id} name={x.name} ref={ref} onOutputChange={onEditorOutputChange} />
         </Box>
       );
     });
-  }, [currentTab?.id, refs, tabs]);
+  }, [currentTab?.id, refs, tabs, onEditorOutputChange]);
 
   const onEnter = useOnEnter(isCreating ? addTab : undefined);
 
@@ -322,36 +322,50 @@ const Wrapper = () => {
           direction="column"
           css={{ height: '100%', background: '$bgSurface' }}
         >
-          <PageHeader>
-            <PageHeader.LeadingVisual>
-              {theme === 'light' && (
-                <img src={logo.src} style={{ height: '2em' }} />
-              )}
-              {theme !== 'light' && (
-                <img src={darkLogo.src} style={{ height: '2em' }} />
-              )}
-            </PageHeader.LeadingVisual>
-            <PageHeader.Title>Resolver Playground</PageHeader.Title>
-            <PageHeader.Description>
-              <Stack direction="row" gap={4} align="center">
-                {/* @ts-ignore */}
-                <Button id="more-help" as={Link} target="_blank" href="https://docs.graph.tokens.studio/" size="small">Docs</Button>
-              </Stack>
-            </PageHeader.Description>
-            {/* @ts-ignore */}
-            <PageHeader.Actions id="toolbar">
-              <Button
-                icon={theme === 'light' ? <MoonIcon /> : <SunIcon />}
-                variant="invisible"
-                size="small"
-                onClick={() => dispatch.ui.toggleTheme(null)}
-              ></Button>
-              <Button onClick={onForceUpdate}>Force Update</Button>
-              <Button onClick={onClear}>Clear</Button>
-              <Button onClick={onSave}>Save</Button>
-              <Button onClick={onLoad}>Load</Button>
-            </PageHeader.Actions>
-          </PageHeader>
+          <Box css={{position: 'fixed', top: '$3', left: '$3', zIndex: 1}}>
+           
+          </Box>
+          <Box css={{position: 'fixed', top: '$3', right: '$3', zIndex: 1}}>
+            <LiveProvider
+              code={theCode}
+              scope={scope}
+              theme={theme === 'light' ? themes.vsLight : themes.vsDark}
+              noInline={true}
+              enableTypeScript={true}
+              language="jsx"
+            >
+              <Preview
+                id="code-editor"
+                codeRef={ref}
+                style={{ height: position }}
+              />
+            </LiveProvider>
+          </Box>
+          <Stack direction="row" gap={1} css={{position: 'fixed', top: '$3', left: '$3', zIndex: 1}}>
+          {theme === 'light' && (
+              <img src={logo.src} style={{ height: '2em' }} />
+            )}
+            {theme !== 'light' && (
+              <img src={darkLogo.src} style={{ height: '2em' }} />
+            )}
+            <IconButton onClick={onLoad} icon={<FolderIcon />}  title="Load .json" variant="invisible" />
+            <IconButton onClick={onSave} icon={<FloppyDiscIcon />}  title="Save .json" variant="invisible" />
+            <IconButton
+              icon={theme === 'light' ? <MoonIcon /> : <SunIcon />}
+              variant="invisible"
+              onClick={() => dispatch.ui.toggleTheme(null)}
+              title={theme === 'light' ? 'Dark mode' : 'Light mode'}
+            />
+            <DropdownMenu>
+              <DropdownMenu.Trigger asChild>
+                <IconButton icon={<DotsHorizontalIcon />} variant="invisible" />
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Content>
+                <DropdownMenu.Item onClick={onForceUpdate}>Force update</DropdownMenu.Item>
+                <DropdownMenu.Item onClick={onClear}>Clear canvas</DropdownMenu.Item>
+              </DropdownMenu.Content>
+            </DropdownMenu>
+          </Stack>
           <Box
             value={currentTab?.id}
             onValueChange={onTabChange}
@@ -364,20 +378,6 @@ const Wrapper = () => {
           >
             <div style={{ flex: 1, position: 'relative' }}>{tabContents}</div>
           </Box>
-          <LiveProvider
-            code={theCode}
-            scope={scope}
-            theme={theme === 'light' ? themes.vsLight : themes.vsDark}
-            noInline={true}
-            enableTypeScript={true}
-            language="jsx"
-          >
-            <Preview
-              id="code-editor"
-              codeRef={ref}
-              style={{ height: position }}
-            />
-          </LiveProvider>
         </Stack>
       </div>
     </>

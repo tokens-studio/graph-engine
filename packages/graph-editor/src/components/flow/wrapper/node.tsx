@@ -190,7 +190,7 @@ export const Node = (props: NodeProps) => {
         minWidth: '300px',
         position: 'relative',
         borderRadius: '$medium',
-        background: error ? '$dangerBg' : '$bgDefault' }}
+        background: error ? '$dangerBg' : '$bgCanvas' }}
     >
       <NodeToolbar className="nodrag">
         <Stack direction="row" gap={2}>

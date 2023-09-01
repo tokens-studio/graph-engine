@@ -11,13 +11,13 @@
     padding: 0;
     cursor: -webkit-grab;
     cursor: grab;
-    border: none;
     background: transparent;
     width: initial;
     border-radius: var(--radii-medium);
     transition: box-shadow 0.3s ease-in-out;
-    background: var(--colors-bgDefault);
+    background: var(--colors-bgCanvas);
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+    border: 2px solid var(--colors-bgSubtle);
 }
 
 .react-flow__node.filtered {
@@ -58,7 +58,6 @@
 
 #drop-panel {
     margin: 0;
-    height: 100%;
 }
 
 .react-flow__edge-path, .react-flow__connection-path {

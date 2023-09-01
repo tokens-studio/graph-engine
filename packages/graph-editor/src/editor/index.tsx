@@ -44,10 +44,11 @@ import { ReduxProvider } from '../redux/index.tsx';
 import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.tsx';
 import groupNode from '../components/flow/groupNode.tsx';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
-import { Tooltip } from '@tokens-studio/ui';
+import { Box, Heading, Text, Tooltip, TextInput } from '@tokens-studio/ui';
 import { OnOutputChangeContextProvider } from '#/context/OutputContext.tsx';
 import { createNode } from './create.ts';
 import { NodeTypes } from '@tokens-studio/graph-engine';
+import { SearchIcon } from "@iconicicons/react"
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -372,14 +373,18 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
               proOptions={proOptions}
             >
               <SelectedNodesToolbar />
-              <CustomControls position="top-right" />
-              <Panel id="drop-panel" position="top-left">
-                <DropPanel />
-              </Panel>
+              <CustomControls position="bottom-center" />
+              <DropPanel />
+              <Box css={{display: 'none', position: 'fixed', right: 0, top: 0, bottom: 0, zIndex: 3}}>
+                <Box css={{maxWidth: 'clamp(180px, 40vw, 400px)', backgroundColor: '$bgCanvas', padding: '$6', borderTopLeftRadius: '16px', borderBottomLeftRadius: '16px', boxShadow: '$contextMenu', borderLeft: '1px solid $borderSubtle'}}>
+                  <Heading>This will be the sidesheet</Heading>
+                  <Text>Add extra configuration here that should be shown on selection of a node. When something is selected, the sidesheet is placed on top of other content.</Text>
+                </Box>
+              </Box>
               {showMinimap && <MiniMapStyled maskStrokeWidth={4} maskStrokeColor="#ff0000" pannable zoomStep={1} zoomable maskColor="rgb(240, 242, 243, 0.7)" nodeColor="var(--colors-borderSubtle)"/>}
               {showGrid && (
                  <Background
-                  color="var(--colors-borderMuted)"
+                  color="var(--colors-borderSubtle)"
                   gap={16}
                   size={2}
                   variant={BackgroundVariant.Dots}

@@ -15,13 +15,13 @@ const Trigger = styled(AccordionPrimitive.Trigger, {
   userSelect: 'none',
   outline: 'none',
   color: '$fgDefault',
-  padding: '$3 $4',
+  padding: '$5 $6',
   border: 'none',
   background: 'transparent',
   cursor: 'pointer',
 
   '&:hover': {
-    background: '$bgSubtle',
+    background: '$bgSurface',
   },
 
   '&:focus-visible': {
@@ -36,8 +36,6 @@ const Trigger = styled(AccordionPrimitive.Trigger, {
 });
 
 const Content = styled(AccordionPrimitive.Content, {
-  paddingLeft: '$5',
-  paddingRight: '$2',
 });
 
 export const Accordion = Object.assign(Root, {

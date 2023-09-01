@@ -15,13 +15,10 @@ const Item = styled('div', {
     borderRadius: '$medium',
     border: '1px solid',
     borderColor: 'transparent',
-    padding: '0',
+    padding: '$1 $3',
+    width: '100%',
     '&:hover': {
-        [`${IconHolder}`]: {
-            borderColor: 'transparent',
-        },
-        backgroundColor: '$buttonSecondaryBgHover',
-        borderColor: '$borderSubtle',
+        backgroundColor: '$bgSurface',
     },
 });
 

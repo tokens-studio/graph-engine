@@ -25,7 +25,7 @@ export const StyledComponent = styled('div');
 // https://www.bram.us/2021/07/08/the-large-small-and-dynamic-viewports/#dynamic-viewport
 export const applyGlobalCSS = globalCss({
   '.react-flow': {
-    background: '$bgCanvas !important',
+    background: '$bgSurface !important',
   },
   body: { height: '100dvh', bgColor: '$bgDefault', color: '$fgDefault' },
   a: {
