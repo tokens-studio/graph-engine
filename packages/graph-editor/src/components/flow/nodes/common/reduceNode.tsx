@@ -26,11 +26,7 @@ export const ReduceNode = () => {
           );
         })}
         <Handle id={newHandle}>
-          <Stack direction="row" justify="between">
-            <Text>
-              <i>New</i>
-            </Text>
-          </Stack>
+          New
         </Handle>
       </HandleContainer>
       <HandleContainer type="source">

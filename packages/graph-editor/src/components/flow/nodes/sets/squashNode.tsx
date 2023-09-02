@@ -21,7 +21,7 @@ const SquashNode = () => {
         <Handle id={input.key} key={input.key}>
           <Stack direction="row" justify="between">
             <Text>{index}</Text>
-            <Text>{!input.value && <i>Missing</i>}</Text>
+            <Text>{!input.value && Missing}</Text>
           </Stack>
         </Handle>
       );
@@ -33,11 +33,7 @@ const SquashNode = () => {
       <HandleContainer type="target">
         {handles}
         <Handle id={`inputs.${newHandle}`}>
-          <Stack direction="row" justify="between">
-            <Text>
-              <i>New</i>
-            </Text>
-          </Stack>
+          New
         </Handle>
       </HandleContainer>
       <HandleContainer type="source">

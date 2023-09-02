@@ -111,9 +111,7 @@ const WheelNode = () => {
       <HandleContainer type="source">
         <Handle id={'asArray'}>
           <Stack direction="row" justify="between" gap={3} align="center">
-            <LabelNoWrap>
-              <i>as Array</i>
-            </LabelNoWrap>
+            As array
           </Stack>
         </Handle>
         <Tooltip.Provider>{outputHandles}</Tooltip.Provider>

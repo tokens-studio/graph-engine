@@ -97,11 +97,7 @@ const ArithmeticNode = (props) => {
       </HandleContainer>
       <HandleContainer type="source">
         <Handle id={'asArray'}>
-          <Stack direction="row" justify="between" gap={3} align="center">
-            <Text>
-              <i>as Array</i>
-            </Text>
-          </Stack>
+            as Array
         </Handle>
         {outputHandles}
       </HandleContainer>

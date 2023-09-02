@@ -95,16 +95,12 @@ const InlineSetNode: FC<NodeProps<TokenSetData>> = ({ id, data }) => {
       <Stack direction="row" gap={2}>
         <HandleContainer type="target">
           <Handle id="input">
-            <Text>
-              <i>Input</i>{' '}
-            </Text>
+            Input
           </Handle>
         </HandleContainer>
         <HandleContainer type="source">
           <Handle id={SET_ID}>
-            <Text>
-              <i>As Setxx</i>{' '}
-            </Text>
+              As set
           </Handle>
         </HandleContainer>
       </Stack>

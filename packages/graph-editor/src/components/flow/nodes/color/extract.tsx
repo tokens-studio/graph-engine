@@ -24,9 +24,7 @@ const ExtractNode = () => {
     return (
       <>
         <Handle id="asArray">
-          <Label>
-            <i>As Array</i>
-          </Label>
+            As array
           <PreviewArray value={output?.asArray} />
         </Handle>
         {Object.entries(rest).map(([key, value]) => {

@@ -89,9 +89,7 @@ const ExternalSetNode: FC<NodeProps<EditorExternalSet>> = () => {
             <Stack direction="row" gap={2} justify='end'>
                 <HandleContainer type="source">
                     <Handle id={EXTERNAL_SET_ID}>
-                        <Text>
-                            <i>As Set</i>{' '}
-                        </Text>
+                        As set
                     </Handle>
                 </HandleContainer>
             </Stack>

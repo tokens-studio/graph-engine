@@ -5,7 +5,7 @@ import React from 'react';
 
 export const PreviewAny = ({ value }) => {
   if (value == undefined) {
-    return <i>Missing</i>;
+    return <Text>Missing</Text>
   }
 
   switch (typeof value) {

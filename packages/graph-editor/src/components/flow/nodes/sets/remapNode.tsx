@@ -180,9 +180,7 @@ const RemapNode = () => {
         </HandleContainer>
         <HandleContainer type="source">
           <Handle id={SET_ID}>
-            <Label>
-              <i>As Setxx</i>
-            </Label>
+            As set
           </Handle>
         </HandleContainer>
       </Stack>
