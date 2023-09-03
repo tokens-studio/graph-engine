@@ -18,7 +18,9 @@ import {
   useStoreApi,
   ReactFlowProvider,
 } from 'reactflow';
+import * as Portal from '@radix-ui/react-portal';
 import { CustomControls, MiniMapStyled } from '../components/flow/controls.tsx';
+import { ActionToolbar } from '../components/flow/ActionToolbar.tsx';
 import { NodeTypes as EditorNodeTypes } from '../components/flow/types.tsx';
 import { ForceUpdateProvider } from './forceUpdateContext.tsx';
 import { GlobalHotKeys } from 'react-hotkeys';
@@ -36,6 +38,7 @@ import { DropPanel } from '../components/flow/DropPanel/Panel.tsx';
 import React, {
   MouseEvent,
   useCallback,
+  useEffect,
   useImperativeHandle,
   useRef,
 } from 'react';
@@ -49,9 +52,10 @@ import { OnOutputChangeContextProvider } from '#/context/OutputContext.tsx';
 import { createNode } from './create.ts';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import { SearchIcon } from "@iconicicons/react"
+import { Sidesheet } from './Sidesheet.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
-const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
+const defaultViewport = { zoom: 0.5 };
 const panOnDrag = [1, 2];
 
 const fullNodeTypes = {
@@ -71,10 +75,7 @@ const proOptions = {
 const defaultEdgeOptions = {
   style: {
     strokeWidth: 2,
-  },
-  markerEnd: {
-    type: MarkerType.ArrowClosed,
-  },
+  }
 };
 
 export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
@@ -85,6 +86,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const { getIntersectingNodes } = reactFlowInstance;
     const store = useStoreApi();
     const [forceUpdate, setForceUpdate] = React.useState(0);
+    const flowRef: React.RefObject<HTMLDivElement> = useRef(null);
 
     const onEdgesDeleted = useCallback((edges) => {
       edges.forEach((edge) => {
@@ -331,6 +333,14 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       onEdgesDeleted,
     });
 
+    // trigger fitView whenever the loaded example changes
+    useEffect(() => {
+      if (props.loadedExample) {
+        reactFlowInstance.fitView();
+      }
+    }, [props.loadedExample, reactFlowInstance]);
+
+
     return (
       <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
         <div
@@ -341,8 +351,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           <ForceUpdateProvider value={forceUpdate}>
             {/* @ts-ignore */}
             <ReactFlow
-              // TODO: this should be true only when loading an existing graph
-              // fitView
+              ref={flowRef}
               nodes={nodes}
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
@@ -372,24 +381,19 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
               maxZoom={Infinity}
               proOptions={proOptions}
             >
-              <SelectedNodesToolbar />
-              <CustomControls position="bottom-center" />
-              <DropPanel />
-              <Box css={{display: 'none', position: 'fixed', right: 0, top: 0, bottom: 0, zIndex: 3}}>
-                <Box css={{maxWidth: 'clamp(180px, 40vw, 400px)', backgroundColor: '$bgCanvas', padding: '$6', borderTopLeftRadius: '16px', borderBottomLeftRadius: '16px', boxShadow: '$contextMenu', borderLeft: '1px solid $borderSubtle'}}>
-                  <Heading>This will be the sidesheet</Heading>
-                  <Text>Add extra configuration here that should be shown on selection of a node. When something is selected, the sidesheet is placed on top of other content.</Text>
-                </Box>
-              </Box>
-              {showMinimap && <MiniMapStyled maskStrokeWidth={4} maskStrokeColor="#ff0000" pannable zoomStep={1} zoomable maskColor="rgb(240, 242, 243, 0.7)" nodeColor="var(--colors-borderSubtle)"/>}
               {showGrid && (
-                 <Background
-                  color="var(--colors-borderSubtle)"
+                <Background
+                  color="var(--colors-borderMuted)"
                   gap={16}
                   size={2}
                   variant={BackgroundVariant.Dots}
                 />
               )}
+              <SelectedNodesToolbar />
+              <ActionToolbar />
+              {showMinimap && <MiniMapStyled maskStrokeWidth={4} maskStrokeColor="#ff0000" pannable zoomStep={1} zoomable maskColor="rgb(240, 242, 243, 0.7)" nodeColor="var(--colors-borderSubtle)" />}
+              <CustomControls position="bottom-left" />
+              <Sidesheet />
             </ReactFlow>
           </ForceUpdateProvider>
         </div>

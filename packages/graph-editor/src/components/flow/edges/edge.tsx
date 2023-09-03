@@ -166,8 +166,8 @@ export default function CustomEdge({
       <path
         d={edgePath}
         fill="none"
-        stroke-opacity="0"
-        stroke-width="20"
+        strokeOpacity="0"
+        strokeWidth="20"
         className="react-flow__edge-interaction"
       />
       <text>

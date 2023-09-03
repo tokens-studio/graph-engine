@@ -1,16 +1,6 @@
 import {
   Box,
-  Button,
-  DropdownMenu,
-  IconButton,
-  Link,
-  NavList,
-  PageHeader,
   Stack,
-  Tabs,
-  Text,
-  TextInput,
-  ToggleGroup,
 } from '@tokens-studio/ui';
 
 import {
@@ -20,7 +10,6 @@ import {
   EditorNode,
 } from '@tokens-studio/graph-editor';
 import { LiveProvider } from 'react-live';
-import { Splitter } from '#/components/splitter.tsx';
 import { code, scope } from '#/components/preview/scope.tsx';
 import { useDispatch } from '#/hooks/index.ts';
 import { useResizable } from 'react-resizable-layout';
@@ -32,8 +21,6 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import darkLogo from '../assets/svgs/tokensstudio-complete-dark.svg';
-import logo from '../assets/svgs/tokensstudio-complete.svg';
 import {
   showJourneySelector,
   tabs as tabsSelector,
@@ -47,21 +34,16 @@ import { themes } from 'prism-react-renderer';
 //import the example
 import example from '#/examples/card.json';
 
-import {
-  CheckIcon,
-  Cross1Icon,
-  MoonIcon,
-  PlusIcon,
-  SunIcon,
-} from '@radix-ui/react-icons';
 import { useOnEnter } from '#/hooks/onEnter.ts';
 import { useTheme } from '#/hooks/useTheme.tsx';
 import { useJourney } from '#/journeys/basic.tsx';
 import { JoyrideTooltip } from '#/components/joyride/tooltip.tsx';
 import { Preview } from '#/components/Preview.tsx';
-import { DotsHorizontalIcon, FloppyDiscIcon, FolderIcon, TrashIcon } from '@iconicicons/react';
+import { TrashIcon } from '@iconicicons/react';
+import { Toolbar } from '../components/Toolbar.tsx';
+import { TokensStudioLogo } from '#/components/TokensStudioLogo.tsx';
 
-interface ResolverData {
+export interface ResolverData {
   nodes: EditorNode[];
   edges: EditorEdge[];
   state: Record<string, any>;
@@ -71,9 +53,8 @@ interface ResolverData {
 const Wrapper = () => {
   const currentTab = useSelector(currentTabSelector);
   const tabs = useSelector(tabsSelector);
-
   const [theCode, setTheCode] = useState(code);
-  const [loadedExample, setLoadedExample] = useState(false);
+  const [loadedExample, setLoadedExample] = useState<string>();
   const dispatch = useDispatch();
   const showJourney = useSelector(showJourneySelector);
   const theme = useTheme();
@@ -130,103 +111,9 @@ const Wrapper = () => {
     dispatch.ui.removeTab(id);
   };
 
-  const onSave = useCallback(() => {
-    if (!currentTab) {
-      return;
-    }
-    const current = refs[currentTab.id]?.current;
-    if (!current) {
-      alert('No attached tab found');
-      return;
-    }
-
-    const { nodes, edges, nodeState } = current.save();
-
-    const finalState = nodes.reduce((acc, node) => {
-      acc[node.id] = nodeState[node.id];
-      return acc;
-    }, {});
-
-    const fileContent = JSON.stringify({
-      nodes,
-      edges,
-      state: finalState,
-      code: ref.current?.textContent,
-    });
-
-    const blob = new Blob([fileContent], { type: 'application/json' });
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${currentTab.name}.json`;
-    document.body.appendChild(link);
-    link.click();
-
-    // Clean up the URL and link
-    URL.revokeObjectURL(url);
-    document.body.removeChild(link);
-  }, [currentTab, dispatch.node, refs]);
-
-  const onClear = useCallback(() => {
-    if (currentTab) {
-      refs[currentTab.id]?.current?.clear();
-
-      dispatch.editorOutput.set({
-        name: currentTab.name,
-        value: undefined,
-      });
-    }
-  }, [currentTab, refs]);
-
-  const onLoad = useCallback(() => {
-    if (currentTab) {
-      const current = refs[currentTab.id]?.current;
-      if (!current) {
-        alert('No attached tab found');
-        return;
-      }
-
-      // create an input element
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.addEventListener('change', function (event) {
-        //@ts-ignore
-        const files = event?.target?.files;
-        const file = files[0];
-
-        // do something with the file, like reading its contents
-        const reader = new FileReader();
-        reader.onload = function () {
-          const resolver = JSON.parse(reader.result as string) as ResolverData;
-
-          const { state, code, nodes, edges } = resolver;
-
-          onClear();
-          //TODO , this needs a refactor. We need to wait for the clear to finish
-          // as the nodes still get one final update by the dispatch before they are removed which
-          // causes nulls to occur everywhere. They need to be unmounted
-          setTimeout(() => {
-            if (code !== undefined) {
-              setTheCode(code);
-            }
-
-            current.load({
-              nodes,
-              edges,
-              nodeState: state,
-            });
-          }, 0);
-        };
-        reader.readAsText(file);
-      });
-
-      // simulate a click on the input element to trigger the file picker dialog
-      input.click();
-    }
-  }, [currentTab, dispatch.node, refs]);
 
   useEffect(() => {
+    console.log("Changed", currentTab, loadedExample, example);
     if (!loadedExample) {
       const exampleData = example as ResolverData;
 
@@ -242,25 +129,21 @@ const Wrapper = () => {
         edges: edges,
         nodeState: state,
       });
-      setLoadedExample(true);
+      console.log("loaded", {
+        nodes: nodes,
+        edges: edges,
+        nodeState: state,
+      })
+      setLoadedExample('initial');
     }
-  }, [refs]);
+  }, [refs, loadedExample, currentTab]);
 
-  const onEditorOutputChange = (output: Record<string, unknown>) => {
+  const onEditorOutputChange = useCallback((output: Record<string, unknown>) => {
     dispatch.editorOutput.set({
       name: currentTab.name,
       value: output,
     });
-  };
-
-  const onForceUpdate = useCallback(() => {
-    const current = refs[currentTab.id]?.current;
-    if (!current) {
-      alert('No attached tab found');
-      return;
-    }
-    current.forceUpdate();
-  }, [currentTab, refs]);
+  }, [currentTab]);
 
   const tabContents = useMemo(() => {
     return tabs.map((x) => {
@@ -275,16 +158,16 @@ const Wrapper = () => {
             height: '100%',
             position: 'absolute',
             width: '100%',
-            background: '$bgSurface',
+            backgroundColor: '$bgCanvas',
             top: 0,
             display: currentTab?.id === x.id ? 'initial' : 'none',
           }}
         >
-          <Editor id={x.id} name={x.name} ref={ref} onOutputChange={onEditorOutputChange} />
+          <Editor id={x.id} name={x.name} ref={ref} onOutputChange={onEditorOutputChange} loadedExample={loadedExample} />
         </Box>
       );
     });
-  }, [currentTab?.id, refs, tabs, onEditorOutputChange]);
+  }, [currentTab?.id, refs, tabs, onEditorOutputChange, loadedExample]);
 
   const onEnter = useOnEnter(isCreating ? addTab : undefined);
 
@@ -320,12 +203,26 @@ const Wrapper = () => {
       <div style={{ height: '100vh', overflow: 'hidden' }}>
         <Stack
           direction="column"
-          css={{ height: '100%', background: '$bgSurface' }}
+          css={{ height: '100%', background: '$bgCanvas' }}
         >
-          <Box css={{position: 'fixed', top: '$3', left: '$3', zIndex: 1}}>
-           
+          <Box css={{ position: 'fixed', top: '$3', left: '$3', zIndex: 1 }}>
+            <TokensStudioLogo style={{ height: '3rem', width: 'auto' }} />
           </Box>
-          <Box css={{position: 'fixed', top: '$3', right: '$3', zIndex: 1}}>
+          <Toolbar ref={ref} refs={refs} setTheCode={setTheCode} />
+          <Box
+            value={currentTab?.id}
+            onValueChange={onTabChange}
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              flex: 1,
+              background: '$bgCanvas',
+              position: 'relative',
+            }}
+          >
+            <div style={{ flex: 1, position: 'relative' }}>{tabContents}</div>
+          </Box>
+          <Box css={{ position: 'fixed', top: '$3', right: '$3' }}>
             <LiveProvider
               code={theCode}
               scope={scope}
@@ -340,43 +237,6 @@ const Wrapper = () => {
                 style={{ height: position }}
               />
             </LiveProvider>
-          </Box>
-          <Stack direction="row" gap={1} css={{position: 'fixed', top: '$3', left: '$3', zIndex: 1}}>
-          {theme === 'light' && (
-              <img src={logo.src} style={{ height: '2em' }} />
-            )}
-            {theme !== 'light' && (
-              <img src={darkLogo.src} style={{ height: '2em' }} />
-            )}
-            <IconButton onClick={onLoad} icon={<FolderIcon />}  title="Load .json" variant="invisible" />
-            <IconButton onClick={onSave} icon={<FloppyDiscIcon />}  title="Save .json" variant="invisible" />
-            <IconButton
-              icon={theme === 'light' ? <MoonIcon /> : <SunIcon />}
-              variant="invisible"
-              onClick={() => dispatch.ui.toggleTheme(null)}
-              title={theme === 'light' ? 'Dark mode' : 'Light mode'}
-            />
-            <DropdownMenu>
-              <DropdownMenu.Trigger asChild>
-                <IconButton icon={<DotsHorizontalIcon />} variant="invisible" />
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Content>
-                <DropdownMenu.Item onClick={onForceUpdate}>Force update</DropdownMenu.Item>
-                <DropdownMenu.Item onClick={onClear}>Clear canvas</DropdownMenu.Item>
-              </DropdownMenu.Content>
-            </DropdownMenu>
-          </Stack>
-          <Box
-            value={currentTab?.id}
-            onValueChange={onTabChange}
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              flex: 1,
-              background: '$bgSurface',
-            }}
-          >
-            <div style={{ flex: 1, position: 'relative' }}>{tabContents}</div>
           </Box>
         </Stack>
       </div>

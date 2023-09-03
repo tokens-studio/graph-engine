@@ -49,6 +49,7 @@ export const PreviewToken = ({ token, hideName }: PreviewProps) => (
       <Box
         css={{
           fontWeight: '$sansRegular',
+          fontFamily: 'monospace',
           fontSize: '$xsmall',
           color: '$fgMuted',
           overflow: 'hidden',

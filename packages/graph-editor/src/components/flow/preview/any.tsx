@@ -2,6 +2,7 @@ import { PreviewBoolean } from './boolean.tsx';
 import { Text } from '@tokens-studio/ui';
 import PreviewNumber from './number.tsx';
 import React from 'react';
+import { DynamicValueText } from '../handles.tsx';
 
 export const PreviewAny = ({ value }) => {
   if (value == undefined) {
@@ -15,10 +16,10 @@ export const PreviewAny = ({ value }) => {
       return <PreviewNumber value={value} />;
     case 'object':
       if (Array.isArray(value)) {
-        return <Text>Array</Text>;
+        return <DynamicValueText>Array</DynamicValueText>;
       }
-      return <Text>Object</Text>;
+      return <DynamicValueText>Object</DynamicValueText>;
     default:
-      return <Text>{value}</Text>;
+      return <DynamicValueText css={{ fontFamily: 'monospace', fontSize: '$xsmall' }}>{value}</DynamicValueText>;
   }
 };

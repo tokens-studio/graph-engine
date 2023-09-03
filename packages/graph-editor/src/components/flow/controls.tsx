@@ -2,18 +2,21 @@ import { ControlButton, ControlProps, Controls, MiniMap } from 'reactflow';
 import { styled } from '#/lib/stitches/index.ts';
 import React from 'react';
 import { Settings } from '../Settings';
+import { DropPanel } from './DropPanel';
 
 export const ControlsStyled = styled(Controls, {
   display: 'flex',
-  flexDirection: 'row',
-  padding: '$2',
-  backgroundColor: '$bgSubtle',
+  flexDirection: 'column',
+  padding: '$1',
+  backgroundColor: '$bgDefault',
   borderRadius: '$medium',
+  boxShadows: '$small',
+  border: '1px solid $borderSubtle',
   button: {
-    width: 24,
-    height: 24,
+    width: 16,
+    height: 16,
     borderRadius: '$small',
-    backgroundColor: '$bgSubtle',
+    backgroundColor: '$bgDefault',
     borderBottom: 'transparent',
     '&:hover': {
       backgroundColor: '$bgSubtle',

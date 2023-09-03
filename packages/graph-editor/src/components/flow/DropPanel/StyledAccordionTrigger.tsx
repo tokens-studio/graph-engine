@@ -16,6 +16,6 @@ export const StyledAccordingTrigger = styled(Accordion.Trigger, {
         marginTop: '$6',
     },
     '&:hover': {
-        backgroundColor: '$bgDefault',
+        backgroundColor: '$bgSubtle',
     },
 });

@@ -1,10 +1,11 @@
 import { Text } from '@tokens-studio/ui';
 import React from 'react';
+import { DynamicValueText } from '../handles';
 
 export const PreviewArray = ({ value }) => {
   if (!value) {
-    return <Text>Missing</Text>;
+    return <DynamicValueText>Missing</DynamicValueText>;
   }
   // @ts-ignore
-  return <Text title={value}>[...] {value.length}</Text>;
+  return <DynamicValueText title={value}>{value.length}</DynamicValueText>;
 };

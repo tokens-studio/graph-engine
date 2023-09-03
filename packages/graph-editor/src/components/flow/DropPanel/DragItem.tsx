@@ -2,6 +2,7 @@ import { NodeTypes } from '@tokens-studio/graph-engine';
 import { styled } from '#/lib/stitches/index.ts';
 import React, { useCallback } from 'react';
 import { IconHolder } from '#/components/IconHolder';
+import { DropdownMenuItem } from './Panel';
 
 type DragItemProps = {
     data?: any;
@@ -18,7 +19,7 @@ const Item = styled('div', {
     padding: '$1 $3',
     width: '100%',
     '&:hover': {
-        backgroundColor: '$bgSurface',
+        backgroundColor: '$bgSubtle',
     },
 });
 
@@ -39,8 +40,8 @@ export const DragItem = ({ data, type, children }: DragItemProps) => {
     );
 
     return (
-        <Item onDragStart={onDragStart} draggable>
+        <DropdownMenuItem onDragStart={onDragStart} draggable>
             {children}
-        </Item>
+        </DropdownMenuItem>
     );
 };

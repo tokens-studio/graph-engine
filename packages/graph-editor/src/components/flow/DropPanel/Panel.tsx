@@ -1,29 +1,42 @@
-import { Button, Box, Scroll, Separator, Stack, TextInput } from '@tokens-studio/ui';
-import React, { useEffect, useState } from 'react';
-import { Accordion } from '../../accordion/index.tsx';
+import { Box, IconButton, TextInput } from '@tokens-studio/ui';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { PanelItems, items } from './PanelItems.tsx';
 import { DragItem } from './DragItem.tsx';
 import { NodeEntry } from './NodeEntry.tsx';
 import { NodeTypes } from '@tokens-studio/graph-engine';
-import { PlusIcon, ChevronDownIcon, ChevronUpIcon } from '@iconicicons/react';
-import { TriangleDownIcon } from '@radix-ui/react-icons';
+import { PlusIcon, ChevronRightIcon } from '@iconicicons/react';
 import { Loading } from './Loading.tsx';
-import { StyledPanel } from './StyledPanel.tsx';
-import { StyledAccordingTrigger } from './StyledAccordionTrigger.tsx';
 import { useExternalData } from '#/context/ExternalDataContext.tsx';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { styled, keyframes } from '#/lib/stitches/stitches.config.ts';
 
-
-export const DropPanel = () => {
+export const DropPanel: React.FC<PropsWithChildren> = ({ children }) => {
   const { tokenSets, loadingTokenSets } = useExternalData();
   const [panelItems, setPanelItems] = useState<PanelItems>(items)
   const [search, setSearch] = React.useState('');
   const [defaultValue, setDefaultValue] = React.useState<string[]>([
     'generic',
   ]);
-  const [isVisible, setIsVisible] = useState(true);
+  const [addNodeVisible, setAddNodeIsVisible] = useState(true);
+  const [searchVisible, setSearchVisible] = useState(false);
+  const searchInputRef = React.useRef<HTMLInputElement>(null);
 
-  const handleToggleVisible = () => {
-    setIsVisible(!isVisible);
+  const handleToggleAddNodeVisible = () => {
+    if (addNodeVisible) {
+      setAddNodeIsVisible(false);
+    } else {
+      setAddNodeIsVisible(true);
+      setSearchVisible(false);
+    }
+  };
+
+  const handleToggleSearch = () => {
+    if (searchVisible) {
+      setSearchVisible(false);
+    } else {
+      setSearchVisible(true);
+      setAddNodeIsVisible(false);
+    }
   };
 
   useEffect(() => {
@@ -33,9 +46,15 @@ export const DropPanel = () => {
         newPanelItems.tokens = tokenSets.map((set) => ({ type: NodeTypes.SET, data: { identifier: set.identifier, title: set.name }, icon: <PlusIcon />, text: set.name }));
         return newPanelItems
       })
+    } else {
+
     }
 
   }, [tokenSets])
+
+  useEffect(() => {
+    console.log("Panel items changed", panelItems);
+  }, [panelItems])
 
   const onSearch = (e) => {
     setSearch(e.target.value);
@@ -46,69 +65,180 @@ export const DropPanel = () => {
     }
   };
 
-  const accordionItems = React.useMemo(() => {
+  const onInsertNode = React.useCallback(
+    (event, type, data) => {
+      console.log("event", event);
+
+      event.dataTransfer.setData(
+        'application/reactflow',
+        JSON.stringify({
+          type,
+          data,
+        }),
+      );
+    },
+    [],
+  );
+
+  const handleOnOpenChange = (open) => {
+    console.log('open', open, searchInputRef);
+
+    if (open && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  };
+
+  const availableNodes = React.useMemo(() => {
     if (loadingTokenSets) {
-      return <Loading />;
+      return <div>Loading</div>
     }
 
-    return (
-      <Accordion type="multiple" defaultValue={defaultValue}>
-        {Object.entries(panelItems).map(([key, values]) => {
+    return Object.entries(panelItems).map(([key, values]) => {
           const filteredValues = values
             .filter((item) =>
               item.text.toLowerCase().includes(search.toLowerCase()),
             )
             .map((item) => (
-              <DragItem
-                type={item.type}
-                data={item.data || null}
+              <DropdownMenuItem
                 key={item.text}
+                onSelect={(event) => onInsertNode(event, item.type, item.data)}
               >
-                <NodeEntry icon={item.icon} text={item.text} />
-              </DragItem>
+                <DropdownMenuItemIcon>{item.icon}</DropdownMenuItemIcon>
+                {item.text}
+              </DropdownMenuItem>
             ));
 
           if (filteredValues.length === 0) return null;
 
           return (
-            <Accordion.Item value={key} key={key}>
-              <StyledAccordingTrigger>
+            <DropdownMenu.Sub>
+              <DropdownMenuSubTrigger>
                 {key.charAt(0).toUpperCase() + key.slice(1)}
-                <Box css={{color: '$fgSubtle'}}><TriangleDownIcon /></Box>
-              </StyledAccordingTrigger>
-              <Accordion.Content>
-                <Stack direction="column" css={{ padding: 0 }} gap={1}>
+                <RightSlot>
+                  <ChevronRightIcon />
+                </RightSlot>
+
+              </DropdownMenuSubTrigger>
+              <DropdownMenu.Portal>
+                <DropdownMenuSubContent className="DropdownMenuContent">
                   {filteredValues}
-                </Stack>
-              </Accordion.Content>
-            </Accordion.Item>
+                </DropdownMenuSubContent>
+              </DropdownMenu.Portal>
+            </DropdownMenu.Sub>
           );
-        })}
-      </Accordion>
-    );
-  }, [loadingTokenSets, defaultValue, panelItems, search]);
+    });
+  }, [loadingTokenSets, panelItems, search, onInsertNode]);
 
   return (
-    <StyledPanel id="drop-panel">
-      <Stack css={{borderBottom: '1px solid', borderBottomColor: isVisible ? '$borderSubtle' : 'transparent'}}>
-        <Button css={{flexGrow: 1, flexShrink: 0}} size="small" onClick={handleToggleVisible} icon={<PlusIcon />} variant="invisible">
-          Add new node
-          {isVisible ? <ChevronDownIcon /> : <ChevronUpIcon />}
-        </Button>
-      </Stack>
-      {isVisible &&
-        <Scroll height='100%'>
-          <Stack direction="column" gap={1} css={{ paddingTop: '$4', width: '100%', paddingRight: '$3' }}>
-            <Box css={{ padding: '$1 $3' }}>
-              <TextInput placeholder="Search" value={search} onChange={onSearch} />
-            </Box>
-            <Box css={{ padding: '$2 $2' }}>
-              {accordionItems}
-            </Box>
-          </Stack>
-        </Scroll>
-      }
-    </StyledPanel>
+    <DropdownMenu.Root onOpenChange={handleOnOpenChange}>
+      <DropdownMenu.Trigger asChild>
+        {children ? children :
+          <IconButton css={{ flexShrink: 0 }} icon={<PlusIcon />} variant="invisible" tooltip="Add new node" />
+        }
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Portal>
+        <DropdownMenuContent sideOffset={4} className="DropdownMenuContent">
+          <Box css={{ padding: '$2' }}><TextInput ref={searchInputRef} value={search} onChange={onSearch} placeholder="Search" /></Box>
+          {availableNodes}
+        </DropdownMenuContent>
+      </DropdownMenu.Portal>
+    </DropdownMenu.Root>
   );
 };
 
+const slideUpAndFade = keyframes({
+  '0%': { opacity: 0, transform: 'translateY(2px)' },
+  '100%': { opacity: 1, transform: 'translateY(0)' },
+});
+
+const slideRightAndFade = keyframes({
+  '0%': { opacity: 0, transform: 'translateX(-2px)' },
+  '100%': { opacity: 1, transform: 'translateX(0)' },
+});
+
+const slideDownAndFade = keyframes({
+  '0%': { opacity: 0, transform: 'translateY(-2px)' },
+  '100%': { opacity: 1, transform: 'translateY(0)' },
+});
+
+const slideLeftAndFade = keyframes({
+  '0%': { opacity: 0, transform: 'translateX(2px)' },
+  '100%': { opacity: 1, transform: 'translateX(0)' },
+});
+
+const contentStyles = {
+  minWidth: 220,
+  backgroundColor: '$bgDefault',
+  borderRadius: '$medium',
+  padding: '$2',
+  border: '1px solid $borderSubtle',
+  boxShadow:
+    '$contextMenu',
+  animationDuration: '400ms',
+  animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+  willChange: 'transform, opacity',
+  '&[data-state="open"]': {
+    '&[data-side="top"]': { animationName: slideDownAndFade },
+    '&[data-side="right"]': { animationName: slideLeftAndFade },
+    '&[data-side="bottom"]': { animationName: slideUpAndFade },
+    '&[data-side="left"]': { animationName: slideRightAndFade },
+  },
+};
+
+const RightSlot = styled('div', {
+  marginLeft: 'auto',
+  paddingLeft: 20,
+  color: '$fgMuted',
+  '[data-highlighted] > &': { color: '$fgDefault' },
+  '[data-disabled] &': { color: '$fgDisabled' },
+});
+
+
+const DropdownMenuContent = styled(DropdownMenu.Content, contentStyles);
+const DropdownMenuSubContent = styled(DropdownMenu.SubContent, contentStyles);
+
+
+const itemStyles = {
+  all: 'unset',
+  fontSize: '$xsmall',
+  lineHeight: 1,
+  color: '$fgDefault',
+  borderRadius: '$small',
+  display: 'flex',
+  alignItems: 'center',
+  padding: '0 $4',
+  height: '32px',
+  position: 'relative',
+  userSelect: 'none',
+
+  '&[data-disabled]': {
+    color: '$fgDisabled',
+    pointerEvents: 'none',
+  },
+
+  '&[data-highlighted]': {
+    backgroundColor: '$bgSubtle',
+    color: '$fgDefault',
+  },
+};
+
+export const DropdownMenuItem = styled(DropdownMenu.Item, itemStyles);
+const DropdownMenuItemIcon = styled('div', {
+  display: 'flex',
+  width: '24px',
+  height: '24px',
+  fontSize: '$xxsmall',
+  marginRight: '$3',
+  color: '$fgSubtle',
+  userSelect: 'none',
+  cursor: 'pointer',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+const DropdownMenuSubTrigger = styled(DropdownMenu.SubTrigger, {
+  '&[data-state="open"]': {
+    backgroundColor: '$bgSubtle',
+    color: '$fgDefault',
+  },
+  ...itemStyles,
+});

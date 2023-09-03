@@ -4,6 +4,7 @@ export type EditorProps = {
   id: string;
   name: string;
   onOutputChange: (output: Record<string, unknown>) => void;
+  loadedExample?: string;
 };
 
 export type EditorState = {

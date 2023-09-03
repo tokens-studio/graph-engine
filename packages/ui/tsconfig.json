@@ -4,7 +4,7 @@
     "src",
     "src/scripts",
     "next-env.d.ts"
-  ],
+, "../graph-editor/src/components/flow/ActionToolbar.tsx"  ],
   "exclude": [
     "node_modules"
   ],

@@ -12,9 +12,9 @@ export const NodeEntry = ({
     text: string;
 }) => {
     return (
-        <Stack direction="row" gap={2} justify="start" align="center" title={text}>
+        <Stack direction="row" gap={2} justify="start" align="center">
             <IconHolder>{icon}</IconHolder>
-            <Text size="xsmall" css={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: '180px' }} >{text}</Text>
+            <Text size="xsmall" css={{ color: '$contextMenuFg', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }} >{text}</Text>
         </Stack>
     );
 };

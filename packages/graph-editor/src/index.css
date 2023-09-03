@@ -14,19 +14,18 @@
     background: transparent;
     width: initial;
     border-radius: var(--radii-medium);
-    transition: box-shadow 0.3s ease-in-out;
-    background: var(--colors-bgCanvas);
-    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
-    border: 2px solid var(--colors-bgSubtle);
+    background: var(--colors-bgDefault);
+    box-shadow: var(--shadows-small);
 }
 
 .react-flow__node.filtered {
     opacity: 0.25;
 }
+
 .react-flow__node.selectable.selected, .react-flow__node.selectable:focus {
-    box-shadow: 0px 2px 24px -4px rgba(0, 0, 0, 0.15), 0px 2px 4px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 4px rgba(0, 0, 150, 0.05);
-    border: 2px solid var(--colors-focus);
+    --nodeBorderColor: var(--colors-focus);
 }
+
 .react-flow__edge.selected .react-flow__edge-path, .react-flow__edge:focus .react-flow__edge-path, .react-flow__edge:focus-visible .react-flow__edge-path {
     stroke: var(--colors-bgSubtle);
 }
@@ -43,7 +42,7 @@
     background: transparent;
 }
 .react-flow__minimap {
-    background: var(--colors-bgSurface);
+    background: var(--colors-bgCanvas);
 } 
 
 .react-flow__minimap-mask {
@@ -72,4 +71,9 @@
 }
 .react-flow__handle.react-flow__handle-valid:after {
     background: #5d9 !important;
+}
+
+.DropdownMenuContent {
+    width: var(--radix-dropdown-menu-trigger-width);
+    max-height: var(--radix-dropdown-menu-content-available-height);
 }

@@ -1,4 +1,4 @@
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { Stack, Text } from '@tokens-studio/ui';
 import React from 'react';
 
@@ -12,7 +12,7 @@ const IfNode = () => {
     <Stack direction="row">
       <HandleContainer type="target">
         <Handle id="condition">
-          <Text>Condition</Text>
+          <HandleText>Condition</HandleText>
         </Handle>
         <Handle id="a">
           <Text>Truthy</Text>

@@ -16,13 +16,13 @@ export const Preview = ({ style, codeRef, ...rest }) => {
       <Box
         {...rest}
       >
-        <Stack direction="column" css={{maxHeight: '80vh', maxWidth: '40vw', backgroundColor: '$bgSubtle', border: '1px solid $borderSubtle', borderRadius: '$medium', boxShadow: '$small'}}>
-          <Stack direction="row" justify="between" align="center">
+      <Stack direction="column" css={{ maxHeight: '80vh', maxWidth: '40vw', backgroundColor: '$bgDefault', border: '1px solid $borderSubtle', borderRadius: isVisible ? '12px' : '$small', overflow: 'hidden', boxShadow: '$small' }}>
+        <Stack direction="row" justify="between" align="center" css={{ borderBottom: isVisible ? '1px solid $borderSubtle' : '1px solid transparent', padding: isVisible ? '$3' : 0 }}>
             {isVisible && <ToggleGroup type="single" value={visibleTab} onValueChange={setVisibleTab}>
               <ToggleGroup.Item value="preview"><VideoIcon /></ToggleGroup.Item>
               <ToggleGroup.Item value="editor"><FileIcon /></ToggleGroup.Item>
             </ToggleGroup>}
-            <Button size="small" onClick={handleToggleVisible} icon={isVisible ? <ChevronDownIcon /> : <ChevronUpIcon />} variant="invisible">
+          <Button onClick={handleToggleVisible} icon={isVisible ? <ChevronDownIcon /> : <ChevronUpIcon />} variant="invisible">
               Preview
             </Button>
           </Stack>

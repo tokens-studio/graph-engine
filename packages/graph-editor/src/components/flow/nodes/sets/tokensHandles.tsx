@@ -27,6 +27,7 @@ export const TokenSetHandles = ({ tokens }) => {
                         gap: '$2',
                         overflow: 'hidden',
                         width: '100%',
+                        paddingLeft: '$3'
                     }}
                 >
                     <PreviewToken token={token} />
@@ -34,7 +35,10 @@ export const TokenSetHandles = ({ tokens }) => {
                 <Handle id={token.name}>
                     <Box
                         title={getToolTipData(token)}
-                        style={{
+                        css={{
+                            fontFamily: 'monospace',
+                            fontSize: '$xsmall',
+                            color: '$fgSubtle',
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
                             maxWidth: '200px',

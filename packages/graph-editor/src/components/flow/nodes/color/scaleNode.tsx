@@ -1,4 +1,4 @@
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { DynamicValueText, Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { Label, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { PreviewArray } from '../../preview/array.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
@@ -6,6 +6,7 @@ import { node } from '@tokens-studio/graph-engine/nodes/color/scale.js';
 import PreviewColor from '../../preview/color.tsx';
 import PreviewNumber from '../../preview/number.tsx';
 import React, { useCallback, useMemo } from 'react';
+import { ColorWheelIcon } from '@radix-ui/react-icons';
 
 const ScaleNode = () => {
   const { input, state, output, setState } = useNode();
@@ -23,7 +24,11 @@ const ScaleNode = () => {
       .map(([key, value]) => {
         return (
           <Handle id={key} key={key}>
-            <Text>{key}</Text>
+            <Text css={{
+              fontFamily: 'monospace',
+              fontSize: '$xsmall',
+              color: '$fgMuted',
+            }}>{key}</Text>
             <PreviewColor value={value} />
           </Handle>
         );
@@ -32,7 +37,7 @@ const ScaleNode = () => {
     return (
       <>
         <Handle id="array">
-          <Text>As set</Text>
+          <HandleText>Set</HandleText>
           <PreviewArray value={array} />
         </Handle>
         {handles}
@@ -61,15 +66,13 @@ const ScaleNode = () => {
       <HandleContainer type="target">
         <Handle id="color">
           <Stack direction="row" justify="between" gap={3} align="center">
-            <Label>Color</Label>
+            <HandleText>Color</HandleText>
             <PreviewColor value={input.color} />
           </Stack>
         </Handle>
         <Handle id="stepsUp">
           <Stack direction="row" justify="between" gap={3} align="center">
-            <span style={{ whiteSpace: 'nowrap' }}>
-              <Label>Steps Lighter</Label>
-            </span>
+            <HandleText secondary>Steps ↑</HandleText>
             {input.stepsUp !== undefined ? (
               <PreviewNumber value={input.stepsUp} />
             ) : (
@@ -79,9 +82,8 @@ const ScaleNode = () => {
         </Handle>
         <Handle id="stepsDown">
           <Stack direction="row" justify="between" gap={3} align="center">
-            <span style={{ whiteSpace: 'nowrap' }}>
-              <Label css={{ whiteSpace: 'no-wrap' }}>Steps Darker</Label>
-            </span>
+            <HandleText secondary>Steps ↓</HandleText>
+
             {input.stepsDown !== undefined ? (
               <PreviewNumber value={input.stepsDown} />
             ) : (
@@ -98,4 +100,5 @@ const ScaleNode = () => {
 export default WrapNode(ScaleNode, {
   ...node,
   title: 'Generate Color Scale',
+  icon: <ColorWheelIcon />,
 });
