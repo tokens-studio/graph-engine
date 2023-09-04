@@ -5,6 +5,8 @@ import { refState } from './refs.ts';
 import { graphState } from './graphs.ts';
 import { storageState } from './storage.ts';
 import { branchState } from './branch.ts';
+import { refState } from './refs.ts';
+import { graphState } from './graphs.ts';
 
 export interface RootModel extends Models<RootModel> {
   ui: typeof uiState;
@@ -13,4 +15,6 @@ export interface RootModel extends Models<RootModel> {
   graph: typeof graphState;
   branch: typeof branchState;
   storage: typeof storageState;
+  refs: typeof refState;
+  graph: typeof graphState;
 }
