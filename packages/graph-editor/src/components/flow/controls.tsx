@@ -1,9 +1,11 @@
-import { ControlButton, ControlProps, Controls, MiniMap } from 'reactflow';
+import { ControlButton, ControlProps, Controls } from 'reactflow';
+import { MiniMap } from '@reactflow/minimap';
 import { styled } from '#/lib/stitches/index.ts';
 import React from 'react';
 import { Settings } from '../Settings';
 
 export const ControlsStyled = styled(Controls, {
+  color: '$fgDefault',
   button: {
     backgroundColor: '$bgSurface',
     '&:hover': {

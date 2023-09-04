@@ -11,3 +11,7 @@ export const obscureDistance = createSelector(
 );
 
 export const debugMode = createSelector(settings, (state) => state.debugMode);
+
+export const showGrid = createSelector(settings, (state) => state.showGrid);
+
+export const snapGrid = createSelector(settings, (state) => state.snapGrid);

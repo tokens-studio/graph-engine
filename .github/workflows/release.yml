@@ -89,6 +89,8 @@ jobs:
 
       - name: Build site
         run: yarn run build:ui
+        env:
+          NEXT_PUBLIC_GITHUB_SHA: $GITHUB_SHA
 
       - name: Import Secrets
         id: secrets
