@@ -3,6 +3,7 @@ import { NodeState } from './models/node.ts';
 import { RematchDispatch, init } from '@rematch/core';
 import { RootModel, models } from './models/index.ts';
 import { SettingsState } from './models/settings.ts';
+import { GraphState } from './models/graph.ts';
 
 export const store = init({
   models,
@@ -19,5 +20,6 @@ export type Dispatch = RematchDispatch<RootModel>;
 export type RootState = {
   node: NodeState;
   input: InputState;
+  graph: GraphState;
   settings: SettingsState;
 };

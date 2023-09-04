@@ -1,8 +1,11 @@
 import { RootState } from '../store.tsx';
+import { ui } from './roots.ts';
+import { createSelector } from 'reselect';
 
-export const theme = (state: RootState) => state.ui.theme;
+export const theme = createSelector(ui, (state) => state.theme);
 export const tabs = (state: RootState) => state.ui.tabs;
-export const currentTab = (state: RootState) => state.ui.currentTab;
+export const currentTab = createSelector(ui, (state) => state.currentTab);
+
 export const outputSelector = (state: RootState) => state.editorOutput;
 
 export const showJourneySelector = (state: RootState) =>

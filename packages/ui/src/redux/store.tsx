@@ -5,6 +5,8 @@ import persistPlugin from '@rematch/persist';
 import storage from 'redux-persist/lib/storage';
 import { JourneyState } from './models/journey.ts';
 import { OutputState } from './models/output.tsx';
+import { RefState } from './models/refs.ts';
+import { GraphState } from './models/graphs.ts';
 
 const persistConfig = {
   key: 'root',
@@ -29,4 +31,6 @@ export type RootState = {
   ui: UIState;
   journey: JourneyState;
   editorOutput: OutputState;
+  refs: RefState;
+  graph: GraphState;
 };

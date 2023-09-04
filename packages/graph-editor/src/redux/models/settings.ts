@@ -23,6 +23,8 @@ export interface SettingsState {
   edgeType: EdgeType;
   layoutType: LayoutType;
   debugMode: boolean;
+  showGrid: boolean;
+  snapGrid: boolean;
 }
 
 export const settingsState = createModel<RootModel>()({
@@ -30,9 +32,23 @@ export const settingsState = createModel<RootModel>()({
     obscureDistance: 0.5,
     edgeType: EdgeType.bezier,
     layoutType: LayoutType.dagre,
+    showGrid: false,
+    snapGrid: false,
     debugMode: true,
   } as SettingsState,
   reducers: {
+    setSnapGrid(state, snapGrid: boolean) {
+      return {
+        ...state,
+        snapGrid,
+      };
+    },
+    setShowGrid(state, showGrid: boolean) {
+      return {
+        ...state,
+        showGrid,
+      };
+    },
     setDebugMode(state, debugMode: boolean) {
       return {
         ...state,

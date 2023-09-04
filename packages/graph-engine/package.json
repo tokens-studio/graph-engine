@@ -50,6 +50,7 @@
     "get-pixels": "^3.3.3",
     "is-promise": "^4.0.0",
     "postcss-value-parser": "^4.2.0",
+    "react-mosaic-component": "^6.0.1",
     "reactflow": "11.7.0",
     "token-transformer": "^0.0.32"
   },

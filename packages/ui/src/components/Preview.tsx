@@ -1,52 +1,32 @@
-import { Box, Label, Stack } from '@tokens-studio/ui';
-import { useResizable } from 'react-resizable-layout';
+import { Box } from '@tokens-studio/ui';
 //@ts-ignore This is the correct import
 import { Preview as ComponentPreview } from '#/components/preview/index.tsx';
-import { Splitter } from './splitter.tsx';
+
 import { LiveEditor, LiveError } from 'react-live';
 
-export const Preview = ({ style, codeRef, ...rest }) => {
-  const { position, separatorProps } = useResizable({
-    axis: 'x',
-    initial: 250,
-    min: 100,
-  });
-
+export const Preview = () => {
   return (
-    <Stack
-      direction="row"
-      style={style}
-      css={{ background: '$bgSurface' }}
+    <Box css={{ background: '$bgSurface', width: '100%', height: '100%' }}>
+      <ComponentPreview />
+    </Box>
+  );
+};
+
+export const CodeEditor = ({ codeRef, ...rest }) => {
+  return (
+    <Box
+      css={{
+        fontSize: '$xsmall',
+        fontFamily: 'monospace',
+        overflow: 'auto',
+        flex: 1,
+      }}
       {...rest}
     >
-      <Stack
-        direction="row"
-        style={{ flex: 1 }}
-        css={{ background: '$bgSurface' }}
-      >
-        <Stack direction="column" style={{ width: position }}>
-          <Box css={{ flexGrow: 1 }}>
-            <ComponentPreview />
-          </Box>
-        </Stack>
-        <Splitter direction="vertical" {...separatorProps} />
-        <Stack direction="column" css={{ padding: '$4', flex: 1 }}>
-          <Label>Editor</Label>
-          <Box
-            css={{
-              fontSize: '$xsmall',
-              fontFamily: 'monospace',
-              overflow: 'auto',
-              flex: 1,
-            }}
-          >
-            <div ref={codeRef}>
-              <LiveEditor />
-            </div>
-            <LiveError />
-          </Box>
-        </Stack>
-      </Stack>
-    </Stack>
+      <div ref={codeRef}>
+        <LiveEditor />
+      </div>
+      <LiveError />
+    </Box>
   );
 };

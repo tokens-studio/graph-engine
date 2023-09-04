@@ -9,7 +9,6 @@ import {
   EdgeTypes,
   MarkerType,
   Node,
-  Panel,
   SelectionMode,
   SnapGrid,
   useEdgesState,
@@ -32,7 +31,6 @@ import { nodeTypes, stateInitializer } from '../components/flow/nodes/index.ts';
 import { useDispatch } from '../hooks/index.ts';
 import { v4 as uuidv4 } from 'uuid';
 import CustomEdge from '../components/flow/edges/edge.tsx';
-import { DropPanel } from '../components/flow/DropPanel/Panel.tsx';
 import React, {
   MouseEvent,
   useCallback,
@@ -44,10 +42,18 @@ import { ReduxProvider } from '../redux/index.tsx';
 import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.tsx';
 import groupNode from '../components/flow/groupNode.tsx';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
-import { Tooltip } from '@tokens-studio/ui';
+import { Box, Tooltip } from '@tokens-studio/ui';
 import { OnOutputChangeContextProvider } from '#/context/OutputContext.tsx';
 import { createNode } from './create.ts';
 import { NodeTypes } from '@tokens-studio/graph-engine';
+import { useContextMenu } from 'react-contexify';
+import { version } from '../../package.json';
+import { NodeContextMenu } from './nodeContextMenu.tsx';
+import { EdgeContextMenu } from './edgeContextMenu.tsx';
+import { PaneContextMenu } from './paneContextMenu.tsx';
+import { useSelector } from 'react-redux';
+import { showGrid, snapGrid } from '#/redux/selectors/settings.ts';
+import { forceUpdate } from '#/redux/selectors/graph.ts';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -83,7 +89,45 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const dispatch = useDispatch();
     const { getIntersectingNodes } = reactFlowInstance;
     const store = useStoreApi();
-    const [forceUpdate, setForceUpdate] = React.useState(0);
+    const showGridValue = useSelector(showGrid);
+    const snapGridValue = useSelector(snapGrid);
+    const forceUpdateValue = useSelector(forceUpdate);
+
+    const [contextNode, setContextNode] = React.useState<Node | null>(null);
+    const [contextEdge, setContextEdge] = React.useState<Edge | null>(null);
+
+    const { show } = useContextMenu({
+      id: props.id + '_pane',
+    });
+    const { show: showEdge } = useContextMenu({
+      id: props.id + '_edge',
+    });
+
+    const { show: showNode } = useContextMenu({
+      id: props.id + '_node',
+    });
+    const handleContextMenu = useCallback(
+      (event) => {
+        show({ event });
+      },
+      [show],
+    );
+
+    const handleEdgeContextMenu = useCallback(
+      (event, edge) => {
+        setContextEdge(edge);
+        showEdge({ event });
+      },
+      [showEdge],
+    );
+
+    const handleNodeContextMenu = useCallback(
+      (event, node) => {
+        setContextNode(node);
+        showNode({ event });
+      },
+      [showNode],
+    );
 
     const onEdgesDeleted = useCallback((edges) => {
       edges.forEach((edge) => {
@@ -107,12 +151,16 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           reactFlowInstance.setEdges([]);
         },
         save: () => ({
+          graph: {
+            version,
+          },
+          viewport: reactFlowInstance.getViewport(),
           nodes: reactFlowInstance.getNodes(),
           edges: reactFlowInstance.getEdges(),
           nodeState,
         }),
         forceUpdate: () => {
-          setForceUpdate((prev) => prev + 1);
+          dispatch.graph.forceNewUpdate();
         },
         load: ({ nodes, edges, nodeState }) => {
           const input = nodes.reduce((acc, node) => {
@@ -127,11 +175,18 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           reactFlowInstance.setEdges(() => edges);
           //Force delay of 1 tick to allow input state to update
           setTimeout(() => {
-            setForceUpdate((prev) => prev + 1);
+            dispatch.graph.forceNewUpdate();
           }, 1);
         },
+        getFlow: () => reactFlowInstance,
       }),
-      [reactFlowInstance, nodeState, dispatch.input, dispatch.node],
+      [
+        reactFlowInstance,
+        nodeState,
+        dispatch.graph,
+        dispatch.input,
+        dispatch.node,
+      ],
     );
 
     const onConnect = useCallback((params) => {
@@ -288,7 +343,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
       //Create a proxy node
       setNodes((nds) => [...nds, newNode]);
-      console.log(newNode);
     }, []);
 
     const onNodeDrag = useCallback(
@@ -326,68 +380,74 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       [getIntersectingNodes, setNodes],
     );
 
-    const { handlers, snapGrid, showGrid, showMinimap } = useHotkeys({
+    const { handlers, showMinimap } = useHotkeys({
       onEdgesDeleted,
     });
 
     return (
-      <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
-        <div
-          className="editor"
-          style={{ height: '100%' }}
-          ref={reactFlowWrapper}
-        >
-          <ForceUpdateProvider value={forceUpdate}>
-            {/* @ts-ignore */}
-            <ReactFlow
-              // TODO: this should be true only when loading an existing graph
-              // fitView
-              nodes={nodes}
-              onNodesChange={onNodesChange}
-              onEdgesChange={onEdgesChange}
-              onEdgeDoubleClick={onEdgeDblClick}
-              onEdgesDelete={onEdgesDeleted}
-              edges={edges}
-              elevateNodesOnSelect={false}
-              onNodeDragStop={onNodeDragStop}
-              snapToGrid={snapGrid}
-              edgeTypes={edgeTypes}
-              nodeTypes={fullNodeTypes}
-              snapGrid={snapGridCoords}
-              onNodeDrag={onNodeDrag}
-              onConnect={onConnect}
-              onDrop={onDrop}
-              selectNodesOnDrag={false}
-              defaultEdgeOptions={defaultEdgeOptions}
-              panOnScroll={true}
-              panOnDrag={panOnDrag}
-              selectionMode={SelectionMode.Partial}
-              onDragOver={onDragOver}
-              selectionOnDrag={true}
-              minZoom={-Infinity}
-              defaultViewport={defaultViewport}
-              //This causes weirdness with the minimap
-              // onlyRenderVisibleElements={true}
-              maxZoom={Infinity}
-              proOptions={proOptions}
-            >
-              <SelectedNodesToolbar />
-              <CustomControls position="top-right" />
-              <Panel id="drop-panel" position="top-left">
-                <DropPanel />
-              </Panel>
-              {showMinimap && <MiniMapStyled />}
-              {showGrid && (
-                <Background
-                  color="#aaa"
-                  gap={16}
-                  variant={BackgroundVariant.Dots}
-                />
-              )}
-            </ReactFlow>
-          </ForceUpdateProvider>
-        </div>
-      </GlobalHotKeys>
+      <>
+        <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
+          <Box
+            //@ts-ignore
+            id={props.id}
+            className="editor"
+            css={{ height: '100%', background: '$bgCanvas' }}
+            ref={reactFlowWrapper}
+          >
+            <ForceUpdateProvider value={forceUpdateValue}>
+              <ReactFlow
+                fitView
+                nodes={nodes}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onEdgeDoubleClick={onEdgeDblClick}
+                onEdgesDelete={onEdgesDeleted}
+                edges={edges}
+                elevateNodesOnSelect={false}
+                onNodeDragStop={onNodeDragStop}
+                snapToGrid={snapGridValue}
+                edgeTypes={edgeTypes}
+                nodeTypes={fullNodeTypes}
+                snapGrid={snapGridCoords}
+                onNodeDrag={onNodeDrag}
+                onConnect={onConnect}
+                onDrop={onDrop}
+                selectNodesOnDrag={false}
+                defaultEdgeOptions={defaultEdgeOptions}
+                panOnScroll={true}
+                // panOnDrag={panOnDrag}
+                onPaneContextMenu={handleContextMenu}
+                onEdgeContextMenu={handleEdgeContextMenu}
+                onNodeContextMenu={handleNodeContextMenu}
+                selectionMode={SelectionMode.Partial}
+                onDragOver={onDragOver}
+                selectionOnDrag={true}
+                minZoom={-Infinity}
+                defaultViewport={defaultViewport}
+                //This causes weirdness with the minimap
+                // onlyRenderVisibleElements={true}
+                maxZoom={Infinity}
+                proOptions={proOptions}
+              >
+                <SelectedNodesToolbar />
+                <CustomControls position="top-right" />
+                {showMinimap && <MiniMapStyled />}
+                {showGridValue && (
+                  <Background
+                    color="#aaa"
+                    gap={16}
+                    variant={BackgroundVariant.Dots}
+                  />
+                )}
+              </ReactFlow>
+            </ForceUpdateProvider>
+          </Box>
+        </GlobalHotKeys>
+
+        <PaneContextMenu id={props.id + '_pane'} />
+        <NodeContextMenu id={props.id + '_node'} node={contextNode} />
+        <EdgeContextMenu id={props.id + '_edge'} edge={contextEdge} />
+      </>
     );
   },
 );

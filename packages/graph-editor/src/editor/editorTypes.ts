@@ -1,8 +1,7 @@
-import { Edge, Node } from 'reactflow';
+import { Edge, Node, ReactFlowInstance } from 'reactflow';
 
 export type EditorProps = {
   id: string;
-  name: string;
   onOutputChange: (output: Record<string, unknown>) => void;
 };
 
@@ -21,6 +20,7 @@ export type ImperativeEditorRef = {
   save: () => EditorState;
   forceUpdate: () => void;
   load: (state: EditorState) => void;
+  getFlow: () => ReactFlowInstance;
 };
 
 export type EditorNode = Node;
