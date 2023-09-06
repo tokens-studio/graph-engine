@@ -6,7 +6,11 @@ import { DynamicValueText } from '../handles.tsx';
 
 export const PreviewAny = ({ value }) => {
   if (value == undefined) {
-    return <Text>Missing</Text>
+    return (
+      <Text>
+        <i>Missing</i>
+      </Text>
+    );
   }
 
   switch (typeof value) {
@@ -20,6 +24,12 @@ export const PreviewAny = ({ value }) => {
       }
       return <DynamicValueText>Object</DynamicValueText>;
     default:
-      return <DynamicValueText css={{ fontFamily: 'monospace', fontSize: '$xsmall' }}>{value}</DynamicValueText>;
+      return (
+        <DynamicValueText
+          css={{ fontFamily: 'monospace', fontSize: '$xsmall' }}
+        >
+          {value}
+        </DynamicValueText>
+      );
   }
 };

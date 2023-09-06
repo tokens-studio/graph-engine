@@ -1,22 +1,21 @@
 import { Box, IconButton, TextInput } from '@tokens-studio/ui';
-import React, { PropsWithChildren, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PanelItems, items } from './PanelItems.tsx';
-import { DragItem } from './DragItem.tsx';
-import { NodeEntry } from './NodeEntry.tsx';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import { PlusIcon, ChevronRightIcon } from '@iconicicons/react';
-import { Loading } from './Loading.tsx';
 import { useExternalData } from '#/context/ExternalDataContext.tsx';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { styled, keyframes } from '#/lib/stitches/stitches.config.ts';
 
-export const DropPanel: React.FC<PropsWithChildren> = ({ children }) => {
+export interface IDropPanel extends React.HTMLAttributes<HTMLDivElement> {
+  show: boolean;
+}
+
+export const DropPanel = (props: IDropPanel) => {
   const { tokenSets, loadingTokenSets } = useExternalData();
-  const [panelItems, setPanelItems] = useState<PanelItems>(items)
+  const [panelItems, setPanelItems] = useState<PanelItems>(items);
   const [search, setSearch] = React.useState('');
-  const [defaultValue, setDefaultValue] = React.useState<string[]>([
-    'generic',
-  ]);
+  const [defaultValue, setDefaultValue] = React.useState<string[]>(['generic']);
   const [addNodeVisible, setAddNodeIsVisible] = useState(true);
   const [searchVisible, setSearchVisible] = useState(false);
   const searchInputRef = React.useRef<HTMLInputElement>(null);
@@ -43,18 +42,21 @@ export const DropPanel: React.FC<PropsWithChildren> = ({ children }) => {
     if (tokenSets) {
       setPanelItems((prev) => {
         const newPanelItems = { ...prev };
-        newPanelItems.tokens = tokenSets.map((set) => ({ type: NodeTypes.SET, data: { identifier: set.identifier, title: set.name }, icon: <PlusIcon />, text: set.name }));
-        return newPanelItems
-      })
+        newPanelItems.tokens = tokenSets.map((set) => ({
+          type: NodeTypes.SET,
+          data: { identifier: set.identifier, title: set.name },
+          icon: <PlusIcon />,
+          text: set.name,
+        }));
+        return newPanelItems;
+      });
     } else {
-
     }
-
-  }, [tokenSets])
+  }, [tokenSets]);
 
   useEffect(() => {
-    console.log("Panel items changed", panelItems);
-  }, [panelItems])
+    console.log('Panel items changed', panelItems);
+  }, [panelItems]);
 
   const onSearch = (e) => {
     setSearch(e.target.value);
@@ -65,24 +67,17 @@ export const DropPanel: React.FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  const onInsertNode = React.useCallback(
-    (event, type, data) => {
-      console.log("event", event);
-
-      event.dataTransfer.setData(
-        'application/reactflow',
-        JSON.stringify({
-          type,
-          data,
-        }),
-      );
-    },
-    [],
-  );
+  const onInsertNode = React.useCallback((event, type, data) => {
+    event.dataTransfer.setData(
+      'application/reactflow',
+      JSON.stringify({
+        type,
+        data,
+      }),
+    );
+  }, []);
 
   const handleOnOpenChange = (open) => {
-    console.log('open', open, searchInputRef);
-
     if (open && searchInputRef.current) {
       searchInputRef.current.focus();
     }
@@ -90,55 +85,68 @@ export const DropPanel: React.FC<PropsWithChildren> = ({ children }) => {
 
   const availableNodes = React.useMemo(() => {
     if (loadingTokenSets) {
-      return <div>Loading</div>
+      return <div>Loading</div>;
     }
 
     return Object.entries(panelItems).map(([key, values]) => {
-          const filteredValues = values
-            .filter((item) =>
-              item.text.toLowerCase().includes(search.toLowerCase()),
-            )
-            .map((item) => (
-              <DropdownMenuItem
-                key={item.text}
-                onSelect={(event) => onInsertNode(event, item.type, item.data)}
-              >
-                <DropdownMenuItemIcon>{item.icon}</DropdownMenuItemIcon>
-                {item.text}
-              </DropdownMenuItem>
-            ));
+      const filteredValues = values
+        .filter((item) =>
+          item.text.toLowerCase().includes(search.toLowerCase()),
+        )
+        .map((item) => (
+          <DropdownMenuItem
+            key={item.text}
+            onSelect={(event) => onInsertNode(event, item.type, item.data)}
+          >
+            <DropdownMenuItemIcon>{item.icon}</DropdownMenuItemIcon>
+            {item.text}
+          </DropdownMenuItem>
+        ));
 
-          if (filteredValues.length === 0) return null;
+      if (filteredValues.length === 0) return null;
 
-          return (
-            <DropdownMenu.Sub>
-              <DropdownMenuSubTrigger>
-                {key.charAt(0).toUpperCase() + key.slice(1)}
-                <RightSlot>
-                  <ChevronRightIcon />
-                </RightSlot>
-
-              </DropdownMenuSubTrigger>
-              <DropdownMenu.Portal>
-                <DropdownMenuSubContent className="DropdownMenuContent">
-                  {filteredValues}
-                </DropdownMenuSubContent>
-              </DropdownMenu.Portal>
-            </DropdownMenu.Sub>
-          );
+      return (
+        <DropdownMenu.Sub>
+          <DropdownMenuSubTrigger>
+            {key.charAt(0).toUpperCase() + key.slice(1)}
+            <RightSlot>
+              <ChevronRightIcon />
+            </RightSlot>
+          </DropdownMenuSubTrigger>
+          <DropdownMenu.Portal>
+            <DropdownMenuSubContent className="DropdownMenuContent">
+              {filteredValues}
+            </DropdownMenuSubContent>
+          </DropdownMenu.Portal>
+        </DropdownMenu.Sub>
+      );
     });
   }, [loadingTokenSets, panelItems, search, onInsertNode]);
 
   return (
     <DropdownMenu.Root onOpenChange={handleOnOpenChange}>
       <DropdownMenu.Trigger asChild>
-        {children ? children :
-          <IconButton css={{ flexShrink: 0 }} icon={<PlusIcon />} variant="invisible" tooltip="Add new node" />
-        }
+        {props.children ? (
+          props.children
+        ) : (
+          <IconButton
+            css={{ flexShrink: 0 }}
+            icon={<PlusIcon />}
+            variant="invisible"
+            tooltip="Add new node"
+          />
+        )}
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenuContent sideOffset={4} className="DropdownMenuContent">
-          <Box css={{ padding: '$2' }}><TextInput ref={searchInputRef} value={search} onChange={onSearch} placeholder="Search" /></Box>
+          <Box css={{ padding: '$2' }}>
+            <TextInput
+              ref={searchInputRef}
+              value={search}
+              onChange={onSearch}
+              placeholder="Search"
+            />
+          </Box>
           {availableNodes}
         </DropdownMenuContent>
       </DropdownMenu.Portal>
@@ -172,8 +180,7 @@ const contentStyles = {
   borderRadius: '$medium',
   padding: '$2',
   border: '1px solid $borderSubtle',
-  boxShadow:
-    '$contextMenu',
+  boxShadow: '$contextMenu',
   animationDuration: '400ms',
   animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
   willChange: 'transform, opacity',
@@ -193,10 +200,8 @@ const RightSlot = styled('div', {
   '[data-disabled] &': { color: '$fgDisabled' },
 });
 
-
 const DropdownMenuContent = styled(DropdownMenu.Content, contentStyles);
 const DropdownMenuSubContent = styled(DropdownMenu.SubContent, contentStyles);
-
 
 const itemStyles = {
   all: 'unset',

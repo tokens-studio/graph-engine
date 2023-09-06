@@ -5,7 +5,7 @@ import { useIsValidConnection } from './nodes/hooks/useIsValidConnection.ts';
 import { useNode } from './wrapper/nodeV2.tsx';
 import React, { createContext, useContext } from 'react';
 import classNames from 'classnames';
-import styles from './handles.module.scss';
+import styles from './handles.module.css';
 
 export const HandleContext = createContext<{
   position: Position;
@@ -105,18 +105,48 @@ const StyledRawHandle = styled(RawHandle, {
 });
 
 export const HandleText = styled(Text, {
-  textTransform: 'uppercase', fontWeight: 'bold', fontSize: '$xxsmall', color: '$accentDefault', whiteSpace: 'nowrap',
+  textTransform: 'uppercase',
+  fontWeight: 'bold',
+  fontSize: '$xxsmall',
+  color: '$accentDefault',
+  whiteSpace: 'nowrap',
   variants: {
     secondary: {
       true: {
         color: '$fgDefault',
-      }
-    }
-  }
-})
+      },
+    },
+  },
+});
 
 export const DynamicValueText = styled(Text, {
-  padding: '$1 $2', fontFamily: 'monospace', fontSize: '$xxsmall', borderRadius: '$small', backgroundColor: '$accentBg', color: '$accentDefault', lineHeight: 1, whiteSpace: 'nowrap'
+  padding: '$1 $2',
+  fontFamily: 'monospace',
+  fontSize: '$xxsmall',
+  borderRadius: '$small',
+  backgroundColor: '$accentBg',
+  color: '$accentDefault',
+  lineHeight: 1,
+  whiteSpace: 'nowrap',
+});
+const HandleHolder = styled(Box, {
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+
+  variants: {
+    collapsed: {
+      true: {
+        height: 0,
+        overflow: 'hidden',
+        position: 'absolute',
+        top: 0,
+      },
+      false: {
+        minHeight: '1em',
+      },
+    },
+  },
 });
 
 export const Handle = (props) => {
@@ -127,12 +157,7 @@ export const Handle = (props) => {
   const { onConnect } = useNode();
 
   return (
-    <Box
-      className={classNames(
-        styles.handle,
-        collapsed ? styles.collapsed : styles.expanded,
-      )}
-    >
+    <HandleHolder collapsed={collapsed}>
       <StyledRawHandle
         error={error}
         left={type === 'target'}
@@ -154,6 +179,6 @@ export const Handle = (props) => {
       >
         {children}
       </Stack>
-    </Box>
+    </HandleHolder>
   );
 };

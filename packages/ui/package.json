@@ -16,6 +16,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@hlorenzi/react-dockable": "0.1.1",
     "@iconicicons/react": "1.5.1",
     "@lion/button": "0.18.1",
     "@lion/ui": "0.2.1",
@@ -51,6 +52,7 @@
     "dot-prop": "8.0.0",
     "focus-trap-react": "10.1.1",
     "graphlib": "2.1.8",
+    "html-to-image": "1.11.11",
     "is-promise": "4.0.0",
     "json5": "2.2.3",
     "jszip": "3.10.1",
@@ -60,6 +62,7 @@
     "next-themes": "0.2.1",
     "postcss-value-parser": "4.2.0",
     "prism-react-renderer": "2.0.3",
+    "rc-dock": "3.2.18",
     "react": "18.2.0",
     "react-color": "2.19.3",
     "react-dnd": "16.0.1",
@@ -81,10 +84,12 @@
     "reselect": "4.1.8",
     "sass": "1.62.1",
     "sentence-case": "3.0.4",
+    "styled-components": "6.0.7",
     "uuid": "9.0.0",
     "wc-context": "0.14.0"
   },
   "devDependencies": {
+    "@svgr/webpack": "8.1.0",
     "@tokens-studio/eslint-config-custom": "*",
     "@types/graphlib": "2.1.8",
     "@types/node": "18.15.11",

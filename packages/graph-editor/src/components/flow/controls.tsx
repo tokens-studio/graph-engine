@@ -1,17 +1,12 @@
-import { ControlButton, ControlProps, Controls, MiniMap } from 'reactflow';
+import { ControlButton, ControlProps, Controls } from 'reactflow';
+import { MiniMap } from '@reactflow/minimap';
 import { styled } from '#/lib/stitches/index.ts';
 import React from 'react';
 import { Settings } from '../Settings';
 import { DropPanel } from './DropPanel';
 
 export const ControlsStyled = styled(Controls, {
-  display: 'flex',
-  flexDirection: 'column',
-  padding: '$1',
-  backgroundColor: '$bgDefault',
-  borderRadius: '$medium',
-  boxShadows: '$small',
-  border: '1px solid $borderSubtle',
+  color: '$fgDefault',
   button: {
     width: 16,
     height: 16,
@@ -45,7 +40,7 @@ export const CustomControls = (props: ControlProps) => {
     <ControlsStyled showInteractive={false} {...props}>
       <ControlButton>
         <Settings />
-      </ControlButton>             
+      </ControlButton>
     </ControlsStyled>
   );
 };

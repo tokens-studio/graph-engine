@@ -1,175 +1,212 @@
-import {
-  Box,
-  Stack,
-} from '@tokens-studio/ui';
-
-import {
-  Editor,
-  ImperativeEditorRef,
-  EditorEdge,
-  EditorNode,
-} from '@tokens-studio/graph-editor';
+import { IconButton, Stack, Text } from '@tokens-studio/ui';
+import { DockLayout, LayoutData, TabGroup } from 'rc-dock';
+import { Editor, DropPanel } from '@tokens-studio/graph-editor';
 import { LiveProvider } from 'react-live';
 import { code, scope } from '#/components/preview/scope.tsx';
 import { useDispatch } from '#/hooks/index.ts';
-import { useResizable } from 'react-resizable-layout';
 import { useSelector } from 'react-redux';
-import React, {
-  MutableRefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   showJourneySelector,
   tabs as tabsSelector,
   currentTab as currentTabSelector,
 } from '#/redux/selectors/index.ts';
 import Joyride, { CallBackProps, STATUS } from 'react-joyride';
-import { v4 as uuidv4 } from 'uuid';
 // @ts-ignore
 import { themes } from 'prism-react-renderer';
 
 //import the example
 import example from '#/examples/card.json';
 
-import { useOnEnter } from '#/hooks/onEnter.ts';
+import { Cross1Icon } from '@radix-ui/react-icons';
 import { useTheme } from '#/hooks/useTheme.tsx';
 import { useJourney } from '#/journeys/basic.tsx';
 import { JoyrideTooltip } from '#/components/joyride/tooltip.tsx';
-import { Preview } from '#/components/Preview.tsx';
-import { TrashIcon } from '@iconicicons/react';
-import { Toolbar } from '../components/Toolbar.tsx';
-import { TokensStudioLogo } from '#/components/TokensStudioLogo.tsx';
+import { CodeEditor, Preview } from '#/components/Preview.tsx';
+import {
+  ArrowUpRightIcon,
+  GridMasonryIcon,
+  MaximizeIcon,
+  MinimizeIcon,
+} from '@iconicicons/react';
+import { Menubar } from '#/components/editorMenu/index.tsx';
+import { EditorRefs } from '#/service/refs.ts';
+import { useRegisterRef } from '#/hooks/ref.ts';
 
-export interface ResolverData {
-  nodes: EditorNode[];
-  edges: EditorEdge[];
-  state: Record<string, any>;
-  code: string;
-}
+const DockButton = (rest) => {
+  return (
+    <IconButton
+      size="small"
+      variant="invisible"
+      css={{ padding: '$2' }}
+      {...rest}
+    />
+  );
+};
+
+let groups: Record<string, TabGroup> = {
+  popout: {
+    animated: false,
+    floatable: true,
+    panelExtra: (panelData, context) => {
+      let buttons: React.ReactElement[] = [];
+      if (panelData?.parent?.mode !== 'window') {
+        const maxxed = panelData?.parent?.mode === 'maximize';
+        buttons.push(
+          <DockButton
+            key="maximize"
+            title={
+              panelData?.parent?.mode === 'maximize' ? 'Restore' : 'Maximize'
+            }
+            icon={maxxed ? <MinimizeIcon /> : <MaximizeIcon />}
+            onClick={() => context.dockMove(panelData, null, 'maximize')}
+          ></DockButton>,
+        );
+        buttons.push(
+          <DockButton
+            key="new-window"
+            title="Open in new window"
+            icon={<ArrowUpRightIcon />}
+            onClick={() => context.dockMove(panelData, null, 'new-window')}
+          ></DockButton>,
+        );
+      }
+      buttons.push(
+        <DockButton
+          key="close"
+          title="Close"
+          icon={<Cross1Icon />}
+          onClick={() => context.dockMove(panelData, null, 'remove')}
+        ></DockButton>,
+      );
+      return <Stack gap={2}>{buttons}</Stack>;
+    },
+  },
+  /**
+   * Note that the graph has a huge issue when ran in a popout window, as such we disable it for now
+   */
+  graph: {
+    animated: false,
+    floatable: true,
+    panelExtra: (panelData, context) => {
+      let buttons: React.ReactElement[] = [];
+      if (panelData?.parent?.mode !== 'window') {
+        const maxxed = panelData?.parent?.mode === 'maximize';
+        buttons.push(
+          <DockButton
+            key="maximize"
+            title={
+              panelData?.parent?.mode === 'maximize' ? 'Restore' : 'Maximize'
+            }
+            icon={maxxed ? <MinimizeIcon /> : <MaximizeIcon />}
+            onClick={() => context.dockMove(panelData, null, 'maximize')}
+          ></DockButton>,
+        );
+      }
+
+      return <Stack gap={2}>{buttons}</Stack>;
+    },
+  },
+};
 
 const Wrapper = () => {
   const currentTab = useSelector(currentTabSelector);
-  const tabs = useSelector(tabsSelector);
+
   const [theCode, setTheCode] = useState(code);
-  const [loadedExample, setLoadedExample] = useState<string>();
+  const [loadedExample, setLoadedExample] = useState(false);
   const dispatch = useDispatch();
   const showJourney = useSelector(showJourneySelector);
   const theme = useTheme();
-  const initRefs = useCallback(() => {
-    return tabs.reduce((acc, x) => {
-      acc[x.id] = React.createRef();
-      return acc;
-    }, {});
-  }, []);
-  const [refs, setRefs] =
-    useState<Record<string, MutableRefObject<ImperativeEditorRef>>>(initRefs);
+  const [, setCodeRef] = useRegisterRef('codeEditor');
+  const [, setDockRef] = useRegisterRef<DockLayout>('dock');
 
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [isCreating, setIsCreating] = useState(false);
-  const toggleCreating = useCallback(
-    () => setIsCreating(!isCreating),
-    [isCreating, setIsCreating],
-  );
+  const defaultLayout: LayoutData = {
+    dockbox: {
+      mode: 'vertical',
+      children: [
+        {
+          mode: 'horizontal',
+          children: [
+            {
+              size: 300,
+              tabs: [
+                {
+                  group: 'popout',
+                  id: 'tab2',
+                  title: 'Nodes',
+                  content: <DropPanel id="drop-panel" />,
+                },
+              ],
+            },
+            {
+              id: 'graphs',
+              size: 1000,
+              group: 'graph',
 
-  const { position, separatorProps } = useResizable({
-    axis: 'y',
-    initial: 250,
-    min: 50,
-    reverse: true,
-  });
-
-  const [resolverName, setResolverName] = useState('Untitled');
-
-  const onTabChange = (name: string) => {
-    dispatch.ui.setSelectedTab(name);
+              panelLock: { panelStyle: 'graph' },
+              tabs: [],
+            },
+          ],
+        },
+        {
+          mode: 'horizontal',
+          children: [
+            {
+              tabs: [
+                {
+                  group: 'popout',
+                  id: 'tab3',
+                  title: 'Preview',
+                  content: <Preview />,
+                },
+              ],
+            },
+            {
+              tabs: [
+                {
+                  group: 'popout',
+                  id: 'tab4',
+                  title: 'Code Editor',
+                  content: (
+                    <CodeEditor
+                      id="code-editor"
+                      style={{ height: '100%', width: '100%' }}
+                      codeRef={setCodeRef}
+                    />
+                  ),
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   };
-
-  const addTab = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (!tabs.find((x) => x.name === resolverName)) {
-      const id = uuidv4();
-      dispatch.ui.addTab({ name: resolverName, id });
-
-      //Create the new ref to attach
-      setRefs((refs) => ({
-        ...refs,
-        [id]: React.createRef(),
-      }));
-      //Reset the resolver name
-      setResolverName('Untitled');
-    }
-    toggleCreating();
-  };
-
-  const removeTab = (ev) => {
-    const id = ev.currentTarget.dataset.key;
-    dispatch.ui.removeTab(id);
-  };
-
 
   useEffect(() => {
-    console.log("Changed", currentTab, loadedExample, example);
     if (!loadedExample) {
       const exampleData = example as ResolverData;
 
       const { state, code, edges, nodes } = exampleData;
-      const current = refs[currentTab.id]?.current;
+
+      const editor = EditorRefs[currentTab.id];
+
+      if (!editor.current) {
+        return;
+      }
 
       if (code !== undefined) {
         setTheCode(code);
       }
 
-      current.load({
+      editor.current.load({
         nodes: nodes,
         edges: edges,
         nodeState: state,
       });
-      console.log("loaded", {
-        nodes: nodes,
-        edges: edges,
-        nodeState: state,
-      })
-      setLoadedExample('initial');
+      setLoadedExample(true);
     }
-  }, [refs, loadedExample, currentTab]);
-
-  const onEditorOutputChange = useCallback((output: Record<string, unknown>) => {
-    dispatch.editorOutput.set({
-      name: currentTab.name,
-      value: output,
-    });
-  }, [currentTab]);
-
-  const tabContents = useMemo(() => {
-    return tabs.map((x) => {
-      const ref = refs[x.id];
-
-      return (
-        <Box
-          value={x.id}
-          key={x.id}
-          forceMount
-          css={{
-            height: '100%',
-            position: 'absolute',
-            width: '100%',
-            backgroundColor: '$bgCanvas',
-            top: 0,
-            display: currentTab?.id === x.id ? 'initial' : 'none',
-          }}
-        >
-          <Editor id={x.id} name={x.name} ref={ref} onOutputChange={onEditorOutputChange} loadedExample={loadedExample} />
-        </Box>
-      );
-    });
-  }, [currentTab?.id, refs, tabs, onEditorOutputChange, loadedExample]);
-
-  const onEnter = useOnEnter(isCreating ? addTab : undefined);
+  }, [currentTab.id, loadedExample]);
 
   const [{ steps }] = useJourney();
   const handleJoyrideCallback = (data: CallBackProps) => {
@@ -203,41 +240,24 @@ const Wrapper = () => {
       <div style={{ height: '100vh', overflow: 'hidden' }}>
         <Stack
           direction="column"
-          css={{ height: '100%', background: '$bgCanvas' }}
+          css={{ height: '100%', background: '$bgSurface' }}
         >
-          <Box css={{ position: 'fixed', top: '$3', left: '$3', zIndex: 1 }}>
-            <TokensStudioLogo style={{ height: '3rem', width: 'auto' }} />
-          </Box>
-          <Toolbar ref={ref} refs={refs} setTheCode={setTheCode} />
-          <Box
-            value={currentTab?.id}
-            onValueChange={onTabChange}
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              flex: 1,
-              background: '$bgCanvas',
-              position: 'relative',
-            }}
+          <Menubar />
+          <LiveProvider
+            code={theCode}
+            scope={scope}
+            theme={theme === 'light' ? themes.vsLight : themes.vsDark}
+            noInline={true}
+            enableTypeScript={true}
+            language="jsx"
           >
-            <div style={{ flex: 1, position: 'relative' }}>{tabContents}</div>
-          </Box>
-          <Box css={{ position: 'fixed', top: '$3', right: '$3' }}>
-            <LiveProvider
-              code={theCode}
-              scope={scope}
-              theme={theme === 'light' ? themes.vsLight : themes.vsDark}
-              noInline={true}
-              enableTypeScript={true}
-              language="jsx"
-            >
-              <Preview
-                id="code-editor"
-                codeRef={ref}
-                style={{ height: position }}
-              />
-            </LiveProvider>
-          </Box>
+            <DockLayout
+              defaultLayout={defaultLayout}
+              groups={groups}
+              ref={setDockRef}
+              style={{ height: '100%' }}
+            />
+          </LiveProvider>
         </Stack>
       </div>
     </>

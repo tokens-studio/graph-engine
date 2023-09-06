@@ -20,6 +20,13 @@ const config = {
   },
   webpack: (config, { dev, isServer }) => {
 
+
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: ['@svgr/webpack'],
+    })
+
     if (dev && !isServer) {
       const originalEntry = config.entry;
       config.entry = async () => {
