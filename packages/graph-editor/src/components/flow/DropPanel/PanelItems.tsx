@@ -7,10 +7,10 @@ import {
   ImageIcon,
   PlusIcon,
 } from '@radix-ui/react-icons';
-import icons from "../icons";
+import icons from '../icons';
 import { NodeTypes } from '@tokens-studio/graph-engine';
-import React from "react";
-import { BoxIcon } from "@iconicicons/react";
+import React from 'react';
+import { BoxIcon } from '@iconicicons/react';
 import preset from '#/data/preset.ts';
 import tinyCore from '#/data/tiny/core.ts';
 import tinyCoreDark from '#/data/tiny/dark.ts';
@@ -27,7 +27,6 @@ const tinyCoreLightFlattened = flatten(tinyCoreLight);
 //@ts-ignore
 const tinyCoreDarkFlattened = flatten(tinyCoreDark);
 
-
 export interface PanelItem {
   type: NodeTypes;
   icon: string | JSX.Element;
@@ -39,7 +38,17 @@ export interface PanelItem {
   };
 }
 
-type PanelItemsKeys = 'generic' | 'tokens' | 'math' | 'array' | 'sets' | 'logic' | 'color' | 'accessibility' | 'series' | 'string';
+type PanelItemsKeys =
+  | 'generic'
+  | 'tokens'
+  | 'math'
+  | 'array'
+  | 'sets'
+  | 'logic'
+  | 'color'
+  | 'accessibility'
+  | 'series'
+  | 'string';
 
 export type PanelItems = Record<PanelItemsKeys, PanelItem[]>;
 
@@ -111,7 +120,7 @@ export const items = {
       type: NodeTypes.INLINE_SET,
       data: {
         tokens: tinyCoreFlattened,
-        title: 'Tiny Core'
+        title: 'Tiny Core',
       },
       icon: <PlusIcon />,
       text: 'Tiny Core',
@@ -120,7 +129,7 @@ export const items = {
       type: NodeTypes.INLINE_SET,
       data: {
         tokens: tinyCoreLightFlattened,
-        title: 'Tiny Light'
+        title: 'Tiny Light',
       },
       icon: <PlusIcon />,
       text: 'Tiny Light',
@@ -129,7 +138,7 @@ export const items = {
       type: NodeTypes.INLINE_SET,
       data: {
         tokens: tinyCoreDarkFlattened,
-        title: 'Tiny Dark'
+        title: 'Tiny Dark',
       },
       icon: <PlusIcon />,
       text: 'Tiny Dark',
@@ -138,7 +147,7 @@ export const items = {
       type: NodeTypes.INLINE_SET,
       data: {
         tokens: presetFlattened,
-        title: 'Preset tokens'
+        title: 'Preset tokens',
       },
       icon: <PlusIcon />,
       text: 'Preset Tokens',

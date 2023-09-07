@@ -11,25 +11,26 @@ import { StyledPanel } from './StyledPanel.tsx';
 import { StyledAccordingTrigger } from './StyledAccordionTrigger.tsx';
 import { useExternalData } from '#/context/ExternalDataContext.tsx';
 
-
 export const DropPanel = () => {
   const { tokenSets, loadingTokenSets } = useExternalData();
-  const [panelItems, setPanelItems] = useState<PanelItems>(items)
+  const [panelItems, setPanelItems] = useState<PanelItems>(items);
   const [search, setSearch] = React.useState('');
-  const [defaultValue, setDefaultValue] = React.useState<string[]>([
-    'generic',
-  ]);
+  const [defaultValue, setDefaultValue] = React.useState<string[]>(['generic']);
 
   useEffect(() => {
     if (tokenSets) {
       setPanelItems((prev) => {
         const newPanelItems = { ...prev };
-        newPanelItems.tokens = tokenSets.map((set) => ({ type: NodeTypes.SET, data: { identifier: set.identifier, title: set.name }, icon: <PlusIcon />, text: set.name }));
-        return newPanelItems
-      })
+        newPanelItems.tokens = tokenSets.map((set) => ({
+          type: NodeTypes.SET,
+          data: { identifier: set.identifier, title: set.name },
+          icon: <PlusIcon />,
+          text: set.name,
+        }));
+        return newPanelItems;
+      });
     }
-
-  }, [tokenSets])
+  }, [tokenSets]);
 
   const onSearch = (e) => {
     setSearch(e.target.value);
@@ -84,10 +85,14 @@ export const DropPanel = () => {
 
   return (
     <StyledPanel id="drop-panel">
-      <Scroll height='100%'>
+      <Scroll height="100%">
         <Stack direction="column" gap={1} css={{ width: '100%' }}>
           <Box css={{ padding: '$4' }}>
-            <TextInput placeholder="Search" value={search} onChange={onSearch} />
+            <TextInput
+              placeholder="Search"
+              value={search}
+              onChange={onSearch}
+            />
           </Box>
           {accordionItems}
         </Stack>
@@ -95,4 +100,3 @@ export const DropPanel = () => {
     </StyledPanel>
   );
 };
-

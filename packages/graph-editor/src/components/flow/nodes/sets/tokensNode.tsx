@@ -19,7 +19,6 @@ import { processTokensFile } from '#/utils/tokenFiles.ts';
 import copy from 'copy-to-clipboard';
 import { TokenSetHandles } from './tokensHandles.tsx';
 
-
 type TokenSetData = {
   tokens: IResolvedToken[];
   name: string;

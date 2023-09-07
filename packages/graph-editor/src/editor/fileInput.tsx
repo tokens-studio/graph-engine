@@ -70,7 +70,6 @@ export const handleDrop = async (event, opts: DropOptions): Promise<Node[]> => {
         switch (file.type) {
           case 'application/json': {
             const data = await processTokensFile(file);
-            console.log(data);
             return process(
               {
                 type: NodeTypes.INLINE_SET,
