@@ -21,7 +21,7 @@ import { MoonIcon, SunIcon, DotsHorizontalIcon, FloppyDiscIcon, FolderIcon } fro
 import { ResolverData } from '../pages/index.tsx';
 
 
-export function Toolbar({ refs, ref, setTheCode }: { refs: Record<string, MutableRefObject<ImperativeEditorRef>>; ref: HTMLDivElement; setTheCode: (code: string) => void; }) {
+export function Toolbar({ refs, codeRef, setTheCode }: { refs: Record<string, MutableRefObject<ImperativeEditorRef>>; codeRef: HTMLDivElement; setTheCode: (code: string) => void; }) {
   const currentTab = useSelector(currentTabSelector);
   const tabs = useSelector(tabsSelector);
   const dispatch = useDispatch();
@@ -48,7 +48,7 @@ export function Toolbar({ refs, ref, setTheCode }: { refs: Record<string, Mutabl
       nodes,
       edges,
       state: finalState,
-      code: ref.current?.textContent,
+      code: codeRef.textContent,
     });
 
     const blob = new Blob([fileContent], { type: 'application/json' });
@@ -63,7 +63,7 @@ export function Toolbar({ refs, ref, setTheCode }: { refs: Record<string, Mutabl
     // Clean up the URL and link
     URL.revokeObjectURL(url);
     document.body.removeChild(link);
-  }, [currentTab, refs, ref]);
+  }, [currentTab, refs, codeRef]);
 
   const onClear = useCallback(() => {
     if (currentTab) {

@@ -5,7 +5,7 @@ import { ChevronDownIcon, ChevronUpIcon, CodeIcon, FileIcon, VideoIcon } from '@
 import { useCallback, useState } from 'react';
 
 export const Preview = ({ style, codeRef, ...rest }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [visibleTab, setVisibleTab] = useState("preview");
 
   const handleToggleVisible = useCallback(() => {
@@ -28,21 +28,22 @@ export const Preview = ({ style, codeRef, ...rest }) => {
           </Stack>
           {isVisible &&
           <Box css={{overflowY: 'scroll', flexGrow: 1, paddingTop: '$2'}}>
-            {visibleTab === "preview" && <Box css={{width: '100%', display: 'flex'}}><ComponentPreview /></Box>}
-            {visibleTab === "editor" && <Box
+            <Box css={{ width: '100%', display: visibleTab === "preview" ? 'flex' : 'none' }}><ComponentPreview /></Box>
+            <Box
               css={{
                 fontSize: '$xsmall',
                 fontFamily: 'monospace',
                 overflowY: 'scroll',
                 maxHeight: '100%',
                 flex: 1,
+                display: visibleTab === "editor" ? 'flex' : 'none'
               }}
             >
               <div ref={codeRef}>
                 <LiveEditor />
               </div>
               <LiveError />
-            </Box>}
+            </Box>
             </Box>}
         </Stack>
     </Box>

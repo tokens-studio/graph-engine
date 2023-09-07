@@ -32,7 +32,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { themes } from 'prism-react-renderer';
 
 //import the example
-import example from '#/examples/card.json';
+import example from '#/examples/scale.json';
 
 import { useOnEnter } from '#/hooks/onEnter.ts';
 import { useTheme } from '#/hooks/useTheme.tsx';
@@ -208,7 +208,7 @@ const Wrapper = () => {
           <Box css={{ position: 'fixed', top: '$3', left: '$3', zIndex: 1 }}>
             <TokensStudioLogo style={{ height: '3rem', width: 'auto' }} />
           </Box>
-          <Toolbar ref={ref} refs={refs} setTheCode={setTheCode} />
+          <Toolbar codeRef={ref} refs={refs} setTheCode={setTheCode} />
           <Box
             value={currentTab?.id}
             onValueChange={onTabChange}

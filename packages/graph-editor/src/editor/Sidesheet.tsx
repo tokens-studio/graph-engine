@@ -3,7 +3,7 @@ import { Box, IconButton, Stack, Heading, Text } from '@tokens-studio/ui';
 import * as Portal from '@radix-ui/react-portal';
 import { CloseIcon } from "@iconicicons/react"
 
-export function Sidesheet() {
+export function Sidesheet({ title, children, isVisible }) {
     const [isOpen, setIsOpen] = React.useState(true);
 
     return isOpen ? (
@@ -12,12 +12,12 @@ export function Sidesheet() {
                 <Box css={{ maxWidth: 'clamp(180px, 40vw, 400px)', backgroundColor: '$bgCanvas', padding: '$6', borderTopLeftRadius: '16px', borderBottomLeftRadius: '16px', boxShadow: '$contextMenu', borderLeft: '1px solid $borderSubtle', borderTop: '1px solid $borderSubtle' }}>
                     <Box css={{ position: 'absolute', right: '$6' }}><IconButton icon={<CloseIcon />} variant="invisible" onClick={() => setIsOpen(false)} /></Box>
                     <Stack direction="column" gap={3}>
-                        <Heading size="large">This will be the sidesheet</Heading>
+                        <Heading size="large">{title}</Heading>
                         <Text muted>Add extra configuration here that should be shown on selection of a node. When something is selected, the sidesheet is placed on top of other content.</Text>
                     </Stack>
+                    {children}
                 </Box>
             </Box>
         </Portal.Root>
     ) : null
-}
 }

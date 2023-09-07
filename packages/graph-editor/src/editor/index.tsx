@@ -340,6 +340,53 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       }
     }, [props.loadedExample, reactFlowInstance]);
 
+    const handleSelectNewNodeType = (nodeRequest) => {
+      const nodes = reactFlowInstance.getNodes();
+
+      // Couldn't determine the type
+      if (!nodeRequest.type) {
+        return;
+      }
+      if (
+        nodeRequest.type == NodeTypes.INPUT &&
+        nodes.some((x) => x.type == NodeTypes.INPUT)
+      ) {
+        alert('Only one input node allowed');
+        return null;
+      }
+
+      if (
+        nodeRequest.type == NodeTypes.OUTPUT &&
+        nodes.some((x) => x.type == NodeTypes.OUTPUT)
+      ) {
+        alert('Only one output node allowed');
+        return null;
+      }
+
+
+      console.log('reactFlowInstance', reactFlowInstance.viewportInitialized);
+
+
+      // set position to center of the screen
+      const bounds = reactFlowWrapper!.current!.getBoundingClientRect();
+
+      // set x y coordinates in instance
+      const position = reactFlowInstance.project({
+        x: bounds.width / 2,
+        y: bounds.height / 2,
+      });
+
+      console.log('position', position);
+
+      const newNode = createNode({
+        nodeRequest,
+        stateInitializer,
+        dispatch,
+        position,
+      })
+
+      reactFlowInstance.addNodes(newNode);
+    };
 
     return (
       <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
@@ -390,10 +437,9 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 />
               )}
               <SelectedNodesToolbar />
-              <ActionToolbar />
+              <ActionToolbar onSelectItem={handleSelectNewNodeType} />
               {showMinimap && <MiniMapStyled maskStrokeWidth={4} maskStrokeColor="#ff0000" pannable zoomStep={1} zoomable maskColor="rgb(240, 242, 243, 0.7)" nodeColor="var(--colors-borderSubtle)" />}
               <CustomControls position="bottom-left" />
-              <Sidesheet />
             </ReactFlow>
           </ForceUpdateProvider>
         </div>

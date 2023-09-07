@@ -10,7 +10,7 @@ import { useExternalData } from '#/context/ExternalDataContext.tsx';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { styled, keyframes } from '#/lib/stitches/stitches.config.ts';
 
-export const DropPanel: React.FC<PropsWithChildren> = ({ children }) => {
+export const DropPanel: React.FC<PropsWithChildren & { onSelectItem: (item: any) => void }> = ({ children, onSelectItem }) => {
   const { tokenSets, loadingTokenSets } = useExternalData();
   const [panelItems, setPanelItems] = useState<PanelItems>(items)
   const [search, setSearch] = React.useState('');
@@ -66,18 +66,10 @@ export const DropPanel: React.FC<PropsWithChildren> = ({ children }) => {
   };
 
   const onInsertNode = React.useCallback(
-    (event, type, data) => {
-      console.log("event", event);
-
-      event.dataTransfer.setData(
-        'application/reactflow',
-        JSON.stringify({
-          type,
-          data,
-        }),
-      );
+    (type) => {
+      onSelectItem({ type })
     },
-    [],
+    [onSelectItem],
   );
 
   const handleOnOpenChange = (open) => {
@@ -101,7 +93,7 @@ export const DropPanel: React.FC<PropsWithChildren> = ({ children }) => {
             .map((item) => (
               <DropdownMenuItem
                 key={item.text}
-                onSelect={(event) => onInsertNode(event, item.type, item.data)}
+                onSelect={() => onInsertNode(item.type)}
               >
                 <DropdownMenuItemIcon>{item.icon}</DropdownMenuItemIcon>
                 {item.text}
@@ -125,8 +117,9 @@ export const DropPanel: React.FC<PropsWithChildren> = ({ children }) => {
                 </DropdownMenuSubContent>
               </DropdownMenu.Portal>
             </DropdownMenu.Sub>
-          );
-    });
+      )
+    }
+    );
   }, [loadingTokenSets, panelItems, search, onInsertNode]);
 
   return (
@@ -138,7 +131,7 @@ export const DropPanel: React.FC<PropsWithChildren> = ({ children }) => {
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenuContent sideOffset={4} className="DropdownMenuContent">
-          <Box css={{ padding: '$2' }}><TextInput ref={searchInputRef} value={search} onChange={onSearch} placeholder="Search" /></Box>
+          <Box css={{ padding: '$2' }}><TextInput ref={searchInputRef} value={search} onChange={onSearch} placeholder="Search" onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.stopPropagation()} /></Box>
           {availableNodes}
         </DropdownMenuContent>
       </DropdownMenu.Portal>
@@ -242,3 +235,4 @@ const DropdownMenuSubTrigger = styled(DropdownMenu.SubTrigger, {
   },
   ...itemStyles,
 });
+
