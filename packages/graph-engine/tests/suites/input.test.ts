@@ -1,4 +1,4 @@
-import { minimizeFlowGraph } from './../../src/graph/graph';
+import { minimizeFlowGraph } from "./../../src/graph/graph";
 import { MinimizedFlowGraph, execute, nodes } from "../../src/index.js";
 import inputDisconnected from "../data/processed/inputDisconnected.json";
 import tokenSetInput from "../data/raw/tokenSetInput.json";
@@ -33,16 +33,16 @@ describe("Input", () => {
         colorSet: {
           name: "input.json",
           tokens: {
-          "background-color": {
-            "value": "#0F3CC9",
-            "type": "color"
-          }}
-        }
+            "background-color": {
+              value: "#0F3CC9",
+              type: "color",
+            },
+          },
+        },
       },
       nodes,
     });
 
-    expect(result).toEqual({css: { background: "#0F3CC9"}})
+    expect(result).toEqual({ css: { background: "#0F3CC9" } });
   });
-
 });
