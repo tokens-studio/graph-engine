@@ -1,15 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "include": ["src"],
-  "exclude": ["node_modules"],
+  "include": ["src","package.json","node_modules/@reactflow/minimap" ],
   "compilerOptions": {
     "composite": false,
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
+    "allowImportingTsExtensions":true,
     "forceConsistentCasingInFileNames": true,
-    "allowImportingTsExtensions": true,
     "inlineSources": false,
     "isolatedModules": true,
     "noUnusedLocals": false,
@@ -25,12 +24,11 @@
       "#/*": ["src/*"]
     },
     "noImplicitAny": false,
-    "rootDir": "src",
+    "rootDir": ".",
     "experimentalDecorators": true,
     "lib": ["esnext", "dom", "dom.iterable"],
     "allowJs": true,
     "sourceMap": true,
-    "incremental": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "outDir": "dist"

@@ -225,71 +225,73 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
         reactFlowInstance.setNodes((nodes) => [...nodes, ...processed]);
       },
-      [reactFlowInstance],
+      [dispatch, reactFlowInstance],
     );
 
-    const onEdgeDblClick = useCallback((event, clickedEdge) => {
-      event.stopPropagation();
+    const onEdgeDblClick = useCallback(
+      (event, clickedEdge) => {
+        event.stopPropagation();
 
-      const reactFlowBounds =
-        reactFlowWrapper!.current!.getBoundingClientRect();
+        const reactFlowBounds =
+          reactFlowWrapper!.current!.getBoundingClientRect();
 
-      const position = reactFlowInstance?.project({
-        x: event.clientX - reactFlowBounds.left,
-        y: event.clientY - reactFlowBounds.top,
-      });
-
-      const newNode = createNode({
-        nodeRequest: {
-          type: NodeTypes.PASS_THROUGH,
-        },
-        stateInitializer,
-        dispatch,
-        position,
-      });
-
-      //Set the initial value
-      dispatch.input.copyInputKey({
-        id: newNode.id,
-        key: 'input',
-        source: clickedEdge.target,
-        sourceKey: clickedEdge.targetHandle,
-      });
-
-      setEdges((eds) => {
-        //Remove the old edge
-        const filtered = eds.filter((edge) => {
-          return !(
-            edge.target == clickedEdge.target &&
-            edge.targetHandle == clickedEdge.targetHandle
-          );
+        const position = reactFlowInstance?.project({
+          x: event.clientX - reactFlowBounds.left,
+          y: event.clientY - reactFlowBounds.top,
         });
-        //Add a new edge from the old target to the new node
-        const newEdge = {
-          source: clickedEdge.source,
-          sourceHandle: clickedEdge.sourceHandle,
-          target: newNode.id,
-          targetHandle: 'input',
-          id: uuidv4(),
-          type: 'custom',
-        };
-        //Create another edge from the new node to the old target
-        const newEdge2 = {
-          source: newNode.id,
-          sourceHandle: 'output',
-          target: clickedEdge.target,
-          targetHandle: clickedEdge.targetHandle,
-          id: uuidv4(),
-          type: 'custom',
-        };
 
-        return [...filtered, newEdge, newEdge2];
-      });
+        const newNode = createNode({
+          nodeRequest: {
+            type: NodeTypes.PASS_THROUGH,
+          },
+          stateInitializer,
+          dispatch,
+          position,
+        });
 
-      //Create a proxy node
-      setNodes((nds) => [...nds, newNode]);
-      console.log(newNode);
-    }, []);
+        //Set the initial value
+        dispatch.input.copyInputKey({
+          id: newNode.id,
+          key: 'input',
+          source: clickedEdge.target,
+          sourceKey: clickedEdge.targetHandle,
+        });
+
+        setEdges((eds) => {
+          //Remove the old edge
+          const filtered = eds.filter((edge) => {
+            return !(
+              edge.target == clickedEdge.target &&
+              edge.targetHandle == clickedEdge.targetHandle
+            );
+          });
+          //Add a new edge from the old target to the new node
+          const newEdge = {
+            source: clickedEdge.source,
+            sourceHandle: clickedEdge.sourceHandle,
+            target: newNode.id,
+            targetHandle: 'input',
+            id: uuidv4(),
+            type: 'custom',
+          };
+          //Create another edge from the new node to the old target
+          const newEdge2 = {
+            source: newNode.id,
+            sourceHandle: 'output',
+            target: clickedEdge.target,
+            targetHandle: clickedEdge.targetHandle,
+            id: uuidv4(),
+            type: 'custom',
+          };
+
+          return [...filtered, newEdge, newEdge2];
+        });
+
+        //Create a proxy node
+        setNodes((nds) => [...nds, newNode]);
+      },
+      [dispatch, reactFlowInstance, setEdges, setNodes],
+    );
 
     const onNodeDrag = useCallback(
       (_: MouseEvent, node: Node) => {
