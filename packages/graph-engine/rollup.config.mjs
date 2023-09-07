@@ -32,12 +32,6 @@ const defaultEntries = [
                 env: {
                     dynamicImport: true,
                 },
-                jsc: {
-                    parser: {
-                        syntax: 'typescript',
-                    },
-                    target: 'es5',
-                },
             }),
         ]
     }
