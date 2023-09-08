@@ -9,7 +9,10 @@ export const type = NodeTypes.COS;
  * @param state
  * @returns
  */
-export const process = (input) => Math.cos(input.value);
+export const process = (input) => {
+  if (input.input === undefined) return undefined;
+  return Math.cos(input.input);
+};
 
 export const node: NodeDefinition = {
   type,
