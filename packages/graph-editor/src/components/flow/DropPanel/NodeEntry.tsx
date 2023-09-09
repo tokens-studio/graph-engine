@@ -2,7 +2,6 @@
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import React from 'react';
 
-import { IconHolder } from '#/components/IconHolder.tsx';
 
 export const NodeEntry = ({
     icon,
@@ -13,8 +12,8 @@ export const NodeEntry = ({
 }) => {
     return (
         <Stack direction="row" gap={2} justify="start" align="center">
-            <IconHolder>{icon}</IconHolder>
-            <Text size="xsmall" css={{ color: '$contextMenuFg', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }} >{text}</Text>
+            <Box css={{color: '$fgSubtle', width: '16px', height: '16px', display: 'flex', fontSize: '$xxsmall'}}>{icon}</Box>
+            <Text size="xsmall" css={{ color: '$fgDefault', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }} >{text}</Text>
         </Stack>
     );
 };

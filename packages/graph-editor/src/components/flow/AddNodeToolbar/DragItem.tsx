@@ -1,13 +1,23 @@
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import React, { useCallback } from 'react';
+import { styled } from "#/lib/stitches";
 
-import { DropdownMenuItem } from './Panel';
 
 type DragItemProps = {
   data?: any;
   type: NodeTypes;
   children: React.ReactNode;
 };
+
+const StyledButton = styled('button', {
+  all: 'unset',
+  padding: '$3 $4',
+  borderRadius: '$small',
+  
+  '&:hover': {
+    background: '$bgSubtle',
+  },
+})
 
 export const DragItem = ({ data, type, children }: DragItemProps) => {
   const onDragStart = useCallback(
@@ -25,8 +35,8 @@ export const DragItem = ({ data, type, children }: DragItemProps) => {
   );
 
   return (
-    <button type="button" onDragStart={onDragStart} draggable>
+    <StyledButton type="button" onDragStart={onDragStart} draggable>
       {children}
-    </button>
+    </StyledButton>
   );
 };

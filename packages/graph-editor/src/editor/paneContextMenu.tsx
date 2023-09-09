@@ -46,8 +46,10 @@ export const PaneContextMenu = ({ id }: IPaneContextMenu) => {
   const layout = useAutoLayout();
   return (
     <Menu id={id} preventDefaultOnKeydown animation="">
-      <Submenu label="Add Node"> <Item onClick={layout}>Apply Layout</Item>
-      <Item onClick={setShowGrid}>{showGridValue ? 'Hide' : 'Show'} Grid</Item></Submenu>
+      <Submenu label="Add Node">
+        <Item onClick={layout}>Apply Layout</Item>
+        <Item onClick={setShowGrid}>{showGridValue ? 'Hide' : 'Show'} Grid</Item>
+      </Submenu>
       <Item onClick={layout}>Apply Layout</Item>
       <Item onClick={setShowGrid}>{showGridValue ? 'Hide' : 'Show'} Grid</Item>
       <Item onClick={recenter}>Recenter</Item>

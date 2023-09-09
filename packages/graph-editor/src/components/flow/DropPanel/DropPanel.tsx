@@ -1,16 +1,16 @@
-import { Button, Box, Scroll, Separator, Stack, TextInput } from '@tokens-studio/ui';
+import { Button, Box, Text, Separator, Stack, TextInput, Heading, IconButton } from '@tokens-studio/ui';
 import React, { useEffect, useState } from 'react';
 import { Accordion } from '../../accordion/index.js';
 import { PanelItems, items } from '../AddNodeToolbar/PanelItems';
 import { DragItem } from '../AddNodeToolbar/DragItem';
 import { NodeEntry } from './NodeEntry.js';
 import { NodeTypes } from '@tokens-studio/graph-engine';
-import { PlusIcon, ChevronDownIcon, ChevronUpIcon } from '@iconicicons/react';
+import { PlusIcon, ChevronDownIcon, ChevronUpIcon, SearchIcon, PinTackIcon } from '@iconicicons/react';
 import { TriangleDownIcon } from '@radix-ui/react-icons';
 import { useExternalData } from '#/context/ExternalDataContext.tsx';
 
 
-export const DropPanel = () => {
+export const DropPanel = ({onTogglePin}: {onTogglePin: () => void}) => {
   const { tokenSets, loadingTokenSets } = useExternalData();
   const [panelItems, setPanelItems] = useState<PanelItems>(items)
   const [search, setSearch] = React.useState('');
@@ -40,7 +40,7 @@ export const DropPanel = () => {
 
   const accordionItems = React.useMemo(() => {
     if (loadingTokenSets) {
-      return <div>Loadng</div>;
+      return <div>Loading</div>;
     }
 
     return (
@@ -64,10 +64,12 @@ export const DropPanel = () => {
 
           return (
             <Accordion.Item value={key} key={key}>
-              <Stack direction="row" css={{}}>
-                {key.charAt(0).toUpperCase() + key.slice(1)}
-                <Box css={{color: '$fgSubtle'}}><TriangleDownIcon /></Box>
-              </Stack>
+              <Accordion.Trigger>
+                <Stack direction="row" align="center" css={{}}>
+                  <Box css={{display: 'flex', color: '$fgSubtle'}}><TriangleDownIcon /></Box>
+                  <Text css={{fontSize: '$xsmall', fontWeight: '$sansBold'}}>{key.charAt(0).toUpperCase() + key.slice(1)}</Text>
+                </Stack>
+              </Accordion.Trigger>
               <Accordion.Content>
                 <Stack direction="column" css={{ padding: 0 }} gap={1}>
                   {filteredValues}
@@ -81,17 +83,19 @@ export const DropPanel = () => {
   }, [loadingTokenSets, defaultValue, panelItems, search]);
 
   return (
-    <Box css={{position: 'fixed', top: '40px', border: '1px solid $borderMuted', borderRadius: '$medium', left: '$3', background: '$bgDefault', zIndex: 10, maxHeight: '80vh', display: 'flex', flexDirection: 'column'}} id="drop-panel">
-      <Scroll height='100%'>
-        <Stack direction="column" gap={1} css={{ paddingTop: '$4', width: '100%', paddingRight: '$3' }}>
-          <Box css={{ padding: '$1 $3' }}>
-            <TextInput placeholder="Search" value={search} onChange={onSearch} />
-          </Box>
-          <Box css={{ padding: '$2 $2' }}>
-            {accordionItems}
-          </Box>
+    <Box css={{width: '100%', background: '$bgDefault', zIndex: 10, maxHeight: '100%', display: 'flex', flexDirection: 'column'}} id="drop-panel">
+      <Stack direction="column" gap={1} css={{ paddingTop: '$4', width: '100%', overflowY: 'scroll' }}>
+        <Stack direction="column" gap={2} css={{ padding: '$1 $3' }}>
+          <Stack direction="row" justify="between" align="center">
+            <Heading>Nodes</Heading>
+            <IconButton icon={<PinTackIcon />} variant="invisible" tooltip="Pin to toolbar" onClick={onTogglePin}/>
+          </Stack>
+          <TextInput leadingVisual={<SearchIcon />} placeholder="Search" value={search} onChange={onSearch} />
         </Stack>
-      </Scroll>
+        <Box css={{ padding: '$2 $2' }}>
+          {accordionItems}
+        </Box>
+      </Stack>
     </Box>
   );
 };

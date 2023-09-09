@@ -228,7 +228,7 @@ export const Node = (props: NodeProps) => {
                   direction="row"
                   justify="between"
                   align="center"
-                  css={{ padding: '$3 $5', borderBottom: collapsed ? 'none' : '2px solid var(--nodeBorderColor, var(--colors-borderSubtle))', backgroundColor: '$bgSubtle', borderTopLeftRadius: '$medium', borderTopRightRadius: '$medium' }}
+                  css={{ padding: '$3 $5', borderBottom: collapsed ? 'none' : '2px solid var(--nodeBorderColor, var(--colors-borderSubtle))', backgroundColor: 'var(--nodeBgColor, var(--colors-bgSubtle))', borderTopLeftRadius: '$medium', borderTopRightRadius: '$medium' }}
                 >
                   <Stack direction="row" gap={2} align="center">
                     {icon && <Box css={{ color: '$fgSubtle' }}>{icon}</Box>}

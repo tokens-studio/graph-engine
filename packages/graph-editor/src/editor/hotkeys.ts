@@ -8,6 +8,7 @@ import { LayoutType } from '#/redux/models/settings.ts';
 import { useAutoLayout } from './hooks/useAutolayout';
 import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '#/redux/selectors/settings';
+import { showNodesPanelSelector } from '#/redux/selectors/ui';
 
 export const keyMap = {
   AUTO_LAYOUT: 'ctrl+alt+f',
@@ -35,6 +36,7 @@ export const keyMap = {
   TOGGLE_HELP: 'ctrl+shift+h',
   TOGGLE_THEME: 'ctrl+shift+t',
   TOGGLE_SNAP_GRID: ['command+shift+s', 'ctrl+shift+s'],
+  TOGGLE_NODES_PANE: ['n']
 };
 
 export const useHotkeys = ({ onEdgesDeleted }) => {
@@ -43,6 +45,7 @@ export const useHotkeys = ({ onEdgesDeleted }) => {
 
   const showGridValue = useSelector(showGrid);
   const snapGridValue = useSelector(snapGrid);
+  const showNodesPanel = useSelector(showNodesPanelSelector);
 
   const layout = useAutoLayout();
 
@@ -173,16 +176,23 @@ export const useHotkeys = ({ onEdgesDeleted }) => {
       TOGGLE_SNAP_GRID: () => {
         dispatch.settings.setSnapGrid(!snapGridValue);
       },
+      TOGGLE_NODES_PANE: () => {
+        console.log('TOGGLE_NODES_PANE');
+        
+        dispatch.ui.setShowNodesPanel(!showNodesPanel);
+      },
     }),
     [
       dispatch.input,
       dispatch.node,
       dispatch.settings,
+      dispatch.ui,
       layout,
       onEdgesDeleted,
       reactFlowInstance,
       showGridValue,
       snapGridValue,
+      showNodesPanel,
     ],
   );
 

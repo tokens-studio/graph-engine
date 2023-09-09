@@ -213,7 +213,7 @@ const Wrapper = () => {
             <EditorTab id="123" title="Card" />
           </LiveProvider>
           <Menubar />
-          <Stack direction="row" css={{position: 'fixed', top: '$8', left: '$3'}}>
+          {/* <Stack direction="row" css={{position: 'fixed', top: '$3', left: '$3'}}>
             <Box css={{backgroundColor: '$bgDefault', padding: '$2 $4', borderRadius: '$small', boxShadow: '$small', border: '1px solid $borderSubtle'}}>
               <Text css={{fontSize: '$xxsmall', fontWeight: '$sansMedium'}}>Main canvas</Text>
             </Box>
@@ -221,7 +221,7 @@ const Wrapper = () => {
             <Box css={{backgroundColor: '$bgDefault', padding: '$2 $4', borderRadius: '$small', boxShadow: '$small', border: '1px solid $borderSubtle'}}>
               <Text css={{fontSize: '$xxsmall', fontWeight: '$sansMedium'}}>Subresolver</Text>
             </Box>
-          </Stack>
+          </Stack> */}
         </Stack>
       </div>
     </>

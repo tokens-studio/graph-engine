@@ -44,7 +44,7 @@ import { ReduxProvider } from '../redux/index.tsx';
 import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.tsx';
 import groupNode from '../components/flow/groupNode.tsx';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
-import { Box, Tooltip } from '@tokens-studio/ui';
+import { Box, IconButton, Tooltip } from '@tokens-studio/ui';
 import { OnOutputChangeContextProvider } from '#/context/OutputContext.tsx';
 import { createNode } from './create.ts';
 import { NodeTypes } from '@tokens-studio/graph-engine';
@@ -55,10 +55,13 @@ import { EdgeContextMenu } from './edgeContextMenu.tsx';
 import { PaneContextMenu } from './paneContextMenu.tsx';
 import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '#/redux/selectors/settings.ts';
+import { showNodesPanelSelector, isPanePinnedSelector } from '#/redux/selectors/ui.ts';
 import { forceUpdate } from '#/redux/selectors/graph.ts';
 import { DropPanel } from '#/components/index.ts';
 import { ActionToolbar } from '#/components/flow/ActionToolbar.tsx';
 import { DropPanelContextMenu } from '#/components/flow/AddNodeToolbar/ContextMenu.tsx';
+import { FolderPlusIcon, LayersIcon, PinTackIcon } from '@iconicicons/react';
+import { AddNodetoolbar } from '../components/flow/AddNodeToolbar';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -95,7 +98,23 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const store = useStoreApi();
     const showGridValue = useSelector(showGrid);
     const snapGridValue = useSelector(snapGrid);
+    const showNodesPanel = useSelector(showNodesPanelSelector);
+    const isPanePinned = useSelector(isPanePinnedSelector);
     const forceUpdateValue = useSelector(forceUpdate);
+
+    const handlePinPane = () => {
+      dispatch.ui.setPanePinned(!isPanePinned);
+      dispatch.ui.setShowNodesPanel(true);
+    };
+
+    const handleUnPinPane = () => {
+      dispatch.ui.setPanePinned(!isPanePinned);
+      dispatch.ui.setShowNodesPanel(false);
+    };
+
+    const handleTogglePanel = () => {
+      dispatch.ui.setShowNodesPanel(!showNodesPanel);
+    };
 
     const [contextNode, setContextNode] = React.useState<Node | null>(null);
     const [contextEdge, setContextEdge] = React.useState<Edge | null>(null);
@@ -117,6 +136,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
     const handleContextMenu = useCallback(
       (event) => {
+        console.log('handleContextMenu', event);
+        
         show({ event });
       },
       [show],
@@ -475,10 +496,17 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
         <Box
           className="editor"
-          css={{ height: '100%', backgroundColor: '$bgCanvas' }}
+          css={{ height: '100%', backgroundColor: '$bgCanvas', display: 'flex', flexDirection: 'row' }}
           ref={reactFlowWrapper}
         >
           <ForceUpdateProvider value={forceUpdate}>
+            <Box css={{display: 'flex', flexDirection: 'row', ...(isPanePinned ? {} : { border: '1px solid $borderSubtle', boxShadow: '$small', borderRadius: '$medium', position: 'fixed', top: '$3', left: '$3', zIndex: 10})}}>
+              <Box css={{padding: '$1', backgroundColor: '$bgDefault', ...(isPanePinned ? {borderRight: '1px solid $borderMuted'} : { })}}>
+                {isPanePinned ?  <IconButton onClick={handleTogglePanel} icon={<FolderPlusIcon />} variant={showNodesPanel ? 'primary' : 'invisible'} /> : <AddNodetoolbar onTogglePin={handlePinPane} onSelectItem={handleSelectNewNodeType} />}
+                <IconButton variant="invisible" onClick={() => alert("not implemented")} icon={<LayersIcon />} />
+                </Box>
+          {showNodesPanel && isPanePinned && <Box css={{width: '240px', overflow: 'hidden', display: 'flex', flexDirection: 'column', backgroundColor: '$bgDefault', borderRight: '1px solid $borderMuted'}}><DropPanel onTogglePin={handleUnPinPane}/></Box>}
+          </Box>
             {/* @ts-ignore */}
             <ReactFlow
               fitView
@@ -524,9 +552,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 />
               )}
               <SelectedNodesToolbar />
-              <ActionToolbar onSelectItem={handleSelectNewNodeType} />
-              {showMinimap && <MiniMapStyled maskStrokeWidth={4} maskStrokeColor="#ff0000" pannable zoomStep={1} zoomable maskColor="rgb(240, 242, 243, 0.7)" nodeColor="var(--colors-borderSubtle)" />}
-              <DropPanel />
               <CustomControls position="bottom-left" />
             </ReactFlow>
           </ForceUpdateProvider>

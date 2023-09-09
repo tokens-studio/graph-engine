@@ -1,38 +1,22 @@
-import { Box, IconButton, TextInput } from '@tokens-studio/ui';
+import { Box, Heading, IconButton, Stack, TextInput } from '@tokens-studio/ui';
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { PanelItems, items } from './PanelItems.tsx';
 import { NodeTypes } from '@tokens-studio/graph-engine';
-import { PlusIcon, ChevronRightIcon } from '@iconicicons/react';
+import { PlusIcon, ChevronRightIcon, FolderPlusIcon, PinTackIcon } from '@iconicicons/react';
 import { useExternalData } from '#/context/ExternalDataContext.tsx';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { styled, keyframes } from '#/lib/stitches/stitches.config.ts';
+import { showNodesPanelSelector } from '#/redux/selectors/ui';
+import { useDispatch, useSelector } from 'react-redux';
 
-export const AddNodetoolbar: React.FC<PropsWithChildren & { onSelectItem: (item: any) => void }> = ({ children, onSelectItem }) => {
+export const AddNodetoolbar: React.FC<PropsWithChildren & { onSelectItem: (item: any) => void, onTogglePin: () => void }> = ({ children, onSelectItem, onTogglePin }) => {
   const { tokenSets, loadingTokenSets } = useExternalData();
   const [panelItems, setPanelItems] = useState<PanelItems>(items);
   const [search, setSearch] = React.useState('');
   const [defaultValue, setDefaultValue] = React.useState<string[]>(['generic']);
-  const [addNodeVisible, setAddNodeIsVisible] = useState(true);
-  const [searchVisible, setSearchVisible] = useState(false);
   const searchInputRef = React.useRef<HTMLInputElement>(null);
-
-  const handleToggleAddNodeVisible = () => {
-    if (addNodeVisible) {
-      setAddNodeIsVisible(false);
-    } else {
-      setAddNodeIsVisible(true);
-      setSearchVisible(false);
-    }
-  };
-
-  const handleToggleSearch = () => {
-    if (searchVisible) {
-      setSearchVisible(false);
-    } else {
-      setSearchVisible(true);
-      setAddNodeIsVisible(false);
-    }
-  };
+  const showNodesPanel = useSelector(showNodesPanelSelector);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (tokenSets) {
@@ -71,6 +55,9 @@ export const AddNodetoolbar: React.FC<PropsWithChildren & { onSelectItem: (item:
   );
 
   const handleOnOpenChange = (open) => {
+    console.log('open', open, searchInputRef);
+    dispatch.ui.setShowNodesPanel(open);
+    
     if (open && searchInputRef.current) {
       searchInputRef.current.focus();
     }
@@ -119,18 +106,23 @@ export const AddNodetoolbar: React.FC<PropsWithChildren & { onSelectItem: (item:
   }, [loadingTokenSets, panelItems, search, onInsertNode]);
 
   return (
-    <DropdownMenu.Root onOpenChange={handleOnOpenChange}>
+    <DropdownMenu.Root open={showNodesPanel} onOpenChange={handleOnOpenChange}>
       <DropdownMenu.Trigger asChild>
         <IconButton
           css={{ flexShrink: 0 }}
-          icon={<PlusIcon />}
+          icon={<FolderPlusIcon />}
           variant="invisible"
-          tooltip="Add new node"
+          tooltip="Add new node (alt+n)"
         />
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
-        <DropdownMenuContent sideOffset={4} className="DropdownMenuContent">
-          <Box css={{ padding: '$2' }}><TextInput ref={searchInputRef} value={search} onChange={onSearch} placeholder="Search" onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.stopPropagation()} /></Box>
+        <DropdownMenuContent side="right" sideOffset={8} className="DropdownMenuContent">
+          <Box css={{ padding: '$2' }}>
+            <Stack direction="row" justify="between" align="center">
+              <Heading size="small">Nodes</Heading>
+              <IconButton icon={<PinTackIcon />} variant="invisible" tooltip="Pin to toolbar" onClick={onTogglePin}/>
+            </Stack>
+            <TextInput ref={searchInputRef} value={search} onChange={onSearch} placeholder="Search" onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.stopPropagation()} /></Box>
           {availableNodes}
         </DropdownMenuContent>
       </DropdownMenu.Portal>

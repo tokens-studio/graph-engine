@@ -1,9 +1,9 @@
-import { Box, Button, Stack, ToggleGroup } from '@tokens-studio/ui';
+import { Box, Button, Heading, IconButton, Stack, ToggleGroup } from '@tokens-studio/ui';
 //@ts-ignore This is the correct import
 import { Preview as ComponentPreview } from '#/components/preview/index.tsx';
 
 import { LiveEditor, LiveError } from 'react-live';
-import { ChevronDownIcon, ChevronUpIcon, CodeIcon, FileIcon, VideoIcon } from '@iconicicons/react';
+import { ChevronDownIcon, ChevronUpIcon, CodeIcon, FileIcon, MinusIcon, VideoIcon } from '@iconicicons/react';
 import { useCallback, useState } from 'react';
 
 export const Preview = ({ codeRef}) => {
@@ -16,15 +16,14 @@ export const Preview = ({ codeRef}) => {
 
   return (
     <Box css={{position: 'fixed', top: '$3', right: '$3'}}>
-      <Stack direction="column" css={{ maxHeight: '80vh', maxWidth: '40vw', backgroundColor: '$bgDefault', border: '1px solid $borderSubtle', borderRadius: isVisible ? '12px' : '$small', overflow: 'hidden', boxShadow: '$small' }}>
-        <Stack direction="row" justify="between" align="center" css={{ borderBottom: isVisible ? '1px solid $borderSubtle' : '1px solid transparent', padding: isVisible ? '$3' : 0 }}>
-          {isVisible && <ToggleGroup type="single" value={visibleTab} onValueChange={setVisibleTab}>
+      <Stack direction="column" css={{ maxHeight: '80vh', maxWidth: '40vw', backgroundColor: '$bgDefault', border: '1px solid $borderMuted', borderRadius: isVisible ? '$small' : '$small', overflow: 'hidden', boxShadow: '$small' }}>
+        <Stack direction="row" justify="between" align="center" css={{ borderBottom: isVisible ? '1px solid $borderSubtle' : '1px solid transparent', padding: isVisible ? '$2' : 0 }}>
+          {isVisible ? <Stack gap={1} css={{width:'100%'}} direction="row" align="center" justify="between"><Heading>Preview</Heading><Stack gap={2}><ToggleGroup type="single" value={visibleTab} onValueChange={setVisibleTab}>
             <ToggleGroup.Item value="preview"><VideoIcon /></ToggleGroup.Item>
-            <ToggleGroup.Item value="editor"><FileIcon /></ToggleGroup.Item>
-          </ToggleGroup>}
-          <Button onClick={handleToggleVisible} icon={isVisible ? <ChevronDownIcon /> : <ChevronUpIcon />} variant="invisible">
+            <ToggleGroup.Item value="editor"><CodeIcon /></ToggleGroup.Item>
+          </ToggleGroup><IconButton variant="invisible" icon={<MinusIcon />} onClick={handleToggleVisible} /></Stack></Stack> : <Button css={{width: '100%'}} onClick={handleToggleVisible}  variant="invisible">
               Preview
-            </Button>
+            </Button>}
         </Stack>
         {isVisible && <Box css={{overflowY: 'scroll', flexGrow: 1, paddingTop: '$2'}}>
           <Box css={{ width: '100%', display: visibleTab === "preview" ? 'flex' : 'none' }}><ComponentPreview /></Box>

@@ -15,7 +15,6 @@ const Trigger = styled(AccordionPrimitive.Trigger, {
   userSelect: 'none',
   outline: 'none',
   color: '$fgDefault',
-  padding: '$5 $6',
   border: 'none',
   background: 'transparent',
   cursor: 'pointer',
