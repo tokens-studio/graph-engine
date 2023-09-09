@@ -413,75 +413,117 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       onEdgesDeleted,
     });
 
-    return (
-      <>
-        <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
-          <Box
-            //@ts-ignore
-            id={props.id}
-            className="editor"
-            css={{ height: '100%', background: '$bgCanvas' }}
-            ref={reactFlowWrapper}
-          >
-            <ForceUpdateProvider value={forceUpdateValue}>
-              <ReactFlow
-                fitView
-                nodes={nodes}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onEdgeDoubleClick={onEdgeDblClick}
-                onEdgesDelete={onEdgesDeleted}
-                edges={edges}
-                elevateNodesOnSelect={false}
-                onNodeDragStop={onNodeDragStop}
-                snapToGrid={snapGridValue}
-                edgeTypes={edgeTypes}
-                nodeTypes={fullNodeTypes}
-                snapGrid={snapGridCoords}
-                onNodeDrag={onNodeDrag}
-                onConnect={onConnect}
-                onDrop={onDrop}
-                onConnectEnd={onConnectEnd}
-                selectNodesOnDrag={false}
-                defaultEdgeOptions={defaultEdgeOptions}
-                panOnScroll={true}
-                // panOnDrag={panOnDrag}
-                onPaneContextMenu={handleContextMenu}
-                onEdgeContextMenu={handleEdgeContextMenu}
-                onNodeContextMenu={handleNodeContextMenu}
-                selectionMode={SelectionMode.Partial}
-                onDragOver={onDragOver}
-                selectionOnDrag={true}
-                minZoom={-Infinity}
-                defaultViewport={defaultViewport}
-                //This causes weirdness with the minimap
-                // onlyRenderVisibleElements={true}
-                maxZoom={Infinity}
-                proOptions={proOptions}
-              >
-                <SelectedNodesToolbar />
-                <CustomControls position="top-right" />
-                {showMinimap && <MiniMapStyled />}
-                {showGridValue && (
-                  <Background
-                    color="#aaa"
-                    gap={16}
-                    variant={BackgroundVariant.Dots}
-                  />
-                )}
-              </ReactFlow>
-            </ForceUpdateProvider>
-          </Box>
-        </GlobalHotKeys>
+    // trigger fitView whenever the loaded example changes
+    useEffect(() => {
+      if (props.loadedExample) {
+        reactFlowInstance.fitView();
+      }
+    }, [props.loadedExample, reactFlowInstance]);
 
-        <PaneContextMenu id={props.id + '_pane'} />
-        <NodeContextMenu id={props.id + '_node'} node={contextNode} />
-        <EdgeContextMenu id={props.id + '_edge'} edge={contextEdge} />
-        <DropPanelContextMenu
-          id={props.id + '_picker'}
-          position={dropPanelPosition}
-        />
-      </>
+    const handleSelectNewNodeType = (nodeRequest) => {
+      const nodes = reactFlowInstance.getNodes();
+
+      // Couldn't determine the type
+      if (!nodeRequest.type) {
+        return;
+      }
+      if (
+        nodeRequest.type == NodeTypes.INPUT &&
+        nodes.some((x) => x.type == NodeTypes.INPUT)
+      ) {
+        alert('Only one input node allowed');
+        return null;
+      }
+
+      if (
+        nodeRequest.type == NodeTypes.OUTPUT &&
+        nodes.some((x) => x.type == NodeTypes.OUTPUT)
+      ) {
+        alert('Only one output node allowed');
+        return null;
+      }
+
+
+      console.log('reactFlowInstance', reactFlowInstance.viewportInitialized);
+
+
+      // set position to center of the screen
+      const bounds = reactFlowWrapper!.current!.getBoundingClientRect();
+
+      // set x y coordinates in instance
+      const position = reactFlowInstance.project({
+        x: bounds.width / 2,
+        y: bounds.height / 2,
+      });
+
+      console.log('position', position);
+
+      const newNode = createNode({
+        nodeRequest,
+        stateInitializer,
+        dispatch,
+        position,
+      })
+
+      reactFlowInstance.addNodes(newNode);
+    };
+
+    return (
+      <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
+        <div
+          className="editor"
+          style={{ height: '100%' }}
+          ref={reactFlowWrapper}
+        >
+          <ForceUpdateProvider value={forceUpdate}>
+            {/* @ts-ignore */}
+            <ReactFlow
+              ref={flowRef}
+              nodes={nodes}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              onEdgeDoubleClick={onEdgeDblClick}
+              onEdgesDelete={onEdgesDeleted}
+              edges={edges}
+              elevateNodesOnSelect={false}
+              onNodeDragStop={onNodeDragStop}
+              snapToGrid={snapGrid}
+              edgeTypes={edgeTypes}
+              nodeTypes={fullNodeTypes}
+              snapGrid={snapGridCoords}
+              onNodeDrag={onNodeDrag}
+              onConnect={onConnect}
+              onDrop={onDrop}
+              selectNodesOnDrag={false}
+              defaultEdgeOptions={defaultEdgeOptions}
+              panOnScroll={true}
+              panOnDrag={panOnDrag}
+              selectionMode={SelectionMode.Partial}
+              onDragOver={onDragOver}
+              selectionOnDrag={true}
+              minZoom={-Infinity}
+              defaultViewport={defaultViewport}
+              //This causes weirdness with the minimap
+              // onlyRenderVisibleElements={true}
+              maxZoom={Infinity}
+              proOptions={proOptions}
+            >
+              {showGrid && (
+                <Background
+                  color="var(--colors-borderMuted)"
+                  gap={16}
+                  size={2}
+                  variant={BackgroundVariant.Dots}
+                />
+              )}
+              <SelectedNodesToolbar />
+              <ActionToolbar onSelectItem={handleSelectNewNodeType} />
+              {showMinimap && <MiniMapStyled maskStrokeWidth={4} maskStrokeColor="#ff0000" pannable zoomStep={1} zoomable maskColor="rgb(240, 242, 243, 0.7)" nodeColor="var(--colors-borderSubtle)" />}
+              <CustomControls position="bottom-left" />
+            </ReactFlow>
+          </ForceUpdateProvider>
+        </div>
+      </GlobalHotKeys>
     );
   },
 );

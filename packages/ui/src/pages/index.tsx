@@ -16,7 +16,7 @@ import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 import { themes } from 'prism-react-renderer';
 
 //import the example
-import example from '#/examples/card.json';
+import example from '#/examples/scale.json';
 
 import { Cross1Icon } from '@radix-ui/react-icons';
 import { useTheme } from '#/hooks/useTheme.tsx';
@@ -263,5 +263,20 @@ const Wrapper = () => {
     </>
   );
 };
+
+{/* <Box css={{ position: 'fixed', top: '$3', left: '$3', zIndex: 1 }}>
+<TokensStudioLogo style={{ height: '3rem', width: 'auto' }} />
+</Box>
+<Toolbar codeRef={ref} refs={refs} setTheCode={setTheCode} />
+<Box
+value={currentTab?.id}
+onValueChange={onTabChange}
+style={{
+  display: 'flex',
+  flexDirection: 'row',
+  flex: 1,
+  background: '$bgCanvas',
+  position: 'relative',
+}} */}
 
 export default Wrapper;

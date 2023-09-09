@@ -7,11 +7,7 @@ import { useExternalData } from '#/context/ExternalDataContext.tsx';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { styled, keyframes } from '#/lib/stitches/stitches.config.ts';
 
-export interface IDropPanel extends React.HTMLAttributes<HTMLDivElement> {
-  show: boolean;
-}
-
-export const DropPanel = (props: IDropPanel) => {
+export const DropPanel: React.FC<PropsWithChildren & { onSelectItem: (item: any) => void }> = ({ children, onSelectItem }) => {
   const { tokenSets, loadingTokenSets } = useExternalData();
   const [panelItems, setPanelItems] = useState<PanelItems>(items);
   const [search, setSearch] = React.useState('');
@@ -67,15 +63,12 @@ export const DropPanel = (props: IDropPanel) => {
     }
   };
 
-  const onInsertNode = React.useCallback((event, type, data) => {
-    event.dataTransfer.setData(
-      'application/reactflow',
-      JSON.stringify({
-        type,
-        data,
-      }),
-    );
-  }, []);
+  const onInsertNode = React.useCallback(
+    (type) => {
+      onSelectItem({ type })
+    },
+    [onSelectItem],
+  );
 
   const handleOnOpenChange = (open) => {
     if (open && searchInputRef.current) {
@@ -89,38 +82,40 @@ export const DropPanel = (props: IDropPanel) => {
     }
 
     return Object.entries(panelItems).map(([key, values]) => {
-      const filteredValues = values
-        .filter((item) =>
-          item.text.toLowerCase().includes(search.toLowerCase()),
-        )
-        .map((item) => (
-          <DropdownMenuItem
-            key={item.text}
-            onSelect={(event) => onInsertNode(event, item.type, item.data)}
-          >
-            <DropdownMenuItemIcon>{item.icon}</DropdownMenuItemIcon>
-            {item.text}
-          </DropdownMenuItem>
-        ));
+          const filteredValues = values
+            .filter((item) =>
+              item.text.toLowerCase().includes(search.toLowerCase()),
+            )
+            .map((item) => (
+              <DropdownMenuItem
+                key={item.text}
+                onSelect={() => onInsertNode(item.type)}
+              >
+                <DropdownMenuItemIcon>{item.icon}</DropdownMenuItemIcon>
+                {item.text}
+              </DropdownMenuItem>
+            ));
 
       if (filteredValues.length === 0) return null;
 
-      return (
-        <DropdownMenu.Sub>
-          <DropdownMenuSubTrigger>
-            {key.charAt(0).toUpperCase() + key.slice(1)}
-            <RightSlot>
-              <ChevronRightIcon />
-            </RightSlot>
-          </DropdownMenuSubTrigger>
-          <DropdownMenu.Portal>
-            <DropdownMenuSubContent className="DropdownMenuContent">
-              {filteredValues}
-            </DropdownMenuSubContent>
-          </DropdownMenu.Portal>
-        </DropdownMenu.Sub>
-      );
-    });
+          return (
+            <DropdownMenu.Sub>
+              <DropdownMenuSubTrigger>
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+                <RightSlot>
+                  <ChevronRightIcon />
+                </RightSlot>
+
+              </DropdownMenuSubTrigger>
+              <DropdownMenu.Portal>
+                <DropdownMenuSubContent className="DropdownMenuContent">
+                  {filteredValues}
+                </DropdownMenuSubContent>
+              </DropdownMenu.Portal>
+            </DropdownMenu.Sub>
+      )
+    }
+    );
   }, [loadingTokenSets, panelItems, search, onInsertNode]);
 
   return (
@@ -139,14 +134,7 @@ export const DropPanel = (props: IDropPanel) => {
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenuContent sideOffset={4} className="DropdownMenuContent">
-          <Box css={{ padding: '$2' }}>
-            <TextInput
-              ref={searchInputRef}
-              value={search}
-              onChange={onSearch}
-              placeholder="Search"
-            />
-          </Box>
+          <Box css={{ padding: '$2' }}><TextInput ref={searchInputRef} value={search} onChange={onSearch} placeholder="Search" onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.stopPropagation()} /></Box>
           {availableNodes}
         </DropdownMenuContent>
       </DropdownMenu.Portal>
@@ -247,3 +235,4 @@ const DropdownMenuSubTrigger = styled(DropdownMenu.SubTrigger, {
   },
   ...itemStyles,
 });
+

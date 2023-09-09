@@ -6,7 +6,13 @@ import { Settings } from '../Settings';
 import { DropPanel } from './DropPanel';
 
 export const ControlsStyled = styled(Controls, {
-  color: '$fgDefault',
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '$1',
+  backgroundColor: '$bgDefault',
+  borderRadius: '$medium',
+  boxShadow: '$small',
+  border: '1px solid $borderSubtle',
   button: {
     width: 16,
     height: 16,
