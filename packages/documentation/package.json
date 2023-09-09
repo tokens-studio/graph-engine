@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.2",
-    "next": "^13.1.2",
+    "next": "^13.4.19",
     "nextra": "^2.7.1",
     "nextra-theme-docs": "^2.7.1",
     "postcss": "^8.4.25",
