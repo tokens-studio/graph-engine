@@ -1,5 +1,5 @@
 import { Box, IconButton, TextInput } from '@tokens-studio/ui';
-import React, { useEffect, useState } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { PanelItems, items } from './PanelItems.tsx';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import { PlusIcon, ChevronRightIcon } from '@iconicicons/react';
@@ -7,7 +7,7 @@ import { useExternalData } from '#/context/ExternalDataContext.tsx';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { styled, keyframes } from '#/lib/stitches/stitches.config.ts';
 
-export const DropPanel: React.FC<PropsWithChildren & { onSelectItem: (item: any) => void }> = ({ children, onSelectItem }) => {
+export const AddNodetoolbar: React.FC<PropsWithChildren & { onSelectItem: (item: any) => void }> = ({ children, onSelectItem }) => {
   const { tokenSets, loadingTokenSets } = useExternalData();
   const [panelItems, setPanelItems] = useState<PanelItems>(items);
   const [search, setSearch] = React.useState('');
@@ -121,16 +121,12 @@ export const DropPanel: React.FC<PropsWithChildren & { onSelectItem: (item: any)
   return (
     <DropdownMenu.Root onOpenChange={handleOnOpenChange}>
       <DropdownMenu.Trigger asChild>
-        {props.children ? (
-          props.children
-        ) : (
-          <IconButton
-            css={{ flexShrink: 0 }}
-            icon={<PlusIcon />}
-            variant="invisible"
-            tooltip="Add new node"
-          />
-        )}
+        <IconButton
+          css={{ flexShrink: 0 }}
+          icon={<PlusIcon />}
+          variant="invisible"
+          tooltip="Add new node"
+        />
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenuContent sideOffset={4} className="DropdownMenuContent">

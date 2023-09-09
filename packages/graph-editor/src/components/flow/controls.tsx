@@ -3,12 +3,13 @@ import { MiniMap } from '@reactflow/minimap';
 import { styled } from '#/lib/stitches/index.ts';
 import React from 'react';
 import { Settings } from '../Settings';
-import { DropPanel } from './DropPanel';
+import { DropPanel } from './AddNodeToolbar';
 
 export const ControlsStyled = styled(Controls, {
   display: 'flex',
-  flexDirection: 'column',
+  flexDirection: 'row',
   padding: '$1',
+  color: '$fgDefault',
   backgroundColor: '$bgDefault',
   borderRadius: '$medium',
   boxShadow: '$small',

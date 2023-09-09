@@ -1,6 +1,5 @@
-import { IconButton, Stack, Text } from '@tokens-studio/ui';
+import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
 import { DockLayout, LayoutData, TabGroup } from 'rc-dock';
-import { Editor, DropPanel } from '@tokens-studio/graph-editor';
 import { LiveProvider } from 'react-live';
 import { code, scope } from '#/components/preview/scope.tsx';
 import { useDispatch } from '#/hooks/index.ts';
@@ -22,9 +21,10 @@ import { Cross1Icon } from '@radix-ui/react-icons';
 import { useTheme } from '#/hooks/useTheme.tsx';
 import { useJourney } from '#/journeys/basic.tsx';
 import { JoyrideTooltip } from '#/components/joyride/tooltip.tsx';
-import { CodeEditor, Preview } from '#/components/Preview.tsx';
+import { Preview } from '#/components/Preview.tsx';
 import {
   ArrowUpRightIcon,
+  ChevronRightIcon,
   GridMasonryIcon,
   MaximizeIcon,
   MinimizeIcon,
@@ -32,6 +32,8 @@ import {
 import { Menubar } from '#/components/editorMenu/index.tsx';
 import { EditorRefs } from '#/service/refs.ts';
 import { useRegisterRef } from '#/hooks/ref.ts';
+import { TokensStudioLogo } from '#/components/TokensStudioLogo.tsx';
+import { EditorTab } from '#/components/editor/index.tsx';
 
 const DockButton = (rest) => {
   return (
@@ -117,7 +119,6 @@ const Wrapper = () => {
   const dispatch = useDispatch();
   const showJourney = useSelector(showJourneySelector);
   const theme = useTheme();
-  const [, setCodeRef] = useRegisterRef('codeEditor');
   const [, setDockRef] = useRegisterRef<DockLayout>('dock');
 
   const defaultLayout: LayoutData = {
@@ -128,17 +129,6 @@ const Wrapper = () => {
           mode: 'horizontal',
           children: [
             {
-              size: 300,
-              tabs: [
-                {
-                  group: 'popout',
-                  id: 'tab2',
-                  title: 'Nodes',
-                  content: <DropPanel id="drop-panel" />,
-                },
-              ],
-            },
-            {
               id: 'graphs',
               size: 1000,
               group: 'graph',
@@ -147,38 +137,7 @@ const Wrapper = () => {
               tabs: [],
             },
           ],
-        },
-        {
-          mode: 'horizontal',
-          children: [
-            {
-              tabs: [
-                {
-                  group: 'popout',
-                  id: 'tab3',
-                  title: 'Preview',
-                  content: <Preview />,
-                },
-              ],
-            },
-            {
-              tabs: [
-                {
-                  group: 'popout',
-                  id: 'tab4',
-                  title: 'Code Editor',
-                  content: (
-                    <CodeEditor
-                      id="code-editor"
-                      style={{ height: '100%', width: '100%' }}
-                      codeRef={setCodeRef}
-                    />
-                  ),
-                },
-              ],
-            },
-          ],
-        },
+        }
       ],
     },
   };
@@ -242,7 +201,7 @@ const Wrapper = () => {
           direction="column"
           css={{ height: '100%', background: '$bgSurface' }}
         >
-          <Menubar />
+          
           <LiveProvider
             code={theCode}
             scope={scope}
@@ -251,13 +210,18 @@ const Wrapper = () => {
             enableTypeScript={true}
             language="jsx"
           >
-            <DockLayout
-              defaultLayout={defaultLayout}
-              groups={groups}
-              ref={setDockRef}
-              style={{ height: '100%' }}
-            />
+            <EditorTab id="123" title="Card" />
           </LiveProvider>
+          <Menubar />
+          <Stack direction="row" css={{position: 'fixed', top: '$8', left: '$3'}}>
+            <Box css={{backgroundColor: '$bgDefault', padding: '$2 $4', borderRadius: '$small', boxShadow: '$small', border: '1px solid $borderSubtle'}}>
+              <Text css={{fontSize: '$xxsmall', fontWeight: '$sansMedium'}}>Main canvas</Text>
+            </Box>
+            <Text css={{color: '$fgSubtle'}}><ChevronRightIcon /></Text>
+            <Box css={{backgroundColor: '$bgDefault', padding: '$2 $4', borderRadius: '$small', boxShadow: '$small', border: '1px solid $borderSubtle'}}>
+              <Text css={{fontSize: '$xxsmall', fontWeight: '$sansMedium'}}>Subresolver</Text>
+            </Box>
+          </Stack>
         </Stack>
       </div>
     </>

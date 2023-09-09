@@ -18,14 +18,14 @@ import {
   ImageIcon,
   PlusIcon,
 } from '@radix-ui/react-icons';
-import icons from "../icons";
+import icons from "../icons.tsx";
 import { BoxIcon } from "@iconicicons/react";
 
 import { flatten } from '#/utils/index.ts';
 import { ChevronDownIcon, ChevronUpIcon, CloseIcon, FilePlusIcon, FolderPlusIcon, KeyIcon, PlusCircleIcon } from '@iconicicons/react';
 import { StyledAccordingTrigger } from './StyledAccordionTrigger.tsx';
 import { DragItem } from './DragItem.tsx';
-import { NodeEntry } from './NodeEntry.tsx';
+import { NodeEntry } from '../DropPanel/NodeEntry.tsx';
 import { Accordion } from '#/components/accordion/index.tsx';
 
 //@ts-ignore
@@ -494,7 +494,7 @@ const DropPanel = () => {
                     <Separator orientation="horizontal" />
                   </StyledAccordingTrigger>
                   <Accordion.Content>
-                    <EntryGroup>{vals}</EntryGroup>
+                    {vals}
                   </Accordion.Content>
                 </Accordion.Item>
               );

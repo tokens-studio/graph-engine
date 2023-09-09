@@ -25,8 +25,8 @@ export const DragItem = ({ data, type, children }: DragItemProps) => {
   );
 
   return (
-    <DropdownMenuItem onDragStart={onDragStart} draggable>
+    <button type="button" onDragStart={onDragStart} draggable>
       {children}
-    </DropdownMenuItem>
+    </button>
   );
 };

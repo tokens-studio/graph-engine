@@ -9,5 +9,5 @@ export interface IDropPanelContextMenuProps {
 
 export const DropPanelContextMenu = (props: IDropPanelContextMenuProps) => {
   const { id } = props;
-  return <Menu id={id}></Menu>;
+  return <Menu id={id}>foo</Menu>;
 };

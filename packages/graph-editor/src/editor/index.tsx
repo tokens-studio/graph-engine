@@ -35,6 +35,7 @@ import CustomEdge from '../components/flow/edges/edge.tsx';
 import React, {
   MouseEvent,
   useCallback,
+  useEffect,
   useImperativeHandle,
   useRef,
 } from 'react';
@@ -56,7 +57,8 @@ import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '#/redux/selectors/settings.ts';
 import { forceUpdate } from '#/redux/selectors/graph.ts';
 import { DropPanel } from '#/components/index.ts';
-import { DropPanelContextMenu } from '#/components/flow/DropPanel/ContextMenu.tsx';
+import { ActionToolbar } from '#/components/flow/ActionToolbar.tsx';
+import { DropPanelContextMenu } from '#/components/flow/AddNodeToolbar/ContextMenu.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -413,12 +415,12 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       onEdgesDeleted,
     });
 
-    // trigger fitView whenever the loaded example changes
-    useEffect(() => {
-      if (props.loadedExample) {
-        reactFlowInstance.fitView();
-      }
-    }, [props.loadedExample, reactFlowInstance]);
+    // // trigger fitView whenever the loaded example changes
+    // useEffect(() => {
+    //   if (props.loadedExample) {
+    //     reactFlowInstance.fitView();
+    //   }
+    // }, [props.loadedExample, reactFlowInstance]);
 
     const handleSelectNewNodeType = (nodeRequest) => {
       const nodes = reactFlowInstance.getNodes();
@@ -469,16 +471,17 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     };
 
     return (
+      <>
       <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
-        <div
+        <Box
           className="editor"
-          style={{ height: '100%' }}
+          css={{ height: '100%', backgroundColor: '$bgCanvas' }}
           ref={reactFlowWrapper}
         >
           <ForceUpdateProvider value={forceUpdate}>
             {/* @ts-ignore */}
             <ReactFlow
-              ref={flowRef}
+              fitView
               nodes={nodes}
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
@@ -487,17 +490,21 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
               edges={edges}
               elevateNodesOnSelect={false}
               onNodeDragStop={onNodeDragStop}
-              snapToGrid={snapGrid}
+              snapToGrid={snapGridValue}
               edgeTypes={edgeTypes}
               nodeTypes={fullNodeTypes}
               snapGrid={snapGridCoords}
               onNodeDrag={onNodeDrag}
               onConnect={onConnect}
               onDrop={onDrop}
+              onConnectEnd={onConnectEnd}
               selectNodesOnDrag={false}
               defaultEdgeOptions={defaultEdgeOptions}
               panOnScroll={true}
-              panOnDrag={panOnDrag}
+              // panOnDrag={panOnDrag}
+              onPaneContextMenu={handleContextMenu}
+              onEdgeContextMenu={handleEdgeContextMenu}
+              onNodeContextMenu={handleNodeContextMenu}
               selectionMode={SelectionMode.Partial}
               onDragOver={onDragOver}
               selectionOnDrag={true}
@@ -508,7 +515,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
               maxZoom={Infinity}
               proOptions={proOptions}
             >
-              {showGrid && (
+              {showGridValue && (
                 <Background
                   color="var(--colors-borderMuted)"
                   gap={16}
@@ -519,11 +526,21 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
               <SelectedNodesToolbar />
               <ActionToolbar onSelectItem={handleSelectNewNodeType} />
               {showMinimap && <MiniMapStyled maskStrokeWidth={4} maskStrokeColor="#ff0000" pannable zoomStep={1} zoomable maskColor="rgb(240, 242, 243, 0.7)" nodeColor="var(--colors-borderSubtle)" />}
+              <DropPanel />
               <CustomControls position="bottom-left" />
             </ReactFlow>
           </ForceUpdateProvider>
-        </div>
+        </Box>
       </GlobalHotKeys>
+        <PaneContextMenu id={props.id + '_pane'} />
+        <NodeContextMenu id={props.id + '_node'} node={contextNode} />
+        <EdgeContextMenu id={props.id + '_edge'} edge={contextEdge} />
+        <DropPanelContextMenu
+          id={props.id + '_picker'}
+          position={dropPanelPosition}
+        />
+
+        </>
     );
   },
 );

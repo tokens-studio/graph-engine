@@ -9,7 +9,7 @@ import {
 } from '@iconicicons/react';
 import SlackIcon from '#/assets/svgs/slack.svg';
 import YoutubeIcon from '#/assets/svgs/youtube.svg';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { currentTab as currentTabSelector } from '#/redux/selectors/index.ts';
 import { useDispatch } from '#/hooks/useDispatch.ts';
@@ -211,124 +211,21 @@ export const Menubar = () => {
     );
   }, [dispatch.graph, dockRef]);
 
+  // on mount call onNewGraph
+  useEffect(() => {
+    onNewGraph();
+  }, [onNewGraph]);
+
   return (
-    <Stack css={{ padding: '0 $3' }} justify="between" align="center">
-      <Root>
-        <Link href="https://tokens.studio">
-          <Logo />
-        </Link>
-        <MenubarPrimitive.Menu>
-          <Trigger>File</Trigger>
-          <MenubarPrimitive.Portal>
-            <Content align="start" sideOffset={5} alignOffset={-3}>
-              <Item onClick={onNewGraph}>New Graph</Item>
-              <Item disabled={!currentTab} onClick={onLoad}>
-                Open{' '}
-                <RightSlot>
-                  <FolderIcon />
-                </RightSlot>
-              </Item>
-              <Item onClick={onSave} disabled={!currentTab}>
-                Save{' '}
-                <RightSlot>
-                  <FloppyDiscIcon />
-                </RightSlot>
-              </Item>
-              <Seperator />
-              {/* <MenubarPrimitive.Sub>
-                                <SubTrigger >
-                                    Share
-                                    <RightSlot>
-                                        <ChevronRightIcon />
-                                    </RightSlot>
-                                </SubTrigger>
-                                <MenubarPrimitive.Portal>
-                                    <SubContent alignOffset={-5}>
-                                        <Item >Email Link</Item>
-                                        <Item >Messages</Item>
-                                        <Item >Notes</Item>
-                                    </SubContent>
-                                </MenubarPrimitive.Portal>
-                            </MenubarPrimitive.Sub> */}
-              <Seperator />
-              <Item onClick={onPrint}>Print</Item>
-            </Content>
-          </MenubarPrimitive.Portal>
-        </MenubarPrimitive.Menu>
-
-        {/* <MenubarPrimitive.Menu>
-                    <Trigger >Edit</Trigger>
-                    <MenubarPrimitive.Portal>
-                        <Content align="start" sideOffset={5} alignOffset={-3}>
-                            <Item >
-                                Undo <RightSlot>⌘ Z</RightSlot>
-                            </Item>
-                            <Item >
-                                Redo <RightSlot>⇧ ⌘ Z</RightSlot>
-                            </Item>
-                            <Seperator />
-                            <MenubarPrimitive.Sub>
-                                <SubTrigger >
-                                    Find
-                                    <RightSlot>
-                                        <ChevronRightIcon />
-                                    </RightSlot>
-                                </SubTrigger>
-
-                                <MenubarPrimitive.Portal>
-                                    <SubContent alignOffset={-5}>
-                                        <Item >Search the web…</Item>
-                                        <Seperator />
-                                        <Item >Find…</Item>
-                                        <Item >Find Next</Item>
-                                        <Item >Find Previous</Item>
-                                    </SubContent>
-                                </MenubarPrimitive.Portal>
-                            </MenubarPrimitive.Sub>
-                            <Seperator />
-                            <Item >Cut</Item>
-                            <Item >Copy</Item>
-                            <Item >Paste</Item>
-                        </Content>
-                    </MenubarPrimitive.Portal>
-                </MenubarPrimitive.Menu>
- */}
-
-        <MenubarPrimitive.Menu>
-          <Trigger id="more-help">Help</Trigger>
-          <MenubarPrimitive.Portal>
-            <Content align="start" sideOffset={5} alignOffset={-3}>
-              <Link href="https://docs.graph.tokens.studio/">
-                <Item>Documentation</Item>
-              </Link>
-              <Seperator />
-              <Link href="https://www.youtube.com/@TokensStudio">
-                <Item>
-                  Youtube{' '}
-                  <RightSlot>
-                    <YoutubeIcon />
-                  </RightSlot>
-                </Item>
-              </Link>
-              <Link href="https://tokens.studio//slack">
-                <Item>
-                  Slack{' '}
-                  <RightSlot>
-                    <SlackIcon />
-                  </RightSlot>
-                </Item>
-              </Link>
-            </Content>
-          </MenubarPrimitive.Portal>
-        </MenubarPrimitive.Menu>
-      </Root>
-
+    <Stack direction="row" gap={2} css={{ position: 'fixed', top: '$3', left: '$3', zIndex: 1 }}>
+      <IconButton variant="invisible" size="small" icon={<FolderIcon />} onClick={onLoad} disabled={!currentTab} />
+      <IconButton variant="invisible" size="small" icon={<FloppyDiscIcon />} onClick={onSave} disabled={!currentTab} />
       <IconButton
         variant="invisible"
         size="small"
         icon={theme === 'light' ? <MoonIcon /> : <SunIcon />}
         onClick={toggleTheme}
-      ></IconButton>
+      />
     </Stack>
   );
 };
