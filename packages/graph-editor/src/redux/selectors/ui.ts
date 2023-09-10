@@ -5,4 +5,4 @@ export const isSidesheetVisible = createSelector(ui, (state) => state.isSideshee
 
 export const showNodesPanelSelector = createSelector(ui, (state) => state.showNodesPanel);
 
-export const isPanePinnedSelector = createSelector(ui, (state) => state.isPanePinned);
+export const showNodesDropdownSelector = createSelector(ui, (state) => state.showNodesDropdown);

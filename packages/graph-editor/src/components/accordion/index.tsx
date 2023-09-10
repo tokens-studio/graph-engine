@@ -20,7 +20,7 @@ const Trigger = styled(AccordionPrimitive.Trigger, {
   cursor: 'pointer',
 
   '&:hover': {
-    background: '$bgSurface',
+    background: '$bgSubtle',
   },
 
   '&:focus-visible': {

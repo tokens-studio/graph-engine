@@ -36,7 +36,8 @@ export const keyMap = {
   TOGGLE_HELP: 'ctrl+shift+h',
   TOGGLE_THEME: 'ctrl+shift+t',
   TOGGLE_SNAP_GRID: ['command+shift+s', 'ctrl+shift+s'],
-  TOGGLE_NODES_PANE: ['n']
+  TOGGLE_NODES_PANE: ['n'],
+  TOGGLE_NODES_DROPDOWN: ['b']
 };
 
 export const useHotkeys = ({ onEdgesDeleted }) => {
@@ -176,10 +177,13 @@ export const useHotkeys = ({ onEdgesDeleted }) => {
       TOGGLE_SNAP_GRID: () => {
         dispatch.settings.setSnapGrid(!snapGridValue);
       },
-      TOGGLE_NODES_PANE: () => {
-        console.log('TOGGLE_NODES_PANE');
-        
+      TOGGLE_NODES_PANE: () => {        
         dispatch.ui.setShowNodesPanel(!showNodesPanel);
+      },
+      TOGGLE_NODES_DROPDOWN: () => {        
+        // TODO: This should trigger on the position of the user's cursor, so that a user could just press `b` and start typing the name of the node the want. Could be a power user feature where users would just see their most used at the top and be quite fast.
+        // Similar to Figma's Shift + I where you can insert components by typing their name.
+        dispatch.ui.setShowNodesDropdown(true);
       },
     }),
     [

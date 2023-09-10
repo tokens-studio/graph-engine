@@ -4,14 +4,14 @@ import { createModel } from '@rematch/core';
 export interface UIState {
   isSidesheetVisible: boolean;
   showNodesPanel: boolean;
-  isPanePinned: boolean;
+  showNodesDropdown: boolean;
 }
 
 export const uiState = createModel<RootModel>()({
   state: {
     isSidesheetVisible: true,
     showNodesPanel: false,
-    isPanePinned: true,
+    showNodesDropdown: false,
   } as UIState,
   reducers: {
    setSidesheetVisible(state, isSidesheetVisible: boolean) {
@@ -26,11 +26,11 @@ export const uiState = createModel<RootModel>()({
         showNodesPanel,
       };
     },
-    setPanePinned(state, isPanePinned: boolean) {
+    setShowNodesDropdown(state, showNodesDropdown: boolean) {
       return {
         ...state,
-        isPanePinned,
+        showNodesDropdown,
       };
-    }
+    },
   }
 });

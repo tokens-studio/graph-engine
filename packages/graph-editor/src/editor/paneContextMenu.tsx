@@ -11,7 +11,7 @@ import { useAutoLayout } from './hooks/useAutolayout';
 import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '#/redux/selectors/settings';
 import { useDispatch } from '#/hooks';
-import { ContextMenuNodes } from '#/components/flow/AddNodeToolbar/AddNodesContextMenu';
+import { ContextMenuNodes } from '#/components/flow/AddNodeDropdown/AddNodesContextMenu';
 
 export interface IPaneContextMenu {
   id: string;

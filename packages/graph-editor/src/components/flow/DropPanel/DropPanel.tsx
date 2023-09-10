@@ -1,13 +1,13 @@
 import { Button, Box, Text, Separator, Stack, TextInput, Heading, IconButton } from '@tokens-studio/ui';
 import React, { useEffect, useState } from 'react';
 import { Accordion } from '../../accordion/index.js';
-import { PanelItems, items } from '../AddNodeToolbar/PanelItems';
-import { DragItem } from '../AddNodeToolbar/DragItem';
-import { NodeEntry } from './NodeEntry.js';
+import { PanelItems, items } from '../AddNodeDropdown/PanelItems.js';
+import { DragItem } from './DragItem';
+import { NodeEntry } from './NodeEntry';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import { PlusIcon, ChevronDownIcon, ChevronUpIcon, SearchIcon, PinTackIcon } from '@iconicicons/react';
 import { TriangleDownIcon } from '@radix-ui/react-icons';
-import { useExternalData } from '#/context/ExternalDataContext.tsx';
+import { useExternalData } from '#/context/ExternalDataContext';
 
 
 export const DropPanel = () => {

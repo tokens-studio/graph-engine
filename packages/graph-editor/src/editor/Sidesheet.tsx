@@ -14,7 +14,7 @@ export function Sidesheet({ title, children, isVisible }) {
                         <Heading size="large">{title}</Heading>
                         <IconButton icon={<CloseIcon />} variant="invisible" onClick={() => setIsOpen(false)} />
                     </Stack>
-                    <Text muted size='small'>Here is where we could show a short description and link to the node docs.</Text>
+                    <Text muted size='small'>Here is where we could show a short description and link to the node docs. Also, this should show the advanced configuration for each node, which we dont want to show on the canvas</Text>
                     {children}
                 </Stack>
             </Box>

@@ -1,2 +1,2 @@
-export * from './AddNodeToolbar'
+export * from './AddNodeDropdown'
 export * from './DropPanel/DropPanel'

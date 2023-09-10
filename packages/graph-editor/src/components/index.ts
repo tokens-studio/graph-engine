@@ -1,2 +1,2 @@
 export * from './flow';
-export * from './flow/AddNodeToolbar/index.js';
+export * from './flow/AddNodeDropdown/index.js';

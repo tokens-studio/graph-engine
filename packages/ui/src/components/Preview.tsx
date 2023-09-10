@@ -23,7 +23,7 @@ export const Preview = ({ codeRef }) => {
             <ToggleGroup.Item value="preview"><VideoIcon /></ToggleGroup.Item>
             <ToggleGroup.Item value="editor"><Code3Icon /></ToggleGroup.Item>
           </ToggleGroup>
-            <IconButton variant="invisible" icon={<PictureInPictureIcon />} tooltip="Pop out" onClick={() => alert("not implemented")} />
+            <IconButton variant="invisible" icon={<PictureInPictureIcon />} tooltip="Pop out" onClick={() => alert("not implemented, pop out to new window, possibly new browser window with realtime sync so i can move it to a different screen")} />
             <IconButton variant="invisible" icon={<MinusIcon />} tooltip="Minimize" onClick={handleToggleVisible} />
           </Stack>
         </Stack> : <Button css={{ width: '100%' }} onClick={handleToggleVisible} variant="invisible" icon={<PictureInPictureIcon />}>

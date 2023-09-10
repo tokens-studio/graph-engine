@@ -44,7 +44,7 @@ import { ReduxProvider } from '../redux/index.tsx';
 import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.tsx';
 import groupNode from '../components/flow/groupNode.tsx';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
-import { Box, Button, EmptyState, IconButton, Tooltip } from '@tokens-studio/ui';
+import { Box, Button, EmptyState, IconButton, Stack, Tooltip } from '@tokens-studio/ui';
 import { OnOutputChangeContextProvider } from '#/context/OutputContext.tsx';
 import { createNode } from './create.ts';
 import { NodeTypes } from '@tokens-studio/graph-engine';
@@ -55,12 +55,12 @@ import { EdgeContextMenu } from './edgeContextMenu.tsx';
 import { PaneContextMenu } from './paneContextMenu.tsx';
 import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '#/redux/selectors/settings.ts';
-import { showNodesPanelSelector, isPanePinnedSelector } from '#/redux/selectors/ui.ts';
+import { showNodesPanelSelector } from '#/redux/selectors/ui.ts';
 import { forceUpdate } from '#/redux/selectors/graph.ts';
 import { DropPanel } from '#/components/index.ts';
-import { DropPanelContextMenu } from '#/components/flow/AddNodeToolbar/ContextMenu.tsx';
-import { BatteryChargingIcon } from '@iconicicons/react';
-import { AddNodetoolbar } from '../components/flow/AddNodeToolbar';
+import { DropPanelContextMenu } from '#/components/flow/AddNodeDropdown/ContextMenu.tsx';
+import { BatteryChargingIcon, FilePlusIcon } from '@iconicicons/react';
+import { AddNodeDropdown } from '../components/flow/AddNodeDropdown/index.ts';
 import { AppsIcon } from '#/components/icons/AppsIcon.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
@@ -99,7 +99,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const showGridValue = useSelector(showGrid);
     const snapGridValue = useSelector(snapGrid);
     const showNodesPanel = useSelector(showNodesPanelSelector);
-    const isPanePinned = useSelector(isPanePinnedSelector);
     const forceUpdateValue = useSelector(forceUpdate);
 
     const handleTogglePanel = () => {
@@ -551,9 +550,12 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                   />
                 )}
                     {nodeCount === 0 && (
-                  <Box css={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', position: 'relative'}}>
-                    <EmptyState icon={<BatteryChargingIcon style={{width: 48, height: 48}} />} title="Build scalable and flexible design systems." description='Add your first node to get started.'>
-                      <Button css={{zIndex: 100}} onClick={() => alert("Not implemented")}>Load example</Button>
+                  <Box css={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', position: 'relative', zIndex: 100}}>
+                    <EmptyState icon={<BatteryChargingIcon style={{width: 48, height: 48 }} />} title="Build scalable and flexible design systems." description='Add your first node to get started or load an example'>
+                      <Stack direction="row" gap={2}>
+                        <AddNodeDropdown onSelectItem={handleSelectNewNodeType} />
+                        <Button icon={<FilePlusIcon />} onClick={() => alert("Not implemented, we should let the user choose from Marcos examples in a dropdown")}>Load example</Button>
+                      </Stack>
                     </EmptyState></Box>                 
                 )}
                 <SelectedNodesToolbar />

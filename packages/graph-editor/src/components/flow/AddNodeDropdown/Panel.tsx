@@ -1,4 +1,4 @@
-import { Box, Heading, IconButton, Stack, TextInput } from '@tokens-studio/ui';
+import { Box, Button, Heading, IconButton, Stack, TextInput } from '@tokens-studio/ui';
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { PanelItems, items } from './PanelItems.tsx';
 import { NodeTypes } from '@tokens-studio/graph-engine';
@@ -6,17 +6,25 @@ import { PlusIcon, ChevronRightIcon } from '@iconicicons/react';
 import { useExternalData } from '#/context/ExternalDataContext.tsx';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { styled, keyframes } from '#/lib/stitches/stitches.config.ts';
-import { showNodesPanelSelector } from '#/redux/selectors/ui';
+import { showNodesDropdownSelector } from '#/redux/selectors/ui';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppsIcon } from '#/components/icons/AppsIcon.tsx';
 
-export const AddNodetoolbar: React.FC<PropsWithChildren & { onSelectItem: (item: any) => void }> = ({ children, onSelectItem }) => {
+// todo: this component should not just render when we have the input, but also when the user is just working on their canvas and presses the hotkey.
+export const AddNodeDropdown: React.FC<PropsWithChildren & { onSelectItem: (item: any) => void }> = ({ children, onSelectItem }) => {
   const { tokenSets, loadingTokenSets } = useExternalData();
   const [panelItems, setPanelItems] = useState<PanelItems>(items);
   const [search, setSearch] = React.useState('');
   const searchInputRef = React.useRef<HTMLInputElement>(null);
-  const showNodesPanel = useSelector(showNodesPanelSelector);
+  const showNodesDropdown = useSelector(showNodesDropdownSelector);
   const dispatch = useDispatch();
+
+  // todo: when showNodesDropdown changes, focus the first input. somehow the ref is null when rendered
+  React.useLayoutEffect(() => {    
+    if (showNodesDropdown && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [showNodesDropdown, searchInputRef]);
 
   useEffect(() => {
     if (tokenSets) {
@@ -46,12 +54,7 @@ export const AddNodetoolbar: React.FC<PropsWithChildren & { onSelectItem: (item:
   );
 
   const handleOnOpenChange = (open) => {
-    console.log('open', open, searchInputRef);
-    dispatch.ui.setShowNodesPanel(open);
-    
-    if (open && searchInputRef.current) {
-      searchInputRef.current.focus();
-    }
+    dispatch.ui.setShowNodesDropdown(open);
   };
 
   const availableNodes = React.useMemo(() => {
@@ -97,14 +100,12 @@ export const AddNodetoolbar: React.FC<PropsWithChildren & { onSelectItem: (item:
   }, [loadingTokenSets, panelItems, search, onInsertNode]);
 
   return (
-    <DropdownMenu.Root open={showNodesPanel} onOpenChange={handleOnOpenChange}>
+    <DropdownMenu.Root open={showNodesDropdown} onOpenChange={handleOnOpenChange}>
       <DropdownMenu.Trigger asChild>
-        <IconButton
+        <Button
           css={{ flexShrink: 0 }}
           icon={<AppsIcon />}
-          variant="invisible"
-          tooltip="Add new node (n)"
-        />
+        >Add a node</Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenuContent side="right" sideOffset={4} className="DropdownMenuContent">
