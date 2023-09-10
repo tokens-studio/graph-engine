@@ -17,104 +17,16 @@ import { themes } from 'prism-react-renderer';
 //import the example
 import example from '#/examples/scale.json';
 
-import { Cross1Icon } from '@radix-ui/react-icons';
 import { useTheme } from '#/hooks/useTheme.tsx';
 import { useJourney } from '#/journeys/basic.tsx';
 import { JoyrideTooltip } from '#/components/joyride/tooltip.tsx';
-import { Preview } from '#/components/Preview.tsx';
-import {
-  ArrowUpRightIcon,
-  ChevronRightIcon,
-  GridMasonryIcon,
-  MaximizeIcon,
-  MinimizeIcon,
-} from '@iconicicons/react';
 import { Menubar } from '#/components/editorMenu/index.tsx';
 import { EditorRefs } from '#/service/refs.ts';
-import { useRegisterRef } from '#/hooks/ref.ts';
-import { TokensStudioLogo } from '#/components/TokensStudioLogo.tsx';
 import { EditorTab } from '#/components/editor/index.tsx';
 import { ResolverData } from '#/types/file.ts';
 
-const DockButton = (rest) => {
-  return (
-    <IconButton
-      size="small"
-      variant="invisible"
-      css={{ padding: '$2' }}
-      {...rest}
-    />
-  );
-};
-
-let groups: Record<string, TabGroup> = {
-  popout: {
-    animated: false,
-    floatable: true,
-    panelExtra: (panelData, context) => {
-      let buttons: React.ReactElement[] = [];
-      if (panelData?.parent?.mode !== 'window') {
-        const maxxed = panelData?.parent?.mode === 'maximize';
-        buttons.push(
-          <DockButton
-            key="maximize"
-            title={
-              panelData?.parent?.mode === 'maximize' ? 'Restore' : 'Maximize'
-            }
-            icon={maxxed ? <MinimizeIcon /> : <MaximizeIcon />}
-            onClick={() => context.dockMove(panelData, null, 'maximize')}
-          ></DockButton>,
-        );
-        buttons.push(
-          <DockButton
-            key="new-window"
-            title="Open in new window"
-            icon={<ArrowUpRightIcon />}
-            onClick={() => context.dockMove(panelData, null, 'new-window')}
-          ></DockButton>,
-        );
-      }
-      buttons.push(
-        <DockButton
-          key="close"
-          title="Close"
-          icon={<Cross1Icon />}
-          onClick={() => context.dockMove(panelData, null, 'remove')}
-        ></DockButton>,
-      );
-      return <Stack gap={2}>{buttons}</Stack>;
-    },
-  },
-  /**
-   * Note that the graph has a huge issue when ran in a popout window, as such we disable it for now
-   */
-  graph: {
-    animated: false,
-    floatable: true,
-    panelExtra: (panelData, context) => {
-      let buttons: React.ReactElement[] = [];
-      if (panelData?.parent?.mode !== 'window') {
-        const maxxed = panelData?.parent?.mode === 'maximize';
-        buttons.push(
-          <DockButton
-            key="maximize"
-            title={
-              panelData?.parent?.mode === 'maximize' ? 'Restore' : 'Maximize'
-            }
-            icon={maxxed ? <MinimizeIcon /> : <MaximizeIcon />}
-            onClick={() => context.dockMove(panelData, null, 'maximize')}
-          ></DockButton>,
-        );
-      }
-
-      return <Stack gap={2}>{buttons}</Stack>;
-    },
-  },
-};
-
 const Wrapper = () => {
   const currentTab = useSelector(currentTabSelector);
-
   const [theCode, setTheCode] = useState(code);
   const [loadedExample, setLoadedExample] = useState(false);
   const dispatch = useDispatch();
@@ -177,22 +89,23 @@ const Wrapper = () => {
       />
       <div style={{ height: '100vh', overflow: 'hidden' }}>
         <Stack
-          direction="column"
-          css={{ height: '100%', background: '$bgSurface' }}
+          direction="row"
+          css={{ height: '100%', background: '$bgDefault' }}
         >
-          
-          <LiveProvider
-            code={theCode}
-            scope={scope}
-            theme={theme === 'light' ? themes.vsLight : themes.vsDark}
-            noInline={true}
-            enableTypeScript={true}
-            language="jsx"
-          >
-            <EditorTab id="1" title="Example" />
-          </LiveProvider>
-          {/* TODO: Can we consolidate the panes? Some are in the graph-editor, some are in the ui package. Feels like everything should be part of the graph editor. */}
           <Menubar />
+          <Box css={{position: 'relative', display: 'flex', flexDirection: 'column', width: '100%', height: '100%'}}>
+            <LiveProvider
+              code={theCode}
+              scope={scope}
+              theme={theme === 'light' ? themes.vsLight : themes.vsDark}
+              noInline={true}
+              enableTypeScript={true}
+              language="jsx"
+            >
+              <EditorTab id="1" title="Example" />
+            </LiveProvider>
+          </Box>
+          {/* TODO: Can we consolidate the panes? Some are in the graph-editor, some are in the ui package. Feels like everything should be part of the graph editor. */}
         </Stack>
       </div>
     </>

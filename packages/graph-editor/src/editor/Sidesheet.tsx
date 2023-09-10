@@ -8,15 +8,13 @@ export function Sidesheet({ title, children, isVisible }) {
 
     return isOpen ? (
         <Portal.Root>
-            <Box css={{ display: 'flex', position: 'fixed', right: 0, bottom: 0, zIndex: 100, maxHeight: '45vh', overflowY: 'auto', paddingBottom: '$5' }}>
-                <Stack direction="column" gap={3} css={{ maxWidth: 'clamp(180px, 40vw, 400px)', backgroundColor: '$bgCanvas', padding: '$6', borderTopLeftRadius: '16px', boxShadow: '$contextMenu', borderLeft: '1px solid $borderSubtle', borderTop: '1px solid $borderSubtle' }}>
-                    <Box css={{ position: 'absolute', right: '$6' }}>
-                        <IconButton icon={<CloseIcon />} variant="invisible" onClick={() => setIsOpen(false)} />
-                    </Box>
-                    <Stack direction="column" gap={3}>
+            <Box css={{ display: 'flex', position: 'fixed', right: 0, bottom: 0, zIndex: 100, maxHeight: '45vh' }}>
+                <Stack direction="column" gap={3} css={{ overflowY: 'auto', maxWidth: 'clamp(180px, 40vw, 400px)', backgroundColor: '$bgCanvas', padding: '$6', borderTopLeftRadius: '16px', boxShadow: '$contextMenu', borderLeft: '1px solid $borderSubtle', borderTop: '1px solid $borderSubtle' }}>
+                    <Stack direction="row" justify="between" gap={3}>
                         <Heading size="large">{title}</Heading>
-                        <Text muted size='small'>Here is where we could show a short description and link to the node docs.</Text>
+                        <IconButton icon={<CloseIcon />} variant="invisible" onClick={() => setIsOpen(false)} />
                     </Stack>
+                    <Text muted size='small'>Here is where we could show a short description and link to the node docs.</Text>
                     {children}
                 </Stack>
             </Box>

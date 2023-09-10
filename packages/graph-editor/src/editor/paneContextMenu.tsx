@@ -15,9 +15,10 @@ import { ContextMenuNodes } from '#/components/flow/AddNodeToolbar/AddNodesConte
 
 export interface IPaneContextMenu {
   id: string;
+  onSelectItem: (item: any) => void;
 }
 
-export const PaneContextMenu = ({ id }: IPaneContextMenu) => {
+export const PaneContextMenu = ({ id, onSelectItem }: IPaneContextMenu) => {
   const reactFlowInstance = useReactFlow();
   const showGridValue = useSelector(showGrid);
   const snapGridValue = useSelector(snapGrid);
@@ -44,20 +45,11 @@ export const PaneContextMenu = ({ id }: IPaneContextMenu) => {
     reactFlowInstance.setEdges([]);
   }, [reactFlowInstance]);
 
-  const handleSelectItem = useCallback(
-    (item) => {
-      console.log('Selected item', item);
-    },
-    [reactFlowInstance],
-  );  
-
   const layout = useAutoLayout();
   return (
     <Menu id={id} preventDefaultOnKeydown animation="">
       <Submenu label="Add Node">
-        <ContextMenuNodes onSelectItem={handleSelectItem} />
-        <Item onClick={layout}>Apply Layout</Item>
-        <Item onClick={setShowGrid}>{showGridValue ? 'Hide' : 'Show'} Grid</Item>
+        <ContextMenuNodes onSelectItem={onSelectItem} />
       </Submenu>
       <Item onClick={layout}>Apply Layout</Item>
       <Item onClick={setShowGrid}>{showGridValue ? 'Hide' : 'Show'} Grid</Item>

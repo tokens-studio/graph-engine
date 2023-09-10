@@ -11,7 +11,7 @@ export const uiState = createModel<RootModel>()({
   state: {
     isSidesheetVisible: true,
     showNodesPanel: false,
-    isPanePinned: false,
+    isPanePinned: true,
   } as UIState,
   reducers: {
    setSidesheetVisible(state, isSidesheetVisible: boolean) {

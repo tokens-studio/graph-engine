@@ -44,7 +44,7 @@ import { ReduxProvider } from '../redux/index.tsx';
 import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.tsx';
 import groupNode from '../components/flow/groupNode.tsx';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
-import { Box, EmptyState, IconButton, Tooltip } from '@tokens-studio/ui';
+import { Box, Button, EmptyState, IconButton, Tooltip } from '@tokens-studio/ui';
 import { OnOutputChangeContextProvider } from '#/context/OutputContext.tsx';
 import { createNode } from './create.ts';
 import { NodeTypes } from '@tokens-studio/graph-engine';
@@ -58,10 +58,10 @@ import { showGrid, snapGrid } from '#/redux/selectors/settings.ts';
 import { showNodesPanelSelector, isPanePinnedSelector } from '#/redux/selectors/ui.ts';
 import { forceUpdate } from '#/redux/selectors/graph.ts';
 import { DropPanel } from '#/components/index.ts';
-import { ActionToolbar } from '#/components/flow/ActionToolbar.tsx';
 import { DropPanelContextMenu } from '#/components/flow/AddNodeToolbar/ContextMenu.tsx';
-import { BatteryChargingIcon, FolderPlusIcon, LayersIcon, PinTackIcon } from '@iconicicons/react';
+import { BatteryChargingIcon } from '@iconicicons/react';
 import { AddNodetoolbar } from '../components/flow/AddNodeToolbar';
+import { AppsIcon } from '#/components/icons/AppsIcon.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -102,16 +102,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const isPanePinned = useSelector(isPanePinnedSelector);
     const forceUpdateValue = useSelector(forceUpdate);
 
-    const handlePinPane = () => {
-      dispatch.ui.setPanePinned(!isPanePinned);
-      dispatch.ui.setShowNodesPanel(true);
-    };
-
-    const handleUnPinPane = () => {
-      dispatch.ui.setPanePinned(!isPanePinned);
-      dispatch.ui.setShowNodesPanel(false);
-    };
-
     const handleTogglePanel = () => {
       dispatch.ui.setShowNodesPanel(!showNodesPanel);
     };
@@ -147,6 +137,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           event.target.classList.contains('react-flow__pane');
 
         if (targetIsPane) {
+          console.log('target is pane');
+          
           showPicker({ event });
           const reactFlowBounds =
             reactFlowWrapper?.current?.getBoundingClientRect();
@@ -442,7 +434,12 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     // }, [props.loadedExample, reactFlowInstance]);
 
     const handleSelectNewNodeType = (nodeRequest) => {
+      console.log('nodeRequest', nodeRequest);
+      
       const nodes = reactFlowInstance.getNodes();
+
+      console.log('nodes', nodes);
+      
 
       // Couldn't determine the type
       if (!nodeRequest.type) {
@@ -500,12 +497,12 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
             ref={reactFlowWrapper}
           >
             <ForceUpdateProvider value={forceUpdate}>
-              <Box css={{ display: 'flex', flexDirection: 'row', backgroundColor: '$bgDefault', ...(isPanePinned ? {} : { border: '1px solid $borderSubtle', boxShadow: '$small', borderRadius: '$medium', position: 'fixed', top: '$3', left: '$3', zIndex: 10 }) }}>
-                <Box css={{ padding: isPanePinned ? '$3' : '$1', ...(isPanePinned ? { borderRight: '1px solid $borderMuted' } : {}) }}>
-                  {isPanePinned ? <IconButton onClick={handleTogglePanel} icon={<FolderPlusIcon />} variant={showNodesPanel ? 'primary' : 'invisible'} /> : <AddNodetoolbar onTogglePin={handlePinPane} onSelectItem={handleSelectNewNodeType} />}
+              <Box css={{ display: 'flex', flexDirection: 'row' }}>
+                <Box css={{ padding: '$1', position: 'fixed', top: '$1', left: 0 }}>
+                  <IconButton tooltip='Add nodes (n)' onClick={handleTogglePanel} icon={<AppsIcon />} variant={showNodesPanel ? 'primary' : 'invisible'} />
                 </Box>
-                {showNodesPanel && isPanePinned && <Box css={{ width: '240px', overflow: 'hidden', display: 'flex', flexDirection: 'column', backgroundColor: '$bgDefault', borderRight: '1px solid $borderMuted' }}>
-                  <DropPanel onTogglePin={handleUnPinPane} />
+                {showNodesPanel && <Box css={{ backgroundColor: '$bgDefault', width: '240px', overflow: 'hidden', display: 'flex', flexDirection: 'column', borderRight: '1px solid $borderMuted', zIndex: 10 }}>
+                  <DropPanel />
                 </Box>}
               </Box>
               {/* @ts-ignore */}
@@ -556,6 +553,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                     {nodeCount === 0 && (
                   <Box css={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', position: 'relative'}}>
                     <EmptyState icon={<BatteryChargingIcon style={{width: 48, height: 48}} />} title="Build scalable and flexible design systems." description='Add your first node to get started.'>
+                      <Button css={{zIndex: 100}} onClick={() => alert("Not implemented")}>Load example</Button>
                     </EmptyState></Box>                 
                 )}
                 <SelectedNodesToolbar />
@@ -564,14 +562,14 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
             </ForceUpdateProvider>
           </Box>
         </GlobalHotKeys>
-        <PaneContextMenu id={props.id + '_pane'} />
+        <PaneContextMenu id={props.id + '_pane'} onSelectItem={handleSelectNewNodeType}/>
         <NodeContextMenu id={props.id + '_node'} node={contextNode} />
         <EdgeContextMenu id={props.id + '_edge'} edge={contextEdge} />
         <DropPanelContextMenu
           id={props.id + '_picker'}
           position={dropPanelPosition}
+          onSelectItem={handleSelectNewNodeType}
         />
-
       </>
     );
   },

@@ -10,7 +10,7 @@ import { TriangleDownIcon } from '@radix-ui/react-icons';
 import { useExternalData } from '#/context/ExternalDataContext.tsx';
 
 
-export const DropPanel = ({onTogglePin}: {onTogglePin: () => void}) => {
+export const DropPanel = () => {
   const { tokenSets, loadingTokenSets } = useExternalData();
   const [panelItems, setPanelItems] = useState<PanelItems>(items)
   const [search, setSearch] = React.useState('');
@@ -85,10 +85,9 @@ export const DropPanel = ({onTogglePin}: {onTogglePin: () => void}) => {
   return (
     <Box css={{width: '100%', background: '$bgDefault', zIndex: 10, maxHeight: '100%', display: 'flex', flexDirection: 'column'}} id="drop-panel">
       <Stack direction="column" gap={1} css={{ paddingTop: '$1', width: '100%', overflowY: 'scroll' }}>
-        <Stack direction="column" gap={2} css={{ padding: '$1 $3' }}>
+        <Stack direction="column" gap={2} css={{ padding: '$2 $3' }}>
           <Stack direction="row" justify="between" align="center">
             <Heading>Nodes</Heading>
-            <IconButton icon={<PinTackIcon />} variant="invisible" tooltip="Pin to toolbar" onClick={onTogglePin}/>
           </Stack>
           <TextInput leadingVisual={<SearchIcon />} placeholder="Search" value={search} onChange={onSearch} />
         </Stack>

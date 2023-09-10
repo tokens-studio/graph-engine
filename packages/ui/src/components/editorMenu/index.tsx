@@ -1,5 +1,6 @@
 import * as MenubarPrimitive from '@radix-ui/react-menubar';
 import {
+  BookIcon,
   ChevronRightIcon,
   FloppyDiscIcon,
   FolderIcon,
@@ -16,7 +17,7 @@ import { useDispatch } from '#/hooks/useDispatch.ts';
 import { CodeEditorRef } from '#/service/refs.ts';
 import { ResolverData } from '#/types/file.ts';
 import Logo from '#/assets/svgs/tokensstudio-logo.svg';
-import { IconButton, Stack, Text } from '@tokens-studio/ui';
+import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
 import { toPng } from 'html-to-image';
 import { getRectOfNodes, getTransformForBounds } from 'reactflow';
 import {
@@ -219,16 +220,45 @@ export const Menubar = () => {
   }, [onNewGraph]);
 
   return (
-    <Stack direction="column" gap={2} css={{ position: 'fixed', bottom: '$3', left: '$3', backgroundColor: '$bgDefault', padding: '$1', border: '1px solid $borderSubtle', borderRadius: '$medium', boxShadow: '$small', zIndex: 100 }}>
-      <IconButton tooltip="Load .json" variant="invisible" size="medium" icon={<FolderIcon />} onClick={onLoad} disabled={!currentTab} />
-      <IconButton tooltip="Save as .json" variant="invisible" size="medium" icon={<FloppyDiscIcon />} onClick={onSave} disabled={!currentTab} />
-      <IconButton
-        variant="invisible"
-        tooltip={theme === 'light' ? 'Dark mode' : 'Light mode'}
-        size="medium"
-        icon={theme === 'light' ? <MoonIcon /> : <SunIcon />}
-        onClick={toggleTheme}
-      />
+    <Stack direction="column" gap={2} css={{ position: 'relative', backgroundColor: '$bgDefault', padding: '$1', borderRight: '1px solid $borderSubtle', paddingTop: '$7' }}>
+      <Stack direction="column"><Box css={{ height: '1px', backgroundColor: '$borderSubtle', margin: '$2', marginTop: '$3' }} />
+        <IconButton tooltip="Load .json" variant="invisible" size="medium" icon={<FolderIcon />} onClick={onLoad} disabled={!currentTab} />
+        <IconButton tooltip="Save as .json" variant="invisible" size="medium" icon={<FloppyDiscIcon />} onClick={onSave} disabled={!currentTab} />
+      </Stack>
+      <Stack direction="column" justify="end" css={{flexGrow: 1}}>
+        <IconButton
+          variant="invisible"
+          tooltip={theme === 'light' ? 'Dark mode' : 'Light mode'}
+          size="medium"
+          icon={theme === 'light' ? <MoonIcon /> : <SunIcon />}
+          onClick={toggleTheme}
+        />
+         <IconButton
+          as={Link}
+          href="https://docs.graph.tokens.studio/"
+          variant="invisible"
+          tooltip="View documentation"
+          size="medium"
+          icon={<BookIcon />}
+          onClick={toggleTheme}
+        />
+         <IconButton
+          as={Link}
+          href="https://www.youtube.com/@TokensStudio"
+          variant="invisible"
+          tooltip="YouTube"
+          size="medium"
+          icon={<YoutubeIcon />}
+        />
+         <IconButton
+          as={Link}
+          href="https://tokens.studio//slack"
+          variant="invisible"
+          tooltip="Slack"
+          size="medium"
+          icon={<SlackIcon />}
+        />
+      </Stack>
     </Stack>
   );
 };

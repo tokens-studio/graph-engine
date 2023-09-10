@@ -1,9 +1,6 @@
 import {
-  Menu,
   Item,
-  Separator,
   Submenu,
-  useContextMenu,
 } from 'react-contexify';
 
 import React, { useEffect, useMemo, useState } from 'react';
@@ -16,20 +13,16 @@ export function ContextMenuNodes({ onSelectItem }: { onSelectItem: (item: any) =
   const { tokenSets, loadingTokenSets } = useExternalData();
   const [panelItems, setPanelItems] = useState<PanelItems>(items);
   const [search, setSearch] = React.useState('');
-  const [defaultValue, setDefaultValue] = React.useState<string[]>(['generic']);
   const searchInputRef = React.useRef<HTMLInputElement>(null);
 
   const onSearch = (e) => {
     setSearch(e.target.value);
-    if (e.target.value === '') {
-      setDefaultValue(['generic']);
-    } else {
-      setDefaultValue(Object.keys(panelItems));
-    }
   };
 
   const onInsertNode = React.useCallback(
     (type) => {
+      console.log('insert node', type);
+      
       onSelectItem({ type })
     },
     [onSelectItem],
@@ -64,7 +57,7 @@ export function ContextMenuNodes({ onSelectItem }: { onSelectItem: (item: any) =
       .map((item) => (
         <Item
           key={item.text}
-          onSelect={() => onInsertNode(item.type)}
+          onClick={() => onInsertNode(item.type)}
         >
           {item.icon}
           {item.text}
