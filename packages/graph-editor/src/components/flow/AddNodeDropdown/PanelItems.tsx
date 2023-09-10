@@ -452,7 +452,7 @@ const DropPanel = () => {
 
   return (
     <Box css={{border: '1px solid',
-    backgroundColor: '$bgSurface',
+    backgroundColor: '$bgDefault',
     borderRadius: '$small',
     borderColor: '$borderMuted',
     display: 'flex',

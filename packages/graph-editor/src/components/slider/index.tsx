@@ -58,7 +58,7 @@ export const ValueLabel = styled('div', {
   transform: 'translate(-50%)',
   padding: '0.25em',
   borderRadius: '$medium',
-  color: '$bgSurface',
+  color: '$bgDefault',
   background: '$bgEmphasis',
   pointerEvents: 'none',
 });

@@ -425,13 +425,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       onEdgesDeleted,
     });
 
-    // // trigger fitView whenever the loaded example changes
-    // useEffect(() => {
-    //   if (props.loadedExample) {
-    //     reactFlowInstance.fitView();
-    //   }
-    // }, [props.loadedExample, reactFlowInstance]);
-
     const handleSelectNewNodeType = (nodeRequest) => {
       console.log('nodeRequest', nodeRequest);
       
@@ -439,7 +432,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
       console.log('nodes', nodes);
       
-
       // Couldn't determine the type
       if (!nodeRequest.type) {
         return;

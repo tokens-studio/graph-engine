@@ -453,7 +453,7 @@ export const Permutator = () => {
       gap={2}
       css={{
         height: '100%',
-        background: '$bgSurface',
+        background: '$bgDefault',
         padding: '$4',
         overflow: 'auto',
       }}

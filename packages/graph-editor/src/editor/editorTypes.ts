@@ -3,7 +3,6 @@ import { Edge, Node, ReactFlowInstance } from 'reactflow';
 export type EditorProps = {
   id: string;
   onOutputChange: (output: Record<string, unknown>) => void;
-  loadedExample?: string;
 };
 
 export type EditorState = {

@@ -26,8 +26,6 @@ export const createNode = (options: ICreate): Node => {
     throw new Error(`No initial state for ${nodeRequest.type}`);
   }
 
-console.log('creating a node', nodeRequest, initialState, position);
-
   dispatch.node.set({
     id,
     value: {

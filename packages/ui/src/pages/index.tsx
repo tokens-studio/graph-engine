@@ -28,35 +28,9 @@ import { ResolverData } from '#/types/file.ts';
 const Wrapper = () => {
   const currentTab = useSelector(currentTabSelector);
   const [theCode, setTheCode] = useState(code);
-  const [loadedExample, setLoadedExample] = useState(false);
   const dispatch = useDispatch();
   const showJourney = useSelector(showJourneySelector);
   const theme = useTheme();
-
-  useEffect(() => {
-    if (!loadedExample) {
-      const exampleData = example as ResolverData;
-
-      const { state, code, edges, nodes } = exampleData;
-
-      const editor = EditorRefs[currentTab.id];
-
-      if (!editor.current) {
-        return;
-      }
-
-      if (code !== undefined) {
-        setTheCode(code);
-      }
-
-      editor.current.load({
-        nodes: nodes,
-        edges: edges,
-        nodeState: state,
-      });
-      setLoadedExample(true);
-    }
-  }, [currentTab.id, loadedExample]);
 
   const [{ steps }] = useJourney();
   const handleJoyrideCallback = (data: CallBackProps) => {

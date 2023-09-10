@@ -11,9 +11,6 @@ import { ColorWheelIcon } from '@radix-ui/react-icons';
 const ScaleNode = () => {
   const { input, state, output, setState } = useNode();
 
-  console.log("state", state);
-
-
   const outputHandles = useMemo(() => {
     const values = output || {};
 
