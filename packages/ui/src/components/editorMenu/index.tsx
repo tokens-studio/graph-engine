@@ -47,24 +47,26 @@ export const Menubar = () => {
   const dockRef: DockLayout | undefined = useSelector(serviceRef('dock'));
 
   const findCurrentEditor = useCallback(() => {
-    if (!dockRef) {
-      return;
-    }
+    // if (!dockRef) {
+    //   return;
+    // }
 
-    const graphs = dockRef.find('graphs') as PanelData;
-    if (!graphs) {
-      return;
-    }
+    // const graphs = dockRef.find('graphs') as PanelData;
+    // if (!graphs) {
+    //   return;
+    // }
 
-    //Get the current activeID
-    const id = graphs.activeId;
+    // //Get the current activeID
+    // const id = graphs.activeId;
 
-    if (!id) {
-      return;
-    }
+    // if (!id) {
+    //   return;
+    // }
+    const activeEditor = store.getState().refs['1']
+    console.log("Store is", activeEditor)
 
-    return store.getState().refs[id];
-  }, [dockRef]);
+    return activeEditor;
+  }, []);
 
   const onSave = useCallback(() => {
     const editor = findCurrentEditor();
@@ -217,12 +219,13 @@ export const Menubar = () => {
   }, [onNewGraph]);
 
   return (
-    <Stack direction="row" gap={2} css={{ position: 'fixed', top: '$3', left: '$3', zIndex: 1 }}>
-      <IconButton variant="invisible" size="small" icon={<FolderIcon />} onClick={onLoad} disabled={!currentTab} />
-      <IconButton variant="invisible" size="small" icon={<FloppyDiscIcon />} onClick={onSave} disabled={!currentTab} />
+    <Stack direction="column" gap={2} css={{ position: 'fixed', bottom: '$3', left: '$3', backgroundColor: '$bgDefault', padding: '$1', border: '1px solid $borderSubtle', borderRadius: '$medium', boxShadow: '$small', zIndex: 100 }}>
+      <IconButton tooltip="Load .json" variant="invisible" size="medium" icon={<FolderIcon />} onClick={onLoad} disabled={!currentTab} />
+      <IconButton tooltip="Save as .json" variant="invisible" size="medium" icon={<FloppyDiscIcon />} onClick={onSave} disabled={!currentTab} />
       <IconButton
         variant="invisible"
-        size="small"
+        tooltip={theme === 'light' ? 'Dark mode' : 'Light mode'}
+        size="medium"
         icon={theme === 'light' ? <MoonIcon /> : <SunIcon />}
         onClick={toggleTheme}
       />

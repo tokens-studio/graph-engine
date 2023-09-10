@@ -8,15 +8,17 @@ export function Sidesheet({ title, children, isVisible }) {
 
     return isOpen ? (
         <Portal.Root>
-            <Box css={{ display: 'flex', position: 'fixed', right: 0, top: '30vh', bottom: 0, zIndex: 100 }}>
-                <Box css={{ maxWidth: 'clamp(180px, 40vw, 400px)', backgroundColor: '$bgCanvas', padding: '$6', borderTopLeftRadius: '16px', borderBottomLeftRadius: '16px', boxShadow: '$contextMenu', borderLeft: '1px solid $borderSubtle', borderTop: '1px solid $borderSubtle' }}>
-                    <Box css={{ position: 'absolute', right: '$6' }}><IconButton icon={<CloseIcon />} variant="invisible" onClick={() => setIsOpen(false)} /></Box>
+            <Box css={{ display: 'flex', position: 'fixed', right: 0, bottom: 0, zIndex: 100, maxHeight: '45vh', overflowY: 'auto', paddingBottom: '$5' }}>
+                <Stack direction="column" gap={3} css={{ maxWidth: 'clamp(180px, 40vw, 400px)', backgroundColor: '$bgCanvas', padding: '$6', borderTopLeftRadius: '16px', boxShadow: '$contextMenu', borderLeft: '1px solid $borderSubtle', borderTop: '1px solid $borderSubtle' }}>
+                    <Box css={{ position: 'absolute', right: '$6' }}>
+                        <IconButton icon={<CloseIcon />} variant="invisible" onClick={() => setIsOpen(false)} />
+                    </Box>
                     <Stack direction="column" gap={3}>
                         <Heading size="large">{title}</Heading>
-                        <Text muted>Add extra configuration here that should be shown on selection of a node. When something is selected, the sidesheet is placed on top of other content.</Text>
+                        <Text muted size='small'>Here is where we could show a short description and link to the node docs.</Text>
                     </Stack>
                     {children}
-                </Box>
+                </Stack>
             </Box>
         </Portal.Root>
     ) : null

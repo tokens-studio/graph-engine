@@ -14,7 +14,7 @@ export const Preview = () => {
     <div id="preview" style={{ fontFamily: 'initial' }}>
       <OutputProvider value={output}>
         <TokenContextProvider context={output}>
-          <Box css={{ padding: '$2', overflow: 'hidden' }}>
+          <Box css={{ padding: '$5', overflow: 'hidden' }}>
             <LivePreview />
           </Box>
         </TokenContextProvider>

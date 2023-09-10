@@ -2,7 +2,7 @@ import { Box, Heading, IconButton, Stack, TextInput } from '@tokens-studio/ui';
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { PanelItems, items } from './PanelItems.tsx';
 import { NodeTypes } from '@tokens-studio/graph-engine';
-import { PlusIcon, ChevronRightIcon, FolderPlusIcon, PinTackIcon } from '@iconicicons/react';
+import { PlusIcon, ChevronRightIcon, FolderPlusIcon, PinTackIcon, PlusCircleIcon } from '@iconicicons/react';
 import { useExternalData } from '#/context/ExternalDataContext.tsx';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { styled, keyframes } from '#/lib/stitches/stitches.config.ts';
@@ -33,10 +33,6 @@ export const AddNodetoolbar: React.FC<PropsWithChildren & { onSelectItem: (item:
     } else {
     }
   }, [tokenSets]);
-
-  useEffect(() => {
-    console.log('Panel items changed', panelItems);
-  }, [panelItems]);
 
   const onSearch = (e) => {
     setSearch(e.target.value);
@@ -110,9 +106,9 @@ export const AddNodetoolbar: React.FC<PropsWithChildren & { onSelectItem: (item:
       <DropdownMenu.Trigger asChild>
         <IconButton
           css={{ flexShrink: 0 }}
-          icon={<FolderPlusIcon />}
+          icon={<PlusCircleIcon />}
           variant="invisible"
-          tooltip="Add new node (alt+n)"
+          tooltip="Add new node (n)"
         />
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>

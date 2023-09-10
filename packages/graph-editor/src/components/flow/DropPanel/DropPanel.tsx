@@ -84,7 +84,7 @@ export const DropPanel = ({onTogglePin}: {onTogglePin: () => void}) => {
 
   return (
     <Box css={{width: '100%', background: '$bgDefault', zIndex: 10, maxHeight: '100%', display: 'flex', flexDirection: 'column'}} id="drop-panel">
-      <Stack direction="column" gap={1} css={{ paddingTop: '$4', width: '100%', overflowY: 'scroll' }}>
+      <Stack direction="column" gap={1} css={{ paddingTop: '$1', width: '100%', overflowY: 'scroll' }}>
         <Stack direction="column" gap={2} css={{ padding: '$1 $3' }}>
           <Stack direction="row" justify="between" align="center">
             <Heading>Nodes</Heading>

@@ -34,6 +34,7 @@ import { EditorRefs } from '#/service/refs.ts';
 import { useRegisterRef } from '#/hooks/ref.ts';
 import { TokensStudioLogo } from '#/components/TokensStudioLogo.tsx';
 import { EditorTab } from '#/components/editor/index.tsx';
+import { ResolverData } from '#/types/file.ts';
 
 const DockButton = (rest) => {
   return (
@@ -119,28 +120,6 @@ const Wrapper = () => {
   const dispatch = useDispatch();
   const showJourney = useSelector(showJourneySelector);
   const theme = useTheme();
-  const [, setDockRef] = useRegisterRef<DockLayout>('dock');
-
-  const defaultLayout: LayoutData = {
-    dockbox: {
-      mode: 'vertical',
-      children: [
-        {
-          mode: 'horizontal',
-          children: [
-            {
-              id: 'graphs',
-              size: 1000,
-              group: 'graph',
-
-              panelLock: { panelStyle: 'graph' },
-              tabs: [],
-            },
-          ],
-        }
-      ],
-    },
-  };
 
   useEffect(() => {
     if (!loadedExample) {
@@ -210,18 +189,10 @@ const Wrapper = () => {
             enableTypeScript={true}
             language="jsx"
           >
-            <EditorTab id="123" title="Card" />
+            <EditorTab id="1" title="Example" />
           </LiveProvider>
+          {/* TODO: Can we consolidate the panes? Some are in the graph-editor, some are in the ui package. Feels like everything should be part of the graph editor. */}
           <Menubar />
-          {/* <Stack direction="row" css={{position: 'fixed', top: '$3', left: '$3'}}>
-            <Box css={{backgroundColor: '$bgDefault', padding: '$2 $4', borderRadius: '$small', boxShadow: '$small', border: '1px solid $borderSubtle'}}>
-              <Text css={{fontSize: '$xxsmall', fontWeight: '$sansMedium'}}>Main canvas</Text>
-            </Box>
-            <Text css={{color: '$fgSubtle'}}><ChevronRightIcon /></Text>
-            <Box css={{backgroundColor: '$bgDefault', padding: '$2 $4', borderRadius: '$small', boxShadow: '$small', border: '1px solid $borderSubtle'}}>
-              <Text css={{fontSize: '$xxsmall', fontWeight: '$sansMedium'}}>Subresolver</Text>
-            </Box>
-          </Stack> */}
         </Stack>
       </div>
     </>

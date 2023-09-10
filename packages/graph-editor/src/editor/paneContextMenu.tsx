@@ -11,6 +11,7 @@ import { useAutoLayout } from './hooks/useAutolayout';
 import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '#/redux/selectors/settings';
 import { useDispatch } from '#/hooks';
+import { ContextMenuNodes } from '#/components/flow/AddNodeToolbar/AddNodesContextMenu';
 
 export interface IPaneContextMenu {
   id: string;
@@ -43,10 +44,18 @@ export const PaneContextMenu = ({ id }: IPaneContextMenu) => {
     reactFlowInstance.setEdges([]);
   }, [reactFlowInstance]);
 
+  const handleSelectItem = useCallback(
+    (item) => {
+      console.log('Selected item', item);
+    },
+    [reactFlowInstance],
+  );  
+
   const layout = useAutoLayout();
   return (
     <Menu id={id} preventDefaultOnKeydown animation="">
       <Submenu label="Add Node">
+        <ContextMenuNodes onSelectItem={handleSelectItem} />
         <Item onClick={layout}>Apply Layout</Item>
         <Item onClick={setShowGrid}>{showGridValue ? 'Hide' : 'Show'} Grid</Item>
       </Submenu>

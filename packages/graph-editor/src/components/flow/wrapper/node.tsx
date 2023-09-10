@@ -192,7 +192,7 @@ export const Node = (props: NodeProps) => {
       }}
     >
       <NodeToolbar className="nodrag">
-        <Sidesheet title={title}>{children}</Sidesheet>
+        <Sidesheet isVisible={true} title={title}>{children}</Sidesheet>
         <Stack direction="row" gap={0} css={{ padding: '$1', backgroundColor: '$bgDefault', borderRadius: '$medium', border: '1px solid $borderSubtle', boxShadow: '$small', }}>
           {hasParent && <Button onClick={onDetach}>Detach</Button>}
           <IconButton
@@ -231,8 +231,8 @@ export const Node = (props: NodeProps) => {
                   css={{ padding: '$3 $5', borderBottom: collapsed ? 'none' : '2px solid var(--nodeBorderColor, var(--colors-borderSubtle))', backgroundColor: 'var(--nodeBgColor, var(--colors-bgSubtle))', borderTopLeftRadius: '$medium', borderTopRightRadius: '$medium' }}
                 >
                   <Stack direction="row" gap={2} align="center">
-                    {icon && <Box css={{ color: '$fgSubtle' }}>{icon}</Box>}
-                    <Text css={{ fontSize: '$xxsmall', fontWeight: '$sansMedium', textTransform: 'uppercase', color: '$fgSubtle', letterSpacing: '0.15px' }}>{title}</Text>
+                    {icon && <Box css={{ color: 'var(--nodeTextColor, var(--colors-fgSubtle))' }}>{icon}</Box>}
+                    <Text css={{ fontSize: '$xxsmall', fontWeight: '$sansMedium', textTransform: 'uppercase', color: 'var(--nodeTextColor, var(--colors-fgSubtle))', letterSpacing: '0.15px' }}>{title}</Text>
                     {debugModeValue && (
                       <Text css={{ fontSize: '$xxsmall', fontFamily: 'monospace', color: '$fgSubtle' }}>
                         {props.stats.executionTime}ms

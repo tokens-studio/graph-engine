@@ -2,10 +2,9 @@ import { useRegisterRef } from '#/hooks/ref.ts';
 import { useDispatch } from '#/hooks/useDispatch.ts';
 import { editorTab } from '#/redux/selectors/graph.ts';
 import { Editor } from '@tokens-studio/graph-editor';
-import { Stack, Text, TextInput } from '@tokens-studio/ui';
+import { Box, Button, Heading, IconButton, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { useSelector } from 'react-redux';
 import { Preview } from '../Preview.tsx';
-import { Toolbar } from '../Toolbar.tsx';
 
 export const EditorTab = ({ id, ...rest }) => {
   const dispatch = useDispatch();
@@ -19,10 +18,11 @@ export const EditorTab = ({ id, ...rest }) => {
     });
   };
 
-  return (
-    <>
+  return (<>
     <Editor id={id} ref={ref} onOutputChange={onEditorOutputChange} {...rest} />
-    <Preview codeRef={setCodeRef} />
+    <Stack direction="column" align="end" gap={3} css={{position: 'fixed', top: '$3', right: '$3', zIndex: 100}}>
+        <Preview codeRef={setCodeRef} />
+      </Stack>
     </>
   );
 };

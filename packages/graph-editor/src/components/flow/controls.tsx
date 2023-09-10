@@ -3,7 +3,6 @@ import { MiniMap } from '@reactflow/minimap';
 import { styled } from '#/lib/stitches/index.ts';
 import React from 'react';
 import { Settings } from '../Settings';
-import { DropPanel } from './AddNodeToolbar';
 
 export const ControlsStyled = styled(Controls, {
   display: 'flex',

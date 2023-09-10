@@ -44,7 +44,7 @@ import { ReduxProvider } from '../redux/index.tsx';
 import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.tsx';
 import groupNode from '../components/flow/groupNode.tsx';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
-import { Box, IconButton, Tooltip } from '@tokens-studio/ui';
+import { Box, EmptyState, IconButton, Tooltip } from '@tokens-studio/ui';
 import { OnOutputChangeContextProvider } from '#/context/OutputContext.tsx';
 import { createNode } from './create.ts';
 import { NodeTypes } from '@tokens-studio/graph-engine';
@@ -60,7 +60,7 @@ import { forceUpdate } from '#/redux/selectors/graph.ts';
 import { DropPanel } from '#/components/index.ts';
 import { ActionToolbar } from '#/components/flow/ActionToolbar.tsx';
 import { DropPanelContextMenu } from '#/components/flow/AddNodeToolbar/ContextMenu.tsx';
-import { FolderPlusIcon, LayersIcon, PinTackIcon } from '@iconicicons/react';
+import { BatteryChargingIcon, FolderPlusIcon, LayersIcon, PinTackIcon } from '@iconicicons/react';
 import { AddNodetoolbar } from '../components/flow/AddNodeToolbar';
 
 const snapGridCoords: SnapGrid = [16, 16];
@@ -136,8 +136,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
     const handleContextMenu = useCallback(
       (event) => {
-        console.log('handleContextMenu', event);
-        
         show({ event });
       },
       [show],
@@ -490,73 +488,82 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
       reactFlowInstance.addNodes(newNode);
     };
+    
+    const nodeCount = nodes.length;
 
     return (
       <>
-      <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
-        <Box
-          className="editor"
-          css={{ height: '100%', backgroundColor: '$bgCanvas', display: 'flex', flexDirection: 'row' }}
-          ref={reactFlowWrapper}
-        >
-          <ForceUpdateProvider value={forceUpdate}>
-            <Box css={{display: 'flex', flexDirection: 'row', ...(isPanePinned ? {} : { border: '1px solid $borderSubtle', boxShadow: '$small', borderRadius: '$medium', position: 'fixed', top: '$3', left: '$3', zIndex: 10})}}>
-              <Box css={{padding: '$1', backgroundColor: '$bgDefault', ...(isPanePinned ? {borderRight: '1px solid $borderMuted'} : { })}}>
-                {isPanePinned ?  <IconButton onClick={handleTogglePanel} icon={<FolderPlusIcon />} variant={showNodesPanel ? 'primary' : 'invisible'} /> : <AddNodetoolbar onTogglePin={handlePinPane} onSelectItem={handleSelectNewNodeType} />}
-                <IconButton variant="invisible" onClick={() => alert("not implemented")} icon={<LayersIcon />} />
+        <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
+          <Box
+            className="editor"
+            css={{ height: '100%', backgroundColor: '$bgCanvas', display: 'flex', flexDirection: 'row' }}
+            ref={reactFlowWrapper}
+          >
+            <ForceUpdateProvider value={forceUpdate}>
+              <Box css={{ display: 'flex', flexDirection: 'row', backgroundColor: '$bgDefault', ...(isPanePinned ? {} : { border: '1px solid $borderSubtle', boxShadow: '$small', borderRadius: '$medium', position: 'fixed', top: '$3', left: '$3', zIndex: 10 }) }}>
+                <Box css={{ padding: isPanePinned ? '$3' : '$1', ...(isPanePinned ? { borderRight: '1px solid $borderMuted' } : {}) }}>
+                  {isPanePinned ? <IconButton onClick={handleTogglePanel} icon={<FolderPlusIcon />} variant={showNodesPanel ? 'primary' : 'invisible'} /> : <AddNodetoolbar onTogglePin={handlePinPane} onSelectItem={handleSelectNewNodeType} />}
                 </Box>
-          {showNodesPanel && isPanePinned && <Box css={{width: '240px', overflow: 'hidden', display: 'flex', flexDirection: 'column', backgroundColor: '$bgDefault', borderRight: '1px solid $borderMuted'}}><DropPanel onTogglePin={handleUnPinPane}/></Box>}
+                {showNodesPanel && isPanePinned && <Box css={{ width: '240px', overflow: 'hidden', display: 'flex', flexDirection: 'column', backgroundColor: '$bgDefault', borderRight: '1px solid $borderMuted' }}>
+                  <DropPanel onTogglePin={handleUnPinPane} />
+                </Box>}
+              </Box>
+              {/* @ts-ignore */}
+              <ReactFlow
+                fitView
+                nodes={nodes}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onEdgeDoubleClick={onEdgeDblClick}
+                onEdgesDelete={onEdgesDeleted}
+                edges={edges}
+                elevateNodesOnSelect={false}
+                onNodeDragStop={onNodeDragStop}
+                snapToGrid={snapGridValue}
+                edgeTypes={edgeTypes}
+                nodeTypes={fullNodeTypes}
+                snapGrid={snapGridCoords}
+                onNodeDrag={onNodeDrag}
+                onConnect={onConnect}
+                onDrop={onDrop}
+                onConnectEnd={onConnectEnd}
+                selectNodesOnDrag={false}
+                defaultEdgeOptions={defaultEdgeOptions}
+                panOnScroll={true}
+                // panOnDrag={panOnDrag}
+                onPaneContextMenu={handleContextMenu}
+                onEdgeContextMenu={handleEdgeContextMenu}
+                onNodeContextMenu={handleNodeContextMenu}
+                selectionMode={SelectionMode.Partial}
+                onDragOver={onDragOver}
+                selectionOnDrag={true}
+                minZoom={-Infinity}
+                defaultViewport={defaultViewport}
+                //This causes weirdness with the minimap
+                // onlyRenderVisibleElements={true}
+                maxZoom={Infinity}
+                proOptions={proOptions}
+              >
+            
+                {showGridValue && (
+                  <Background
+                    color="var(--colors-borderMuted)"
+                    gap={16}
+                    size={2}
+                    variant={BackgroundVariant.Dots}
+                  />
+                )}
+                    {nodeCount === 0 && (
+                  <Box css={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', position: 'relative'}}>
+                    <EmptyState icon={<BatteryChargingIcon style={{width: 48, height: 48}} />} title="Build scalable and flexible design systems." description='Add your first node to get started.'>
+                    </EmptyState></Box>                 
+                )}
+                <SelectedNodesToolbar />
+                <CustomControls position="bottom-center" />
+              </ReactFlow>
+            </ForceUpdateProvider>
           </Box>
-            {/* @ts-ignore */}
-            <ReactFlow
-              fitView
-              nodes={nodes}
-              onNodesChange={onNodesChange}
-              onEdgesChange={onEdgesChange}
-              onEdgeDoubleClick={onEdgeDblClick}
-              onEdgesDelete={onEdgesDeleted}
-              edges={edges}
-              elevateNodesOnSelect={false}
-              onNodeDragStop={onNodeDragStop}
-              snapToGrid={snapGridValue}
-              edgeTypes={edgeTypes}
-              nodeTypes={fullNodeTypes}
-              snapGrid={snapGridCoords}
-              onNodeDrag={onNodeDrag}
-              onConnect={onConnect}
-              onDrop={onDrop}
-              onConnectEnd={onConnectEnd}
-              selectNodesOnDrag={false}
-              defaultEdgeOptions={defaultEdgeOptions}
-              panOnScroll={true}
-              // panOnDrag={panOnDrag}
-              onPaneContextMenu={handleContextMenu}
-              onEdgeContextMenu={handleEdgeContextMenu}
-              onNodeContextMenu={handleNodeContextMenu}
-              selectionMode={SelectionMode.Partial}
-              onDragOver={onDragOver}
-              selectionOnDrag={true}
-              minZoom={-Infinity}
-              defaultViewport={defaultViewport}
-              //This causes weirdness with the minimap
-              // onlyRenderVisibleElements={true}
-              maxZoom={Infinity}
-              proOptions={proOptions}
-            >
-              {showGridValue && (
-                <Background
-                  color="var(--colors-borderMuted)"
-                  gap={16}
-                  size={2}
-                  variant={BackgroundVariant.Dots}
-                />
-              )}
-              <SelectedNodesToolbar />
-              <CustomControls position="bottom-left" />
-            </ReactFlow>
-          </ForceUpdateProvider>
-        </Box>
-      </GlobalHotKeys>
+        </GlobalHotKeys>
         <PaneContextMenu id={props.id + '_pane'} />
         <NodeContextMenu id={props.id + '_node'} node={contextNode} />
         <EdgeContextMenu id={props.id + '_edge'} edge={contextEdge} />
@@ -565,7 +572,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           position={dropPanelPosition}
         />
 
-        </>
+      </>
     );
   },
 );

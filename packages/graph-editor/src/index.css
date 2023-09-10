@@ -26,6 +26,7 @@
 .react-flow__node.selectable.selected, .react-flow__node.selectable:focus {
     --nodeBorderColor: var(--colors-focus);
     --nodeBgColor: var(--colors-accentBg);
+    --nodeTextColor: var(--colors-fgDefault);
     outline: 2px solid var(--colors-focus);
 }
 
