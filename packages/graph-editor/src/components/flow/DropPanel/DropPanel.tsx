@@ -1,7 +1,7 @@
 import { Button, Box, Text, Separator, Stack, TextInput, Heading, IconButton } from '@tokens-studio/ui';
 import React, { useEffect, useState } from 'react';
 import { Accordion } from '../../accordion/index.js';
-import { PanelItems, items } from '../AddNodeDropdown/PanelItems.js';
+import { PanelItems, items } from '../PanelItems.js';
 import { DragItem } from './DragItem';
 import { NodeEntry } from './NodeEntry';
 import { NodeTypes } from '@tokens-studio/graph-engine';

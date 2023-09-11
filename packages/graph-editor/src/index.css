@@ -124,6 +124,7 @@
     --contexify-activeRightSlot-color: var(--colors-contextMenuFg);
     --contexify-arrow-color: var(--colors-contextMenuFgMuted);
     --contexify-activeArrow-color:  var(--colors-contextMenuFgMuted);
+    --contexify-menu-shadow: var(--shadows-contextMenu);
 }
 
 .DropdownMenuContent {

@@ -58,9 +58,7 @@ import { showGrid, snapGrid } from '#/redux/selectors/settings.ts';
 import { showNodesPanelSelector } from '#/redux/selectors/ui.ts';
 import { forceUpdate } from '#/redux/selectors/graph.ts';
 import { DropPanel } from '#/components/index.ts';
-import { DropPanelContextMenu } from '#/components/flow/AddNodeDropdown/ContextMenu.tsx';
 import { BatteryChargingIcon, FilePlusIcon } from '@iconicicons/react';
-import { AddNodeDropdown } from '../components/flow/AddNodeDropdown/index.ts';
 import { AppsIcon } from '#/components/icons/AppsIcon.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
@@ -558,11 +556,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
         <PaneContextMenu id={props.id + '_pane'}  onSelectItem={handleSelectNewNodeType}/>
         <NodeContextMenu id={props.id + '_node'} node={contextNode} />
         <EdgeContextMenu id={props.id + '_edge'} edge={contextEdge} />
-        <DropPanelContextMenu
-          id={props.id + '_picker'}
-          position={dropPanelPosition}
-          onSelectItem={handleSelectNewNodeType}
-        />
       </>
     );
   },

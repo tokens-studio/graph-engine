@@ -1,7 +1,4 @@
-import { Box, Button, Separator, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { NodeTypes } from '@tokens-studio/graph-engine';
-import { styled } from '#/lib/stitches/index.ts';
-import { useCallback } from 'react';
 import React from 'react';
 
 import preset from '#/data/preset.ts';
@@ -18,15 +15,10 @@ import {
   ImageIcon,
   PlusIcon,
 } from '@radix-ui/react-icons';
-import icons from "../icons.tsx";
+import icons from "./icons.tsx";
 import { BoxIcon } from "@iconicicons/react";
 
 import { flatten } from '#/utils/index.ts';
-import { ChevronDownIcon, ChevronUpIcon, CloseIcon, FilePlusIcon, FolderPlusIcon, KeyIcon, PlusCircleIcon } from '@iconicicons/react';
-import { StyledAccordingTrigger } from './StyledAccordionTrigger.tsx';
-import { DragItem } from '../DropPanel/DragItem.tsx';
-import { NodeEntry } from '../DropPanel/NodeEntry.tsx';
-import { Accordion } from '#/components/accordion/index.tsx';
 
 //@ts-ignore
 const presetFlattened = flatten(preset);
@@ -425,84 +417,3 @@ export const items = {
     },
   ],
 };
-
-const DropPanel = () => {
-  const [isVisible, setIsVisible] = React.useState(true);
-  const [search, setSearch] = React.useState('');
-  const [defaultValue, setDefaultValue] = React.useState<string | string[]>(
-    'generic',
-  );
-
-  const [type, setType] = React.useState('multiple');
-
-  const onSearch = (e) => {
-    setSearch(e.target.value);
-    if (e.target.value === '') {
-      setType('single');
-      setDefaultValue('generic');
-    } else {
-      setType('multiple');
-      setDefaultValue(Object.keys(types));
-    }
-  };
-
-  const handleToggleVisible = () => {
-    setIsVisible(!isVisible);
-  };
-
-  return (
-    <Box css={{border: '1px solid',
-    backgroundColor: '$bgDefault',
-    borderRadius: '$small',
-    borderColor: '$borderMuted',
-    display: 'flex',
-    flexDirection: 'column',
-    position: 'absolute',
-    left: '$4',
-    top: '$4',
-    flexShrink: '0',
-    width: '200px'}}>
-        <Box css={{display: 'flex', flexDirection: 'column', borderBottom: '1px solid transparent', borderBottomColor: isVisible ? '$borderMuted' : 'transparent'}}>
-          <Button onClick={handleToggleVisible} variant="invisible">
-            Add a node
-          <Box css={{marginLeft: 'auto'}}>{isVisible ? <CloseIcon /> : <FilePlusIcon />}</Box>
-        </Button>
-        </Box>
-        {isVisible && <Stack direction="column" gap={0} css={{ width: '100%', maxHeight: '50vh', overflowY: 'auto' }}>
-          <Box css={{ padding: '$4' }}>
-            <TextInput placeholder="Search" value={search} onChange={onSearch} />
-          </Box>
-          <Accordion type={type} collapsible={false} defaultValue={defaultValue}>
-            {Object.entries(types).map(([key, values]) => {
-              const vals = values
-                .filter((item) =>
-                  item.text.toLowerCase().includes(search.toLowerCase()),
-                )
-                .map((item) => (
-                  // @ts-ignore
-                  <DragItem type={item.type} data={item.data || null}>
-                    <NodeEntry icon={item.icon} text={item.text} />
-                  </DragItem>
-                ));
-
-              if (vals.length === 0) return null;
-
-              return (
-                <Accordion.Item value={key}>
-                  <StyledAccordingTrigger>
-                    {key.charAt(0).toUpperCase() + key.slice(1)}
-                    <Separator orientation="horizontal" />
-                  </StyledAccordingTrigger>
-                  <Accordion.Content>
-                    {vals}
-                  </Accordion.Content>
-                </Accordion.Item>
-              );
-            })}
-          </Accordion>
-        </Stack>}
-    </Box>
-  );
-};
-
-export default DropPanel;

@@ -5,7 +5,7 @@ export const IconHolder = styled('div', {
     width: '24px',
     height: '24px',
     fontSize: '$xxsmall',
-    color: '$contextMenuFgMuted',
+    color: '$fgSubtle',
     userSelect: 'none',
     cursor: 'pointer',
     alignItems: 'center',

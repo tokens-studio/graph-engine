@@ -34,8 +34,7 @@ const Trigger = styled(AccordionPrimitive.Trigger, {
   },
 });
 
-const Content = styled(AccordionPrimitive.Content, {
-});
+const Content = AccordionPrimitive.Content;
 
 export const Accordion = Object.assign(Root, {
   Item: AccordionPrimitive.Item,
