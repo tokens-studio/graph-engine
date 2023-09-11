@@ -18,7 +18,7 @@ import {
   ReactFlowProvider,
   XYPosition,
 } from 'reactflow';
-import { CustomControls, MiniMapStyled } from '../components/flow/controls.tsx';
+import { CustomControls } from '../components/flow/controls.tsx';
 import { NodeTypes as EditorNodeTypes } from '../components/flow/types.tsx';
 import { ForceUpdateProvider } from './forceUpdateContext.tsx';
 import { GlobalHotKeys } from 'react-hotkeys';
@@ -111,7 +111,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       React.useState<XYPosition>({ x: 0, y: 0 });
 
     const { show } = useContextMenu({
-      id: props.id + '_pane',
+      id: props.id + '_pane'
     });
     const { show: showEdge } = useContextMenu({
       id: props.id + '_edge',
@@ -125,6 +125,9 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
     const handleContextMenu = useCallback(
       (event) => {
+        console.log("Event is", event);
+        setDropPanelPosition({ x: event.clientX, y: event.clientY });
+        
         show({ event });
       },
       [show],
@@ -427,6 +430,11 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
     const handleSelectNewNodeType = (nodeRequest) => {
       console.log('nodeRequest', nodeRequest);
+
+      const dropPosition = nodeRequest.position || {
+        x: dropPanelPosition.x,
+        y: dropPanelPosition.y,
+      }
       
       const nodes = reactFlowInstance.getNodes();
 
@@ -455,15 +463,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
       console.log('reactFlowInstance', reactFlowInstance.viewportInitialized);
 
-
-      // set position to center of the screen
-      const bounds = reactFlowWrapper!.current!.getBoundingClientRect();
-
       // set x y coordinates in instance
-      const position = reactFlowInstance.project({
-        x: bounds.width / 2,
-        y: bounds.height / 2,
-      });
+      const position = reactFlowInstance.project(dropPosition);
 
       console.log('position', position);
 
@@ -485,7 +486,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           <Box
             className="editor"
             css={{ height: '100%', backgroundColor: '$bgCanvas', display: 'flex', flexDirection: 'row', flexGrow: 1 }}
-            ref={reactFlowWrapper}
           >
             <ForceUpdateProvider value={forceUpdate}>
               <Box css={{ display: 'flex', flexDirection: 'row' }}>
@@ -499,6 +499,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
               </Box>
               {/* @ts-ignore */}
               <ReactFlow
+                ref={reactFlowWrapper}
                 fitView
                 nodes={nodes}
                 onNodesChange={onNodesChange}
@@ -544,21 +545,15 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 )}
                     {nodeCount === 0 && (
                   <Box css={{display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', width: '100%', height: '100%', position: 'relative', zIndex: 100}}>
-                    <EmptyState icon={<BatteryChargingIcon style={{width: 48, height: 48 }} />} title="Build scalable and flexible design systems." description='Add your first node to get started or load an example'>
-                      <Stack direction="row" gap={2} css={{pointerEvents: 'auto'}}>
-                        <AddNodeDropdown onSelectItem={handleSelectNewNodeType} />
-                        <Button icon={<FilePlusIcon />} onClick={() => alert("Not implemented, we should let the user choose from Marcos examples in a dropdown")}>Load example</Button>
-                      </Stack>
-                    </EmptyState></Box>                 
+                    <EmptyState icon={<BatteryChargingIcon style={{width: 48, height: 48 }} />} title="Build scalable and flexible design systems." description='Add your first node to get started or load an example' /></Box>                 
                 )}
                 <SelectedNodesToolbar />
                 <CustomControls position="bottom-center" />
-                {props.children}
               </ReactFlow>
             </ForceUpdateProvider>
           </Box>
         </GlobalHotKeys>
-        <PaneContextMenu id={props.id + '_pane'} onSelectItem={handleSelectNewNodeType}/>
+        <PaneContextMenu id={props.id + '_pane'}  onSelectItem={handleSelectNewNodeType}/>
         <NodeContextMenu id={props.id + '_node'} node={contextNode} />
         <EdgeContextMenu id={props.id + '_edge'} edge={contextEdge} />
         <DropPanelContextMenu

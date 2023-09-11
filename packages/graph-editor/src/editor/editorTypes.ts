@@ -4,7 +4,6 @@ export type EditorProps = {
   id: string;
   onOutputChange: (output: Record<string, unknown>) => void;
   menuContent?: React.ReactNode;
-  children?: React.ReactNode;
 };
 
 export type EditorState = {

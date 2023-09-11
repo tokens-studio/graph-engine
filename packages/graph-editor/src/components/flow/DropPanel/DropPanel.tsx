@@ -64,6 +64,7 @@ export const DropPanel = () => {
       return <div>Loading</div>;
     }
 
+    // todo: refactor to just use <details>/<summary>, no need for an accordion if were treating it like a regular expandable pattern
     return (
       <StyledAccordion type="multiple" defaultValue={defaultValue}>
         {Object.entries(panelItems).map(([key, values]) => {
@@ -86,7 +87,9 @@ export const DropPanel = () => {
           return (
             <Accordion.Item value={key} key={key}>
               <StyledAccordionTrigger>
-                <Box css={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '$fgSubtle', width: '24px', height: '24px'}}><TriangleDownIcon /></Box>
+                <Box css={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '$fgSubtle', width: '24px', height: '24px'}}>
+                  <TriangleDownIcon />
+                  </Box>
                 <Text size="xsmall" bold>{key.charAt(0).toUpperCase() + key.slice(1)}</Text>
               </StyledAccordionTrigger>
               <Accordion.Content>

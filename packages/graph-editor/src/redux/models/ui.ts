@@ -3,13 +3,11 @@ import { createModel } from '@rematch/core';
 
 export interface UIState {
   showNodesPanel: boolean;
-  showNodesDropdown: boolean;
 }
 
 export const uiState = createModel<RootModel>()({
   state: {
-    showNodesPanel: false,
-    showNodesDropdown: false,
+    showNodesPanel: true,
   } as UIState,
   reducers: {
     setShowNodesPanel(state, showNodesPanel: boolean) {
@@ -17,12 +15,6 @@ export const uiState = createModel<RootModel>()({
         ...state,
         showNodesPanel,
       };
-    },
-    setShowNodesDropdown(state, showNodesDropdown: boolean) {
-      return {
-        ...state,
-        showNodesDropdown,
-      };
-    },
+    }
   }
 });

@@ -115,15 +115,15 @@
 }
 
 .contexify{
-    --contexify-menu-bgColor: var(--colors-bgCanvas);
-    --contexify-separator-color: #4c4c4c;
-    --contexify-item-color: var(--colors-fgDefault);
-    --contexify-activeItem-color: var(--colors-fgDefault);
-    --contexify-activeItem-bgColor: #3498db;
-    --contexify-rightSlot-color: #6f6e77;
-    --contexify-activeRightSlot-color: var(--colors-fgDefault);
-    --contexify-arrow-color: #6f6e77;
-    --contexify-activeArrow-color:  var(--colors-fgDefault);
+    --contexify-menu-bgColor: var(--colors-contextMenuBg);
+    --contexify-separator-color: var(--colors-contextMenuSeparator);
+    --contexify-item-color: var(--colors-contextMenuFg);
+    --contexify-activeItem-color: var(--colors-contextMenuFg);
+    --contexify-activeItem-bgColor: var(--colors-contextMenuBgHover);
+    --contexify-rightSlot-color: var(--colors-contextMenuFgMuted);
+    --contexify-activeRightSlot-color: var(--colors-contextMenuFg);
+    --contexify-arrow-color: var(--colors-contextMenuFgMuted);
+    --contexify-activeArrow-color:  var(--colors-contextMenuFgMuted);
 }
 
 .DropdownMenuContent {
