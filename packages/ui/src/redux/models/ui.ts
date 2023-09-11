@@ -24,7 +24,7 @@ export const uiState = createModel<RootModel>()({
   state: {
     currentTab: starting[0],
     tabs: starting,
-    theme: 'light',
+    theme: 'dark',
   } as UIState,
   reducers: {
     setTheme(state, theme: string) {
