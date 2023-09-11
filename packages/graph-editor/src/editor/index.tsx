@@ -135,24 +135,26 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
     const onConnectEnd = useCallback(
       (event) => {
-        const targetIsPane =
-          event.target.classList.contains('react-flow__pane');
+        // Commenting out for now, I'd like to bring this back once we have cmdk hooked up, I'd do this after we merge this PR.
+        // I imagine the user being able to do what they can in Figma with Shift + I
+        // which triggers a combobox to select the node type. I expect that same combobox (in a cmd palette)
+        // to also appear when I drag a node, hold option (alt) and then let go in the canvas - I'd expect to be able to select a new node type (and if its just 1 input, connect it)
+        // const targetIsPane =
+        //   event.target.classList.contains('react-flow__pane');
 
-        if (targetIsPane) {
-          console.log('target is pane');
-          
-          showPicker({ event });
-          const reactFlowBounds =
-            reactFlowWrapper?.current?.getBoundingClientRect();
-          if (!reactFlowBounds) {
-            return;
-          }
-          const position = reactFlowInstance?.project({
-            x: event.clientX - reactFlowBounds.left,
-            y: event.clientY - reactFlowBounds.top,
-          });
-          setDropPanelPosition(position);
-        }
+        // if (targetIsPane) {          
+        //   showPicker({ event });
+        //   const reactFlowBounds =
+        //     reactFlowWrapper?.current?.getBoundingClientRect();
+        //   if (!reactFlowBounds) {
+        //     return;
+        //   }
+        //   const position = reactFlowInstance?.project({
+        //     x: event.clientX - reactFlowBounds.left,
+        //     y: event.clientY - reactFlowBounds.top,
+        //   });
+        //   setDropPanelPosition(position);
+        // }
       },
       [reactFlowInstance, showPicker],
     );
