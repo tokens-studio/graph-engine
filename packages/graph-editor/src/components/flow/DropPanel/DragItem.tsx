@@ -11,7 +11,7 @@ type DragItemProps = {
 
 const StyledButton = styled('button', {
   all: 'unset',
-  padding: '$3 $4',
+  padding: '$1 $3',
   borderRadius: '$small',
   
   '&:hover': {

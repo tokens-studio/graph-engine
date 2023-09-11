@@ -12,7 +12,7 @@ export const NodeEntry = ({
 }) => {
     return (
         <Stack direction="row" gap={2} justify="start" align="center">
-            <Box css={{color: '$fgSubtle', width: '16px', height: '16px', display: 'flex', fontSize: '$xxsmall'}}>{icon}</Box>
+            <Box css={{color: '$fgSubtle', width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '$xxsmall'}}>{icon}</Box>
             <Text size="xsmall" css={{ color: '$fgDefault', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }} >{text}</Text>
         </Stack>
     );

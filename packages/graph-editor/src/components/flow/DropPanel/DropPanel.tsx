@@ -8,7 +8,28 @@ import { NodeTypes } from '@tokens-studio/graph-engine';
 import { PlusIcon, ChevronDownIcon, ChevronUpIcon, SearchIcon, PinTackIcon } from '@iconicicons/react';
 import { TriangleDownIcon } from '@radix-ui/react-icons';
 import { useExternalData } from '#/context/ExternalDataContext';
+import { styled } from '#/lib/stitches/stitches.config.js';
 
+const StyledAccordionTrigger = styled(Accordion.Trigger, {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '$2',
+  justifyContent: 'flex-start',
+  width: '100%',
+  padding: '$1 $3',
+  borderRadius: '$small',
+  cursor: 'pointer',
+  '&:hover': {
+    background: '$bgSubtle',
+  },
+});
+
+const StyledAccordion = styled(Accordion, {
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '$3',
+});
 
 export const DropPanel = () => {
   const { tokenSets, loadingTokenSets } = useExternalData();
@@ -44,7 +65,7 @@ export const DropPanel = () => {
     }
 
     return (
-      <Accordion type="multiple" defaultValue={defaultValue}>
+      <StyledAccordion type="multiple" defaultValue={defaultValue}>
         {Object.entries(panelItems).map(([key, values]) => {
           const filteredValues = values
             .filter((item) =>
@@ -64,36 +85,32 @@ export const DropPanel = () => {
 
           return (
             <Accordion.Item value={key} key={key}>
-              <Accordion.Trigger>
-                <Stack direction="row" align="center" css={{}}>
-                  <Box css={{display: 'flex', color: '$fgSubtle'}}><TriangleDownIcon /></Box>
-                  <Text css={{fontSize: '$xsmall', fontWeight: '$sansBold'}}>{key.charAt(0).toUpperCase() + key.slice(1)}</Text>
-                </Stack>
-              </Accordion.Trigger>
+              <StyledAccordionTrigger>
+                <Box css={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '$fgSubtle', width: '24px', height: '24px'}}><TriangleDownIcon /></Box>
+                <Text size="xsmall" bold>{key.charAt(0).toUpperCase() + key.slice(1)}</Text>
+              </StyledAccordionTrigger>
               <Accordion.Content>
-                <Stack direction="column" css={{ padding: 0 }} gap={1}>
+                <Stack direction="column" css={{ padding: 0 }}>
                   {filteredValues}
                 </Stack>
               </Accordion.Content>
             </Accordion.Item>
           );
         })}
-      </Accordion>
+      </StyledAccordion>
     );
   }, [loadingTokenSets, defaultValue, panelItems, search]);
 
   return (
     <Box css={{width: '100%', background: '$bgDefault', zIndex: 10, maxHeight: '100%', display: 'flex', flexDirection: 'column'}} id="drop-panel">
-      <Stack direction="column" gap={1} css={{ paddingTop: '$1', width: '100%', overflowY: 'scroll' }}>
-        <Stack direction="column" gap={2} css={{ padding: '$2 $3' }}>
-          <Stack direction="row" justify="between" align="center">
-            <Heading>Nodes</Heading>
-          </Stack>
-          <TextInput leadingVisual={<SearchIcon />} placeholder="Search" value={search} onChange={onSearch} />
+      <Stack direction="column" gap={3} css={{ paddingTop: '$1', width: '100%', overflowY: 'scroll' }}>
+        <Stack direction="column" gap={2} css={{ padding: '0 $3', paddingTop: '$4' }}>
+          <Text size="xsmall" bold>Nodes</Text>
+          <TextInput placeholder="Search…" value={search} onChange={onSearch} />
         </Stack>
-        <Box css={{ padding: '$2 $2' }}>
+        <Stack direction="column" gap={2} css={{ padding: '$2' }}>
           {accordionItems}
-        </Box>
+        </Stack>
       </Stack>
     </Box>
   );

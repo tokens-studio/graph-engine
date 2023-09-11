@@ -4,7 +4,7 @@ import {
 } from 'react-contexify';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { PanelItems, items } from './PanelItems';
+import { PanelItems, items } from '../AddNodeDropdown/PanelItems';
 import { PlusIcon } from '@radix-ui/react-icons';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import { useExternalData } from '#/context';

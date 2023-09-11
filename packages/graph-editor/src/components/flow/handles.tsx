@@ -59,7 +59,7 @@ const StyledRawHandle = styled(RawHandle, {
   border: 'none !important',
   '&::after': {
     content: "''",
-    width: '3px',
+    width: '4px',
     height: '9px',
     border: '1px solid var(--colors-accentBorder)',
     background: 'var(--colors-accentEmphasis)',

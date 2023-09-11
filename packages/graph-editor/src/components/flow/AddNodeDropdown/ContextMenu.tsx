@@ -2,7 +2,7 @@ import { Menu } from 'react-contexify';
 import React from 'react';
 import { XYPosition } from 'reactflow';
 import DropPanel from './PanelItems';
-import { ContextMenuNodes } from './AddNodesContextMenu';
+import { ContextMenuNodes } from '../AddNodesContextMenu/AddNodesContextMenu';
 
 export interface IDropPanelContextMenuProps {
   id: string;
