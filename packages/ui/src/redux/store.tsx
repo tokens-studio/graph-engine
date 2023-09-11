@@ -1,13 +1,10 @@
-import { InputState } from './models/input.ts';
-import { NodeState } from './models/node.ts';
-import { OutputState } from './models/output.ts';
 import { RematchDispatch, init } from '@rematch/core';
 import { RootModel, models } from './models/index.ts';
 import { UIState } from './models/ui.ts';
 import persistPlugin from '@rematch/persist';
 import storage from 'redux-persist/lib/storage';
 import { JourneyState } from './models/journey.ts';
-import { SettingsState } from './models/settings.ts';
+import { OutputState } from './models/output.tsx';
 
 const persistConfig = {
   key: 'root',
@@ -29,10 +26,7 @@ export const store = init({
 
 export type Dispatch = RematchDispatch<RootModel>;
 export type RootState = {
-  output: OutputState;
-  node: NodeState;
-  input: InputState;
   ui: UIState;
   journey: JourneyState;
-  settings: SettingsState;
+  editorOutput: OutputState;
 };

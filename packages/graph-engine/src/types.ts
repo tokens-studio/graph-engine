@@ -69,6 +69,7 @@ export interface NodeDefinition<
 export enum NodeTypes {
   INPUT = "studio.tokens.generic.input",
   OUTPUT = "studio.tokens.generic.output",
+  PASS_THROUGH = "studio.tokens.generic.passthrough",
 
   ENUMERATED_INPUT = "studio.tokens.input.enumerated-constant",
   CONSTANT = "studio.tokens.input.constant",
@@ -78,6 +79,7 @@ export enum NodeTypes {
   JSON = "studio.tokens.input.json",
 
   CSS_MAP = "studio.tokens.css.map",
+  CSS_BOX = "studio.tokens.css.box",
 
   //Logic
   IF = "studio.tokens.logic.if",
@@ -93,6 +95,7 @@ export enum NodeTypes {
   REVERSE = "studio.tokens.array.reverse",
   SLICE = "studio.tokens.array.slice",
   JOIN = "studio.tokens.array.join",
+  CONCAT = "studio.tokens.array.concat",
   DOT_PROP = "studio.tokens.array.dotProp",
 
   // Math
