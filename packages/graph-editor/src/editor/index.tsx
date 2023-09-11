@@ -117,9 +117,9 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const { show: showNode } = useContextMenu({
       id: props.id + '_node',
     });
-    const { show: showPicker } = useContextMenu({
-      id: props.id + '_picker',
-    });
+    // const { show: showPicker } = useContextMenu({
+    //   id: props.id + '_picker',
+    // });
 
     const handleContextMenu = useCallback(
       (event) => {
@@ -153,8 +153,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
         //   });
         //   setDropPanelPosition(position);
         // }
-      },
-      [reactFlowInstance, showPicker],
+    },
+       [],
     );
 
     const handleEdgeContextMenu = useCallback(
@@ -429,53 +429,52 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     });
 
     const handleSelectNewNodeType = (nodeRequest) => {
-      console.log('nodeRequest', nodeRequest);
-
-      const dropPosition = nodeRequest.position || {
-        x: dropPanelPosition.x,
-        y: dropPanelPosition.y,
-      }
+    // Commenting out, we'll use this once we have the command palette
+    //   const dropPosition = nodeRequest.position || {
+    //     x: dropPanelPosition.x,
+    //     y: dropPanelPosition.y,
+    //   }
       
-      const nodes = reactFlowInstance.getNodes();
+    //   const nodes = reactFlowInstance.getNodes();
 
-      console.log('nodes', nodes);
+    //   console.log('nodes', nodes);
       
-      // Couldn't determine the type
-      if (!nodeRequest.type) {
-        return;
-      }
-      if (
-        nodeRequest.type == NodeTypes.INPUT &&
-        nodes.some((x) => x.type == NodeTypes.INPUT)
-      ) {
-        alert('Only one input node allowed');
-        return null;
-      }
+    //   // Couldn't determine the type
+    //   if (!nodeRequest.type) {
+    //     return;
+    //   }
+    //   if (
+    //     nodeRequest.type == NodeTypes.INPUT &&
+    //     nodes.some((x) => x.type == NodeTypes.INPUT)
+    //   ) {
+    //     alert('Only one input node allowed');
+    //     return null;
+    //   }
 
-      if (
-        nodeRequest.type == NodeTypes.OUTPUT &&
-        nodes.some((x) => x.type == NodeTypes.OUTPUT)
-      ) {
-        alert('Only one output node allowed');
-        return null;
-      }
+    //   if (
+    //     nodeRequest.type == NodeTypes.OUTPUT &&
+    //     nodes.some((x) => x.type == NodeTypes.OUTPUT)
+    //   ) {
+    //     alert('Only one output node allowed');
+    //     return null;
+    //   }
 
 
-      console.log('reactFlowInstance', reactFlowInstance.viewportInitialized);
+    //   console.log('reactFlowInstance', reactFlowInstance.viewportInitialized);
 
-      // set x y coordinates in instance
-      const position = reactFlowInstance.project(dropPosition);
+    //   // set x y coordinates in instance
+    //   const position = reactFlowInstance.project(dropPosition);
 
-      console.log('position', position);
+    //   console.log('position', position);
 
-      const newNode = createNode({
-        nodeRequest,
-        stateInitializer,
-        dispatch,
-        position,
-      })
+    //   const newNode = createNode({
+    //     nodeRequest,
+    //     stateInitializer,
+    //     dispatch,
+    //     position,
+    //   })
 
-      reactFlowInstance.addNodes(newNode);
+    //   reactFlowInstance.addNodes(newNode);
     };
     
     const nodeCount = nodes.length;
@@ -545,7 +544,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 )}
                     {nodeCount === 0 && (
                   <Box css={{display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', width: '100%', height: '100%', position: 'relative', zIndex: 100}}>
-                    <EmptyState icon={<BatteryChargingIcon style={{width: 48, height: 48 }} />} title="Build scalable and flexible design systems." description='Add your first node to get started or load an example' /></Box>                 
+                    <EmptyState icon={<BatteryChargingIcon style={{width: 48, height: 48 }} />} title="Build scalable and flexible design systems." description='Add your first node to get started or load an example' ><Box /></EmptyState></Box>                 
                 )}
                 <SelectedNodesToolbar />
                 <CustomControls position="bottom-center" />

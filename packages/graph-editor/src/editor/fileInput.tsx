@@ -117,7 +117,7 @@ export const handleDrop = async (event, opts: DropOptions): Promise<Node[]> => {
         }
       }),
     );
-  } else {    
+  } else {
     const dropData = event.dataTransfer.getData('application/reactflow');
     // check if the dropped element is valid
     if (typeof dropData === 'undefined' || !dropData) {

@@ -36,7 +36,7 @@ export const keyMap = {
   TOGGLE_HELP: 'ctrl+shift+h',
   TOGGLE_THEME: 'ctrl+shift+t',
   TOGGLE_SNAP_GRID: ['command+shift+s', 'ctrl+shift+s'],
-  TOGGLE_NODES_PANE: ['n'],
+  TOGGLE_NODES_PANEL: ['n'],
 };
 
 export const useHotkeys = ({ onEdgesDeleted }) => {
@@ -176,7 +176,7 @@ export const useHotkeys = ({ onEdgesDeleted }) => {
       TOGGLE_SNAP_GRID: () => {
         dispatch.settings.setSnapGrid(!snapGridValue);
       },
-      TOGGLE_NODES_PANE: () => {        
+      TOGGLE_NODES_PANEL: () => {        
         dispatch.ui.setShowNodesPanel(!showNodesPanel);
       }
     }),

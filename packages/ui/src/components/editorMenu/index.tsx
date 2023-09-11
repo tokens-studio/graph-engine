@@ -3,6 +3,7 @@ import {
   FloppyDiscIcon,
   FolderIcon,
   MoonIcon,
+  PhotoIcon,
   SunIcon,
 } from '@iconicicons/react';
 import SlackIcon from '#/assets/svgs/slack.svg';
@@ -10,28 +11,18 @@ import YoutubeIcon from '#/assets/svgs/youtube.svg';
 import { useCallback, useEffect } from 'react';
 import { CodeEditorRef } from '#/service/refs.ts';
 import { ResolverData } from '#/types/file.ts';
+import { getRectOfNodes, getTransformForBounds } from 'reactflow';
 import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
-import Link from 'next/link';
+import { toPng } from 'html-to-image';
 import { store } from '#/redux/store.tsx';
+
+const imageWidth = 1024;
+  
+const imageHeight = 768;
 
 export const Menubar = ({toggleTheme, theme}: {toggleTheme: () => void, theme: string}) => {
 
   const findCurrentEditor = useCallback(() => {
-    // if (!dockRef) {
-    //   return;
-    // }
-
-    // const graphs = dockRef.find('graphs') as PanelData;
-    // if (!graphs) {
-    //   return;
-    // }
-
-    // //Get the current activeID
-    // const id = graphs.activeId;
-
-    // if (!id) {
-    //   return;
-    // }
     const activeEditor = store.getState().refs['1']
 
     return activeEditor;
@@ -112,6 +103,50 @@ export const Menubar = ({toggleTheme, theme}: {toggleTheme: () => void, theme: s
     input.click();
   }, [findCurrentEditor]);
 
+  const onPrint = useCallback(async () => {
+    function downloadImage(dataUrl) {
+      const a = document.createElement('a');
+      a.setAttribute('download', 'reactflow.png');
+      a.setAttribute('href', dataUrl);
+      a.click();
+    }
+
+    const editor = findCurrentEditor();
+    if (!editor) {
+      return;
+    }
+
+    const reactFlow = editor.current.getFlow();
+
+    // we calculate a transform for the nodes so that all nodes are visible
+    // we then overwrite the transform of the `.react-flow__viewport` element
+    // with the style option of the html-to-image library
+    const nodesBounds = getRectOfNodes(reactFlow.getNodes());
+    const transform = getTransformForBounds(
+      nodesBounds,
+      imageWidth,
+      imageHeight,
+      0,
+      Infinity,
+    );
+
+    toPng(
+      document.querySelector(
+        `.editor .react-flow__viewport`,
+      ) as HTMLElement,
+      {
+        backgroundColor: '#1a365d',
+        width: imageWidth,
+        height: imageHeight,
+        style: {
+          width: '' + imageWidth,
+          height: '' + imageHeight,
+          transform: `translate(${transform[0]}px, ${transform[1]}px) scale(${transform[2]})`,
+        },
+      },
+    ).then(downloadImage);
+  }, [findCurrentEditor]);
+
   return (
     <Stack direction="column" justify="between" gap={2} css={{flexGrow: 1}}>
       <Stack direction="column">
@@ -128,16 +163,22 @@ export const Menubar = ({toggleTheme, theme}: {toggleTheme: () => void, theme: s
           onClick={toggleTheme}
         />
         <IconButton
-          as={Link}
+          variant="invisible"
+          tooltip="Save as screenshot"
+          size="medium"
+          icon={<PhotoIcon />}
+          onClick={onPrint}
+        />
+        <IconButton
+          as="a"
           href="https://docs.graph.tokens.studio/"
           variant="invisible"
           tooltip="View documentation"
           size="medium"
           icon={<BookIcon />}
-          onClick={toggleTheme}
         />
         <IconButton
-          as={Link}
+          as="a"
           href="https://www.youtube.com/@TokensStudio"
           variant="invisible"
           tooltip="YouTube"
@@ -145,7 +186,7 @@ export const Menubar = ({toggleTheme, theme}: {toggleTheme: () => void, theme: s
           icon={<YoutubeIcon />}
         />
         <IconButton
-          as={Link}
+          as="a"
           href="https://tokens.studio//slack"
           variant="invisible"
           tooltip="Slack"
