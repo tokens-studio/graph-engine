@@ -1,51 +1,20 @@
-import * as MenubarPrimitive from '@radix-ui/react-menubar';
 import {
   BookIcon,
-  ChevronRightIcon,
   FloppyDiscIcon,
   FolderIcon,
-  GridMasonryIcon,
   MoonIcon,
   SunIcon,
 } from '@iconicicons/react';
 import SlackIcon from '#/assets/svgs/slack.svg';
 import YoutubeIcon from '#/assets/svgs/youtube.svg';
 import { useCallback, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { currentTab as currentTabSelector } from '#/redux/selectors/index.ts';
-import { useDispatch } from '#/hooks/useDispatch.ts';
 import { CodeEditorRef } from '#/service/refs.ts';
 import { ResolverData } from '#/types/file.ts';
-import Logo from '#/assets/svgs/tokensstudio-logo.svg';
 import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
-import { toPng } from 'html-to-image';
-import { getRectOfNodes, getTransformForBounds } from 'reactflow';
-import {
-  Content,
-  Item,
-  RightSlot,
-  Root,
-  Seperator,
-  SubContent,
-  SubTrigger,
-  Trigger,
-} from './components.tsx';
-import { useTheme } from '#/hooks/useTheme.tsx';
-import { serviceRef } from '#/redux/selectors/refs.ts';
-import { DockLayout, PanelData } from 'rc-dock';
-import { v4 as uuidv4 } from 'uuid';
-import { EditorDockTab, EditorTab } from '../editor/index.tsx';
 import Link from 'next/link';
 import { store } from '#/redux/store.tsx';
 
-const imageWidth = 1024;
-const imageHeight = 768;
-
-export const Menubar = () => {
-  const dispatch = useDispatch();
-  const currentTab = useSelector(currentTabSelector);
-  const theme = useTheme();
-  const dockRef: DockLayout | undefined = useSelector(serviceRef('dock'));
+export const Menubar = ({toggleTheme, theme}: {toggleTheme: () => void, theme: string}) => {
 
   const findCurrentEditor = useCallback(() => {
     // if (!dockRef) {
@@ -64,13 +33,13 @@ export const Menubar = () => {
     //   return;
     // }
     const activeEditor = store.getState().refs['1']
-    console.log("Store is", activeEditor)
 
     return activeEditor;
   }, []);
 
   const onSave = useCallback(() => {
     const editor = findCurrentEditor();
+
     if (!editor) {
       return;
     }
@@ -93,7 +62,7 @@ export const Menubar = () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${editor.meta.name}.json`;
+    link.download = `tokens-studio-export.json`;
     document.body.appendChild(link);
     link.click();
 
@@ -143,89 +112,14 @@ export const Menubar = () => {
     input.click();
   }, [findCurrentEditor]);
 
-  const onPrint = useCallback(async () => {
-    function downloadImage(dataUrl) {
-      const a = document.createElement('a');
-      a.setAttribute('download', 'reactflow.png');
-      a.setAttribute('href', dataUrl);
-      a.click();
-    }
-
-    const editor = findCurrentEditor();
-    if (!editor) {
-      return;
-    }
-
-    const reactFlow = editor.current.getFlow();
-
-    // we calculate a transform for the nodes so that all nodes are visible
-    // we then overwrite the transform of the `.react-flow__viewport` element
-    // with the style option of the html-to-image library
-    const nodesBounds = getRectOfNodes(reactFlow.getNodes());
-    const transform = getTransformForBounds(
-      nodesBounds,
-      imageWidth,
-      imageHeight,
-      0,
-      Infinity,
-    );
-
-    toPng(
-      document.querySelector(
-        `#${currentTab.id} .react-flow__viewport`,
-      ) as HTMLElement,
-      {
-        backgroundColor: '#1a365d',
-        width: imageWidth,
-        height: imageHeight,
-        style: {
-          width: '' + imageWidth,
-          height: '' + imageHeight,
-          transform: `translate(${transform[0]}px, ${transform[1]}px) scale(${transform[2]})`,
-        },
-      },
-    ).then(downloadImage);
-  }, [currentTab.id, findCurrentEditor]);
-
-  const toggleTheme = useCallback(() => dispatch.ui.toggleTheme(null), []);
-  const onNewGraph = useCallback(() => {
-    if (!dockRef) {
-      return;
-    }
-
-    const id: string = uuidv4();
-    const title = 'New Tab';
-
-    dispatch.graph.setGraphState({
-      id,
-      title,
-    });
-
-    dockRef.dockMove(
-      {
-        cached: true,
-        closable: true,
-        id: id,
-        title: <EditorDockTab id={id} />,
-        content: <EditorTab id={id} name={title} />,
-      },
-      'graphs',
-      'middle',
-    );
-  }, [dispatch.graph, dockRef]);
-
-  // on mount call onNewGraph
-  useEffect(() => {
-    onNewGraph();
-  }, [onNewGraph]);
-
   return (
-    <Stack direction="column" gap={2} css={{ position: 'relative', backgroundColor: '$bgDefault', padding: '$1', borderRight: '1px solid $borderSubtle', paddingTop: '$7' }}>
-      <Stack direction="column"><Box css={{ height: '1px', backgroundColor: '$borderSubtle', margin: '$2', marginTop: '$3' }} />
-        <IconButton tooltip="Load .json" variant="invisible" size="medium" icon={<FolderIcon />} onClick={onLoad} disabled={!currentTab} />
-        <IconButton tooltip="Save as .json" variant="invisible" size="medium" icon={<FloppyDiscIcon />} onClick={onSave} disabled={!currentTab} />
+    <Stack direction="column" justify="between" gap={2} css={{flexGrow: 1}}>
+      <Stack direction="column">
+        <Box css={{ height: '1px', backgroundColor: '$borderSubtle', margin: '$2'}} />
+        <IconButton tooltip="Load .json" variant="invisible" size="medium" icon={<FolderIcon />} onClick={onLoad} />
+        <IconButton tooltip="Save as .json" variant="invisible" size="medium" icon={<FloppyDiscIcon />} onClick={onSave} />
       </Stack>
-      <Stack direction="column" justify="end" css={{flexGrow: 1}}>
+      <Stack direction="column" justify="end" css={{ flexGrow: 1 }}>
         <IconButton
           variant="invisible"
           tooltip={theme === 'light' ? 'Dark mode' : 'Light mode'}
@@ -233,7 +127,7 @@ export const Menubar = () => {
           icon={theme === 'light' ? <MoonIcon /> : <SunIcon />}
           onClick={toggleTheme}
         />
-         <IconButton
+        <IconButton
           as={Link}
           href="https://docs.graph.tokens.studio/"
           variant="invisible"
@@ -242,7 +136,7 @@ export const Menubar = () => {
           icon={<BookIcon />}
           onClick={toggleTheme}
         />
-         <IconButton
+        <IconButton
           as={Link}
           href="https://www.youtube.com/@TokensStudio"
           variant="invisible"
@@ -250,7 +144,7 @@ export const Menubar = () => {
           size="medium"
           icon={<YoutubeIcon />}
         />
-         <IconButton
+        <IconButton
           as={Link}
           href="https://tokens.studio//slack"
           variant="invisible"

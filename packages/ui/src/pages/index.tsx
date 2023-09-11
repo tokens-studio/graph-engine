@@ -20,13 +20,9 @@ import example from '#/examples/scale.json';
 import { useTheme } from '#/hooks/useTheme.tsx';
 import { useJourney } from '#/journeys/basic.tsx';
 import { JoyrideTooltip } from '#/components/joyride/tooltip.tsx';
-import { Menubar } from '#/components/editorMenu/index.tsx';
-import { EditorRefs } from '#/service/refs.ts';
 import { EditorTab } from '#/components/editor/index.tsx';
-import { ResolverData } from '#/types/file.ts';
 
 const Wrapper = () => {
-  const currentTab = useSelector(currentTabSelector);
   const [theCode, setTheCode] = useState(code);
   const dispatch = useDispatch();
   const showJourney = useSelector(showJourneySelector);
@@ -61,44 +57,20 @@ const Wrapper = () => {
           },
         }}
       />
-      <div style={{ height: '100vh', overflow: 'hidden' }}>
-        <Stack
-          direction="row"
-          css={{ height: '100%', background: '$bgDefault' }}
+      <Box css={{ position: 'relative', display: 'flex', flexDirection: 'row', width: '100%', height: '100%', overflow: 'hidden', background: '$bgDefault'  }}>
+        <LiveProvider
+          code={theCode}
+          scope={scope}
+          theme={theme === 'light' ? themes.vsLight : themes.vsDark}
+          noInline={true}
+          enableTypeScript={true}
+          language="jsx"
         >
-          <Menubar />
-          <Box css={{position: 'relative', display: 'flex', flexDirection: 'column', width: '100%', height: '100%'}}>
-            <LiveProvider
-              code={theCode}
-              scope={scope}
-              theme={theme === 'light' ? themes.vsLight : themes.vsDark}
-              noInline={true}
-              enableTypeScript={true}
-              language="jsx"
-            >
-              <EditorTab id="1" title="Example" />
-            </LiveProvider>
-          </Box>
-          {/* TODO: Can we consolidate the panes? Some are in the graph-editor, some are in the ui package. Feels like everything should be part of the graph editor. */}
-        </Stack>
-      </div>
+          <EditorTab id="1" title="Example" />
+        </LiveProvider>
+      </Box>
     </>
   );
 };
-
-{/* <Box css={{ position: 'fixed', top: '$3', left: '$3', zIndex: 1 }}>
-<TokensStudioLogo style={{ height: '3rem', width: 'auto' }} />
-</Box>
-<Toolbar codeRef={ref} refs={refs} setTheCode={setTheCode} />
-<Box
-value={currentTab?.id}
-onValueChange={onTabChange}
-style={{
-  display: 'flex',
-  flexDirection: 'row',
-  flex: 1,
-  background: '$bgCanvas',
-  position: 'relative',
-}} */}
 
 export default Wrapper;

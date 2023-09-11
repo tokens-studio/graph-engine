@@ -484,14 +484,15 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
         <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
           <Box
             className="editor"
-            css={{ height: '100%', backgroundColor: '$bgCanvas', display: 'flex', flexDirection: 'row' }}
+            css={{ height: '100%', backgroundColor: '$bgCanvas', display: 'flex', flexDirection: 'row', flexGrow: 1 }}
             ref={reactFlowWrapper}
           >
             <ForceUpdateProvider value={forceUpdate}>
               <Box css={{ display: 'flex', flexDirection: 'row' }}>
-                <Box css={{ padding: '$1', position: 'fixed', top: '$1', left: 0 }}>
+                <Stack direction="column" gap={2} css={{ position: 'relative', backgroundColor: '$bgDefault', padding: '$1', borderRight: '1px solid $borderSubtle' }}>
                   <IconButton tooltip='Add nodes (n)' onClick={handleTogglePanel} icon={<AppsIcon />} variant={showNodesPanel ? 'primary' : 'invisible'} />
-                </Box>
+                  {props.menuContent}
+                </Stack>
                 {showNodesPanel && <Box css={{ backgroundColor: '$bgDefault', width: '240px', overflow: 'hidden', display: 'flex', flexDirection: 'column', borderRight: '1px solid $borderMuted', zIndex: 10 }}>
                   <DropPanel />
                 </Box>}
@@ -542,9 +543,9 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                   />
                 )}
                     {nodeCount === 0 && (
-                  <Box css={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', position: 'relative', zIndex: 100}}>
+                  <Box css={{display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', width: '100%', height: '100%', position: 'relative', zIndex: 100}}>
                     <EmptyState icon={<BatteryChargingIcon style={{width: 48, height: 48 }} />} title="Build scalable and flexible design systems." description='Add your first node to get started or load an example'>
-                      <Stack direction="row" gap={2}>
+                      <Stack direction="row" gap={2} css={{pointerEvents: 'auto'}}>
                         <AddNodeDropdown onSelectItem={handleSelectNewNodeType} />
                         <Button icon={<FilePlusIcon />} onClick={() => alert("Not implemented, we should let the user choose from Marcos examples in a dropdown")}>Load example</Button>
                       </Stack>
@@ -552,6 +553,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 )}
                 <SelectedNodesToolbar />
                 <CustomControls position="bottom-center" />
+                {props.children}
               </ReactFlow>
             </ForceUpdateProvider>
           </Box>

@@ -29,7 +29,6 @@ import classNames from 'classnames/dedupe.js';
 import useDetachNodes from '../hooks/useDetachNodes.ts';
 import { useSelector } from 'react-redux';
 import { debugMode, obscureDistance } from '#/redux/selectors/settings.ts';
-import { Sidesheet } from '#/editor/Sidesheet.tsx';
 
 const CollapserContainer = styled('div', {});
 
@@ -192,7 +191,6 @@ export const Node = (props: NodeProps) => {
       }}
     >
       <NodeToolbar className="nodrag">
-        <Sidesheet isVisible={true} title={title}>{children}</Sidesheet>
         <Stack direction="row" gap={0} css={{ padding: '$1', backgroundColor: '$bgDefault', borderRadius: '$medium', border: '1px solid $borderSubtle', boxShadow: '$small', }}>
           {hasParent && <Button onClick={onDetach}>Detach</Button>}
           <IconButton
@@ -228,7 +226,7 @@ export const Node = (props: NodeProps) => {
                   direction="row"
                   justify="between"
                   align="center"
-                  css={{ padding: '$3 $5', borderBottom: collapsed ? 'none' : '2px solid var(--nodeBorderColor, var(--colors-borderSubtle))', backgroundColor: 'var(--nodeBgColor, var(--colors-bgSubtle))', borderTopLeftRadius: '$medium', borderTopRightRadius: '$medium' }}
+                  css={{ padding: '$3 $5', borderBottom: collapsed ? 'none' : '2px solid var(--nodeBorderColor, var(--colors-borderSubtle))', backgroundColor: 'var(--nodeBgColor, var(--colors-bgSubtle))', borderRadius: '$medium', borderBottomLeftRadius: collapsed ? '$medium' : 0, borderBottomRightRadius: collapsed ? '$medium' : 0 }}
                 >
                   <Stack direction="row" gap={2} align="center">
                     {icon && <Box css={{ color: 'var(--nodeTextColor, var(--colors-fgSubtle))' }}>{icon}</Box>}
