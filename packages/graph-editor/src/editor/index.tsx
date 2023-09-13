@@ -60,6 +60,7 @@ import { forceUpdate } from '#/redux/selectors/graph.ts';
 import { DropPanel } from '#/components/index.ts';
 import { BatteryChargingIcon, FilePlusIcon } from '@iconicicons/react';
 import { AppsIcon } from '#/components/icons/AppsIcon.tsx';
+import { CommandMenu } from '#/components/CommandPalette.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -131,30 +132,50 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       [show],
     );
 
+    const [isHoldingDownOption, setIsHoldingDownOption] = React.useState(false);
+
+    useEffect(() => {
+      const down = (e) => {
+        if ((e.altKey)) {
+            e.preventDefault()
+
+            setIsHoldingDownOption(true);
+        } else {
+          setIsHoldingDownOption(false);
+        }
+    }
+
+    document.addEventListener('keydown', down)
+    return () => document.removeEventListener('keydown', down)
+    }, [dispatch.ui])
+
     const onConnectEnd = useCallback(
       (event) => {
-        // Commenting out for now, I'd like to bring this back once we have cmdk hooked up, I'd do this after we merge this PR.
-        // I imagine the user being able to do what they can in Figma with Shift + I
-        // which triggers a combobox to select the node type. I expect that same combobox (in a cmd palette)
-        // to also appear when I drag a node, hold option (alt) and then let go in the canvas - I'd expect to be able to select a new node type (and if its just 1 input, connect it)
-        // const targetIsPane =
-        //   event.target.classList.contains('react-flow__pane');
+        if (!isHoldingDownOption) {
+          return;
+        }
 
-        // if (targetIsPane) {          
-        //   showPicker({ event });
-        //   const reactFlowBounds =
-        //     reactFlowWrapper?.current?.getBoundingClientRect();
-        //   if (!reactFlowBounds) {
-        //     return;
-        //   }
-        //   const position = reactFlowInstance?.project({
-        //     x: event.clientX - reactFlowBounds.left,
-        //     y: event.clientY - reactFlowBounds.top,
-        //   });
-        //   setDropPanelPosition(position);
-        // }
+        const targetIsPane =
+          event.target.classList.contains('react-flow__pane');
+
+        if (targetIsPane) {     
+          dispatch.ui.setShowNodesCmdPalette(true);
+
+          const reactFlowBounds =
+            reactFlowWrapper?.current?.getBoundingClientRect();
+          if (!reactFlowBounds) {
+            return;
+          }
+          const position = reactFlowInstance?.project({
+            x: event.clientX - reactFlowBounds.left,
+            y: event.clientY - reactFlowBounds.top,
+          });
+          dispatch.ui.setNodeInsertPosition(position)
+
+          // TODO: After dropping the node we should try to connect the node if it has 1 handler only
+        }
     },
-       [],
+       [dispatch.ui, isHoldingDownOption, reactFlowInstance, reactFlowWrapper],
     );
 
     const handleEdgeContextMenu = useCallback(
@@ -548,6 +569,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 )}
                 <SelectedNodesToolbar />
                 <CustomControls position="bottom-center" />
+                <CommandMenu reactFlowWrapper={reactFlowWrapper} />
               </ReactFlow>
             </ForceUpdateProvider>
           </Box>

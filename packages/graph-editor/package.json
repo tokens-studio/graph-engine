@@ -46,6 +46,7 @@
     "@tokens-studio/ui": "0.3.2",
     "change-case": "4.1.2",
     "classnames": "2.3.2",
+    "cmdk": "^0.2.0",
     "copy-to-clipboard": "3.3.3",
     "dagre": "0.8.5",
     "debounce": "1.2.1",

@@ -24,6 +24,13 @@ export const PaneContextMenu = ({ id, onSelectItem }: IPaneContextMenu) => {
   const snapGridValue = useSelector(snapGrid);
   const dispatch = useDispatch();
 
+  const handleTriggerAddNode = useCallback(
+    (e) => {
+      dispatch.ui.setShowNodesCmdPalette(true);
+    },
+    [dispatch.ui]
+  );
+
   const recenter = useCallback(() => {
     reactFlowInstance.fitView();
   }, [reactFlowInstance]);
@@ -48,6 +55,7 @@ export const PaneContextMenu = ({ id, onSelectItem }: IPaneContextMenu) => {
   const layout = useAutoLayout();
   return (
     <Menu id={id} preventDefaultOnKeydown animation="">
+      <ContextMenuItem onClick={handleTriggerAddNode}>Add node</ContextMenuItem>
       <ContextMenuItem onClick={layout}>Apply Layout</ContextMenuItem>
       <ContextMenuItem onClick={setShowGrid}>{showGridValue ? 'Hide' : 'Show'} Grid</ContextMenuItem>
       <ContextMenuItem onClick={recenter}>Recenter</ContextMenuItem>
