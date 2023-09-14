@@ -49,6 +49,7 @@
     "extract-colors": "^3.0.0",
     "get-pixels": "^3.3.3",
     "is-promise": "^4.0.0",
+    "poline": "^0.7.0",
     "postcss-value-parser": "^4.2.0",
     "reactflow": "11.7.0",
     "token-transformer": "^0.0.32"

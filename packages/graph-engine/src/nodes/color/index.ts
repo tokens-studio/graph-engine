@@ -6,6 +6,7 @@ import { node as extract } from "./extract.js";
 import { node as scale } from "./scale.js";
 import { node as convert } from "./convert.js";
 import { node as wheel } from "./wheel.js";
+import { node as poline } from "./poline.js";
 
 export const nodes = [
   blend,
@@ -16,4 +17,5 @@ export const nodes = [
   extract,
   convert,
   wheel,
+  poline,
 ];
