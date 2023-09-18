@@ -14,6 +14,8 @@ import {
   ImperativeEditorRef,
   EditorEdge,
   EditorNode,
+  addPanelItem,
+  addCustomNodeTypes,
 } from '@tokens-studio/graph-editor';
 import { LiveProvider } from 'react-live';
 import { Splitter } from '#/components/splitter.tsx';
@@ -55,6 +57,26 @@ import { useTheme } from '#/hooks/useTheme.tsx';
 import { useJourney } from '#/journeys/basic.tsx';
 import { JoyrideTooltip } from '#/components/joyride/tooltip.tsx';
 import { Preview } from '#/components/Preview.tsx';
+
+import customOrNodeUI from '#/components/customOrNodeUI.tsx';
+import { CUSTOM_OR_TYPE } from '#/components/customOrNode.tsx';
+import polineNodeUI from '#/components/polineNodeUI.tsx';
+import { type as POLINE_TYPE } from '#/components/polineNode.ts';
+
+//Register the custom node
+addCustomNodeTypes(customOrNodeUI)
+addPanelItem({
+  type: CUSTOM_OR_TYPE,
+  icon: <span>i</span>,
+  text: 'Custom OR',
+}, "logic")
+
+addCustomNodeTypes(polineNodeUI)
+addPanelItem({
+  type: POLINE_TYPE,
+  icon: <span>i</span>,
+  text: 'Poline',
+}, "color")
 
 interface ResolverData {
   nodes: EditorNode[];
@@ -260,6 +282,7 @@ const Wrapper = () => {
   const tabContents = useMemo(() => {
     return tabs.map((x) => {
       const ref = refs[x.id];
+      console.log(ref, 'ref editor &*&*')
 
       return (
         <Tabs.Content
