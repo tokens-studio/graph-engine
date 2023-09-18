@@ -66,7 +66,6 @@ import ExternalSetNode from './sets/ExternalSetNode.tsx';
 export const customNodeTypes: WrappedNodeDefinition[] = [];
 
 export const addCustomNodeTypes = (customNodeType: WrappedNodeDefinition) => {
-  // listOfNodes.push(customNodeType);
   const customNodeTypes = processTypes([customNodeType]);
   nodeTypes = { ...nodeTypes, ...customNodeTypes.nodeTypes };
   stateInitializer = {

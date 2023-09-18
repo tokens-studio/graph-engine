@@ -178,6 +178,7 @@ export const WrapNode = (
             mappedInput,
             state,
             value,
+            ephemeralState,
           );
           setError(null);
           setIsLoading(false);
