@@ -282,7 +282,6 @@ const Wrapper = () => {
   const tabContents = useMemo(() => {
     return tabs.map((x) => {
       const ref = refs[x.id];
-      console.log(ref, 'ref editor &*&*')
 
       return (
         <Tabs.Content
