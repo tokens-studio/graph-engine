@@ -1,4 +1,5 @@
 import {
+  ArrowDownIcon,
   BlendingModeIcon,
   ButtonIcon,
   ColorWheelIcon,
@@ -258,6 +259,11 @@ export const items = {
       type: NodeTypes.SLICE,
       icon: '[a,b]',
       text: 'Slice Array',
+    },
+    {
+      type: NodeTypes.SORT,
+      icon: <ArrowDownIcon />,
+      text: 'Sort Array',
     },
     {
       type: NodeTypes.JOIN,
