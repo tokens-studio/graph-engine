@@ -62,6 +62,7 @@ import jsonNode from './generic/jsonNode.tsx';
 import cssBox from './css/boxNode.tsx';
 import concat from './array/concat.tsx';
 import ExternalSetNode from './sets/ExternalSetNode.tsx';
+import selectToken from './sets/selectToken.tsx';
 
 const processTypes = (types: WrappedNodeDefinition[]) => {
   const nodeTypes = types.reduce((acc, type) => {
@@ -144,4 +145,5 @@ export const { nodeTypes, stateInitializer } = processTypes([
   cssBox,
   concat,
   ExternalSetNode,
+  selectToken,
 ]);
