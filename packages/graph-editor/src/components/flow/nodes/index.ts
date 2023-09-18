@@ -63,6 +63,18 @@ import cssBox from './css/boxNode.tsx';
 import concat from './array/concat.tsx';
 import ExternalSetNode from './sets/ExternalSetNode.tsx';
 
+export const customNodeTypes: WrappedNodeDefinition[] = [];
+
+export const addCustomNodeTypes = (customNodeType: WrappedNodeDefinition) => {
+  // listOfNodes.push(customNodeType);
+  const customNodeTypes = processTypes([customNodeType]);
+  nodeTypes = { ...nodeTypes, ...customNodeTypes.nodeTypes };
+  stateInitializer = {
+    ...stateInitializer,
+    ...customNodeTypes.stateInitializer,
+  };
+};
+
 const processTypes = (types: WrappedNodeDefinition[]) => {
   const nodeTypes = types.reduce((acc, type) => {
     acc[type.type] = type.component;
@@ -80,7 +92,7 @@ const processTypes = (types: WrappedNodeDefinition[]) => {
   };
 };
 
-export const { nodeTypes, stateInitializer } = processTypes([
+export let { nodeTypes, stateInitializer } = processTypes([
   ConstantNode,
   AddNode,
   convertNode,

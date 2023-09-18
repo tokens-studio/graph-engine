@@ -421,3 +421,11 @@ export const items = {
     },
   ],
 };
+
+export const addPanelItem = (item: PanelItem, category: string) => {
+  if (items[category]) {
+    items[category].push(item);
+  } else {
+    items[category] = [item];
+  }
+}

@@ -53,11 +53,6 @@ const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
 const panOnDrag = [1, 2];
 
-const fullNodeTypes = {
-  ...nodeTypes,
-  [EditorNodeTypes.GROUP]: groupNode,
-};
-
 const edgeTypes = {
   custom: CustomEdge,
 } as unknown as EdgeTypes;
@@ -98,6 +93,12 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
     const nodeState = dispatch.node.getState();
+
+    // Create flow node types here, instead of the global scope to ensure that custom nodes added by the user are available in nodeTypes 
+    const fullNodeTypesRef = useRef({
+      ...nodeTypes,
+      [EditorNodeTypes.GROUP]: groupNode,
+    });
 
     useImperativeHandle(
       ref,
@@ -354,7 +355,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
               onNodeDragStop={onNodeDragStop}
               snapToGrid={snapGrid}
               edgeTypes={edgeTypes}
-              nodeTypes={fullNodeTypes}
+              nodeTypes={fullNodeTypesRef.current}
               snapGrid={snapGridCoords}
               onNodeDrag={onNodeDrag}
               onConnect={onConnect}
