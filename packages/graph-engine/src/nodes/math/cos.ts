@@ -10,7 +10,7 @@ export const type = NodeTypes.COS;
  * @returns
  */
 export const process = (input) => {
-  if (input.input === undefined) return undefined;
+  if (input.input === undefined) throw new Error("Input is undefined");
   return Math.cos(input.input);
 };
 
