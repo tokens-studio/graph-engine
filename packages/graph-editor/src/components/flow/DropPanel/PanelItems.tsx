@@ -405,6 +405,11 @@ export const items = {
   ],
   string: [
     {
+      type: NodeTypes.JOIN_STRING,
+      icon: 'a+a',
+      text: 'Join String',
+    },
+    {
       type: NodeTypes.UPPERCASE,
       icon: 'uU',
       text: 'Uppercase',
