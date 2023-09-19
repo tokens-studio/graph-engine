@@ -5,19 +5,18 @@
  */
 
 import { NodeDefinition, NodeTypes } from "../../types.js";
-import { orderBy } from 'lodash';
+import orderBy from "lodash.orderby";
 
 const type = NodeTypes.SORT;
 
 export enum OrderMap {
-  ASC = "Ascend",
-  DESC = "Descend",
+  ASC = "asc",
+  DESC = "desc",
 }
-
 
 export type NamedInput = {
   array: any[];
-  order?: OrderMap.ASC | OrderMap.DESC,// Optional parameter to specify the sort order
+  order?: OrderMap.ASC | OrderMap.DESC; // Optional parameter to specify the sort order
   sortBy?: string; // Optional parameter to specify the property to sort by
 };
 
