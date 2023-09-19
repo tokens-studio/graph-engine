@@ -34,6 +34,7 @@ import RegexNode from './string/regexNode.tsx';
 import RemapNode from './sets/remapNode.tsx';
 import ResolveAliasesNode from './sets/resolveAliases.tsx';
 import ReverseArrayNode from './array/reverse.tsx';
+import SortArrayNode from './array/sort.tsx';
 import ScaleNode from './color/scaleNode.tsx';
 import SinNode from './math/sinNode.tsx';
 import SliceNode from './array/slice.tsx';
@@ -112,6 +113,7 @@ export const { nodeTypes, stateInitializer } = processTypes([
   SinNode,
   CosNode,
   ReverseArrayNode,
+  SortArrayNode,
   TanNode,
   jsonNode,
   ClampNode,

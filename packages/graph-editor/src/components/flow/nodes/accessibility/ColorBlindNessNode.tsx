@@ -1,11 +1,4 @@
-import {
-  Button,
-  Checkbox,
-  DropdownMenu,
-  Label,
-  Stack,
-  Text,
-} from '@tokens-studio/ui';
+import { Button, DropdownMenu, Label, Stack, Text } from '@tokens-studio/ui';
 import {
   ColorBlindnessTypes,
   node,
@@ -17,7 +10,6 @@ import {
 import { PreviewColor } from '../../preview/color.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { sentenceCase } from 'sentence-case';
-import PreviewNumber from '../../preview/number.tsx';
 import React, { useCallback } from 'react';
 
 const keys = Object.values(ColorBlindnessTypes);
