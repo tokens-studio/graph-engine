@@ -22,6 +22,7 @@ import InvertNode from './sets/invertNode.tsx';
 import objectify from './input/objectify.tsx';
 import dotProp from './array/dotProp.tsx';
 import JoinNode from './array/join.tsx';
+import JoinString from './string/join.tsx';
 import LerpNode from './math/lerpNode.tsx';
 import LowerCaseNode from './string/lowerCaseNode.tsx';
 import MultiplyNode from './math/multiplyNode.tsx';
@@ -33,6 +34,7 @@ import RegexNode from './string/regexNode.tsx';
 import RemapNode from './sets/remapNode.tsx';
 import ResolveAliasesNode from './sets/resolveAliases.tsx';
 import ReverseArrayNode from './array/reverse.tsx';
+import SortArrayNode from './array/sort.tsx';
 import ScaleNode from './color/scaleNode.tsx';
 import SinNode from './math/sinNode.tsx';
 import SliceNode from './array/slice.tsx';
@@ -98,6 +100,7 @@ export const { nodeTypes, stateInitializer } = processTypes([
   SubtractNode,
   sliderNode,
   JoinNode,
+  JoinString,
   TokenSetNode,
   roundNode,
   UpperNode,
@@ -111,6 +114,7 @@ export const { nodeTypes, stateInitializer } = processTypes([
   SinNode,
   CosNode,
   ReverseArrayNode,
+  SortArrayNode,
   TanNode,
   jsonNode,
   ClampNode,
