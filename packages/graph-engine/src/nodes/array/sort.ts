@@ -20,13 +20,18 @@ export type NamedInput = {
   sortBy?: string; // Optional parameter to specify the property to sort by
 };
 
-export const process = (input: NamedInput) => {
-  const { array, order = OrderMap.ASC, sortBy } = input;
-
-  return orderBy(array, [sortBy], [order]);
+export const defaults = {
+  order: OrderMap.ASC,
 };
 
-export const node: NodeDefinition<NamedInput> = {
+export const process = (input: NamedInput, state: NamedInput) => {
+  const { array, order, sortBy } = { ...state, ...input };
+
+  return orderBy(array, [sortBy], order);
+};
+
+export const node: NodeDefinition<NamedInput, NamedInput> = {
   type,
+  defaults,
   process,
 };
