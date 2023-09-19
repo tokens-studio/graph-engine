@@ -22,6 +22,7 @@ import InvertNode from './sets/invertNode.tsx';
 import objectify from './input/objectify.tsx';
 import dotProp from './array/dotProp.tsx';
 import JoinNode from './array/join.tsx';
+import JoinString from './string/join.tsx';
 import LerpNode from './math/lerpNode.tsx';
 import LowerCaseNode from './string/lowerCaseNode.tsx';
 import MultiplyNode from './math/multiplyNode.tsx';
@@ -98,6 +99,7 @@ export const { nodeTypes, stateInitializer } = processTypes([
   SubtractNode,
   sliderNode,
   JoinNode,
+  JoinString,
   TokenSetNode,
   roundNode,
   UpperNode,
