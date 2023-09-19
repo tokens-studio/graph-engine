@@ -17,7 +17,7 @@ export const process = (input: NamedInput, state: NamedInput) => {
   return array.join(separator);
 };
 
-export const node: NodeDefinition<NamedInput> = {
+export const node: NodeDefinition<NamedInput, NamedInput> = {
   defaults,
   type,
   process,
