@@ -1,5 +1,5 @@
 import { NodeDefinition, NodeTypes } from "../../types.js";
-import { Hsl, converter, formatHex, parse } from "culori";
+import { Hsl, converter, formatHex } from "culori";
 import { Poline, PositionFunction, Vector3, positionFunctions } from "poline";
 
 export const type = NodeTypes.POLINE;
