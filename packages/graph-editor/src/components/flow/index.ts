@@ -1,1 +1,1 @@
-export * from './DropPanel'
+export * from './DropPanel/DropPanel'

@@ -32,7 +32,7 @@ export const settingsState = createModel<RootModel>()({
     obscureDistance: 0.5,
     edgeType: EdgeType.bezier,
     layoutType: LayoutType.dagre,
-    showGrid: false,
+    showGrid: true,
     snapGrid: false,
     debugMode: true,
   } as SettingsState,

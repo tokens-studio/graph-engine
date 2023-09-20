@@ -89,7 +89,7 @@ td,
 
 
 .dock-panel,.dock-top .dock-bar, .dock-tab{
-  background: var(--colors-bgSurface)
+  background: var(--colors-bgDefault)
   }
 
   .dock-panel.dock-style-main .dock-bar{

@@ -2,7 +2,7 @@
 import React, { useMemo, useState } from 'react';
 
 import { Box, Stack, Text } from '@tokens-studio/ui';
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { LabelNoWrap } from '../../../../components/label.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/set/resolve.js';
@@ -62,9 +62,7 @@ export const ResolveAliasesNode = () => {
     <Stack direction="row" gap={2}>
       <HandleContainer type="target">
         <Handle id={`inputs.${newInputHandle}`}>
-          <Text>
-            <i>Input</i>{' '}
-          </Text>
+          Input
         </Handle>
         {input.inputs.map((input, i) => {
           return (
@@ -74,9 +72,9 @@ export const ResolveAliasesNode = () => {
           );
         })}
         <Handle id={`context.${newContextHandle}`}>
-          <Text>
-            <i>Context</i>{' '}
-          </Text>
+          <HandleText secondary>
+            Context
+          </HandleText>
         </Handle>
         {input.context.map((input, i) => {
           return (
@@ -88,9 +86,7 @@ export const ResolveAliasesNode = () => {
       </HandleContainer>
       <HandleContainer type="source">
         <Handle id={SET_ID}>
-          <Text>
-            <i>As Set</i>{' '}
-          </Text>
+          <HandleText>Set</HandleText>
         </Handle>
         {/* {handles} */}
       </HandleContainer>

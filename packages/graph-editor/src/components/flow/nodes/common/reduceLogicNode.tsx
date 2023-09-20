@@ -26,9 +26,7 @@ export const ReduceLogicNode = () => {
           );
         })}
         <Handle id={newHandle}>
-          <Text>
-            <i>New</i>
-          </Text>
+          New
         </Handle>
       </HandleContainer>
       <HandleContainer type="source">

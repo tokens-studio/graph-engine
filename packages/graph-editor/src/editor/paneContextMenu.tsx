@@ -11,16 +11,25 @@ import { useAutoLayout } from './hooks/useAutolayout';
 import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '#/redux/selectors/settings';
 import { useDispatch } from '#/hooks';
+import { ContextMenuItem } from './ContextMenuStyles';
 
 export interface IPaneContextMenu {
   id: string;
+  onSelectItem: (item: any) => void;
 }
 
-export const PaneContextMenu = ({ id }: IPaneContextMenu) => {
+export const PaneContextMenu = ({ id, onSelectItem }: IPaneContextMenu) => {
   const reactFlowInstance = useReactFlow();
   const showGridValue = useSelector(showGrid);
   const snapGridValue = useSelector(snapGrid);
   const dispatch = useDispatch();
+
+  const handleTriggerAddNode = useCallback(
+    (e) => {
+      dispatch.ui.setShowNodesCmdPalette(true);
+    },
+    [dispatch.ui]
+  );
 
   const recenter = useCallback(() => {
     reactFlowInstance.fitView();
@@ -46,14 +55,15 @@ export const PaneContextMenu = ({ id }: IPaneContextMenu) => {
   const layout = useAutoLayout();
   return (
     <Menu id={id} preventDefaultOnKeydown animation="">
-      <Item onClick={layout}>Apply Layout</Item>
-      <Item onClick={setShowGrid}>{showGridValue ? 'Hide' : 'Show'} Grid</Item>
-      <Item onClick={recenter}>Recenter</Item>
+      <ContextMenuItem onClick={handleTriggerAddNode}>Add node</ContextMenuItem>
+      <ContextMenuItem onClick={layout}>Apply Layout</ContextMenuItem>
+      <ContextMenuItem onClick={setShowGrid}>{showGridValue ? 'Hide' : 'Show'} Grid</ContextMenuItem>
+      <ContextMenuItem onClick={recenter}>Recenter</ContextMenuItem>
       <Separator />
-      <Item onClick={setSnapGrid}>Snap Grid</Item>
-      <Item onClick={forceUpdate}>Force Update</Item>
+      <ContextMenuItem onClick={setSnapGrid}>Snap Grid</ContextMenuItem>
+      <ContextMenuItem onClick={forceUpdate}>Force Update</ContextMenuItem>
       <Separator />
-      <Item onClick={clear}>Clear</Item>
+      <ContextMenuItem onClick={clear}>Clear</ContextMenuItem>
     </Menu>
   );
 };

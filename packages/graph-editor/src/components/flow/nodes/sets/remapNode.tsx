@@ -11,7 +11,7 @@ import {
   TextInput,
 } from '@tokens-studio/ui';
 import { Cross1Icon, PlusIcon } from '@radix-ui/react-icons';
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
 
 import { TokenTypes } from '@tokens-studio/types';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
@@ -180,9 +180,7 @@ const RemapNode = () => {
         </HandleContainer>
         <HandleContainer type="source">
           <Handle id={SET_ID}>
-            <Label>
-              <i>As Set</i>
-            </Label>
+            <HandleText>Set</HandleText>
           </Handle>
         </HandleContainer>
       </Stack>

@@ -82,4 +82,7 @@ const ConstantNode = () => {
   );
 };
 
-export default WrapNode(ConstantNode, node);
+export default WrapNode(ConstantNode, {
+  ...node,
+  title: "Constant"
+});

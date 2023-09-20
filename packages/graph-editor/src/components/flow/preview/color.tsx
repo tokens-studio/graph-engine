@@ -30,7 +30,7 @@ export const PreviewColor = ({ value }) => {
   if (value === undefined) {
     return (
       <Text>
-        <i>Missing</i>
+        Missing
       </Text>
     );
   }

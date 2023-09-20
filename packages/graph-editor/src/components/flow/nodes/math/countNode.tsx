@@ -12,9 +12,7 @@ const CountNode = () => {
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
         <Handle id="input">
-          <Text>
-            Input <i> as Array</i>
-          </Text>
+            Input as Array
         </Handle>
       </HandleContainer>
       <HandleContainer type="source">

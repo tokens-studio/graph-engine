@@ -1,6 +1,7 @@
 import { LivePreview } from 'react-live';
 import { OutputProvider } from './scope.tsx';
 import { useSelector } from 'react-redux';
+import { Box } from '@tokens-studio/ui';
 import React from 'react';
 import { outputSelector } from '#/redux/selectors/index.ts';
 import { TokenContextProvider } from './contextExamples/lion/context.ts';
@@ -13,9 +14,9 @@ export const Preview = () => {
     <div id="preview" style={{ fontFamily: 'initial' }}>
       <OutputProvider value={output}>
         <TokenContextProvider context={output}>
-          <div style={{ padding: '1.5em', overflow: 'hidden' }}>
+          <Box css={{ padding: '$5', overflow: 'hidden' }}>
             <LivePreview />
-          </div>
+          </Box>
         </TokenContextProvider>
       </OutputProvider>
     </div>

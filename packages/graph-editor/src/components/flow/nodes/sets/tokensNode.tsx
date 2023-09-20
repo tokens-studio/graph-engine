@@ -7,7 +7,7 @@ import {
   Cross1Icon,
   DownloadIcon,
 } from '@radix-ui/react-icons';
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { IResolvedToken, flatTokensRestoreToMap } from '#/utils/index.ts';
 import { NodeProps } from 'reactflow';
 import {
@@ -92,19 +92,19 @@ const InlineSetNode: FC<NodeProps<TokenSetData>> = ({ id, data }) => {
 
   return (
     <div onDragOver={onDragOver} onDrop={onDrop}>
-      <Stack direction="row" gap={2}>
+      <Stack direction="row" gap={2} css={{ padding: '$3 0', }}>
         <HandleContainer type="target">
           <Handle id="input">
-            <Text>
-              <i>Input</i>{' '}
-            </Text>
+            <HandleText>
+            Input
+            </HandleText>
           </Handle>
         </HandleContainer>
         <HandleContainer type="source">
-          <Handle id={SET_ID}>
-            <Text>
-              <i>As Set</i>{' '}
-            </Text>
+          <Handle asMain id={SET_ID}>
+            <HandleText>
+              Set
+            </HandleText>
           </Handle>
         </HandleContainer>
       </Stack>

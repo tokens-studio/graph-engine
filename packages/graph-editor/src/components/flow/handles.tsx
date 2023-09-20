@@ -1,4 +1,4 @@
-import { Box, Stack } from '@tokens-studio/ui';
+import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Position, Handle as RawHandle } from 'reactflow';
 import { styled } from '#/lib/stitches/index.ts';
 import { useIsValidConnection } from './nodes/hooks/useIsValidConnection.ts';
@@ -59,7 +59,7 @@ const StyledRawHandle = styled(RawHandle, {
   border: 'none !important',
   '&::after': {
     content: "''",
-    width: '3px',
+    width: '4px',
     height: '9px',
     border: '1px solid var(--colors-accentBorder)',
     background: 'var(--colors-accentEmphasis)',
@@ -104,6 +104,31 @@ const StyledRawHandle = styled(RawHandle, {
   },
 });
 
+export const HandleText = styled(Text, {
+  textTransform: 'uppercase',
+  fontWeight: 'bold',
+  fontSize: '$xxsmall',
+  color: '$accentDefault',
+  whiteSpace: 'nowrap',
+  variants: {
+    secondary: {
+      true: {
+        color: '$fgDefault',
+      },
+    },
+  },
+});
+
+export const DynamicValueText = styled(Text, {
+  padding: '$1 $2',
+  fontFamily: 'monospace',
+  fontSize: '$xxsmall',
+  borderRadius: '$small',
+  backgroundColor: '$accentBg',
+  color: '$accentDefault',
+  lineHeight: 1,
+  whiteSpace: 'nowrap',
+});
 const HandleHolder = styled(Box, {
   position: 'relative',
   display: 'flex',
@@ -125,7 +150,7 @@ const HandleHolder = styled(Box, {
 });
 
 export const Handle = (props) => {
-  const { children, error, ...rest } = props;
+  const { children, asMain, error, ...rest } = props;
   const { position, type } = useHandle();
   const isValidConnection = useIsValidConnection();
   const { collapsed, hide } = useContext(HandleContainerContext);
@@ -147,10 +172,10 @@ export const Handle = (props) => {
       />
       <Stack
         direction="row"
-        gap={4}
-        justify="between"
+        gap={2}
+        justify={type === 'target' ? 'start' : 'end'}
         align="center"
-        css={{ flex: 1 }}
+        css={{ flex: 1, paddingLeft: '$3', paddingRight: '$3' }}
       >
         {children}
       </Stack>

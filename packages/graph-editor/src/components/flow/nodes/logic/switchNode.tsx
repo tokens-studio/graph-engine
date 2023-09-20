@@ -1,11 +1,28 @@
 import { Cross1Icon, PlusIcon } from '@radix-ui/react-icons';
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { DynamicValueText, Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { IconButton, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { PreviewAny } from '../../preview/any.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/logic/switch.js';
 import { useOnEnter } from '#/hooks/onEnter.ts';
 import React, { useCallback, useState } from 'react';
+import { styled } from '#/lib/stitches/stitches.config.ts';
+
+const StyledRemoveButton = styled(IconButton, {
+  opacity: 0,
+  transition: 'opacity 0.2s ease-in-out',
+  '&:hover': {
+    opacity: 1,
+  },
+});
+
+const StyledHandle = styled(Handle, {
+  '&:hover': {
+    [`${StyledRemoveButton}`]: {
+      opacity: 1,
+    },
+  },
+});
 
 const SwitchNode = () => {
   const { input, state, setState, output, disconnectInput } = useNode();
@@ -31,24 +48,24 @@ const SwitchNode = () => {
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
         <Handle id="condition">
-          <Text>Condition</Text>
-          <Text>{input?.condition}</Text>
+          <HandleText>Condition</HandleText>
+          <DynamicValueText>{input?.condition}</DynamicValueText>
         </Handle>
         {state?.order.map((key) => {
           return (
-            <Handle id={key} key={key}>
-              <Text>{key}</Text>
+            <StyledHandle id={key} key={key}>
+              <HandleText secondary>{key}</HandleText>
 
               <PreviewAny value={input[key]} />
 
-              <IconButton
+              <StyledRemoveButton
                 size="small"
                 data-key={key}
                 onClick={onDelete}
                 variant="invisible"
                 icon={<Cross1Icon />}
               />
-            </Handle>
+            </StyledHandle>
           );
         })}
         <Stack direction="row" gap={2}>
@@ -68,8 +85,7 @@ const SwitchNode = () => {
       </HandleContainer>
       <HandleContainer type="source">
         <Handle id="output">
-          <Text>Output</Text>
-          <PreviewAny value={output?.output} />
+          <HandleText>Output</HandleText>
         </Handle>
       </HandleContainer>
     </Stack>

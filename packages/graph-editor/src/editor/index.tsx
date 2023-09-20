@@ -16,8 +16,9 @@ import {
   useReactFlow,
   useStoreApi,
   ReactFlowProvider,
+  XYPosition,
 } from 'reactflow';
-import { CustomControls, MiniMapStyled } from '../components/flow/controls.tsx';
+import { CustomControls } from '../components/flow/controls.tsx';
 import { NodeTypes as EditorNodeTypes } from '../components/flow/types.tsx';
 import { ForceUpdateProvider } from './forceUpdateContext.tsx';
 import { GlobalHotKeys } from 'react-hotkeys';
@@ -34,6 +35,7 @@ import CustomEdge from '../components/flow/edges/edge.tsx';
 import React, {
   MouseEvent,
   useCallback,
+  useEffect,
   useImperativeHandle,
   useRef,
 } from 'react';
@@ -42,7 +44,7 @@ import { ReduxProvider } from '../redux/index.tsx';
 import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.tsx';
 import groupNode from '../components/flow/groupNode.tsx';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
-import { Box, Tooltip } from '@tokens-studio/ui';
+import { Box, Button, EmptyState, IconButton, Stack, Tooltip } from '@tokens-studio/ui';
 import { OnOutputChangeContextProvider } from '#/context/OutputContext.tsx';
 import { createNode } from './create.ts';
 import { NodeTypes } from '@tokens-studio/graph-engine';
@@ -53,11 +55,15 @@ import { EdgeContextMenu } from './edgeContextMenu.tsx';
 import { PaneContextMenu } from './paneContextMenu.tsx';
 import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '#/redux/selectors/settings.ts';
+import { showNodesPanelSelector } from '#/redux/selectors/ui.ts';
 import { forceUpdate } from '#/redux/selectors/graph.ts';
+import { DropPanel } from '#/components/index.ts';
+import { BatteryChargingIcon, FilePlusIcon } from '@iconicicons/react';
+import { AppsIcon } from '#/components/icons/AppsIcon.tsx';
+import { CommandMenu } from '#/components/CommandPalette.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
-const panOnDrag = [1, 2];
 
 const fullNodeTypes = {
   ...nodeTypes,
@@ -91,26 +97,85 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const store = useStoreApi();
     const showGridValue = useSelector(showGrid);
     const snapGridValue = useSelector(snapGrid);
+    const showNodesPanel = useSelector(showNodesPanelSelector);
     const forceUpdateValue = useSelector(forceUpdate);
+
+    const handleTogglePanel = () => {
+      dispatch.ui.setShowNodesPanel(!showNodesPanel);
+    };
 
     const [contextNode, setContextNode] = React.useState<Node | null>(null);
     const [contextEdge, setContextEdge] = React.useState<Edge | null>(null);
+    const [dropPanelPosition, setDropPanelPosition] =
+      React.useState<XYPosition>({ x: 0, y: 0 });
 
     const { show } = useContextMenu({
-      id: props.id + '_pane',
+      id: props.id + '_pane'
     });
     const { show: showEdge } = useContextMenu({
       id: props.id + '_edge',
     });
-
     const { show: showNode } = useContextMenu({
       id: props.id + '_node',
     });
+    // const { show: showPicker } = useContextMenu({
+    //   id: props.id + '_picker',
+    // });
+
     const handleContextMenu = useCallback(
       (event) => {
+        console.log("Event is", event);
+        setDropPanelPosition({ x: event.clientX, y: event.clientY });
+        
         show({ event });
       },
       [show],
+    );
+
+    const [isHoldingDownOption, setIsHoldingDownOption] = React.useState(false);
+
+    useEffect(() => {
+      const down = (e) => {
+        if ((e.altKey)) {
+            e.preventDefault()
+
+            setIsHoldingDownOption(true);
+        } else {
+          setIsHoldingDownOption(false);
+        }
+    }
+
+    document.addEventListener('keydown', down)
+    return () => document.removeEventListener('keydown', down)
+    }, [dispatch.ui])
+
+    const onConnectEnd = useCallback(
+      (event) => {
+        if (!isHoldingDownOption) {
+          return;
+        }
+
+        const targetIsPane =
+          event.target.classList.contains('react-flow__pane');
+
+        if (targetIsPane) {     
+          dispatch.ui.setShowNodesCmdPalette(true);
+
+          const reactFlowBounds =
+            reactFlowWrapper?.current?.getBoundingClientRect();
+          if (!reactFlowBounds) {
+            return;
+          }
+          const position = reactFlowInstance?.project({
+            x: event.clientX - reactFlowBounds.left,
+            y: event.clientY - reactFlowBounds.top,
+          });
+          dispatch.ui.setNodeInsertPosition(position)
+
+          // TODO: After dropping the node we should try to connect the node if it has 1 handler only
+        }
+    },
+       [dispatch.ui, isHoldingDownOption, reactFlowInstance, reactFlowWrapper],
     );
 
     const handleEdgeContextMenu = useCallback(
@@ -384,18 +449,77 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       onEdgesDeleted,
     });
 
+    const handleSelectNewNodeType = (nodeRequest) => {
+    // Commenting out, we'll use this once we have the command palette
+    //   const dropPosition = nodeRequest.position || {
+    //     x: dropPanelPosition.x,
+    //     y: dropPanelPosition.y,
+    //   }
+      
+    //   const nodes = reactFlowInstance.getNodes();
+
+    //   console.log('nodes', nodes);
+      
+    //   // Couldn't determine the type
+    //   if (!nodeRequest.type) {
+    //     return;
+    //   }
+    //   if (
+    //     nodeRequest.type == NodeTypes.INPUT &&
+    //     nodes.some((x) => x.type == NodeTypes.INPUT)
+    //   ) {
+    //     alert('Only one input node allowed');
+    //     return null;
+    //   }
+
+    //   if (
+    //     nodeRequest.type == NodeTypes.OUTPUT &&
+    //     nodes.some((x) => x.type == NodeTypes.OUTPUT)
+    //   ) {
+    //     alert('Only one output node allowed');
+    //     return null;
+    //   }
+
+
+    //   console.log('reactFlowInstance', reactFlowInstance.viewportInitialized);
+
+    //   // set x y coordinates in instance
+    //   const position = reactFlowInstance.project(dropPosition);
+
+    //   console.log('position', position);
+
+    //   const newNode = createNode({
+    //     nodeRequest,
+    //     stateInitializer,
+    //     dispatch,
+    //     position,
+    //   })
+
+    //   reactFlowInstance.addNodes(newNode);
+    };
+    
+    const nodeCount = nodes.length;
+
     return (
       <>
         <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
           <Box
-            //@ts-ignore
-            id={props.id}
             className="editor"
-            css={{ height: '100%', background: '$bgCanvas' }}
-            ref={reactFlowWrapper}
+            css={{ height: '100%', backgroundColor: '$bgCanvas', display: 'flex', flexDirection: 'row', flexGrow: 1 }}
           >
-            <ForceUpdateProvider value={forceUpdateValue}>
+            <ForceUpdateProvider value={forceUpdate}>
+              <Box css={{ display: 'flex', flexDirection: 'row' }}>
+                <Stack direction="column" gap={2} css={{ position: 'relative', backgroundColor: '$bgDefault', padding: '$1', borderRight: '1px solid $borderSubtle' }}>
+                  <IconButton tooltip='Add nodes (n)' onClick={handleTogglePanel} icon={<AppsIcon />} variant={showNodesPanel ? 'primary' : 'invisible'} />
+                  {props.menuContent}
+                </Stack>
+                {showNodesPanel && <Box css={{ backgroundColor: '$bgDefault', width: '240px', overflow: 'hidden', display: 'flex', flexDirection: 'column', borderRight: '1px solid $borderMuted', zIndex: 10 }}>
+                  <DropPanel />
+                </Box>}
+              </Box>
+              {/* @ts-ignore */}
               <ReactFlow
+                ref={reactFlowWrapper}
                 fitView
                 nodes={nodes}
                 onNodesChange={onNodesChange}
@@ -412,6 +536,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 onNodeDrag={onNodeDrag}
                 onConnect={onConnect}
                 onDrop={onDrop}
+                onConnectEnd={onConnectEnd}
                 selectNodesOnDrag={false}
                 defaultEdgeOptions={defaultEdgeOptions}
                 panOnScroll={true}
@@ -429,22 +554,27 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 maxZoom={Infinity}
                 proOptions={proOptions}
               >
-                <SelectedNodesToolbar />
-                <CustomControls position="top-right" />
-                {showMinimap && <MiniMapStyled />}
+            
                 {showGridValue && (
                   <Background
-                    color="#aaa"
+                    color="var(--colors-borderMuted)"
                     gap={16}
+                    size={2}
                     variant={BackgroundVariant.Dots}
                   />
                 )}
+                    {nodeCount === 0 && (
+                  <Box css={{display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', width: '100%', height: '100%', position: 'relative', zIndex: 100}}>
+                    <EmptyState icon={<BatteryChargingIcon style={{width: 48, height: 48 }} />} title="Build scalable and flexible design systems." description='Add your first node to get started or load an example' ><Box /></EmptyState></Box>                 
+                )}
+                <SelectedNodesToolbar />
+                <CustomControls position="bottom-center" />
+                <CommandMenu reactFlowWrapper={reactFlowWrapper} />
               </ReactFlow>
             </ForceUpdateProvider>
           </Box>
         </GlobalHotKeys>
-
-        <PaneContextMenu id={props.id + '_pane'} />
+        <PaneContextMenu id={props.id + '_pane'}  onSelectItem={handleSelectNewNodeType}/>
         <NodeContextMenu id={props.id + '_node'} node={contextNode} />
         <EdgeContextMenu id={props.id + '_edge'} edge={contextEdge} />
       </>

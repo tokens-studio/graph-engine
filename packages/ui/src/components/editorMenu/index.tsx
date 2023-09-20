@@ -1,73 +1,36 @@
-import * as MenubarPrimitive from '@radix-ui/react-menubar';
 import {
-  ChevronRightIcon,
+  BookIcon,
   FloppyDiscIcon,
   FolderIcon,
-  GridMasonryIcon,
   MoonIcon,
+  PhotoIcon,
   SunIcon,
 } from '@iconicicons/react';
 import SlackIcon from '#/assets/svgs/slack.svg';
 import YoutubeIcon from '#/assets/svgs/youtube.svg';
-import { useCallback } from 'react';
-import { useSelector } from 'react-redux';
-import { currentTab as currentTabSelector } from '#/redux/selectors/index.ts';
-import { useDispatch } from '#/hooks/useDispatch.ts';
+import { useCallback, useEffect } from 'react';
 import { CodeEditorRef } from '#/service/refs.ts';
 import { ResolverData } from '#/types/file.ts';
-import Logo from '#/assets/svgs/tokensstudio-logo.svg';
-import { IconButton, Stack, Text } from '@tokens-studio/ui';
-import { toPng } from 'html-to-image';
 import { getRectOfNodes, getTransformForBounds } from 'reactflow';
-import {
-  Content,
-  Item,
-  RightSlot,
-  Root,
-  Seperator,
-  SubContent,
-  SubTrigger,
-  Trigger,
-} from './components.tsx';
-import { useTheme } from '#/hooks/useTheme.tsx';
-import { serviceRef } from '#/redux/selectors/refs.ts';
-import { DockLayout, PanelData } from 'rc-dock';
-import { v4 as uuidv4 } from 'uuid';
-import { EditorDockTab, EditorTab } from '../editor/index.tsx';
-import Link from 'next/link';
+import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
+import { toPng } from 'html-to-image';
 import { store } from '#/redux/store.tsx';
 
 const imageWidth = 1024;
+  
 const imageHeight = 768;
 
-export const Menubar = () => {
-  const dispatch = useDispatch();
-  const currentTab = useSelector(currentTabSelector);
-  const theme = useTheme();
-  const dockRef: DockLayout | undefined = useSelector(serviceRef('dock'));
+export const Menubar = ({toggleTheme, theme}: {toggleTheme: () => void, theme: string}) => {
 
   const findCurrentEditor = useCallback(() => {
-    if (!dockRef) {
-      return;
-    }
+    const activeEditor = store.getState().refs['1']
 
-    const graphs = dockRef.find('graphs') as PanelData;
-    if (!graphs) {
-      return;
-    }
-
-    //Get the current activeID
-    const id = graphs.activeId;
-
-    if (!id) {
-      return;
-    }
-
-    return store.getState().refs[id];
-  }, [dockRef]);
+    return activeEditor;
+  }, []);
 
   const onSave = useCallback(() => {
     const editor = findCurrentEditor();
+
     if (!editor) {
       return;
     }
@@ -90,7 +53,7 @@ export const Menubar = () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${editor.meta.name}.json`;
+    link.download = `tokens-studio-export.json`;
     document.body.appendChild(link);
     link.click();
 
@@ -169,7 +132,7 @@ export const Menubar = () => {
 
     toPng(
       document.querySelector(
-        `#${currentTab.id} .react-flow__viewport`,
+        `.editor .react-flow__viewport`,
       ) as HTMLElement,
       {
         backgroundColor: '#1a365d',
@@ -182,153 +145,55 @@ export const Menubar = () => {
         },
       },
     ).then(downloadImage);
-  }, [currentTab.id, findCurrentEditor]);
-
-  const toggleTheme = useCallback(() => dispatch.ui.toggleTheme(null), []);
-  const onNewGraph = useCallback(() => {
-    if (!dockRef) {
-      return;
-    }
-
-    const id: string = uuidv4();
-    const title = 'New Tab';
-
-    dispatch.graph.setGraphState({
-      id,
-      title,
-    });
-
-    dockRef.dockMove(
-      {
-        cached: true,
-        closable: true,
-        id: id,
-        title: <EditorDockTab id={id} />,
-        content: <EditorTab id={id} name={title} />,
-      },
-      'graphs',
-      'middle',
-    );
-  }, [dispatch.graph, dockRef]);
+  }, [findCurrentEditor]);
 
   return (
-    <Stack css={{ padding: '0 $3' }} justify="between" align="center">
-      <Root>
-        <Link href="https://tokens.studio">
-          <Logo />
-        </Link>
-        <MenubarPrimitive.Menu>
-          <Trigger>File</Trigger>
-          <MenubarPrimitive.Portal>
-            <Content align="start" sideOffset={5} alignOffset={-3}>
-              <Item onClick={onNewGraph}>New Graph</Item>
-              <Item disabled={!currentTab} onClick={onLoad}>
-                Open{' '}
-                <RightSlot>
-                  <FolderIcon />
-                </RightSlot>
-              </Item>
-              <Item onClick={onSave} disabled={!currentTab}>
-                Save{' '}
-                <RightSlot>
-                  <FloppyDiscIcon />
-                </RightSlot>
-              </Item>
-              <Seperator />
-              {/* <MenubarPrimitive.Sub>
-                                <SubTrigger >
-                                    Share
-                                    <RightSlot>
-                                        <ChevronRightIcon />
-                                    </RightSlot>
-                                </SubTrigger>
-                                <MenubarPrimitive.Portal>
-                                    <SubContent alignOffset={-5}>
-                                        <Item >Email Link</Item>
-                                        <Item >Messages</Item>
-                                        <Item >Notes</Item>
-                                    </SubContent>
-                                </MenubarPrimitive.Portal>
-                            </MenubarPrimitive.Sub> */}
-              <Seperator />
-              <Item onClick={onPrint}>Print</Item>
-            </Content>
-          </MenubarPrimitive.Portal>
-        </MenubarPrimitive.Menu>
-
-        {/* <MenubarPrimitive.Menu>
-                    <Trigger >Edit</Trigger>
-                    <MenubarPrimitive.Portal>
-                        <Content align="start" sideOffset={5} alignOffset={-3}>
-                            <Item >
-                                Undo <RightSlot>⌘ Z</RightSlot>
-                            </Item>
-                            <Item >
-                                Redo <RightSlot>⇧ ⌘ Z</RightSlot>
-                            </Item>
-                            <Seperator />
-                            <MenubarPrimitive.Sub>
-                                <SubTrigger >
-                                    Find
-                                    <RightSlot>
-                                        <ChevronRightIcon />
-                                    </RightSlot>
-                                </SubTrigger>
-
-                                <MenubarPrimitive.Portal>
-                                    <SubContent alignOffset={-5}>
-                                        <Item >Search the web…</Item>
-                                        <Seperator />
-                                        <Item >Find…</Item>
-                                        <Item >Find Next</Item>
-                                        <Item >Find Previous</Item>
-                                    </SubContent>
-                                </MenubarPrimitive.Portal>
-                            </MenubarPrimitive.Sub>
-                            <Seperator />
-                            <Item >Cut</Item>
-                            <Item >Copy</Item>
-                            <Item >Paste</Item>
-                        </Content>
-                    </MenubarPrimitive.Portal>
-                </MenubarPrimitive.Menu>
- */}
-
-        <MenubarPrimitive.Menu>
-          <Trigger id="more-help">Help</Trigger>
-          <MenubarPrimitive.Portal>
-            <Content align="start" sideOffset={5} alignOffset={-3}>
-              <Link href="https://docs.graph.tokens.studio/">
-                <Item>Documentation</Item>
-              </Link>
-              <Seperator />
-              <Link href="https://www.youtube.com/@TokensStudio">
-                <Item>
-                  Youtube{' '}
-                  <RightSlot>
-                    <YoutubeIcon />
-                  </RightSlot>
-                </Item>
-              </Link>
-              <Link href="https://tokens.studio//slack">
-                <Item>
-                  Slack{' '}
-                  <RightSlot>
-                    <SlackIcon />
-                  </RightSlot>
-                </Item>
-              </Link>
-            </Content>
-          </MenubarPrimitive.Portal>
-        </MenubarPrimitive.Menu>
-      </Root>
-
-      <IconButton
-        variant="invisible"
-        size="small"
-        icon={theme === 'light' ? <MoonIcon /> : <SunIcon />}
-        onClick={toggleTheme}
-      ></IconButton>
+    <Stack direction="column" justify="between" gap={2} css={{flexGrow: 1}}>
+      <Stack direction="column">
+        <Box css={{ height: '1px', backgroundColor: '$borderSubtle', margin: '$2'}} />
+        <IconButton tooltip="Load .json" variant="invisible" size="medium" icon={<FolderIcon />} onClick={onLoad} />
+        <IconButton tooltip="Save as .json" variant="invisible" size="medium" icon={<FloppyDiscIcon />} onClick={onSave} />
+      </Stack>
+      <Stack direction="column" justify="end" css={{ flexGrow: 1 }}>
+        <IconButton
+          variant="invisible"
+          tooltip={theme === 'light' ? 'Dark mode' : 'Light mode'}
+          size="medium"
+          icon={theme === 'light' ? <MoonIcon /> : <SunIcon />}
+          onClick={toggleTheme}
+        />
+        <IconButton
+          variant="invisible"
+          tooltip="Save as screenshot"
+          size="medium"
+          icon={<PhotoIcon />}
+          onClick={onPrint}
+        />
+        <IconButton
+          as="a"
+          href="https://docs.graph.tokens.studio/"
+          variant="invisible"
+          tooltip="View documentation"
+          size="medium"
+          icon={<BookIcon />}
+        />
+        <IconButton
+          as="a"
+          href="https://www.youtube.com/@TokensStudio"
+          variant="invisible"
+          tooltip="YouTube"
+          size="medium"
+          icon={<YoutubeIcon />}
+        />
+        <IconButton
+          as="a"
+          href="https://tokens.studio//slack"
+          variant="invisible"
+          tooltip="Slack"
+          size="medium"
+          icon={<SlackIcon />}
+        />
+      </Stack>
     </Stack>
   );
 };

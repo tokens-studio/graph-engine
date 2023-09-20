@@ -1,3 +1,11 @@
+import { NodeTypes } from '@tokens-studio/graph-engine';
+import React from 'react';
+
+import preset from '#/data/preset.ts';
+import tinyCore from '#/data/tiny/core.ts';
+import tinyCoreDark from '#/data/tiny/dark.ts';
+import tinyCoreLight from '#/data/tiny/light.ts';
+
 import {
   BlendingModeIcon,
   ButtonIcon,
@@ -7,14 +15,8 @@ import {
   ImageIcon,
   PlusIcon,
 } from '@radix-ui/react-icons';
-import icons from "../icons";
-import { NodeTypes } from '@tokens-studio/graph-engine';
-import React from "react";
+import icons from "./icons.tsx";
 import { BoxIcon } from "@iconicicons/react";
-import preset from '#/data/preset.ts';
-import tinyCore from '#/data/tiny/core.ts';
-import tinyCoreDark from '#/data/tiny/dark.ts';
-import tinyCoreLight from '#/data/tiny/light.ts';
 
 import { flatten } from '#/utils/index.ts';
 
@@ -27,6 +29,9 @@ const tinyCoreLightFlattened = flatten(tinyCoreLight);
 //@ts-ignore
 const tinyCoreDarkFlattened = flatten(tinyCoreDark);
 
+type DragItemProps = {
+  data?: any;
+};
 
 export interface PanelItem {
   type: NodeTypes;
