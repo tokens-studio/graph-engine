@@ -379,6 +379,11 @@ export const items = {
       icon: <ColorWheelIcon />,
       text: 'Generate Color Wheel',
     },
+    {
+      type: NodeTypes.POLINE,
+      icon: <ColorWheelIcon />,
+      text: 'Generate Color Palette (Poline)',
+    },
   ],
   accessibility: [
     {

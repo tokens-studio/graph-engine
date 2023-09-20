@@ -11603,6 +11603,11 @@ pngjs@^3.3.3:
   resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-3.4.0.tgz#99ca7d725965fb655814eaf65f38f12bbdbf555f"
   integrity sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w==
 
+poline@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/poline/-/poline-0.7.0.tgz#fc4435442f29f33081460c951b48fddb0b2ca8f0"
+  integrity sha512-ZLlkJKNmzRRARYyWLu8JuWolS23oKQP3FA7vrq9TB+R55bbb0Dfo3zyL69jMWddn88SFl88JWFYhtqe1TXOrEw==
+
 popper.js@^1.16.0:
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.1.tgz#2a223cb3dc7b6213d740e40372be40de43e65b1b"
