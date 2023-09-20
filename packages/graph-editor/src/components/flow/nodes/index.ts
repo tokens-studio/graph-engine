@@ -65,6 +65,7 @@ import cssBox from './css/boxNode.tsx';
 import concat from './array/concat.tsx';
 import ExternalSetNode from './sets/ExternalSetNode.tsx';
 import PolineNode from './color/polineNode.tsx';
+import fluidNode from './math/fluidNode.tsx';
 
 const processTypes = (types: WrappedNodeDefinition[]) => {
   const nodeTypes = types.reduce((acc, type) => {
@@ -150,4 +151,5 @@ export const { nodeTypes, stateInitializer } = processTypes([
   concat,
   ExternalSetNode,
   PolineNode,
+  fluidNode,
 ]);
