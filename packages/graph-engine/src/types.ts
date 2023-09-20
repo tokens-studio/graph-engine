@@ -115,6 +115,7 @@ export enum NodeTypes {
   RANDOM = "studio.tokens.math.random",
   COUNT = "studio.tokens.math.count",
   POW = "studio.tokens.math.pow",
+  FLUID_VALUE = "studio.tokens.math.fluid",
 
   // Color
   CONTRASTING = "studio.tokens.color.contrasting",

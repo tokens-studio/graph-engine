@@ -228,6 +228,11 @@ export const items = {
       icon: 'a^b',
       text: 'Power',
     },
+    {
+      type: NodeTypes.FLUID_VALUE,
+      icon: '|-|',
+      text: 'Fluid',
+    },
   ],
   array: [
     {
