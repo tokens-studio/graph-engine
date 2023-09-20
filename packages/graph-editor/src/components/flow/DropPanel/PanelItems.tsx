@@ -384,6 +384,11 @@ export const items = {
       icon: <ColorWheelIcon />,
       text: 'Generate Color Palette (Poline)',
     },
+    {
+      type: NodeTypes.COLOR_DISTANCE,
+      icon: 'x>y',
+      text: 'Distance',
+    },
   ],
   accessibility: [
     {
