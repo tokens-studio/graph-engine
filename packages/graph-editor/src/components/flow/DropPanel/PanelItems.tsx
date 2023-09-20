@@ -396,6 +396,11 @@ export const items = {
       icon: <EyeNoneIcon />,
       text: 'Color Blindness',
     },
+    {
+      type: NodeTypes.BASE_FONT_SIZE,
+      icon: 'Aa',
+      text: 'Base Font Size',
+    },
   ],
   series: [
     {
