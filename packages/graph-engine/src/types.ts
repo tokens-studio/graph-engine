@@ -94,6 +94,7 @@ export enum NodeTypes {
   ARRIFY = "studio.tokens.array.arrify",
   REVERSE = "studio.tokens.array.reverse",
   SLICE = "studio.tokens.array.slice",
+  SORT = "studio.tokens.array.sort",
   JOIN = "studio.tokens.array.join",
   CONCAT = "studio.tokens.array.concat",
   DOT_PROP = "studio.tokens.array.dotProp",
@@ -125,6 +126,7 @@ export enum NodeTypes {
   EXTRACT = "studio.tokens.color.extract",
   TRANSFORM_COLOR = "studio.tokens.color.transform",
   WHEEL = "studio.tokens.color.wheel",
+  POLINE = "studio.tokens.color.poline",
 
   //Sets
   FLATTEN = "studio.tokens.sets.flatten",
@@ -142,6 +144,7 @@ export enum NodeTypes {
 
   //String
   UPPERCASE = "studio.tokens.string.uppercase",
+  JOIN_STRING = "studio.tokens.string.join",
   LOWER = "studio.tokens.string.lowercase",
   REGEX = "studio.tokens.string.regex",
   PASS_UNIT = "studio.tokens.typing.passUnit",

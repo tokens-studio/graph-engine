@@ -1,4 +1,5 @@
 import {
+  ArrowDownIcon,
   BlendingModeIcon,
   ButtonIcon,
   ColorWheelIcon,
@@ -260,6 +261,11 @@ export const items = {
       text: 'Slice Array',
     },
     {
+      type: NodeTypes.SORT,
+      icon: <ArrowDownIcon />,
+      text: 'Sort Array',
+    },
+    {
       type: NodeTypes.JOIN,
       icon: '[,]',
       text: 'Join Array',
@@ -378,6 +384,11 @@ export const items = {
       icon: <ColorWheelIcon />,
       text: 'Generate Color Wheel',
     },
+    {
+      type: NodeTypes.POLINE,
+      icon: <ColorWheelIcon />,
+      text: 'Generate Color Palette (Poline)',
+    },
   ],
   accessibility: [
     {
@@ -409,6 +420,11 @@ export const items = {
     },
   ],
   string: [
+    {
+      type: NodeTypes.JOIN_STRING,
+      icon: 'a+a',
+      text: 'Join String',
+    },
     {
       type: NodeTypes.UPPERCASE,
       icon: 'uU',
