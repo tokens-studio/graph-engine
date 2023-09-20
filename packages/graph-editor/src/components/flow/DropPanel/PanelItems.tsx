@@ -305,6 +305,11 @@ export const items = {
       icon: '-+',
       text: 'Invert',
     },
+    {
+      type: NodeTypes.SELECT_TOKEN,
+      icon: '?',
+      text: 'Select Token',
+    },
   ],
   logic: [
     {

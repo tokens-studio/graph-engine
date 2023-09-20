@@ -135,6 +135,7 @@ export enum NodeTypes {
   INLINE_SET = "studio.tokens.sets.inline",
   SET = "studio.tokens.sets.external",
   INVERT_SET = "studio.tokens.sets.invert",
+  SELECT_TOKEN = "studio.tokens.sets.selectToken",
 
   //Series
   ARITHMETIC_SERIES = "studio.tokens.sets.arithmetic",
