@@ -48,6 +48,7 @@ import { Tooltip } from '@tokens-studio/ui';
 import { OnOutputChangeContextProvider } from '#/context/OutputContext.tsx';
 import { createNode } from './create.ts';
 import { NodeTypes } from '@tokens-studio/graph-engine';
+import { ExternalLoaderProvider } from '#/context/ExternalLoaderContext.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -397,14 +398,16 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
 export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
-    const { onOutputChange } = props;
+    const { onOutputChange, externalLoader } = props;
     return (
       <ReduxProvider>
         <ReactFlowProvider>
           <OnOutputChangeContextProvider onOutputChange={onOutputChange}>
-            <Tooltip.Provider>
-              <EditorApp {...props} ref={ref} />
-            </Tooltip.Provider>
+            <ExternalLoaderProvider externalLoader={externalLoader}>
+              <Tooltip.Provider>
+                <EditorApp {...props} ref={ref} />
+              </Tooltip.Provider>
+            </ExternalLoaderProvider>
           </OnOutputChangeContextProvider>
         </ReactFlowProvider>
       </ReduxProvider>

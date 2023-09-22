@@ -24,6 +24,7 @@ import React, {
 } from 'react';
 import isPromise from 'is-promise';
 import { useOnOutputChange } from '#/context/OutputContext.tsx';
+import { useExternalLoader } from '#/context/ExternalLoaderContext.tsx';
 import { useExternalData } from '#/context/ExternalDataContext.tsx';
 
 export type UiNodeDefinition = {
@@ -93,6 +94,7 @@ export const WrapNode = (
 ): WrappedNodeDefinition => {
   const WrappedNode = (data) => {
     const { loadSetTokens } = useExternalData();
+    const { externalLoader } = useExternalLoader();
     const [ephemeralState, setEphemeralState] = useState({});
     const [loadingEphemeralData, setLoadingEphemeralData] = useState(false);
     const { onOutputChange } = useOnOutputChange();
@@ -157,6 +159,27 @@ export const WrapNode = (
         }
       }
     }, [state.identifier, loadSetTokens]);
+
+    useEffect(() => {
+      async function fetchExternalData() {
+        if (nodeDef.external && !externalLoader) {
+          throw new Error(
+            `Node "${data.id}" of type "${nodeDef.type}" requires an external loader`
+          );
+        } else if (nodeDef.external && externalLoader) {
+          const ephemeralRequest = nodeDef.external(mappedInput, state);
+          let ephemeralData = await externalLoader({
+            type: nodeDef.type,
+            id: data.id,
+            data: ephemeralRequest,
+          });
+          setEphemeralState(ephemeralData)
+        }
+      }
+
+      fetchExternalData()
+
+    }, [state.identifier, mappedInput, state, externalLoader]);
 
     useMemo(async () => {
       setIsLoading(true);

@@ -1,9 +1,11 @@
+import { ExternalLoadOptions } from '@tokens-studio/graph-engine';
 import { Edge, Node } from 'reactflow';
 
 export type EditorProps = {
   id: string;
   name: string;
   onOutputChange: (output: Record<string, unknown>) => void;
+  externalLoader?: (opts: ExternalLoadOptions) => Promise<any> | any;
 };
 
 export type EditorState = {
