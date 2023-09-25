@@ -7,6 +7,7 @@ import { node as scale } from "./scale.js";
 import { node as convert } from "./convert.js";
 import { node as wheel } from "./wheel.js";
 import { node as poline } from "./poline.js";
+import { node as balancedScale } from "./balancedScale.js";
 
 export const nodes = [
   blend,
@@ -18,4 +19,5 @@ export const nodes = [
   convert,
   wheel,
   poline,
+  balancedScale,
 ];

@@ -394,6 +394,11 @@ export const items = {
       icon: <ColorWheelIcon />,
       text: 'Generate Color Palette (Poline)',
     },
+    {
+      type: NodeTypes.BALANCED_SCALE,
+      icon: <ColorWheelIcon />,
+      text: 'Balanced Scale',
+    },
   ],
   accessibility: [
     {

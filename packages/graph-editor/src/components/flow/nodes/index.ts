@@ -67,6 +67,7 @@ import ExternalSetNode from './sets/ExternalSetNode.tsx';
 import selectToken from './sets/selectToken.tsx';
 import PolineNode from './color/polineNode.tsx';
 import fluidNode from './math/fluidNode.tsx';
+import balancedScaleNode from './color/balancedScaleNode.tsx';
 
 const processTypes = (types: WrappedNodeDefinition[]) => {
   const nodeTypes = types.reduce((acc, type) => {
@@ -153,5 +154,6 @@ export const { nodeTypes, stateInitializer } = processTypes([
   ExternalSetNode,
   PolineNode,
   fluidNode,
-  selectToken
+  selectToken,
+  balancedScaleNode,
 ]);
