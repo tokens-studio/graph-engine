@@ -13,6 +13,7 @@ import { node as sin } from "./sin.js";
 import { node as pow } from "./pow.js";
 import { node as subtract } from "./subtract.js";
 import { node as tan } from "./tan.js";
+import { node as fluid } from "./fluid.js";
 
 export const nodes = [
   abs,
@@ -30,4 +31,5 @@ export const nodes = [
   sin,
   subtract,
   tan,
+  fluid,
 ];

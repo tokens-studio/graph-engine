@@ -228,6 +228,11 @@ export const items = {
       icon: 'a^b',
       text: 'Power',
     },
+    {
+      type: NodeTypes.FLUID_VALUE,
+      icon: '|-|',
+      text: 'Fluid',
+    },
   ],
   array: [
     {
@@ -304,6 +309,11 @@ export const items = {
       type: NodeTypes.INVERT_SET,
       icon: '-+',
       text: 'Invert',
+    },
+    {
+      type: NodeTypes.SELECT_TOKEN,
+      icon: '?',
+      text: 'Select Token',
     },
   ],
   logic: [
