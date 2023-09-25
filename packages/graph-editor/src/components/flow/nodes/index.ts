@@ -66,7 +66,9 @@ import concat from './array/concat.tsx';
 import ExternalSetNode from './sets/ExternalSetNode.tsx';
 import selectToken from './sets/selectToken.tsx';
 import PolineNode from './color/polineNode.tsx';
+import colorDistanceNode from './color/colorDistanceNode.tsx';
 import fluidNode from './math/fluidNode.tsx';
+
 
 const processTypes = (types: WrappedNodeDefinition[]) => {
   const nodeTypes = types.reduce((acc, type) => {
@@ -152,6 +154,7 @@ export const { nodeTypes, stateInitializer } = processTypes([
   concat,
   ExternalSetNode,
   PolineNode,
+  colorDistanceNode,
   fluidNode,
   selectToken
 ]);
