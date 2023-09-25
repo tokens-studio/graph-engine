@@ -15,8 +15,8 @@ import {
   ImageIcon,
   PlusIcon,
 } from '@radix-ui/react-icons';
-import icons from "./icons.tsx";
-import { BoxIcon } from "@iconicicons/react";
+import icons from './icons.tsx';
+import { BoxIcon } from '@iconicicons/react';
 
 import { flatten } from '#/utils/index.ts';
 
@@ -44,7 +44,17 @@ export interface PanelItem {
   };
 }
 
-type PanelItemsKeys = 'generic' | 'tokens' | 'math' | 'array' | 'sets' | 'logic' | 'color' | 'accessibility' | 'series' | 'string';
+type PanelItemsKeys =
+  | 'generic'
+  | 'tokens'
+  | 'math'
+  | 'array'
+  | 'sets'
+  | 'logic'
+  | 'color'
+  | 'accessibility'
+  | 'series'
+  | 'string';
 
 export type PanelItems = Record<PanelItemsKeys, PanelItem[]>;
 
@@ -116,7 +126,7 @@ export const items = {
       type: NodeTypes.INLINE_SET,
       data: {
         tokens: tinyCoreFlattened,
-        title: 'Tiny Core'
+        title: 'Tiny Core',
       },
       icon: <PlusIcon />,
       text: 'Tiny Core',
@@ -125,7 +135,7 @@ export const items = {
       type: NodeTypes.INLINE_SET,
       data: {
         tokens: tinyCoreLightFlattened,
-        title: 'Tiny Light'
+        title: 'Tiny Light',
       },
       icon: <PlusIcon />,
       text: 'Tiny Light',
@@ -134,7 +144,7 @@ export const items = {
       type: NodeTypes.INLINE_SET,
       data: {
         tokens: tinyCoreDarkFlattened,
-        title: 'Tiny Dark'
+        title: 'Tiny Dark',
       },
       icon: <PlusIcon />,
       text: 'Tiny Dark',
@@ -143,7 +153,7 @@ export const items = {
       type: NodeTypes.INLINE_SET,
       data: {
         tokens: presetFlattened,
-        title: 'Preset tokens'
+        title: 'Preset tokens',
       },
       icon: <PlusIcon />,
       text: 'Preset Tokens',
@@ -284,6 +294,23 @@ export const items = {
       type: NodeTypes.ALIAS,
       icon: '{..}',
       text: 'Resolve Alias',
+    },
+    {
+      type: NodeTypes.GROUP,
+      icon: '{..}',
+      text: 'Token Group',
+      data: {
+        tokens: [],
+        name: '',
+      },
+    },
+    {
+      type: NodeTypes.EXTRACT_TOKENS,
+      icon: '{..}',
+      text: 'Extract tokens',
+      data: {
+        name: '',
+      },
     },
     {
       type: NodeTypes.REMAP,

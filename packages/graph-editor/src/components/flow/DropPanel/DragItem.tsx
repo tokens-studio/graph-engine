@@ -1,7 +1,6 @@
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import React, { useCallback } from 'react';
-import { styled } from "#/lib/stitches";
-
+import { styled } from '#/lib/stitches';
 
 type DragItemProps = {
   data?: any;
@@ -9,15 +8,16 @@ type DragItemProps = {
   children: React.ReactNode;
 };
 
-const StyledButton = styled('button', {
-  all: 'unset',
+const StyledButton = styled('div', {
+  userSelect: 'none',
+  cursor: 'pointer',
   padding: '$1 $3',
   borderRadius: '$small',
-  
+
   '&:hover': {
     background: '$bgSubtle',
   },
-})
+});
 
 export const DragItem = ({ data, type, children }: DragItemProps) => {
   const onDragStart = useCallback(
@@ -35,7 +35,7 @@ export const DragItem = ({ data, type, children }: DragItemProps) => {
   );
 
   return (
-    <StyledButton type="button" onDragStart={onDragStart} draggable>
+    <StyledButton onDragStart={onDragStart} draggable="true">
       {children}
     </StyledButton>
   );

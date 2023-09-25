@@ -187,28 +187,47 @@ export const Node = (props: NodeProps) => {
         minWidth: '300px',
         position: 'relative',
         borderRadius: '$medium',
-        background: error ? '$dangerBg' : '$bgDefault'
+        background: error ? '$dangerBg' : '$bgDefault',
       }}
     >
       <NodeToolbar className="nodrag">
-        <Stack direction="row" gap={0} css={{ padding: '$1', backgroundColor: '$bgDefault', borderRadius: '$medium', border: '1px solid $borderSubtle', boxShadow: '$small', }}>
+        <Stack
+          direction="row"
+          gap={0}
+          css={{
+            padding: '$1',
+            backgroundColor: '$bgDefault',
+            borderRadius: '$medium',
+            border: '1px solid $borderSubtle',
+            boxShadow: '$small',
+          }}
+        >
           {hasParent && <Button onClick={onDetach}>Detach</Button>}
           <IconButton
-            tooltip="Trace upstream" tooltipSide="top" 
+            tooltip="Trace upstream"
+            tooltipSide="top"
             icon={<DoubleArrowLeftIcon />}
             onClick={onTraceSource}
             variant="invisible"
           />
-          <IconButton tooltip="Delete" tooltipSide="top" icon={<TrashIcon />} onClick={onDelete} variant="invisible" />
+          <IconButton
+            tooltip="Delete"
+            tooltipSide="top"
+            icon={<TrashIcon />}
+            onClick={onDelete}
+            variant="invisible"
+          />
 
           <IconButton
-            tooltip="Trace upstream" tooltipSide="top" 
+            tooltip="Trace upstream"
+            tooltipSide="top"
             icon={<DoubleArrowRightIcon />}
             onClick={onTraceDown}
             variant="invisible"
           />
           <IconButton
-            tooltip="Reset trace" tooltipSide="top" 
+            tooltip="Reset trace"
+            tooltipSide="top"
             icon={<ResetIcon />}
             onClick={onResetTrace}
             variant="invisible"
@@ -226,13 +245,47 @@ export const Node = (props: NodeProps) => {
                   direction="row"
                   justify="between"
                   align="center"
-                  css={{ padding: '$3 $5', borderBottom: collapsed ? 'none' : '2px solid var(--nodeBorderColor, var(--colors-borderSubtle))', backgroundColor: 'var(--nodeBgColor, var(--colors-bgSubtle))', borderRadius: '$medium', borderBottomLeftRadius: collapsed ? '$medium' : 0, borderBottomRightRadius: collapsed ? '$medium' : 0 }}
+                  css={{
+                    padding: '$3 $5',
+                    borderBottom: collapsed
+                      ? 'none'
+                      : '2px solid var(--nodeBorderColor, var(--colors-borderSubtle))',
+                    backgroundColor:
+                      'var(--nodeBgColor, var(--colors-bgSubtle))',
+                    borderRadius: '$medium',
+                    borderBottomLeftRadius: collapsed ? '$medium' : 0,
+                    borderBottomRightRadius: collapsed ? '$medium' : 0,
+                  }}
                 >
                   <Stack direction="row" gap={2} align="center">
-                    {icon && <Box css={{ color: 'var(--nodeTextColor, var(--colors-fgSubtle))' }}>{icon}</Box>}
-                    <Text css={{ fontSize: '$xxsmall', fontWeight: '$sansMedium', textTransform: 'uppercase', color: 'var(--nodeTextColor, var(--colors-fgSubtle))', letterSpacing: '0.15px' }}>{title}</Text>
+                    {icon && (
+                      <Box
+                        css={{
+                          color: 'var(--nodeTextColor, var(--colors-fgSubtle))',
+                        }}
+                      >
+                        {icon}
+                      </Box>
+                    )}
+                    <Text
+                      css={{
+                        fontSize: '$xxsmall',
+                        fontWeight: '$sansMedium',
+                        textTransform: 'uppercase',
+                        color: 'var(--nodeTextColor, var(--colors-fgSubtle))',
+                        letterSpacing: '0.15px',
+                      }}
+                    >
+                      {title}
+                    </Text>
                     {debugModeValue && (
-                      <Text css={{ fontSize: '$xxsmall', fontFamily: 'monospace', color: '$fgSubtle' }}>
+                      <Text
+                        css={{
+                          fontSize: '$xxsmall',
+                          fontFamily: 'monospace',
+                          color: '$fgSubtle',
+                        }}
+                      >
                         {props.stats.executionTime}ms
                       </Text>
                     )}

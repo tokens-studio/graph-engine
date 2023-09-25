@@ -17,13 +17,18 @@ import { toPng } from 'html-to-image';
 import { store } from '#/redux/store.tsx';
 
 const imageWidth = 1024;
-  
+
 const imageHeight = 768;
 
-export const Menubar = ({toggleTheme, theme}: {toggleTheme: () => void, theme: string}) => {
-
+export const Menubar = ({
+  toggleTheme,
+  theme,
+}: {
+  toggleTheme: () => void;
+  theme: string;
+}) => {
   const findCurrentEditor = useCallback(() => {
-    const activeEditor = store.getState().refs['1']
+    const activeEditor = store.getState().refs['1'];
 
     return activeEditor;
   }, []);
@@ -131,9 +136,7 @@ export const Menubar = ({toggleTheme, theme}: {toggleTheme: () => void, theme: s
     );
 
     toPng(
-      document.querySelector(
-        `.editor .react-flow__viewport`,
-      ) as HTMLElement,
+      document.querySelector(`.editor .react-flow__viewport`) as HTMLElement,
       {
         backgroundColor: '#1a365d',
         width: imageWidth,
@@ -148,11 +151,29 @@ export const Menubar = ({toggleTheme, theme}: {toggleTheme: () => void, theme: s
   }, [findCurrentEditor]);
 
   return (
-    <Stack direction="column" justify="between" gap={2} css={{flexGrow: 1}}>
+    <Stack direction="column" justify="between" gap={2} css={{ flexGrow: 1 }}>
       <Stack direction="column">
-        <Box css={{ height: '1px', backgroundColor: '$borderSubtle', margin: '$2'}} />
-        <IconButton tooltip="Load .json" variant="invisible" size="medium" icon={<FolderIcon />} onClick={onLoad} />
-        <IconButton tooltip="Save as .json" variant="invisible" size="medium" icon={<FloppyDiscIcon />} onClick={onSave} />
+        <Box
+          css={{
+            height: '1px',
+            backgroundColor: '$borderSubtle',
+            margin: '$2',
+          }}
+        />
+        <IconButton
+          tooltip="Load .json"
+          variant="invisible"
+          size="medium"
+          icon={<FolderIcon />}
+          onClick={onLoad}
+        />
+        <IconButton
+          tooltip="Save as .json"
+          variant="invisible"
+          size="medium"
+          icon={<FloppyDiscIcon />}
+          onClick={onSave}
+        />
       </Stack>
       <Stack direction="column" justify="end" css={{ flexGrow: 1 }}>
         <IconButton

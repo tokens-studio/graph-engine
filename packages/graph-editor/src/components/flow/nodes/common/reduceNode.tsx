@@ -25,9 +25,7 @@ export const ReduceNode = () => {
             </Handle>
           );
         })}
-        <Handle id={newHandle}>
-          New
-        </Handle>
+        <Handle id={newHandle}>New</Handle>
       </HandleContainer>
       <HandleContainer type="source">
         <Handle id="output">

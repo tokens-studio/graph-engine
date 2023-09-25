@@ -19,6 +19,7 @@ import HarmonicNode from './series/harmonicNode.tsx';
 import IfNode from './logic/ifNode.tsx';
 import InputNode from './generic/inputNode.tsx';
 import InvertNode from './sets/invertNode.tsx';
+import TokenGroup from './sets/tokenGroup.tsx';
 import objectify from './input/objectify.tsx';
 import dotProp from './array/dotProp.tsx';
 import JoinNode from './array/join.tsx';
@@ -62,6 +63,7 @@ import jsonNode from './generic/jsonNode.tsx';
 import cssBox from './css/boxNode.tsx';
 import concat from './array/concat.tsx';
 import ExternalSetNode from './sets/ExternalSetNode.tsx';
+import ExtractTokenNodes from './sets/tokenExtract.tsx';
 
 const processTypes = (types: WrappedNodeDefinition[]) => {
   const nodeTypes = types.reduce((acc, type) => {
@@ -91,6 +93,7 @@ export const { nodeTypes, stateInitializer } = processTypes([
   spreadNode,
   dotProp,
   objectify,
+  ExtractTokenNodes,
   arrayIndex,
   MultiplyNode,
   DivisionNode,
@@ -113,6 +116,7 @@ export const { nodeTypes, stateInitializer } = processTypes([
   TanNode,
   jsonNode,
   ClampNode,
+  TokenGroup,
   LerpNode,
   IfNode,
   RegexNode,

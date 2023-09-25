@@ -1,8 +1,8 @@
-import { styled } from "#/lib/stitches";
-import { Item } from "react-contexify";
+import { styled } from '#/lib/stitches';
+import { Item } from 'react-contexify';
 
 const ContextMenuItem = styled(Item, {
-    fontSize: '$xsmall'
-})
+  fontSize: '$xsmall',
+});
 
-export { ContextMenuItem } 
+export { ContextMenuItem };

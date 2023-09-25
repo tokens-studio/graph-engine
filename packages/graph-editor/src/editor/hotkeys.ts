@@ -176,9 +176,9 @@ export const useHotkeys = ({ onEdgesDeleted }) => {
       TOGGLE_SNAP_GRID: () => {
         dispatch.settings.setSnapGrid(!snapGridValue);
       },
-      TOGGLE_NODES_PANEL: () => {        
+      TOGGLE_NODES_PANEL: () => {
         dispatch.ui.setShowNodesPanel(!showNodesPanel);
-      }
+      },
     }),
     [
       dispatch.input,

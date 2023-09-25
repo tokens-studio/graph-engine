@@ -32,9 +32,7 @@ const SquashNode = () => {
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
         {handles}
-        <Handle id={`inputs.${newHandle}`}>
-          New
-        </Handle>
+        <Handle id={`inputs.${newHandle}`}>New</Handle>
       </HandleContainer>
       <HandleContainer type="source">
         <Handle id="output">

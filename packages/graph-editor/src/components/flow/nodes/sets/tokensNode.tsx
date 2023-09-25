@@ -19,7 +19,6 @@ import { processTokensFile } from '#/utils/tokenFiles.ts';
 import copy from 'copy-to-clipboard';
 import { TokenSetHandles } from './tokensHandles.tsx';
 
-
 type TokenSetData = {
   tokens: IResolvedToken[];
   name: string;
@@ -92,19 +91,15 @@ const InlineSetNode: FC<NodeProps<TokenSetData>> = ({ id, data }) => {
 
   return (
     <div onDragOver={onDragOver} onDrop={onDrop}>
-      <Stack direction="row" gap={2} css={{ padding: '$3 0', }}>
+      <Stack direction="row" gap={2} css={{ padding: '$3 0' }}>
         <HandleContainer type="target">
           <Handle id="input">
-            <HandleText>
-            Input
-            </HandleText>
+            <HandleText>Input</HandleText>
           </Handle>
         </HandleContainer>
         <HandleContainer type="source">
           <Handle asMain id={SET_ID}>
-            <HandleText>
-              Set
-            </HandleText>
+            <HandleText>Set</HandleText>
           </Handle>
         </HandleContainer>
       </Stack>

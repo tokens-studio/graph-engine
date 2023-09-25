@@ -1,7 +1,6 @@
 import { CSS as StitchesCSS, createStitches } from '@stitches/react';
 import { core, lightTheme } from '@tokens-studio/tokens';
 
-
 export type CSS = StitchesCSS<typeof config>;
 
 export const {

@@ -1,4 +1,9 @@
-import { DynamicValueText, Handle, HandleContainer, HandleText } from '../../handles.tsx';
+import {
+  DynamicValueText,
+  Handle,
+  HandleContainer,
+  HandleText,
+} from '../../handles.tsx';
 import { Label, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { PreviewArray } from '../../preview/array.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
@@ -24,11 +29,15 @@ const ScaleNode = () => {
       .map(([key, value]) => {
         return (
           <Handle id={key} key={key}>
-            <Text css={{
-              fontFamily: 'monospace',
-              fontSize: '$xsmall',
-              color: '$fgMuted',
-            }}>{key}</Text>
+            <Text
+              css={{
+                fontFamily: 'monospace',
+                fontSize: '$xsmall',
+                color: '$fgMuted',
+              }}
+            >
+              {key}
+            </Text>
             <PreviewColor value={value} />
           </Handle>
         );

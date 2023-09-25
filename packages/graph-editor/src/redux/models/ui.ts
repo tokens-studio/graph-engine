@@ -4,7 +4,7 @@ import { createModel } from '@rematch/core';
 export interface UIState {
   showNodesPanel: boolean;
   showNodesCmdPalette: boolean;
-  storeNodeInsertPosition: { x: number, y: number };
+  storeNodeInsertPosition: { x: number; y: number };
 }
 
 export const uiState = createModel<RootModel>()({
@@ -26,11 +26,11 @@ export const uiState = createModel<RootModel>()({
         showNodesCmdPalette,
       };
     },
-    setNodeInsertPosition(state, nodeInsertPosition: { x: number, y: number }) {    
+    setNodeInsertPosition(state, nodeInsertPosition: { x: number; y: number }) {
       return {
         ...state,
         storeNodeInsertPosition: nodeInsertPosition,
       };
-    }
-  }
+    },
+  },
 });

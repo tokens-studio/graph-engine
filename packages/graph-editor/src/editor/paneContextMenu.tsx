@@ -28,7 +28,7 @@ export const PaneContextMenu = ({ id, onSelectItem }: IPaneContextMenu) => {
     (e) => {
       dispatch.ui.setShowNodesCmdPalette(true);
     },
-    [dispatch.ui]
+    [dispatch.ui],
   );
 
   const recenter = useCallback(() => {
@@ -57,7 +57,9 @@ export const PaneContextMenu = ({ id, onSelectItem }: IPaneContextMenu) => {
     <Menu id={id} preventDefaultOnKeydown animation="">
       <ContextMenuItem onClick={handleTriggerAddNode}>Add node</ContextMenuItem>
       <ContextMenuItem onClick={layout}>Apply Layout</ContextMenuItem>
-      <ContextMenuItem onClick={setShowGrid}>{showGridValue ? 'Hide' : 'Show'} Grid</ContextMenuItem>
+      <ContextMenuItem onClick={setShowGrid}>
+        {showGridValue ? 'Hide' : 'Show'} Grid
+      </ContextMenuItem>
       <ContextMenuItem onClick={recenter}>Recenter</ContextMenuItem>
       <Separator />
       <ContextMenuItem onClick={setSnapGrid}>Snap Grid</ContextMenuItem>

@@ -1,5 +1,10 @@
 import { Cross1Icon, PlusIcon } from '@radix-ui/react-icons';
-import { DynamicValueText, Handle, HandleContainer, HandleText } from '../../handles.tsx';
+import {
+  DynamicValueText,
+  Handle,
+  HandleContainer,
+  HandleText,
+} from '../../handles.tsx';
 import { IconButton, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { PreviewAny } from '../../preview/any.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
