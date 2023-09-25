@@ -286,6 +286,15 @@ export const items = {
       text: 'Resolve Alias',
     },
     {
+      type: NodeTypes.GROUP,
+      icon: '{..}',
+      text: 'Token Group',
+      data: {
+        tokens: [],
+        name: ''
+      }
+    },
+    {
       type: NodeTypes.REMAP,
       icon: 'x->y',
       text: 'Remap',
