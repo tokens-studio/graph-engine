@@ -1,4 +1,5 @@
 import {
+  ArrowDownIcon,
   BlendingModeIcon,
   ButtonIcon,
   ColorWheelIcon,
@@ -227,6 +228,11 @@ export const items = {
       icon: 'a^b',
       text: 'Power',
     },
+    {
+      type: NodeTypes.FLUID_VALUE,
+      icon: '|-|',
+      text: 'Fluid',
+    },
   ],
   array: [
     {
@@ -258,6 +264,11 @@ export const items = {
       type: NodeTypes.SLICE,
       icon: '[a,b]',
       text: 'Slice Array',
+    },
+    {
+      type: NodeTypes.SORT,
+      icon: <ArrowDownIcon />,
+      text: 'Sort Array',
     },
     {
       type: NodeTypes.JOIN,
@@ -298,6 +309,11 @@ export const items = {
       type: NodeTypes.INVERT_SET,
       icon: '-+',
       text: 'Invert',
+    },
+    {
+      type: NodeTypes.SELECT_TOKEN,
+      icon: '?',
+      text: 'Select Token',
     },
   ],
   logic: [
@@ -373,6 +389,16 @@ export const items = {
       icon: <ColorWheelIcon />,
       text: 'Generate Color Wheel',
     },
+    {
+      type: NodeTypes.POLINE,
+      icon: <ColorWheelIcon />,
+      text: 'Generate Color Palette (Poline)',
+    },
+    {
+      type: NodeTypes.COLOR_DISTANCE,
+      icon: 'x>y',
+      text: 'Distance',
+    },
   ],
   accessibility: [
     {
@@ -404,6 +430,11 @@ export const items = {
     },
   ],
   string: [
+    {
+      type: NodeTypes.JOIN_STRING,
+      icon: 'a+a',
+      text: 'Join String',
+    },
     {
       type: NodeTypes.UPPERCASE,
       icon: 'uU',
