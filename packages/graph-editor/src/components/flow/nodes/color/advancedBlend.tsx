@@ -47,9 +47,7 @@ const BlendNode = () => {
               </Handle>
             );
           })}
-          <Handle id={'i.' + ref.current}>
-            New
-          </Handle>
+          <Handle id={'i.' + ref.current}>New</Handle>
           <Stack
             direction="row"
             align="center"

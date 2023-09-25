@@ -97,9 +97,7 @@ const HarmonicNode = (props) => {
         </Handle>
       </HandleContainer>
       <HandleContainer type="source">
-        <Handle id={'asArray'}>
-          as Array
-        </Handle>
+        <Handle id={'asArray'}>as Array</Handle>
         {outputHandles}
       </HandleContainer>
     </Stack>

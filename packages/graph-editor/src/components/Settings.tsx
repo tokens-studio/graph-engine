@@ -37,7 +37,12 @@ export const Settings = () => {
   return (
     <Dialog>
       <Dialog.Trigger asChild>
-        <IconButton css={{ flexShrink: 0 }} icon={<GearIcon />} variant="invisible" tooltip="Settings" />
+        <IconButton
+          css={{ flexShrink: 0 }}
+          icon={<GearIcon />}
+          variant="invisible"
+          tooltip="Settings"
+        />
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay />

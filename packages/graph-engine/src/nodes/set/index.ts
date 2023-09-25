@@ -5,5 +5,15 @@ import { node as invert } from "./invert.js";
 import { node as remap } from "./remap.js";
 import { node as resolve } from "./resolve.js";
 import { node as group } from "./group.js";
+import { node as extract } from "./extract.js";
 
-export const nodes = [flatten, remap, resolve, inlineTokens, invert, externalTokens, group];
+export const nodes = [
+  flatten,
+  remap,
+  resolve,
+  inlineTokens,
+  invert,
+  externalTokens,
+  group,
+  extract,
+];

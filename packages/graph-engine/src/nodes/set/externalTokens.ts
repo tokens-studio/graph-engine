@@ -7,7 +7,7 @@ type Input = Record<string, any>;
 
 type State = {
   title: string;
-  urn: string
+  urn: string;
 };
 
 type Ephemeral = Record<string, any>;
@@ -19,17 +19,17 @@ export const defaults: State = {
 
 export const EXTERNAL_SET_ID = "as Set";
 
-const external = (_,state)=>{
-   return state;
-}
+const external = (_, state) => {
+  return state;
+};
 
 export const process = (input: Input, state: State, ephemeral: Ephemeral) => {
   return ephemeral.tokens;
 };
 
 export const mapOutput = (input: Input, state, tokens: SingleToken[]) => {
-  if (!tokens) return {}
-  
+  if (!tokens) return {};
+
   const map = tokens.reduce((acc, item) => {
     //Some protection against undefined which can happen if the user deletes a token
     if (!item) {
@@ -50,5 +50,5 @@ export const node: NodeDefinition<Input, State, SingleToken[]> = {
   process,
   defaults,
   mapOutput,
-  external
+  external,
 };

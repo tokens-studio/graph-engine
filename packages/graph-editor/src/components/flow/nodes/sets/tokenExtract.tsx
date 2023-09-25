@@ -3,7 +3,7 @@ import { PreviewAny } from '../../preview/any.tsx';
 import { PreviewArray } from '../../preview/array.tsx';
 import { Stack, TextInput } from '@tokens-studio/ui';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
-import { node } from '@tokens-studio/graph-engine/nodes/set/group.js';
+import { node } from '@tokens-studio/graph-engine/nodes/set/extract.js';
 import React, { useCallback } from 'react';
 
 const TokenGroupNode = () => {
@@ -45,5 +45,5 @@ const TokenGroupNode = () => {
 
 export default WrapNode(TokenGroupNode, {
   ...node,
-  title: 'Token Group',
+  title: 'Extract Tokens',
 });

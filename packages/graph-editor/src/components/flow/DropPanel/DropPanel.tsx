@@ -1,11 +1,11 @@
-import { Button, Box, Text, Separator, Stack, TextInput, Heading, IconButton } from '@tokens-studio/ui';
+import { Box, Text, Stack, TextInput } from '@tokens-studio/ui';
 import React, { useEffect, useState } from 'react';
 import { Accordion } from '../../accordion/index.js';
 import { PanelItems, items } from '../PanelItems.js';
 import { DragItem } from './DragItem';
 import { NodeEntry } from './NodeEntry';
 import { NodeTypes } from '@tokens-studio/graph-engine';
-import { PlusIcon, ChevronDownIcon, ChevronUpIcon, SearchIcon, PinTackIcon } from '@iconicicons/react';
+import { PlusIcon } from '@iconicicons/react';
 import { TriangleDownIcon } from '@radix-ui/react-icons';
 import { useExternalData } from '#/context/ExternalDataContext';
 import { styled } from '#/lib/stitches/stitches.config.js';
@@ -33,22 +33,24 @@ const StyledAccordion = styled(Accordion, {
 
 export const DropPanel = () => {
   const { tokenSets, loadingTokenSets } = useExternalData();
-  const [panelItems, setPanelItems] = useState<PanelItems>(items)
+  const [panelItems, setPanelItems] = useState<PanelItems>(items);
   const [search, setSearch] = React.useState('');
-  const [defaultValue, setDefaultValue] = React.useState<string[]>([
-    'generic',
-  ]);
+  const [defaultValue, setDefaultValue] = React.useState<string[]>(['generic']);
 
   useEffect(() => {
     if (tokenSets) {
       setPanelItems((prev) => {
         const newPanelItems = { ...prev };
-        newPanelItems.tokens = tokenSets.map((set) => ({ type: NodeTypes.SET, data: { identifier: set.identifier, title: set.name }, icon: <PlusIcon />, text: set.name }));
-        return newPanelItems
-      })
+        newPanelItems.tokens = tokenSets.map((set) => ({
+          type: NodeTypes.SET,
+          data: { identifier: set.identifier, title: set.name },
+          icon: <PlusIcon />,
+          text: set.name,
+        }));
+        return newPanelItems;
+      });
     }
-
-  }, [tokenSets])
+  }, [tokenSets]);
 
   const onSearch = (e) => {
     setSearch(e.target.value);
@@ -87,10 +89,21 @@ export const DropPanel = () => {
           return (
             <Accordion.Item value={key} key={key}>
               <StyledAccordionTrigger>
-                <Box css={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '$fgSubtle', width: '24px', height: '24px'}}>
+                <Box
+                  css={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '$fgSubtle',
+                    width: '24px',
+                    height: '24px',
+                  }}
+                >
                   <TriangleDownIcon />
-                  </Box>
-                <Text size="xsmall" bold>{key.charAt(0).toUpperCase() + key.slice(1)}</Text>
+                </Box>
+                <Text size="xsmall" bold>
+                  {key.charAt(0).toUpperCase() + key.slice(1)}
+                </Text>
               </StyledAccordionTrigger>
               <Accordion.Content>
                 <Stack direction="column" css={{ padding: 0 }}>
@@ -105,10 +118,30 @@ export const DropPanel = () => {
   }, [loadingTokenSets, defaultValue, panelItems, search]);
 
   return (
-    <Box css={{width: '100%', background: '$bgDefault', zIndex: 10, maxHeight: '100%', display: 'flex', flexDirection: 'column'}} id="drop-panel">
-      <Stack direction="column" gap={3} css={{ paddingTop: '$1', width: '100%', overflowY: 'scroll' }}>
-        <Stack direction="column" gap={2} css={{ padding: '0 $3', paddingTop: '$4' }}>
-          <Text size="xsmall" bold>Nodes</Text>
+    <Box
+      css={{
+        width: '100%',
+        background: '$bgDefault',
+        zIndex: 10,
+        maxHeight: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+      id="drop-panel"
+    >
+      <Stack
+        direction="column"
+        gap={3}
+        css={{ paddingTop: '$1', width: '100%', overflowY: 'scroll' }}
+      >
+        <Stack
+          direction="column"
+          gap={2}
+          css={{ padding: '0 $3', paddingTop: '$4' }}
+        >
+          <Text size="xsmall" bold>
+            Nodes
+          </Text>
           <TextInput placeholder="Search…" value={search} onChange={onSearch} />
         </Stack>
         <Stack direction="column" gap={2} css={{ padding: '$2' }}>
@@ -118,4 +151,3 @@ export const DropPanel = () => {
     </Box>
   );
 };
-

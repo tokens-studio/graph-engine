@@ -61,9 +61,7 @@ export const ResolveAliasesNode = () => {
   return (
     <Stack direction="row" gap={2}>
       <HandleContainer type="target">
-        <Handle id={`inputs.${newInputHandle}`}>
-          Input
-        </Handle>
+        <Handle id={`inputs.${newInputHandle}`}>Input</Handle>
         {input.inputs.map((input, i) => {
           return (
             <Handle id={input.key} key={input.key}>
@@ -72,9 +70,7 @@ export const ResolveAliasesNode = () => {
           );
         })}
         <Handle id={`context.${newContextHandle}`}>
-          <HandleText secondary>
-            Context
-          </HandleText>
+          <HandleText secondary>Context</HandleText>
         </Handle>
         {input.context.map((input, i) => {
           return (

@@ -1,7 +1,7 @@
 import { NodeDefinition, NodeTypes } from "../../types.js";
 import { SingleToken } from "@tokens-studio/types";
 
-export const type = NodeTypes.GROUP;
+export const type = NodeTypes.EXTRACT_TOKENS;
 
 /**
  * Defines the starting state of the node
@@ -15,23 +15,12 @@ export type MappedInput = {
   tokens: SingleToken[];
   name: string;
 };
-
-export const mapInput = (input) => {
-  return {
-    tokens: input.tokens,
-    name: input.name,
-  };
-};
-
 export const process = (input, state) => {
   const final = {
     ...state,
     ...input,
   };
-  return final.tokens.map((token) => ({
-    ...token,
-    name: final.name ? `${final.name}.${token.name}` : token.name,
-  }));
+  return final.tokens.filter((token) => token.name.startsWith(final.name));
 };
 
 export const node: NodeDefinition<MappedInput, any> = {

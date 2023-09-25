@@ -84,5 +84,5 @@ const ConstantNode = () => {
 
 export default WrapNode(ConstantNode, {
   ...node,
-  title: "Constant"
+  title: 'Constant',
 });
