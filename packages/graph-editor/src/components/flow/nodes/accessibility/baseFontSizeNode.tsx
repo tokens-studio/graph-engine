@@ -36,6 +36,10 @@ const BaseFontSizeNode = (props) => {
                     <Text>Pixel Density</Text>
                     <PreviewNumber value={input.pixelDensity} />
                 </Handle>
+                <Handle id="correctionFactor">
+                    <Text>Correction Factor</Text>
+                    <PreviewNumber value={input.correctionFactor} />
+                </Handle>
             </HandleContainer>
 
             <HandleContainer type="source">
