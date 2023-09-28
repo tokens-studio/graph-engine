@@ -28,7 +28,7 @@ const tinyCoreLightFlattened = flatten(tinyCoreLight);
 //@ts-ignore
 const tinyCoreDarkFlattened = flatten(tinyCoreDark);
 
-export interface PanelItem {
+export interface PanelItem<T extends NodeTypes = NodeTypes> {
   type: NodeTypes;
   icon: string | JSX.Element;
   text: string;
@@ -453,7 +453,7 @@ export const items = {
   ],
 };
 
-export const addPanelItem = (item: PanelItem, category: string) => {
+export function addPanelItem<T extends NodeTypes = NodeTypes>(item: PanelItem<T>, category: string) {
   if (items[category]) {
     items[category].push(item);
   } else {
