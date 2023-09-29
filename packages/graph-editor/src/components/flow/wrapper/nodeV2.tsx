@@ -51,6 +51,8 @@ export type INodeContext<Input = any, State = any, Output = any> = {
    */
   createInput: (key: string, value?: any) => void;
   disconnectInput: (key: string) => void;
+  disconnectInputs: (keys: string[]) => void;
+  disconnectAllOutputs: () => void;
   onConnect: (edge: Edge) => void;
   ephemeralState: object;
   setEphemeralState: (state: object) => void;
@@ -70,6 +72,8 @@ const NodeContext = createContext<INodeContext>({
   output: undefined,
   onConnect: noop,
   disconnectInput: noop,
+  disconnectInputs: noop,
+  disconnectAllOutputs: noop,
   setState: noop,
   ephemeralState: {},
   setEphemeralState: noop,
@@ -126,6 +130,43 @@ export const WrapNode = (
         }),
       );
     }, []);
+
+    const disconnectInputs = useCallback((keys) => {
+      //Remove the values from the input
+      keys.forEach(key => {
+        dispatch.input.remove({
+          id: data.id,
+          key,
+        });
+      })
+
+      //and also remove from the graph
+      flow.setEdges((edges) =>
+        edges.filter((edge) => {
+          return !(edge.target == data.id && keys.includes(edge.targetHandle));
+        }),
+      );
+    }, []);
+
+    const disconnectAllOutputs = useCallback(() => {
+
+      const self = flow.getNode(data.id);
+      const edges = flow.getEdges();
+
+      const outgoing = getOutgoingEdges(self, edges);
+      outgoing.forEach((edge) => {
+        dispatch.input.remove({
+          id: edge.target!,
+          key: edge.targetHandle!,
+        });
+      });
+
+      flow.setEdges((edges) =>
+        edges.filter((edge) => {
+          return !outgoing.find(outEdge => outEdge.id === edge.id)
+        }),
+      );
+    }, [flow, output, data.id, dispatch.node]);
 
     const setState = useCallback(
       (newVal) => {
@@ -258,6 +299,8 @@ export const WrapNode = (
         setState,
         output,
         disconnectInput,
+        disconnectInputs,
+        disconnectAllOutputs,
         onConnect,
         ephemeralState,
         setEphemeralState,
@@ -270,6 +313,8 @@ export const WrapNode = (
       setState,
       output,
       disconnectInput,
+      disconnectInputs,
+      disconnectAllOutputs,
       onConnect,
       createInput,
       ephemeralState,
