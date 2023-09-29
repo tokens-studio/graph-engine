@@ -155,4 +155,5 @@ export enum NodeTypes {
   //Accessibility
   CONTRAST = "studio.tokens.accessibility.contrast",
   COLOR_BLINDNESS = "studio.tokens.accessibility.colorBlindness",
+  BASE_FONT_SIZE = "studio.tokens.accessibility.baseFontSize",
 }
