@@ -16,10 +16,20 @@ type Inputs = {
     xHeightRatio: number;
     ppi: number;
     pixelDensity: number;
+    correctionFactor: number;
+};
+
+const defaults = {
+    correctionFactor: 13,
+    visualAcuity: 0.7,
+    lightingCondition: 0.85,
+    distance: 30,
+    xHeightRatio: 0.53,
+    ppi: 458,
+    pixelDensity: 3
 };
 
 const process = (input: Inputs, state) => {
-    const correctionFactor = 13; // Please define the correct value for the correction factor
     const {
         visualAcuity,
         lightingCondition,
@@ -27,6 +37,7 @@ const process = (input: Inputs, state) => {
         xHeightRatio,
         ppi,
         pixelDensity,
+        correctionFactor
     } = input;
 
     const visualCorrection = correctionFactor * (lightingCondition / visualAcuity);
@@ -44,6 +55,7 @@ export const mapOutput = (input, state, processed) => {
 
 export const node: NodeDefinition<Inputs> = {
     type,
+    defaults,
     process,
     mapOutput
 };

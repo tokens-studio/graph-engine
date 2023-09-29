@@ -115,6 +115,7 @@ export enum NodeTypes {
   RANDOM = "studio.tokens.math.random",
   COUNT = "studio.tokens.math.count",
   POW = "studio.tokens.math.pow",
+  FLUID_VALUE = "studio.tokens.math.fluid",
 
   // Color
   CONTRASTING = "studio.tokens.color.contrasting",
@@ -127,6 +128,7 @@ export enum NodeTypes {
   TRANSFORM_COLOR = "studio.tokens.color.transform",
   WHEEL = "studio.tokens.color.wheel",
   POLINE = "studio.tokens.color.poline",
+  COLOR_DISTANCE = "studio.tokens.color.distance",
 
   //Sets
   FLATTEN = "studio.tokens.sets.flatten",
@@ -135,6 +137,7 @@ export enum NodeTypes {
   INLINE_SET = "studio.tokens.sets.inline",
   SET = "studio.tokens.sets.external",
   INVERT_SET = "studio.tokens.sets.invert",
+  SELECT_TOKEN = "studio.tokens.sets.selectToken",
 
   //Series
   ARITHMETIC_SERIES = "studio.tokens.sets.arithmetic",
