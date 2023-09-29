@@ -64,8 +64,11 @@ import jsonNode from './generic/jsonNode.tsx';
 import cssBox from './css/boxNode.tsx';
 import concat from './array/concat.tsx';
 import ExternalSetNode from './sets/ExternalSetNode.tsx';
+import selectToken from './sets/selectToken.tsx';
 import PolineNode from './color/polineNode.tsx';
 import baseFontSizeNode from './accessibility/baseFontSizeNode.tsx';
+import colorDistanceNode from './color/colorDistanceNode.tsx';
+import fluidNode from './math/fluidNode.tsx';
 
 const processTypes = (types: WrappedNodeDefinition[]) => {
   const nodeTypes = types.reduce((acc, type) => {
@@ -152,4 +155,7 @@ export const { nodeTypes, stateInitializer } = processTypes([
   ExternalSetNode,
   PolineNode,
   baseFontSizeNode,
+  colorDistanceNode,
+  fluidNode,
+  selectToken
 ]);
