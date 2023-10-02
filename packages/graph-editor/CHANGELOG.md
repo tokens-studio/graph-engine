@@ -1,5 +1,23 @@
 # @tokens-studio/graph-editor
 
+## 1.3.0
+
+### Minor Changes
+
+- 3a38bfe: Adds a base font node based on german DIN 1450 and calculates the min required font size for readability
+- 231a25e: Add support for other layout options
+- ab797ce: Improved how custom nodes and groups can be exposed in the editor courtesy of @himanshu-satija. Users can now pass through the allowed nodes to expose
+
+### Patch Changes
+
+- ab797ce: Fixed an issue with the basefont node
+- Updated dependencies [e04601d]
+- Updated dependencies [ab797ce]
+- Updated dependencies [3a38bfe]
+- Updated dependencies [ed80a0b]
+- Updated dependencies [4e19200]
+  - @tokens-studio/graph-engine@0.7.0
+
 ## 1.2.1
 
 ### Patch Changes
