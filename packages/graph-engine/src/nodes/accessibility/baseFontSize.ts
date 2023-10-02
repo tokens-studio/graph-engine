@@ -48,7 +48,7 @@ const process = (input: Inputs, state) => {
   const fontSizePT = (2.83465 * xHeightMM * 1) / xHeightRatio;
   const fontSizePX = (1 * xHeightPX) / xHeightRatio;
 
-  return { fontSizePX };
+  return { fontSizePX, fontSizePT };
 };
 
 export const mapOutput = (input, state, processed) => {
