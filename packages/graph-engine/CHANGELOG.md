@@ -1,5 +1,18 @@
 # @tokens-studio/graph-engine
 
+## 0.7.0
+
+### Minor Changes
+
+- 3a38bfe: Adds a base font node based on german DIN 1450 and calculates the min required font size for readability
+- ed80a0b: Add a sort array node
+- 4e19200: Adds a string join node
+
+### Patch Changes
+
+- e04601d: Trig should throw an error
+- ab797ce: Fixed an issue with the basefont node
+
 ## 0.6.1
 
 ### Patch Changes
