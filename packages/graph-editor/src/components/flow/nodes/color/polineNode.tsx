@@ -1,5 +1,14 @@
 import { Handle, HandleContainer } from '../../handles.tsx';
-import { Button, Checkbox, DropdownMenu, IconButton, Label, Stack, Text, TextInput } from '@tokens-studio/ui';
+import {
+  Button,
+  Checkbox,
+  DropdownMenu,
+  IconButton,
+  Label,
+  Stack,
+  Text,
+  TextInput,
+} from '@tokens-studio/ui';
 import { PreviewArray } from '../../preview/array.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { LabelNoWrap } from '../../../../components/label.tsx';
@@ -48,7 +57,7 @@ const PolineNode = () => {
     const numPoints = ev.target.value;
     setState((state) => ({
       ...state,
-      numPoints: numPoints ? parseInt(numPoints, 10) : "",
+      numPoints: numPoints ? parseInt(numPoints, 10) : '',
     }));
   }, []);
 
@@ -56,17 +65,20 @@ const PolineNode = () => {
     const hueShift = ev.target.value;
     setState((state) => ({
       ...state,
-      hueShift: hueShift ? parseFloat(hueShift) : "",
+      hueShift: hueShift ? parseFloat(hueShift) : '',
     }));
   }, []);
 
-  const setPositionFn = useCallback(axis => ev => {
-    const positionFn = ev.currentTarget.dataset.key;
-    setState((state) => ({
-      ...state,
-      ["positionFn" + axis]: positionFn,
-    }));
-  }, []);
+  const setPositionFn = useCallback(
+    (axis) => (ev) => {
+      const positionFn = ev.currentTarget.dataset.key;
+      setState((state) => ({
+        ...state,
+        ['positionFn' + axis]: positionFn,
+      }));
+    },
+    [],
+  );
 
   const setInvertedLightness = useCallback((checked) => {
     setState((state) => ({
@@ -76,11 +88,11 @@ const PolineNode = () => {
   }, []);
 
   const setNewAnchorColor = useCallback((ev) => {
-    setState(state => ({
+    setState((state) => ({
       ...state,
-      anchorColors: [...state.anchorColors, "#000000"]
+      anchorColors: [...state.anchorColors, '#000000'],
     }));
-  }, [])
+  }, []);
 
   return (
     <Stack direction="row" gap={4}>
@@ -88,24 +100,28 @@ const PolineNode = () => {
         <Handle id="anchorColors">
           <Label>Colors</Label>
         </Handle>
-        {input.anchorColors ?
+        {input.anchorColors ? (
           <Stack direction="column" gap={1}>
             {input.anchorColors.map((hexColor, i) => {
-              return <Stack direction="row" gap={3}>
-                <PreviewColor value={hexColor} />
-                <Label>{hexColor}</Label>
-              </Stack>
+              return (
+                <Stack direction="row" gap={3}>
+                  <PreviewColor value={hexColor} />
+                  <Label>{hexColor}</Label>
+                </Stack>
+              );
             })}
           </Stack>
-          : null
-        }
+        ) : null}
         <Handle id="numPoints">
           <Stack direction="row" justify="between" gap={3} align="center">
             <LabelNoWrap>Number Of Points</LabelNoWrap>
             {input.numPoints !== undefined ? (
               <PreviewNumber value={input.numPoints} />
             ) : (
-              <TextInput onChange={setNumPoints} value={state.numPoints ?? ""} />
+              <TextInput
+                onChange={setNumPoints}
+                value={state.numPoints ?? ''}
+              />
             )}
           </Stack>
         </Handle>
@@ -115,7 +131,7 @@ const PolineNode = () => {
             {input.hueShift !== undefined ? (
               <PreviewNumber value={input.hueShift} />
             ) : (
-              <TextInput onChange={setHueShift} value={state.hueShift ?? ""} />
+              <TextInput onChange={setHueShift} value={state.hueShift ?? ''} />
             )}
           </Stack>
         </Handle>
@@ -130,8 +146,7 @@ const PolineNode = () => {
                 checked={state.invertedLightness}
                 onCheckedChange={setInvertedLightness}
               />
-            )
-            }
+            )}
           </Stack>
         </Handle>
         <PositionFunctionInputs {...{ state, input, setPositionFn }} />
@@ -142,42 +157,46 @@ const PolineNode = () => {
 };
 
 const PositionFunctionInputs = ({ state, input, setPositionFn }) => {
-  return ["X", "Y", "Z"].map(axis => {
-    return <Handle id={"positionFn" + axis}>
-      <Stack direction="row" justify="between" align="center" gap={3}>
-        <LabelNoWrap>Position Function {axis}</LabelNoWrap>
+  return ['X', 'Y', 'Z'].map((axis) => {
+    return (
+      <Handle id={'positionFn' + axis}>
+        <Stack direction="row" justify="between" align="center" gap={3}>
+          <LabelNoWrap>Position Function {axis}</LabelNoWrap>
 
-        {input["positionFn" + axis] !== undefined ? (
-          <PreviewAny value={input["positionFn" + axis]} />
-        ) : (
-          <DropdownMenu>
-            <DropdownMenu.Trigger asChild>
-              <Button variant="secondary" asDropdown size="small">
-                {state["positionFn" + axis] ? state["positionFn" + axis] : "sinusoidalPosition"}
-              </Button>
-            </DropdownMenu.Trigger>
+          {input['positionFn' + axis] !== undefined ? (
+            <PreviewAny value={input['positionFn' + axis]} />
+          ) : (
+            <DropdownMenu>
+              <DropdownMenu.Trigger asChild>
+                <Button variant="secondary" asDropdown size="small">
+                  {state['positionFn' + axis]
+                    ? state['positionFn' + axis]
+                    : 'sinusoidalPosition'}
+                </Button>
+              </DropdownMenu.Trigger>
 
-            <DropdownMenu.Portal>
-              <DropdownMenu.Content>
-                {Object.keys(positionFunctions).map((key, i) => {
-                  return (
-                    <DropdownMenu.Item
-                      key={key}
-                      onClick={setPositionFn(axis)}
-                      data-key={key}
-                    >
-                      {key}
-                    </DropdownMenu.Item>
-                  );
-                })}
-              </DropdownMenu.Content>
-            </DropdownMenu.Portal>
-          </DropdownMenu>
-        )}
-      </Stack>
-    </Handle>
-  })
-}
+              <DropdownMenu.Portal>
+                <DropdownMenu.Content>
+                  {Object.keys(positionFunctions).map((key, i) => {
+                    return (
+                      <DropdownMenu.Item
+                        key={key}
+                        onClick={setPositionFn(axis)}
+                        data-key={key}
+                      >
+                        {key}
+                      </DropdownMenu.Item>
+                    );
+                  })}
+                </DropdownMenu.Content>
+              </DropdownMenu.Portal>
+            </DropdownMenu>
+          )}
+        </Stack>
+      </Handle>
+    );
+  });
+};
 
 export default WrapNode(PolineNode, {
   ...node,

@@ -10,10 +10,12 @@ import {
 } from '@tokens-studio/ui';
 
 import {
+  defaultPanelItems,
   Editor,
   ImperativeEditorRef,
   EditorEdge,
   EditorNode,
+  PanelGroup,
 } from '@tokens-studio/graph-editor';
 import { LiveProvider } from 'react-live';
 import { Splitter } from '#/components/splitter.tsx';
@@ -62,6 +64,15 @@ interface ResolverData {
   state: Record<string, any>;
   code: string;
 }
+
+const customPanelItems: PanelGroup[] = [
+  ...defaultPanelItems,
+  {
+    title: 'My group',
+    key: 'my-group',
+    items: [],
+  },
+];
 
 const Wrapper = () => {
   const currentTab = useSelector(currentTabSelector);
@@ -279,6 +290,7 @@ const Wrapper = () => {
             id={x.id}
             name={x.name}
             ref={ref}
+            panelItems={customPanelItems}
             onOutputChange={onEditorOutputChange}
           />
         </Tabs.Content>

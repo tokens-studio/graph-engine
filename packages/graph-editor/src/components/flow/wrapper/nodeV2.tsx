@@ -24,6 +24,7 @@ import React, {
 } from 'react';
 import isPromise from 'is-promise';
 import { useOnOutputChange } from '#/context/OutputContext.tsx';
+import { useExternalLoader } from '#/context/ExternalLoaderContext.tsx';
 import { useExternalData } from '#/context/ExternalDataContext.tsx';
 
 export type UiNodeDefinition = {
@@ -50,6 +51,8 @@ export type INodeContext<Input = any, State = any, Output = any> = {
    */
   createInput: (key: string, value?: any) => void;
   disconnectInput: (key: string) => void;
+  disconnectInputs: (keys: string[]) => void;
+  disconnectAllOutputs: () => void;
   onConnect: (edge: Edge) => void;
   ephemeralState: object;
   setEphemeralState: (state: object) => void;
@@ -69,6 +72,8 @@ const NodeContext = createContext<INodeContext>({
   output: undefined,
   onConnect: noop,
   disconnectInput: noop,
+  disconnectInputs: noop,
+  disconnectAllOutputs: noop,
   setState: noop,
   ephemeralState: {},
   setEphemeralState: noop,
@@ -78,7 +83,7 @@ const NodeContext = createContext<INodeContext>({
 export type WrappedNodeDefinition = {
   type: string;
   state: Record<string, any>;
-  component: React.FC;
+  component: React.ReactNode | React.FC;
 };
 
 /**
@@ -93,6 +98,7 @@ export const WrapNode = (
 ): WrappedNodeDefinition => {
   const WrappedNode = (data) => {
     const { loadSetTokens } = useExternalData();
+    const { externalLoader } = useExternalLoader();
     const [ephemeralState, setEphemeralState] = useState({});
     const [loadingEphemeralData, setLoadingEphemeralData] = useState(false);
     const { onOutputChange } = useOnOutputChange();
@@ -124,6 +130,42 @@ export const WrapNode = (
         }),
       );
     }, []);
+
+    const disconnectInputs = useCallback((keys) => {
+      //Remove the values from the input
+      keys.forEach((key) => {
+        dispatch.input.remove({
+          id: data.id,
+          key,
+        });
+      });
+
+      //and also remove from the graph
+      flow.setEdges((edges) =>
+        edges.filter((edge) => {
+          return !(edge.target == data.id && keys.includes(edge.targetHandle));
+        }),
+      );
+    }, []);
+
+    const disconnectAllOutputs = useCallback(() => {
+      const self = flow.getNode(data.id);
+      const edges = flow.getEdges();
+
+      const outgoing = getOutgoingEdges(self, edges);
+      outgoing.forEach((edge) => {
+        dispatch.input.remove({
+          id: edge.target!,
+          key: edge.targetHandle!,
+        });
+      });
+
+      flow.setEdges((edges) =>
+        edges.filter((edge) => {
+          return !outgoing.find((outEdge) => outEdge.id === edge.id);
+        }),
+      );
+    }, [flow, output, data.id, dispatch.node]);
 
     const setState = useCallback(
       (newVal) => {
@@ -158,6 +200,26 @@ export const WrapNode = (
       }
     }, [state.identifier, loadSetTokens]);
 
+    useEffect(() => {
+      async function fetchExternalData() {
+        if (nodeDef.external && !externalLoader) {
+          throw new Error(
+            `Node "${data.id}" of type "${nodeDef.type}" requires an external loader`,
+          );
+        } else if (nodeDef.external && externalLoader) {
+          const ephemeralRequest = nodeDef.external(mappedInput, state);
+          let ephemeralData = await externalLoader({
+            type: nodeDef.type,
+            id: data.id,
+            data: ephemeralRequest,
+          });
+          setEphemeralState(ephemeralData);
+        }
+      }
+
+      fetchExternalData();
+    }, [state.identifier, mappedInput, state, externalLoader]);
+
     useMemo(async () => {
       setIsLoading(true);
       try {
@@ -178,6 +240,7 @@ export const WrapNode = (
             mappedInput,
             state,
             value,
+            ephemeralState,
           );
           setError(null);
           setIsLoading(false);
@@ -234,6 +297,8 @@ export const WrapNode = (
         setState,
         output,
         disconnectInput,
+        disconnectInputs,
+        disconnectAllOutputs,
         onConnect,
         ephemeralState,
         setEphemeralState,
@@ -246,6 +311,8 @@ export const WrapNode = (
       setState,
       output,
       disconnectInput,
+      disconnectInputs,
+      disconnectAllOutputs,
       onConnect,
       createInput,
       ephemeralState,

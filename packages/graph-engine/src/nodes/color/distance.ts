@@ -6,39 +6,39 @@
  */
 
 import { NodeDefinition, NodeTypes } from "../../types.js";
-import chroma from 'chroma-js';
+import chroma from "chroma-js";
 
 export const type = NodeTypes.COLOR_DISTANCE;
 
 type Inputs = {
-    /**
-     * Color
-     */
-    color1: string;
-    /**
-     * Color
-     */
-    color2: string;
+  /**
+   * Color
+   */
+  color1: string;
+  /**
+   * Color
+   */
+  color2: string;
 };
 
 const process = (input: Inputs, state) => {
-    const { color1, color2 } = input;
+  const { color1, color2 } = input;
 
-    if (!chroma.valid(color1) || !chroma.valid(color2)) {
-        throw new Error('Invalid color inputs');
-    }
+  if (!chroma.valid(color1) || !chroma.valid(color2)) {
+    throw new Error("Invalid color inputs");
+  }
 
-    const distance = chroma.deltaE(color1, color2);
+  const distance = chroma.deltaE(color1, color2);
 
-    return { distance };
+  return { distance };
 };
 
 const mapOutput = (input, state, output) => {
-    return output;
+  return output;
 };
 
 export const node: NodeDefinition<Inputs> = {
-    type,
-    mapOutput,
-    process
+  type,
+  mapOutput,
+  process,
 };

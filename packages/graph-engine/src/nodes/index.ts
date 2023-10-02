@@ -26,5 +26,5 @@ export const nodes: NodeDefinition<any>[] = (
   series,
   sets,
   string,
-  typing,
+  typing
 );
