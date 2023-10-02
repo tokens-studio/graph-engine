@@ -28,7 +28,10 @@ import {
 } from '../components/flow/utils.ts';
 import { handleDrop } from './fileInput.tsx';
 import { keyMap, useHotkeys } from './hotkeys.ts';
-import { nodeTypes, stateInitializer } from '../components/flow/nodes/index.ts';
+import {
+  defaultNodeTypes,
+  defaultStateInitializer,
+} from '../components/flow/nodes/index.ts';
 import { useDispatch } from '../hooks/index.ts';
 import { v4 as uuidv4 } from 'uuid';
 import CustomEdge from '../components/flow/edges/edge.tsx';
@@ -49,6 +52,7 @@ import { OnOutputChangeContextProvider } from '#/context/OutputContext.tsx';
 import { createNode } from './create.ts';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import { ExternalLoaderProvider } from '#/context/ExternalLoaderContext.tsx';
+import { defaultPanelItems } from '#/components/flow/DropPanel/PanelItems.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -74,6 +78,12 @@ const defaultEdgeOptions = {
 
 export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
+    const {
+      panelItems = defaultPanelItems,
+      nodeTypes = defaultNodeTypes,
+      stateInitializer = defaultStateInitializer,
+    } = props;
+
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
     const reactFlowInstance = useReactFlow();
     const dispatch = useDispatch();
@@ -95,7 +105,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
     const nodeState = dispatch.node.getState();
 
-    // Create flow node types here, instead of the global scope to ensure that custom nodes added by the user are available in nodeTypes 
+    // Create flow node types here, instead of the global scope to ensure that custom nodes added by the user are available in nodeTypes
     const fullNodeTypesRef = useRef({
       ...nodeTypes,
       [EditorNodeTypes.GROUP]: groupNode,
@@ -378,7 +388,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
               <SelectedNodesToolbar />
               <CustomControls position="top-right" />
               <Panel id="drop-panel" position="top-left">
-                <DropPanel />
+                <DropPanel groups={['generic']} items={panelItems} />
               </Panel>
               {showMinimap && <MiniMapStyled />}
               {showGrid && (

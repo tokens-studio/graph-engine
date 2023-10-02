@@ -69,28 +69,36 @@ import PolineNode from './color/polineNode.tsx';
 import colorDistanceNode from './color/colorDistanceNode.tsx';
 import fluidNode from './math/fluidNode.tsx';
 
+export type NodeTypeLookup = Record<string, React.ReactNode | React.FC>;
+export type StateInitializer = Record<string, Record<string, any>>;
 
-export const customNodeTypes: WrappedNodeDefinition[] = [];
-
-export const addCustomNodeTypes = (customNodeType: WrappedNodeDefinition) => {
-  const customNodeTypes = processTypes([customNodeType]);
-  nodeTypes = { ...nodeTypes, ...customNodeTypes.nodeTypes };
-  stateInitializer = {
-    ...stateInitializer,
-    ...customNodeTypes.stateInitializer,
-  };
-};
-
-const processTypes = (types: WrappedNodeDefinition[]) => {
+/**
+ * Use this to extend your own custom nodes. This can then be passed to the editor to populate it with your own types
+ * @example
+ * ```tsx
+ * const { nodeTypes, stateInitializer } = processTypes(defaultNodeTypes, defaultStateInitializer, [
+ *  MyCustomNode,
+ * MyOtherCustomNode,
+ * ]);
+ * ```
+ */
+export const processTypes = (
+  existingNodeTypes: NodeTypeLookup,
+  existingStateInitializer: StateInitializer,
+  types: WrappedNodeDefinition[],
+) => {
   const nodeTypes = types.reduce((acc, type) => {
     acc[type.type] = type.component;
     return acc;
-  }, {});
+  }, existingNodeTypes);
 
-  const stateInitializer = types.reduce((acc, type) => {
-    acc[type.type] = type.state;
-    return acc;
-  }, {});
+  const stateInitializer: Record<string, Record<string, any>> = types.reduce(
+    (acc, type) => {
+      acc[type.type] = type.state;
+      return acc;
+    },
+    existingStateInitializer,
+  );
 
   return {
     nodeTypes,
@@ -98,7 +106,13 @@ const processTypes = (types: WrappedNodeDefinition[]) => {
   };
 };
 
-export let { nodeTypes, stateInitializer } = processTypes([
+/**
+ * Default processed nodes for the editor.
+ */
+export const {
+  nodeTypes: defaultNodeTypes,
+  stateInitializer: defaultStateInitializer,
+} = processTypes({}, {}, [
   ConstantNode,
   AddNode,
   convertNode,
@@ -167,5 +181,5 @@ export let { nodeTypes, stateInitializer } = processTypes([
   PolineNode,
   colorDistanceNode,
   fluidNode,
-  selectToken
+  selectToken,
 ]);

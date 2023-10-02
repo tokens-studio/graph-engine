@@ -10,12 +10,12 @@ import {
 } from '@tokens-studio/ui';
 
 import {
+  defaultPanelItems,
   Editor,
   ImperativeEditorRef,
   EditorEdge,
   EditorNode,
-  addPanelItem,
-  addCustomNodeTypes,
+  PanelGroup,
 } from '@tokens-studio/graph-editor';
 import { LiveProvider } from 'react-live';
 import { Splitter } from '#/components/splitter.tsx';
@@ -58,32 +58,21 @@ import { useJourney } from '#/journeys/basic.tsx';
 import { JoyrideTooltip } from '#/components/joyride/tooltip.tsx';
 import { Preview } from '#/components/Preview.tsx';
 
-import customOrNodeUI from '#/components/customOrNodeUI.tsx';
-import { CUSTOM_OR_TYPE } from '#/components/customOrNode.tsx';
-import polineNodeUI from '#/components/polineNodeUI.tsx';
-import { type as POLINE_TYPE } from '#/components/polineNode.ts';
-
-//Register the custom node
-addCustomNodeTypes(customOrNodeUI)
-addPanelItem({
-  type: CUSTOM_OR_TYPE,
-  icon: <span>i</span>,
-  text: 'Custom OR',
-}, "logic")
-
-addCustomNodeTypes(polineNodeUI)
-addPanelItem({
-  type: POLINE_TYPE,
-  icon: <span>i</span>,
-  text: 'Poline',
-}, "color")
-
 interface ResolverData {
   nodes: EditorNode[];
   edges: EditorEdge[];
   state: Record<string, any>;
   code: string;
 }
+
+const customPanelItems: PanelGroup[] = [
+  ...defaultPanelItems,
+  {
+    title: 'My group',
+    key: 'my-group',
+    items: [],
+  },
+];
 
 const Wrapper = () => {
   const currentTab = useSelector(currentTabSelector);
@@ -301,6 +290,7 @@ const Wrapper = () => {
             id={x.id}
             name={x.name}
             ref={ref}
+            panelItems={customPanelItems}
             onOutputChange={onEditorOutputChange}
           />
         </Tabs.Content>

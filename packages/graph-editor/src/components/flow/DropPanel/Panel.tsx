@@ -1,102 +1,108 @@
+/* eslint-disable react/display-name */
 import { Box, Scroll, Separator, Stack, TextInput } from '@tokens-studio/ui';
-import React, { useEffect, useState } from 'react';
+import React, { useImperativeHandle, useState } from 'react';
 import { Accordion } from '../../accordion/index.tsx';
-import { PanelItems, items } from './PanelItems.tsx';
+import { PanelGroup } from './PanelItems.tsx';
 import { DragItem } from './DragItem.tsx';
 import { NodeEntry } from './NodeEntry.tsx';
-import { NodeTypes } from '@tokens-studio/graph-engine';
-import { PlusIcon } from '@iconicicons/react';
-import { Loading } from './Loading.tsx';
 import { StyledPanel } from './StyledPanel.tsx';
 import { StyledAccordingTrigger } from './StyledAccordionTrigger.tsx';
-import { useExternalData } from '#/context/ExternalDataContext.tsx';
 
-export const DropPanel = () => {
-  const { tokenSets, loadingTokenSets } = useExternalData();
-  const [panelItems, setPanelItems] = useState<PanelItems>(items);
-  const [search, setSearch] = React.useState('');
-  const [defaultValue, setDefaultValue] = React.useState<string[]>(['generic']);
+export type ImperativeDropPanelRef = {
+  /**
+   * Sets the currently opened groups by key
+   */
+  setGroups: (groups: string[]) => void;
+};
 
-  useEffect(() => {
-    if (tokenSets) {
-      setPanelItems((prev) => {
-        const newPanelItems = { ...prev };
-        newPanelItems.tokens = tokenSets.map((set) => ({
-          type: NodeTypes.SET,
-          data: { identifier: set.identifier, title: set.name },
-          icon: <PlusIcon />,
-          text: set.name,
-        }));
-        return newPanelItems;
-      });
-    }
-  }, [tokenSets]);
+export interface IDropPanel {
+  /**
+   * The currently opened groups by key
+   */
+  groups: string[];
+  /**
+   * Items to display
+   */
+  items: PanelGroup[];
+}
 
-  const onSearch = (e) => {
-    setSearch(e.target.value);
-    if (e.target.value === '') {
-      setDefaultValue(['generic']);
-    } else {
-      setDefaultValue(Object.keys(panelItems));
-    }
-  };
+export const DropPanel = React.forwardRef<ImperativeDropPanelRef, IDropPanel>(
+  (props: IDropPanel, ref) => {
+    const { groups = [], items = [] } = props;
+    const [thePanelItems, setPanelItems] = useState<PanelGroup[]>(items);
+    const [search, setSearch] = React.useState('');
+    const [defaultValue, setDefaultValue] = React.useState<string[]>(groups);
 
-  const accordionItems = React.useMemo(() => {
-    if (loadingTokenSets) {
-      return <Loading />;
-    }
+    useImperativeHandle(
+      ref,
+      () => ({
+        setGroups: (groups) => {
+          setDefaultValue(groups);
+        },
+      }),
+      [],
+    );
+
+    const onSearch = (e) => {
+      setSearch(e.target.value);
+      if (e.target.value === '') {
+        setDefaultValue([]);
+      } else {
+        setDefaultValue(Object.keys(thePanelItems));
+      }
+    };
+
+    const accordionItems = React.useMemo(() => {
+      return (
+        <Accordion type="multiple" defaultValue={defaultValue}>
+          {thePanelItems.map((value) => {
+            const filteredValues = value.items
+              .filter((item) =>
+                item.text.toLowerCase().includes(search.toLowerCase()),
+              )
+              .map((item) => (
+                <DragItem
+                  type={item.type}
+                  data={item.data || null}
+                  key={item.text}
+                >
+                  <NodeEntry icon={item.icon} text={item.text} />
+                </DragItem>
+              ));
+
+            return (
+              <Accordion.Item value={value.key} key={value.key}>
+                <StyledAccordingTrigger>
+                  {value.title}
+                  <Separator orientation="horizontal" />
+                </StyledAccordingTrigger>
+                <Accordion.Content>
+                  <Stack direction="column" css={{ padding: 0 }} gap={1}>
+                    {filteredValues}
+                  </Stack>
+                </Accordion.Content>
+              </Accordion.Item>
+            );
+          })}
+        </Accordion>
+      );
+    }, [defaultValue, thePanelItems, search]);
 
     return (
-      <Accordion type="multiple" defaultValue={defaultValue}>
-        {Object.entries(panelItems).map(([key, values]) => {
-          const filteredValues = values
-            .filter((item) =>
-              item.text.toLowerCase().includes(search.toLowerCase()),
-            )
-            .map((item) => (
-              <DragItem
-                type={item.type}
-                data={item.data || null}
-                key={item.text}
-              >
-                <NodeEntry icon={item.icon} text={item.text} />
-              </DragItem>
-            ));
-
-          if (filteredValues.length === 0) return null;
-
-          return (
-            <Accordion.Item value={key} key={key}>
-              <StyledAccordingTrigger>
-                {key.charAt(0).toUpperCase() + key.slice(1)}
-                <Separator orientation="horizontal" />
-              </StyledAccordingTrigger>
-              <Accordion.Content>
-                <Stack direction="column" css={{ padding: 0 }} gap={1}>
-                  {filteredValues}
-                </Stack>
-              </Accordion.Content>
-            </Accordion.Item>
-          );
-        })}
-      </Accordion>
+      <StyledPanel id="drop-panel">
+        <Scroll height="100%">
+          <Stack direction="column" gap={1} css={{ width: '100%' }}>
+            <Box css={{ padding: '$4' }}>
+              <TextInput
+                placeholder="Search"
+                value={search}
+                onChange={onSearch}
+              />
+            </Box>
+            {accordionItems}
+          </Stack>
+        </Scroll>
+      </StyledPanel>
     );
-  }, [loadingTokenSets, defaultValue, panelItems, search]);
-
-  return (
-    <StyledPanel id="drop-panel">
-      <Scroll height="100%">
-        <Stack direction="column" gap={1} css={{ width: '100%' }}>
-          <Box css={{ padding: '$4' }}>
-            <TextInput
-              placeholder="Search"
-              value={search}
-              onChange={onSearch}
-            />
-          </Box>
-          {accordionItems}
-        </Stack>
-      </Scroll>
-    </StyledPanel>
-  );
-};
+  },
+);

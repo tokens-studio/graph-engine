@@ -83,7 +83,7 @@ const NodeContext = createContext<INodeContext>({
 export type WrappedNodeDefinition = {
   type: string;
   state: Record<string, any>;
-  component: React.FC;
+  component: React.ReactNode | React.FC;
 };
 
 /**
@@ -133,12 +133,12 @@ export const WrapNode = (
 
     const disconnectInputs = useCallback((keys) => {
       //Remove the values from the input
-      keys.forEach(key => {
+      keys.forEach((key) => {
         dispatch.input.remove({
           id: data.id,
           key,
         });
-      })
+      });
 
       //and also remove from the graph
       flow.setEdges((edges) =>
@@ -149,7 +149,6 @@ export const WrapNode = (
     }, []);
 
     const disconnectAllOutputs = useCallback(() => {
-
       const self = flow.getNode(data.id);
       const edges = flow.getEdges();
 
@@ -163,7 +162,7 @@ export const WrapNode = (
 
       flow.setEdges((edges) =>
         edges.filter((edge) => {
-          return !outgoing.find(outEdge => outEdge.id === edge.id)
+          return !outgoing.find((outEdge) => outEdge.id === edge.id);
         }),
       );
     }, [flow, output, data.id, dispatch.node]);
@@ -205,7 +204,7 @@ export const WrapNode = (
       async function fetchExternalData() {
         if (nodeDef.external && !externalLoader) {
           throw new Error(
-            `Node "${data.id}" of type "${nodeDef.type}" requires an external loader`
+            `Node "${data.id}" of type "${nodeDef.type}" requires an external loader`,
           );
         } else if (nodeDef.external && externalLoader) {
           const ephemeralRequest = nodeDef.external(mappedInput, state);
@@ -214,12 +213,11 @@ export const WrapNode = (
             id: data.id,
             data: ephemeralRequest,
           });
-          setEphemeralState(ephemeralData)
+          setEphemeralState(ephemeralData);
         }
       }
 
-      fetchExternalData()
-
+      fetchExternalData();
     }, [state.identifier, mappedInput, state, externalLoader]);
 
     useMemo(async () => {
