@@ -66,6 +66,7 @@ import concat from './array/concat.tsx';
 import ExternalSetNode from './sets/ExternalSetNode.tsx';
 import selectToken from './sets/selectToken.tsx';
 import PolineNode from './color/polineNode.tsx';
+import baseFontSizeNode from './accessibility/baseFontSizeNode.tsx';
 import colorDistanceNode from './color/colorDistanceNode.tsx';
 import fluidNode from './math/fluidNode.tsx';
 
@@ -179,6 +180,7 @@ export const {
   concat,
   ExternalSetNode,
   PolineNode,
+  baseFontSizeNode,
   colorDistanceNode,
   fluidNode,
   selectToken,
