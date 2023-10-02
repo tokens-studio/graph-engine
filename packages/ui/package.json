@@ -58,6 +58,7 @@
     "memfs": "4.2.0",
     "next": "13.3.0",
     "next-themes": "0.2.1",
+    "poline": "0.7.0",
     "postcss-value-parser": "4.2.0",
     "prism-react-renderer": "2.0.3",
     "rc-dock": "3.2.18",

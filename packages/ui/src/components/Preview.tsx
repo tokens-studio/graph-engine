@@ -69,16 +69,6 @@ export const Preview = ({ codeRef }) => {
               </ToggleGroup>
               <IconButton
                 variant="invisible"
-                icon={<PictureInPictureIcon />}
-                tooltip="Pop out"
-                onClick={() =>
-                  alert(
-                    'not implemented, pop out to new window, possibly new browser window with realtime sync so i can move it to a different screen',
-                  )
-                }
-              />
-              <IconButton
-                variant="invisible"
                 icon={<MinusIcon />}
                 tooltip="Minimize"
                 onClick={handleToggleVisible}
@@ -97,7 +87,7 @@ export const Preview = ({ codeRef }) => {
         )}
       </Stack>
       {isVisible && (
-        <Box css={{ overflowY: 'scroll', flexGrow: 1, paddingTop: '0' }}>
+        <Box css={{ overflowY: 'auto', flexGrow: 1, paddingTop: '0' }}>
           <Box
             css={{
               width: '100%',
@@ -110,7 +100,6 @@ export const Preview = ({ codeRef }) => {
             css={{
               fontSize: '$xsmall',
               fontFamily: 'monospace',
-              overflowY: 'scroll',
               maxHeight: '100%',
               flex: 1,
               padding: 0,

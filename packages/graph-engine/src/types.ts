@@ -94,6 +94,7 @@ export enum NodeTypes {
   ARRIFY = "studio.tokens.array.arrify",
   REVERSE = "studio.tokens.array.reverse",
   SLICE = "studio.tokens.array.slice",
+  SORT = "studio.tokens.array.sort",
   JOIN = "studio.tokens.array.join",
   CONCAT = "studio.tokens.array.concat",
   DOT_PROP = "studio.tokens.array.dotProp",
@@ -114,6 +115,7 @@ export enum NodeTypes {
   RANDOM = "studio.tokens.math.random",
   COUNT = "studio.tokens.math.count",
   POW = "studio.tokens.math.pow",
+  FLUID_VALUE = "studio.tokens.math.fluid",
 
   // Color
   CONTRASTING = "studio.tokens.color.contrasting",
@@ -125,6 +127,8 @@ export enum NodeTypes {
   EXTRACT = "studio.tokens.color.extract",
   TRANSFORM_COLOR = "studio.tokens.color.transform",
   WHEEL = "studio.tokens.color.wheel",
+  POLINE = "studio.tokens.color.poline",
+  COLOR_DISTANCE = "studio.tokens.color.distance",
 
   //Sets
   FLATTEN = "studio.tokens.sets.flatten",
@@ -143,6 +147,7 @@ export enum NodeTypes {
 
   //String
   UPPERCASE = "studio.tokens.string.uppercase",
+  JOIN_STRING = "studio.tokens.string.join",
   LOWER = "studio.tokens.string.lowercase",
   REGEX = "studio.tokens.string.regex",
   PASS_UNIT = "studio.tokens.typing.passUnit",
@@ -151,4 +156,5 @@ export enum NodeTypes {
   //Accessibility
   CONTRAST = "studio.tokens.accessibility.contrast",
   COLOR_BLINDNESS = "studio.tokens.accessibility.colorBlindness",
+  BASE_FONT_SIZE = "studio.tokens.accessibility.baseFontSize",
 }

@@ -17,6 +17,8 @@ const StyledButton = styled('div', {
   '&:hover': {
     background: '$bgSubtle',
   },
+  backgroundColor: '$buttonSecondaryBgHover',
+  borderColor: '$borderSubtle',
 });
 
 export const DragItem = ({ data, type, children }: DragItemProps) => {

@@ -28,7 +28,10 @@ import {
 } from '../components/flow/utils.ts';
 import { handleDrop } from './fileInput.tsx';
 import { keyMap, useHotkeys } from './hotkeys.ts';
-import { nodeTypes, stateInitializer } from '../components/flow/nodes/index.ts';
+import {
+  defaultNodeTypes,
+  defaultStateInitializer,
+} from '../components/flow/nodes/index.ts';
 import { useDispatch } from '../hooks/index.ts';
 import { v4 as uuidv4 } from 'uuid';
 import CustomEdge from '../components/flow/edges/edge.tsx';
@@ -68,14 +71,11 @@ import { DropPanel } from '#/components/index.ts';
 import { BatteryChargingIcon, FilePlusIcon } from '@iconicicons/react';
 import { AppsIcon } from '#/components/icons/AppsIcon.tsx';
 import { CommandMenu } from '#/components/CommandPalette.tsx';
+import { ExternalLoaderProvider } from '#/context/ExternalLoaderContext.tsx';
+import { defaultPanelItems } from '#/components/flow/DropPanel/PanelItems.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
-
-const fullNodeTypes = {
-  ...nodeTypes,
-  [EditorNodeTypes.GROUP]: groupNode,
-};
 
 const edgeTypes = {
   custom: CustomEdge,
@@ -97,6 +97,12 @@ const defaultEdgeOptions = {
 
 export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
+    const {
+      panelItems = defaultPanelItems,
+      nodeTypes = defaultNodeTypes,
+      stateInitializer = defaultStateInitializer,
+    } = props;
+
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
     const reactFlowInstance = useReactFlow();
     const dispatch = useDispatch();
@@ -132,7 +138,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const handleContextMenu = useCallback(
       (event) => {
         setDropPanelPosition({ x: event.clientX, y: event.clientY });
-
         show({ event });
       },
       [show],
@@ -213,6 +218,12 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
     const nodeState = dispatch.node.getState();
+
+    // Create flow node types here, instead of the global scope to ensure that custom nodes added by the user are available in nodeTypes
+    const fullNodeTypesRef = useRef({
+      ...nodeTypes,
+      [EditorNodeTypes.GROUP]: groupNode,
+    });
 
     useImperativeHandle(
       ref,
@@ -351,70 +362,73 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
         reactFlowInstance.setNodes((nodes) => [...nodes, ...processed]);
       },
-      [reactFlowInstance],
+      [dispatch, reactFlowInstance, stateInitializer],
     );
 
-    const onEdgeDblClick = useCallback((event, clickedEdge) => {
-      event.stopPropagation();
+    const onEdgeDblClick = useCallback(
+      (event, clickedEdge) => {
+        event.stopPropagation();
 
-      const reactFlowBounds =
-        reactFlowWrapper!.current!.getBoundingClientRect();
+        const reactFlowBounds =
+          reactFlowWrapper!.current!.getBoundingClientRect();
 
-      const position = reactFlowInstance?.project({
-        x: event.clientX - reactFlowBounds.left,
-        y: event.clientY - reactFlowBounds.top,
-      });
-
-      const newNode = createNode({
-        nodeRequest: {
-          type: NodeTypes.PASS_THROUGH,
-        },
-        stateInitializer,
-        dispatch,
-        position,
-      });
-
-      //Set the initial value
-      dispatch.input.copyInputKey({
-        id: newNode.id,
-        key: 'input',
-        source: clickedEdge.target,
-        sourceKey: clickedEdge.targetHandle,
-      });
-
-      setEdges((eds) => {
-        //Remove the old edge
-        const filtered = eds.filter((edge) => {
-          return !(
-            edge.target == clickedEdge.target &&
-            edge.targetHandle == clickedEdge.targetHandle
-          );
+        const position = reactFlowInstance?.project({
+          x: event.clientX - reactFlowBounds.left,
+          y: event.clientY - reactFlowBounds.top,
         });
-        //Add a new edge from the old target to the new node
-        const newEdge = {
-          source: clickedEdge.source,
-          sourceHandle: clickedEdge.sourceHandle,
-          target: newNode.id,
-          targetHandle: 'input',
-          id: uuidv4(),
-          type: 'custom',
-        };
-        //Create another edge from the new node to the old target
-        const newEdge2 = {
-          source: newNode.id,
-          sourceHandle: 'output',
-          target: clickedEdge.target,
-          targetHandle: clickedEdge.targetHandle,
-          id: uuidv4(),
-          type: 'custom',
-        };
 
-        return [...filtered, newEdge, newEdge2];
-      });
+        const newNode = createNode({
+          nodeRequest: {
+            type: NodeTypes.PASS_THROUGH,
+          },
+          stateInitializer,
+          dispatch,
+          position,
+        });
 
-      //Create a proxy node
-      setNodes((nds) => [...nds, newNode]);
-    }, []);
+        //Set the initial value
+        dispatch.input.copyInputKey({
+          id: newNode.id,
+          key: 'input',
+          source: clickedEdge.target,
+          sourceKey: clickedEdge.targetHandle,
+        });
+
+        setEdges((eds) => {
+          //Remove the old edge
+          const filtered = eds.filter((edge) => {
+            return !(
+              edge.target == clickedEdge.target &&
+              edge.targetHandle == clickedEdge.targetHandle
+            );
+          });
+          //Add a new edge from the old target to the new node
+          const newEdge = {
+            source: clickedEdge.source,
+            sourceHandle: clickedEdge.sourceHandle,
+            target: newNode.id,
+            targetHandle: 'input',
+            id: uuidv4(),
+            type: 'custom',
+          };
+          //Create another edge from the new node to the old target
+          const newEdge2 = {
+            source: newNode.id,
+            sourceHandle: 'output',
+            target: clickedEdge.target,
+            targetHandle: clickedEdge.targetHandle,
+            id: uuidv4(),
+            type: 'custom',
+          };
+
+          return [...filtered, newEdge, newEdge2];
+        });
+
+        //Create a proxy node
+        setNodes((nds) => [...nds, newNode]);
+      },
+      [dispatch, reactFlowInstance, setEdges, setNodes],
+    );
 
     const onNodeDrag = useCallback(
       (_: MouseEvent, node: Node) => {
@@ -451,47 +465,45 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       [getIntersectingNodes, setNodes],
     );
 
-    const { handlers, showMinimap } = useHotkeys({
+    const { handlers } = useHotkeys({
       onEdgesDeleted,
     });
 
-    const handleSelectNewNodeType = (nodeRequest) => {
-      // Commenting out, we'll use this once we have the command palette
-      //   const dropPosition = nodeRequest.position || {
-      //     x: dropPanelPosition.x,
-      //     y: dropPanelPosition.y,
-      //   }
-      //   const nodes = reactFlowInstance.getNodes();
-      //   console.log('nodes', nodes);
-      //   // Couldn't determine the type
-      //   if (!nodeRequest.type) {
-      //     return;
-      //   }
-      //   if (
-      //     nodeRequest.type == NodeTypes.INPUT &&
-      //     nodes.some((x) => x.type == NodeTypes.INPUT)
-      //   ) {
-      //     alert('Only one input node allowed');
-      //     return null;
-      //   }
-      //   if (
-      //     nodeRequest.type == NodeTypes.OUTPUT &&
-      //     nodes.some((x) => x.type == NodeTypes.OUTPUT)
-      //   ) {
-      //     alert('Only one output node allowed');
-      //     return null;
-      //   }
-      //   console.log('reactFlowInstance', reactFlowInstance.viewportInitialized);
-      //   // set x y coordinates in instance
-      //   const position = reactFlowInstance.project(dropPosition);
-      //   console.log('position', position);
-      //   const newNode = createNode({
-      //     nodeRequest,
-      //     stateInitializer,
-      //     dispatch,
-      //     position,
-      //   })
-      //   reactFlowInstance.addNodes(newNode);
+    const handleSelectNewNodeType = async (nodeRequest) => {
+      const dropPosition = nodeRequest.position || {
+        x: dropPanelPosition.x,
+        y: dropPanelPosition.y,
+      };
+      const nodes = reactFlowInstance.getNodes();
+      console.log(nodeRequest);
+      // Couldn't determine the type
+      if (!nodeRequest.type) {
+        return;
+      }
+      if (
+        nodeRequest.type == NodeTypes.INPUT &&
+        nodes.some((x) => x.type == NodeTypes.INPUT)
+      ) {
+        alert('Only one input node allowed');
+        return null;
+      }
+      if (
+        nodeRequest.type == NodeTypes.OUTPUT &&
+        nodes.some((x) => x.type == NodeTypes.OUTPUT)
+      ) {
+        alert('Only one output node allowed');
+        return null;
+      }
+      // set x y coordinates in instance
+      const position = reactFlowInstance.project(dropPosition);
+      const newNode = createNode({
+        nodeRequest,
+        stateInitializer,
+        dispatch,
+        position,
+      });
+      console.log(newNode);
+      reactFlowInstance.addNodes(newNode);
     };
 
     const nodeCount = nodes.length;
@@ -541,7 +553,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                       zIndex: 10,
                     }}
                   >
-                    <DropPanel />
+                    <DropPanel groups={[]} items={panelItems} />
                   </Box>
                 )}
               </Box>
@@ -559,7 +571,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 onNodeDragStop={onNodeDragStop}
                 snapToGrid={snapGridValue}
                 edgeTypes={edgeTypes}
-                nodeTypes={fullNodeTypes}
+                nodeTypes={fullNodeTypesRef.current}
                 snapGrid={snapGridCoords}
                 onNodeDrag={onNodeDrag}
                 onConnect={onConnect}
@@ -568,7 +580,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 selectNodesOnDrag={false}
                 defaultEdgeOptions={defaultEdgeOptions}
                 panOnScroll={true}
-                // panOnDrag={panOnDrag}
+                //  panOnDrag={panOnDrag}
                 onPaneContextMenu={handleContextMenu}
                 onEdgeContextMenu={handleEdgeContextMenu}
                 onNodeContextMenu={handleNodeContextMenu}
@@ -618,7 +630,11 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 )}
                 <SelectedNodesToolbar />
                 <CustomControls position="bottom-center" />
-                <CommandMenu reactFlowWrapper={reactFlowWrapper} />
+                <CommandMenu
+                  reactFlowWrapper={reactFlowWrapper}
+                  items={panelItems}
+                  handleSelectNewNodeType={handleSelectNewNodeType}
+                />
               </ReactFlow>
             </ForceUpdateProvider>
           </Box>
@@ -636,14 +652,16 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
 export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
-    const { onOutputChange } = props;
+    const { onOutputChange, externalLoader } = props;
     return (
       <ReduxProvider>
         <ReactFlowProvider>
           <OnOutputChangeContextProvider onOutputChange={onOutputChange}>
-            <Tooltip.Provider>
-              <EditorApp {...props} ref={ref} />
-            </Tooltip.Provider>
+            <ExternalLoaderProvider externalLoader={externalLoader}>
+              <Tooltip.Provider>
+                <EditorApp {...props} ref={ref} />
+              </Tooltip.Provider>
+            </ExternalLoaderProvider>
           </OnOutputChangeContextProvider>
         </ReactFlowProvider>
       </ReduxProvider>

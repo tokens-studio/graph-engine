@@ -67,7 +67,7 @@ const OutputNode = () => {
         </Handle>
       );
     });
-  }, [state.mappings, output]);
+  }, [state.mappings, onChange, output, onDelete]);
 
   const onClick = useCallback(() => {
     setState((state) => ({

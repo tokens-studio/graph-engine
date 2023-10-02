@@ -2,26 +2,30 @@ import { SearchIcon } from '@iconicicons/react';
 import { Box, Stack } from '@tokens-studio/ui';
 import { Command } from 'cmdk';
 import React from 'react';
-import { PanelItems, items } from './flow/PanelItems';
+import { PanelGroup, PanelItem } from './flow/DropPanel/PanelItems';
 import { useDispatch, useSelector } from 'react-redux';
 import { showNodesCmdPaletteSelector } from '#/redux/selectors/ui';
 import { useEditor } from './flow/hooks/useEditor';
-import { useReactFlow } from 'reactflow';
+import { NodeTypes } from '@tokens-studio/graph-engine';
+
+export interface ICommandMenu {
+  reactFlowWrapper: React.MutableRefObject<HTMLDivElement | null>;
+  items: PanelGroup[];
+  handleSelectNewNodeType: (node: { type: NodeTypes }) => void;
+}
 
 const CommandMenu = ({
   reactFlowWrapper,
-}: {
-  reactFlowWrapper: React.MutableRefObject<HTMLDivElement | null>;
-}) => {
+  items,
+  handleSelectNewNodeType,
+}: ICommandMenu) => {
   const showNodesCmdPalette = useSelector(showNodesCmdPaletteSelector);
   const dispatch = useDispatch();
   const cursorPositionRef = React.useRef<{ x: number; y: number } | null>(null);
-  const { handleSelectNewNodeType } = useEditor();
-  const reactFlowInstance = useReactFlow();
 
   const wrapperBounds = reactFlowWrapper.current?.getBoundingClientRect();
 
-  const handleSelectItem = (item: PanelItems) => {
+  const handleSelectItem = (item: NodeTypes) => {
     handleSelectNewNodeType({ type: item });
     dispatch.ui.setShowNodesCmdPalette(false);
   };
@@ -44,7 +48,7 @@ const CommandMenu = ({
   // Toggle the menu when ⌘K is pressed
   React.useEffect(() => {
     const down = (e) => {
-      if (e.key === 'I' && e.shiftKey) {
+      if (e.key === 'K' && e.shiftKey) {
         e.preventDefault();
 
         dispatch.ui.setNodeInsertPosition(cursorPositionRef.current);
@@ -80,8 +84,8 @@ const CommandMenu = ({
       <Command.List>
         <Command.Empty>No results found.</Command.Empty>
 
-        {Object.entries(items).map(([key, values]) => {
-          const childValues = values.map((item) => (
+        {items.map((value) => {
+          const childValues = value.items.map((item) => (
             <Command.Item
               key={item.text}
               onSelect={() => handleSelectItem(item.type)}
@@ -105,9 +109,7 @@ const CommandMenu = ({
             </Command.Item>
           ));
           return (
-            <Command.Group heading={key.charAt(0).toUpperCase() + key.slice(1)}>
-              {childValues}
-            </Command.Group>
+            <Command.Group heading={value.title}>{childValues}</Command.Group>
           );
         })}
       </Command.List>

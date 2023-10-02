@@ -2,16 +2,7 @@ import { useRegisterRef } from '#/hooks/ref.ts';
 import { useDispatch } from '#/hooks/useDispatch.ts';
 import { editorTab } from '#/redux/selectors/graph.ts';
 import { Editor } from '@tokens-studio/graph-editor';
-import {
-  Box,
-  Button,
-  Heading,
-  IconButton,
-  Stack,
-  Text,
-  TextInput,
-  Tooltip,
-} from '@tokens-studio/ui';
+import { Box, Stack, Text } from '@tokens-studio/ui';
 import { useSelector } from 'react-redux';
 import { Preview } from '../Preview.tsx';
 import { Menubar } from '../editorMenu/index.tsx';

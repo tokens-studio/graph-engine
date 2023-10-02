@@ -14,9 +14,6 @@ import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 // @ts-ignore
 import { themes } from 'prism-react-renderer';
 
-//import the example
-import example from '#/examples/scale.json';
-
 import { useTheme } from '#/hooks/useTheme.tsx';
 import { useJourney } from '#/journeys/basic.tsx';
 import { JoyrideTooltip } from '#/components/joyride/tooltip.tsx';

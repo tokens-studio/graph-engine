@@ -18,7 +18,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup --external reactflow",
+    "build": "tsup --external reactflow,@reactflow/minimap",
     "dev": "tsup --watch --external reactflow",
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint --ext .tsx,.ts,.js,.html . --fix",
@@ -56,6 +56,7 @@
     "is-promise": "4.0.0",
     "json5": "2.2.3",
     "jszip": "3.10.1",
+    "poline": "^0.7.0",
     "postcss-value-parser": "4.2.0",
     "react-color": "2.19.3",
     "react-contexify": "^6.0.0",
@@ -66,7 +67,7 @@
     "react-redux": "8.0.5",
     "react-resizable-layout": "0.6.0",
     "react-use": "17.4.0",
-    "reactflow": "^11.8.2",
+    "reactflow": "^11.8.3",
     "redux": "4.2.1",
     "redux-persist": "6.0.0",
     "reselect": "4.1.8",

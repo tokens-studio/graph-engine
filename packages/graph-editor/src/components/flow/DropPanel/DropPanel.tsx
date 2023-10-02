@@ -1,13 +1,11 @@
-import { Box, Text, Stack, TextInput } from '@tokens-studio/ui';
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react/display-name */
+import { Box, Text, Stack, TextInput, Scroll } from '@tokens-studio/ui';
+import React, { useImperativeHandle, useState } from 'react';
 import { Accordion } from '../../accordion/index.js';
-import { PanelItems, items } from '../PanelItems.js';
+import { PanelGroup } from './PanelItems.js';
 import { DragItem } from './DragItem';
 import { NodeEntry } from './NodeEntry';
-import { NodeTypes } from '@tokens-studio/graph-engine';
-import { PlusIcon } from '@iconicicons/react';
-import { TriangleDownIcon } from '@radix-ui/react-icons';
-import { useExternalData } from '#/context/ExternalDataContext';
+import { TriangleRightIcon } from '@radix-ui/react-icons';
 import { styled } from '#/lib/stitches/stitches.config.js';
 
 const StyledAccordionTrigger = styled(Accordion.Trigger, {
@@ -31,123 +29,145 @@ const StyledAccordion = styled(Accordion, {
   gap: '$3',
 });
 
-export const DropPanel = () => {
-  const { tokenSets, loadingTokenSets } = useExternalData();
-  const [panelItems, setPanelItems] = useState<PanelItems>(items);
-  const [search, setSearch] = React.useState('');
-  const [defaultValue, setDefaultValue] = React.useState<string[]>(['generic']);
+const StyledChevron = styled(TriangleRightIcon, {
+  transition: 'all ease 0.3s',
+  '[data-state="open"] &': {
+    transform: 'rotate(90deg)',
+  },
+});
 
-  useEffect(() => {
-    if (tokenSets) {
-      setPanelItems((prev) => {
-        const newPanelItems = { ...prev };
-        newPanelItems.tokens = tokenSets.map((set) => ({
-          type: NodeTypes.SET,
-          data: { identifier: set.identifier, title: set.name },
-          icon: <PlusIcon />,
-          text: set.name,
-        }));
-        return newPanelItems;
-      });
-    }
-  }, [tokenSets]);
-
-  const onSearch = (e) => {
-    setSearch(e.target.value);
-    if (e.target.value === '') {
-      setDefaultValue(['generic']);
-    } else {
-      setDefaultValue(Object.keys(panelItems));
-    }
-  };
-
-  const accordionItems = React.useMemo(() => {
-    if (loadingTokenSets) {
-      return <div>Loading</div>;
-    }
-
-    // todo: refactor to just use <details>/<summary>, no need for an accordion if were treating it like a regular expandable pattern
-    return (
-      <StyledAccordion type="multiple" defaultValue={defaultValue}>
-        {Object.entries(panelItems).map(([key, values]) => {
-          const filteredValues = values
-            .filter((item) =>
-              item.text.toLowerCase().includes(search.toLowerCase()),
-            )
-            .map((item) => (
-              <DragItem
-                type={item.type}
-                data={item.data || null}
-                key={item.text}
-              >
-                <NodeEntry icon={item.icon} text={item.text} />
-              </DragItem>
-            ));
-
-          if (filteredValues.length === 0) return null;
-
-          return (
-            <Accordion.Item value={key} key={key}>
-              <StyledAccordionTrigger>
-                <Box
-                  css={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '$fgSubtle',
-                    width: '24px',
-                    height: '24px',
-                  }}
-                >
-                  <TriangleDownIcon />
-                </Box>
-                <Text size="xsmall" bold>
-                  {key.charAt(0).toUpperCase() + key.slice(1)}
-                </Text>
-              </StyledAccordionTrigger>
-              <Accordion.Content>
-                <Stack direction="column" css={{ padding: 0 }}>
-                  {filteredValues}
-                </Stack>
-              </Accordion.Content>
-            </Accordion.Item>
-          );
-        })}
-      </StyledAccordion>
-    );
-  }, [loadingTokenSets, defaultValue, panelItems, search]);
-
-  return (
-    <Box
-      css={{
-        width: '100%',
-        background: '$bgDefault',
-        zIndex: 10,
-        maxHeight: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-      id="drop-panel"
-    >
-      <Stack
-        direction="column"
-        gap={3}
-        css={{ paddingTop: '$1', width: '100%', overflowY: 'scroll' }}
-      >
-        <Stack
-          direction="column"
-          gap={2}
-          css={{ padding: '0 $3', paddingTop: '$4' }}
-        >
-          <Text size="xsmall" bold>
-            Nodes
-          </Text>
-          <TextInput placeholder="Search…" value={search} onChange={onSearch} />
-        </Stack>
-        <Stack direction="column" gap={2} css={{ padding: '$2' }}>
-          {accordionItems}
-        </Stack>
-      </Stack>
-    </Box>
-  );
+export type ImperativeDropPanelRef = {
+  /**
+   * Sets the currently opened groups by key
+   */
+  setGroups: (groups: string[]) => void;
 };
+
+export interface IDropPanel {
+  /**
+   * The currently opened groups by key
+   */
+  groups: string[];
+  /**
+   * Items to display
+   */
+  items: PanelGroup[];
+}
+
+export const DropPanel = React.forwardRef<ImperativeDropPanelRef, IDropPanel>(
+  (props: IDropPanel, ref) => {
+    const { groups = [], items = [] } = props;
+    const [thePanelItems, setPanelItems] = useState<PanelGroup[]>(items);
+    const [search, setSearch] = React.useState('');
+    const [defaultValue, setDefaultValue] = React.useState<string[]>(groups);
+
+    useImperativeHandle(
+      ref,
+      () => ({
+        setGroups: (groups) => {
+          setDefaultValue(groups);
+        },
+      }),
+      [],
+    );
+
+    const onSearch = (e) => {
+      setSearch(e.target.value);
+      if (e.target.value === '') {
+        setDefaultValue([]);
+      } else {
+        setDefaultValue(Object.keys(thePanelItems));
+      }
+    };
+
+    const accordionItems = React.useMemo(() => {
+      // todo: refactor to just use <details>/<summary>, no need for an accordion if were treating it like a regular expandable pattern
+      return (
+        <StyledAccordion type="multiple" defaultValue={defaultValue}>
+          {thePanelItems.map((value) => {
+            const filteredValues = value.items
+              .filter((item) =>
+                item.text.toLowerCase().includes(search.toLowerCase()),
+              )
+              .map((item) => (
+                <DragItem
+                  type={item.type}
+                  data={item.data || null}
+                  key={item.text}
+                >
+                  <NodeEntry icon={item.icon} text={item.text} />
+                </DragItem>
+              ));
+
+            return (
+              <Accordion.Item value={value.key} key={value.key}>
+                <StyledAccordionTrigger>
+                  <Box
+                    css={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '$fgSubtle',
+                      width: '24px',
+                      height: '24px',
+                    }}
+                  >
+                    <StyledChevron />
+                  </Box>
+                  <Text size="xsmall" bold>
+                    {value.title}
+                  </Text>
+                </StyledAccordionTrigger>
+                <Accordion.Content>
+                  <Stack direction="column" css={{ padding: 0 }}>
+                    {filteredValues}
+                  </Stack>
+                </Accordion.Content>
+              </Accordion.Item>
+            );
+          })}
+        </StyledAccordion>
+      );
+    }, [defaultValue, thePanelItems, search]);
+
+    return (
+      <Box
+        css={{
+          width: '100%',
+          background: '$bgDefault',
+          zIndex: 10,
+          maxHeight: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+        id="drop-panel"
+      >
+        <Scroll height="100%">
+          <Stack
+            direction="column"
+            gap={3}
+            css={{ paddingTop: '$1', width: '100%' }}
+          >
+            <Stack
+              direction="column"
+              gap={2}
+              css={{ padding: '0 $3', paddingTop: '$4' }}
+            >
+              <Text size="xsmall" bold>
+                Nodes
+              </Text>
+              <TextInput
+                placeholder="Search…"
+                value={search}
+                onChange={onSearch}
+              />
+            </Stack>
+            <Stack direction="column" gap={2} css={{ padding: '$2' }}>
+              {accordionItems}
+            </Stack>
+          </Stack>
+        </Scroll>
+      </Box>
+    );
+  },
+);

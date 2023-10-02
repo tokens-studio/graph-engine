@@ -42,6 +42,7 @@ export interface IResolvedToken {
    * Optional description of the token
    */
   description?: string;
+  $extensions?: Record<string, any>;
 }
 
 export const flatten = (
@@ -59,6 +60,7 @@ export const flatten = (
         value: val.value,
         type: val.type,
         description: val.description,
+        $extensions: val.$extensions,
       });
       return acc;
     }

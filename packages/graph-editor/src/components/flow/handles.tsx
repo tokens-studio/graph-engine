@@ -4,8 +4,6 @@ import { styled } from '#/lib/stitches/index.ts';
 import { useIsValidConnection } from './nodes/hooks/useIsValidConnection.ts';
 import { useNode } from './wrapper/nodeV2.tsx';
 import React, { createContext, useContext } from 'react';
-import classNames from 'classnames';
-import styles from './handles.module.css';
 
 export const HandleContext = createContext<{
   position: Position;

@@ -140,6 +140,7 @@ export const Node = (props: NodeProps) => {
     [obscureDistanceValue],
   );
 
+  console.log(error);
   const showContent = useStore(limiter);
 
   const [collapsed, setCollapsed] = useState(false);

@@ -1,6 +1,5 @@
 import { createNode } from '#/editor/create';
 import { NodeTypes } from '@tokens-studio/graph-engine';
-import { stateInitializer } from '../nodes/index.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useReactFlow } from 'reactflow';
 import { storeNodeInsertPositionSelector } from '#/redux/selectors/ui';
@@ -11,8 +10,6 @@ export function useEditor() {
   const storeNodeInsertPosition = useSelector(storeNodeInsertPositionSelector);
 
   const handleSelectNewNodeType = (nodeRequest) => {
-    console.log('good', nodeRequest);
-
     const nodes = reactFlowInstance.getNodes();
 
     if (!nodeRequest.type) {
@@ -34,11 +31,7 @@ export function useEditor() {
       return null;
     }
 
-    console.log('pos before', storeNodeInsertPosition);
-
     const position = reactFlowInstance.project(storeNodeInsertPosition);
-
-    console.log('pos after', position);
 
     const newNode = createNode({
       nodeRequest,
