@@ -200,6 +200,7 @@ export const Menubar = ({
         />
         <IconButton
           id="more-help"
+          // @ts-ignore
           as="a"
           href="https://docs.graph.tokens.studio/"
           variant="invisible"
@@ -208,6 +209,7 @@ export const Menubar = ({
           icon={<BookIcon />}
         />
         <IconButton
+          // @ts-ignore
           as="a"
           href="https://www.youtube.com/@TokensStudio"
           variant="invisible"
@@ -216,6 +218,7 @@ export const Menubar = ({
           icon={<YoutubeIcon />}
         />
         <IconButton
+          // @ts-ignore
           as="a"
           href="https://tokens.studio//slack"
           variant="invisible"
