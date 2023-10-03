@@ -30,6 +30,7 @@ export const process = (input: NamedInput, state: NamedInput) => {
 };
 
 export const node: NodeDefinition<NamedInput, NamedInput> = {
+  description: "Extracts a property from an array of objects",
   type,
   process,
 };

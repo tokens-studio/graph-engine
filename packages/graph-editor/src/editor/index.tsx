@@ -76,6 +76,7 @@ import { defaultPanelItems } from '#/components/flow/DropPanel/PanelItems.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
+const panOnDrag = [1, 2];
 
 const edgeTypes = {
   custom: CustomEdge,
@@ -502,7 +503,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
         dispatch,
         position,
       });
-      console.log(newNode);
       reactFlowInstance.addNodes(newNode);
     };
 
@@ -580,7 +580,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 selectNodesOnDrag={false}
                 defaultEdgeOptions={defaultEdgeOptions}
                 panOnScroll={true}
-                //  panOnDrag={panOnDrag}
+                //Note that we cannot use pan on drag or it will affect the context menu
                 onPaneContextMenu={handleContextMenu}
                 onEdgeContextMenu={handleEdgeContextMenu}
                 onNodeContextMenu={handleNodeContextMenu}

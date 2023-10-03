@@ -18,6 +18,7 @@ export const process = (input: NamedInput) => {
 };
 
 export const node: NodeDefinition<NamedInput> = {
+  description: "Reverses a given array without mutating the original",
   type,
   process,
 };

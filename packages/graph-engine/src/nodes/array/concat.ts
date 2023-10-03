@@ -39,6 +39,7 @@ export const process = (input: MappedInput) => {
 };
 
 export const node: NodeDefinition<MappedInput> = {
+  description: "Performs an array join using a string delimiter",
   type,
   mapInput,
   process,

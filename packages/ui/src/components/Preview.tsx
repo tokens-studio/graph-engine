@@ -25,13 +25,13 @@ export const Preview = ({ codeRef }) => {
     <Stack
       direction="column"
       css={{
-        maxHeight: '45vh',
-        maxWidth: 'clamp(180px, 40vw, 400px)',
+        width: '400px',
         backgroundColor: '$bgDefault',
         border: '1px solid $borderMuted',
         borderRadius: isVisible ? '$small' : '$small',
         overflow: 'hidden',
         boxShadow: '$small',
+        resize: 'horizontal',
       }}
     >
       <Stack
@@ -61,10 +61,10 @@ export const Preview = ({ codeRef }) => {
                 onValueChange={setVisibleTab}
               >
                 <ToggleGroup.Item value="preview">
-                  <VideoIcon />
+                  <VideoIcon id="preview" />
                 </ToggleGroup.Item>
                 <ToggleGroup.Item value="editor">
-                  <Code3Icon />
+                  <Code3Icon id="code-editor" />
                 </ToggleGroup.Item>
               </ToggleGroup>
               <IconButton
@@ -96,6 +96,7 @@ export const Preview = ({ codeRef }) => {
           >
             <ComponentPreview />
           </Box>
+
           <Box
             css={{
               fontSize: '$xsmall',
@@ -106,10 +107,12 @@ export const Preview = ({ codeRef }) => {
               display: visibleTab === 'editor' ? 'flex' : 'none',
             }}
           >
-            <div ref={codeRef}>
-              <LiveEditor />
-            </div>
-            <LiveError />
+            <Stack direction="column">
+              <LiveError />
+              <div ref={codeRef}>
+                <LiveEditor />
+              </div>
+            </Stack>
           </Box>
         </Box>
       )}

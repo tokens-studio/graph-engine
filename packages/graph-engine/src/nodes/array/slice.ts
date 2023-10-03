@@ -19,6 +19,7 @@ export const process = (input: NamedInput) => {
 };
 
 export const node: NodeDefinition<NamedInput> = {
+  description: "Slices an input array",
   type,
   process,
 };

@@ -35,6 +35,7 @@ const process = (input: Input, state: State) => {
 };
 
 export const node: NodeDefinition<Input, State> = {
+  description: "Extracts a value from an array at a given index",
   type,
   defaults,
   process,

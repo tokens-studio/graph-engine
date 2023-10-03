@@ -344,6 +344,11 @@ export const defaultPanelItems: PanelGroup[] = [
         icon: '?',
         text: 'Select Token',
       },
+      {
+        type: NodeTypes.GROUP,
+        icon: '{a:}',
+        text: 'Group Token',
+      },
     ],
   },
   {

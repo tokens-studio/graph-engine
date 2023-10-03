@@ -1,23 +1,20 @@
 import { useRegisterRef } from '#/hooks/ref.ts';
 import { useDispatch } from '#/hooks/useDispatch.ts';
-import { editorTab } from '#/redux/selectors/graph.ts';
 import { Editor } from '@tokens-studio/graph-editor';
-import { Box, Stack, Text } from '@tokens-studio/ui';
-import { useSelector } from 'react-redux';
+import { Box, Stack } from '@tokens-studio/ui';
 import { Preview } from '../Preview.tsx';
 import { Menubar } from '../editorMenu/index.tsx';
 import { useCallback } from 'react';
 import { useTheme } from '#/hooks/useTheme.tsx';
 
-export const EditorTab = ({ id, ...rest }) => {
+export const EditorTab = ({ ...rest }) => {
   const dispatch = useDispatch();
-  const [, ref] = useRegisterRef(id);
+  const [, ref] = useRegisterRef('editor');
   const [, setCodeRef] = useRegisterRef('codeEditor');
-  const tab = useSelector(editorTab(id));
   const theme = useTheme();
   const onEditorOutputChange = (output: Record<string, unknown>) => {
     dispatch.editorOutput.set({
-      name: tab.title!,
+      name: 'output',
       value: output,
     });
   };
@@ -30,7 +27,7 @@ export const EditorTab = ({ id, ...rest }) => {
   return (
     <Box css={{ position: 'relative', width: '100%', height: '100%' }}>
       <Editor
-        id={id}
+        id={'editor'}
         ref={ref}
         onOutputChange={onEditorOutputChange}
         menuContent={<Menubar toggleTheme={toggleTheme} theme={theme} />}
@@ -45,14 +42,5 @@ export const EditorTab = ({ id, ...rest }) => {
         <Preview codeRef={setCodeRef} />
       </Stack>
     </Box>
-  );
-};
-
-export const EditorDockTab = ({ id }) => {
-  const tab = useSelector(editorTab(id));
-  return (
-    <Stack align="center" gap={2}>
-      <Text>{tab.title}</Text>
-    </Stack>
   );
 };

@@ -9,6 +9,10 @@ export interface NodeDefinition<
   ExternalRequest = object
 > {
   /**
+   * A markdown based description of the node
+   */
+  description?: string;
+  /**
    * Reverse domain name notation for the node
    */
   type: string;

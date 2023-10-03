@@ -1,15 +1,10 @@
-import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
-import { DockLayout, LayoutData, TabGroup } from 'rc-dock';
+import { Box } from '@tokens-studio/ui';
 import { LiveProvider } from 'react-live';
 import { code, scope } from '#/components/preview/scope.tsx';
 import { useDispatch } from '#/hooks/index.ts';
 import { useSelector } from 'react-redux';
-import React, { useEffect, useState } from 'react';
-import {
-  showJourneySelector,
-  tabs as tabsSelector,
-  currentTab as currentTabSelector,
-} from '#/redux/selectors/index.ts';
+import React, { useState } from 'react';
+import { showJourneySelector } from '#/redux/selectors/index.ts';
 import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 // @ts-ignore
 import { themes } from 'prism-react-renderer';
@@ -18,6 +13,7 @@ import { useTheme } from '#/hooks/useTheme.tsx';
 import { useJourney } from '#/journeys/basic.tsx';
 import { JoyrideTooltip } from '#/components/joyride/tooltip.tsx';
 import { EditorTab } from '#/components/editor/index.tsx';
+import { PreviewContextProvider } from '#/providers/preview.tsx';
 
 const Wrapper = () => {
   const [theCode, setTheCode] = useState(code);
@@ -65,16 +61,18 @@ const Wrapper = () => {
           background: '$bgDefault',
         }}
       >
-        <LiveProvider
-          code={theCode}
-          scope={scope}
-          theme={theme === 'light' ? themes.vsLight : themes.vsDark}
-          noInline={true}
-          enableTypeScript={true}
-          language="jsx"
-        >
-          <EditorTab id="1" title="Example" />
-        </LiveProvider>
+        <PreviewContextProvider setCode={setTheCode}>
+          <LiveProvider
+            code={theCode}
+            scope={scope}
+            theme={theme === 'light' ? themes.vsLight : themes.vsDark}
+            noInline={true}
+            enableTypeScript={true}
+            language="jsx"
+          >
+            <EditorTab setTheCode={setTheCode} />
+          </LiveProvider>
+        </PreviewContextProvider>
       </Box>
     </>
   );

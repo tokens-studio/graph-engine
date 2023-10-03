@@ -33,6 +33,7 @@ const process = (input: Inputs, state) => {
 };
 
 export const node: NodeDefinition<Inputs> = {
+  description: "Calculates the contrast between two colors",
   type,
   process,
 };

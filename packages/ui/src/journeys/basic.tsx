@@ -82,6 +82,11 @@ export const useJourney = (): [
               As you adjust both the code and the graph, you will see the
               changes reflected here.
             </Text>
+            <Text>
+              <b>Note</b>
+              You might need to update your old previews as we no longer support
+              multiple tabs
+            </Text>
           </>
         ),
         floaterProps: {
@@ -97,7 +102,7 @@ export const useJourney = (): [
             <Text>You can save or load your graph as a JSON file.</Text>
           </>
         ),
-        placement: 'bottom',
+        placement: 'right',
         title: 'Toolbar',
         target: '#toolbar',
       },
@@ -109,7 +114,7 @@ export const useJourney = (): [
             </Text>
           </>
         ),
-        placement: 'bottom',
+        placement: 'right',
         title: 'Documentation',
         target: '#more-help',
       },

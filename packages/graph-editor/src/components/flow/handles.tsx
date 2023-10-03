@@ -148,7 +148,7 @@ const HandleHolder = styled(Box, {
 });
 
 export const Handle = (props) => {
-  const { children, asMain, error, ...rest } = props;
+  const { children, error, full, ...rest } = props;
   const { position, type } = useHandle();
   const isValidConnection = useIsValidConnection();
   const { collapsed, hide } = useContext(HandleContainerContext);
@@ -162,7 +162,6 @@ export const Handle = (props) => {
         isConnected={isValidConnection}
         type={type}
         position={position}
-        data={{ eg: '1' }}
         hide={hide}
         isValidConnection={isValidConnection}
         {...rest}
@@ -171,7 +170,7 @@ export const Handle = (props) => {
       <Stack
         direction="row"
         gap={2}
-        justify={type === 'target' ? 'start' : 'end'}
+        justify={full ? 'between' : type === 'target' ? 'start' : 'end'}
         align="center"
         css={{ flex: 1, paddingLeft: '$3', paddingRight: '$3' }}
       >

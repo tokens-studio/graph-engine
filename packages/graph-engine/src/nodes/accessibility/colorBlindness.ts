@@ -70,6 +70,8 @@ const process = (input: Inputs, state: STATE) => {
 };
 
 export const node: NodeDefinition<Inputs, STATE> = {
+  description:
+    "Converts provided colors to the colors as perceived by the specified color blindness type.",
   defaults,
   type,
   process,

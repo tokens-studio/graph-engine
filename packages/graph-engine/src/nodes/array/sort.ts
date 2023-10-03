@@ -31,6 +31,7 @@ export const process = (input: NamedInput, state: NamedInput) => {
 };
 
 export const node: NodeDefinition<NamedInput, NamedInput> = {
+  description: "Sort a given array without mutating the original",
   type,
   defaults,
   process,

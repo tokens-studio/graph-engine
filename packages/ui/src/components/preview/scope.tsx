@@ -8,14 +8,12 @@ export const OutputProvider = ({ children, value = {} }) => {
   );
 };
 
-const useTokens = (selector: string, subSelector?: string) => {
+const useTokens = (subSelector?: string) => {
   const ctx = react.useContext(OutputContext);
 
-  if (!selector) {
-    return ctx;
-  }
-
-  let vals = ctx[selector] || {};
+  //@ts-ignore
+  let vals = ctx.output || {};
+  console.log(ctx);
 
   if (subSelector) {
     vals = vals[subSelector] || {};
@@ -23,8 +21,8 @@ const useTokens = (selector: string, subSelector?: string) => {
   return vals;
 };
 
-const useTokenProps = (selector: string, subSelector?: string) => {
-  const styles = useTokens(selector, subSelector);
+const useTokenProps = (subSelector?: string) => {
+  const styles = useTokens(subSelector);
 
   return {
     style: styles,
@@ -38,10 +36,10 @@ export const scope = {
 
 export const code = `const Example = () => {
 
-    const cardStyle = useTokens('Card','container');
-    const cardImageStyle = useTokens('Card','image');
-    const cardContent= useTokens('Card','content');
-    const cardTitle= useTokens('Card','title');
+    const cardStyle = useTokens('container');
+    const cardImageStyle = useTokens('image');
+    const cardContent= useTokens('content');
+    const cardTitle= useTokens('title');
 
 
     return (<div class="card" style={cardStyle}>

@@ -15,6 +15,7 @@ import { getRectOfNodes, getTransformForBounds } from 'reactflow';
 import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
 import { toPng } from 'html-to-image';
 import { store } from '#/redux/store.tsx';
+import { usePreviewContext } from '#/providers/preview.tsx';
 
 const imageWidth = 1024;
 
@@ -27,8 +28,9 @@ export const Menubar = ({
   toggleTheme: () => void;
   theme: string;
 }) => {
+  const { setCode } = usePreviewContext();
   const findCurrentEditor = useCallback(() => {
-    const activeEditor = store.getState().refs['1'];
+    const activeEditor = store.getState().refs.editor;
 
     return activeEditor;
   }, []);
@@ -90,9 +92,9 @@ export const Menubar = ({
         // as the nodes still get one final update by the dispatch before they are removed which
         // causes nulls to occur everywhere. They need to be unmounted
         setTimeout(() => {
-          // if (code !== undefined) {
-          //     setTheCode(code);
-          // }
+          if (code !== undefined) {
+            setCode(code);
+          }
 
           editor.current.load({
             nodes,
@@ -106,7 +108,7 @@ export const Menubar = ({
 
     // simulate a click on the input element to trigger the file picker dialog
     input.click();
-  }, [findCurrentEditor]);
+  }, [findCurrentEditor, setCode]);
 
   const onPrint = useCallback(async () => {
     function downloadImage(dataUrl) {
@@ -151,7 +153,13 @@ export const Menubar = ({
   }, [findCurrentEditor]);
 
   return (
-    <Stack direction="column" justify="between" gap={2} css={{ flexGrow: 1 }}>
+    <Stack
+      id="toolbar"
+      direction="column"
+      justify="between"
+      gap={2}
+      css={{ flexGrow: 1 }}
+    >
       <Stack direction="column">
         <Box
           css={{
@@ -191,6 +199,7 @@ export const Menubar = ({
           onClick={onPrint}
         />
         <IconButton
+          id="more-help"
           as="a"
           href="https://docs.graph.tokens.studio/"
           variant="invisible"

@@ -29,6 +29,7 @@ export const process = (input) => {
 };
 
 export const node: NodeDefinition = {
+  description: "Converts a string to uppercase",
   type,
   validateInputs,
   process,

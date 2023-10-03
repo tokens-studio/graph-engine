@@ -70,6 +70,7 @@ import baseFontSizeNode from './accessibility/baseFontSizeNode.tsx';
 import colorDistanceNode from './color/colorDistanceNode.tsx';
 import fluidNode from './math/fluidNode.tsx';
 import ExtractTokenNodes from './sets/tokenExtract.tsx';
+import GroupToken from './sets/tokenGroup.tsx';
 
 export type NodeTypeLookup = Record<string, React.ReactNode | React.FC>;
 export type StateInitializer = Record<string, Record<string, any>>;
@@ -186,4 +187,5 @@ export const {
   baseFontSizeNode,
   colorDistanceNode,
   fluidNode,
+  GroupToken,
 ]);

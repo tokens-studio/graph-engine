@@ -18,6 +18,7 @@ export const process = (input: NamedInput, state: NamedInput) => {
 };
 
 export const node: NodeDefinition<NamedInput, NamedInput> = {
+  description: "Joins an array of strings into a single string",
   defaults,
   type,
   process,
