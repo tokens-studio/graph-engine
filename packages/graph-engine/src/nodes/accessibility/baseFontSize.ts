@@ -56,6 +56,7 @@ export const mapOutput = (input, state, processed) => {
 };
 
 export const node: NodeDefinition<Inputs> = {
+  description: "Calculates the base font size",
   type,
   defaults,
   process,
