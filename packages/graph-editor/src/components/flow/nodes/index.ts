@@ -19,6 +19,7 @@ import HarmonicNode from './series/harmonicNode.tsx';
 import IfNode from './logic/ifNode.tsx';
 import InputNode from './generic/inputNode.tsx';
 import InvertNode from './sets/invertNode.tsx';
+import TokenGroup from './sets/tokenGroup.tsx';
 import objectify from './input/objectify.tsx';
 import dotProp from './array/dotProp.tsx';
 import JoinNode from './array/join.tsx';
@@ -64,11 +65,12 @@ import jsonNode from './generic/jsonNode.tsx';
 import cssBox from './css/boxNode.tsx';
 import concat from './array/concat.tsx';
 import ExternalSetNode from './sets/ExternalSetNode.tsx';
-import selectToken from './sets/selectToken.tsx';
 import PolineNode from './color/polineNode.tsx';
 import baseFontSizeNode from './accessibility/baseFontSizeNode.tsx';
 import colorDistanceNode from './color/colorDistanceNode.tsx';
 import fluidNode from './math/fluidNode.tsx';
+import ExtractTokenNodes from './sets/tokenExtract.tsx';
+import GroupToken from './sets/tokenGroup.tsx';
 
 export type NodeTypeLookup = Record<string, React.ReactNode | React.FC>;
 export type StateInitializer = Record<string, Record<string, any>>;
@@ -124,6 +126,7 @@ export const {
   spreadNode,
   dotProp,
   objectify,
+  ExtractTokenNodes,
   arrayIndex,
   MultiplyNode,
   DivisionNode,
@@ -148,6 +151,7 @@ export const {
   TanNode,
   jsonNode,
   ClampNode,
+  TokenGroup,
   LerpNode,
   IfNode,
   RegexNode,
@@ -183,5 +187,5 @@ export const {
   baseFontSizeNode,
   colorDistanceNode,
   fluidNode,
-  selectToken,
+  GroupToken,
 ]);

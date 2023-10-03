@@ -47,13 +47,7 @@ const BlendNode = () => {
               </Handle>
             );
           })}
-          <Handle id={'i.' + ref.current}>
-            <Stack direction="row" justify="between">
-              <Text>
-                <i>New</i>
-              </Text>
-            </Stack>
-          </Handle>
+          <Handle id={'i.' + ref.current}>New</Handle>
           <Stack
             direction="row"
             align="center"

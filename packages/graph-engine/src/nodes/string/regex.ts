@@ -26,6 +26,7 @@ export const process = (input, state) => {
 };
 
 export const node: NodeDefinition = {
+  description: "Replaces a string with a regex",
   type,
   defaults,
   process,

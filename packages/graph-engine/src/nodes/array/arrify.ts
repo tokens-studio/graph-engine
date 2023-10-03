@@ -36,6 +36,7 @@ export const process = (input: MappedInput) => {
 };
 
 export const node: NodeDefinition<MappedInput> = {
+  description: "Allows creation of the an array from a series of inputs",
   mapInput,
   type,
   process,

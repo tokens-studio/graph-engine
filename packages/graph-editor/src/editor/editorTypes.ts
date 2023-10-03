@@ -1,10 +1,9 @@
 import { PanelGroup } from '#/components/flow/DropPanel/PanelItems';
 import { ExternalLoadOptions } from '@tokens-studio/graph-engine';
-import { Edge, Node } from 'reactflow';
+import { Edge, Node, ReactFlowInstance } from 'reactflow';
 
 export type EditorProps = {
   id: string;
-  name: string;
   /**
    * Items to display in the drop panel.
    * Not populating this will result in the default items being displayed.
@@ -20,6 +19,10 @@ export type EditorProps = {
    * Not populating this will result in the default items being displayed.
    */
   stateInitializer?: Record<string, Record<string, unknown>>;
+  /**
+   * Menu content to displya
+   */
+  menuContent: React.ReactNode;
   onOutputChange: (output: Record<string, unknown>) => void;
   externalLoader?: (opts: ExternalLoadOptions) => Promise<any> | any;
 };
@@ -39,6 +42,7 @@ export type ImperativeEditorRef = {
   save: () => EditorState;
   forceUpdate: () => void;
   load: (state: EditorState) => void;
+  getFlow: () => ReactFlowInstance;
 };
 
 export type EditorNode = Node;

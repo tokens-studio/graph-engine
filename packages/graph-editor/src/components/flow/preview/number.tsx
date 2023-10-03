@@ -3,19 +3,19 @@ import React from 'react';
 
 export const choosePreview = (value) => {
   if (value == undefined) {
-    return <i>Missing</i>;
+    return <Text>Missing</Text>;
   }
 
   if (isNaN(value)) {
-    return <i>NaN</i>;
+    return <Text>NaN</Text>;
   }
 
   if (value == Infinity) {
-    return <i>Infinity</i>;
+    return <Text>Infinity</Text>;
   }
 
   if (value == -Infinity) {
-    return <i>-Infinity</i>;
+    return <Text>-Infinity</Text>;
   }
   return <span>{Math.round(value * 100) / 100}</span>;
 };

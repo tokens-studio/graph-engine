@@ -1,9 +1,7 @@
 import {
   Box,
   Button,
-  Heading,
   IconButton,
-  Separator,
   Spinner,
   Stack,
   Text,
@@ -118,6 +116,7 @@ export const Collapser = ({ icon, children, collapsed, showContent }) => {
     return {
       position: 'relative',
       padding: '$3',
+      paddingBottom: '$5',
       opacity: !showContent ? 0 : 1,
       pointerEvents: !showContent ? 'none' : 'initial',
     };
@@ -125,9 +124,7 @@ export const Collapser = ({ icon, children, collapsed, showContent }) => {
 
   return (
     <CollapserContainer css={styling}>
-      <Box>
-        <Box css={occluding}>{children}</Box>
-      </Box>
+      <Box css={occluding}>{children}</Box>
     </CollapserContainer>
   );
 };
@@ -186,32 +183,54 @@ export const Node = (props: NodeProps) => {
 
   return (
     <Box
-      style={{
+      css={{
         minWidth: '300px',
         position: 'relative',
-        borderRadius: '3px',
+        borderRadius: '$medium',
+        background: error ? '$dangerBg' : '$bgDefault',
       }}
-      css={{ background: error ? '$dangerBg' : '$bgDefault' }}
     >
       <NodeToolbar className="nodrag">
-        <Stack direction="row" gap={2}>
+        <Stack
+          direction="row"
+          gap={0}
+          css={{
+            padding: '$1',
+            backgroundColor: '$bgDefault',
+            borderRadius: '$medium',
+            border: '1px solid $borderSubtle',
+            boxShadow: '$small',
+          }}
+        >
           {hasParent && <Button onClick={onDetach}>Detach</Button>}
           <IconButton
-            title="Trace upstream"
+            tooltip="Trace upstream"
+            tooltipSide="top"
             icon={<DoubleArrowLeftIcon />}
             onClick={onTraceSource}
+            variant="invisible"
           />
-          <IconButton title="Delete" icon={<TrashIcon />} onClick={onDelete} />
+          <IconButton
+            tooltip="Delete"
+            tooltipSide="top"
+            icon={<TrashIcon />}
+            onClick={onDelete}
+            variant="invisible"
+          />
 
           <IconButton
-            title="Trace upstream"
+            tooltip="Trace upstream"
+            tooltipSide="top"
             icon={<DoubleArrowRightIcon />}
             onClick={onTraceDown}
+            variant="invisible"
           />
           <IconButton
-            title="Reset trace"
+            tooltip="Reset trace"
+            tooltipSide="top"
             icon={<ResetIcon />}
             onClick={onResetTrace}
+            variant="invisible"
           />
         </Stack>
       </NodeToolbar>
@@ -226,12 +245,51 @@ export const Node = (props: NodeProps) => {
                   direction="row"
                   justify="between"
                   align="center"
-                  css={{ padding: '$3' }}
+                  css={{
+                    padding: '$3 $5',
+                    borderBottom: collapsed
+                      ? 'none'
+                      : '2px solid var(--nodeBorderColor, var(--colors-borderSubtle))',
+                    backgroundColor:
+                      'var(--nodeBgColor, var(--colors-bgSubtle))',
+                    borderRadius: '$medium',
+                    borderBottomLeftRadius: collapsed ? '$medium' : 0,
+                    borderBottomRightRadius: collapsed ? '$medium' : 0,
+                  }}
                 >
                   <Stack direction="row" gap={2} align="center">
-                    <Box>{icon}</Box>
+                    {icon && (
+                      <Box
+                        css={{
+                          color: 'var(--nodeTextColor, var(--colors-fgSubtle))',
+                        }}
+                      >
+                        {icon}
+                      </Box>
+                    )}
+                    <Text
+                      css={{
+                        fontSize: '$xxsmall',
+                        fontWeight: '$sansMedium',
+                        textTransform: 'uppercase',
+                        color: 'var(--nodeTextColor, var(--colors-fgSubtle))',
+                        letterSpacing: '0.15px',
+                      }}
+                    >
+                      {title}
+                    </Text>
+                    {debugModeValue && (
+                      <Text
+                        css={{
+                          fontSize: '$xxsmall',
+                          fontFamily: 'monospace',
+                          color: '$fgSubtle',
+                        }}
+                      >
+                        {props.stats.executionTime}ms
+                      </Text>
+                    )}
                     {isAsync && <Spinner />}
-                    <Heading>{title}</Heading>
                   </Stack>
                   <Stack direction="row" gap={2}>
                     {controls}
@@ -244,7 +302,6 @@ export const Node = (props: NodeProps) => {
                     />
                   </Stack>
                 </Stack>
-                <Separator orientation="horizontal" />
               </>
             )}
             <Collapser
@@ -254,11 +311,6 @@ export const Node = (props: NodeProps) => {
             >
               {children}
             </Collapser>
-            {debugModeValue && (
-              <Text css={{ position: 'absolute', top: 'calc(100% + 10px)' }}>
-                {props.stats.executionTime}ms
-              </Text>
-            )}
           </Stack>
         </FocusTrap>
       </HandleContainerContext.Provider>

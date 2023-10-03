@@ -1,5 +1,5 @@
 @import url('reactflow/dist/style.css');
-
+@import url('react-contexify/ReactContexify.css');
 .react-flow__node {
     position: absolute;
     -webkit-user-select: none;
@@ -11,22 +11,25 @@
     padding: 0;
     cursor: -webkit-grab;
     cursor: grab;
-    border: none;
     background: transparent;
     width: initial;
     border-radius: var(--radii-medium);
-    transition: box-shadow 0.3s ease-in-out;
     background: var(--colors-bgDefault);
-    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadows-small);
+    outline: 2px solid transparent;
 }
 
 .react-flow__node.filtered {
     opacity: 0.25;
 }
+
 .react-flow__node.selectable.selected, .react-flow__node.selectable:focus {
-    box-shadow: 0px 2px 24px -4px rgba(0, 0, 0, 0.15), 0px 2px 4px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 4px rgba(0, 0, 150, 0.05);
-    border: 2px solid var(--colors-focus);
+    --nodeBorderColor: var(--colors-accentMuted);
+    --nodeBgColor: var(--colors-accentBg);
+    --nodeTextColor: var(--colors-fgDefault);
+    outline: 2px solid var(--colors-accentMuted);
 }
+
 .react-flow__edge.selected .react-flow__edge-path, .react-flow__edge:focus .react-flow__edge-path, .react-flow__edge:focus-visible .react-flow__edge-path {
     stroke: var(--colors-bgSubtle);
 }
@@ -43,7 +46,7 @@
     background: transparent;
 }
 .react-flow__minimap {
-    background: var(--colors-bgSurface);
+    background: var(--colors-bgCanvas);
 } 
 
 .react-flow__minimap-mask {
@@ -58,7 +61,6 @@
 
 #drop-panel {
     margin: 0;
-    height: 100%;
 }
 
 .react-flow__edge-path, .react-flow__connection-path {
@@ -73,4 +75,127 @@
 }
 .react-flow__handle.react-flow__handle-valid:after {
     background: #5d9 !important;
+}
+
+
+.mosaic-window .mosaic-window-toolbar, .mosaic-preview .mosaic-window-toolbar{
+    color:var(--colors-fgMuted);
+    background:var(--colors-bgCanvas); ;
+}
+
+.mosaic-root{
+    background:var(--colors-borderMuted); ;
+    top:2px;
+    left:2px;
+    right:2px;
+    bottom:2px;
+}
+
+.mosaic-split,.mosaic.mosaic-blueprint-theme{
+    background:var(--colors-borderMuted); ;
+}
+
+.mosaic-split.-row{
+    width:4px;
+    margin-left:2px;
+}
+.mosaic-split.-column {
+    margin-top: -2px;
+    height: 4px;
+}
+
+.mosaic.mosaic-blueprint-theme .mosaic-window .mosaic-window-title, .mosaic.mosaic-blueprint-theme .mosaic-preview .mosaic-window-title,
+.mosaic.mosaic-blueprint-theme .mosaic-window .mosaic-window-toolbar.draggable:hover .mosaic-window-title, .mosaic.mosaic-blueprint-theme .mosaic-preview .mosaic-window-toolbar.draggable:hover .mosaic-window-title{
+    color:var(--colors-fgMuted);
+    font-size: var(--fontSizes-xsmall);
+}
+
+.mosaic.mosaic-blueprint-theme .mosaic-window .mosaic-window-toolbar.draggable:hover, .mosaic.mosaic-blueprint-theme .mosaic-preview .mosaic-window-toolbar.draggable:hover {
+    background:var(--colors-bgEmphasis); ;
+}
+
+.contexify{
+    --contexify-menu-bgColor: var(--colors-contextMenuBg);
+    --contexify-separator-color: var(--colors-contextMenuSeparator);
+    --contexify-item-color: var(--colors-contextMenuFg);
+    --contexify-activeItem-color: var(--colors-contextMenuFg);
+    --contexify-activeItem-bgColor: var(--colors-contextMenuBgHover);
+    --contexify-rightSlot-color: var(--colors-contextMenuFgMuted);
+    --contexify-activeRightSlot-color: var(--colors-contextMenuFg);
+    --contexify-arrow-color: var(--colors-contextMenuFgMuted);
+    --contexify-activeArrow-color:  var(--colors-contextMenuFgMuted);
+    --contexify-menu-shadow: var(--shadows-contextMenu);
+}
+
+.DropdownMenuContent {
+    width: var(--radix-dropdown-menu-trigger-width);
+    max-height: var(--radix-dropdown-menu-content-available-height);
+    overflow-y: scroll;
+}
+
+
+[cmdk-overlay] {
+    background: rgba(25, 25, 25, 0.5);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 500;
+}
+
+[cmdk-dialog] {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+[cmdk-root] {
+    background-color: var(--colors-bgDefault);
+    border-radius: var(--radii-medium);
+    box-shadow: var(--shadows-contextMenu);
+    border: 1px solid var(--colors-borderSubtle);
+    padding: var(--space-4);
+    font-size: var(--fontSizes-small);
+    color: var(--colors-fgMuted);
+    width: 100%;
+    max-width: 640px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+[cmdk-input] {
+    border: none;
+    width: 100%;
+    cursor: text;
+    &:focus {
+        outline: none;
+    }
+}
+
+[cmdk-item] {
+    font-size: var(--fontSizes-small);
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radii-medium);
+}
+
+[cmdk-group] {
+
+}
+
+[cmdk-group-heading] {
+    padding: var(--space-1) var(--space-5);
+    font-weight: var(--fontWeights-sansMedium);
+    color: var(--colors-fgSubtle);
+    font-size: var(--fontSizes-xxsmall);
+}
+
+[cmdk-item][data-selected="true"] {
+    background-color: var(--colors-bgSubtle);
 }

@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { IconButton, Spinner, Stack, Text } from '@tokens-studio/ui';
 import { ClipboardCopyIcon, DownloadIcon } from '@radix-ui/react-icons';
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { flatTokensRestoreToMap } from '#/utils/index.ts';
 import { NodeProps } from 'reactflow';
 import {
@@ -90,9 +90,7 @@ const ExternalSetNode: FC<NodeProps<EditorExternalSet>> = () => {
       <Stack direction="row" gap={2} justify="end">
         <HandleContainer type="source">
           <Handle id={EXTERNAL_SET_ID}>
-            <Text>
-              <i>As Set</i>{' '}
-            </Text>
+            <HandleText>Set</HandleText>
           </Handle>
         </HandleContainer>
       </Stack>

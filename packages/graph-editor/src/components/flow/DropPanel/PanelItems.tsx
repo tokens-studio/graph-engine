@@ -5,6 +5,7 @@ import {
   ColorWheelIcon,
   EyeNoneIcon,
   Half2Icon,
+  FontSizeIcon,
   ImageIcon,
   PlusIcon,
 } from '@radix-ui/react-icons';
@@ -339,9 +340,14 @@ export const defaultPanelItems: PanelGroup[] = [
         text: 'Invert',
       },
       {
-        type: NodeTypes.SELECT_TOKEN,
+        type: NodeTypes.EXTRACT_TOKENS,
         icon: '?',
         text: 'Select Token',
+      },
+      {
+        type: NodeTypes.GROUP,
+        icon: '{a:}',
+        text: 'Group Token',
       },
     ],
   },
@@ -442,6 +448,11 @@ export const defaultPanelItems: PanelGroup[] = [
     title: 'Accessibility',
     key: 'accessibility',
     items: [
+      {
+        type: NodeTypes.BASE_FONT_SIZE,
+        icon: <FontSizeIcon />,
+        text: 'Base Font',
+      },
       {
         type: NodeTypes.CONTRAST,
         icon: <Half2Icon />,

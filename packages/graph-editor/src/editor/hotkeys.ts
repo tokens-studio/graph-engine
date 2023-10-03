@@ -4,17 +4,11 @@ import { useDispatch } from '#/hooks/useDispatch.ts';
 import { useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import copy from 'copy-to-clipboard';
-import useAutoLayout from '../components/flow/layouts/dagre.tsx';
-import {
-  elkForceOptions,
-  elkLayeredOptions,
-  elkRectOptions,
-  elkStressOptions,
-  useElkLayout,
-} from '#/components/flow/layouts/elk.tsx';
-import { layoutType as layoutTypeSelector } from '#/redux/selectors/settings.ts';
-import { useSelector } from 'react-redux';
 import { LayoutType } from '#/redux/models/settings.ts';
+import { useAutoLayout } from './hooks/useAutolayout';
+import { useSelector } from 'react-redux';
+import { showGrid, snapGrid } from '#/redux/selectors/settings';
+import { showNodesPanelSelector } from '#/redux/selectors/ui';
 
 export const keyMap = {
   AUTO_LAYOUT: 'ctrl+alt+f',
@@ -42,41 +36,25 @@ export const keyMap = {
   TOGGLE_HELP: 'ctrl+shift+h',
   TOGGLE_THEME: 'ctrl+shift+t',
   TOGGLE_SNAP_GRID: ['command+shift+s', 'ctrl+shift+s'],
+  TOGGLE_NODES_PANEL: ['n'],
 };
 
 export const useHotkeys = ({ onEdgesDeleted }) => {
-  const [showGrid, setShowGrid] = useState(false);
   const [showMinimap, setShowMinimap] = useState(true);
-  const [snapGrid, setSnapGrid] = useState(true);
   const [hideZoom, setHideZoom] = useState(true);
-  const dagreAutoLayout = useAutoLayout();
-  const elkLayout = useElkLayout();
-  const dispatch = useDispatch();
 
-  const layoutType = useSelector(layoutTypeSelector);
+  const showGridValue = useSelector(showGrid);
+  const snapGridValue = useSelector(snapGrid);
+  const showNodesPanel = useSelector(showNodesPanelSelector);
+
+  const layout = useAutoLayout();
+
+  const dispatch = useDispatch();
 
   const reactFlowInstance = useReactFlow();
   const handlers = useMemo(
     () => ({
-      AUTO_LAYOUT: () => {
-        switch (layoutType) {
-          case LayoutType.dagre:
-            dagreAutoLayout();
-            break;
-          case LayoutType.elkForce:
-            elkLayout(elkForceOptions);
-            break;
-          case LayoutType.elkRect:
-            elkLayout(elkRectOptions);
-            break;
-          case LayoutType.elkLayered:
-            elkLayout(elkLayeredOptions);
-            break;
-          case LayoutType.elkStress:
-            elkLayout(elkStressOptions);
-            break;
-        }
-      },
+      AUTO_LAYOUT: layout,
       TOGGLE_HIDE: () => {
         setHideZoom((x) => !x);
       },
@@ -190,31 +168,35 @@ export const useHotkeys = ({ onEdgesDeleted }) => {
       },
       TOGGLE_GRID: (event) => {
         event.preventDefault();
-        setShowGrid((x) => !x);
+        dispatch.settings.setShowGrid(!showGridValue);
       },
       TOGGLE_MINIMAP: () => {
         setShowMinimap((x) => !x);
       },
       TOGGLE_SNAP_GRID: () => {
-        setSnapGrid((x) => !x);
+        dispatch.settings.setSnapGrid(!snapGridValue);
+      },
+      TOGGLE_NODES_PANEL: () => {
+        dispatch.ui.setShowNodesPanel(!showNodesPanel);
       },
     }),
     [
-      dagreAutoLayout,
       dispatch.input,
       dispatch.node,
-      elkLayout,
-      layoutType,
+      dispatch.settings,
+      dispatch.ui,
+      layout,
       onEdgesDeleted,
       reactFlowInstance,
+      showGridValue,
+      snapGridValue,
+      showNodesPanel,
     ],
   );
 
   return {
     handlers,
-    showGrid,
     showMinimap,
-    snapGrid,
     hideZoom,
   };
 };

@@ -28,11 +28,7 @@ const StyledDiv = styled('div', {
 
 export const PreviewColor = ({ value }) => {
   if (value === undefined) {
-    return (
-      <Text>
-        <i>Missing</i>
-      </Text>
-    );
+    return <Text>Missing</Text>;
   }
 
   return (

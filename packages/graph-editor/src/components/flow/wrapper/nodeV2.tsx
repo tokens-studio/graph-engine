@@ -198,7 +198,7 @@ export const WrapNode = (
           getTokens();
         }
       }
-    }, [state.identifier, loadSetTokens]);
+    }, [state?.identifier, loadSetTokens]);
 
     useEffect(() => {
       async function fetchExternalData() {
@@ -218,7 +218,7 @@ export const WrapNode = (
       }
 
       fetchExternalData();
-    }, [state.identifier, mappedInput, state, externalLoader]);
+    }, [state?.identifier, mappedInput, state, externalLoader]);
 
     useMemo(async () => {
       setIsLoading(true);

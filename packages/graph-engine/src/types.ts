@@ -9,6 +9,10 @@ export interface NodeDefinition<
   ExternalRequest = object
 > {
   /**
+   * A markdown based description of the node
+   */
+  description?: string;
+  /**
    * Reverse domain name notation for the node
    */
   type: string;
@@ -137,7 +141,8 @@ export enum NodeTypes {
   INLINE_SET = "studio.tokens.sets.inline",
   SET = "studio.tokens.sets.external",
   INVERT_SET = "studio.tokens.sets.invert",
-  SELECT_TOKEN = "studio.tokens.sets.selectToken",
+  GROUP = "studio.tokens.sets.group",
+  EXTRACT_TOKENS = "studio.tokens.sets.extract",
 
   //Series
   ARITHMETIC_SERIES = "studio.tokens.sets.arithmetic",

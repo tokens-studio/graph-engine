@@ -1,1 +1,1 @@
-export * from './Panel';
+export * from './DropPanel.js';

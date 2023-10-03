@@ -1,11 +1,24 @@
-import { ControlButton, ControlProps, Controls, MiniMap } from 'reactflow';
+import { ControlButton, ControlProps, Controls } from 'reactflow';
+import { MiniMap } from '@reactflow/minimap';
 import { styled } from '#/lib/stitches/index.ts';
 import React from 'react';
 import { Settings } from '../Settings';
 
 export const ControlsStyled = styled(Controls, {
+  display: 'flex',
+  flexDirection: 'row',
+  padding: '$1',
+  color: '$fgDefault',
+  backgroundColor: '$bgDefault',
+  borderRadius: '$medium',
+  boxShadow: '$small',
+  border: '1px solid $borderSubtle',
   button: {
-    backgroundColor: '$bgSurface',
+    width: 16,
+    height: 16,
+    borderRadius: '$small',
+    backgroundColor: '$bgDefault',
+    borderBottom: 'transparent',
     '&:hover': {
       backgroundColor: '$bgSubtle',
     },
@@ -19,7 +32,7 @@ export const MiniMapStyled = styled(MiniMap, {
   backgroundColor: '$bgSubtle',
 
   '.react-flow__minimap-mask': {
-    fill: '$contextMenuFgMuted',
+    fill: '$bgSubtle !important',
   },
 
   '.react-flow__minimap-node': {
@@ -30,8 +43,8 @@ export const MiniMapStyled = styled(MiniMap, {
 
 export const CustomControls = (props: ControlProps) => {
   return (
-    <ControlsStyled {...props}>
-      <ControlButton title="Settings">
+    <ControlsStyled showInteractive={false} {...props}>
+      <ControlButton>
         <Settings />
       </ControlButton>
     </ControlsStyled>

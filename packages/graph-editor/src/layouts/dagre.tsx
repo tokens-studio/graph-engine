@@ -30,7 +30,9 @@ const nodesInitializedSelector = (state: ReactFlowState) =>
     (node) => node.width && node.height,
   );
 
-function useAutoLayout(options: Options | undefined = { direction: 'LR' }) {
+export function useDagreLayout(
+  options: Options | undefined = { direction: 'LR' },
+) {
   const { direction } = options;
   const nodesInitialized = useStore(nodesInitializedSelector);
   const { getNodes, getEdges, setNodes, setEdges, fitView } = useReactFlow();
@@ -74,5 +76,3 @@ function useAutoLayout(options: Options | undefined = { direction: 'LR' }) {
     );
   };
 }
-
-export default useAutoLayout;

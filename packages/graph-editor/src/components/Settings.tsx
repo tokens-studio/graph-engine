@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Box,
   Button,
+  IconButton,
   Dialog,
   DropdownMenu,
   Label,
@@ -17,8 +18,8 @@ import {
 } from '#/redux/selectors/settings';
 import { useDispatch } from '#/hooks/useDispatch.ts';
 import { EdgeType, LayoutType } from '#/redux/models/settings.ts';
-import { GearIcon } from '@radix-ui/react-icons';
 import { InformationIcon } from '@iconicicons/react';
+import { GearIcon } from '@radix-ui/react-icons';
 
 const EdgeValues = Object.values(EdgeType);
 const LayoutValues = Object.values(LayoutType);
@@ -36,11 +37,12 @@ export const Settings = () => {
   return (
     <Dialog>
       <Dialog.Trigger asChild>
-        <Stack direction="column" justify="center" align="center">
-          <Tooltip label={'Settings'} side="left">
-            <GearIcon />
-          </Tooltip>
-        </Stack>
+        <IconButton
+          css={{ flexShrink: 0 }}
+          icon={<GearIcon />}
+          variant="invisible"
+          tooltip="Settings"
+        />
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay />

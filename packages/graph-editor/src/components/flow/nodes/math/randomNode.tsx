@@ -17,11 +17,9 @@ const RandomNode = (props) => {
   return (
     <Stack direction="row" gap={4} css={{ flex: 1 }}>
       <HandleContainer type="source" full>
-        <Handle id="output">
-          <Stack direction="row" justify="between">
-            <Text>Output</Text>
-            <PreviewNumber value={output?.output} />
-          </Stack>
+        <Handle id="output" full>
+          <Text>Output</Text>
+          <PreviewNumber value={output?.output} />
         </Handle>
       </HandleContainer>
     </Stack>
