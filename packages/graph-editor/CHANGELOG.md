@@ -1,5 +1,16 @@
 # @tokens-studio/graph-editor
 
+## 2.0.0
+
+### Major Changes
+
+- 5070766: Major V2 update for the UI. Removes multiple tab support
+- 5070766: Large overhaul of internals to better support keymaps, and window managers. Adds support for context menus as well as using tsup as the build tool of choice over rollup for better support for esm
+
+### Patch Changes
+
+- 5070766: Removed pan on right click as it affects the context menu that was added
+
 ## 1.3.0
 
 ### Minor Changes
