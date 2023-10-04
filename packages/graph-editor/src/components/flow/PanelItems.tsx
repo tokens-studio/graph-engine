@@ -275,6 +275,11 @@ export const items = {
       icon: '[][]',
       text: 'Concat Array',
     },
+    {
+      type: NodeTypes.NAME,
+      icon: '[][]',
+      text: 'Incremental name array',
+    },
   ],
   sets: [
     {
