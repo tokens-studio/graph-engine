@@ -65,3 +65,33 @@ td,
     }
   }
   
+  .dock-panel{
+    border-color: var(--colors-borderSubtle);
+  }
+
+.dock-top .dock-bar{
+  border-bottom-color: var(--colors-borderSubtle);
+}
+
+.dock-tab{
+  color:var(--colors-fgDefault);
+
+  border-bottom-color: var(--colors-borderDefault);
+}
+
+.dock-nav-wrap{
+  cursor: move;
+}
+
+.dock-panel.dock-style-main .dock-tab,.dock-tab{
+  background: var(--colors-bgDefault);
+}
+
+
+.dock-panel,.dock-top .dock-bar, .dock-tab{
+  background: var(--colors-bgDefault)
+  }
+
+  .dock-panel.dock-style-main .dock-bar{
+    border-bottom-color: var(--colors-borderDefault);
+  }

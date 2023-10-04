@@ -9,6 +9,10 @@ export interface NodeDefinition<
   ExternalRequest = object
 > {
   /**
+   * A markdown based description of the node
+   */
+  description?: string;
+  /**
    * Reverse domain name notation for the node
    */
   type: string;
@@ -69,6 +73,7 @@ export interface NodeDefinition<
 export enum NodeTypes {
   INPUT = "studio.tokens.generic.input",
   OUTPUT = "studio.tokens.generic.output",
+  PASS_THROUGH = "studio.tokens.generic.passthrough",
 
   ENUMERATED_INPUT = "studio.tokens.input.enumerated-constant",
   CONSTANT = "studio.tokens.input.constant",
@@ -93,6 +98,7 @@ export enum NodeTypes {
   ARRIFY = "studio.tokens.array.arrify",
   REVERSE = "studio.tokens.array.reverse",
   SLICE = "studio.tokens.array.slice",
+  SORT = "studio.tokens.array.sort",
   JOIN = "studio.tokens.array.join",
   CONCAT = "studio.tokens.array.concat",
   DOT_PROP = "studio.tokens.array.dotProp",
@@ -113,6 +119,7 @@ export enum NodeTypes {
   RANDOM = "studio.tokens.math.random",
   COUNT = "studio.tokens.math.count",
   POW = "studio.tokens.math.pow",
+  FLUID_VALUE = "studio.tokens.math.fluid",
 
   // Color
   CONTRASTING = "studio.tokens.color.contrasting",
@@ -124,6 +131,8 @@ export enum NodeTypes {
   EXTRACT = "studio.tokens.color.extract",
   TRANSFORM_COLOR = "studio.tokens.color.transform",
   WHEEL = "studio.tokens.color.wheel",
+  POLINE = "studio.tokens.color.poline",
+  COLOR_DISTANCE = "studio.tokens.color.distance",
 
   //Sets
   FLATTEN = "studio.tokens.sets.flatten",
@@ -132,6 +141,8 @@ export enum NodeTypes {
   INLINE_SET = "studio.tokens.sets.inline",
   SET = "studio.tokens.sets.external",
   INVERT_SET = "studio.tokens.sets.invert",
+  GROUP = "studio.tokens.sets.group",
+  EXTRACT_TOKENS = "studio.tokens.sets.extract",
 
   //Series
   ARITHMETIC_SERIES = "studio.tokens.sets.arithmetic",
@@ -140,6 +151,7 @@ export enum NodeTypes {
 
   //String
   UPPERCASE = "studio.tokens.string.uppercase",
+  JOIN_STRING = "studio.tokens.string.join",
   LOWER = "studio.tokens.string.lowercase",
   REGEX = "studio.tokens.string.regex",
   PASS_UNIT = "studio.tokens.typing.passUnit",
@@ -148,4 +160,5 @@ export enum NodeTypes {
   //Accessibility
   CONTRAST = "studio.tokens.accessibility.contrast",
   COLOR_BLINDNESS = "studio.tokens.accessibility.colorBlindness",
+  BASE_FONT_SIZE = "studio.tokens.accessibility.baseFontSize",
 }

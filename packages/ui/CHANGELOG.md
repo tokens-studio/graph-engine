@@ -1,5 +1,18 @@
 # @tokens-studio/graph-engine-ui
 
+## 2.0.0
+
+### Major Changes
+
+- 5070766: Major V2 update for the UI. Removes multiple tab support
+
+### Patch Changes
+
+- Updated dependencies [5070766]
+- Updated dependencies [5070766]
+- Updated dependencies [5070766]
+  - @tokens-studio/graph-editor@2.0.0
+
 ## 1.0.1
 
 ### Patch Changes

@@ -2,9 +2,9 @@ import { Dispatch } from '../redux/store.tsx';
 import { Node, ReactFlowInstance } from 'reactflow';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import { processJson, processTokensFile } from '#/utils/tokenFiles.ts';
-import { v4 as uuidv4 } from 'uuid';
 import JSZip from 'jszip';
 import React from 'react';
+import { createNode } from './create.ts';
 
 type DropOptions = {
   reactFlowInstance: ReactFlowInstance;
@@ -52,32 +52,13 @@ export const handleDrop = async (event, opts: DropOptions): Promise<Node[]> => {
       alert('Only one output node allowed');
       return null;
     }
-    const id = uuidv4();
 
-    const initialState = stateInitializer[nodeRequest.type];
-
-    if (initialState === undefined) {
-      throw new Error(`No initial state for ${nodeRequest.type}`);
-    }
-
-    dispatch.node.set({
-      id,
-      value: {
-        ...(initialState as object),
-        ...(nodeRequest.data || {}),
-      },
-    });
-    dispatch.input.set({
-      id,
-      value: {},
-    });
-
-    return {
-      id: id,
-      type: nodeRequest.type,
-      data: {},
+    return createNode({
+      nodeRequest,
       position,
-    };
+      stateInitializer,
+      dispatch,
+    });
   }
 
   if (event.dataTransfer.files?.length > 0) {

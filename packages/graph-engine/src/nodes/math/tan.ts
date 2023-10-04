@@ -9,7 +9,10 @@ export const type = NodeTypes.TAN;
  * @param state
  * @returns
  */
-export const process = (input) => Math.tan(input.value);
+export const process = (input) => {
+  if (input.input === undefined) throw new Error("Input is undefined");
+  return Math.tan(input.input);
+};
 
 export const node: NodeDefinition = {
   type,

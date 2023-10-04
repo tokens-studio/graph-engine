@@ -14,8 +14,7 @@ const Root = styled(SliderPrimitive.Root, {
 });
 
 const Track = styled(SliderPrimitive.Track, {
-  backgroundColor: '$bgSubtle',
-
+  backgroundColor: '$borderSubtle',
   position: 'relative',
   flexGrow: 1,
   borderRadius: '9999px',
@@ -24,16 +23,16 @@ const Track = styled(SliderPrimitive.Track, {
 
 const Range = styled(SliderPrimitive.Range, {
   position: 'absolute',
-  backgroundColor: '$bgEmphasis',
+  backgroundColor: '$accentEmphasis',
   borderRadius: '9999px',
   height: '100%',
 });
 
 const Thumb = styled(SliderPrimitive.Thumb, {
   display: 'block',
-  width: '20px',
-  height: '20px',
-  backgroundColor: '$fgDefault',
+  width: '16px',
+  height: '16px',
+  backgroundColor: '$interactionHandle',
   boxShadow: '$focus',
   borderRadius: '10px',
 
@@ -59,7 +58,7 @@ export const ValueLabel = styled('div', {
   transform: 'translate(-50%)',
   padding: '0.25em',
   borderRadius: '$medium',
-  color: '$bgSurface',
+  color: '$bgDefault',
   background: '$bgEmphasis',
   pointerEvents: 'none',
 });

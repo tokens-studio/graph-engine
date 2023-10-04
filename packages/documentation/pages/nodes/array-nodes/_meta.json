@@ -4,5 +4,6 @@
     "index-array": "Index array",
     "reverse-array": "Reverse array",
     "slice-array": "Slice array",
+    "sort-array": "Sort array",
     "join-array": "Join array"
 }

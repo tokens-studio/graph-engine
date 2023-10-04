@@ -43,6 +43,24 @@ export const inputState = createModel<RootModel>()({
         },
       };
     },
+    /**
+     * Copies a value from one node to another
+     * @param state
+     * @param payload
+     * @returns
+     */
+    copyInputKey: (
+      state,
+      payload: { id: string; key: string; source: string; sourceKey: string },
+    ) => {
+      return {
+        ...state,
+        [payload.id]: {
+          ...state[payload.id],
+          [payload.key]: state[payload.source][payload.sourceKey],
+        },
+      };
+    },
     setState(state, payload) {
       return payload;
     },

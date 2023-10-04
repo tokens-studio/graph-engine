@@ -1,9 +1,11 @@
 import { ExternalLoader, NodeDefinition } from "./types.js";
 import {
+  FlowGraph,
   MinimizedFlowGraph,
   MinimizedNode,
   convertFlowGraphToGraphlib,
   findTerminals,
+  minimizeFlowGraph,
   topologicalSort,
 } from "./graph/index.js";
 import { NodeTypes } from "./types.js";
@@ -47,7 +49,6 @@ export interface NodeExecutionOptions {
 export const executeNode = async (opts: NodeExecutionOptions) => {
   const { input, node, nodeId, state, externalLoader } = opts;
 
-  
   let mappedInput = input;
   if (node.mapInput) {
     //Map the input to the node
@@ -197,4 +198,26 @@ export const execute = async (opts: ExecuteOptions) => {
   }
 
   return stateTracker[terminals.output.id].output;
+};
+
+/**
+ * Forcefully cleans a graph to remove dangling edges
+ * @param graph
+ */
+export const clean = (graph: FlowGraph): FlowGraph => {
+  const newGraph = { ...graph };
+  const minimized = minimizeFlowGraph(newGraph);
+  const nodeLookup = flowGraphToNodeLookup(minimized);
+
+  newGraph.edges = newGraph.edges.filter((edge) => {
+    const sourceNode = nodeLookup[edge.source];
+    const targetNode = nodeLookup[edge.target];
+
+    if (!sourceNode || !targetNode) {
+      return false;
+    }
+
+    return true;
+  });
+  return newGraph;
 };

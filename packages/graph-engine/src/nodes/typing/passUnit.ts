@@ -34,6 +34,7 @@ const process = (input, state) => {
 };
 
 export const node: NodeDefinition = {
+  description: "Adds a unit to a value if it doesn't already have one",
   type,
   defaults,
   process,

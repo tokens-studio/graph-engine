@@ -1,5 +1,3 @@
 declare module '*.svg' {
-  export = {
-    src: string,
-  };
+  export = React.PureComponent;
 }

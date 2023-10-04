@@ -11,11 +11,7 @@ const CountNode = () => {
   return (
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
-        <Handle id="input">
-          <Text>
-            Input <i> as Array</i>
-          </Text>
-        </Handle>
+        <Handle id="input">Input as Array</Handle>
       </HandleContainer>
       <HandleContainer type="source">
         <Handle id="output">

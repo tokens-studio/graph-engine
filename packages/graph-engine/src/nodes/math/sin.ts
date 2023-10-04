@@ -9,7 +9,10 @@ export const type = NodeTypes.SIN;
  * @param state
  * @returns
  */
-export const process = (input) => Math.sin(input.value);
+export const process = (input) => {
+  if (input.input === undefined) throw new Error("Input is undefined");
+  return Math.sin(input.input);
+};
 
 export const node: NodeDefinition = {
   type,

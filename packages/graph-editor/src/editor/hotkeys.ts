@@ -4,7 +4,11 @@ import { useDispatch } from '#/hooks/useDispatch.ts';
 import { useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import copy from 'copy-to-clipboard';
-import useAutoLayout from '../components/flow/nodes/layouts/dagre.tsx';
+import { LayoutType } from '#/redux/models/settings.ts';
+import { useAutoLayout } from './hooks/useAutolayout';
+import { useSelector } from 'react-redux';
+import { showGrid, snapGrid } from '#/redux/selectors/settings';
+import { showNodesPanelSelector } from '#/redux/selectors/ui';
 
 export const keyMap = {
   AUTO_LAYOUT: 'ctrl+alt+f',
@@ -32,22 +36,25 @@ export const keyMap = {
   TOGGLE_HELP: 'ctrl+shift+h',
   TOGGLE_THEME: 'ctrl+shift+t',
   TOGGLE_SNAP_GRID: ['command+shift+s', 'ctrl+shift+s'],
+  TOGGLE_NODES_PANEL: ['n'],
 };
 
 export const useHotkeys = ({ onEdgesDeleted }) => {
-  const [showGrid, setShowGrid] = useState(false);
   const [showMinimap, setShowMinimap] = useState(true);
-  const [snapGrid, setSnapGrid] = useState(true);
   const [hideZoom, setHideZoom] = useState(true);
-  const autoLayout = useAutoLayout();
+
+  const showGridValue = useSelector(showGrid);
+  const snapGridValue = useSelector(snapGrid);
+  const showNodesPanel = useSelector(showNodesPanelSelector);
+
+  const layout = useAutoLayout();
+
   const dispatch = useDispatch();
 
   const reactFlowInstance = useReactFlow();
   const handlers = useMemo(
     () => ({
-      AUTO_LAYOUT: () => {
-        autoLayout();
-      },
+      AUTO_LAYOUT: layout,
       TOGGLE_HIDE: () => {
         setHideZoom((x) => !x);
       },
@@ -161,29 +168,35 @@ export const useHotkeys = ({ onEdgesDeleted }) => {
       },
       TOGGLE_GRID: (event) => {
         event.preventDefault();
-        setShowGrid((x) => !x);
+        dispatch.settings.setShowGrid(!showGridValue);
       },
       TOGGLE_MINIMAP: () => {
         setShowMinimap((x) => !x);
       },
       TOGGLE_SNAP_GRID: () => {
-        setSnapGrid((x) => !x);
+        dispatch.settings.setSnapGrid(!snapGridValue);
+      },
+      TOGGLE_NODES_PANEL: () => {
+        dispatch.ui.setShowNodesPanel(!showNodesPanel);
       },
     }),
     [
-      autoLayout,
       dispatch.input,
       dispatch.node,
+      dispatch.settings,
+      dispatch.ui,
+      layout,
       onEdgesDeleted,
       reactFlowInstance,
+      showGridValue,
+      snapGridValue,
+      showNodesPanel,
     ],
   );
 
   return {
     handlers,
-    showGrid,
     showMinimap,
-    snapGrid,
     hideZoom,
   };
 };

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "include": ["src"],
+  "include": ["src", "package.json"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "composite": false,
@@ -8,8 +8,8 @@
     "declarationMap": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "forceConsistentCasingInFileNames": true,
     "allowImportingTsExtensions": true,
+    "forceConsistentCasingInFileNames": true,
     "inlineSources": false,
     "isolatedModules": true,
     "noUnusedLocals": false,
@@ -25,12 +25,11 @@
       "#/*": ["src/*"]
     },
     "noImplicitAny": false,
-    "rootDir": "src",
+    "rootDir": ".",
     "experimentalDecorators": true,
     "lib": ["esnext", "dom", "dom.iterable"],
     "allowJs": true,
     "sourceMap": true,
-    "incremental": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "outDir": "dist"

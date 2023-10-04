@@ -95,6 +95,7 @@ export const mapOutput = (input, state, processed) => {
 };
 
 export const node: NodeDefinition<MappedInput> = {
+  description: "Resolves a set of tokens",
   type,
   mapInput,
   process,

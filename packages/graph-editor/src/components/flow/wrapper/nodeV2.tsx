@@ -24,11 +24,14 @@ import React, {
 } from 'react';
 import isPromise from 'is-promise';
 import { useOnOutputChange } from '#/context/OutputContext.tsx';
+import { useExternalLoader } from '#/context/ExternalLoaderContext.tsx';
 import { useExternalData } from '#/context/ExternalDataContext.tsx';
 
 export type UiNodeDefinition = {
   //Name of the Node
   title?: string;
+  // Whether to support custom rendering by specifying a component
+  wrapper?: React.FC;
   icon?: React.ReactNode;
 } & NodeDefinition<any, any, any>;
 
@@ -48,10 +51,12 @@ export type INodeContext<Input = any, State = any, Output = any> = {
    */
   createInput: (key: string, value?: any) => void;
   disconnectInput: (key: string) => void;
+  disconnectInputs: (keys: string[]) => void;
+  disconnectAllOutputs: () => void;
   onConnect: (edge: Edge) => void;
-  ephemeralState: object,
-  setEphemeralState: (state: object) => void,
-  loadingEphemeralData: boolean
+  ephemeralState: object;
+  setEphemeralState: (state: object) => void;
+  loadingEphemeralData: boolean;
 };
 const noop = () => {
   /** Do nothing */
@@ -67,16 +72,18 @@ const NodeContext = createContext<INodeContext>({
   output: undefined,
   onConnect: noop,
   disconnectInput: noop,
+  disconnectInputs: noop,
+  disconnectAllOutputs: noop,
   setState: noop,
   ephemeralState: {},
   setEphemeralState: noop,
-  loadingEphemeralData: false
+  loadingEphemeralData: false,
 });
 
 export type WrappedNodeDefinition = {
   type: string;
   state: Record<string, any>;
-  component: React.FC;
+  component: React.ReactNode | React.FC;
 };
 
 /**
@@ -89,14 +96,15 @@ export const WrapNode = (
   InnerNode,
   nodeDef: UiNodeDefinition,
 ): WrappedNodeDefinition => {
-
   const WrappedNode = (data) => {
-    const { loadSetTokens } = useExternalData()
+    const { loadSetTokens } = useExternalData();
+    const { externalLoader } = useExternalLoader();
     const [ephemeralState, setEphemeralState] = useState({});
     const [loadingEphemeralData, setLoadingEphemeralData] = useState(false);
     const { onOutputChange } = useOnOutputChange();
     const [error, setError] = useState<Error | null>(null);
     const [title, setTitle] = useState<string>(nodeDef.title || '');
+    const [execTime, setExecTime] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
     const flow = useReactFlow();
     const [controls, setControls] = useState<React.ReactNode>(null);
@@ -105,7 +113,6 @@ export const WrapNode = (
     const dispatch = useDispatch();
     //We have access to our child state
     const input = useSelector(inputSelector(data.id));
-
     const state = useSelector(stateSelector(data.id));
 
     const [output, setOutput] = useState<any>(undefined);
@@ -123,6 +130,42 @@ export const WrapNode = (
         }),
       );
     }, []);
+
+    const disconnectInputs = useCallback((keys) => {
+      //Remove the values from the input
+      keys.forEach((key) => {
+        dispatch.input.remove({
+          id: data.id,
+          key,
+        });
+      });
+
+      //and also remove from the graph
+      flow.setEdges((edges) =>
+        edges.filter((edge) => {
+          return !(edge.target == data.id && keys.includes(edge.targetHandle));
+        }),
+      );
+    }, []);
+
+    const disconnectAllOutputs = useCallback(() => {
+      const self = flow.getNode(data.id);
+      const edges = flow.getEdges();
+
+      const outgoing = getOutgoingEdges(self, edges);
+      outgoing.forEach((edge) => {
+        dispatch.input.remove({
+          id: edge.target!,
+          key: edge.targetHandle!,
+        });
+      });
+
+      flow.setEdges((edges) =>
+        edges.filter((edge) => {
+          return !outgoing.find((outEdge) => outEdge.id === edge.id);
+        }),
+      );
+    }, [flow, output, data.id, dispatch.node]);
 
     const setState = useCallback(
       (newVal) => {
@@ -147,22 +190,41 @@ export const WrapNode = (
         const getTokens = async () => {
           setLoadingEphemeralData(true);
           const set = await loadSetTokens(state.identifier);
-          setEphemeralState(set)
+          setEphemeralState(set);
           setLoadingEphemeralData(false);
-        }
+        };
 
         if (state.identifier) {
-          getTokens()
+          getTokens();
+        }
+      }
+    }, [state?.identifier, loadSetTokens]);
+
+    useEffect(() => {
+      async function fetchExternalData() {
+        if (nodeDef.external && !externalLoader) {
+          throw new Error(
+            `Node "${data.id}" of type "${nodeDef.type}" requires an external loader`,
+          );
+        } else if (nodeDef.external && externalLoader) {
+          const ephemeralRequest = nodeDef.external(mappedInput, state);
+          let ephemeralData = await externalLoader({
+            type: nodeDef.type,
+            id: data.id,
+            data: ephemeralRequest,
+          });
+          setEphemeralState(ephemeralData);
         }
       }
 
-    }, [state.identifier, loadSetTokens]);
+      fetchExternalData();
+    }, [state?.identifier, mappedInput, state, externalLoader]);
 
     useMemo(async () => {
       setIsLoading(true);
       try {
         if (mappedInput !== undefined) {
-
+          const processStart = performance.now();
           let value = nodeDef.process(mappedInput, state, ephemeralState);
 
           //@ts-ignore
@@ -171,10 +233,14 @@ export const WrapNode = (
             setIsLoading(true);
             value = await value;
           }
+
+          const processEnd = performance.now();
+          setExecTime(processEnd - processStart);
           const mappedOutput = (nodeDef.mapOutput || defaultMapOutput)(
             mappedInput,
             state,
             value,
+            ephemeralState,
           );
           setError(null);
           setIsLoading(false);
@@ -231,10 +297,12 @@ export const WrapNode = (
         setState,
         output,
         disconnectInput,
+        disconnectInputs,
+        disconnectAllOutputs,
         onConnect,
         ephemeralState,
         setEphemeralState,
-        loadingEphemeralData
+        loadingEphemeralData,
       };
     }, [
       error,
@@ -243,11 +311,13 @@ export const WrapNode = (
       setState,
       output,
       disconnectInput,
+      disconnectInputs,
+      disconnectAllOutputs,
       onConnect,
       createInput,
       ephemeralState,
       setEphemeralState,
-      loadingEphemeralData
+      loadingEphemeralData,
     ]);
 
     useEffect(() => {
@@ -280,9 +350,23 @@ export const WrapNode = (
       propagate();
     }, [JSON.stringify(output)]);
 
+    const stats = useMemo(
+      () => ({
+        executionTime: execTime,
+      }),
+      [execTime],
+    );
+
+    const Wrapped = useMemo(() => {
+      if (nodeDef.wrapper) {
+        return nodeDef.wrapper;
+      }
+      return Node;
+    }, [nodeDef.wrapper]);
+
     return (
       <NodeContext.Provider value={values}>
-        <Node
+        <Wrapped
           key={data.id}
           id={data.id}
           isAsync={isLoading}
@@ -290,11 +374,12 @@ export const WrapNode = (
           title={title}
           error={error}
           controls={controls}
+          stats={stats}
         >
           <ErrorBoundary fallbackRender={() => 'Oops I just accidentally ...'}>
             <InnerNode />
           </ErrorBoundary>
-        </Node>
+        </Wrapped>
       </NodeContext.Provider>
     );
   };

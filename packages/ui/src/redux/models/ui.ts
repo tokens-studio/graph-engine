@@ -16,7 +16,7 @@ export interface UIState {
 const starting = [
   {
     name: 'Card',
-    id: '0',
+    id: 'editor-0',
   },
 ];
 
