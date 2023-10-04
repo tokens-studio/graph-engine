@@ -1,5 +1,13 @@
 # @tokens-studio/graph-editor
 
+## 2.0.1
+
+### Patch Changes
+
+- b94d6bb: Fixed issue with exposing exports correctly
+- Updated dependencies [d2096c1]
+  - @tokens-studio/graph-engine@0.8.0
+
 ## 2.0.0
 
 ### Major Changes
