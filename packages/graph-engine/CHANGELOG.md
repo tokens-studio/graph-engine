@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 0.8.0
+
+### Minor Changes
+
+- d2096c1: Adds in a group and extract node for set manipulation
+
 ## 0.7.0
 
 ### Minor Changes
