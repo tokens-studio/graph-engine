@@ -102,6 +102,7 @@ export enum NodeTypes {
   JOIN = "studio.tokens.array.join",
   CONCAT = "studio.tokens.array.concat",
   DOT_PROP = "studio.tokens.array.dotProp",
+  NAME = "studio.tokens.array.name",
 
   // Math
   ADD = "studio.tokens.math.add",
