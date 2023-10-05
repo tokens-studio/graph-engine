@@ -27,15 +27,10 @@ const process = (input: Inputs, state) => {
   const fluid = (viewport / 100) * fontV + fontR;
   const clamped = Math.min(maxSize, Math.max(minSize, fluid));
 
-  return { clamped };
-};
-
-export const mapOutput = (input, state, processed) => {
-  return processed;
+  return clamped;
 };
 
 export const node: NodeDefinition<Inputs> = {
   type,
   process,
-  mapOutput,
 };

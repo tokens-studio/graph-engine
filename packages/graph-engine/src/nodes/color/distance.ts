@@ -30,15 +30,11 @@ const process = (input: Inputs, state) => {
 
   const distance = chroma.deltaE(color1, color2);
 
-  return { distance };
+  return distance;
 };
 
-const mapOutput = (input, state, output) => {
-  return output;
-};
 
 export const node: NodeDefinition<Inputs> = {
   type,
-  mapOutput,
   process,
 };

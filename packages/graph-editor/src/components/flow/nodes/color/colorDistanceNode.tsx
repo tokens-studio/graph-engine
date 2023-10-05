@@ -33,7 +33,7 @@ const ColorDistanceNode = (props) => {
       <HandleContainer type="source">
         <Handle id="output">
           <Text>Output</Text>
-          <PreviewNumber value={output?.distance} />
+          <PreviewNumber value={output?.output} />
         </Handle>
       </HandleContainer>
     </Stack>

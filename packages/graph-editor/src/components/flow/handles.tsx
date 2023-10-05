@@ -114,6 +114,11 @@ export const HandleText = styled(Text, {
         color: '$fgDefault',
       },
     },
+    caseSensitive: {
+      true: {
+        textTransform: 'none',
+      },
+    },
   },
 });
 
