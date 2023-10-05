@@ -6,8 +6,7 @@
   "author": "andrew@hyma.io",
   "type": "module",
   "scripts": {
-    "build": "cross-env NODE_ENV=production next build",
-    "build:dev": "cross-env NODE_ENV=development next build",
+    "build": "cross-env NODE_ENV=development next build",
     "dev": "next",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",

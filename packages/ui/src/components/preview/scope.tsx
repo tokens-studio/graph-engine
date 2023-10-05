@@ -13,7 +13,6 @@ const useTokens = (subSelector?: string) => {
 
   //@ts-ignore
   let vals = ctx.output || {};
-  console.log(ctx);
 
   if (subSelector) {
     vals = vals[subSelector] || {};
