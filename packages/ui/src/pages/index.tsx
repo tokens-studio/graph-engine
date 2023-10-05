@@ -23,7 +23,7 @@ const Wrapper = () => {
 
   const [{ steps }] = useJourney();
   const handleJoyrideCallback = (data: CallBackProps) => {
-    const { status, type } = data;
+    const { status } = data;
     const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
 
     if (finishedStatuses.includes(status)) {
@@ -61,7 +61,7 @@ const Wrapper = () => {
           background: '$bgDefault',
         }}
       >
-        <PreviewContextProvider setCode={setTheCode}>
+        <PreviewContextProvider code={theCode} setCode={setTheCode}>
           <LiveProvider
             code={theCode}
             scope={scope}

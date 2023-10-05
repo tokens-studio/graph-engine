@@ -11,6 +11,7 @@ export const EditorTab = ({ ...rest }) => {
   const dispatch = useDispatch();
   const [, ref] = useRegisterRef('editor');
   const [, setCodeRef] = useRegisterRef('codeEditor');
+
   const theme = useTheme();
   const onEditorOutputChange = (output: Record<string, unknown>) => {
     dispatch.editorOutput.set({
