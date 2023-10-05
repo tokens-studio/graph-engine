@@ -5,8 +5,8 @@ import { Accordion } from '../../accordion/index.js';
 import { PanelGroup } from './PanelItems.js';
 import { DragItem } from './DragItem';
 import { NodeEntry } from './NodeEntry';
-import { TriangleRightIcon } from '@radix-ui/react-icons';
 import { styled } from '#/lib/stitches/stitches.config.js';
+import { ChevronRightIcon } from '@iconicicons/react';
 
 const StyledAccordionTrigger = styled(Accordion.Trigger, {
   display: 'flex',
@@ -26,10 +26,10 @@ const StyledAccordion = styled(Accordion, {
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  gap: '$3',
+  padding: '$2'
 });
 
-const StyledChevron = styled(TriangleRightIcon, {
+const StyledChevron = styled(ChevronRightIcon, {
   transition: 'all ease 0.3s',
   '[data-state="open"] &': {
     transform: 'rotate(90deg)',
@@ -119,7 +119,7 @@ export const DropPanel = React.forwardRef<ImperativeDropPanelRef, IDropPanel>(
                   </Text>
                 </StyledAccordionTrigger>
                 <Accordion.Content>
-                  <Stack direction="column" css={{ padding: 0 }}>
+                  <Stack direction="column" css={{ padding: 0, marginBottom: '$3' }}>
                     {filteredValues}
                   </Stack>
                 </Accordion.Content>
@@ -151,9 +151,14 @@ export const DropPanel = React.forwardRef<ImperativeDropPanelRef, IDropPanel>(
             <Stack
               direction="column"
               gap={2}
-              css={{ padding: '0 $3', paddingTop: '$4' }}
+              css={{ padding: '0 $5', paddingTop: '$4' }}
             >
-              <Text size="xsmall" bold>
+              <Text css={{
+                 fontSize: '$xxsmall',
+                 fontWeight: '$sansMedium',
+                 textTransform: 'uppercase',
+                 letterSpacing: '0.15px',
+              }}>
                 Nodes
               </Text>
               <TextInput
@@ -162,9 +167,7 @@ export const DropPanel = React.forwardRef<ImperativeDropPanelRef, IDropPanel>(
                 onChange={onSearch}
               />
             </Stack>
-            <Stack direction="column" gap={2} css={{ padding: '$2' }}>
-              {accordionItems}
-            </Stack>
+            {accordionItems}
           </Stack>
         </Scroll>
       </Box>
