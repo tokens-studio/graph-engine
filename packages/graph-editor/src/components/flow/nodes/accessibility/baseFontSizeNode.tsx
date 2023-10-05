@@ -46,13 +46,9 @@ const BaseFontSizeNode = (props) => {
       </HandleContainer>
 
       <HandleContainer type="source">
-        <Handle id="fontSizePX">
-          <Text>Font Size Px:</Text>
-          <PreviewNumber value={output?.fontSizePX} />
-        </Handle>
-        <Handle id="fontSizePT">
-          <Text>Font Size Pt:</Text>
-          <PreviewNumber value={output?.fontSizePT} />
+        <Handle id="output">
+          <Text>Font Size:</Text>
+          <PreviewNumber value={output?.output} />
         </Handle>
       </HandleContainer>
     </Stack>
