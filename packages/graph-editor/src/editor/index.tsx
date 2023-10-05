@@ -522,7 +522,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
             }}
           >
             <ForceUpdateProvider value={forceUpdate}>
-              <Box css={{ display: 'flex', flexDirection: 'row' }}>
+              <Box css={{ display: 'flex', flexDirection: 'row', zIndex: 0 }}>
                 <Stack
                   direction="column"
                   gap={2}
@@ -550,7 +550,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                       display: 'flex',
                       flexDirection: 'column',
                       borderRight: '1px solid $borderMuted',
-                      zIndex: 10,
                     }}
                   >
                     <DropPanel groups={[]} items={panelItems} />
