@@ -38,9 +38,9 @@ const FluidValueNode = (props) => {
       </HandleContainer>
 
       <HandleContainer type="source">
-        <Handle id="fluid">
+        <Handle id="output">
           <Text>Fluid</Text>
-          <PreviewNumber value={output?.clamped} />
+          <PreviewNumber value={output?.output} />
         </Handle>
       </HandleContainer>
     </Stack>
