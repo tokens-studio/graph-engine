@@ -112,6 +112,7 @@ export const HandleText = styled(Text, {
     secondary: {
       true: {
         color: '$fgDefault',
+        textTransform: 'none',
       },
     },
   },
