@@ -17,6 +17,16 @@ export const Preview = ({ codeRef }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [visibleTab, setVisibleTab] = useState('preview');
 
+  const handleSetVisibleTab = useCallback((tab) => {
+    if (!tab) {
+      setVisibleTab(visibleTab);
+      setIsVisible(false);
+      return;
+    } else {
+      setVisibleTab(tab);
+    }
+  }, [visibleTab]);
+
   const handleToggleVisible = useCallback(() => {
     setIsVisible(!isVisible);
   }, [isVisible, setIsVisible]);
@@ -85,7 +95,7 @@ export const Preview = ({ codeRef }) => {
               <ToggleGroup
                 type="single"
                 value={visibleTab}
-                onValueChange={setVisibleTab}
+                onValueChange={handleSetVisibleTab}
               >
                 <ToggleGroup.Item value="preview">
                   <VideoIcon id="preview" />
@@ -118,7 +128,7 @@ export const Preview = ({ codeRef }) => {
                 display: visibleTab === 'editor' ? 'flex' : 'none',
               }}
             >
-              <Stack direction="column">
+              <Stack direction="column" css={{overflow: 'auto', maxHeight: '80vh'}}>
                 <LiveError />
                 <div ref={codeRef}>
                   <LiveEditor />
