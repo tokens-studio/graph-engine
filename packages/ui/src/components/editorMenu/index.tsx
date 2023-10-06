@@ -8,17 +8,15 @@ import {
 } from '@iconicicons/react';
 import SlackIcon from '#/assets/svgs/slack.svg';
 import YoutubeIcon from '#/assets/svgs/youtube.svg';
-import { useCallback, useEffect } from 'react';
-import { CodeEditorRef } from '#/service/refs.ts';
+import { useCallback } from 'react';
 import { ResolverData } from '#/types/file.ts';
 import { getRectOfNodes, getTransformForBounds } from 'reactflow';
-import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
+import { Box, IconButton, Stack } from '@tokens-studio/ui';
 import { toPng } from 'html-to-image';
 import { store } from '#/redux/store.tsx';
 import { usePreviewContext } from '#/providers/preview.tsx';
 
 const imageWidth = 1024;
-
 const imageHeight = 768;
 
 export const Menubar = ({
@@ -28,7 +26,7 @@ export const Menubar = ({
   toggleTheme: () => void;
   theme: string;
 }) => {
-  const { setCode } = usePreviewContext();
+  const { setCode, code } = usePreviewContext();
   const findCurrentEditor = useCallback(() => {
     const activeEditor = store.getState().refs.editor;
 
@@ -52,7 +50,7 @@ export const Menubar = ({
       nodes,
       ...rest,
       state: finalState,
-      code: CodeEditorRef.current?.textContent,
+      code,
     });
 
     const blob = new Blob([fileContent], { type: 'application/json' });
@@ -67,7 +65,7 @@ export const Menubar = ({
     // Clean up the URL and link
     URL.revokeObjectURL(url);
     document.body.removeChild(link);
-  }, [findCurrentEditor]);
+  }, [code, findCurrentEditor]);
 
   const onLoad = useCallback(() => {
     const editor = findCurrentEditor();

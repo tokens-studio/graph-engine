@@ -6,8 +6,7 @@
   "author": "andrew@hyma.io",
   "type": "module",
   "scripts": {
-    "build": "cross-env NODE_ENV=production next build",
-    "build:dev": "cross-env NODE_ENV=development next build",
+    "build": "cross-env NODE_ENV=development next build",
     "dev": "next",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
@@ -16,7 +15,6 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@hlorenzi/react-dockable": "0.1.1",
     "@iconicicons/react": "1.5.1",
     "@lion/button": "0.18.1",
     "@lion/ui": "0.2.1",
@@ -61,7 +59,6 @@
     "poline": "0.7.0",
     "postcss-value-parser": "4.2.0",
     "prism-react-renderer": "2.0.3",
-    "rc-dock": "3.2.18",
     "react": "18.2.0",
     "react-color": "2.19.3",
     "react-dnd": "16.0.1",

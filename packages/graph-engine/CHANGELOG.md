@@ -1,5 +1,21 @@
 # @tokens-studio/graph-engine
 
+## 0.9.0
+
+### Minor Changes
+
+- ca1ed6d: Adds in a group and extract node for set manipulation
+
+### Patch Changes
+
+- ca1ed6d: Fix an issue with the editor where clicking on edges did not work as expected. Fixed an issue where the code was not being set correctly during the load of the initial graph
+
+## 0.8.0
+
+### Minor Changes
+
+- d2096c1: Adds in a group and extract node for set manipulation
+
 ## 0.7.0
 
 ### Minor Changes

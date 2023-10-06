@@ -59,7 +59,9 @@ const SwitchNode = () => {
         {state?.order.map((key) => {
           return (
             <StyledHandle id={key} key={key}>
-              <HandleText secondary>{key}</HandleText>
+              <HandleText secondary caseSensitive>
+                {key}
+              </HandleText>
 
               <PreviewAny value={input[key]} />
 

@@ -8,7 +8,6 @@ import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 
 const PortalNode = () => {
   const { input, output } = useNode();
-  console.log(input, output);
   return (
     <Stack direction="row" gap={4}>
       <HandleContext.Provider

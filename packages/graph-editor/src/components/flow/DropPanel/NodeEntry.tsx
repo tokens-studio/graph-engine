@@ -9,7 +9,13 @@ export const NodeEntry = ({
   text: string;
 }) => {
   return (
-    <Stack direction="row" gap={2} justify="start" align="center">
+    <Stack
+      direction="row"
+      gap={2}
+      justify="start"
+      align="center"
+      css={{ paddingLeft: '$3' }}
+    >
       <Box
         css={{
           color: '$fgSubtle',
@@ -26,7 +32,7 @@ export const NodeEntry = ({
       <Text
         size="xsmall"
         css={{
-          color: '$fgDefault',
+          color: '$fgMuted',
           whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',
           overflow: 'hidden',
