@@ -51,7 +51,6 @@ const process = (input: Inputs, state) => {
   return fontSizePX;
 };
 
-
 export const node: NodeDefinition<Inputs> = {
   description: "Calculates the base font size",
   type,

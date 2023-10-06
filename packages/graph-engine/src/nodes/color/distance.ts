@@ -33,7 +33,6 @@ const process = (input: Inputs, state) => {
   return distance;
 };
 
-
 export const node: NodeDefinition<Inputs> = {
   type,
   process,

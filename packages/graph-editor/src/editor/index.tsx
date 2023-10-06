@@ -476,7 +476,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
         y: dropPanelPosition.y,
       };
       const nodes = reactFlowInstance.getNodes();
-      console.log(nodeRequest);
       // Couldn't determine the type
       if (!nodeRequest.type) {
         return;
@@ -586,6 +585,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 selectionMode={SelectionMode.Partial}
                 onDragOver={onDragOver}
                 selectionOnDrag={true}
+                panOnDrag={panOnDrag}
                 minZoom={-Infinity}
                 defaultViewport={defaultViewport}
                 //This causes weirdness with the minimap
