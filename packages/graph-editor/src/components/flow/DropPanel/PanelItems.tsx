@@ -33,6 +33,8 @@ export interface PanelItem<T extends NodeTypes = NodeTypes> {
   type: NodeTypes;
   icon: string | JSX.Element;
   text: string;
+  description?: string;
+  docs?: string;
   data?: {
     identifier?: string;
     tokens?: any[];
@@ -75,6 +77,8 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.INPUT,
         icon: icons[NodeTypes.INPUT],
         text: 'Input',
+        description: 'Input node allows you to provide initial values for the whole graph. An input node can be used only once at the start of the graph. You can use this node to set brand decisions or any initial values.',
+        docs: 'https://docs.graph.tokens.studio/nodes/generic-nodes/input',
       },
       {
         type: NodeTypes.ENUMERATED_INPUT,

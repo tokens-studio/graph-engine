@@ -94,6 +94,10 @@ export const DropPanel = React.forwardRef<ImperativeDropPanelRef, IDropPanel>(
                   type={item.type}
                   data={item.data || null}
                   key={item.text}
+                  docs={item.docs}
+                  description={item.description}
+                  title={item.text}
+                  icon={item.icon}
                 >
                   <NodeEntry icon={item.icon} text={item.text} />
                 </DragItem>
@@ -119,7 +123,7 @@ export const DropPanel = React.forwardRef<ImperativeDropPanelRef, IDropPanel>(
                   </Text>
                 </StyledAccordionTrigger>
                 <Accordion.Content>
-                  <Stack direction="column" css={{ padding: 0, marginBottom: '$3' }}>
+                  <Stack direction="column" css={{ padding: 0, marginBottom: '$4' }}>
                     {filteredValues}
                   </Stack>
                 </Accordion.Content>
