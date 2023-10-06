@@ -78,18 +78,19 @@ const CommandMenu = ({
           display: 'flex',
           flexDirection: 'row',
           gap: 1,
-          marginBottom: '$3',
-          padding: '0 $4',
+          padding: '$4',
+          borderBottom: '1px solid $borderSubtle',
         }}
       >
         <SearchIcon />
         <Command.Input placeholder="Find nodes to add…" />
       </Box>
       <Command.List>
-        <Command.Empty>No results found.</Command.Empty>
-        <Stack direction="row">
+        <Command.Empty><Box css={{padding: '$4'}}>No nodes found.</Box></Command.Empty>
+        <Stack direction="row" css={{overflowY: 'scroll', maxHeight: '450px'}}>
           <Box css={{
             width: '50%',
+            padding: '$4'
           }}>
             {items.map((value) => {
               const childValues = value.items.map((item) => (
@@ -124,8 +125,12 @@ const CommandMenu = ({
           <Box css={{
               display: 'flex',
               flexDirection: 'column',
-              marginLeft: '$3',
+              margin: '$5',
               width: '50%',
+              background: '$bgCanvas',
+              borderRadius: '$medium',
+              position: 'sticky',
+              top: '$5',
           }}>
             {items.map((value) => value.items.map((item) => selectedItem === item.type && <NodePreview title={item.text} description={item.description} docs={item.docs} />))}
           </Box>
@@ -137,7 +142,7 @@ const CommandMenu = ({
 
 function NodePreview({ title, description, docs }) {
   return (
-    <Stack direction="column" justify='center' gap={3} css={{position: 'sticky', top: 0, padding: '$6'}}>
+    <Stack direction="column" justify='center' gap={3} css={{padding: '$6'}}>
       <Stack direction="column" gap={5}>
         <Heading css={{
           fontSize: '$small',

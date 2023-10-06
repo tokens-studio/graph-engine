@@ -161,13 +161,10 @@
     border-radius: var(--radii-medium);
     box-shadow: var(--shadows-contextMenu);
     border: 1px solid var(--colors-borderSubtle);
-    padding: var(--space-4);
     font-size: var(--fontSizes-small);
     color: var(--colors-fgMuted);
     width: 100%;
     max-width: 640px;
-    max-height: 500px;
-    overflow-y: auto;
     position: relative;
 }
 
