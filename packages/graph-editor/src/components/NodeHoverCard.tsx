@@ -37,29 +37,24 @@ const NodeHoverCard = ({children, title, description, docs, icon, isDragging}: I
   }, [isDragging])
 
   return (
-    <HoverCard.Root onOpenChange={handleOpenChange} openDelay={300} closeDelay={300} open={isOpen}>
+    <HoverCard.Root onOpenChange={handleOpenChange} openDelay={500} closeDelay={200} open={isOpen}>
       <HoverCard.Trigger asChild>
         {children}
       </HoverCard.Trigger>
       <HoverCard.Portal>
-        <HoverCardContent  side='right' sideOffset={5}>
+        <HoverCardContent side='right' sideOffset={5}>
           <Stack direction="column" gap={3}>
-            <Stack direction="column" gap={2}>
-              <Stack direction="row" gap={2} align="center">
-                {icon}
-                <Heading css={{
-                  fontSize: '$xxsmall',
-                  fontWeight: '$sansMedium',
-                  textTransform: 'uppercase',
-                  color: 'var(--nodeTextColor, var(--colors-fgSubtle))',
-                  letterSpacing: '0.15px',
-                }}>{title}</Heading>
-                </Stack>
-                <Text size="xsmall" muted css={{lineHeight: '140%'}}>{description}</Text>
+            <Stack direction="row" gap={2} align="center">
+              {icon}
+              <Heading css={{
+                fontSize: '$small',
+                fontWeight: '$sansMedium',
+                color: '$fgDefault',
+              }}>{title}</Heading>
               </Stack>
+              <Text size="small" muted css={{lineHeight: '150%'}}>{description}</Text>
             {docs ? <Text size="xsmall"><StyledLink href={docs} target="_blank">Read more</StyledLink></Text> : null}
           </Stack>
-          <HoverCardArrow />
         </HoverCardContent>
       </HoverCard.Portal>
     </HoverCard.Root>
@@ -102,10 +97,6 @@ const HoverCardContent = styled(HoverCard.Content, {
     '&[data-side="bottom"]': { animationName: slideUpAndFade },
     '&[data-side="left"]': { animationName: slideRightAndFade },
   },
-});
-
-const HoverCardArrow = styled(HoverCard.Arrow, {
-  fill: '$bgCanvas',
 });
 
 export { NodeHoverCard };

@@ -77,18 +77,21 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.INPUT,
         icon: icons[NodeTypes.INPUT],
         text: 'Input',
-        description: 'Input node allows you to provide initial values for the whole graph. An input node can be used only once at the start of the graph. You can use this node to set brand decisions or any initial values.',
+        description: 'Allows you to provide initial values for the whole graph. An input node can be used only once at the start of the graph. You can use this node to set brand decisions or any initial values.',
         docs: 'https://docs.graph.tokens.studio/nodes/generic-nodes/input',
       },
       {
         type: NodeTypes.ENUMERATED_INPUT,
         icon: <ButtonIcon />,
         text: 'Enumerated Constant',
+        description: 'Represents a node that holds a set of predefined values (enumerated values) and maintains a current value among them.',
       },
       {
         type: NodeTypes.CSS_MAP,
         icon: './x',
         text: 'CSS Map',
+        description: 'Exposes all the css properties. You can link the input of any other node to the any property that is there in the css map node.',
+        docs: 'https://docs.graph.tokens.studio/nodes/generic-nodes/css-map'
       },
       {
         type: NodeTypes.CSS_BOX,
@@ -109,6 +112,7 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.CONSTANT,
         icon: <ButtonIcon />,
         text: 'Constant',
+        description: 'Holds a single string value.',
       },
       {
         type: NodeTypes.OBJECTIFY,
@@ -124,6 +128,7 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.PASS_UNIT,
         icon: 'px',
         text: 'Pass Unit',
+        description: 'Passes a unit of choice to a single token input',
       },
       {
         type: NodeTypes.PARSE_UNIT,
@@ -352,6 +357,7 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.GROUP,
         icon: '{a:}',
         text: 'Group Token',
+        description: 'Prepends a group name to an array of tokens.',
       },
     ],
   },
