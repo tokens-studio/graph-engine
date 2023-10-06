@@ -587,6 +587,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 selectionOnDrag={true}
                 panOnDrag={panOnDrag}
                 minZoom={-Infinity}
+                zoomOnDoubleClick={false}
                 defaultViewport={defaultViewport}
                 //This causes weirdness with the minimap
                 // onlyRenderVisibleElements={true}
