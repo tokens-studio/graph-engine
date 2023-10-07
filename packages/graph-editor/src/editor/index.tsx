@@ -49,8 +49,6 @@ import groupNode from '../components/flow/groupNode.tsx';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
 import {
   Box,
-  Button,
-  EmptyState,
   IconButton,
   Stack,
   Tooltip,
@@ -68,7 +66,6 @@ import { showGrid, snapGrid } from '#/redux/selectors/settings.ts';
 import { showNodesPanelSelector } from '#/redux/selectors/ui.ts';
 import { forceUpdate } from '#/redux/selectors/graph.ts';
 import { DropPanel } from '#/components/index.ts';
-import { BatteryChargingIcon, FilePlusIcon } from '@iconicicons/react';
 import { AppsIcon } from '#/components/icons/AppsIcon.tsx';
 import { CommandMenu } from '#/components/CommandPalette.tsx';
 import { ExternalLoaderProvider } from '#/context/ExternalLoaderContext.tsx';
@@ -601,32 +598,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                     variant={BackgroundVariant.Dots}
                   />
                 )}
-                {nodeCount === 0 && (
-                  <Box
-                    css={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      pointerEvents: 'none',
-                      width: '100%',
-                      height: '100%',
-                      position: 'relative',
-                      zIndex: 100,
-                    }}
-                  >
-                    <EmptyState
-                      icon={
-                        <BatteryChargingIcon
-                          style={{ width: 48, height: 48 }}
-                        />
-                      }
-                      title="Build scalable and flexible design systems."
-                      description="Add your first node to get started or load an example"
-                    >
-                      <Box />
-                    </EmptyState>
-                  </Box>
-                )}
+                {nodeCount === 0 && props.emptyContent}
                 <SelectedNodesToolbar />
                 <CustomControls position="bottom-center" />
                 <CommandMenu
@@ -634,6 +606,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                   items={panelItems}
                   handleSelectNewNodeType={handleSelectNewNodeType}
                 />
+                {props.children}
               </ReactFlow>
             </ForceUpdateProvider>
           </Box>

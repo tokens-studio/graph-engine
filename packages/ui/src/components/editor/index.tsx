@@ -6,11 +6,24 @@ import { Preview } from '../Preview.tsx';
 import { Menubar } from '../editorMenu/index.tsx';
 import { useCallback } from 'react';
 import { useTheme } from '#/hooks/useTheme.tsx';
+import { EmptyStateEditor } from '../EmptyStateEditor.tsx';
+import { ExamplesPicker } from '../ExamplesPicker.tsx';
+import { showExamplePickerSelector } from '#/redux/selectors/index.ts';
+import { useSelector } from 'react-redux';
 
 export const EditorTab = ({ ...rest }) => {
   const dispatch = useDispatch();
   const [, ref] = useRegisterRef('editor');
   const [, setCodeRef] = useRegisterRef('codeEditor');
+  const showExamplePicker = useSelector(showExamplePickerSelector);
+  
+  const onCloseExamplePicker = useCallback(() => {
+    dispatch.ui.setShowExamplePicker(false);
+  }, [dispatch.ui]);
+
+  const onOpenExamplePicker = useCallback(() => {
+    dispatch.ui.setShowExamplePicker(true);
+  }, [dispatch.ui]);
 
   const theme = useTheme();
   const onEditorOutputChange = (output: Record<string, unknown>) => {
@@ -31,9 +44,12 @@ export const EditorTab = ({ ...rest }) => {
         id={'editor'}
         ref={ref}
         onOutputChange={onEditorOutputChange}
-        menuContent={<Menubar toggleTheme={toggleTheme} theme={theme} />}
+        menuContent={<Menubar toggleTheme={toggleTheme} theme={theme} onLoadExamples={onOpenExamplePicker} />}
+        emptyContent={<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />}
         {...rest}
-      />
+      >
+        <ExamplesPicker open={showExamplePicker} onClose={onCloseExamplePicker} />
+      </Editor>
       <Stack
         direction="column"
         align="end"
