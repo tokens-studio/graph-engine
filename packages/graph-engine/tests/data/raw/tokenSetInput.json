@@ -47,7 +47,6 @@
   "edges": [
     {
       "style": { "strokeWidth": 2 },
-      "markerEnd": { "type": "arrowclosed" },
       "source": "80182fd6-c10d-4adb-810b-15d555b73c12",
       "sourceHandle": "background-color",
       "target": "413a4ad6-65ca-4d6d-9f68-f12a52ae8185",
@@ -57,7 +56,6 @@
     },
     {
       "style": { "strokeWidth": 2 },
-      "markerEnd": { "type": "arrowclosed" },
       "source": "413a4ad6-65ca-4d6d-9f68-f12a52ae8185",
       "sourceHandle": "output",
       "target": "db665864-d7fe-4345-a084-9f020ef5ee9c",
@@ -67,7 +65,6 @@
     },
     {
       "style": { "strokeWidth": 2 },
-      "markerEnd": { "type": "arrowclosed" },
       "source": "95b28e18-149f-42df-a61c-891748baeff6",
       "sourceHandle": "colorSet",
       "target": "80182fd6-c10d-4adb-810b-15d555b73c12",

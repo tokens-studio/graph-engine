@@ -37,7 +37,6 @@
   "edges": [
     {
       "style": { "strokeWidth": 2 },
-      "markerEnd": { "type": "arrowclosed" },
       "source": "4afda872-881c-4e2b-905c-b5995ad0ebda",
       "sourceHandle": "background",
       "target": "ef251584-99f2-4976-8f0e-e265a12223ce",
@@ -48,7 +47,6 @@
     },
     {
       "style": { "strokeWidth": 2 },
-      "markerEnd": { "type": "arrowclosed" },
       "source": "ef251584-99f2-4976-8f0e-e265a12223ce",
       "sourceHandle": "output",
       "target": "3a2f6a06-c2a5-4b82-9f93-f9afa00aaacf",
