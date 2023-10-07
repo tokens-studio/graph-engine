@@ -42,7 +42,5 @@ export const MiniMapStyled = styled(MiniMap, {
 });
 
 export const CustomControls = (props: ControlProps) => {
-  return (
-    <ControlsStyled showInteractive={false} {...props} />
-  );
+  return <ControlsStyled showInteractive={false} {...props} />;
 };
