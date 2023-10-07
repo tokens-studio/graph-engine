@@ -30,7 +30,15 @@ const StyledButton = styled('button', {
   backgroundColor: '$buttonSecondaryBgHover',
 });
 
-export const DragItem = ({ data, type, title, description, icon, docs, children }: DragItemProps) => {
+export const DragItem = ({
+  data,
+  type,
+  title,
+  description,
+  icon,
+  docs,
+  children,
+}: DragItemProps) => {
   const [isDragging, setIsDragging] = React.useState(false);
   const onDragStart = useCallback(
     (event) => {
@@ -52,11 +60,19 @@ export const DragItem = ({ data, type, title, description, icon, docs, children 
   }, []);
 
   return (
-    <StyledWrapper onDragStart={onDragStart} onDragEnd={onDragEnd} draggable="true">
-      <NodeHoverCard isDragging={isDragging} title={title} description={description} docs={docs} icon={icon}>
-          <StyledButton type="button">
-            {children}
-          </StyledButton>
+    <StyledWrapper
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      draggable="true"
+    >
+      <NodeHoverCard
+        isDragging={isDragging}
+        title={title}
+        description={description}
+        docs={docs}
+        icon={icon}
+      >
+        <StyledButton type="button">{children}</StyledButton>
       </NodeHoverCard>
     </StyledWrapper>
   );

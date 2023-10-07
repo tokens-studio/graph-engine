@@ -23,7 +23,7 @@ const CommandMenu = ({
   const showNodesCmdPalette = useSelector(showNodesCmdPaletteSelector);
   const dispatch = useDispatch();
   const cursorPositionRef = React.useRef<{ x: number; y: number } | null>(null);
-  const [selectedItem, setSelectedItem] = React.useState('input')
+  const [selectedItem, setSelectedItem] = React.useState('input');
 
   const wrapperBounds = reactFlowWrapper.current?.getBoundingClientRect();
 
@@ -86,12 +86,19 @@ const CommandMenu = ({
         <Command.Input placeholder="Find nodes to add…" />
       </Box>
       <Command.List>
-        <Command.Empty><Box css={{padding: '$4'}}>No nodes found.</Box></Command.Empty>
-        <Stack direction="row" css={{overflowY: 'scroll', maxHeight: '450px'}}>
-          <Box css={{
-            width: '50%',
-            padding: '$4'
-          }}>
+        <Command.Empty>
+          <Box css={{ padding: '$4' }}>No nodes found.</Box>
+        </Command.Empty>
+        <Stack
+          direction="row"
+          css={{ overflowY: 'scroll', maxHeight: '450px' }}
+        >
+          <Box
+            css={{
+              width: '50%',
+              padding: '$4',
+            }}
+          >
             {items.map((value) => {
               const childValues = value.items.map((item) => (
                 <Command.Item
@@ -118,11 +125,14 @@ const CommandMenu = ({
                 </Command.Item>
               ));
               return (
-                <Command.Group heading={value.title}>{childValues}</Command.Group>
+                <Command.Group heading={value.title}>
+                  {childValues}
+                </Command.Group>
               );
             })}
           </Box>
-          <Box css={{
+          <Box
+            css={{
               display: 'flex',
               flexDirection: 'column',
               margin: '$5',
@@ -131,8 +141,20 @@ const CommandMenu = ({
               borderRadius: '$medium',
               position: 'sticky',
               top: '$5',
-          }}>
-            {items.map((value) => value.items.map((item) => selectedItem === item.type && <NodePreview title={item.text} description={item.description} docs={item.docs} />))}
+            }}
+          >
+            {items.map((value) =>
+              value.items.map(
+                (item) =>
+                  selectedItem === item.type && (
+                    <NodePreview
+                      title={item.text}
+                      description={item.description}
+                      docs={item.docs}
+                    />
+                  ),
+              ),
+            )}
           </Box>
         </Stack>
       </Command.List>
@@ -142,16 +164,28 @@ const CommandMenu = ({
 
 function NodePreview({ title, description, docs }) {
   return (
-    <Stack direction="column" justify='center' gap={3} css={{padding: '$6'}}>
+    <Stack direction="column" justify="center" gap={3} css={{ padding: '$6' }}>
       <Stack direction="column" gap={5}>
-        <Heading css={{
-          fontSize: '$small',
-          fontWeight: '$sansMedium',
-          color: '$fgDefault',
-        }}>{title}</Heading>
-        </Stack>
-        <Text size="small" muted css={{lineHeight: '150%'}}>{description}</Text>
-      {docs ? <Text size="xsmall"><StyledLink href={docs} target="_blank">Read more</StyledLink></Text> : null}
+        <Heading
+          css={{
+            fontSize: '$small',
+            fontWeight: '$sansMedium',
+            color: '$fgDefault',
+          }}
+        >
+          {title}
+        </Heading>
+      </Stack>
+      <Text size="small" muted css={{ lineHeight: '150%' }}>
+        {description}
+      </Text>
+      {docs ? (
+        <Text size="xsmall">
+          <StyledLink href={docs} target="_blank">
+            Read more
+          </StyledLink>
+        </Text>
+      ) : null}
     </Stack>
   );
 }
@@ -159,7 +193,7 @@ function NodePreview({ title, description, docs }) {
 const StyledLink = styled('a', {
   color: '$accentDefault',
   textDecoration: 'none',
-  fontWeight: '$sansMedium'
+  fontWeight: '$sansMedium',
 });
 
 export { CommandMenu };

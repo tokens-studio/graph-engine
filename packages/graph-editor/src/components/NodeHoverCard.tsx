@@ -15,51 +15,76 @@ interface INodeHoverCard {
 const StyledLink = styled('a', {
   color: '$accentDefault',
   textDecoration: 'none',
-  fontWeight: '$sansMedium'
+  fontWeight: '$sansMedium',
 });
 
-const NodeHoverCard = ({children, title, description, docs, icon, isDragging}: INodeHoverCard) => {
+const NodeHoverCard = ({
+  children,
+  title,
+  description,
+  docs,
+  icon,
+  isDragging,
+}: INodeHoverCard) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const handleOpenChange = React.useCallback((open) => {
-    if (open === true) {
-      if (isDragging) return;
-      setIsOpen(open);
-    } else {
-      setIsOpen(open);
-    }
-  }, [isDragging]);
+  const handleOpenChange = React.useCallback(
+    (open) => {
+      if (open === true) {
+        if (isDragging) return;
+        setIsOpen(open);
+      } else {
+        setIsOpen(open);
+      }
+    },
+    [isDragging],
+  );
 
   React.useEffect(() => {
     if (isDragging) {
       setIsOpen(false);
     }
-  }, [isDragging])
+  }, [isDragging]);
 
   return (
-    <HoverCard.Root onOpenChange={handleOpenChange} openDelay={500} closeDelay={200} open={isOpen}>
-      <HoverCard.Trigger asChild>
-        {children}
-      </HoverCard.Trigger>
+    <HoverCard.Root
+      onOpenChange={handleOpenChange}
+      openDelay={500}
+      closeDelay={200}
+      open={isOpen}
+    >
+      <HoverCard.Trigger asChild>{children}</HoverCard.Trigger>
       <HoverCard.Portal>
-        <HoverCardContent side='right' sideOffset={5}>
+        <HoverCardContent side="right" sideOffset={5}>
           <Stack direction="column" gap={3}>
             <Stack direction="row" gap={2} align="center">
               {icon}
-              <Heading css={{
-                fontSize: '$small',
-                fontWeight: '$sansMedium',
-                color: '$fgDefault',
-              }}>{title}</Heading>
-              </Stack>
-              <Text size="small" muted css={{lineHeight: '150%'}}>{description}</Text>
-            {docs ? <Text size="xsmall"><StyledLink href={docs} target="_blank">Read more</StyledLink></Text> : null}
+              <Heading
+                css={{
+                  fontSize: '$small',
+                  fontWeight: '$sansMedium',
+                  color: '$fgDefault',
+                }}
+              >
+                {title}
+              </Heading>
+            </Stack>
+            <Text size="small" muted css={{ lineHeight: '150%' }}>
+              {description}
+            </Text>
+            {docs ? (
+              <Text size="xsmall">
+                <StyledLink href={docs} target="_blank">
+                  Read more
+                </StyledLink>
+              </Text>
+            ) : null}
           </Stack>
         </HoverCardContent>
       </HoverCard.Portal>
     </HoverCard.Root>
-  )
-}
+  );
+};
 
 const slideUpAndFade = keyframes({
   '0%': { opacity: 0, transform: 'translateY(2px)' },

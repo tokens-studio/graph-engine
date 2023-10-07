@@ -26,7 +26,7 @@ const StyledAccordion = styled(Accordion, {
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  padding: '$2'
+  padding: '$2',
 });
 
 const StyledChevron = styled(ChevronRightIcon, {
@@ -123,7 +123,10 @@ export const DropPanel = React.forwardRef<ImperativeDropPanelRef, IDropPanel>(
                   </Text>
                 </StyledAccordionTrigger>
                 <Accordion.Content>
-                  <Stack direction="column" css={{ padding: 0, marginBottom: '$4' }}>
+                  <Stack
+                    direction="column"
+                    css={{ padding: 0, marginBottom: '$4' }}
+                  >
                     {filteredValues}
                   </Stack>
                 </Accordion.Content>
@@ -157,12 +160,14 @@ export const DropPanel = React.forwardRef<ImperativeDropPanelRef, IDropPanel>(
               gap={2}
               css={{ padding: '0 $5', paddingTop: '$4' }}
             >
-              <Text css={{
-                 fontSize: '$xxsmall',
-                 fontWeight: '$sansMedium',
-                 textTransform: 'uppercase',
-                 letterSpacing: '0.15px',
-              }}>
+              <Text
+                css={{
+                  fontSize: '$xxsmall',
+                  fontWeight: '$sansMedium',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.15px',
+                }}
+              >
                 Nodes
               </Text>
               <TextInput
