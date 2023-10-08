@@ -471,7 +471,7 @@ export const defaultPanelItems: PanelGroup[] = [
       {
         type: NodeTypes.CONTRAST,
         icon: <Half2Icon />,
-        text: 'Contast',
+        text: 'Contrast',
         description: 'Contrast node allows you to calculate the contrast ratio between two colors.',
       },
       {
