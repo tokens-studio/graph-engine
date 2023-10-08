@@ -187,7 +187,7 @@ export const Node = (props: NodeProps) => {
         minWidth: '300px',
         position: 'relative',
         borderRadius: '$medium',
-        background: error ? '$dangerBg' : '$bgDefault',
+        background: '$bgDefault',
       }}
     >
       <NodeToolbar className="nodrag">
@@ -243,6 +243,7 @@ export const Node = (props: NodeProps) => {
               <>
                 <Stack
                   direction="row"
+                  className={error ? 'error' : ''}
                   justify="between"
                   align="center"
                   css={{
