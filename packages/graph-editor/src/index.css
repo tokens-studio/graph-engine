@@ -23,24 +23,11 @@
     opacity: 0.25;
 }
 
-.react-flow__node.error {
-    --nodeBorderColor: var(--colors-dangerFg);
-    --nodeBgColor: var(--colors-dangerBg);
-    --nodeTextColor: var(--colors-dangerFg);
-}
-
 .react-flow__node.selectable.selected, .react-flow__node.selectable:focus {
     --nodeBorderColor: var(--colors-accentMuted);
     --nodeBgColor: var(--colors-accentBg);
     --nodeTextColor: var(--colors-fgDefault);
     outline: 2px solid var(--colors-accentMuted);
-}
-
-.react-flow__node.selectable.selected.error, .react-flow__node.selectable.error:focus {
-    --nodeBorderColor: var(--colors-dangerBorder);
-    --nodeBgColor: var(--colors-dangerBg);
-    --nodeTextColor: var(--colors-dangerFg);
-    outline: 2px solid var(--colors-dangerBorder);
 }
 
 .react-flow__edge.selected .react-flow__edge-path, .react-flow__edge:focus .react-flow__edge-path, .react-flow__edge:focus-visible .react-flow__edge-path {
