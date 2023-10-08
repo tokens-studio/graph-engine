@@ -4,7 +4,7 @@ import {
   HandleContainer,
   HandleText,
 } from '../../handles.tsx';
-import { Label, Stack, Text, TextInput } from '@tokens-studio/ui';
+import { Box, IconButton, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { PreviewArray } from '../../preview/array.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/color/scale.js';
@@ -12,6 +12,36 @@ import PreviewColor from '../../preview/color.tsx';
 import PreviewNumber from '../../preview/number.tsx';
 import React, { useCallback, useMemo } from 'react';
 import { ColorWheelIcon } from '@radix-ui/react-icons';
+import { HexColorPicker } from "react-colorful";
+import InputPopover from '#/components/InputPopover.tsx';
+import { BezierCurveEditor } from '#/components/BezierCurveEditor.tsx';
+import { BezierIcon } from '#/components/icons/BezierIcon.tsx';
+
+function ColorPickerPopover({ value, onChange }) {
+  return (
+  <InputPopover trigger={<Box as="button" css={{all: 'unset', cursor: 'pointer', borderRadius: '$small', backgroundColor: value, width: 16, height: 16, border: '1px solid $borderMuted'}} type="button" />}>
+    <ColorPicker value={value} onChange={onChange} />
+    {value}
+  </InputPopover>)
+}
+
+function BezierPopover({ value, onChange }) {
+  return (
+  <InputPopover trigger={<IconButton variant="invisible" size="small" icon={<BezierIcon />} tooltip="Edit curve" />}>
+     <BezierCurveEditor value={value} onChange={onChange} />
+  </InputPopover>)
+}
+
+function ColorPicker({ value, onChange }) {  
+  const handleChange = useCallback(
+    (val) => {
+      onChange(val);
+    },
+    [onChange],
+    );
+    
+  return <HexColorPicker color={value} onChange={handleChange} />;
+}
 
 const ScaleNode = () => {
   const { input, state, output, setState } = useNode();
@@ -27,17 +57,24 @@ const ScaleNode = () => {
         return ~~a < ~~b ? -1 : 1;
       })
       .map(([key, value]) => {
+        // We want the base to be styled differently so users understand where's their base
+        const isBase = Number(key) + 1 === Number(state.stepsUp) + 1;
         return (
           <Handle id={key} key={key}>
-            <Text
+            <Box
               css={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 3,
                 fontFamily: 'monospace',
                 fontSize: '$xsmall',
                 color: '$fgMuted',
               }}
             >
-              {key}
-            </Text>
+              {isBase ? <Box css={{width: '3px', height: '12px', borderRadius: '100px', background: '$accentDefault'}} /> : null}
+              <Box css={isBase ? { fontWeight: '$sansBold', color: '$fgDefault'} : {}}>{key}</Box>
+            </Box>
             <PreviewColor value={value} />
           </Handle>
         );
@@ -52,7 +89,7 @@ const ScaleNode = () => {
         {handles}
       </>
     );
-  }, [output]);
+  }, [output, state]);
 
   const setStepsUp = useCallback((ev) => {
     const stepsUp = ev.target.value;
@@ -60,7 +97,7 @@ const ScaleNode = () => {
       ...state,
       stepsUp,
     }));
-  }, []);
+  }, [setState]);
 
   const setStepsDown = useCallback((ev) => {
     const stepsDown = ev.target.value;
@@ -68,15 +105,41 @@ const ScaleNode = () => {
       ...state,
       stepsDown,
     }));
-  }, []);
+  }, [setState]);
+
+  const handleColorChange = useCallback((color) => {
+    setState((state) => ({
+      ...state,
+      color,
+    }));
+  }, [setState]);
+
+  const handleChromaCurveValueChange = useCallback((chromaCurve) => {
+    console.log("Handling chroma curve change", chromaCurve, state)
+    setState((state) => ({
+      ...state,
+      chromaCurve,
+    }));
+  }, [setState, state]);
+
+  // If the input color changes, update the state so that when we later detach we have the input as the latest value
+  React.useEffect(() => {
+    if (input.color) {
+      setState((state) => ({
+        ...state,
+        color: input.color,
+      }));
+    }
+  }, [input.color, setState])
 
   return (
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
         <Handle id="color">
           <Stack direction="row" justify="between" gap={3} align="center">
+            {input.color ? <PreviewColor value={input.color} /> :  <ColorPickerPopover value={state.color} onChange={handleColorChange} />}
             <HandleText>Color</HandleText>
-            <PreviewColor value={input.color} />
+            <Box css={{fontWeight: '$sansRegular', color: '$fgMuted', fontSize: '$xxsmall', fontFamily: '$mono'}}>{state.color}</Box>
           </Stack>
         </Handle>
         <Handle id="stepsUp">
@@ -98,6 +161,12 @@ const ScaleNode = () => {
             ) : (
               <TextInput onChange={setStepsDown} value={state.stepsDown} />
             )}
+          </Stack>
+        </Handle>
+        <Handle id="chromaCurve">
+          <Stack direction="row" justify="between" gap={3} align="center">
+            <HandleText secondary>Distribution curve</HandleText>
+            <BezierPopover value={input.chromaCurve || state.chromaCurve} onChange={handleChromaCurveValueChange} />
           </Stack>
         </Handle>
       </HandleContainer>
