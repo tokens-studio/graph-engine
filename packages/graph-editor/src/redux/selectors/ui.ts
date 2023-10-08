@@ -15,3 +15,8 @@ export const storeNodeInsertPositionSelector = createSelector(
   ui,
   (state) => state.storeNodeInsertPosition,
 );
+
+export const isSideSheetMinimizedSelector = createSelector(
+  ui,
+  (state) => state.isSideSheetMinimized,
+);

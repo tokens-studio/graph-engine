@@ -5,6 +5,7 @@ export interface UIState {
   showNodesPanel: boolean;
   showNodesCmdPalette: boolean;
   storeNodeInsertPosition: { x: number; y: number };
+  isSideSheetMinimized: boolean;
 }
 
 export const uiState = createModel<RootModel>()({
@@ -12,6 +13,7 @@ export const uiState = createModel<RootModel>()({
     showNodesPanel: true,
     showNodesCmdPalette: false,
     storeNodeInsertPosition: { x: 0, y: 0 },
+    isSideSheetMinimized: false,
   } as UIState,
   reducers: {
     setShowNodesPanel(state, showNodesPanel: boolean) {
@@ -32,5 +34,11 @@ export const uiState = createModel<RootModel>()({
         storeNodeInsertPosition: nodeInsertPosition,
       };
     },
+    setIsSideSheetMinimized(state, isSideSheetMinimized: boolean) {
+      return {
+        ...state,
+        isSideSheetMinimized,
+      };
+    }
   },
 });

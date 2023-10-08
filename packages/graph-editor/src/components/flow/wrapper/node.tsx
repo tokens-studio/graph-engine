@@ -29,7 +29,6 @@ import classNames from 'classnames/dedupe.js';
 import useDetachNodes from '../hooks/useDetachNodes.ts';
 import { useSelector } from 'react-redux';
 import { debugMode, obscureDistance } from '#/redux/selectors/settings.ts';
-import { Sidesheet } from '#/editor/Sidesheet.tsx';
 
 const CollapserContainer = styled('div', {});
 
@@ -192,7 +191,6 @@ export const Node = (props: NodeProps) => {
       }}
     >
       <NodeToolbar>
-        <Sidesheet title={title}>{children}</Sidesheet>
         <Stack
           direction="row"
           gap={0}

@@ -13,7 +13,8 @@ import PreviewNumber from '../../preview/number.tsx';
 import React, { useCallback, useMemo } from 'react';
 import { ColorWheelIcon } from '@radix-ui/react-icons';
 
-const ScaleNode = () => {
+// We introduce a isSettings prop to the node so we dont have to build the contents twice. Another way to do this would be to have a separate node for the settings and the node itself. Or.. to understand "where am i rendered" in the node itself, but that would be a bit more complex.
+const ScaleNode = ({isSettings}: {isSettings?: boolean}) => {
   const { input, state, output, setState } = useNode();
 
   const outputHandles = useMemo(() => {
@@ -28,7 +29,7 @@ const ScaleNode = () => {
       })
       .map(([key, value]) => {
         return (
-          <Handle id={key} key={key}>
+          <Handle shouldHideHandles={isSettings} id={key} key={key}>
             <Text
               css={{
                 fontFamily: 'monospace',
@@ -45,7 +46,7 @@ const ScaleNode = () => {
 
     return (
       <>
-        <Handle id="array">
+        <Handle shouldHideHandles={isSettings} id="array">
           <HandleText>Set</HandleText>
           <PreviewArray value={array} />
         </Handle>
@@ -73,35 +74,36 @@ const ScaleNode = () => {
   return (
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
-        <Handle id="color">
+        <Handle shouldHideHandles={isSettings} id="color">
           <Stack direction="row" justify="between" gap={3} align="center">
             <HandleText>Color</HandleText>
             <PreviewColor value={input.color} />
           </Stack>
         </Handle>
-        <Handle id="stepsUp">
+        <Handle shouldHideHandles={isSettings} id="stepsUp">
           <Stack direction="row" justify="between" gap={3} align="center">
             <HandleText secondary>Steps ↑</HandleText>
-            {input.stepsUp !== undefined ? (
-              <PreviewNumber value={input.stepsUp} />
+            {isSettings ? <>{input.stepsUp !== undefined ? (
+              <PreviewNumber value={input.stepsUp || state.stepsUp} />
             ) : (
               <TextInput onChange={setStepsUp} value={state.stepsUp} />
-            )}
+            )}</> : <DynamicValueText>{input.stepsUp || state.stepsUp}</DynamicValueText>}
           </Stack>
         </Handle>
-        <Handle id="stepsDown">
+        <Handle shouldHideHandles={isSettings} id="stepsDown">
           <Stack direction="row" justify="between" gap={3} align="center">
             <HandleText secondary>Steps ↓</HandleText>
 
-            {input.stepsDown !== undefined ? (
-              <PreviewNumber value={input.stepsDown} />
+            {isSettings ? <>{input.stepsDown !== undefined ? (
+              <PreviewNumber value={input.stepsDown || state.stepsDown} />
             ) : (
               <TextInput onChange={setStepsDown} value={state.stepsDown} />
-            )}
+            )}</> : <DynamicValueText>{input.stepsDown || state.stepsDown}</DynamicValueText>}
           </Stack>
         </Handle>
       </HandleContainer>
-      <HandleContainer type="source">{outputHandles}</HandleContainer>
+      {/* Hide output handles for now. Ideally we'd have a proper way to display outputs here, but I think for now the goal is to get the inputs out of the graph */}
+      <HandleContainer shouldHide={isSettings} type="source">{outputHandles}</HandleContainer>
     </Stack>
   );
 };
@@ -110,4 +112,4 @@ export default WrapNode(ScaleNode, {
   ...node,
   title: 'Generate Color Scale',
   icon: <ColorWheelIcon />,
-});
+}, <ScaleNode isSettings />);
