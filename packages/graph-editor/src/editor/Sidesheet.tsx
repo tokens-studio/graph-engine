@@ -20,14 +20,13 @@ export function Sidesheet({ title, children }) {
           onClick={handleToggleMinimized}
           css={{
             position: 'fixed',
-            right: 0,
-            bottom: 0,
-            zIndex: 100,
+            right: '$3',
+            bottom: '$3',
             backgroundColor: '$bgCanvas',
             border: '1px solid $borderSubtle',
             borderRightWidth: 0,
             borderBottomWidth: 0,
-            borderTopLeftRadius: '$medium',
+            borderRadius: '$medium',
             padding: '$3 $4',
             cursor: 'pointer',
             fontSize: '$xsmall',
@@ -45,33 +44,31 @@ export function Sidesheet({ title, children }) {
         css={{
           display: 'flex',
           position: 'fixed',
-          right: 0,
-          minHeight: '30vh',
-          bottom: 0,
-          zIndex: 100,
+          right: '$3',
+          bottom: '$3',
         }}
       >
         <Box
           css={{
             maxWidth: 'clamp(180px, 40vw, 400px)',
-            backgroundColor: '$bgCanvas',
+            backgroundColor: '$bgDefault',
             padding: '$6',
-            borderTopLeftRadius: '16px',
+            paddingTop: '$5',
+            borderRadius: '$medium',
             boxShadow: '$contextMenu',
-            borderLeft: '1px solid $borderSubtle',
-            borderTop: '1px solid $borderSubtle',
+            border: '1px solid $borderSubtle',
           }}
         >
-          <Box css={{ position: 'absolute', right: '$6' }}>
-            <IconButton
-              icon={<CloseIcon />}
-              variant="invisible"
-              onClick={handleToggleMinimized}
-            />
-          </Box>
           <Stack direction="column" gap={4}>
             <Stack direction="column" gap={3}>
-              <Heading size="large">{title}</Heading>
+              <Stack gap={2} align="start" justify="between">
+                <Heading size="large">{title}</Heading>
+                <IconButton
+                  icon={<CloseIcon />}
+                  variant="invisible"
+                  onClick={handleToggleMinimized}
+                />
+              </Stack>
               <Text muted>We could add the description here as well.</Text>
             </Stack>
             {children}
