@@ -104,7 +104,7 @@ const CommandMenu = ({
                 <Command.Item
                   key={item.type}
                   onSelect={() => handleSelectItem(item.type)}
-                  value={item.type}
+                  value={item.text.toLowerCase()}
                 >
                   <Stack direction="row" gap={2} align="center">
                     <Box
@@ -146,7 +146,7 @@ const CommandMenu = ({
             {items.map((value) =>
               value.items.map(
                 (item) =>
-                  selectedItem === item.type && (
+                  selectedItem === item.text.toLowerCase() && (
                     <NodePreview
                       title={item.text}
                       description={item.description}
