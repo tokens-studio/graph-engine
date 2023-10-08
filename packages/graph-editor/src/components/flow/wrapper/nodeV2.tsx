@@ -383,9 +383,7 @@ export const WrapNode = (
           </ErrorBoundary>
           <ErrorBoundary fallbackRender={() => 'Oops I just accidentally ...'}>
             <NodeToolbar>
-              <Sidesheet title={nodeDef.title}>
-                {settingsContent}
-              </Sidesheet>
+              <Sidesheet title={nodeDef.title}>{settingsContent}</Sidesheet>
             </NodeToolbar>
           </ErrorBoundary>
         </Wrapped>

@@ -39,6 +39,6 @@ export const uiState = createModel<RootModel>()({
         ...state,
         isSideSheetMinimized,
       };
-    }
+    },
   },
 });

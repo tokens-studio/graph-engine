@@ -29,7 +29,12 @@ export const HandleContainerContext = createContext<{
   hide: false,
 });
 
-export const HandleContainer = ({ type, children, shouldHide = false, full }: HolderProps) => {
+export const HandleContainer = ({
+  type,
+  children,
+  shouldHide = false,
+  full,
+}: HolderProps) => {
   if (shouldHide) return null;
   const position = type === 'source' ? Position.Right : Position.Left;
   return (
@@ -97,8 +102,8 @@ const StyledRawHandle = styled(RawHandle, {
     shouldHideHandles: {
       true: {
         display: 'none',
-      }
-    }
+      },
+    },
   },
   '&:hover': {
     '&::after': {
@@ -185,7 +190,11 @@ export const Handle = (props) => {
         gap={2}
         justify={full ? 'between' : type === 'target' ? 'start' : 'end'}
         align="center"
-        css={{ flex: 1, paddingLeft: shouldHideHandles ? 0 : '$3', paddingRight: shouldHideHandles ? 0: '$3' }}
+        css={{
+          flex: 1,
+          paddingLeft: shouldHideHandles ? 0 : '$3',
+          paddingRight: shouldHideHandles ? 0 : '$3',
+        }}
       >
         {children}
       </Stack>
