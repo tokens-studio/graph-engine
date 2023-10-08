@@ -322,6 +322,14 @@ export const WrapNode = (
       loadingEphemeralData,
     ]);
 
+    const handleTitleChange = useCallback(
+      (newTitle) => {
+        setTitle(newTitle);
+        // TODO: We should also save this back to the node state somehow. Not sure yet how to do that.
+      },
+      [setTitle],
+    );
+
     useEffect(() => {
       async function propagate() {
         //Handle propagating the value to the next node
@@ -383,7 +391,13 @@ export const WrapNode = (
           </ErrorBoundary>
           <ErrorBoundary fallbackRender={() => 'Oops I just accidentally ...'}>
             <NodeToolbar>
-              <Sidesheet title={nodeDef.title}>{settingsContent}</Sidesheet>
+              <Sidesheet
+                title={title}
+                originalTitle={nodeDef.title}
+                onChangeTitle={handleTitleChange}
+              >
+                {settingsContent}
+              </Sidesheet>
             </NodeToolbar>
           </ErrorBoundary>
         </Wrapped>
