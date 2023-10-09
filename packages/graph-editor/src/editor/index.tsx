@@ -88,9 +88,6 @@ const defaultEdgeOptions = {
   style: {
     strokeWidth: 2,
   },
-  markerEnd: {
-    type: MarkerType.ArrowClosed,
-  },
 };
 
 export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(

@@ -12,14 +12,23 @@ import { LiveEditor, LiveError } from 'react-live';
 import { MinusIcon, PictureInPictureIcon, VideoIcon } from '@iconicicons/react';
 import Code3Icon from '#/assets/svgs/code-3.svg';
 import { useCallback, useState } from 'react';
+import { usePreviewContext } from '#/providers/preview.tsx';
 
 export const Preview = ({ codeRef }) => {
+  const { setCode, code } = usePreviewContext();
   const [isVisible, setIsVisible] = useState(false);
   const [visibleTab, setVisibleTab] = useState('preview');
 
   const handleToggleVisible = useCallback(() => {
     setIsVisible(!isVisible);
   }, [isVisible, setIsVisible]);
+
+  const handleChangeCode = useCallback(
+    (code) => {
+      setCode(code);
+    },
+    [setCode],
+  );
 
   return (
     <Stack
@@ -110,7 +119,7 @@ export const Preview = ({ codeRef }) => {
             <Stack direction="column">
               <LiveError />
               <div ref={codeRef}>
-                <LiveEditor />
+                <LiveEditor onChange={handleChangeCode} />
               </div>
             </Stack>
           </Box>
