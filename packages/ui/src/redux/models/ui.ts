@@ -11,6 +11,7 @@ export interface UIState {
   currentTab: Tab;
   tabs: Tab[];
   theme: string;
+  showExamplePicker: boolean;
 }
 
 const starting = [
@@ -25,6 +26,7 @@ export const uiState = createModel<RootModel>()({
     currentTab: starting[0],
     tabs: starting,
     theme: 'dark',
+    showExamplePicker: false,
   } as UIState,
   reducers: {
     setTheme(state, theme: string) {
@@ -55,6 +57,12 @@ export const uiState = createModel<RootModel>()({
         tabs: state.tabs.filter((t) => t.id !== id),
       };
     },
+    setShowExamplePicker(state, showExamplePicker: boolean) {
+      return {
+        ...state,
+        showExamplePicker,
+      };
+    }
   },
   effects: (dispatch) => ({
     toggleTheme(_, state) {
