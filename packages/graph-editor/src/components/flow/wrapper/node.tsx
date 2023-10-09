@@ -129,6 +129,22 @@ export const Collapser = ({ icon, children, collapsed, showContent }) => {
   );
 };
 
+const NodeWrapper = styled('div', {
+  minWidth: '300px',
+  position: 'relative',
+  borderRadius: '$medium',
+  background: '$bgDefault',
+  variants: {
+    error: {
+      true: {
+        '--nodeBorderColor': 'var(--colors-dangerFg)',
+        '--nodeBgColor': 'var(--colors-dangerBg)',
+        '--nodeTextColor': 'var(--colors-dangerFg)',
+      },
+    },
+  },
+});
+
 export const Node = (props: NodeProps) => {
   const { id, icon, title, error, isAsync, children, controls, ...rest } =
     props;
@@ -182,14 +198,7 @@ export const Node = (props: NodeProps) => {
   const onDetach = () => detachNodes([id]);
 
   return (
-    <Box
-      css={{
-        minWidth: '300px',
-        position: 'relative',
-        borderRadius: '$medium',
-        background: error ? '$dangerBg' : '$bgDefault',
-      }}
-    >
+    <NodeWrapper error={Boolean(error)} className={error ? 'error' : ''}>
       <NodeToolbar className="nodrag">
         <Stack
           direction="row"
@@ -314,7 +323,7 @@ export const Node = (props: NodeProps) => {
           </Stack>
         </FocusTrap>
       </HandleContainerContext.Provider>
-    </Box>
+    </NodeWrapper>
   );
 };
 
