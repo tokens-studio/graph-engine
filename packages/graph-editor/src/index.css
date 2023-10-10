@@ -210,3 +210,31 @@
     margin-left: 8px;
     width: 60%;
   }
+.mafs-movable-point-focus {
+    stroke: var(--movable-point-color);
+    stroke-width: 2;
+    stroke-opacity: 0;
+    fill: none;
+    transition: stroke-opacity 0.2s ease;
+  }
+  
+  .mafs-movable-point-hitbox {
+    fill: transparent;
+  }
+  
+  .mafs-movable-point-ring {
+    fill: var(--movable-point-color);
+    fill-opacity: 0.25;
+    stroke: none;
+    transition: r 0.2s ease;
+  }
+  
+  .mafs-movable-point-point {
+    fill: var(--movable-point-color);
+    transition: r 0.2s ease;
+  }
+  
+  .mafs-movable-point * {
+    stroke: none;
+  }
+  
