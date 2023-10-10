@@ -18,8 +18,7 @@ import {
 } from '#/redux/selectors/settings';
 import { useDispatch } from '#/hooks/useDispatch.ts';
 import { EdgeType, LayoutType } from '#/redux/models/settings.ts';
-import { InformationIcon } from '@iconicicons/react';
-import { GearIcon } from '@radix-ui/react-icons';
+import { InformationIcon, SettingsIcon } from '@iconicicons/react';
 
 const EdgeValues = Object.values(EdgeType);
 const LayoutValues = Object.values(LayoutType);
@@ -39,7 +38,7 @@ export const Settings = () => {
       <Dialog.Trigger asChild>
         <IconButton
           css={{ flexShrink: 0 }}
-          icon={<GearIcon />}
+          icon={<SettingsIcon />}
           variant="invisible"
           tooltip="Settings"
         />

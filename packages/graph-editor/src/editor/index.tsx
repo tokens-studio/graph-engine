@@ -70,6 +70,7 @@ import { AppsIcon } from '#/components/icons/AppsIcon.tsx';
 import { CommandMenu } from '#/components/CommandPalette.tsx';
 import { ExternalLoaderProvider } from '#/context/ExternalLoaderContext.tsx';
 import { defaultPanelItems } from '#/components/flow/DropPanel/PanelItems.tsx';
+import { Settings } from '#/components/Settings.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -533,6 +534,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                     variant={showNodesPanel ? 'primary' : 'invisible'}
                   />
                   {props.menuContent}
+                  <Settings />
                 </Stack>
                 {showNodesPanel && (
                   <Box
