@@ -20,9 +20,13 @@ export type EditorProps = {
    */
   stateInitializer?: Record<string, Record<string, unknown>>;
   /**
-   * Menu content to displya
+   * Menu content to display
    */
   menuContent: React.ReactNode;
+  /**
+   * Whether to show the settings icon button
+   */
+  showSettings?: boolean
   onOutputChange: (output: Record<string, unknown>) => void;
   externalLoader?: (opts: ExternalLoadOptions) => Promise<any> | any;
 };

@@ -103,6 +103,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       panelItems = defaultPanelItems,
       nodeTypes = defaultNodeTypes,
       stateInitializer = defaultStateInitializer,
+      showSettings = true,
     } = props;
 
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
@@ -540,7 +541,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                     variant={showNodesPanel ? 'primary' : 'invisible'}
                   />
                   {props.menuContent}
-                  <Settings />
+                  {showSettings && <Settings />}
                 </Stack>
                 {showNodesPanel && (
                   <Box
