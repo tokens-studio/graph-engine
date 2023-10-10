@@ -95,3 +95,12 @@ td,
   .dock-panel.dock-style-main .dock-bar{
     border-bottom-color: var(--colors-borderDefault);
   }
+
+/* Reset any browser-based margins for the preview */
+#preview {
+  all: unset;
+
+  h1, h2, h3, h4, h5, h6, p {
+    margin: unset;
+  }
+}
