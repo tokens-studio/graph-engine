@@ -571,7 +571,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 onConnect={onConnect}
                 onDrop={onDrop}
                 onConnectEnd={onConnectEnd}
-                selectNodesOnDrag={false}
+                selectNodesOnDrag={true}
                 defaultEdgeOptions={defaultEdgeOptions}
                 panOnScroll={true}
                 //Note that we cannot use pan on drag or it will affect the context menu

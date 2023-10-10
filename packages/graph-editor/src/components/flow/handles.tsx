@@ -16,6 +16,7 @@ export const HandleContext = createContext<{
 type HolderProps = {
   type: 'source' | 'target';
   children: React.ReactNode;
+  shouldHide?: boolean;
   full?: boolean;
 };
 
@@ -28,7 +29,13 @@ export const HandleContainerContext = createContext<{
   hide: false,
 });
 
-export const HandleContainer = ({ type, children, full }: HolderProps) => {
+export const HandleContainer = ({
+  type,
+  children,
+  shouldHide = false,
+  full,
+}: HolderProps) => {
+  if (shouldHide) return null;
   const position = type === 'source' ? Position.Right : Position.Left;
   return (
     <HandleContext.Provider value={{ type, position }}>
@@ -92,6 +99,11 @@ const StyledRawHandle = styled(RawHandle, {
         marginRight: '4px',
       },
     },
+    shouldHideHandles: {
+      true: {
+        display: 'none',
+      },
+    },
   },
   '&:hover': {
     '&::after': {
@@ -153,7 +165,7 @@ const HandleHolder = styled(Box, {
 });
 
 export const Handle = (props) => {
-  const { children, error, full, ...rest } = props;
+  const { children, shouldHideHandles = false, error, full, ...rest } = props;
   const { position, type } = useHandle();
   const isValidConnection = useIsValidConnection();
   const { collapsed, hide } = useContext(HandleContainerContext);
@@ -162,6 +174,7 @@ export const Handle = (props) => {
   return (
     <HandleHolder collapsed={collapsed}>
       <StyledRawHandle
+        shouldHideHandles={shouldHideHandles}
         error={error}
         left={type === 'target'}
         isConnected={isValidConnection}
@@ -177,7 +190,11 @@ export const Handle = (props) => {
         gap={2}
         justify={full ? 'between' : type === 'target' ? 'start' : 'end'}
         align="center"
-        css={{ flex: 1, paddingLeft: '$3', paddingRight: '$3' }}
+        css={{
+          flex: 1,
+          paddingLeft: shouldHideHandles ? 0 : '$3',
+          paddingRight: shouldHideHandles ? 0 : '$3',
+        }}
       >
         {children}
       </Stack>

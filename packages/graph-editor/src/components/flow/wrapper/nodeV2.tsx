@@ -1,4 +1,4 @@
-import { Edge, useReactFlow } from 'reactflow';
+import { Edge, useReactFlow, NodeToolbar } from 'reactflow';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Node } from './node.tsx';
 import {
@@ -26,6 +26,7 @@ import isPromise from 'is-promise';
 import { useOnOutputChange } from '#/context/OutputContext.tsx';
 import { useExternalLoader } from '#/context/ExternalLoaderContext.tsx';
 import { useExternalData } from '#/context/ExternalDataContext.tsx';
+import { Sidesheet } from '#/editor/Sidesheet.tsx';
 
 export type UiNodeDefinition = {
   //Name of the Node
@@ -95,6 +96,7 @@ export type WrappedNodeDefinition = {
 export const WrapNode = (
   InnerNode,
   nodeDef: UiNodeDefinition,
+  settingsContent?: React.ReactNode,
 ): WrappedNodeDefinition => {
   const WrappedNode = (data) => {
     const { loadSetTokens } = useExternalData();
@@ -378,6 +380,11 @@ export const WrapNode = (
         >
           <ErrorBoundary fallbackRender={() => 'Oops I just accidentally ...'}>
             <InnerNode />
+          </ErrorBoundary>
+          <ErrorBoundary fallbackRender={() => 'Oops I just accidentally ...'}>
+            <NodeToolbar>
+              <Sidesheet title={nodeDef.title}>{settingsContent}</Sidesheet>
+            </NodeToolbar>
           </ErrorBoundary>
         </Wrapped>
       </NodeContext.Provider>
