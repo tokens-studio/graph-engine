@@ -262,6 +262,11 @@ export const defaultPanelItems: PanelGroup[] = [
         icon: '[][]',
         text: 'Concat Array',
       },
+      {
+        type: NodeTypes.NAME,
+        icon: '[][]',
+        text: 'Incremental name array',
+      },
     ],
   },
   {
