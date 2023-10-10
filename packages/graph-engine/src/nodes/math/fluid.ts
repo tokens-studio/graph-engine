@@ -31,6 +31,8 @@ const process = (input: Inputs, state) => {
 };
 
 export const node: NodeDefinition<Inputs> = {
+  description:
+    "Fluid node allows you to dynamically calculates a dimension based on the current viewport width, transitioning smoothly between a minimum and maximum dimension as the viewport width changes within a defined range (from min viewport to max viewport)",
   type,
   process,
 };

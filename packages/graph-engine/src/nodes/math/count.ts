@@ -15,6 +15,7 @@ export const validateInputs = (inputs) => {
 export const process = (input) => (input.input || []).length;
 
 export const node: NodeDefinition = {
+  description: "Counts the amount of items in an array.",
   type,
   validateInputs,
   process,

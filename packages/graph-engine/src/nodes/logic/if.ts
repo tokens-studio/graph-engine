@@ -21,6 +21,8 @@ export const process = (input: Input) => {
 };
 
 export const node: NodeDefinition<Input> = {
+  description:
+    "If node allows you to conditionally choose a value based on a condition.",
   type,
   process,
 };

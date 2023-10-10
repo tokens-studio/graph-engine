@@ -26,4 +26,6 @@ export const node: NodeDefinition<Input> = {
   defaults,
   type,
   process,
+  description:
+    "Objectify node allows you to convert multiple inputs to an object.",
 };

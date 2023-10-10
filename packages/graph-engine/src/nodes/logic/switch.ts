@@ -27,6 +27,8 @@ export const process = (input) => {
 };
 
 export const node: NodeDefinition = {
+  description:
+    "Switch node allows you to conditionally choose a value based on a condition.",
   defaults,
   type,
   process,

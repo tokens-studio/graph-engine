@@ -10,7 +10,7 @@ import {
   PlusIcon,
 } from '@radix-ui/react-icons';
 import icons from '../icons';
-import { NodeTypes } from '@tokens-studio/graph-engine';
+import { NodeTypes, nodeLookup } from '@tokens-studio/graph-engine';
 import React from 'react';
 import { BoxIcon } from '@iconicicons/react';
 import preset from '#/data/preset.ts';
@@ -33,6 +33,8 @@ export interface PanelItem<T extends NodeTypes = NodeTypes> {
   type: NodeTypes;
   icon: string | JSX.Element;
   text: string;
+  description?: string;
+  docs?: string;
   data?: {
     identifier?: string;
     tokens?: any[];
@@ -75,6 +77,17 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.INPUT,
         icon: icons[NodeTypes.INPUT],
         text: 'Input',
+        docs: 'https://docs.graph.tokens.studio/nodes/generic-nodes/input',
+      },
+      {
+        type: NodeTypes.OUTPUT,
+        icon: <ButtonIcon />,
+        text: 'Output',
+      },
+      {
+        type: NodeTypes.CONSTANT,
+        icon: <ButtonIcon />,
+        text: 'Constant',
       },
       {
         type: NodeTypes.ENUMERATED_INPUT,
@@ -85,26 +98,12 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.CSS_MAP,
         icon: './x',
         text: 'CSS Map',
+        docs: 'https://docs.graph.tokens.studio/nodes/generic-nodes/css-map',
       },
       {
         type: NodeTypes.CSS_BOX,
         icon: <BoxIcon />,
         text: 'CSS Box',
-      },
-      {
-        type: NodeTypes.OUTPUT,
-        icon: <ButtonIcon />,
-        text: 'Output',
-      },
-      {
-        type: NodeTypes.SLIDER,
-        icon: '--.',
-        text: 'Slider',
-      },
-      {
-        type: NodeTypes.CONSTANT,
-        icon: <ButtonIcon />,
-        text: 'Constant',
       },
       {
         type: NodeTypes.OBJECTIFY,
@@ -130,48 +129,6 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.JSON,
         icon: '{/}',
         text: 'JSON',
-      },
-    ],
-  },
-  {
-    title: 'Basic Tokens',
-    key: 'basic',
-    items: [
-      {
-        type: NodeTypes.INLINE_SET,
-        data: {
-          tokens: tinyCoreFlattened,
-          title: 'Tiny Core',
-        },
-        icon: <PlusIcon />,
-        text: 'Tiny Core',
-      },
-      {
-        type: NodeTypes.INLINE_SET,
-        data: {
-          tokens: tinyCoreLightFlattened,
-          title: 'Tiny Light',
-        },
-        icon: <PlusIcon />,
-        text: 'Tiny Light',
-      },
-      {
-        type: NodeTypes.INLINE_SET,
-        data: {
-          tokens: tinyCoreDarkFlattened,
-          title: 'Tiny Dark',
-        },
-        icon: <PlusIcon />,
-        text: 'Tiny Dark',
-      },
-      {
-        type: NodeTypes.INLINE_SET,
-        data: {
-          tokens: presetFlattened,
-          title: 'Preset tokens',
-        },
-        icon: <PlusIcon />,
-        text: 'Preset Tokens',
       },
     ],
   },
@@ -316,7 +273,7 @@ export const defaultPanelItems: PanelGroup[] = [
         data: {
           tokens: [],
         },
-        text: 'Empty',
+        text: 'Inline Set',
         icon: <PlusIcon />,
       },
       {
@@ -456,7 +413,7 @@ export const defaultPanelItems: PanelGroup[] = [
       {
         type: NodeTypes.CONTRAST,
         icon: <Half2Icon />,
-        text: 'Contast',
+        text: 'Contrast',
       },
       {
         type: NodeTypes.COLOR_BLINDNESS,
@@ -512,4 +469,55 @@ export const defaultPanelItems: PanelGroup[] = [
       },
     ],
   },
-];
+  {
+    title: 'Basic Tokens',
+    key: 'basic',
+    items: [
+      {
+        type: NodeTypes.INLINE_SET,
+        data: {
+          tokens: tinyCoreFlattened,
+          title: 'Tiny Core',
+        },
+        icon: <PlusIcon />,
+        text: 'Tiny Core',
+      },
+      {
+        type: NodeTypes.INLINE_SET,
+        data: {
+          tokens: tinyCoreLightFlattened,
+          title: 'Tiny Light',
+        },
+        icon: <PlusIcon />,
+        text: 'Tiny Light',
+      },
+      {
+        type: NodeTypes.INLINE_SET,
+        data: {
+          tokens: tinyCoreDarkFlattened,
+          title: 'Tiny Dark',
+        },
+        icon: <PlusIcon />,
+        text: 'Tiny Dark',
+      },
+      {
+        type: NodeTypes.INLINE_SET,
+        data: {
+          tokens: presetFlattened,
+          title: 'Preset tokens',
+        },
+        icon: <PlusIcon />,
+        text: 'Preset Tokens',
+      },
+    ],
+  },
+].map((item) => {
+  item.items = item.items.map((item) => {
+    const node = nodeLookup[item.type];
+    if (!item.description && node) {
+      item.description = node.description;
+    }
+    return item;
+  });
+  return item;
+});

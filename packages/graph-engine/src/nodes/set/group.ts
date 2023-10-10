@@ -35,6 +35,7 @@ export const process = (input, state) => {
 };
 
 export const node: NodeDefinition<MappedInput, any> = {
+  description: "Groups tokens into a new namespace",
   type,
   defaults,
   process,

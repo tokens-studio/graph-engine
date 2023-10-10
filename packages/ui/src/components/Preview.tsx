@@ -19,15 +19,18 @@ export const Preview = ({ codeRef }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [visibleTab, setVisibleTab] = useState('preview');
 
-  const handleSetVisibleTab = useCallback((tab) => {
-    if (!tab) {
-      setVisibleTab(visibleTab);
-      setIsVisible(false);
-      return;
-    } else {
-      setVisibleTab(tab);
-    }
-  }, [visibleTab]);
+  const handleSetVisibleTab = useCallback(
+    (tab) => {
+      if (!tab) {
+        setVisibleTab(visibleTab);
+        setIsVisible(false);
+        return;
+      } else {
+        setVisibleTab(tab);
+      }
+    },
+    [visibleTab],
+  );
 
   const handleToggleVisible = useCallback(() => {
     setIsVisible(!isVisible);
@@ -41,7 +44,7 @@ export const Preview = ({ codeRef }) => {
   );
 
   return (
-    <Box css={{display: 'flex', flexDirection: 'row-reverse'}}>
+    <Box css={{ display: 'flex', flexDirection: 'row-reverse' }}>
       <Stack
         direction="column"
         css={{
@@ -52,7 +55,7 @@ export const Preview = ({ codeRef }) => {
           borderRadius: isVisible ? '$small' : '$small',
           overflow: 'hidden',
           boxShadow: '$small',
-          resize: isVisible ? 'horizontal' : 'initial',
+          resize: isVisible ? 'auto' : 'initial',
         }}
       >
         <Stack
@@ -66,15 +69,18 @@ export const Preview = ({ codeRef }) => {
             borderBottom: isVisible
               ? '1px solid $borderSubtle'
               : '1px solid transparent',
-              '&:hover': {
-                background: '$bgSubtle',
-              }
+            '&:hover': {
+              background: '$bgSubtle',
+            },
           }}
         >
           <Stack
             gap={1}
-            css={{ width: '100%', position: 'relative', height: '$controlMedium',
-          }}
+            css={{
+              width: '100%',
+              position: 'relative',
+              height: '$controlMedium',
+            }}
             direction="row"
             align="center"
             justify="end"
@@ -99,25 +105,37 @@ export const Preview = ({ codeRef }) => {
                 userSelect: 'none',
                 color: '$fgSubtle',
               }}
-            >{isVisible ? <MinusIcon /> : <PictureInPictureIcon />}<Box css={{color: '$fgDefault'}}>Preview</Box></Box>
-            {isVisible && <Stack gap={2} css={{position: 'relative'}}>
-              <ToggleGroup
-                type="single"
-                value={visibleTab}
-                onValueChange={handleSetVisibleTab}
-              >
-                <ToggleGroup.Item value="preview">
-                  <VideoIcon id="preview" />
-                </ToggleGroup.Item>
-                <ToggleGroup.Item value="editor">
-                  <Code3Icon id="code-editor" />
-                </ToggleGroup.Item>
-              </ToggleGroup>
-            </Stack>}
+            >
+              {isVisible ? <MinusIcon /> : <PictureInPictureIcon />}
+              <Box css={{ color: '$fgDefault' }}>Preview</Box>
+            </Box>
+            {isVisible && (
+              <Stack gap={2} css={{ position: 'relative' }}>
+                <ToggleGroup
+                  type="single"
+                  value={visibleTab}
+                  onValueChange={handleSetVisibleTab}
+                >
+                  <ToggleGroup.Item value="preview">
+                    <VideoIcon id="preview" />
+                  </ToggleGroup.Item>
+                  <ToggleGroup.Item value="editor">
+                    <Code3Icon id="code-editor" />
+                  </ToggleGroup.Item>
+                </ToggleGroup>
+              </Stack>
+            )}
           </Stack>
         </Stack>
         {isVisible && (
-          <Box css={{ direction: 'ltr', overflowY: 'auto', flexGrow: 1, paddingTop: '0' }}>
+          <Box
+            css={{
+              direction: 'ltr',
+              overflowY: 'auto',
+              flexGrow: 1,
+              paddingTop: '0',
+            }}
+          >
             <Box
               css={{
                 width: '100%',
@@ -137,7 +155,10 @@ export const Preview = ({ codeRef }) => {
                 display: visibleTab === 'editor' ? 'flex' : 'none',
               }}
             >
-              <Stack direction="column" css={{overflow: 'auto', maxHeight: '80vh'}}>
+              <Stack
+                direction="column"
+                css={{ overflow: 'auto', maxHeight: '80vh' }}
+              >
                 <LiveError />
                 <div ref={codeRef}>
                   <LiveEditor onChange={handleChangeCode} />

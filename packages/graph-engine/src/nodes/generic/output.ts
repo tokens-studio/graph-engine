@@ -31,6 +31,8 @@ const mapOutput = (input, state, processed) => {
 };
 
 export const node: NodeDefinition = {
+  description:
+    "Allows you to provide initial values for the whole graph. An input node can be used only once at the start of the graph. You can use this node to set brand decisions or any initial values.",
   type,
   defaults,
   process,
