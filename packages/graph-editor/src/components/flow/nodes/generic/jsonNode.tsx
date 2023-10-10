@@ -6,7 +6,7 @@ import {
   Text,
   Textarea,
 } from '@tokens-studio/ui';
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import {
   node,
@@ -38,9 +38,7 @@ const JsonNode = (props) => {
       <HandleContainer type="target">
         <Handle id="input">
           <Stack direction="column" gap={2} width="full">
-            <Stack direction="row" justify="between" align="center">
-              <Label>Input</Label>
-            </Stack>
+            <HandleText>Input</HandleText>
             <Textarea
               rows={7}
               value={input.input || state.input}
@@ -51,9 +49,7 @@ const JsonNode = (props) => {
         </Handle>
         <Handle id="schema">
           <Stack direction="column" gap={2} width="full">
-            <Stack direction="row" justify="between" align="center">
-              <Label>Schema</Label>
-            </Stack>
+            <HandleText>Schema</HandleText>
             <Textarea
               rows={7}
               value={input.schema || state.schema}
@@ -64,16 +60,16 @@ const JsonNode = (props) => {
         </Handle>
         {error && (
           <>
-            <Label>{error.message}</Label>
+            <Text>{error.message}</Text>
             {(error as ValidationError).errors.map((err) => (
-              <Label>{err.message}</Label>
+              <Text>{err.message}</Text>
             ))}
           </>
         )}
       </HandleContainer>
       <HandleContainer type="source">
         <Handle id="output">
-          <Label>Output</Label>
+          <HandleText>Output</HandleText>
           <PreviewAny value={output?.output} />
         </Handle>
       </HandleContainer>

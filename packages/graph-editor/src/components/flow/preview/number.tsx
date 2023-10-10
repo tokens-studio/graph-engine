@@ -1,21 +1,21 @@
-import { Text } from '@tokens-studio/ui';
 import React from 'react';
+import { DynamicValueText } from '../handles';
 
 export const choosePreview = (value) => {
   if (value == undefined) {
-    return <Text>Missing</Text>;
+    return <DynamicValueText error>Missing</DynamicValueText>;
   }
 
   if (isNaN(value)) {
-    return <Text>NaN</Text>;
+    return <DynamicValueText>NaN</DynamicValueText>;
   }
 
   if (value == Infinity) {
-    return <Text>Infinity</Text>;
+    return <DynamicValueText>Infinity</DynamicValueText>;
   }
 
   if (value == -Infinity) {
-    return <Text>-Infinity</Text>;
+    return <DynamicValueText>-Infinity</DynamicValueText>;
   }
   return <span>{Math.round(value * 100) / 100}</span>;
 };
@@ -26,7 +26,7 @@ export const PreviewNumber = ({ value }) => {
   }
 
   // @ts-ignore
-  return <Text title={value}>{choosePreview(value)}</Text>;
+  return <DynamicValueText title={value}>{choosePreview(value)}</DynamicValueText>;
 };
 
 export default PreviewNumber;

@@ -6,7 +6,7 @@ import {
   Stack,
   TextInput,
 } from '@tokens-studio/ui';
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import React, { useCallback, useMemo, useState } from 'react';
 
 import { Cross1Icon, PlusIcon } from '@radix-ui/react-icons';
@@ -63,8 +63,8 @@ const EnumeratedConstantNode = () => {
 
   const keyStacks = useMemo(() => {
     return state.keys.map((x) => (
-      <Stack direction="row" gap={2} key={x} justify="between">
-        <Label>{x}</Label>
+      <Stack direction="row" gap={2} key={x} justify="start" css={{paddingLeft: '$3'}}>
+        <HandleText>{x}</HandleText>
         <IconButton
           variant="invisible"
           size="small"
@@ -81,7 +81,7 @@ const EnumeratedConstantNode = () => {
       <HandleContainer type="target">
         {keyStacks}
 
-        <Stack direction="row" gap={2}>
+        <Stack direction="row" gap={2} css={{paddingLeft: '$3'}}>
           <TextInput
             value={addLabel}
             onKeyUp={onEnter}

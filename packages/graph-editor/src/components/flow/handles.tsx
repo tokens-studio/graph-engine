@@ -1,7 +1,7 @@
-import { Box, Stack, Text } from '@tokens-studio/ui';
+import { Box, Stack, Text, Tooltip } from '@tokens-studio/ui';
 import { Position, Handle as RawHandle } from 'reactflow';
 import { styled } from '#/lib/stitches/index.ts';
-import { useIsValidConnection } from './nodes/hooks/useIsValidConnection.ts';
+import { useHasConnection, useIsValidConnection } from './nodes/hooks/useIsValidConnection.ts';
 import { useNode } from './wrapper/nodeV2.tsx';
 import React, { createContext, useContext } from 'react';
 
@@ -36,6 +36,7 @@ export const HandleContainer = ({ type, children, full }: HolderProps) => {
         direction="column"
         gap={1}
         css={{ flexBasis: full ? '100%' : '50%', position: 'relative' }}
+        className={type === 'source' ? 'handleContainer-source' : 'handleContainer-target'}
       >
         {children}
       </Stack>
@@ -102,16 +103,56 @@ const StyledRawHandle = styled(RawHandle, {
   },
 });
 
+function humanReadableInputType(type: InputTypes) {
+  switch (type) {
+    case InputTypes.ANY:
+      return 'Any';
+    case InputTypes.STRING:
+      return 'String';
+    case InputTypes.NUMBER:
+      return 'Number';
+    case InputTypes.COLOR:
+      return 'Color';
+  }
+}
+
+export function HandleType({type}: {type: InputTypes}) {
+  return (
+    <Tooltip label={humanReadableInputType(type)}>
+      <Box
+        className="handleType"
+        css={{
+          width: '1rem',
+          height: '1rem',
+          borderRadius: '$small',
+          background: '$bgSubtle',
+          color: '$fgSubtle',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '$xxsmall',
+          fontWeight: '$sansBold',
+          textTransform: 'uppercase',
+        }}
+      >
+        {type[0]}
+      </Box>
+    </Tooltip>
+  );
+}
+
 export const HandleText = styled(Text, {
   textTransform: 'uppercase',
-  fontWeight: 'bold',
+  fontWeight: '$sansBold',
   fontSize: '$xxsmall',
-  color: '$accentDefault',
+  color: '$fgDefault',
   whiteSpace: 'nowrap',
+  lineHeight: '24px',
+  marginRight: '$3',
   variants: {
     secondary: {
       true: {
-        color: '$fgDefault',
+        color: '$fgMuted',
       },
     },
     caseSensitive: {
@@ -131,6 +172,14 @@ export const DynamicValueText = styled(Text, {
   color: '$accentDefault',
   lineHeight: 1,
   whiteSpace: 'nowrap',
+  variants: {
+    error: {
+      true: {
+        backgroundColor: '$dangerBg',
+        color: '$dangerFg',
+      },
+    }
+  }
 });
 const HandleHolder = styled(Box, {
   position: 'relative',
@@ -152,9 +201,18 @@ const HandleHolder = styled(Box, {
   },
 });
 
+export enum InputTypes {
+  ANY = 'any',
+  STRING = 'string',
+  NUMBER = 'number',
+  COLOR = 'color',
+}
+
 export const Handle = (props) => {
-  const { children, error, full, ...rest } = props;
+  const { children, error, full, inputType = InputTypes.ANY, ...rest } = props;
   const { position, type } = useHandle();
+  const isConnected = useHasConnection();
+  console.log("props are", children, error, full, rest, isConnected)
   const isValidConnection = useIsValidConnection();
   const { collapsed, hide } = useContext(HandleContainerContext);
   const { onConnect } = useNode();
@@ -164,11 +222,11 @@ export const Handle = (props) => {
       <StyledRawHandle
         error={error}
         left={type === 'target'}
-        isConnected={isValidConnection}
         type={type}
         position={position}
+        isConnected={isConnected}
         hide={hide}
-        isValidConnection={isValidConnection}
+        isValidConnection={(isValidConnection)}
         {...rest}
         onConnect={onConnect}
       />
@@ -178,8 +236,10 @@ export const Handle = (props) => {
         justify={full ? 'between' : type === 'target' ? 'start' : 'end'}
         align="center"
         css={{ flex: 1, paddingLeft: '$3', paddingRight: '$3' }}
+        className="handleWrapper"
       >
-        {children}
+        <HandleType type={inputType} />
+        <Stack direction="row" gap={2} align="center" css={{flexGrow: 1}}>{children}</Stack>
       </Stack>
     </HandleHolder>
   );

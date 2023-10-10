@@ -1,5 +1,5 @@
 import { Button, Label, Stack, Text } from '@tokens-studio/ui';
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { DynamicValueText, Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { sentenceCase } from 'sentence-case';
 import React, { useCallback, useMemo } from 'react';
 
@@ -113,8 +113,8 @@ const CssMapNode = (props) => {
 
         return (
           <Handle id={x} key={x}>
-            <Label>{sentenceCase(x)}</Label>
-            <Text
+            <HandleText>{sentenceCase(x)}</HandleText>
+            {input[x] ? <DynamicValueText
               css={{
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
@@ -123,7 +123,7 @@ const CssMapNode = (props) => {
               }}
             >
               {input[x]}
-            </Text>
+            </DynamicValueText> : null}
           </Handle>
         );
       })
@@ -137,10 +137,11 @@ const CssMapNode = (props) => {
   return (
     <Stack direction="column" gap={2}>
       <Stack direction="row" gap={4} justify="between">
+        {/* TODO: this should probably have an overall input so i can compose these with mixins */}
         <span></span>
         <HandleContainer type="source">
           <Handle id="output">
-            <Text>Output</Text>
+            <HandleText>Output</HandleText>
           </Handle>
         </HandleContainer>
       </Stack>

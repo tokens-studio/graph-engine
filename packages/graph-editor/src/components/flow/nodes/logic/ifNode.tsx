@@ -15,15 +15,15 @@ const IfNode = () => {
           <HandleText>Condition</HandleText>
         </Handle>
         <Handle id="a">
-          <Text>Truthy</Text>
+          <HandleText>Truthy</HandleText>
         </Handle>
         <Handle id="b">
-          <Text>Falsy</Text>
+          <HandleText>Falsy</HandleText>
         </Handle>
       </HandleContainer>
       <HandleContainer type="source">
         <Handle id="output">
-          <Text>Output</Text>
+          <HandleText>Output</HandleText>
           <PreviewAny value={output?.output} />
         </Handle>
       </HandleContainer>

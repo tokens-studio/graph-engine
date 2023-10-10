@@ -4,7 +4,7 @@ import { DynamicValueText } from '../handles';
 
 export const PreviewArray = ({ value }) => {
   if (!value) {
-    return <DynamicValueText>Missing</DynamicValueText>;
+    return <DynamicValueText error>Missing</DynamicValueText>;
   }
   // @ts-ignore
   return <DynamicValueText title={value}>{value.length}</DynamicValueText>;

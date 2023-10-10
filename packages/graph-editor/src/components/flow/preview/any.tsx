@@ -1,5 +1,4 @@
 import { PreviewBoolean } from './boolean.tsx';
-import { Text } from '@tokens-studio/ui';
 import PreviewNumber from './number.tsx';
 import React from 'react';
 import { DynamicValueText } from '../handles.tsx';
@@ -7,9 +6,7 @@ import { DynamicValueText } from '../handles.tsx';
 export const PreviewAny = ({ value }) => {
   if (value == undefined) {
     return (
-      <Text>
-        <i>Missing</i>
-      </Text>
+      <DynamicValueText error>Missing</DynamicValueText>
     );
   }
 

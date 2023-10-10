@@ -1,4 +1,4 @@
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { Handle, HandleContainer, HandleText, InputTypes } from '../../handles.tsx';
 import { PreviewAny } from '../../preview/any.tsx';
 import { PreviewArray } from '../../preview/array.tsx';
 import { Stack, Text } from '@tokens-studio/ui';
@@ -12,26 +12,26 @@ const CssBox = () => {
   return (
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
-        <Handle id="top">
-          <Text>Top</Text>
+        <Handle inputType={InputTypes.NUMBER} id="top">
+          <HandleText>Top</HandleText>
           <PreviewAny value={input.top} />
         </Handle>
-        <Handle id="right">
-          <Text>Right</Text>
+        <Handle inputType={InputTypes.NUMBER} id="right">
+          <HandleText>Right</HandleText>
           <PreviewAny value={input.right} />
         </Handle>
-        <Handle id="bottom">
-          <Text>Bottom</Text>
+        <Handle inputType={InputTypes.NUMBER} id="bottom">
+          <HandleText>Bottom</HandleText>
           <PreviewAny value={input.bottom} />
         </Handle>
-        <Handle id="left">
-          <Text>Left</Text>
+        <Handle inputType={InputTypes.NUMBER} id="left">
+          <HandleText>Left</HandleText>
           <PreviewAny value={input.left} />
         </Handle>
       </HandleContainer>
       <HandleContainer type="source">
         <Handle id="output">
-          <Text>Output</Text>
+          <HandleText>Output</HandleText>
           <PreviewAny value={output?.output} />
         </Handle>
       </HandleContainer>

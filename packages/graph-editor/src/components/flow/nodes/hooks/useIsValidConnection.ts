@@ -10,6 +10,20 @@ export interface IuseIsValidConnection {
   postProcessor?: (params: Edge) => boolean;
 }
 
+export const useHasConnection = ({
+  postProcessor,
+}: IuseIsValidConnection = {}) => {
+  const flow = useReactFlow();
+
+  return useCallback(
+    (params: Edge) => {
+      const edges = flow.getEdges();
+      return edges.some(edge => edge.source === params.target || edge.target === params.source);
+    },
+    [postProcessor]
+  );
+};
+
 export const useIsValidConnection = ({
   postProcessor,
 }: IuseIsValidConnection = {}) => {

@@ -1,6 +1,7 @@
 import { Text } from '@tokens-studio/ui';
 import { styled } from '#/lib/stitches/index.ts';
 import React from 'react';
+import { DynamicValueText } from '../handles';
 
 const StyledInputWrapper = styled('div', {
   border: '1px solid',
@@ -28,7 +29,7 @@ const StyledDiv = styled('div', {
 
 export const PreviewColor = ({ value }) => {
   if (value === undefined) {
-    return <Text>Missing</Text>;
+    return <DynamicValueText error>Missing</DynamicValueText>;
   }
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { Stack, Text, TextInput } from '@tokens-studio/ui';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/string/join.js';
@@ -13,12 +13,12 @@ const JoinStringNode = () => {
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
         <Handle id="array">
-          <Text>Array</Text>
+          <HandleText>Array</HandleText>
           <PreviewArray value={input.array} />
         </Handle>
 
         <Handle id="separator">
-          <Text>Separator</Text>
+          <HandleText>Separator</HandleText>
           {input.separator !== undefined ? (
             <PreviewAny value={input.separator} />
           ) : (
@@ -29,7 +29,7 @@ const JoinStringNode = () => {
 
       <HandleContainer type="source">
         <Handle id="output">
-          <Text>Output</Text>
+          <HandleText>Output</HandleText>
           <PreviewAny value={output?.output} />
         </Handle>
       </HandleContainer>

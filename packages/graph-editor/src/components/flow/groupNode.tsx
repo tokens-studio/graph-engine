@@ -13,7 +13,6 @@ import { NodeResizer } from '@reactflow/node-resizer';
 import { useCallback } from 'react';
 import useDetachNodes from './hooks/useDetachNodes.ts';
 
-const lineStyle = { borderColor: 'white' };
 const padding = 25;
 
 function GroupNode(props: NodeProps) {
@@ -81,17 +80,22 @@ function GroupNode(props: NodeProps) {
     [id, setNodes],
   );
 
+  const groupBgColor = data.color ? `${data.color}0D` : `var(--colors-accentBg)0D`;
+  const groupBorderColor = data.color ? `${data.color}70` : `var(--colors-accentBorder)`;
+
   return (
     <div
+      className="innerNode"
       style={{
         height: '100%',
         width: '100%',
         position: 'relative',
-        background: `${data.color}40`,
+        background: groupBgColor,
+        '--groupBorderColor': `${data.color}70`,
       }}
     >
       <NodeResizer
-        lineStyle={lineStyle}
+        lineStyle={{ borderColor: groupBorderColor }}
         minWidth={minWidth}
         minHeight={minHeight}
       />

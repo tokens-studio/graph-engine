@@ -2,6 +2,8 @@ import { Checkbox, Label, Stack, Text } from '@tokens-studio/ui';
 import {
   Handle,
   HandleContainer,
+  HandleText,
+  InputTypes,
 } from '../../../../components/flow/handles.tsx';
 import { PreviewColor } from '../../preview/color.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
@@ -23,20 +25,16 @@ const ContrastNode = (props) => {
   return (
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
-        <Handle id="a">
-          <Text>Text</Text>
-          <Text>
-            <PreviewColor value={input.a} />
-          </Text>
+        <Handle id="a" inputType={InputTypes.COLOR}>
+          <HandleText>Text</HandleText>
+          <PreviewColor value={input.a} />
         </Handle>
-        <Handle id="b">
-          <Text>Background</Text>
-          <Text>
-            <PreviewColor value={input.b} />
-          </Text>
+        <Handle id="b" inputType={InputTypes.COLOR}>
+          <HandleText>Background</HandleText>
+          <PreviewColor value={input.b} />
         </Handle>
-        <Stack direction="row" justify="between">
-          <Label>Absolute</Label>
+        <Stack direction="row" justify="start" align="center">
+          <HandleText>Absolute</HandleText>
           <Checkbox
             id={randomID}
             checked={state.absolute}
@@ -47,7 +45,7 @@ const ContrastNode = (props) => {
 
       <HandleContainer type="source">
         <Handle id="output">
-          <Text>Output</Text>
+          <HandleText>Output</HandleText>
           <PreviewNumber value={output?.output} />
         </Handle>
       </HandleContainer>

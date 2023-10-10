@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   DropdownMenu,
   Stack,
@@ -6,7 +7,7 @@ import {
   TextInput,
 } from '@tokens-studio/ui';
 import { CheckIcon, DotsVerticalIcon } from '@radix-ui/react-icons';
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { Handle, HandleContainer, InputTypes } from '../../handles.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/input/constant.js';
 import React, { useCallback } from 'react';
@@ -47,8 +48,8 @@ const ConstantNode = () => {
 
   return (
     <HandleContainer type="source">
-      <Handle id="output">
-        <TextInput value={state.input} onChange={onChange} />
+      <Handle id="output" inputType={state.type === 'string' ? InputTypes.STRING : InputTypes.NUMBER}>
+        <Box css={{flexGrow: 1}}><TextInput value={state.input} onChange={onChange} /></Box>
         <DropdownMenu>
           <DropdownMenu.Trigger asChild>
             <Button

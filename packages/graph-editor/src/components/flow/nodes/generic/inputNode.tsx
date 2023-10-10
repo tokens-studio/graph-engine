@@ -19,7 +19,7 @@ import {
   TrashIcon,
 } from '@radix-ui/react-icons';
 import { CheckedState } from '@radix-ui/react-checkbox';
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import {
   TypeDefinition,
@@ -277,7 +277,7 @@ const Option = ({ name, value, def }: OptionProps) => {
       case 'tokenSet':
         return (
           <Stack width="full" justify="end" align="center" gap={4}>
-            <Label>{value?.name}</Label>
+            <HandleText>{value?.name}</HandleText>
             <IconButton
               variant="secondary"
               size="small"
@@ -348,7 +348,7 @@ const Option = ({ name, value, def }: OptionProps) => {
 
   return (
     <Handle id={name}>
-      <Label css={{ whitespace: 'nowrap' }}>{name}</Label>
+      <HandleText css={{ whitespace: 'nowrap' }}>{name}</HandleText>
       <Dialog open={open} onOpenChange={setOpen}>
         <Dialog.SimplePortal>
           <Dialog.Title>Configure</Dialog.Title>

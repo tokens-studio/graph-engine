@@ -1,5 +1,5 @@
 import { Button, DropdownMenu, Label, Stack, Text } from '@tokens-studio/ui';
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { DynamicValueText, Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/typing/passUnit.js';
 import { useCallback } from 'react';
@@ -19,14 +19,14 @@ const PassUnit = (props) => {
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
         <Handle id="value">
-          <Label>Value</Label>
-          <Text>{input.value}</Text>
+          <HandleText>Value</HandleText>
+          {input.value && <DynamicValueText>{input.value}</DynamicValueText>}
         </Handle>
         <Handle id="fallback">
-          <Label>Fallback</Label>
+          <HandleText>Fallback</HandleText>
 
           {input.fallback !== undefined ? (
-            <Text>{input.fallback}</Text>
+            <DynamicValueText>{input.fallback}</DynamicValueText>
           ) : (
             <DropdownMenu>
               <DropdownMenu.Trigger asChild>
@@ -80,8 +80,8 @@ const PassUnit = (props) => {
 
       <HandleContainer type="source">
         <Handle id="output">
-          <Label>Output</Label>
-          <Text>{output?.output}</Text>
+          <HandleText>Output</HandleText>
+          {output?.output ? <DynamicValueText>{output.output}</DynamicValueText> : null}
         </Handle>
       </HandleContainer>
     </Stack>

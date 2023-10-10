@@ -1,4 +1,4 @@
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { Stack, Text } from '@tokens-studio/ui';
 import { useNode } from '../../wrapper/nodeV2.tsx';
 import PreviewNumber from '../../preview/number.tsx';
@@ -20,7 +20,7 @@ export const ReduceNode = () => {
         {input.inputs.map((input, index) => {
           return (
             <Handle id={input.key} key={input.key}>
-              <Text>{index}</Text>
+              <HandleText>{index}</HandleText>
               <PreviewNumber value={input.value} />
             </Handle>
           );
@@ -29,7 +29,7 @@ export const ReduceNode = () => {
       </HandleContainer>
       <HandleContainer type="source">
         <Handle id="output">
-          <Text>Output</Text>
+          <HandleText>Output</HandleText>
           <PreviewNumber value={output?.output} />
         </Handle>
       </HandleContainer>

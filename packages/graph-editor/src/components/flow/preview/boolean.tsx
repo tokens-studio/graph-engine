@@ -1,6 +1,6 @@
-import { Text } from '@tokens-studio/ui';
 import React from 'react';
+import { DynamicValueText } from '../handles';
 export const PreviewBoolean = ({ value }) => {
   // @ts-ignore
-  return <Text title={value}>{value ? 'True' : 'False'}</Text>;
+  return <DynamicValueText title={value}>{value ? 'True' : 'False'}</DynamicValueText>;
 };

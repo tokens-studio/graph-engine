@@ -23,11 +23,15 @@
     opacity: 0.25;
 }
 
-.react-flow__node.selectable.selected, .react-flow__node.selectable:focus {
+.react-flow__node.selectable.selected > .innerNode, .react-flow__node.selectable:focus > .innerNode {
     --nodeBorderColor: var(--colors-accentMuted);
     --nodeBgColor: var(--colors-accentBg);
     --nodeTextColor: var(--colors-fgDefault);
     outline: 2px solid var(--colors-accentMuted);
+}
+
+.react-flow__node.selectable.selected.parent > .innerNode, .react-flow__node.selectable:focus > .innerNode {
+    outline: var(--groupBorderColor);
 }
 
 .react-flow__edge.selected .react-flow__edge-path, .react-flow__edge:focus .react-flow__edge-path, .react-flow__edge:focus-visible .react-flow__edge-path {
@@ -198,4 +202,15 @@
 
 [cmdk-item][data-selected="true"] {
     background-color: var(--colors-bgSubtle);
+}
+
+
+.handleContainer-source .handleWrapper .handleType {
+    order: 50;
+    /* Set to high value to come last (but not have to row-reverse the whole stack */
+}
+
+.react-flow__resize-control.handle {
+    width: 12px;
+    height: 12px;
 }

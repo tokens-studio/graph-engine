@@ -1,5 +1,5 @@
 import { Cross1Icon, PlusIcon } from '@radix-ui/react-icons';
-import { Handle, HandleContainer } from '../../handles.tsx';
+import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { IconButton, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { PreviewAny } from '../../preview/any.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
@@ -33,7 +33,7 @@ const Objectify = () => {
         {state?.order.map((key) => {
           return (
             <Handle id={key} key={key}>
-              <Text>{key}</Text>
+              <HandleText>{key}</HandleText>
 
               <PreviewAny value={input[key]} />
 
@@ -64,7 +64,7 @@ const Objectify = () => {
       </HandleContainer>
       <HandleContainer type="source">
         <Handle id="output">
-          <Text>Output</Text>
+          <HandleText>Output</HandleText>
         </Handle>
       </HandleContainer>
     </Stack>

@@ -183,6 +183,7 @@ export const Node = (props: NodeProps) => {
 
   return (
     <Box
+      className="innerNode"
       css={{
         minWidth: '300px',
         position: 'relative',
