@@ -1,5 +1,18 @@
 # @tokens-studio/graph-editor
 
+## 2.0.3
+
+### Patch Changes
+
+- 08ddaf2: Adjusts error styling for nodes
+- 4de167b: Force bump to fix the pan drag setting
+- b4d5c8a: Fixes Preview to have resize on the left
+  Fixes behavior of opening and closing Preview
+- 9c017b0: Adds hints on hover of node types to the drop panel as well as the Shift + K menu
+- cce0c72: Adds Load example dialog to the empty state as well as to the toolbar
+- 9ee84c2: Moves Settings to the left menu
+- 9dd9239: Changes markerEnd to not include arrow head
+
 ## 2.0.2
 
 ### Patch Changes
