@@ -12,53 +12,99 @@ import { LiveEditor, LiveError } from 'react-live';
 import { MinusIcon, PictureInPictureIcon, VideoIcon } from '@iconicicons/react';
 import Code3Icon from '#/assets/svgs/code-3.svg';
 import { useCallback, useState } from 'react';
+import { usePreviewContext } from '#/providers/preview.tsx';
 
 export const Preview = ({ codeRef }) => {
+  const { setCode, code } = usePreviewContext();
   const [isVisible, setIsVisible] = useState(false);
   const [visibleTab, setVisibleTab] = useState('preview');
+
+  const handleSetVisibleTab = useCallback((tab) => {
+    if (!tab) {
+      setVisibleTab(visibleTab);
+      setIsVisible(false);
+      return;
+    } else {
+      setVisibleTab(tab);
+    }
+  }, [visibleTab]);
 
   const handleToggleVisible = useCallback(() => {
     setIsVisible(!isVisible);
   }, [isVisible, setIsVisible]);
 
+  const handleChangeCode = useCallback(
+    (code) => {
+      setCode(code);
+    },
+    [setCode],
+  );
+
   return (
-    <Stack
-      direction="column"
-      css={{
-        width: '400px',
-        backgroundColor: '$bgDefault',
-        border: '1px solid $borderMuted',
-        borderRadius: isVisible ? '$small' : '$small',
-        overflow: 'hidden',
-        boxShadow: '$small',
-        resize: 'horizontal',
-      }}
-    >
+    <Box css={{display: 'flex', flexDirection: 'row-reverse'}}>
       <Stack
-        direction="row"
-        justify="between"
-        align="center"
+        direction="column"
         css={{
-          borderBottom: isVisible
-            ? '1px solid $borderSubtle'
-            : '1px solid transparent',
-          padding: isVisible ? '$2 $2 $2 $4' : 0,
+          direction: 'rtl',
+          width: '400px',
+          backgroundColor: '$bgDefault',
+          border: '1px solid $borderMuted',
+          borderRadius: isVisible ? '$small' : '$small',
+          overflow: 'hidden',
+          boxShadow: '$small',
+          resize: isVisible ? 'horizontal' : 'initial',
         }}
       >
-        {isVisible ? (
+        <Stack
+          direction="row"
+          justify="between"
+          align="center"
+          css={{
+            direction: 'ltr',
+            border: '1px solid transparent',
+            background: isVisible ? '$bgSubtle' : '$bgDefault',
+            borderBottom: isVisible
+              ? '1px solid $borderSubtle'
+              : '1px solid transparent',
+              '&:hover': {
+                background: '$bgSubtle',
+              }
+          }}
+        >
           <Stack
             gap={1}
-            css={{ width: '100%' }}
+            css={{ width: '100%', position: 'relative', height: '$controlMedium',
+          }}
             direction="row"
             align="center"
-            justify="between"
+            justify="end"
           >
-            <Heading>Preview</Heading>
-            <Stack gap={2}>
+            <Box
+              onClick={handleToggleVisible}
+              css={{
+                all: 'unset',
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
+                border: 'none',
+                left: 0,
+                top: 0,
+                paddingLeft: '$3',
+                fontWeight: '$sansMedium',
+                fontSize: '$xsmall',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 3,
+                cursor: 'pointer',
+                userSelect: 'none',
+                color: '$fgSubtle',
+              }}
+            >{isVisible ? <MinusIcon /> : <PictureInPictureIcon />}<Box css={{color: '$fgDefault'}}>Preview</Box></Box>
+            {isVisible && <Stack gap={2} css={{position: 'relative'}}>
               <ToggleGroup
                 type="single"
                 value={visibleTab}
-                onValueChange={setVisibleTab}
+                onValueChange={handleSetVisibleTab}
               >
                 <ToggleGroup.Item value="preview">
                   <VideoIcon id="preview" />
@@ -67,55 +113,40 @@ export const Preview = ({ codeRef }) => {
                   <Code3Icon id="code-editor" />
                 </ToggleGroup.Item>
               </ToggleGroup>
-              <IconButton
-                variant="invisible"
-                icon={<MinusIcon />}
-                tooltip="Minimize"
-                onClick={handleToggleVisible}
-              />
-            </Stack>
+            </Stack>}
           </Stack>
-        ) : (
-          <Button
-            css={{ width: '100%' }}
-            onClick={handleToggleVisible}
-            variant="invisible"
-            icon={<PictureInPictureIcon />}
-          >
-            Preview
-          </Button>
+        </Stack>
+        {isVisible && (
+          <Box css={{ direction: 'ltr', overflowY: 'auto', flexGrow: 1, paddingTop: '0' }}>
+            <Box
+              css={{
+                width: '100%',
+                display: visibleTab === 'preview' ? 'flex' : 'none',
+              }}
+            >
+              <ComponentPreview />
+            </Box>
+
+            <Box
+              css={{
+                fontSize: '$xsmall',
+                fontFamily: 'monospace',
+                maxHeight: '100%',
+                flex: 1,
+                padding: 0,
+                display: visibleTab === 'editor' ? 'flex' : 'none',
+              }}
+            >
+              <Stack direction="column" css={{overflow: 'auto', maxHeight: '80vh'}}>
+                <LiveError />
+                <div ref={codeRef}>
+                  <LiveEditor onChange={handleChangeCode} />
+                </div>
+              </Stack>
+            </Box>
+          </Box>
         )}
       </Stack>
-      {isVisible && (
-        <Box css={{ overflowY: 'auto', flexGrow: 1, paddingTop: '0' }}>
-          <Box
-            css={{
-              width: '100%',
-              display: visibleTab === 'preview' ? 'flex' : 'none',
-            }}
-          >
-            <ComponentPreview />
-          </Box>
-
-          <Box
-            css={{
-              fontSize: '$xsmall',
-              fontFamily: 'monospace',
-              maxHeight: '100%',
-              flex: 1,
-              padding: 0,
-              display: visibleTab === 'editor' ? 'flex' : 'none',
-            }}
-          >
-            <Stack direction="column">
-              <LiveError />
-              <div ref={codeRef}>
-                <LiveEditor />
-              </div>
-            </Stack>
-          </Box>
-        </Box>
-      )}
-    </Stack>
+    </Box>
   );
 };

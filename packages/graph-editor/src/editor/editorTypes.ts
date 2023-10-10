@@ -23,6 +23,8 @@ export type EditorProps = {
    * Menu content to displya
    */
   menuContent: React.ReactNode;
+  emptyContent: React.ReactNode;
+  children?: React.ReactNode;
   onOutputChange: (output: Record<string, unknown>) => void;
   externalLoader?: (opts: ExternalLoadOptions) => Promise<any> | any;
 };

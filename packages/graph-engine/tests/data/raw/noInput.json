@@ -37,7 +37,6 @@
   "edges": [
     {
       "style": { "strokeWidth": 2 },
-      "markerEnd": { "type": "arrowclosed" },
       "source": "4e629553-6fe2-444a-8a29-9b30abe26e1b",
       "sourceHandle": "output",
       "target": "5531dd87-f2a0-4e2a-89b9-9d382cd793d9",
@@ -48,7 +47,6 @@
     },
     {
       "style": { "strokeWidth": 2 },
-      "markerEnd": { "type": "arrowclosed" },
       "source": "734907ed-5f93-4b34-b24c-f262709470ac",
       "sourceHandle": "colors.tertiary",
       "target": "4e629553-6fe2-444a-8a29-9b30abe26e1b",
@@ -59,7 +57,6 @@
     },
     {
       "style": { "strokeWidth": 2 },
-      "markerEnd": { "type": "arrowclosed" },
       "source": "734907ed-5f93-4b34-b24c-f262709470ac",
       "sourceHandle": "colors.primary",
       "target": "4e629553-6fe2-444a-8a29-9b30abe26e1b",
