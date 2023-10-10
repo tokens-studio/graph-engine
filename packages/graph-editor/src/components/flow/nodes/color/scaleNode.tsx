@@ -49,18 +49,17 @@ const ScaleNode = () => {
   const outputHandles = useMemo(() => {
     const values = output || {};
 
-    const { array, ...rest } = values;
+    const { array = [] } = values;    
 
-    const handles = Object.entries(rest)
-      .sort(([a], [b]) => {
+    const handles = array.sort((a,b) => {
         //Force numeric sorting
-        return ~~a < ~~b ? -1 : 1;
+        return ~~a.name < ~~b.name ? -1 : 1;
       })
-      .map(([key, value]) => {
+      .map((item, index) => {
         // We want the base to be styled differently so users understand where's their base
-        const isBase = Number(key) + 1 === Number(state.stepsUp) + 1;
+        const isBase = Number(index) + 1 === Number(state.stepsUp) + 1;
         return (
-          <Handle id={key} key={key}>
+          <Handle id={item.name} key={item.name}>
             <Box
               css={{
                 display: 'flex',
@@ -73,9 +72,9 @@ const ScaleNode = () => {
               }}
             >
               {isBase ? <Box css={{width: '3px', height: '12px', borderRadius: '100px', background: '$accentDefault'}} /> : null}
-              <Box css={isBase ? { fontWeight: '$sansBold', color: '$fgDefault'} : {}}>{key}</Box>
+              <Box css={isBase ? { fontWeight: '$sansBold', color: '$fgDefault'} : {}}>{item.name}</Box>
             </Box>
-            <PreviewColor value={value} />
+            <PreviewColor value={item.value} />
           </Handle>
         );
       });

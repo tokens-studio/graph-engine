@@ -19,6 +19,7 @@ import tinyCoreDark from '#/data/tiny/dark.ts';
 import tinyCoreLight from '#/data/tiny/light.ts';
 
 import { flatten } from '#/utils/index.ts';
+import { BezierIcon } from '#/components/icons/BezierIcon';
 
 //@ts-ignore
 const presetFlattened = flatten(preset);
@@ -210,6 +211,11 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.FLUID_VALUE,
         icon: '|-|',
         text: 'Fluid',
+      },
+      {
+        type: NodeTypes.BEZIER,
+        icon: <BezierIcon />,
+        text: 'Bezier curve',
       },
     ],
   },

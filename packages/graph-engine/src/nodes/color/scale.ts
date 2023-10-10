@@ -57,7 +57,7 @@ export const process = (input: Input, state: State) => {
   const allColors = [...lighter, final.color, ...darker];
   const allColorScale = chroma.scale(allColors);
 
-  const chromaCurve = new Bezier(transformArray(final.chromaCurve));
+  const chromaCurve = new Bezier(transformArray(final.chromaCurve || defaults.chromaCurve));
 
   const parts = allColors.map((color, index) => {
     const point = chromaCurve.get((index + 1) / allColors.length);
@@ -87,14 +87,32 @@ export const process = (input: Input, state: State) => {
   return ([] as string[]).concat(parts) as string[];
 };
 
+function createColorObject(x, i, totalSteps) {
+  let name;
+  if (totalSteps === 11) {
+    if (i === 0) {
+      name = "50";
+    } else if (i === 10) {
+      name = "950";
+    } else {
+      name = "" + i * 100;
+    }
+  } else {
+    name = "" + (i + 1) * 100;
+  }
+
+  return {
+    name,
+    value: x,
+    type: "color",
+  };
+}
+
 export const mapOutput = (input, state, processed) => {
-  const array = processed.map((x, i) => {
-    return {
-      name: "" + i,
-      value: x,
-      type: "color",
-    };
-  });
+  const totalSteps = parseInt(state.stepsUp) + parseInt(state.stepsDown) + 1;
+  // if totalSteps equals 11, start at 50, then 100-900, then 950. for everything else, use 100, 200, etc
+
+  const array = processed.map((x, i) => createColorObject(x, i, totalSteps));
 
   return processed.reduce(
     (acc, color, i) => {

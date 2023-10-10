@@ -14,6 +14,7 @@ import { node as pow } from "./pow.js";
 import { node as subtract } from "./subtract.js";
 import { node as tan } from "./tan.js";
 import { node as fluid } from "./fluid.js";
+import { node as bezier } from "./bezier.js";
 
 export const nodes = [
   abs,
@@ -32,4 +33,5 @@ export const nodes = [
   subtract,
   tan,
   fluid,
+  bezier,
 ];
