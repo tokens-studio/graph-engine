@@ -2,38 +2,16 @@ import { SearchIcon } from '@iconicicons/react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Command } from 'cmdk';
 import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import scaleExample from '#/examples/scale.json';
 import { store } from '#/redux/store.tsx';
 import { usePreviewContext } from '#/providers/preview.tsx';
-
-interface IFile {
-  nodes: any[];
-  edges: any[];
-  state: any;
-  code?: string;
-}
-
-interface IExample {
-  title: string;
-  description: string;
-  file: IFile;
-  key: string;
-}
-
-const examples: IExample[] = [
-  {
-    title: "Simple color scale generator",
-    description: "Generate a color scale based on a base color and a number of steps.",
-    file: scaleExample,
-    key: 'scale'
-  }
-]
+import { examples } from '../examples/examples.tsx';
+import { IExample } from '../types/IExample.tsx';
+import { GraphFile } from '#/types/file.ts';
 
 const ExamplesPicker = ({open, onClose}) => {
   const { setCode, code } = usePreviewContext();
 
-  const onLoadExample = useCallback((file: IFile) => {
+  const onLoadExample = useCallback((file: GraphFile) => {
     const editor = store.getState().refs.editor;
 
     if (!editor) {
