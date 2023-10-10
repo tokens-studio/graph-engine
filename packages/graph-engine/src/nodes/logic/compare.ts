@@ -43,6 +43,8 @@ export const process = (input, state) => {
 };
 
 export const node: NodeDefinition = {
+  description:
+    "Compare node allows you to compare two values using multiple operators.",
   type,
   process,
 };

@@ -7,6 +7,7 @@ export const process = (input) => {
 };
 
 export const node: NodeDefinition = {
+  description: "Modulo node allows you to get the remainder of a division.",
   type,
   process,
 };

@@ -29,6 +29,8 @@ export const process = (input, state) => {
 };
 
 export const node: NodeDefinition = {
+  description:
+    "Constant node allows you to provide a constant value. You can use this node to set a constant value for a specific property.",
   type,
   defaults,
   process,

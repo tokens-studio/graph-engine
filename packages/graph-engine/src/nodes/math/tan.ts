@@ -15,6 +15,7 @@ export const process = (input) => {
 };
 
 export const node: NodeDefinition = {
+  description: "Tan node allows you to get the sin of a number.",
   type,
   process,
 };

@@ -32,6 +32,7 @@ export const process = (input: MappedInput) => {
 };
 export const node: NodeDefinition<MappedInput> = {
   type,
+  description: "Divide node allows you to divide two or more numbers.",
   mapInput,
   validateInputs,
   process,

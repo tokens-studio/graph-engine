@@ -19,6 +19,7 @@ export const process = (input: MappedInput) => {
 };
 
 export const node: NodeDefinition<MappedInput> = {
+  description: "OR node allows you to check if any inputs are true.",
   mapInput,
   type,
   process,

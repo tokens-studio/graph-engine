@@ -73,6 +73,8 @@ export const mapOutput = (input, state, processed: colorValue[]) => {
 };
 
 export const node: NodeDefinition<Input, State, colorValue[]> = {
+  description:
+    "Generate Color Wheel node allows you to create a color scale based on a base color and rotation in hue. You can use this node to generate a color scale for a specific color property.",
   type,
   validateInputs,
   defaults,

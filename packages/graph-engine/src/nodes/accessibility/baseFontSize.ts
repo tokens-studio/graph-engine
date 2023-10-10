@@ -52,7 +52,8 @@ const process = (input: Inputs, state) => {
 };
 
 export const node: NodeDefinition<Inputs> = {
-  description: "Calculates the base font size",
+  description:
+    "Base Font node allows you to calculate the base font size with DIN 1450.",
   type,
   defaults,
   process,

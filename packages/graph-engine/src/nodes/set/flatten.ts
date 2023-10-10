@@ -61,6 +61,7 @@ export const process = (input) => {
 };
 
 export const node: NodeDefinition<Input, any> = {
+  description: "Flattens a set of tokens",
   type,
   mapInput,
   process,

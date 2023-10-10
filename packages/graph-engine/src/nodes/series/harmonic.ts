@@ -49,6 +49,8 @@ export const mapOutput = (input, state, processed: HarmonicValue[]) => {
 };
 
 export const node: NodeDefinition = {
+  description:
+    'A "Harmonic Series" is a sequence of numbers whose reciprocals form an arithmetic progression. For example, in the series 1, 1/2, 1/3, 1/4, 1/5, the reciprocals form an arithmetic progression with common difference 1/6.',
   defaults,
   type,
   process,

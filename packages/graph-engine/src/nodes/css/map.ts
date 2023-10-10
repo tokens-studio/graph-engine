@@ -11,5 +11,7 @@ const process = (input) => {
 export const node: NodeDefinition = {
   type,
   defaults,
+  description:
+    "Exposes all the css properties. You can link the input of any other node to the any property that is there in the css map node.",
   process,
 };

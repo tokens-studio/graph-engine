@@ -34,6 +34,8 @@ export const process = (input: Options, state: Options) => {
 };
 
 export const node: NodeDefinition<Options, Options> = {
+  description:
+    "Round node allows you to adjusts a floating-point number to the nearest integer or to a specified precision.",
   type,
   defaults,
   process,

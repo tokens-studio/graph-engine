@@ -24,6 +24,7 @@ export const process = (input, state) => {
 };
 
 export const node: NodeDefinition<MappedInput, any> = {
+  description: "Extracts tokens from a set of tokens",
   type,
   defaults,
   process,

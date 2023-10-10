@@ -4,6 +4,7 @@ import { Command } from 'cmdk';
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import scaleExample from '#/examples/scale.json';
+import cardExample from '#/examples/card.json';
 import { store } from '#/redux/store.tsx';
 import { usePreviewContext } from '#/providers/preview.tsx';
 
@@ -23,46 +24,56 @@ interface IExample {
 
 const examples: IExample[] = [
   {
-    title: "Simple color scale generator",
-    description: "Generate a color scale based on a base color and a number of steps.",
+    title: 'Simple color scale generator',
+    description:
+      'Generate a color scale based on a base color and a number of steps.',
     file: scaleExample,
-    key: 'scale'
-  }
-]
+    key: 'scale',
+  },
+  {
+    title: 'Complicated card',
+    description: 'A complicated card example with multiple possible states.',
+    file: cardExample,
+    key: 'card',
+  },
+];
 
-const ExamplesPicker = ({open, onClose}) => {
+const ExamplesPicker = ({ open, onClose }) => {
   const { setCode, code } = usePreviewContext();
 
-  const onLoadExample = useCallback((file: IFile) => {
-    const editor = store.getState().refs.editor;
+  const onLoadExample = useCallback(
+    (file: IFile) => {
+      const editor = store.getState().refs.editor;
 
-    if (!editor) {
-      return;
-    }
-
-    const { state: loadedState, code: loadedCode, nodes, edges } = file;
-
-    // TODO, this needs a refactor. We need to wait for the clear to finish
-    // as the nodes still get one final update by the dispatch before they are removed which
-    // causes nulls to occur everywhere. They need to be unmounted
-
-    editor.current.clear();
-
-    setTimeout(() => {
-      if (loadedCode !== undefined) {
-        setCode(loadedCode);
+      if (!editor) {
+        return;
       }
 
-      editor.current.load({
-        nodeState: loadedState,
-        nodes,
-        edges,
-      });
-    }, 0);
-  }, [setCode])
+      const { state: loadedState, code: loadedCode, nodes, edges } = file;
+
+      // TODO, this needs a refactor. We need to wait for the clear to finish
+      // as the nodes still get one final update by the dispatch before they are removed which
+      // causes nulls to occur everywhere. They need to be unmounted
+
+      editor.current.clear();
+
+      setTimeout(() => {
+        if (loadedCode !== undefined) {
+          setCode(loadedCode);
+        }
+
+        editor.current.load({
+          nodeState: loadedState,
+          nodes,
+          edges,
+        });
+      }, 0);
+    },
+    [setCode],
+  );
 
   const handleSelectItem = (example: IExample) => {
-    onLoadExample(example.file)
+    onLoadExample(example.file);
     onClose();
   };
 
@@ -95,10 +106,10 @@ const ExamplesPicker = ({open, onClose}) => {
             onSelect={() => handleSelectItem(example)}
           >
             <Stack direction="column" gap={2} align="start">
-              <Text css={{fontWeight: '$sansMedium', fontSize: '$xsmall'}}>
+              <Text css={{ fontWeight: '$sansMedium', fontSize: '$xsmall' }}>
                 {example.title}
               </Text>
-              <Text css={{color: '$fgMuted', fontSize: '$xxsmall'}}>
+              <Text css={{ color: '$fgMuted', fontSize: '$xxsmall' }}>
                 {example.description}
               </Text>
             </Stack>

@@ -23,6 +23,8 @@ export const process = (input: NamedInput, state) => {
 };
 
 export const node: NodeDefinition<NamedInput> = {
+  description:
+    "Join node allows you to join an array into a string using a delimiter.",
   type,
   process,
 };

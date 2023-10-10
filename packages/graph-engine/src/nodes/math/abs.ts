@@ -15,6 +15,8 @@ export const process = (input) => {
 };
 
 export const node: NodeDefinition = {
+  description:
+    "Absolute node allows you to get the absolute value of a number. Turning a negative number to positive.",
   type,
   process,
 };
