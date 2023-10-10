@@ -2,7 +2,7 @@
 import { useRouter } from "next/router";
 
 
-const GITHUB_LINK = 'https://github.com/tokens-studio/graph-engine-docs';
+const GITHUB_LINK = 'https://github.com/tokens-studio/graph-engine/packages/documentation';
 const TITLE = 'Graph engine documentation'
 
 const Slack = () => (
