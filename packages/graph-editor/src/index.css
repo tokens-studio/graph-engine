@@ -210,31 +210,47 @@
     margin-left: 8px;
     width: 60%;
   }
+
+.MafsView {
+--mafs-line-color: var(--colors-borderSubtle);
+--colors-handleMovable: var(--colors-accentDefault);
+--colors-handleDisabled: var(--colors-fgSubtle);
+--colors-handleEdges: var(--colors-fgDefault);
+}
+
 .mafs-movable-point-focus {
-    stroke: var(--movable-point-color);
-    stroke-width: 2;
-    stroke-opacity: 0;
-    fill: none;
-    transition: stroke-opacity 0.2s ease;
-  }
-  
-  .mafs-movable-point-hitbox {
-    fill: transparent;
-  }
-  
-  .mafs-movable-point-ring {
-    fill: var(--movable-point-color);
-    fill-opacity: 0.25;
-    stroke: none;
-    transition: r 0.2s ease;
-  }
-  
-  .mafs-movable-point-point {
-    fill: var(--movable-point-color);
-    transition: r 0.2s ease;
-  }
-  
-  .mafs-movable-point * {
-    stroke: none;
-  }
-  
+  stroke: var(--movable-point-color);
+  stroke-width: 2;
+  stroke-opacity: 0;
+  fill: none;
+  transition: stroke-opacity 0.2s ease;
+}
+
+.mafs-movable-point-hitbox {
+  fill: transparent;
+}
+
+.mafs-movable-point-ring {
+  fill: var(--colors-fgSubtle);
+  r: 12px;
+  fill-opacity: 0.15;
+  stroke: none;
+  transition: r 0.2s ease;
+}
+
+.mafs-movable-point-point {
+  fill: var(--movable-point-color);
+  transition: r 0.2s ease;
+  r: 6px;
+}
+
+.mafs-movable-point * {
+  stroke: none;
+}
+
+.mafs-movable-point:focus-visible .mafs-movable-point-point,
+.mafs-movable-point:hover .mafs-movable-point-point {
+  r: 5px;
+  cursor: grab;
+}
+

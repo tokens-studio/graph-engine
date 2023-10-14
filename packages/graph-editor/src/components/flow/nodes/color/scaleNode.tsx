@@ -16,6 +16,7 @@ import { HexColorPicker } from "react-colorful";
 import InputPopover from '#/components/InputPopover.tsx';
 import { BezierCurveEditor } from '#/components/BezierCurveEditor.tsx';
 import { BezierIcon } from '#/components/icons/BezierIcon.tsx';
+import Color from "colorjs.io"
 
 function ColorPickerPopover({ value, onChange }) {
   return (
@@ -25,40 +26,27 @@ function ColorPickerPopover({ value, onChange }) {
   </InputPopover>)
 }
 
-function BezierPopover({ value, onChange }) {
-  return (
-  <InputPopover trigger={<IconButton variant="invisible" size="small" icon={<BezierIcon />} tooltip="Edit curve" />}>
-     <BezierCurveEditor value={value} onChange={onChange} />
-  </InputPopover>)
-}
-
 function ColorPicker({ value, onChange }) {  
-  const handleChange = useCallback(
-    (val) => {
-      onChange(val);
-    },
-    [onChange],
-    );
-    
-  return <HexColorPicker color={value} onChange={handleChange} />;
+  return <HexColorPicker color={value} onChange={onChange} />;
 }
 
 // We introduce a isSettings prop to the node so we dont have to build the contents twice. Another way to do this would be to have a separate node for the settings and the node itself. Or.. to understand "where am i rendered" in the node itself, but that would be a bit more complex.
 const ScaleNode = ({ isSettings }: { isSettings?: boolean }) => {
   const { input, state, output, setState } = useNode();
 
+  const { array = [], ...stops } = output || {};
+  const colorStops = useMemo(() => Object.values(stops), [stops]);
+
   const outputHandles = useMemo(() => {
-    const values = output || {};
-
-    const { array = [] } = values;    
-
     const handles = array.sort((a,b) => {
         //Force numeric sorting
         return ~~a.name < ~~b.name ? -1 : 1;
       })
       .map((item, index) => {
         // We want the base to be styled differently so users understand where's their base
+        const colorValue = new Color(item.value)
         const isBase = Number(index) + 1 === Number(state.stepsUp) + 1;
+        const contrastAgainstWhite = Math.round(colorValue.contrast('white', 'WCAG21') * 100) / 100;
         return (
           <Handle shouldHideHandles={isSettings} id={item.name} key={item.name}>
             <Box
@@ -73,6 +61,7 @@ const ScaleNode = ({ isSettings }: { isSettings?: boolean }) => {
               }}
             >
               {isBase ? <Box css={{width: '3px', height: '12px', borderRadius: '100px', background: '$accentDefault'}} /> : null}
+              <Box css={isBase ? { fontWeight: '$sansBold', color: '$fgDefault'} : {}}>{contrastAgainstWhite}</Box>
               <Box css={isBase ? { fontWeight: '$sansBold', color: '$fgDefault'} : {}}>{item.name}</Box>
             </Box>
             <PreviewColor value={item.value} />
@@ -89,21 +78,13 @@ const ScaleNode = ({ isSettings }: { isSettings?: boolean }) => {
         {handles}
       </>
     );
-  }, [output, state]);
+  }, [state, isSettings, array]);
 
-  const setStepsUp = useCallback((ev) => {
-    const stepsUp = ev.target.value;
+  const setSteps = useCallback((ev) => {
+    const steps = ev.target.value;
     setState((state) => ({
       ...state,
-      stepsUp,
-    }));
-  }, [setState]);
-
-  const setStepsDown = useCallback((ev) => {
-    const stepsDown = ev.target.value;
-    setState((state) => ({
-      ...state,
-      stepsDown,
+      steps,
     }));
   }, [setState]);
 
@@ -115,12 +96,25 @@ const ScaleNode = ({ isSettings }: { isSettings?: boolean }) => {
   }, [setState]);
 
   const handleChromaCurveValueChange = useCallback((chromaCurve) => {
-    console.log("Handling chroma curve change", chromaCurve, state)
     setState((state) => ({
       ...state,
       chromaCurve,
     }));
-  }, [setState, state]);
+  }, [setState]);
+
+  const handleLightnessCurveChange = useCallback((lightnessCurve) => {
+    setState((state) => ({
+      ...state,
+      lightnessCurve,
+    }));
+  }, [setState]);
+
+  const handleHueCurveChange = useCallback((hueCurve) => {
+    setState((state) => ({
+      ...state,
+      hueCurve,
+    }));
+  }, [setState]);
 
   // If the input color changes, update the state so that when we later detach we have the input as the latest value
   React.useEffect(() => {
@@ -142,47 +136,40 @@ const ScaleNode = ({ isSettings }: { isSettings?: boolean }) => {
             <Box css={{fontWeight: '$sansRegular', color: '$fgMuted', fontSize: '$xxsmall', fontFamily: '$mono'}}>{state.color}</Box>
           </Stack>
         </Handle>
-        <Handle shouldHideHandles={isSettings} id="stepsUp">
+        <Handle shouldHideHandles={isSettings} id="steps">
           <Stack direction="row" justify="between" gap={3} align="center">
-            <HandleText secondary>Steps ↑</HandleText>
+            <HandleText secondary>Steps</HandleText>
             {isSettings ? (
               <>
-                {input.stepsUp !== undefined ? (
-                  <PreviewNumber value={input.stepsUp || state.stepsUp} />
+                {input.steps !== undefined ? (
+                  <PreviewNumber value={input.steps || state.steps} />
                 ) : (
-                  <TextInput onChange={setStepsUp} value={state.stepsUp} />
+                  <TextInput onChange={setSteps} value={state.steps} />
                 )}
               </>
             ) : (
               <DynamicValueText>
-                {input.stepsUp || state.stepsUp}
-              </DynamicValueText>
-            )}
-          </Stack>
-        </Handle>
-        <Handle shouldHideHandles={isSettings} id="stepsDown">
-          <Stack direction="row" justify="between" gap={3} align="center">
-            <HandleText secondary>Steps ↓</HandleText>
-
-            {isSettings ? (
-              <>
-                {input.stepsDown !== undefined ? (
-                  <PreviewNumber value={input.stepsDown || state.stepsDown} />
-                ) : (
-                  <TextInput onChange={setStepsDown} value={state.stepsDown} />
-                )}
-              </>
-            ) : (
-              <DynamicValueText>
-                {input.stepsDown || state.stepsDown}
+                {input.steps || state.steps}
               </DynamicValueText>
             )}
           </Stack>
         </Handle>
         <Handle id="chromaCurve">
-          <Stack direction="row" justify="between" gap={3} align="center">
-            <HandleText secondary>Distribution curve</HandleText>
-            <BezierPopover value={input.chromaCurve || state.chromaCurve} onChange={handleChromaCurveValueChange} />
+          <Stack direction="column">
+            <HandleText secondary>Lightness curve</HandleText>
+            {isSettings && <BezierCurveEditor value={input.lightnessCurve || state.lightnessCurve} onChange={handleLightnessCurveChange} strict stops={colorStops} />}
+          </Stack>
+        </Handle>
+        <Handle id="saturationCurve">
+          <Stack direction="column">
+            <HandleText secondary>Chroma curve</HandleText>
+            {isSettings && <BezierCurveEditor value={input.chromaCurve || state.chromaCurve} onChange={handleChromaCurveValueChange} stops={colorStops} />}
+          </Stack>
+        </Handle>
+        <Handle id="hueCurve">
+          <Stack direction="column">
+            <HandleText secondary>Hue curve</HandleText>
+            {isSettings && <BezierCurveEditor value={input.hueCurve || state.hueCurve} onChange={handleHueCurveChange} stops={colorStops} canGoNegative />}
           </Stack>
         </Handle>
       </HandleContainer>

@@ -27,6 +27,7 @@ import { useOnOutputChange } from '#/context/OutputContext.tsx';
 import { useExternalLoader } from '#/context/ExternalLoaderContext.tsx';
 import { useExternalData } from '#/context/ExternalDataContext.tsx';
 import { Sidesheet } from '#/editor/Sidesheet.tsx';
+import { Box } from '@tokens-studio/ui';
 
 export type UiNodeDefinition = {
   //Name of the Node

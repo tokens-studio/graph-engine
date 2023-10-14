@@ -5,7 +5,7 @@ import {
 } from '../../handles.tsx';
 import { IconButton, Stack, Text } from '@tokens-studio/ui';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
-import { node } from '@tokens-studio/graph-engine/nodes/color/scale.js';
+import { node } from '@tokens-studio/graph-engine/nodes/math/bezier.js';
 import React, { useCallback, useMemo } from 'react';
 import InputPopover from '#/components/InputPopover.tsx';
 import { BezierCurveEditor } from '#/components/BezierCurveEditor.tsx';
@@ -41,7 +41,7 @@ const BezierNode = () => {
       </HandleContainer>
       <HandleContainer type="source">
         <Handle id="output">
-          <Text>Output</Text>
+          <HandleText>Output</HandleText>
           <PreviewAny value={output?.output} />
         </Handle>
       </HandleContainer>

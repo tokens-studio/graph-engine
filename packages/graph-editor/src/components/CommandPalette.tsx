@@ -125,7 +125,7 @@ const CommandMenu = ({
                 </Command.Item>
               ));
               return (
-                <Command.Group heading={value.title}>
+                <Command.Group key={value.key} heading={value.title}>
                   {childValues}
                 </Command.Group>
               );

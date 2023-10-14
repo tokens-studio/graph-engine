@@ -1,8 +1,6 @@
 import { NodeDefinition, NodeTypes } from "../../types.js";
-import chroma from "chroma-js";
-import { Bezier } from 'bezier-js';
 
-export const type = NodeTypes.SCALE;
+export const type = NodeTypes.BEZIER;
 
 export type State = {
   curve: number[];
@@ -13,25 +11,16 @@ export const defaults: State = {
 };
 
 export type Input = {
-  curve: string;
+  curve: [number, number, number, number];
 } & State;
 
 export const process = (input: Input, state: State) => {
-  const final = {
-    ...state,
-    ...input,
-  };
-
-  return ([] as string[]).concat(final.curve) as string[];
-};
-
-export const mapOutput = (input, state, processed) => {
-  return processed
+  return input.curve || state.curve;
 };
 
 export const node: NodeDefinition<Input, State> = {
   type,
+  description: "Bezier node allows you to generate a bezier curve.",
   defaults,
   process,
-  mapOutput,
 };

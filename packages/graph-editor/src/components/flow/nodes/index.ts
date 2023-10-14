@@ -37,7 +37,6 @@ import ResolveAliasesNode from './sets/resolveAliases.tsx';
 import ReverseArrayNode from './array/reverse.tsx';
 import SortArrayNode from './array/sort.tsx';
 import ScaleNode from './color/scaleNode.tsx';
-import BezierNode from './math/bezierNode.tsx';
 import SinNode from './math/sinNode.tsx';
 import SliceNode from './array/slice.tsx';
 import SquashNode from './sets/squashNode.tsx';
@@ -73,6 +72,7 @@ import fluidNode from './math/fluidNode.tsx';
 import ExtractTokenNodes from './sets/tokenExtract.tsx';
 import GroupToken from './sets/tokenGroup.tsx';
 import NameArrayNode from './array/name.tsx';
+import BezierNode from './math/bezierNode.tsx';
 
 export type NodeTypeLookup = Record<string, React.ReactNode | React.FC>;
 export type StateInitializer = Record<string, Record<string, any>>;
@@ -170,7 +170,6 @@ export const {
   modNode,
   CreateColorNode,
   ScaleNode,
-  BezierNode,
   EnumeratedInputNode,
   CountNode,
   RemapNode,
@@ -192,4 +191,5 @@ export const {
   fluidNode,
   GroupToken,
   NameArrayNode,
+  BezierNode,
 ]);
