@@ -43,6 +43,8 @@ export const mapOutput = (input, state, processed: GeometricValue[]) => {
 };
 
 export const node: NodeDefinition = {
+  description:
+    "Generates a geometric series f(n)= c * (f(n-1)) of numbers based on the base value, steps down, steps and increment.",
   defaults,
   type,
   process,

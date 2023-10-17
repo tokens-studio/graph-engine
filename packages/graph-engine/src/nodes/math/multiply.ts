@@ -23,6 +23,7 @@ export const process = (input: MappedInput) => {
 };
 
 export const node: NodeDefinition<MappedInput> = {
+  description: "Multiply node allows you to multiply two or more numbers.",
   type,
   mapInput,
   validateInputs,

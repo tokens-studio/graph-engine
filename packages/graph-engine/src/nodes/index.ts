@@ -12,6 +12,9 @@ import { nodes as sets } from "./set/index.js";
 import { nodes as string } from "./string/index.js";
 import { nodes as typing } from "./typing/index.js";
 
+/**
+ * All nodes in the system available as an array
+ */
 export const nodes: NodeDefinition<any>[] = (
   [] as NodeDefinition<any, any, any>[]
 ).concat(
@@ -28,3 +31,11 @@ export const nodes: NodeDefinition<any>[] = (
   string,
   typing
 );
+
+/**
+ * Nodes as a lookup map using the node type as the key
+ */
+export const nodeLookup = nodes.reduce((acc, node) => {
+  acc[node.type] = node;
+  return acc;
+}, {});

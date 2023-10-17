@@ -32,6 +32,7 @@ const process = (input: Input, state: State) => {
 
 export const node: NodeDefinition<Input, State> = {
   type,
+  description: "CSS Box node allows you to generate a CSS box from 4 values.",
   defaults,
   process,
 };

@@ -89,6 +89,7 @@ export const process = (input: Input, state: Input) => {
 };
 
 export const node: NodeDefinition<Input, Input> = {
+  description: "JSON node allows you to define a JSON object.",
   type,
   defaults,
   process,

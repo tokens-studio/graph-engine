@@ -34,23 +34,16 @@ export const scope = {
 };
 
 export const code = `const Example = () => {
+    /* The parameter inside useTokens maps to the name of your Output node parameters. The CSS Map node lets you connect to any css property, but you can also just pass in any other output, for example a string or a color value. */
+    const cardCSSMap = useTokens('card');
+    const titleCSSMap= useTokens('title');
+    const textCSSMap= useTokens('text');
 
-    const cardStyle = useTokens('container');
-    const cardImageStyle = useTokens('image');
-    const cardContent= useTokens('content');
-    const cardTitle= useTokens('title');
-
-
-    return (<div class="card" style={cardStyle}>
-            <img src="https://images.unsplash.com/photo-1684395521046-fe664a85a9e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=500&q=60" alt="Card Image" style={cardImageStyle} />
-            <div style={cardContent}>
-                <h2 style={cardTitle}>Card Title</h2>
-                <p >This is a sample card description.</p>
-                {/* This is a web component provided by lion but wrapped in a token provider. Use'scope=<NAME>' to change the listed scope from  its default 'Button'  */}
-                <wc-button>Read More</wc-button>
-            </div>
+    return (<div style={cardCSSMap}>
+              <h2 style={titleCSSMap}>Dynamic preview</h2>
+              <p style={textCSSMap}>Create an Output node and connect the code in this example to it by using the useTokens hook and see the preview change in real time. Change the code used for this preview to customize it to your liking. This is saved when you save your .json</p>
         </div>);
 }
-render(<Example/>)
 
+render(<Example/>)
 `;

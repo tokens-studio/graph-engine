@@ -23,6 +23,7 @@ export const process = (input: MappedInput) => {
 
 export const node: NodeDefinition<MappedInput> = {
   mapInput,
+  description: "Add node allows you to add two or more numbers.",
   validateInputs,
   type,
   process,

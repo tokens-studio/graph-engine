@@ -46,6 +46,7 @@ export const mapOutput = (input: Input, state, tokens: SingleToken[]) => {
 };
 
 export const node: NodeDefinition<Input, State, SingleToken[]> = {
+  description: "Retrieves and exposes a remote set of tokens",
   type,
   process,
   defaults,

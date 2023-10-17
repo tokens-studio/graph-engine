@@ -33,7 +33,7 @@ const mapOutput = (input: Input, state: any, output: Output) => {
 };
 
 export const node: NodeDefinition<Input, any, Output> = {
-  description: "Parses a unit from a string",
+  description: "Parse unit node allows you to seperate units from a number.",
   type,
   mapOutput,
   process,

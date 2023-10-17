@@ -1,5 +1,6 @@
 import {
   BookIcon,
+  FilePlusIcon,
   FloppyDiscIcon,
   FolderIcon,
   MoonIcon,
@@ -22,9 +23,11 @@ const imageHeight = 768;
 export const Menubar = ({
   toggleTheme,
   theme,
+  onLoadExamples,
 }: {
   toggleTheme: () => void;
   theme: string;
+  onLoadExamples: () => void;
 }) => {
   const { setCode, code } = usePreviewContext();
   const findCurrentEditor = useCallback(() => {
@@ -179,6 +182,13 @@ export const Menubar = ({
           size="medium"
           icon={<FloppyDiscIcon />}
           onClick={onSave}
+        />
+        <IconButton
+          tooltip="Load example"
+          variant="invisible"
+          size="medium"
+          icon={<FilePlusIcon />}
+          onClick={onLoadExamples}
         />
       </Stack>
       <Stack direction="column" justify="end" css={{ flexGrow: 1 }}>

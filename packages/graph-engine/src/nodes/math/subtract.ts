@@ -34,6 +34,7 @@ export const process = (input: MappedInput) => {
 export const node: NodeDefinition<MappedInput> = {
   type,
   mapInput,
+  description: "Subtract node allows you to subtract two or more numbers.",
   validateInputs,
   process,
 };

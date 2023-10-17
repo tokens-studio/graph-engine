@@ -161,13 +161,11 @@
     border-radius: var(--radii-medium);
     box-shadow: var(--shadows-contextMenu);
     border: 1px solid var(--colors-borderSubtle);
-    padding: var(--space-4);
     font-size: var(--fontSizes-small);
     color: var(--colors-fgMuted);
     width: 100%;
     max-width: 640px;
-    max-height: 500px;
-    overflow-y: auto;
+    position: relative;
 }
 
 [cmdk-input] {
@@ -185,10 +183,6 @@
     border-radius: var(--radii-medium);
 }
 
-[cmdk-group] {
-
-}
-
 [cmdk-group-heading] {
     padding: var(--space-1) var(--space-5);
     font-weight: var(--fontWeights-sansMedium);
@@ -199,3 +193,20 @@
 [cmdk-item][data-selected="true"] {
     background-color: var(--colors-bgSubtle);
 }
+
+
+[cmdk-framer-separator] {
+    width: 1px;
+    border: 0;
+    margin-right: 8px;
+    background: var(--gray6);
+  }
+
+  [cmdk-framer-right] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin-left: 8px;
+    width: 60%;
+  }

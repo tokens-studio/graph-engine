@@ -10,3 +10,6 @@ export const outputSelector = (state: RootState) => state.editorOutput;
 
 export const showJourneySelector = (state: RootState) =>
   state.journey.showJourney;
+
+export const showExamplePickerSelector = (state: RootState) =>
+  state.ui.showExamplePicker;

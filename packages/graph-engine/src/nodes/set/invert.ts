@@ -19,6 +19,7 @@ export const process = (input: Input) => {
 };
 
 export const node: NodeDefinition<Input, any> = {
+  description: "Inverts the order of a set of tokens",
   type,
   process,
 };

@@ -31,6 +31,8 @@ export const process = (input, state) => {
 };
 
 export const node: NodeDefinition = {
+  description:
+    "Clamp node allows you to restricts a value within a specified minimum and maximum range.",
   type,
   defaults,
   process,

@@ -26,5 +26,7 @@ export const process = (input, state: State) => {
 export const node: NodeDefinition<State, State> = {
   defaults,
   type,
+  description:
+    "Power node allows you to Raises a base number to the power of an exponent.",
   process,
 };

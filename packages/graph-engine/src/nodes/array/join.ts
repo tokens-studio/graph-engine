@@ -4,7 +4,7 @@
  * @packageDocumentation
  */
 
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { NodeDefinition, NodeTypes, Type } from "../../types.js";
 
 const type = NodeTypes.JOIN;
 
@@ -23,6 +23,19 @@ export const process = (input: NamedInput, state) => {
 };
 
 export const node: NodeDefinition<NamedInput> = {
+  description:
+    "Join node allows you to join an array into a string using a delimiter.",
+
+  inputs: [{
+    default: [],
+    name: 'array',
+    description: 'Array to join',
+    type: Type.ARRAY,
+    items: {
+      type: Type.STRING
+    }
+  }],
+
   type,
   process,
 };

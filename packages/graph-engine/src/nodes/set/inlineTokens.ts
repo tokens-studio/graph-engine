@@ -45,6 +45,7 @@ export const mapOutput = (input: Input, state, processed: SingleToken[]) => {
 };
 
 export const node: NodeDefinition<Input, State, SingleToken[]> = {
+  description: "Creates a set of tokens and stores it directly in the graph",
   type,
   process,
   defaults,

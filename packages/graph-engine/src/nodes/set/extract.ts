@@ -14,6 +14,7 @@ export const defaults = {
 export type MappedInput = {
   tokens: SingleToken[];
   name: string;
+
 };
 export const process = (input, state) => {
   const final = {
@@ -24,6 +25,7 @@ export const process = (input, state) => {
 };
 
 export const node: NodeDefinition<MappedInput, any> = {
+  description: "Extracts tokens from a set of tokens",
   type,
   defaults,
   process,

@@ -57,6 +57,8 @@ export const mapOutput = (input, state, processed) => {
 };
 
 export const node: NodeDefinition = {
+  description:
+    "Generates an arithmetic f(n)= c + (f(n-1)) series of numbers based on the base value, steps down, steps and increment.",
   defaults,
   type,
   process,

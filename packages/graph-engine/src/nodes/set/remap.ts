@@ -63,6 +63,7 @@ export const mapOutput = (input, state, processed) => {
 };
 
 export const node: NodeDefinition<MappedInput> = {
+  description: "Allows you to remap a set of tokens to a new set.",
   type,
   defaults,
   mapInput,

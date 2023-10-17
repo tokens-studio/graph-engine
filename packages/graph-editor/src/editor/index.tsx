@@ -47,14 +47,7 @@ import { ReduxProvider } from '../redux/index.tsx';
 import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.tsx';
 import groupNode from '../components/flow/groupNode.tsx';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
-import {
-  Box,
-  Button,
-  EmptyState,
-  IconButton,
-  Stack,
-  Tooltip,
-} from '@tokens-studio/ui';
+import { Box, IconButton, Stack, Tooltip } from '@tokens-studio/ui';
 import { OnOutputChangeContextProvider } from '#/context/OutputContext.tsx';
 import { createNode } from './create.ts';
 import { NodeTypes } from '@tokens-studio/graph-engine';
@@ -68,11 +61,11 @@ import { showGrid, snapGrid } from '#/redux/selectors/settings.ts';
 import { showNodesPanelSelector } from '#/redux/selectors/ui.ts';
 import { forceUpdate } from '#/redux/selectors/graph.ts';
 import { DropPanel } from '#/components/index.ts';
-import { BatteryChargingIcon, FilePlusIcon } from '@iconicicons/react';
 import { AppsIcon } from '#/components/icons/AppsIcon.tsx';
 import { CommandMenu } from '#/components/CommandPalette.tsx';
 import { ExternalLoaderProvider } from '#/context/ExternalLoaderContext.tsx';
 import { defaultPanelItems } from '#/components/flow/DropPanel/PanelItems.tsx';
+import { Settings } from '#/components/Settings.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -90,9 +83,6 @@ const proOptions = {
 const defaultEdgeOptions = {
   style: {
     strokeWidth: 2,
-  },
-  markerEnd: {
-    type: MarkerType.ArrowClosed,
   },
 };
 
@@ -539,6 +529,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                     variant={showNodesPanel ? 'primary' : 'invisible'}
                   />
                   {props.menuContent}
+                  <Settings />
                 </Stack>
                 {showNodesPanel && (
                   <Box
@@ -587,6 +578,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 selectionOnDrag={true}
                 panOnDrag={panOnDrag}
                 minZoom={-Infinity}
+                zoomOnDoubleClick={false}
                 defaultViewport={defaultViewport}
                 //This causes weirdness with the minimap
                 // onlyRenderVisibleElements={true}
@@ -601,32 +593,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                     variant={BackgroundVariant.Dots}
                   />
                 )}
-                {nodeCount === 0 && (
-                  <Box
-                    css={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      pointerEvents: 'none',
-                      width: '100%',
-                      height: '100%',
-                      position: 'relative',
-                      zIndex: 100,
-                    }}
-                  >
-                    <EmptyState
-                      icon={
-                        <BatteryChargingIcon
-                          style={{ width: 48, height: 48 }}
-                        />
-                      }
-                      title="Build scalable and flexible design systems."
-                      description="Add your first node to get started or load an example"
-                    >
-                      <Box />
-                    </EmptyState>
-                  </Box>
-                )}
+                {nodeCount === 0 && props.emptyContent}
                 <SelectedNodesToolbar />
                 <CustomControls position="bottom-center" />
                 <CommandMenu
@@ -634,6 +601,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                   items={panelItems}
                   handleSelectNewNodeType={handleSelectNewNodeType}
                 />
+                {props.children}
               </ReactFlow>
             </ForceUpdateProvider>
           </Box>

@@ -34,6 +34,8 @@ const process = (input: Inputs, state) => {
 };
 
 export const node: NodeDefinition<Inputs> = {
+  description:
+    "Distance node allows you to calculate the distance between two colors.",
   type,
   process,
 };
