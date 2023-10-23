@@ -14,20 +14,14 @@ export type MappedInput = {
   tokens: SingleToken[];
 };
 
-export const mapInput = (input) => {
-  return {
-    tokens: input.tokens,
-  };
-};
-
-export const process = (input, state) => {
+export const process = (input: MappedInput, state) => {
   const final = {
     ...state,
     ...input,
   };
   return final.tokens.map((token) => {
-    const parts = token.name.split('.');
-    const name = parts.length > 1 ? parts.slice(1).join('.') : parts[0];
+    const parts = token.name.split(".");
+    const name = parts.length > 1 ? parts.slice(1).join(".") : parts[0];
     return {
       ...token,
       name,

@@ -23,18 +23,12 @@ export const process = (input, state) => {
   };
   const index = final.tokens.findIndex((token) => token.name === final.name);
   const token = final.tokens[index];
-  return token ? { ...token, index} : null;
+  return token ? { ...token, index } : null;
 };
-
-export const mapOutput = (input, state, processed) => {
-  return processed ? {...processed} : null;
-};
-
 
 export const node: NodeDefinition<MappedInput, any> = {
   description: "Extracts a single token and returns its values",
   type,
   defaults,
   process,
-  mapOutput
 };
