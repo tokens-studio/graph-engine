@@ -15,6 +15,7 @@ export type MappedInput = {
   tokens: SingleToken[];
   name: string;
 };
+
 export const process = (input, state) => {
   const final = {
     ...state,
