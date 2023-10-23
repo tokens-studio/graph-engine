@@ -365,6 +365,11 @@ export const defaultPanelItems: PanelGroup[] = [
         text: 'Contrasting Color',
       },
       {
+        type: NodeTypes.CONTRASTING_FROM_SET,
+        icon: <Half2Icon />,
+        text: 'Contrasting From Set',
+      },
+      {
         type: NodeTypes.SCALE,
         icon: '...',
         text: 'Generate Scale',
