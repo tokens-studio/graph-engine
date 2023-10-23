@@ -1,5 +1,18 @@
 # @tokens-studio/graph-editor
 
+## 2.1.0
+
+### Minor Changes
+
+- eefa966: add ungroup node, add select single token node, fix input issue on group and extract tokens
+- eaf05cd: Add Contrasting from Set node to return the first element of an array that has sufficient contrast
+
+### Patch Changes
+
+- Updated dependencies [eefa966]
+- Updated dependencies [eaf05cd]
+  - @tokens-studio/graph-engine@0.10.0
+
 ## 2.0.3
 
 ### Patch Changes
