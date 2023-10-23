@@ -24,7 +24,6 @@ export const defaults: State = {
   wcag: WcagVersion.V3,
 };
 
-
 export const process = (input, state: State) => {
   const final = {
     ...state,
@@ -47,7 +46,6 @@ export const process = (input, state: State) => {
     if (contrast >= final.threshold) {
       index = i;
       sufficient = true;
-      console.log(`Sufficient contrast found for ${token.name}`);
       break;
     }
   }
@@ -60,7 +58,7 @@ export const process = (input, state: State) => {
 };
 
 export const mapOutput = (input, state, processed) => {
-  return processed ? {...processed} : null;
+  return processed ? processed : undefined;
 };
 
 export const node: NodeDefinition<State, State> = {

@@ -1,13 +1,25 @@
 import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { PreviewAny } from '../../preview/any.tsx';
 import { PreviewBoolean } from '../../preview/boolean.tsx';
-import { Stack, Text, TextInput, DropdownMenu, Label, Button } from '@tokens-studio/ui';
+import {
+  Stack,
+  Text,
+  TextInput,
+  DropdownMenu,
+  Label,
+  Button,
+} from '@tokens-studio/ui';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
-import { node, WcagVersion } from '@tokens-studio/graph-engine/nodes/color/contrastingFromSet.js';
-import React, { useMemo,useCallback } from 'react';
+import {
+  node,
+  WcagVersion,
+} from '@tokens-studio/graph-engine/nodes/color/contrastingFromSet.js';
+import React, { useMemo, useCallback } from 'react';
 
 const ContrastingFromSetNode = () => {
   const { input, output, state, setState } = useNode();
+
+  const [thresholdTemp, setThresholdTemp] = React.useState(state.threshold);
 
   const setWcag = useCallback(
     (ev) => {
@@ -23,11 +35,15 @@ const ContrastingFromSetNode = () => {
 
   const setThreshold = useCallback(
     (ev) => {
-      const threshold = ev.target.value;
-      setState((state) => ({
-        ...state,
-        threshold,
-      }));
+      const threshold = Number.parseFloat(ev.target.value);
+      if (!Number.isNaN(threshold)) {
+        setState((state) => ({
+          ...state,
+          threshold,
+        }));
+      }
+      //Keep the raw value
+      setThresholdTemp(ev.target.value);
     },
     [setState],
   );
@@ -62,12 +78,16 @@ const ContrastingFromSetNode = () => {
             {input.threshold !== undefined ? (
               <PreviewAny value={input.threshold} />
             ) : (
-              <TextInput onChange={setThreshold} value={state.threshold} />
+              <TextInput
+                type="number"
+                onChange={setThreshold}
+                value={thresholdTemp}
+              />
             )}
           </Stack>
         </Handle>
         <Handle id="wcag">
-          <Label>WCAG Version</Label> 
+          <Label>WCAG Version</Label>
 
           {input.wcag !== undefined ? (
             <Text>{input.wcag}</Text>
@@ -87,7 +107,7 @@ const ContrastingFromSetNode = () => {
                       onClick={setWcag}
                       data-key={key}
                     >
-                      {value}
+                      {value as string}
                     </DropdownMenu.Item>
                   ))}
                 </DropdownMenu.Content>
@@ -105,7 +125,7 @@ const ContrastingFromSetNode = () => {
         <Handle id="sufficient">
           <Text>Sufficient</Text>
           <PreviewBoolean value={output.sufficient} />
-        </Handle> 
+        </Handle>
       </HandleContainer>
     </Stack>
   );
