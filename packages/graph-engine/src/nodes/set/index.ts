@@ -5,7 +5,9 @@ import { node as invert } from "./invert.js";
 import { node as remap } from "./remap.js";
 import { node as resolve } from "./resolve.js";
 import { node as group } from "./group.js";
-import { node as extract } from "./extract.js";
+import { node as ungroup } from "./ungroup.js";
+import { node as extractTokens } from "./extractTokens.js";
+import { node as extractSingleToken } from "./extractSingleToken.js";
 
 export const nodes = [
   flatten,
@@ -15,5 +17,7 @@ export const nodes = [
   invert,
   externalTokens,
   group,
-  extract,
+  ungroup,
+  extractTokens,
+  extractSingleToken,
 ];

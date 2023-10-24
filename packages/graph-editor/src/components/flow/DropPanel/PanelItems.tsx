@@ -297,14 +297,24 @@ export const defaultPanelItems: PanelGroup[] = [
         text: 'Invert',
       },
       {
+        type: NodeTypes.EXTRACT_SINGLE_TOKEN,
+        icon: '?1',
+        text: 'Extract Single Token',
+      },
+      {
         type: NodeTypes.EXTRACT_TOKENS,
-        icon: '?',
-        text: 'Select Token',
+        icon: '?n',
+        text: 'Extract Tokens',
       },
       {
         type: NodeTypes.GROUP,
         icon: '{a:}',
         text: 'Group Token',
+      },
+      {
+        type: NodeTypes.UNGROUP,
+        icon: '{a:}',
+        text: 'Ungroup Token',
       },
     ],
   },
@@ -353,6 +363,11 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.CONTRASTING,
         icon: <Half2Icon />,
         text: 'Contrasting Color',
+      },
+      {
+        type: NodeTypes.CONTRASTING_FROM_SET,
+        icon: <Half2Icon />,
+        text: 'Contrasting From Set',
       },
       {
         type: NodeTypes.SCALE,

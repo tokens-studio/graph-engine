@@ -123,6 +123,7 @@ export enum NodeTypes {
 
   // Color
   CONTRASTING = "studio.tokens.color.contrasting",
+  CONTRASTING_FROM_SET = "studio.tokens.color.contrastingFromSet",
   SCALE = "studio.tokens.color.scale",
   CONVERT_COLOR = "studio.tokens.color.convert",
   BLEND = "studio.tokens.color.blend",
@@ -142,7 +143,9 @@ export enum NodeTypes {
   SET = "studio.tokens.sets.external",
   INVERT_SET = "studio.tokens.sets.invert",
   GROUP = "studio.tokens.sets.group",
-  EXTRACT_TOKENS = "studio.tokens.sets.extract",
+  UNGROUP = "studio.tokens.sets.ungroup",
+  EXTRACT_SINGLE_TOKEN = "studio.tokens.sets.extractSingleToken",
+  EXTRACT_TOKENS = "studio.tokens.sets.extractTokens",
 
   //Series
   ARITHMETIC_SERIES = "studio.tokens.sets.arithmetic",

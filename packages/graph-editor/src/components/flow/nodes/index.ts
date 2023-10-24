@@ -69,9 +69,12 @@ import PolineNode from './color/polineNode.tsx';
 import baseFontSizeNode from './accessibility/baseFontSizeNode.tsx';
 import colorDistanceNode from './color/colorDistanceNode.tsx';
 import fluidNode from './math/fluidNode.tsx';
-import ExtractTokenNodes from './sets/tokenExtract.tsx';
+import ExtractTokensNodes from './sets/extractTokensNode.tsx';
+import ExtractSingleTokenNodes from './sets/extractSingleTokenNode.tsx';
 import GroupToken from './sets/tokenGroup.tsx';
+import UngroupToken from './sets/tokenUngroup.tsx';
 import SplitStringNode from './string/split.tsx';
+import ContrastingFromSetNode from './color/contrastingFromSetNode.tsx';
 
 export type NodeTypeLookup = Record<string, React.ReactNode | React.FC>;
 export type StateInitializer = Record<string, Record<string, any>>;
@@ -127,7 +130,8 @@ export const {
   spreadNode,
   dotProp,
   objectify,
-  ExtractTokenNodes,
+  ExtractSingleTokenNodes,
+  ExtractTokensNodes,
   arrayIndex,
   MultiplyNode,
   DivisionNode,
@@ -189,5 +193,7 @@ export const {
   colorDistanceNode,
   fluidNode,
   GroupToken,
+  UngroupToken,
   SplitStringNode,
+  ContrastingFromSetNode,
 ]);
