@@ -7,19 +7,19 @@ import { PreviewAny } from '../../preview/any.tsx';
 
 const NearestTokensNode = () => {
   const { input, state, output, setState } = useNode();
-    const randomID = useMemo(() => 'x' + Math.random(), []);
+  const randomID = useMemo(() => 'x' + Math.random(), []);
 
-    const setWcag = useCallback(
-      (ev) => {
-        const version =
-          WcagVersion[ev.currentTarget.dataset.key as keyof typeof WcagVersion];
-        setState((state) => ({
-          ...state,
-          wcag: version,
-        }));
-      },
-      [setState],
-    );
+  const setWcag = useCallback(
+    (ev) => {
+      const version =
+        WcagVersion[ev.currentTarget.dataset.key as keyof typeof WcagVersion];
+      setState((state) => ({
+        ...state,
+        wcag: version,
+      }));
+    },
+    [setState],
+  );
 
   const onChange = (checked) => {
     setState((state) => ({
@@ -28,20 +28,16 @@ const NearestTokensNode = () => {
     }));
   };
 
-  const handleCompareChange = (compare) => {
-    setState((state) => ({ ...state, compare }));
-  };
-
   return (
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
         <Handle id="sourceColor">
           <Text>Source Color</Text>
-          <PreviewAny value={input.sourceColor} />  
+          <PreviewAny value={input.sourceColor} />
         </Handle>
         <Handle id="tokens">
           <Text>Token Set</Text>
-          <PreviewAny value={input.tokens} /> 
+          <PreviewAny value={input.tokens} />
         </Handle>
         <Handle id="compare">
           <Text>Compare</Text>
@@ -50,7 +46,7 @@ const NearestTokensNode = () => {
               <Button variant="secondary" asDropdown size="small">
                 {state.compare}
               </Button>
-            </DropdownMenu.Trigger> 
+            </DropdownMenu.Trigger>
 
             <DropdownMenu.Portal>
               <DropdownMenu.Content>
@@ -78,12 +74,6 @@ const NearestTokensNode = () => {
             onCheckedChange={onChange}
           />
         </Stack>
-      </HandleContainer>
-      <HandleContainer type="source">
-        <Handle id="sortedTokens">
-          <Text>Sorted Tokens</Text>
-          <PreviewAny value={output?.sortedTokens} /> 
-        </Handle>
         <Handle id="wcag">
           <Label>WCAG Version</Label>
 
@@ -113,7 +103,13 @@ const NearestTokensNode = () => {
             </DropdownMenu>
           )}
         </Handle>
-        </HandleContainer>
+      </HandleContainer>
+      <HandleContainer type="source">
+        <Handle id="sortedTokens">
+          <Text>Sorted Tokens</Text>
+          <PreviewAny value={output?.sortedTokens} />
+        </Handle>
+      </HandleContainer>
     </Stack>
   );
 };
