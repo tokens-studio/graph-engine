@@ -9,24 +9,22 @@ const NearestTokensNode = () => {
   const { input, state, output, setState } = useNode();
   const randomID = useMemo(() => 'x' + Math.random(), []);
 
-  const setWcag = useCallback(
-    (ev) => {
-      const version =
-        WcagVersion[ev.currentTarget.dataset.key as keyof typeof WcagVersion];
+  const setField = useCallback(
+    (key, value) => {
       setState((state) => ({
         ...state,
-        wcag: version,
+        [key]: value,
       }));
     },
     [setState],
   );
 
-  const onChange = (checked) => {
-    setState((state) => ({
-      ...state,
-      inverted: checked,
-    }));
-  };
+  const handleCompareChange = useCallback(
+    (compare) => {
+      setField('compare', compare);
+    },
+    [setField],
+  );
 
   return (
     <Stack direction="row" gap={4}>
@@ -47,36 +45,27 @@ const NearestTokensNode = () => {
                 {state.compare}
               </Button>
             </DropdownMenu.Trigger>
-
             <DropdownMenu.Portal>
               <DropdownMenu.Content>
-                <DropdownMenu.Item onClick={() => handleCompareChange('Contrast')} data-key="Contrast">
-                  Contrast
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => handleCompareChange('Hue')} data-key="Hue">
-                  Hue
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => handleCompareChange('Lightness')} data-key="Lightness">
-                  Lightness
-                </DropdownMenu.Item>
-                <DropdownMenu.Item onClick={() => handleCompareChange('Saturation')} data-key="Saturation">
-                  Saturation
-                </DropdownMenu.Item>
+                {['Contrast', 'Hue', 'Lightness', 'Saturation', 'Distance'].map((compare) => (
+                  <DropdownMenu.Item key={compare} onClick={() => handleCompareChange(compare)}>
+                    {compare}
+                  </DropdownMenu.Item>
+                ))}
               </DropdownMenu.Content>
             </DropdownMenu.Portal>
-          </DropdownMenu>
+          </DropdownMenu> 
         </Handle>
         <Stack direction="row" justify="between">
           <Label>Inverted</Label>
           <Checkbox
             id={randomID}
             checked={state.inverted}
-            onCheckedChange={onChange}
+            onCheckedChange={(checked) => setField('inverted', checked)}
           />
         </Stack>
         <Handle id="wcag">
           <Label>WCAG Version</Label>
-
           {input.wcag !== undefined ? (
             <Text>{input.wcag}</Text>
           ) : (
@@ -86,14 +75,12 @@ const NearestTokensNode = () => {
                   {state.wcag}
                 </Button>
               </DropdownMenu.Trigger>
-
               <DropdownMenu.Portal>
                 <DropdownMenu.Content>
                   {Object.entries(WcagVersion).map(([key, value]) => (
                     <DropdownMenu.Item
                       key={key}
-                      onClick={setWcag}
-                      data-key={key}
+                      onClick={() => setField('wcag', value)}
                     >
                       {value}
                     </DropdownMenu.Item>

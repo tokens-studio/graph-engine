@@ -10,7 +10,7 @@ export const type = NodeTypes.NEAREST_TOKENS;
 export type State = {
   sourceColor: string;
   tokens: SingleToken[];
-  compare: "Contrast" | "Hue" | "Lightness" | "Saturation";
+  compare: "Contrast" | "Hue" | "Lightness" | "Saturation" | "Distance";
   inverted?: boolean;
   wcag: WcagVersion;
 };
@@ -46,6 +46,7 @@ export const process = (input, state: State) => {
     Hue: (color1, color2) => Math.abs(chroma(color1).get("hsl.h") - chroma(color2).get("hsl.h")),
     Lightness: (color1, color2) => Math.abs(chroma(color1).get("hsl.l") - chroma(color2).get("hsl.l")),
     Saturation: (color1, color2) => Math.abs(chroma(color1).get("hsl.s") - chroma(color2).get("hsl.s")),
+    Distance: (color1, color2) => chroma.deltaE(color1, color2),
   };
 
   const sortedTokens = orderBy(
