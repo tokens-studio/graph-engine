@@ -54,7 +54,7 @@
     "jszip": "3.10.1",
     "lit": "2.7.3",
     "memfs": "4.2.0",
-    "next": "13.3.0",
+    "next": "13.5.0",
     "next-themes": "0.2.1",
     "poline": "0.7.0",
     "postcss-value-parser": "4.2.0",
