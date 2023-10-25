@@ -10,7 +10,8 @@ export const TokenSetHandles = ({ tokens }) => {
     return null;
   }
 
-  return tokens.map((token) => {
+
+  return tokens.filter(x => !!x).map((token) => {
     return (
       <Stack
         direction="row"

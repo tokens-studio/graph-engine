@@ -9,6 +9,7 @@ import { node as extract } from "./extract.js";
 import { node as poline } from "./poline.js";
 import { node as scale } from "./scale.js";
 import { node as wheel } from "./wheel.js";
+import { node as nearest } from "./nearest.js";
 
 export const nodes = [
   advancedBlend,
@@ -22,4 +23,5 @@ export const nodes = [
   poline,
   scale,
   wheel,
+  nearest,
 ];

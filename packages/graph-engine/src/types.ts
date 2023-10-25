@@ -134,6 +134,7 @@ export enum NodeTypes {
   WHEEL = "studio.tokens.color.wheel",
   POLINE = "studio.tokens.color.poline",
   COLOR_DISTANCE = "studio.tokens.color.distance",
+  NEAREST_TOKENS = "studio.tokens.color.nearestTokens",
 
   //Sets
   FLATTEN = "studio.tokens.sets.flatten",
