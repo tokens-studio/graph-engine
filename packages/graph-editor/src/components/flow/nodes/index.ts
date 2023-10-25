@@ -74,6 +74,7 @@ import ExtractSingleTokenNodes from './sets/extractSingleTokenNode.tsx';
 import GroupToken from './sets/tokenGroup.tsx';
 import ContrastingFromSetNode from './color/contrastingFromSetNode.tsx';
 import UngroupToken from './sets/tokenUngroup.tsx';
+import colorNameNode from './color/colorNameNode.tsx';
 
 export type NodeTypeLookup = Record<string, React.ReactNode | React.FC>;
 export type StateInitializer = Record<string, Record<string, any>>;
@@ -194,4 +195,5 @@ export const {
   GroupToken,
   ContrastingFromSetNode,
   UngroupToken,
+  colorNameNode
 ]);
