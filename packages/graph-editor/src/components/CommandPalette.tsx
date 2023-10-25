@@ -27,8 +27,8 @@ const CommandMenu = ({
 
   const wrapperBounds = reactFlowWrapper.current?.getBoundingClientRect();
 
-  const handleSelectItem = (item: NodeTypes) => {
-    handleSelectNewNodeType({ type: item });
+  const handleSelectItem = (item) => {
+    handleSelectNewNodeType(item);
     dispatch.ui.setShowNodesCmdPalette(false);
   };
 
@@ -103,7 +103,7 @@ const CommandMenu = ({
               const childValues = value.items.map((item) => (
                 <Command.Item
                   key={item.type}
-                  onSelect={() => handleSelectItem(item.type)}
+                  onSelect={() => handleSelectItem(item)}
                   value={item.text.toLowerCase()}
                 >
                   <Stack direction="row" gap={2} align="center">
