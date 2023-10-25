@@ -414,6 +414,11 @@ export const defaultPanelItems: PanelGroup[] = [
         icon: 'x>y',
         text: 'Distance',
       },
+      {
+        type: NodeTypes.COLOR_NAME,
+        icon: 'red',
+        text: 'Name',
+      },
     ],
   },
   {
