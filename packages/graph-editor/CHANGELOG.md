@@ -1,5 +1,18 @@
 # @tokens-studio/graph-editor
 
+## 2.3.0
+
+### Minor Changes
+
+- a7baf6d: add ungroup node, add select single token node, fix input issue on group and extract tokens
+
+### Patch Changes
+
+- 91da25d: Fix an issue with ESM loading not working correctly. Converts the input of the extract Tokens and Extract Single Token Node to use Regex
+- Updated dependencies [a7baf6d]
+- Updated dependencies [91da25d]
+  - @tokens-studio/graph-engine@0.12.0
+
 ## 2.2.0
 
 ### Minor Changes
