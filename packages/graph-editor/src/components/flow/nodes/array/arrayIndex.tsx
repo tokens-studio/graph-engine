@@ -2,11 +2,12 @@ import { Checkbox, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { Handle, HandleContainer } from '../../handles.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/array/indexArray.js';
 import React, { useCallback, useMemo } from 'react';
-
-import { Label } from '@radix-ui/react-context-menu';
+import ContextMenu from '@radix-ui/react-context-menu';
 import { PreviewAny } from '../../preview/any.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import PreviewNumber from '../../preview/number.tsx';
+
+const { Label } = ContextMenu;
 
 const ArrayIndexNode = () => {
   const { input, state, setState, output } = useNode();

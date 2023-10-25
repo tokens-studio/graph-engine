@@ -6,10 +6,10 @@
   "author": "andrew@hyma.io",
   "type": "module",
   "exports": {
-    "./nodes/": {
-      "import": "./dist/esm/nodes/",
-      "require": "./dist/cjs/nodes/",
-      "types": "./dist/esm/nodes/"
+    "./nodes/*": {
+      "import": "./dist/esm/nodes/*",
+      "require": "./dist/cjs/nodes/*",
+      "types": "./dist/esm/nodes/*"
     },
     ".": {
       "import": "./dist/esm/index.js",
@@ -46,7 +46,7 @@
     "colorjs.io": "^0.4.3",
     "culori": "^3.1.2",
     "dot-prop": "^8.0.0",
-    "extract-colors": "^3.0.0",
+    "extract-colors": "^4.0.2",
     "get-pixels": "^3.3.3",
     "is-promise": "^4.0.0",
     "lodash.orderby": "^4.6.0",

@@ -1,5 +1,5 @@
 import { Box, Button, Stack, Text } from '@tokens-studio/ui';
-import { GithubPicker } from 'react-color';
+import ReactCol from 'react-color';
 import React from 'react';
 import {
   NodeProps,
@@ -12,6 +12,8 @@ import {
 import { NodeResizer } from '@reactflow/node-resizer';
 import { useCallback } from 'react';
 import useDetachNodes from './hooks/useDetachNodes.ts';
+
+const { GithubPicker } = ReactCol;
 
 const lineStyle = { borderColor: 'white' };
 const padding = 25;
