@@ -7957,10 +7957,10 @@ external-editor@^3.1.0:
     iconv-lite "^0.4.24"
     tmp "^0.0.33"
 
-extract-colors@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/extract-colors/-/extract-colors-3.0.0.tgz#2c494d1b300c90efd646afe07bf90cae8d1f539b"
-  integrity sha512-foK1lbVagBAfiq+GPzRF6jsyGc2xWg6aWoAicWyi2lYw+I14q/hbkZfZ/9FwU2dzbXYzhxgrZTzzJIbDiOelYg==
+extract-colors@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/extract-colors/-/extract-colors-4.0.2.tgz#041e4dcfa0470c35d90a8137d94dc410754b7e4a"
+  integrity sha512-G7v2C3LJqW38U+yRUPD6nJCjBRfdLD7y8efEHn+1qONt1mhj+OZBpzFmiaS+dZiHU/k0dvgK2kgIkbAllHVbRw==
 
 extsprintf@1.3.0:
   version "1.3.0"
@@ -12603,10 +12603,10 @@ react-drag-reorder@1.2.0:
   resolved "https://registry.yarnpkg.com/react-drag-reorder/-/react-drag-reorder-1.2.0.tgz#218c55e9fdd83869d7ec9c6b9449494b28cbaded"
   integrity sha512-UXpXvRYorBoJOIaniqDXtU/eKWx1YNk6D2efUk+awXAd2xNJS6DSdwEOrwUZU44XsjKYO54/QC1RmiaL2OqiEg==
 
-react-error-boundary@4.0.4:
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-4.0.4.tgz#d2e84505b0a67cec7a6bf33b0146faadfe31597d"
-  integrity sha512-AbqMFx8bCsob8rCHZvJYQ42MQijK0/034RUvan9qrqyJCpazr8d9vKHrysbxcr6odoHLZvQEcYomFPoIqH9fow==
+react-error-boundary@4.0.11, react-error-boundary@^4.0.11:
+  version "4.0.11"
+  resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-4.0.11.tgz#36bf44de7746714725a814630282fee83a7c9a1c"
+  integrity sha512-U13ul67aP5DOSPNSCWQ/eO0AQEYzEFkVljULQIjMV0KlffTAhxuDoBKdO0pb/JZ8mDhMKFZ9NZi0BmLGUiNphw==
   dependencies:
     "@babel/runtime" "^7.12.5"
 
