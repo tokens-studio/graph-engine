@@ -21,7 +21,10 @@ export const process = (input, state) => {
     ...state,
     ...input,
   };
-  return final.tokens.filter((token) => token.name.startsWith(final.name));
+
+  const regex = new RegExp(`${final.name}`);
+
+  return final.tokens.filter((token) => token.name.match(regex));
 };
 
 export const node: NodeDefinition<MappedInput, any> = {

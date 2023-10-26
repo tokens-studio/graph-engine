@@ -21,7 +21,11 @@ export const process = (input, state) => {
     ...state,
     ...input,
   };
-  const index = final.tokens.findIndex((token) => token.name === final.name);
+
+  const regex = new RegExp(`${final.name}`);
+  const index = final.tokens.findIndex(
+    (token) => token.name.match(regex) === final.name
+  );
   const token = final.tokens[index];
   return token ? { ...token, index } : null;
 };

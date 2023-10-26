@@ -1,7 +1,9 @@
 import { Edge, useReactFlow } from 'reactflow';
-import { Graph, alg } from 'graphlib';
 import { useCallback } from 'react';
 import React from 'react';
+import GraphLib from 'graphlib';
+const { Graph, alg } = GraphLib;
+
 export interface IuseIsValidConnection {
   postProcessor?: (params: Edge) => boolean;
 }

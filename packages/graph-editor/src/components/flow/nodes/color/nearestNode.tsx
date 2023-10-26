@@ -1,8 +1,18 @@
 import React, { useMemo, useCallback } from 'react';
 import { Handle, HandleContainer } from '../../handles.tsx';
-import { Stack, Text, Label, Checkbox, Button, DropdownMenu } from '@tokens-studio/ui';
+import {
+  Stack,
+  Text,
+  Label,
+  Checkbox,
+  Button,
+  DropdownMenu,
+} from '@tokens-studio/ui';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
-import { node, WcagVersion } from '@tokens-studio/graph-engine/nodes/color/nearest.js';
+import {
+  node,
+  WcagVersion,
+} from '@tokens-studio/graph-engine/nodes/color/nearest.js';
 import { PreviewAny } from '../../preview/any.tsx';
 
 const NearestTokensNode = () => {
@@ -47,14 +57,19 @@ const NearestTokensNode = () => {
             </DropdownMenu.Trigger>
             <DropdownMenu.Portal>
               <DropdownMenu.Content>
-                {['Contrast', 'Hue', 'Lightness', 'Saturation', 'Distance'].map((compare) => (
-                  <DropdownMenu.Item key={compare} onClick={() => handleCompareChange(compare)}>
-                    {compare}
-                  </DropdownMenu.Item>
-                ))}
+                {['Contrast', 'Hue', 'Lightness', 'Saturation', 'Distance'].map(
+                  (compare) => (
+                    <DropdownMenu.Item
+                      key={compare}
+                      onClick={() => handleCompareChange(compare)}
+                    >
+                      {compare}
+                    </DropdownMenu.Item>
+                  ),
+                )}
               </DropdownMenu.Content>
             </DropdownMenu.Portal>
-          </DropdownMenu> 
+          </DropdownMenu>
         </Handle>
         <Stack direction="row" justify="between">
           <Label>Inverted</Label>

@@ -3,7 +3,7 @@ import { NodeDefinition, NodeTypes } from "../../types.js";
 import { SingleToken } from "@tokens-studio/types";
 import { calcAPCA } from "apca-w3";
 import chroma from "chroma-js";
-import orderBy from 'lodash.orderby';
+import orderBy from "lodash.orderby";
 
 export const type = NodeTypes.NEAREST_TOKENS;
 
@@ -43,16 +43,22 @@ export const process = (input, state: State) => {
         return Math.abs(calcAPCA(color1, color2));
       }
     },
-    Hue: (color1, color2) => Math.abs(chroma(color1).get("hsl.h") - chroma(color2).get("hsl.h")),
-    Lightness: (color1, color2) => Math.abs(chroma(color1).get("hsl.l") - chroma(color2).get("hsl.l")),
-    Saturation: (color1, color2) => Math.abs(chroma(color1).get("hsl.s") - chroma(color2).get("hsl.s")),
+    Hue: (color1, color2) =>
+      Math.abs(chroma(color1).get("hsl.h") - chroma(color2).get("hsl.h")),
+    Lightness: (color1, color2) =>
+      Math.abs(chroma(color1).get("hsl.l") - chroma(color2).get("hsl.l")),
+    Saturation: (color1, color2) =>
+      Math.abs(chroma(color1).get("hsl.s") - chroma(color2).get("hsl.s")),
     Distance: (color1, color2) => chroma.deltaE(color1, color2),
   };
 
   const sortedTokens = orderBy(
     final.tokens,
-    [token => compareFunctions[final.compare](final.sourceColor, token.value)],
-    [final.inverted ? 'desc' : 'asc']
+    [
+      (token) =>
+        compareFunctions[final.compare](final.sourceColor, token.value),
+    ],
+    [final.inverted ? "desc" : "asc"]
   );
 
   return {
@@ -60,10 +66,9 @@ export const process = (input, state: State) => {
   };
 };
 
-
 export const mapOutput = (input, state, processed) => {
-    return processed ? processed : undefined;
-  };
+  return processed ? processed : undefined;
+};
 
 export const node: NodeDefinition<State, any> = {
   description: "Sorts Token Set by distance to Color",
