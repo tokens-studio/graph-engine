@@ -14,7 +14,6 @@ import {
   ResetIcon,
   TrashIcon,
 } from '@radix-ui/react-icons';
-import { Graph } from 'graphlib';
 import { HandleContainerContext } from '../handles.tsx';
 import {
   NodeToolbar,
@@ -29,7 +28,8 @@ import classNames from 'classnames/dedupe.js';
 import useDetachNodes from '../hooks/useDetachNodes.ts';
 import { useSelector } from 'react-redux';
 import { debugMode, obscureDistance } from '#/redux/selectors/settings.ts';
-
+import GraphLib from 'graphlib';
+const { Graph, alg } = GraphLib;
 const CollapserContainer = styled('div', {});
 
 interface Stats {

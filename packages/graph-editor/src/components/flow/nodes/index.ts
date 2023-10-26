@@ -75,6 +75,8 @@ import GroupToken from './sets/tokenGroup.tsx';
 import UngroupToken from './sets/tokenUngroup.tsx';
 import SplitStringNode from './string/split.tsx';
 import ContrastingFromSetNode from './color/contrastingFromSetNode.tsx';
+import colorNameNode from './color/colorNameNode.tsx';
+import NearestTokensNode from './color/nearestNode.tsx';
 
 export type NodeTypeLookup = Record<string, React.ReactNode | React.FC>;
 export type StateInitializer = Record<string, Record<string, any>>;
@@ -196,4 +198,6 @@ export const {
   UngroupToken,
   SplitStringNode,
   ContrastingFromSetNode,
+  colorNameNode,
+  NearestTokensNode,
 ]);

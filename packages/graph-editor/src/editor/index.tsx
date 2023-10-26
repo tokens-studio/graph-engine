@@ -89,6 +89,7 @@ const defaultEdgeOptions = {
 export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
     const {
+      showMenu = true,
       panelItems = defaultPanelItems,
       nodeTypes = defaultNodeTypes,
       stateInitializer = defaultStateInitializer,
@@ -512,25 +513,27 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           >
             <ForceUpdateProvider value={forceUpdate}>
               <Box css={{ display: 'flex', flexDirection: 'row', zIndex: 0 }}>
-                <Stack
-                  direction="column"
-                  gap={2}
-                  css={{
-                    position: 'relative',
-                    backgroundColor: '$bgDefault',
-                    padding: '$1',
-                    borderRight: '1px solid $borderSubtle',
-                  }}
-                >
-                  <IconButton
-                    tooltip="Add nodes (n)"
-                    onClick={handleTogglePanel}
-                    icon={<AppsIcon />}
-                    variant={showNodesPanel ? 'primary' : 'invisible'}
-                  />
-                  {props.menuContent}
-                  <Settings />
-                </Stack>
+                {showMenu && (
+                  <Stack
+                    direction="column"
+                    gap={2}
+                    css={{
+                      position: 'relative',
+                      backgroundColor: '$bgDefault',
+                      padding: '$1',
+                      borderRight: '1px solid $borderSubtle',
+                    }}
+                  >
+                    <IconButton
+                      tooltip="Add nodes (n)"
+                      onClick={handleTogglePanel}
+                      icon={<AppsIcon />}
+                      variant={showNodesPanel ? 'primary' : 'invisible'}
+                    />
+                    {props.menuContent}
+                    <Settings />
+                  </Stack>
+                )}
                 {showNodesPanel && (
                   <Box
                     css={{
