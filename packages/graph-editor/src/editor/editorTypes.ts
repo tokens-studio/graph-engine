@@ -27,6 +27,10 @@ export type EditorProps = {
   children?: React.ReactNode;
   onOutputChange: (output: Record<string, unknown>) => void;
   externalLoader?: (opts: ExternalLoadOptions) => Promise<any> | any;
+  /**
+   * Whether or not to show the menu
+   */
+  showMenu: boolean;
 };
 
 export type EditorState = {
