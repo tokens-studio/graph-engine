@@ -6,10 +6,10 @@ export const PreviewArray = ({ value }) => {
   if (!value) {
     return <DynamicValueText>Missing</DynamicValueText>;
   }
-  // @ts-ignore
+
   return (
     <Tooltip label={JSON.stringify(value)}>
-      <DynamicValueText title={value}>[{value.length}]</DynamicValueText>
+      <DynamicValueText>[{value.length}]</DynamicValueText>
     </Tooltip>
   );
 };
