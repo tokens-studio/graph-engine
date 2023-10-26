@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { Stack, Text, TextInput } from '@tokens-studio/ui';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
-import { node } from '@tokens-studio/graph-engine/nodes/string/join.js';
+import { node } from '@tokens-studio/graph-engine/nodes/string/split.js';
 import { PreviewArray } from '../../preview/array.tsx';
 import { PreviewAny } from '../../preview/any.tsx';
-import { useCallback } from 'react';
 
-const JoinStringNode = () => {
-  const { input, state, setState, output } = useNode();
+const SplitStringNode = () => {
+  const { input, state, output, setState } = useNode();
 
   const setValue = useCallback(
     (ev) => {
@@ -26,9 +25,9 @@ const JoinStringNode = () => {
   return (
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
-        <Handle id="array">
-          <Text>Array</Text>
-          <PreviewArray value={input.array} />
+        <Handle id="string">
+          <Text>String</Text>
+          <PreviewAny value={input.string} />
         </Handle>
 
         <Handle id="separator">
@@ -37,10 +36,9 @@ const JoinStringNode = () => {
             <PreviewAny value={input.separator} />
           ) : (
             <TextInput
-              value={state.seperator}
-              data-key="separator"
-              placeholder="Enter separator"
               onChange={setValue}
+              value={state.separator}
+              data-key="separator"
             />
           )}
         </Handle>
@@ -49,14 +47,14 @@ const JoinStringNode = () => {
       <HandleContainer type="source">
         <Handle id="output">
           <HandleText>Output</HandleText>
-          <PreviewAny value={output?.output} />
+          <PreviewArray value={output?.output} />
         </Handle>
       </HandleContainer>
     </Stack>
   );
 };
 
-export default WrapNode(JoinStringNode, {
+export default WrapNode(SplitStringNode, {
   ...node,
-  title: 'Join String',
+  title: 'Split String',
 });

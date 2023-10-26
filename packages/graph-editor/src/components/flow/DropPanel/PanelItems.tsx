@@ -478,6 +478,11 @@ export const defaultPanelItems: PanelGroup[] = [
         text: 'Join String',
       },
       {
+        type: NodeTypes.SPLIT_STRING,
+        icon: 'a|a',
+        text: 'Split String',
+      },
+      {
         type: NodeTypes.UPPERCASE,
         icon: 'uU',
         text: 'Uppercase',

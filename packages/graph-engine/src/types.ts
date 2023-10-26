@@ -157,6 +157,7 @@ export enum NodeTypes {
   //String
   UPPERCASE = "studio.tokens.string.uppercase",
   JOIN_STRING = "studio.tokens.string.join",
+  SPLIT_STRING = "studio.tokens.string.split",
   LOWER = "studio.tokens.string.lowercase",
   REGEX = "studio.tokens.string.regex",
   PASS_UNIT = "studio.tokens.typing.passUnit",
