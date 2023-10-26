@@ -16,7 +16,7 @@ export const EditorTab = ({ ...rest }) => {
   const [, ref] = useRegisterRef('editor');
   const [, setCodeRef] = useRegisterRef('codeEditor');
   const showExamplePicker = useSelector(showExamplePickerSelector);
-  
+
   const onCloseExamplePicker = useCallback(() => {
     dispatch.ui.setShowExamplePicker(false);
   }, [dispatch.ui]);
@@ -44,11 +44,20 @@ export const EditorTab = ({ ...rest }) => {
         id={'editor'}
         ref={ref}
         onOutputChange={onEditorOutputChange}
-        menuContent={<Menubar toggleTheme={toggleTheme} theme={theme} onLoadExamples={onOpenExamplePicker} />}
+        menuContent={
+          <Menubar
+            toggleTheme={toggleTheme}
+            theme={theme}
+            onLoadExamples={onOpenExamplePicker}
+          />
+        }
         emptyContent={<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />}
         {...rest}
       >
-        <ExamplesPicker open={showExamplePicker} onClose={onCloseExamplePicker} />
+        <ExamplesPicker
+          open={showExamplePicker}
+          onClose={onCloseExamplePicker}
+        />
       </Editor>
       <Stack
         direction="column"

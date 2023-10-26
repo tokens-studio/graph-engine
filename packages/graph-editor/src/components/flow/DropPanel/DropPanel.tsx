@@ -57,7 +57,7 @@ export interface IDropPanel {
 export const DropPanel = React.forwardRef<ImperativeDropPanelRef, IDropPanel>(
   (props: IDropPanel, ref) => {
     const { groups = [], items = [] } = props;
-    const [thePanelItems, setPanelItems] = useState<PanelGroup[]>(items);
+
     const [search, setSearch] = React.useState('');
     const [defaultValue, setDefaultValue] = React.useState<string[]>(groups);
 
@@ -76,66 +76,9 @@ export const DropPanel = React.forwardRef<ImperativeDropPanelRef, IDropPanel>(
       if (e.target.value === '') {
         setDefaultValue([]);
       } else {
-        setDefaultValue(Object.keys(thePanelItems));
+        setDefaultValue(Object.keys(items));
       }
     };
-
-    const accordionItems = React.useMemo(() => {
-      // todo: refactor to just use <details>/<summary>, no need for an accordion if were treating it like a regular expandable pattern
-      return (
-        <StyledAccordion type="multiple" defaultValue={defaultValue}>
-          {thePanelItems.map((value) => {
-            const filteredValues = value.items
-              .filter((item) =>
-                item.text.toLowerCase().includes(search.toLowerCase()),
-              )
-              .map((item) => (
-                <DragItem
-                  type={item.type}
-                  data={item.data || null}
-                  key={item.text}
-                  docs={item.docs}
-                  description={item.description}
-                  title={item.text}
-                  icon={item.icon}
-                >
-                  <NodeEntry icon={item.icon} text={item.text} />
-                </DragItem>
-              ));
-
-            return (
-              <Accordion.Item value={value.key} key={value.key}>
-                <StyledAccordionTrigger>
-                  <Box
-                    css={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: '$fgSubtle',
-                      width: '24px',
-                      height: '24px',
-                    }}
-                  >
-                    <StyledChevron />
-                  </Box>
-                  <Text size="xsmall" bold>
-                    {value.title}
-                  </Text>
-                </StyledAccordionTrigger>
-                <Accordion.Content>
-                  <Stack
-                    direction="column"
-                    css={{ padding: 0, marginBottom: '$4' }}
-                  >
-                    {filteredValues}
-                  </Stack>
-                </Accordion.Content>
-              </Accordion.Item>
-            );
-          })}
-        </StyledAccordion>
-      );
-    }, [defaultValue, thePanelItems, search]);
 
     return (
       <Box
@@ -176,7 +119,57 @@ export const DropPanel = React.forwardRef<ImperativeDropPanelRef, IDropPanel>(
                 onChange={onSearch}
               />
             </Stack>
-            {accordionItems}
+            <StyledAccordion type="multiple" defaultValue={defaultValue}>
+              {items.map((value) => {
+                const filteredValues = value.items
+                  .filter((item) =>
+                    item.text.toLowerCase().includes(search.toLowerCase()),
+                  )
+                  .map((item) => (
+                    <DragItem
+                      type={item.type}
+                      data={item.data || null}
+                      key={item.text}
+                      docs={item.docs}
+                      description={item.description}
+                      title={item.text}
+                      icon={item.icon}
+                    >
+                      <NodeEntry icon={item.icon} text={item.text} />
+                    </DragItem>
+                  ));
+
+                return (
+                  <Accordion.Item value={value.key} key={value.key}>
+                    <StyledAccordionTrigger>
+                      <Box
+                        css={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: '$fgSubtle',
+                          width: '24px',
+                          height: '24px',
+                        }}
+                      >
+                        <StyledChevron />
+                      </Box>
+                      <Text size="xsmall" bold>
+                        {value.title}
+                      </Text>
+                    </StyledAccordionTrigger>
+                    <Accordion.Content>
+                      <Stack
+                        direction="column"
+                        css={{ padding: 0, marginBottom: '$4' }}
+                      >
+                        {filteredValues}
+                      </Stack>
+                    </Accordion.Content>
+                  </Accordion.Item>
+                );
+              })}
+            </StyledAccordion>
           </Stack>
         </Scroll>
       </Box>

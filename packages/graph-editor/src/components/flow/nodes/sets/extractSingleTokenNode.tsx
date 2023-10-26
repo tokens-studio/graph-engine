@@ -31,7 +31,7 @@ const ExtractSingleTokenNode = () => {
         <HandleText>{key}</HandleText>
         <PreviewAny value={value} />
       </Handle>
-    )); 
+    ));
   }, [output]);
 
   return (

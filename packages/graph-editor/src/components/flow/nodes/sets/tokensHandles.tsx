@@ -10,45 +10,47 @@ export const TokenSetHandles = ({ tokens }) => {
     return null;
   }
 
-  return tokens.map((token) => {
-    return (
-      <Stack
-        direction="row"
-        css={{ width: '100%' }}
-        key={token.name}
-        align="center"
-      >
-        <Box
-          css={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            flexGrow: 1,
-            alignItems: 'center',
-            gap: '$2',
-            overflow: 'hidden',
-            width: '100%',
-            paddingLeft: '$3',
-          }}
+  return tokens
+    .filter((x) => !!x)
+    .map((token) => {
+      return (
+        <Stack
+          direction="row"
+          css={{ width: '100%' }}
+          key={token.name}
+          align="center"
         >
-          <PreviewToken token={token} />
-        </Box>
-        <Handle id={token.name}>
           <Box
-            title={getToolTipData(token)}
             css={{
-              fontFamily: 'monospace',
-              fontSize: '$xsmall',
-              color: '$fgSubtle',
-              whiteSpace: 'nowrap',
+              display: 'flex',
+              justifyContent: 'space-between',
+              flexGrow: 1,
+              alignItems: 'center',
+              gap: '$2',
               overflow: 'hidden',
-              maxWidth: '200px',
-              textOverflow: 'ellipsis',
+              width: '100%',
+              paddingLeft: '$3',
             }}
           >
-            {getNodeValue(token)}
+            <PreviewToken token={token} />
           </Box>
-        </Handle>
-      </Stack>
-    );
-  });
+          <Handle id={token.name}>
+            <Box
+              title={getToolTipData(token)}
+              css={{
+                fontFamily: 'monospace',
+                fontSize: '$xsmall',
+                color: '$fgSubtle',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                maxWidth: '200px',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {getNodeValue(token)}
+            </Box>
+          </Handle>
+        </Stack>
+      );
+    });
 };

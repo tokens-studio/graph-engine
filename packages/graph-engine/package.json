@@ -1,15 +1,15 @@
 {
   "name": "@tokens-studio/graph-engine",
-  "version": "0.10.0",
+  "version": "0.12.0",
   "description": "An execution engine to handle Token Studios generators and resolvers",
   "license": "MIT",
   "author": "andrew@hyma.io",
   "type": "module",
   "exports": {
-    "./nodes/": {
-      "import": "./dist/esm/nodes/",
-      "require": "./dist/cjs/nodes/",
-      "types": "./dist/esm/nodes/"
+    "./nodes/*": {
+      "import": "./dist/esm/nodes/*",
+      "require": "./dist/cjs/nodes/*",
+      "types": "./dist/esm/nodes/*"
     },
     ".": {
       "import": "./dist/esm/index.js",
@@ -43,17 +43,18 @@
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
     "color-blind": "^0.1.3",
+    "color-namer": "^1.4.0",
     "colorjs.io": "^0.4.3",
     "culori": "^3.1.2",
     "dot-prop": "^8.0.0",
-    "extract-colors": "^3.0.0",
+    "extract-colors": "^4.0.2",
     "get-pixels": "^3.3.3",
     "is-promise": "^4.0.0",
     "lodash.orderby": "^4.6.0",
     "poline": "^0.7.0",
     "postcss-value-parser": "^4.2.0",
     "react-mosaic-component": "^6.0.1",
-    "reactflow": "11.7.0",
+    "reactflow": "^11.9.4",
     "token-transformer": "^0.0.32"
   },
   "devDependencies": {

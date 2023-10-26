@@ -134,6 +134,8 @@ export enum NodeTypes {
   WHEEL = "studio.tokens.color.wheel",
   POLINE = "studio.tokens.color.poline",
   COLOR_DISTANCE = "studio.tokens.color.distance",
+  COLOR_NAME = "studio.tokens.color.name",
+  NEAREST_TOKENS = "studio.tokens.color.nearestTokens",
 
   //Sets
   FLATTEN = "studio.tokens.sets.flatten",
@@ -155,6 +157,7 @@ export enum NodeTypes {
   //String
   UPPERCASE = "studio.tokens.string.uppercase",
   JOIN_STRING = "studio.tokens.string.join",
+  SPLIT_STRING = "studio.tokens.string.split",
   LOWER = "studio.tokens.string.lowercase",
   REGEX = "studio.tokens.string.regex",
   PASS_UNIT = "studio.tokens.typing.passUnit",

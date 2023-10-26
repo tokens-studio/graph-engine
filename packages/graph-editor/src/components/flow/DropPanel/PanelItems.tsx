@@ -414,6 +414,16 @@ export const defaultPanelItems: PanelGroup[] = [
         icon: 'x>y',
         text: 'Distance',
       },
+      {
+        type: NodeTypes.COLOR_NAME,
+        icon: 'red',
+        text: 'Name',
+      },
+      {
+        type: NodeTypes.NEAREST_TOKENS,
+        icon: 'x>y',
+        text: 'Nearest Tokens',
+      },
     ],
   },
   {
@@ -466,6 +476,11 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.JOIN_STRING,
         icon: 'a+a',
         text: 'Join String',
+      },
+      {
+        type: NodeTypes.SPLIT_STRING,
+        icon: 'a|a',
+        text: 'Split String',
       },
       {
         type: NodeTypes.UPPERCASE,
