@@ -62,7 +62,7 @@ export const uiState = createModel<RootModel>()({
         ...state,
         showExamplePicker,
       };
-    }
+    },
   },
   effects: (dispatch) => ({
     toggleTheme(_, state) {
