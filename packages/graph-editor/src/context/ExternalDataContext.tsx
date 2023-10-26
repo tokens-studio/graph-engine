@@ -11,13 +11,11 @@ export interface EditorExternalSet {
 
 type ExternalDataContextType = {
   tokenSets?: EditorExternalSet[];
-  loadingTokenSets: boolean;
   loadSetTokens: (identifier: string) => Promise<ExternalSetData>;
 };
 
 const ExternalDataContext = createContext<ExternalDataContextType>({
   tokenSets: undefined,
-  loadingTokenSets: false,
   loadSetTokens: async () => ({ tokens: [] }),
 });
 
@@ -25,16 +23,14 @@ function ExternalDataContextProvider({
   children,
   tokenSets,
   loadSetTokens,
-  loadingTokenSets,
 }: {
   children: React.ReactNode;
   tokenSets?: EditorExternalSet[];
-  loadingTokenSets: boolean;
   loadSetTokens: (identifier: string) => Promise<ExternalSetData>;
 }) {
   const providerValue = useMemo(
-    () => ({ tokenSets, loadSetTokens, loadingTokenSets }),
-    [tokenSets, loadSetTokens, loadingTokenSets],
+    () => ({ tokenSets, loadSetTokens }),
+    [tokenSets, loadSetTokens],
   );
 
   return (

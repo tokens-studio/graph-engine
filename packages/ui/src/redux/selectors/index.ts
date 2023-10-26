@@ -9,7 +9,7 @@ export const currentTab = createSelector(ui, (state) => state.currentTab);
 export const outputSelector = (state: RootState) => state.editorOutput;
 
 export const showJourneySelector = (state: RootState) =>
-state.journey.showJourney;
+  state.journey.showJourney;
 
 export const showExamplePickerSelector = (state: RootState) =>
-state.ui.showExamplePicker;
+  state.ui.showExamplePicker;
