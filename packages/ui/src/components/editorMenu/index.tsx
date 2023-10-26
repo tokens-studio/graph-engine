@@ -23,7 +23,7 @@ const imageHeight = 768;
 export const Menubar = ({
   toggleTheme,
   theme,
-  onLoadExamples
+  onLoadExamples,
 }: {
   toggleTheme: () => void;
   theme: string;

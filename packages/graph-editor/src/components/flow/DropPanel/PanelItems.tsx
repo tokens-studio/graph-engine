@@ -419,6 +419,11 @@ export const defaultPanelItems: PanelGroup[] = [
         icon: 'red',
         text: 'Name',
       },
+      {
+        type: NodeTypes.NEAREST_TOKENS,
+        icon: 'x>y',
+        text: 'Nearest Tokens',
+      },
     ],
   },
   {

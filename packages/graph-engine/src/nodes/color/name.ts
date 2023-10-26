@@ -20,14 +20,13 @@ type Inputs = {
 const process = (input: Inputs, state) => {
   const color = input.color || state.color;
 
-  const names = namer(color, { pick: ["html"] })
+  const names = namer(color, { pick: ["html"] });
 
-  return names.html[0].name; 
+  return names.html[0].name;
 };
 
 export const node: NodeDefinition<Inputs> = {
-  description:
-    "Returns the name of the color",
+  description: "Returns the name of the color",
   type,
   process,
 };
