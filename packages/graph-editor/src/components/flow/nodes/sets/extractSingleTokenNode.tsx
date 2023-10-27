@@ -1,12 +1,21 @@
 import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { PreviewAny } from '../../preview/any.tsx';
-import { Stack, Text, TextInput } from '@tokens-studio/ui';
+import { Checkbox, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/set/extractSingleToken.js';
 import React, { useMemo, useCallback } from 'react';
 
 const ExtractSingleTokenNode = () => {
   const { input, state, output, setState } = useNode();
+  const setField = useCallback(
+    (key, value) => {
+      setState((state) => ({
+        ...state,
+        [key]: value,
+      }));
+    },
+    [setState],
+  );
 
   const setValue = useCallback(
     (ev) => {
@@ -48,6 +57,13 @@ const ExtractSingleTokenNode = () => {
           ) : (
             <TextInput onChange={setValue} value={state.name} data-key="name" />
           )}
+        </Handle>
+        <Handle id="enableRegex">
+          <HandleText>Enable Regex</HandleText>
+          <Checkbox
+            checked={state.enableRegex}
+            onCheckedChange={(checked) => setField('enableRegex', checked)}
+          />
         </Handle>
       </HandleContainer>
       <HandleContainer type="source">{entries}</HandleContainer>
