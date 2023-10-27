@@ -1,5 +1,24 @@
 # @tokens-studio/graph-editor
 
+## 2.4.0
+
+### Minor Changes
+
+- 00941fe: Add an option to show or hide the side menu
+- c0fcbd6: Add Node Nearest to Color
+- 4296c47: Add color name node
+- bf4f5a1: Add regex support to select tokens node
+- 53b29d3: Add split string node
+
+### Patch Changes
+
+- 35e0533: showMenu is an optional value in the editor to hide the default menu sidebar
+- Updated dependencies [c0fcbd6]
+- Updated dependencies [4296c47]
+- Updated dependencies [bf4f5a1]
+- Updated dependencies [53b29d3]
+  - @tokens-studio/graph-engine@0.13.0
+
 ## 2.3.0
 
 ### Minor Changes
