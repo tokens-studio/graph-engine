@@ -1,6 +1,7 @@
 import { Edge, Node } from 'reactflow';
 import { EditorEdge, EditorNode } from '@tokens-studio/graph-editor';
 export type GraphFile = {
+  version: string;
   nodes: Node[];
   edges: Edge[];
   state: {

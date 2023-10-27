@@ -404,7 +404,7 @@ function Permutate() {
 
     const inputCombinations = getCombinations(inputArrays);
 
-    const minimizedGraph = minimizeFlowGraph(graph as FlowGraph);
+    const minimizedGraph = minimizeFlowGraph(graph as unknown as FlowGraph);
 
     const promises = inputCombinations.map(async (combination) => {
       const inputValues = combination.reduce((result, value, index) => {
