@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 0.13.1
+
+### Patch Changes
+
+- cbc7ab3: Fixes the extract single token node which was never extracting the token
+
 ## 0.13.0
 
 ### Minor Changes
