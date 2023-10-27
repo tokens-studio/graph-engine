@@ -1,5 +1,14 @@
 # @tokens-studio/graph-engine
 
+## 0.13.0
+
+### Minor Changes
+
+- c0fcbd6: Add Node Nearest to Color
+- 4296c47: Add color name node
+- bf4f5a1: Add regex support to select tokens node
+- 53b29d3: Add split string node
+
 ## 0.12.0
 
 ### Minor Changes
