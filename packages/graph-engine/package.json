@@ -20,7 +20,6 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm.js",
   "files": [
-    "cli",
     "dist"
   ],
   "scripts": {
@@ -55,6 +54,7 @@
     "postcss-value-parser": "^4.2.0",
     "react-mosaic-component": "^6.0.1",
     "reactflow": "^11.9.4",
+    "semver-compare": "^1.0.0",
     "token-transformer": "^0.0.32"
   },
   "devDependencies": {

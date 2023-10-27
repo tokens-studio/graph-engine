@@ -1,6 +1,7 @@
 import type { Edge, Node } from "reactflow";
 
 export type FlowGraph = {
+  version: string;
   nodes: Node[];
   edges: Edge[];
   state: Record<string, any>;
@@ -21,6 +22,7 @@ export type MinimizedEdge = {
 };
 
 export type MinimizedFlowGraph = {
+  version: string;
   nodes: MinimizedNode[];
   edges: MinimizedEdge[];
 };
