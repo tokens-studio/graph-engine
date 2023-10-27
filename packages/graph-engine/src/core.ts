@@ -10,6 +10,12 @@ import {
 } from "./graph/index.js";
 import { NodeTypes } from "./types.js";
 import isPromise from "is-promise";
+import cmp from "semver-compare";
+
+/**
+ * The version of the current package, used to aid with migrations
+ */
+export const VERSION = "0.12.0";
 
 type Lookup = {
   [key: string]: NodeDefinition<any, any, any>;
@@ -36,6 +42,10 @@ export interface ExecuteOptions {
    * A function responsible for loading externally requested data. This can be used to source token sets, etc
    */
   externalLoader?: ExternalLoader;
+  /**
+   * If true, no warnings will be logged
+   */
+  quiet?: boolean;
 }
 
 export interface NodeExecutionOptions {
@@ -104,7 +114,14 @@ export const executeNode = async (opts: NodeExecutionOptions) => {
 // Perform boxing //TODO
 
 export const execute = async (opts: ExecuteOptions) => {
-  const { graph, inputValues, nodes } = opts;
+  const { graph, inputValues, nodes, quiet } = opts;
+
+  //Previously graphs didn't contain the version
+  if (!quiet && cmp(graph.version || "0.0.0", VERSION) == -1) {
+    console.warn(
+      `Graph version is older than engine version. This might cause unexpected behaviour. Graph version: ${graph.version}, Engine version: ${VERSION}`
+    );
+  }
 
   //First convert to Graphlib compat
   const g = convertFlowGraphToGraphlib(graph);
@@ -200,13 +217,19 @@ export const execute = async (opts: ExecuteOptions) => {
   return stateTracker[terminals.output.id].output;
 };
 
+interface CleanOptions {
+  quiet?: boolean;
+}
 /**
  * Forcefully cleans a graph to remove dangling edges
  * @param graph
  */
-export const clean = (graph: FlowGraph): FlowGraph => {
+export const clean = (
+  graph: FlowGraph,
+  opts: CleanOptions = { quiet: false }
+): FlowGraph => {
   const newGraph = { ...graph };
-  const minimized = minimizeFlowGraph(newGraph);
+  const minimized = minimizeFlowGraph(newGraph, opts);
   const nodeLookup = flowGraphToNodeLookup(minimized);
 
   newGraph.edges = newGraph.edges.filter((edge) => {

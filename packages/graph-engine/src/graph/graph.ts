@@ -22,13 +22,20 @@ function genEdgeId(
   return `${v}:${sourceHandle}→${w}:${targetHandle}}`;
 }
 
+interface IMinimizedFlowGraph {
+  quiet?: boolean;
+}
+
 /**
  * Converts the UI graph to a minimized graph that can be used for execution.
  * The UI graph contains additional information like positioning,etc that is not needed for execution
  * @param graph
  * @returns
  */
-export const minimizeFlowGraph = (graph: FlowGraph): MinimizedFlowGraph => {
+export const minimizeFlowGraph = (
+  graph: FlowGraph,
+  opts: IMinimizedFlowGraph = { quiet: false }
+): MinimizedFlowGraph => {
   const state = graph.state || {};
 
   const nodeLookup = {};
@@ -45,6 +52,7 @@ export const minimizeFlowGraph = (graph: FlowGraph): MinimizedFlowGraph => {
   });
 
   return {
+    version: graph.version,
     nodes,
     edges: graph.edges.reduce((acc, x) => {
       if (!nodeLookup[x.source] || !nodeLookup[x.target]) {

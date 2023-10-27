@@ -30,7 +30,7 @@ export type EditorProps = {
   /**
    * Whether or not to show the menu
    */
-  showMenu: boolean;
+  showMenu?: boolean;
 };
 
 export type EditorState = {

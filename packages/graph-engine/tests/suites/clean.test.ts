@@ -4,6 +4,7 @@ describe("clean", () => {
   // Tests that clean function returns a new graph object with no dangling edges when given a graph with no dangling edges
   it("should return the same graph object when given a graph with no dangling edges", () => {
     const graph = {
+      version: "100.0.0",
       nodes: [
         { id: "1", type: "x", data: {}, position: { x: 0, y: 0 } },
         { id: "2", type: "y", data: {}, position: { x: 0, y: 0 } },
@@ -25,6 +26,7 @@ describe("clean", () => {
 
   it("should return the same graph object when given a graph with only one node and no edges", () => {
     const graph = {
+      version: "100.0.0",
       nodes: [{ id: "1", type: "x", data: {}, position: { x: 0, y: 0 } }],
       edges: [],
       state: {},
@@ -35,6 +37,7 @@ describe("clean", () => {
 
   it("should return a new graph object with no dangling edges when given a graph with one node and one dangling edge", () => {
     const graph = {
+      version: "100.0.0",
       nodes: [{ id: "1", type: "x", data: {}, position: { x: 0, y: 0 } }],
       edges: [
         {
@@ -48,11 +51,12 @@ describe("clean", () => {
       state: {},
     };
     const expected = {
+      version: "100.0.0",
       nodes: [{ id: "1", type: "x", data: {}, position: { x: 0, y: 0 } }],
       edges: [],
       state: {},
     };
-    const result = clean(graph);
+    const result = clean(graph, { quiet: true });
     expect(result).toEqual(expected);
   });
 });
