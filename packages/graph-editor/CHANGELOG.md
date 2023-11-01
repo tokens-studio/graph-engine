@@ -1,5 +1,11 @@
 # @tokens-studio/graph-editor
 
+## 2.4.1
+
+### Patch Changes
+
+- ed4bdcb: Fixes an issue with the EditorProps which did not allow additional properties and forced certain properties to be required when they were optional
+
 ## 2.4.0
 
 ### Minor Changes
