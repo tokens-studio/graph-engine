@@ -13,7 +13,8 @@ import isPromise from "is-promise";
 import cmp from "semver-compare";
 
 /**
- * The version of the current package, used to aid with migrations
+ * The version of the current package, used to aid with migrations.
+ * Note this needs to be updated in accordance with changes to internal engine data structures.
  */
 export const VERSION = "0.12.0";
 

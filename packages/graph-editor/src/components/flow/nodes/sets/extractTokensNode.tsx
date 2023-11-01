@@ -24,13 +24,17 @@ const TokenGroupNode = () => {
         <Handle id="tokens">
           <HandleText>Tokens</HandleText>
           <PreviewAny value={input.tokens} />
-        </Handle> 
+        </Handle>
         <Handle id="name">
           <HandleText>Name</HandleText>
           {input.name !== undefined ? (
             <Text>{input.name}</Text>
           ) : (
-            <TextInput onChange={(e) => setField('name', e.target.value)} value={state.name} data-key="name" />
+            <TextInput
+              onChange={(e) => setField('name', e.target.value)}
+              value={state.name}
+              data-key="name"
+            />
           )}
         </Handle>
         <Handle id="enableRegex">

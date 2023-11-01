@@ -71,6 +71,8 @@ const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
 const panOnDrag = [1, 2];
 
+const noop = () => {};
+
 const edgeTypes = {
   custom: CustomEdge,
 } as unknown as EdgeTypes;
@@ -626,7 +628,9 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
     return (
       <ReduxProvider>
         <ReactFlowProvider>
-          <OnOutputChangeContextProvider onOutputChange={onOutputChange}>
+          <OnOutputChangeContextProvider
+            onOutputChange={onOutputChange || noop}
+          >
             <ExternalLoaderProvider externalLoader={externalLoader}>
               <Tooltip.Provider>
                 <EditorApp {...props} ref={ref} />

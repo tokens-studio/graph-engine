@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useMemo } from 'react';
 
-type OuptpuChangeContextType = {
+type OutputChangeContextType = {
   onOutputChange: (output: Record<string, unknown>) => void;
 };
 
-const OutputChangeContext = createContext<OuptpuChangeContextType | undefined>(
+const OutputChangeContext = createContext<OutputChangeContextType | undefined>(
   undefined,
 );
 
