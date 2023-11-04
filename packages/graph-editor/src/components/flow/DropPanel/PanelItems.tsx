@@ -410,6 +410,11 @@ export const defaultPanelItems: PanelGroup[] = [
         icon: 'x>y',
         text: 'Distance',
       },
+      {
+        type: NodeTypes.SET_COLOR_VALUE,
+        icon: '+/-l',
+        text: 'Set Color Value',
+      },
     ],
   },
   {

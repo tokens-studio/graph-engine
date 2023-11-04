@@ -11,11 +11,10 @@ import { Preview as ComponentPreview } from '#/components/preview/index.tsx';
 import { LiveEditor, LiveError } from 'react-live';
 import { MinusIcon, PictureInPictureIcon, VideoIcon } from '@iconicicons/react';
 import Code3Icon from '#/assets/svgs/code-3.svg';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { usePreviewContext } from '#/providers/preview.tsx';
 
 export const Preview = ({ codeRef }) => {
-  const { setCode, code } = usePreviewContext();
   const [isVisible, setIsVisible] = useState(false);
   const [visibleTab, setVisibleTab] = useState('preview');
 
@@ -35,13 +34,6 @@ export const Preview = ({ codeRef }) => {
   const handleToggleVisible = useCallback(() => {
     setIsVisible(!isVisible);
   }, [isVisible, setIsVisible]);
-
-  const handleChangeCode = useCallback(
-    (code) => {
-      setCode(code);
-    },
-    [setCode],
-  );
 
   return (
     <Box css={{ display: 'flex', flexDirection: 'row-reverse' }}>
@@ -161,7 +153,7 @@ export const Preview = ({ codeRef }) => {
               >
                 <LiveError />
                 <div ref={codeRef}>
-                  <LiveEditor onChange={handleChangeCode} />
+                  <LiveEditor />
                 </div>
               </Stack>
             </Box>

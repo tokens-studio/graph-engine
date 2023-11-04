@@ -70,7 +70,7 @@ const Wrapper = () => {
             enableTypeScript={true}
             language="jsx"
           >
-            <EditorTab setTheCode={setTheCode} />
+            <EditorTab />
           </LiveProvider>
         </PreviewContextProvider>
       </Box>

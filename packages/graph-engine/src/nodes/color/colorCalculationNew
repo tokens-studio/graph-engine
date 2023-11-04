@@ -1,0 +1,72 @@
+// Import stylesheets
+import './style.css';
+import { Bezier } from 'bezier-js';
+import chroma from 'chroma-js';
+import Color from 'colorjs.io';
+
+function transformArray(array, endsAtZero) {
+  if (array.length !== 4) {
+    throw new Error('Input array must have exactly four elements');
+  }
+
+  return [
+    { x: 0, y: 0 },
+    { x: array[0], y: array[1] },
+    { x: array[2], y: array[3] },
+    { x: 1, y: endsAtZero ? 0 : 1 },
+  ];
+}
+
+function generateColorStops(
+  numStops,
+  baseColor,
+  saturationCurve,
+  luminanceCurve
+) {
+  const colorStops = [];
+
+  console.log('l curve', luminanceCurve);
+
+  for (let i = 0; i < numStops; i++) {
+    const t = i / (numStops - 1);
+    const luminance = luminanceCurve.get(t).y;
+    const saturation = saturationCurve.get(t).y;
+    const saturationNormalized = saturation * 0.37;
+
+    // Use Chroma.js to set the luminance while preserving the base color
+    const interpolatedColor = new Color(baseColor);
+    interpolatedColor.oklch[0] = luminance;
+    interpolatedColor.oklch[1] = saturationNormalized;
+    colorStops.push({
+      color: interpolatedColor,
+      t: Math.round(t * 100) / 100,
+      luminance: Math.round(luminance * 100) / 100,
+      saturation: Math.round(saturation * 100) / 100,
+    });
+  }
+
+  return colorStops;
+}
+
+const numStops = 10;
+const baseColor = '#ff0000'; // You can set your base color
+const saturationCurve = new Bezier(transformArray([0, 1, 1, 0], true));
+const luminanceCurve = new Bezier(transformArray([0, 0.5, 0.5, 1]));
+
+const colorStops = generateColorStops(
+  numStops,
+  baseColor,
+  saturationCurve,
+  luminanceCurve
+);
+
+const renderColorStops = () => {
+  return colorStops.map(
+    (color, index) =>
+      `<div style="background-color: ${color.color}">T: ${color.t}, L: ${color.luminance}, S: ${color.saturation}`
+  );
+};
+
+// Write Javascript code!
+const appDiv = document.getElementById('app');
+appDiv.innerHTML = `<div>${renderColorStops()}</div>`;

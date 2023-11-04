@@ -12,23 +12,10 @@ import PreviewColor from '../../preview/color.tsx';
 import PreviewNumber from '../../preview/number.tsx';
 import React, { useCallback, useMemo } from 'react';
 import { ColorWheelIcon } from '@radix-ui/react-icons';
-import { HexColorPicker } from "react-colorful";
-import InputPopover from '#/components/InputPopover.tsx';
 import { BezierCurveEditor } from '#/components/BezierCurveEditor.tsx';
 import { BezierIcon } from '#/components/icons/BezierIcon.tsx';
 import Color from "colorjs.io"
-
-function ColorPickerPopover({ value, onChange }) {
-  return (
-  <InputPopover trigger={<Box as="button" css={{all: 'unset', cursor: 'pointer', borderRadius: '$small', backgroundColor: value, width: 16, height: 16, border: '1px solid $borderMuted'}} type="button" />}>
-    <ColorPicker value={value} onChange={onChange} />
-    {value}
-  </InputPopover>)
-}
-
-function ColorPicker({ value, onChange }) {  
-  return <HexColorPicker color={value} onChange={onChange} />;
-}
+import { ColorPickerPopover } from '#/components/ColorPickerPopover.tsx';
 
 // We introduce a isSettings prop to the node so we dont have to build the contents twice. Another way to do this would be to have a separate node for the settings and the node itself. Or.. to understand "where am i rendered" in the node itself, but that would be a bit more complex.
 const ScaleNode = ({ isSettings }: { isSettings?: boolean }) => {
