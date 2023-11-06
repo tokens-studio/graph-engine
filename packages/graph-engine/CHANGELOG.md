@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 0.14.0
+
+### Minor Changes
+
+- bd2346b: Exposes an extra output in token sets to allow users to interact with the set as an object
+
 ## 0.13.1
 
 ### Patch Changes
