@@ -12,6 +12,7 @@ import { IResolvedToken, flatTokensRestoreToMap } from '#/utils/index.ts';
 import { NodeProps } from 'reactflow';
 import {
   SET_ID,
+  EXTERNAL_OBJECT_ID,
   node,
 } from '@tokens-studio/graph-engine/nodes/set/inlineTokens.js';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
@@ -99,7 +100,10 @@ const InlineSetNode: FC<NodeProps<TokenSetData>> = ({ id, data }) => {
         </HandleContainer>
         <HandleContainer type="source">
           <Handle asMain id={SET_ID}>
-            <HandleText>Set</HandleText>
+            <HandleText>As Token Array</HandleText>
+          </Handle>
+          <Handle asMain id={EXTERNAL_OBJECT_ID}>
+            <HandleText>As Token Object</HandleText>
           </Handle>
         </HandleContainer>
       </Stack>
