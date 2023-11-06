@@ -1,5 +1,17 @@
 # @tokens-studio/graph-editor
 
+## 2.6.0
+
+### Minor Changes
+
+- 612bc38: Exposes an extra output in token sets to allow users to interact with the set as an object
+
+### Patch Changes
+
+- Updated dependencies [612bc38]
+- Updated dependencies [612bc38]
+  - @tokens-studio/graph-engine@0.15.0
+
 ## 2.5.0
 
 ### Minor Changes
