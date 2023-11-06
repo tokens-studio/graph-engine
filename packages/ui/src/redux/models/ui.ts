@@ -1,13 +1,30 @@
 import { RootModel } from './root.ts';
 import { createModel } from '@rematch/core';
-import { v4 as uuidv4 } from 'uuid';
-
 export type Tab = {
   name: string;
   id: string;
 };
 
+export type ConfirmProps = {
+  show?: boolean;
+  text?: string;
+  description?: React.ReactNode;
+  choices?: {
+    key: string;
+    label: string;
+    enabled?: boolean;
+    unique?: boolean;
+  }[];
+  confirmAction?: string;
+  cancelAction?: string;
+  input?: {
+    type: 'text';
+    placeholder: string;
+  };
+};
+
 export interface UIState {
+  confirmState: ConfirmProps;
   currentTab: Tab;
   tabs: Tab[];
   theme: string;

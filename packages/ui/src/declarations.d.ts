@@ -1,3 +1,4 @@
 declare module '*.svg' {
-  export = React.PureComponent;
+  const content: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
+  export default content;
 }

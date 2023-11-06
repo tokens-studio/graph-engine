@@ -7,6 +7,8 @@ import { JourneyState } from './models/journey.ts';
 import { OutputState } from './models/output.tsx';
 import { RefState } from './models/refs.ts';
 import { GraphState } from './models/graphs.ts';
+import { StorageState } from './models/storage.ts';
+import { BranchState } from './models/branch.ts';
 
 const persistConfig = {
   key: 'root',
@@ -28,7 +30,9 @@ export const store = init({
 
 export type Dispatch = RematchDispatch<RootModel>;
 export type RootState = {
+  storage: StorageState;
   ui: UIState;
+  branch: BranchState;
   journey: JourneyState;
   editorOutput: OutputState;
   refs: RefState;
