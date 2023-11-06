@@ -45,7 +45,7 @@
     "color-namer": "^1.4.0",
     "colorjs.io": "^0.4.3",
     "culori": "^3.1.2",
-    "dot-prop": "^8.0.0",
+    "dot-prop": "^8.0.2",
     "extract-colors": "^4.0.2",
     "get-pixels": "^3.3.3",
     "is-promise": "^4.0.0",

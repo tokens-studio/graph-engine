@@ -1,5 +1,5 @@
 import { NodeDefinition, NodeTypes } from "../../types.js";
-import { SingleToken } from "@tokens-studio/types";
+import { setProperty } from "dot-prop";
 
 export const type = NodeTypes.SET;
 
@@ -25,10 +25,7 @@ const external = (_, state) => {
 };
 
 export const process = (input: Input, state: State, ephemeral: Ephemeral) => {
-  return ephemeral.tokens;
-};
-
-export const mapOutput = (input: Input, state, tokens: SingleToken[]) => {
+  let tokens = ephemeral.tokens || [];
   if (!tokens) return {};
 
   const map = tokens.reduce(
@@ -37,8 +34,9 @@ export const mapOutput = (input: Input, state, tokens: SingleToken[]) => {
       if (!item) {
         return acc;
       }
-      acc.values[item.name] = item.value;
-      acc.raw[item.name] = item;
+      const { name, ...rest } = item;
+      acc.values[name] = item.value;
+      setProperty(acc.raw, name, rest);
       return acc;
     },
     {
@@ -54,7 +52,9 @@ export const mapOutput = (input: Input, state, tokens: SingleToken[]) => {
   };
 };
 
-export const node: NodeDefinition<Input, State, SingleToken[]> = {
+export const mapOutput = (input: Input, state, output) => output;
+
+export const node: NodeDefinition<Input, State> = {
   description: "Retrieves and exposes a remote set of tokens",
   type,
   process,

@@ -7035,7 +7035,7 @@ dot-prop@8.0.0:
   dependencies:
     type-fest "^3.8.0"
 
-dot-prop@^8.0.0:
+dot-prop@^8.0.2:
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-8.0.2.tgz#afda6866610684dd155a96538f8efcdf78a27f18"
   integrity sha512-xaBe6ZT4DHPkg0k4Ytbvn5xoxgpG0jOS1dYxSOwAHPuNLjP3/OzN0gH55SrLqpx8cBfSaVt91lXYkApjb+nYdQ==

@@ -26,7 +26,13 @@ const SpreadNode = () => {
           <Text>Input</Text>
         </Handle>
       </HandleContainer>
-      <HandleContainer type="source">{outputs}</HandleContainer>
+      <HandleContainer type="source">
+        {/* This is a horrible hack because of a weird bug in reactflow when there is a single handle with the spread node*/}
+        <div style={{ opacity: 0 }}>
+          <Handle id="" />
+        </div>
+        {outputs}
+      </HandleContainer>
     </Stack>
   );
 };
