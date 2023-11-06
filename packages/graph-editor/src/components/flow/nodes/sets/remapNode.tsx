@@ -166,7 +166,7 @@ const RemapNode = () => {
       };
     });
     ref.current += 1;
-  }, []);
+  }, [setState]);
 
   return (
     <Stack direction="column" gap={2}>

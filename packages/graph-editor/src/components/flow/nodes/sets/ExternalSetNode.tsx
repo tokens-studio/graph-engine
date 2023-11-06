@@ -6,6 +6,7 @@ import { flatTokensRestoreToMap } from '#/utils/index.ts';
 import { NodeProps } from 'reactflow';
 import {
   EXTERNAL_SET_ID,
+  EXTERNAL_OBJECT_ID,
   node,
 } from '@tokens-studio/graph-engine/nodes/set/externalTokens.js';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
@@ -90,7 +91,10 @@ const ExternalSetNode: FC<NodeProps<EditorExternalSet>> = () => {
       <Stack direction="row" gap={2} justify="end">
         <HandleContainer type="source">
           <Handle id={EXTERNAL_SET_ID}>
-            <HandleText>Set</HandleText>
+            <HandleText>As Token Array</HandleText>
+          </Handle>
+          <Handle id={EXTERNAL_OBJECT_ID}>
+            <HandleText>As Token Object</HandleText>
           </Handle>
         </HandleContainer>
       </Stack>

@@ -18,6 +18,7 @@ export const defaults: State = {
 };
 
 export const EXTERNAL_SET_ID = "as Set";
+export const EXTERNAL_OBJECT_ID = "as Object";
 
 const external = (_, state) => {
   return state;
@@ -30,18 +31,26 @@ export const process = (input: Input, state: State, ephemeral: Ephemeral) => {
 export const mapOutput = (input: Input, state, tokens: SingleToken[]) => {
   if (!tokens) return {};
 
-  const map = tokens.reduce((acc, item) => {
-    //Some protection against undefined which can happen if the user deletes a token
-    if (!item) {
+  const map = tokens.reduce(
+    (acc, item) => {
+      //Some protection against undefined which can happen if the user deletes a token
+      if (!item) {
+        return acc;
+      }
+      acc.values[item.name] = item.value;
+      acc.raw[item.name] = item;
       return acc;
+    },
+    {
+      raw: {},
+      values: {},
     }
-    acc[item.name] = item.value;
-    return acc;
-  }, {});
+  );
 
   return {
     [EXTERNAL_SET_ID]: tokens,
-    ...map,
+    [EXTERNAL_OBJECT_ID]: map.raw,
+    ...map.values,
   };
 };
 

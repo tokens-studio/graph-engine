@@ -19,6 +19,7 @@ export const defaults: State = {
 };
 
 export const SET_ID = "as Set";
+export const EXTERNAL_OBJECT_ID = "as Object";
 
 export const process = (input: Input, state: State) => {
   //Override with state if defined
@@ -29,18 +30,26 @@ export const process = (input: Input, state: State) => {
 };
 
 export const mapOutput = (input: Input, state, processed: SingleToken[]) => {
-  const map = processed.reduce((acc, item) => {
-    //Some protection against undefined which can happen if the user deletes a token
-    if (!item) {
+  const map = processed.reduce(
+    (acc, item) => {
+      //Some protection against undefined which can happen if the user deletes a token
+      if (!item) {
+        return acc;
+      }
+      acc.values[item.name] = item.value;
+      acc.raw[item.name] = item;
       return acc;
+    },
+    {
+      raw: {},
+      values: {},
     }
-    acc[item.name] = item.value;
-    return acc;
-  }, {});
+  );
 
   return {
     [SET_ID]: processed,
-    ...map,
+    [EXTERNAL_OBJECT_ID]: map.raw,
+    ...map.values,
   };
 };
 
