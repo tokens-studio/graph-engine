@@ -1,5 +1,15 @@
 # @tokens-studio/graph-engine-ui
 
+## 2.0.3
+
+### Patch Changes
+
+- 612bc38: Updated the version of the reactflow used to prevent zustand provider problems
+- Updated dependencies [612bc38]
+- Updated dependencies [612bc38]
+  - @tokens-studio/graph-engine@0.15.0
+  - @tokens-studio/graph-editor@2.6.0
+
 ## 2.0.2
 
 ### Patch Changes
