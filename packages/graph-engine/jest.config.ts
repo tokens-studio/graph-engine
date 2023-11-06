@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { pathsToModuleNameMapper } from "ts-jest";
 import tsconfig from "./tsconfig.json";
 

@@ -34,7 +34,7 @@ export const settingsState = createModel<RootModel>()({
     layoutType: LayoutType.dagre,
     showGrid: true,
     snapGrid: false,
-    debugMode: true,
+    debugMode: false,
   } as SettingsState,
   reducers: {
     setSnapGrid(state, snapGrid: boolean) {
