@@ -5,8 +5,7 @@
  */
 
 import { NodeDefinition, NodeTypes } from "#/types.js";
-import { calcAPCA } from "apca-w3";
-import chroma from "chroma-js";
+import Color from "colorjs.io";
 
 export const type = NodeTypes.CONTRASTING;
 
@@ -46,13 +45,16 @@ export const process = (input, state: State): contrastingValues => {
   };
 
   let a, b;
+  let colorA = new Color(final.a);
+  let colorB = new Color(final.b);
+  let background = new Color(final.background);
 
   if (final.wcag == WcagVersion.V2) {
-    a = chroma.contrast(final.a, final.background);
-    b = chroma.contrast(final.b, final.background);
+    a = background.contrast(colorA, "WCAG21");
+    b = background.contrast(colorB, "WCAG21");
   } else {
-    a = Math.abs(calcAPCA(final.a, final.background));
-    b = Math.abs(calcAPCA(final.b, final.background));
+    a = Math.abs(background.contrast(colorA, "APCA"));
+    b = Math.abs(background.contrast(colorB, "APCA"));
   }
 
   let contrast: contrastingValues;

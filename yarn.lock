@@ -5256,13 +5256,6 @@ anymatch@^3.0.3, anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-apca-w3@^0.1.9:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/apca-w3/-/apca-w3-0.1.9.tgz#5fe32d4a0bc6295f89532a856dbb81a4d6818fc5"
-  integrity sha512-Zrf6AeBeQjNe/fxK7U1jCo5zfdjDl6T4/kdw5Xlky3G7u+EJTZkyItjMYQGtwf9pkftsINxcYyOpuLkzKf1ITQ==
-  dependencies:
-    colorparsley "^0.1.8"
-
 arch@^2.1.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/arch/-/arch-2.2.0.tgz#1bc47818f305764f23ab3306b0bfc086c5a29d11"
@@ -6107,11 +6100,6 @@ colorjs.io@^0.4.3:
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/colorjs.io/-/colorjs.io-0.4.5.tgz#7775f787ff90aca7a38f6edb7b7c0f8cce1e6418"
   integrity sha512-yCtUNCmge7llyfd/Wou19PMAcf5yC3XXhgFoAh6zsO2pGswhUPBaaUh8jzgHnXtXuZyFKzXZNAnyF5i+apICow==
-
-colorparsley@^0.1.8:
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/colorparsley/-/colorparsley-0.1.8.tgz#fd5c1b3d2befbc08c4ab73dc5c2c88f72f743132"
-  integrity sha512-rObESTTTE6G5qO5WFwFxWPggpw4KfpxnLC6Ssl8bITBnNVRhDsyCeTRAUxWQNVTx2pRknKlO2nddYTxjkdNFaw==
 
 combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
   version "1.0.8"

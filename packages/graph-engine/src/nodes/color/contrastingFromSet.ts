@@ -1,7 +1,6 @@
 import { NodeDefinition, NodeTypes } from "../../types.js";
 import { SingleToken } from "@tokens-studio/types";
-import { calcAPCA } from "apca-w3";
-import chroma from "chroma-js";
+import Color from "colorjs.io";
 
 export const type = NodeTypes.CONTRASTING_FROM_SET;
 
@@ -36,11 +35,13 @@ export const process = (input, state: State) => {
   for (let i = 0; i < final.tokens.length; i++) {
     let token = final.tokens[i];
     let value = token.value;
+    let background = new Color(final.background);
+    let foreground = new Color(value);
 
     if (final.wcag == WcagVersion.V2) {
-      contrast = chroma.contrast(value, final.background);
+      contrast = foreground.contrast(background, "WCAG21");
     } else {
-      contrast = Math.abs(calcAPCA(value, final.background));
+      contrast = Math.abs(foreground.contrast(background, "APCA"));
     }
 
     if (contrast >= final.threshold) {
