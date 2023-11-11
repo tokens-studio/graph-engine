@@ -1,8 +1,7 @@
 // nearestTokens.js
 import { NodeDefinition, NodeTypes } from "../../types.js";
 import { SingleToken } from "@tokens-studio/types";
-import { calcAPCA } from "apca-w3";
-import chroma from "chroma-js";
+import Color from "colorjs.io";
 import orderBy from "lodash.orderby";
 
 export const type = NodeTypes.NEAREST_TOKENS;
@@ -34,29 +33,34 @@ export const process = (input, state: State) => {
     ...input,
   };
 
+
   const compareFunctions = {
-    Contrast: (color1, color2) => {
+    Contrast: (foreground, background) => {
       if (final.wcag == WcagVersion.V2) {
-        return chroma.contrast(color1, color2);
+        return background.contrast(foreground, "WCAG21");
       } else {
-        // Please make sure to import and define the `calcAPCA` function
-        return Math.abs(calcAPCA(color1, color2));
+        return Math.abs(background.contrast(foreground, "APCA"));
       }
     },
-    Hue: (color1, color2) =>
-      Math.abs(chroma(color1).get("hsl.h") - chroma(color2).get("hsl.h")),
-    Lightness: (color1, color2) =>
-      Math.abs(chroma(color1).get("hsl.l") - chroma(color2).get("hsl.l")),
-    Saturation: (color1, color2) =>
-      Math.abs(chroma(color1).get("hsl.s") - chroma(color2).get("hsl.s")),
-    Distance: (color1, color2) => chroma.deltaE(color1, color2),
+    Hue: (foreground, background) =>
+      Math.abs(foreground.hsl[0] - background.hsl[0]),
+    Lightness: (foreground, background) =>
+      Math.abs(foreground.contrast(background, "Lstar")),
+    Saturation: (foreground, background) =>
+      Math.abs(foreground.hsl[1] - background.hsl[1]),
+    Distance: (foreground, background) => 
+      foreground.deltaE(background, "2000"),
   };
 
   const sortedTokens = orderBy(
     final.tokens,
     [
-      (token) =>
-        compareFunctions[final.compare](final.sourceColor, token.value),
+      (token) => {
+        let foreground = new Color(token.value);
+        let background = new Color(final.sourceColor);
+
+        return compareFunctions[final.compare](foreground, background);
+      }
     ],
     [final.inverted ? "desc" : "asc"]
   );

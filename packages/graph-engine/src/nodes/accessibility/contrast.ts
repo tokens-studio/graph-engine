@@ -5,7 +5,7 @@
  */
 
 import { NodeDefinition, NodeTypes } from "../../types.js";
-import { calcAPCA } from "apca-w3";
+import Color from "colorjs.io";
 
 const type = NodeTypes.CONTRAST;
 
@@ -27,7 +27,11 @@ const process = (input: Inputs, state) => {
     ...state,
     ...input,
   };
-  const calculated = calcAPCA(final.a, final.b);
+
+  let color = new Color(final.a);
+  let background = new Color(final.b);
+  
+  const calculated = background.contrast(color, "APCA");
 
   return final.absolute ? Math.abs(calculated) : calculated;
 };
