@@ -71,6 +71,7 @@ const keys = [
   'maxWidth',
   'minHeight',
   'minWidth',
+  'mixBlendMode',
   'opacity',
   'outline',
   'overflow',
