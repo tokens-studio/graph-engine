@@ -93,6 +93,7 @@ const keys = [
   'transform',
   'transition',
   'translate',
+  'userSelect',
   'verticalAlign',
   'visibility',
   'whiteSpace',
