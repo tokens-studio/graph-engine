@@ -1,5 +1,16 @@
 # @tokens-studio/graph-editor
 
+## 2.7.0
+
+### Minor Changes
+
+- dba5c05: add blending and blur to css map
+
+### Patch Changes
+
+- Updated dependencies [f52e0d7]
+  - @tokens-studio/graph-engine@0.15.1
+
 ## 2.6.0
 
 ### Minor Changes
