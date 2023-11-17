@@ -1,8 +1,5 @@
 import {
   Box,
-  Button,
-  Heading,
-  IconButton,
   Stack,
   ToggleGroup,
 } from '@tokens-studio/ui';
@@ -10,12 +7,14 @@ import { Preview as ComponentPreview } from '#/components/preview/index.tsx';
 
 import { LiveEditor, LiveError } from 'react-live';
 import { MinusIcon, PictureInPictureIcon, VideoIcon } from '@iconicicons/react';
-import Code3Icon from '#/assets/svgs/code-3.svg';
+import { previewCodeSelector } from '#/redux/selectors/index.ts';
 import { useCallback, useState } from 'react';
-import { usePreviewContext } from '#/providers/preview.tsx';
+import {  useDispatch, useSelector } from 'react-redux';
+import Code3Icon from "#/assets/svgs/code-3.svg";
 
-export const Preview = ({ codeRef }) => {
-  const { setCode, code } = usePreviewContext();
+export const Preview = (  { codeRef }) => {
+  const previewCode = useSelector(previewCodeSelector)
+  const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(false);
   const [visibleTab, setVisibleTab] = useState('preview');
 
@@ -34,13 +33,14 @@ export const Preview = ({ codeRef }) => {
 
   const handleToggleVisible = useCallback(() => {
     setIsVisible(!isVisible);
+    console.log("Hello!")
   }, [isVisible, setIsVisible]);
 
   const handleChangeCode = useCallback(
     (code) => {
-      setCode(code);
+      dispatch.ui.setPreviewCode(code);
     },
-    [setCode],
+    [dispatch.ui],
   );
 
   return (
@@ -133,14 +133,12 @@ export const Preview = ({ codeRef }) => {
               direction: 'ltr',
               overflowY: 'auto',
               flexGrow: 1,
+
               paddingTop: '0',
             }}
           >
-            <Box
-              css={{
-                width: '100%',
-                display: visibleTab === 'preview' ? 'flex' : 'none',
-              }}
+            <Box css={{width: '100%',display: visibleTab === 'preview' ? 'flex' : 'none',
+            }}
             >
               <ComponentPreview />
             </Box>

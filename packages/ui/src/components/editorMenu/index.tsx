@@ -5,17 +5,19 @@ import {
   FolderIcon,
   MoonIcon,
   PhotoIcon,
+  SendIcon,
   SunIcon,
 } from '@iconicicons/react';
 import SlackIcon from '#/assets/svgs/slack.svg';
 import YoutubeIcon from '#/assets/svgs/youtube.svg';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { ResolverData } from '#/types/file.ts';
 import { getRectOfNodes, getTransformForBounds } from 'reactflow';
 import { Box, IconButton, Stack } from '@tokens-studio/ui';
 import { toPng } from 'html-to-image';
 import { store } from '#/redux/store.tsx';
 import { usePreviewContext } from '#/providers/preview.tsx';
+import { ShareDialog } from './ShareDialog.tsx';
 
 const imageWidth = 1024;
 const imageHeight = 768;
@@ -30,11 +32,18 @@ export const Menubar = ({
   onLoadExamples: () => void;
 }) => {
   const { setCode, code } = usePreviewContext();
+  const [shareDialogVisible, setShareDialogVisible] = useState(false);
   const findCurrentEditor = useCallback(() => {
     const activeEditor = store.getState().refs.editor;
 
     return activeEditor;
   }, []);
+
+  const onShare = useCallback(() => {
+    // open a dialog with the share link
+    setShareDialogVisible(true);
+  }, []);
+
 
   const onSave = useCallback(() => {
     const editor = findCurrentEditor();
@@ -190,6 +199,15 @@ export const Menubar = ({
           icon={<FilePlusIcon />}
           onClick={onLoadExamples}
         />
+        <ShareDialog open={shareDialogVisible} onClose={() => setShareDialogVisible(false)}>
+          <IconButton
+          tooltip="Share"
+          variant="invisible"
+          size="medium"
+          icon={<SendIcon />}
+          onClick={onShare}
+        />
+        </ShareDialog>
       </Stack>
       <Stack direction="column" justify="end" css={{ flexGrow: 1 }}>
         <IconButton
