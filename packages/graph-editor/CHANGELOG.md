@@ -1,5 +1,11 @@
 # @tokens-studio/graph-editor
 
+## 2.7.1
+
+### Patch Changes
+
+- bb77dae: Fixes an import issue with elkjs
+
 ## 2.7.0
 
 ### Minor Changes
