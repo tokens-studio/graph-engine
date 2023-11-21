@@ -28,8 +28,8 @@ const process = (input: Inputs, state) => {
     ...input,
   };
 
-  let color = new Color(final.a);
-  let background = new Color(final.b);
+  let color = new Color(final.a ? final.a : "#000000");
+  let background = new Color(final.b ? final.b : "#ffffff");
   
   const calculated = background.contrast(color, "APCA");
 
