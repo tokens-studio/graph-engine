@@ -22,14 +22,19 @@ type Inputs = {
   absolute?: boolean;
 };
 
+const defaults = {
+  a: '#000000',
+  b: '#ffffff'
+};
+
 const process = (input: Inputs, state) => {
   const final = {
     ...state,
     ...input,
   };
 
-  let color = new Color(final.a ? final.a : "#000000");
-  let background = new Color(final.b ? final.b : "#ffffff");
+  let color = new Color(final.a);
+  let background = new Color(final.b);
   
   const calculated = background.contrast(color, "APCA");
 
@@ -39,5 +44,6 @@ const process = (input: Inputs, state) => {
 export const node: NodeDefinition<Inputs> = {
   description: "Calculates the contrast between two colors",
   type,
+  defaults,
   process,
 };
