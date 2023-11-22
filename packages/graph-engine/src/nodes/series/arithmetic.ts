@@ -7,6 +7,7 @@ export const defaults = {
   stepsDown: 0,
   steps: 1,
   increment: 1,
+  precision: 0,
 };
 
 export const process = (input, state) => {
@@ -18,9 +19,10 @@ export const process = (input, state) => {
   const sizes: Output = [];
   //Fixes issue with string concatenation
   const base = parseFloat(final.base);
+  const shift = 10 ** final.precision;
 
   for (let i = Math.abs(final.stepsDown); i > 0; i--) {
-    const value = base - final.increment * i;
+    const value = Math.round((base - final.increment * i) * shift) / shift;
     sizes.push({
       step: 0 - i,
       size: value,
@@ -28,11 +30,11 @@ export const process = (input, state) => {
   }
   sizes.push({
     step: 0,
-    size: final.base,
+    size: Math.round(final.base * shift) / shift,
   });
 
   for (let i = 0; i < Math.abs(final.steps); i++) {
-    const value = base + final.increment * (i + 1);
+    const value = Math.round((base + final.increment * (i + 1)) * shift) / shift;
     sizes.push({
       step: i + 1,
       size: value,

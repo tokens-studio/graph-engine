@@ -94,6 +94,21 @@ const ArithmeticNode = (props) => {
             )}
           </Stack>
         </Handle>
+
+
+        <Handle id="precision">
+          <Stack direction="row" justify="between" align="center" gap={3}>
+            <Text>Precision</Text>
+            {input.precision !== undefined ? (
+              <Text>{input.precision}</Text>
+            ) : (
+              <TextInput
+                data-key="precision"
+                value={state.precision}
+                onChange={onChange} />
+            )}
+          </Stack>
+        </Handle>
       </HandleContainer>
       <HandleContainer type="source">
         <Handle id={'asArray'}>as Array</Handle>

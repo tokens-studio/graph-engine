@@ -7,6 +7,7 @@ export const defaults = {
   ratio: 1.5,
   stepsDown: 0,
   steps: 5,
+  precision: 0,
 };
 
 type GeometricValue = {
@@ -21,9 +22,10 @@ export const process = (input, state) => {
   };
 
   const values: GeometricValue[] = [];
+  const shift = 10 ** final.precision;
 
   for (let i = 0 - final.stepsDown; i < final.steps; i++) {
-    const value = final.base * Math.pow(final.ratio, i);
+    const value = Math.round((final.base * Math.pow(final.ratio, i)) * shift) / shift;
     values.push({
       value,
       index: i,

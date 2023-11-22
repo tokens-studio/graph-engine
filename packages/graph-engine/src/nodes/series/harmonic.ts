@@ -8,6 +8,7 @@ export const defaults = {
   stepsDown: 0,
   steps: 5,
   notes: 1,
+  precision: 0,
 };
 
 type HarmonicValue = {
@@ -26,10 +27,12 @@ export const process = (input, state) => {
 
   for (let i = 0 - final.stepsDown; i < final.steps; i++) {
     for (let j = 0; j < final.notes; j++) {
+      const shift = 10 ** final.precision;
       const size =
         final.base * Math.pow(final.ratio, (i * final.notes + j) / final.notes);
+      const rounded = Math.round(size * shift) / shift;
       values.push({
-        size,
+        size: rounded,
         frequency: i,
         note: j,
       });
