@@ -27,6 +27,13 @@ export const validateInputs = (inputs) => {
  * @returns
  */
 export const process = (input: MappedInput) => {
+  if (input.inputs.length == 0) {
+    return 0;
+  }
+  if (input.inputs.length == 1) {
+    return input.inputs[0].value;
+  }
+
   const vals = input.inputs.slice(1);
   return vals.reduce((acc, x) => acc - x.value, input.inputs[0].value);
 };

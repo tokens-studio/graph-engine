@@ -162,6 +162,7 @@ export enum NodeTypes {
   REGEX = "studio.tokens.string.regex",
   PASS_UNIT = "studio.tokens.typing.passUnit",
   PARSE_UNIT = "studio.tokens.typing.parseUnit",
+  STRINGIFY = "studio.tokens.string.stringify",
 
   //Accessibility
   CONTRAST = "studio.tokens.accessibility.contrast",
