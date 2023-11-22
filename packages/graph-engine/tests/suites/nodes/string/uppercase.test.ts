@@ -1,5 +1,5 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/string/uppercase.js";
+import { executeNode } from "@/core.js";
+import { node } from "@/nodes/string/uppercase.js";
 
 describe("string/uppercase", () => {
   it("throws and error if not passed a string", async () => {

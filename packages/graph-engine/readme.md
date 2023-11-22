@@ -1,6 +1,6 @@
 # Graph Execution Engine
 
-![NPM version badge](https://img.shields.io/npm/v/@tokens-studio/graph-engine) ![License badge](https://img.shields.io/github/license/tokens-studio/types)
+![NPM version badge](https://img.shields.io/npm/v/@tokens-studio/graph-engine) ![License badge](https://img.shields.io/github/license/tokens-studio/graph-engine)
 
 > This project is currently in ALPHA
 

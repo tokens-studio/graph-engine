@@ -23,10 +23,10 @@ import React, {
   useState,
 } from 'react';
 import isPromise from 'is-promise';
-import { useOnOutputChange } from '#/context/OutputContext.tsx';
-import { useExternalLoader } from '#/context/ExternalLoaderContext.tsx';
-import { useExternalData } from '#/context/ExternalDataContext.tsx';
-import { Sidesheet } from '#/editor/Sidesheet.tsx';
+import { useOnOutputChange } from '@/context/OutputContext.tsx';
+import { useExternalLoader } from '@/context/ExternalLoaderContext.tsx';
+import { useExternalData } from '@/context/ExternalDataContext.tsx';
+import { Sidesheet } from '@/editor/Sidesheet.tsx';
 
 export type UiNodeDefinition = {
   //Name of the Node

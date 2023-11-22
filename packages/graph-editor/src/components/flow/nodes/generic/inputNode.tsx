@@ -8,7 +8,7 @@ import {
   Text,
   TextInput,
 } from '@tokens-studio/ui';
-import { Dialog } from '#/components/dialog/index.tsx';
+import { Dialog } from '@/components/dialog/index.tsx';
 import {
   CheckIcon,
   Cross1Icon,
@@ -26,7 +26,7 @@ import {
   node,
 } from '@tokens-studio/graph-engine/nodes/generic/input.js';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
-import { useOnEnter } from '#/hooks/onEnter.ts';
+import { useOnEnter } from '@/hooks/onEnter.ts';
 import React, { useCallback, useMemo, useState } from 'react';
 import icons from '../../icons.tsx';
 

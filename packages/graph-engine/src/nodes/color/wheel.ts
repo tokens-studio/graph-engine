@@ -1,4 +1,4 @@
-import { NodeDefinition, NodeTypes } from "#/types.js";
+import { NodeDefinition, NodeTypes } from "@/types.js";
 import chroma from "chroma-js";
 
 export const type = NodeTypes.WHEEL;

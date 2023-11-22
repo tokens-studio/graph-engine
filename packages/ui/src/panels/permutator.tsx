@@ -6,7 +6,7 @@ import {
   NodeTypes,
   FlowGraph,
 } from '@tokens-studio/graph-engine';
-import { GraphFile } from '#/types/file.ts';
+import { GraphFile } from '@/types/file.ts';
 import {
   Accordion,
   Box,
@@ -18,14 +18,14 @@ import {
   Separator,
   Stack,
 } from '@tokens-studio/ui';
-import { OutputProvider } from '#/components/preview/scope.tsx';
-import { TokenContextProvider } from '#/components/preview/contextExamples/lion/context.ts';
+import { OutputProvider } from '@/components/preview/scope.tsx';
+import { TokenContextProvider } from '@/components/preview/contextExamples/lion/context.ts';
 import { LiveEditor, LivePreview, LiveProvider, LiveError } from 'react-live';
 import {
   TypeDefinition,
   State,
 } from '@tokens-studio/graph-engine/nodes/generic/input.js';
-import { scope } from '#/components/preview/scope.tsx';
+import { scope } from '@/components/preview/scope.tsx';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import {

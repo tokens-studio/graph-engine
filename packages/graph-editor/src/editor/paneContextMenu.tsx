@@ -9,8 +9,8 @@ import React, { useCallback } from 'react';
 import { useReactFlow, Node } from 'reactflow';
 import { useAutoLayout } from './hooks/useAutolayout';
 import { useSelector } from 'react-redux';
-import { showGrid, snapGrid } from '#/redux/selectors/settings';
-import { useDispatch } from '#/hooks';
+import { showGrid, snapGrid } from '@/redux/selectors/settings';
+import { useDispatch } from '@/hooks';
 import { ContextMenuItem } from './ContextMenuStyles';
 
 export interface IPaneContextMenu {

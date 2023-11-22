@@ -1,5 +1,5 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/array/dotProp.js";
+import { executeNode } from "@/core.js";
+import { node } from "@/nodes/array/dotProp.js";
 
 describe("array/dotProp", () => {
   it("extracts the expected property", async () => {

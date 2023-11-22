@@ -1,14 +1,14 @@
 import { Edge, useReactFlow } from 'reactflow';
 import { NodeTypes } from '@tokens-studio/graph-engine';
-import { useDispatch } from '#/hooks/useDispatch.ts';
+import { useDispatch } from '@/hooks/useDispatch.ts';
 import { useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import copy from 'copy-to-clipboard';
-import { LayoutType } from '#/redux/models/settings.ts';
+import { LayoutType } from '@/redux/models/settings.ts';
 import { useAutoLayout } from './hooks/useAutolayout';
 import { useSelector } from 'react-redux';
-import { showGrid, snapGrid } from '#/redux/selectors/settings';
-import { showNodesPanelSelector } from '#/redux/selectors/ui';
+import { showGrid, snapGrid } from '@/redux/selectors/settings';
+import { showNodesPanelSelector } from '@/redux/selectors/ui';
 
 export const keyMap = {
   AUTO_LAYOUT: 'ctrl+alt+f',

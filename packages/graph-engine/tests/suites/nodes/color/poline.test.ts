@@ -1,5 +1,5 @@
-import { executeNode } from "#/core.js";
-import { node, mapOutput } from "#/nodes/color/poline.js";
+import { executeNode } from "@/core.js";
+import { node, mapOutput } from "@/nodes/color/poline.js";
 
 describe("color/poline", () => {
   it("creates the expected color palette with these inputs 1", async () => {

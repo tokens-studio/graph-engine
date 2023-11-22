@@ -9,15 +9,17 @@ import {
   Stack,
   TextInput,
   Tooltip,
+  Checkbox,
 } from '@tokens-studio/ui';
 import { useSelector } from 'react-redux';
 import {
+  debugMode,
   edgeType,
   layoutType,
   obscureDistance,
-} from '#/redux/selectors/settings';
-import { useDispatch } from '#/hooks/useDispatch.ts';
-import { EdgeType, LayoutType } from '#/redux/models/settings.ts';
+} from '@/redux/selectors/settings';
+import { useDispatch } from '@/hooks/useDispatch.ts';
+import { EdgeType, LayoutType } from '@/redux/models/settings.ts';
 import { InformationIcon, SettingsIcon } from '@iconicicons/react';
 
 const EdgeValues = Object.values(EdgeType);
@@ -27,6 +29,7 @@ export const Settings = () => {
   const edgeTypeValue = useSelector(edgeType);
   const layoutTypeValue = useSelector(layoutType);
   const obscureDistanceValue = useSelector(obscureDistance);
+  const debugModeValue = useSelector(debugMode);
   const dispatch = useDispatch();
 
   const onObscureDistanceChange = (event) => {
@@ -48,6 +51,22 @@ export const Settings = () => {
         <Dialog.Content>
           <Dialog.Title>Settings</Dialog.Title>
 
+          <Stack direction="column" gap={2} justify="between">
+            <Stack direction="row" gap={2} justify="between">
+              <Label>Show execution time</Label>
+              <Tooltip label={'Shows how long it takes for a node to process'}>
+                <Box>
+                  <InformationIcon />
+                </Box>
+              </Tooltip>
+            </Stack>
+            <Checkbox
+              onCheckedChange={(checked) =>
+                dispatch.settings.setDebugMode(Boolean(checked))
+              }
+              checked={debugModeValue}
+            />
+          </Stack>
           <Stack direction="column" gap={2} justify="between">
             <Stack direction="row" gap={2} justify="between">
               <Label>Obscure distance</Label>

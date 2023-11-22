@@ -1,6 +1,6 @@
 import { ControlButton, ControlProps, Controls } from 'reactflow';
 import { MiniMap } from '@reactflow/minimap';
-import { styled } from '#/lib/stitches/index.ts';
+import { styled } from '@/lib/stitches/index.ts';
 import React from 'react';
 import { Settings } from '../Settings';
 

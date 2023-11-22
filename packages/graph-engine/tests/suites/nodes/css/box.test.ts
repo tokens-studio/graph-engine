@@ -1,5 +1,5 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/css/box.js";
+import { executeNode } from "@/core.js";
+import { node } from "@/nodes/css/box.js";
 
 describe("css/box", () => {
   it("produces the css box descriptionbs", async () => {

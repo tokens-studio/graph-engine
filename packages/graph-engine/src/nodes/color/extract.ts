@@ -1,6 +1,6 @@
 import { NodeDefinition, NodeTypes } from "../../types.js";
 import chroma from "chroma-js";
-import extractColors from "extract-colors";
+import { extractColors } from "extract-colors";
 
 const type = NodeTypes.EXTRACT;
 

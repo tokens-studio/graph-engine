@@ -4,10 +4,10 @@ import { Command } from 'cmdk';
 import React from 'react';
 import { PanelGroup, PanelItem } from './flow/DropPanel/PanelItems';
 import { useDispatch, useSelector } from 'react-redux';
-import { showNodesCmdPaletteSelector } from '#/redux/selectors/ui';
+import { showNodesCmdPaletteSelector } from '@/redux/selectors/ui';
 import { useEditor } from './flow/hooks/useEditor';
 import { NodeTypes } from '@tokens-studio/graph-engine';
-import { styled } from '#/lib/stitches';
+import { styled } from '@/lib/stitches';
 
 export interface ICommandMenu {
   reactFlowWrapper: React.MutableRefObject<HTMLDivElement | null>;
@@ -27,8 +27,8 @@ const CommandMenu = ({
 
   const wrapperBounds = reactFlowWrapper.current?.getBoundingClientRect();
 
-  const handleSelectItem = (item: NodeTypes) => {
-    handleSelectNewNodeType({ type: item });
+  const handleSelectItem = (item) => {
+    handleSelectNewNodeType(item);
     dispatch.ui.setShowNodesCmdPalette(false);
   };
 
@@ -103,7 +103,7 @@ const CommandMenu = ({
               const childValues = value.items.map((item) => (
                 <Command.Item
                   key={item.type}
-                  onSelect={() => handleSelectItem(item.type)}
+                  onSelect={() => handleSelectItem(item)}
                   value={item.text.toLowerCase()}
                 >
                   <Stack direction="row" gap={2} align="center">

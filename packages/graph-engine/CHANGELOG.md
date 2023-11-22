@@ -1,5 +1,63 @@
 # @tokens-studio/graph-engine
 
+## 0.15.0
+
+### Minor Changes
+
+- 612bc38: Exposes an extra output in token sets to allow users to interact with the set as an object
+
+### Patch Changes
+
+- 612bc38: Fixes how tokens are exposed in the token set to follow scope naming
+
+## 0.14.0
+
+### Minor Changes
+
+- bd2346b: Exposes an extra output in token sets to allow users to interact with the set as an object
+
+## 0.13.1
+
+### Patch Changes
+
+- cbc7ab3: Fixes the extract single token node which was never extracting the token
+
+## 0.13.0
+
+### Minor Changes
+
+- c0fcbd6: Add Node Nearest to Color
+- 4296c47: Add color name node
+- bf4f5a1: Add regex support to select tokens node
+- 53b29d3: Add split string node
+
+## 0.12.0
+
+### Minor Changes
+
+- a7baf6d: add ungroup node, add select single token node, fix input issue on group and extract tokens
+
+### Patch Changes
+
+- 91da25d: Fix an issue with ESM loading not working correctly. Converts the input of the extract Tokens and Extract Single Token Node to use Regex
+
+## 0.11.0
+
+### Minor Changes
+
+- de6a6f0: add ungroup node, add select single token node, fix input issue on group and extract tokens
+
+### Patch Changes
+
+- de6a6f0: Fix an issue with ESM loading not working correctly. Converts the input of the extract Tokens and Extract Single Token Node to use Regex
+
+## 0.10.0
+
+### Minor Changes
+
+- eefa966: add ungroup node, add select single token node, fix input issue on group and extract tokens
+- eaf05cd: Add Contrasting from Set node to return the first element of an array that has sufficient contrast
+
 ## 0.9.0
 
 ### Minor Changes

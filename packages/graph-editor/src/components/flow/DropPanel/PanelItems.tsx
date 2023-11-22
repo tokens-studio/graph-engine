@@ -13,12 +13,12 @@ import icons from '../icons';
 import { NodeTypes, nodeLookup } from '@tokens-studio/graph-engine';
 import React from 'react';
 import { BoxIcon } from '@iconicicons/react';
-import preset from '#/data/preset.ts';
-import tinyCore from '#/data/tiny/core.ts';
-import tinyCoreDark from '#/data/tiny/dark.ts';
-import tinyCoreLight from '#/data/tiny/light.ts';
+import preset from '@/data/preset.ts';
+import tinyCore from '@/data/tiny/core.ts';
+import tinyCoreDark from '@/data/tiny/dark.ts';
+import tinyCoreLight from '@/data/tiny/light.ts';
 
-import { flatten } from '#/utils/index.ts';
+import { flatten } from '@/utils/index.ts';
 
 //@ts-ignore
 const presetFlattened = flatten(preset);
@@ -297,14 +297,24 @@ export const defaultPanelItems: PanelGroup[] = [
         text: 'Invert',
       },
       {
+        type: NodeTypes.EXTRACT_SINGLE_TOKEN,
+        icon: '?1',
+        text: 'Extract Single Token',
+      },
+      {
         type: NodeTypes.EXTRACT_TOKENS,
-        icon: '?',
-        text: 'Select Token',
+        icon: '?n',
+        text: 'Extract Tokens',
       },
       {
         type: NodeTypes.GROUP,
         icon: '{a:}',
         text: 'Group Token',
+      },
+      {
+        type: NodeTypes.UNGROUP,
+        icon: '{a:}',
+        text: 'Ungroup Token',
       },
     ],
   },
@@ -355,6 +365,11 @@ export const defaultPanelItems: PanelGroup[] = [
         text: 'Contrasting Color',
       },
       {
+        type: NodeTypes.CONTRASTING_FROM_SET,
+        icon: <Half2Icon />,
+        text: 'Contrasting From Set',
+      },
+      {
         type: NodeTypes.SCALE,
         icon: '...',
         text: 'Generate Scale',
@@ -398,6 +413,16 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.COLOR_DISTANCE,
         icon: 'x>y',
         text: 'Distance',
+      },
+      {
+        type: NodeTypes.COLOR_NAME,
+        icon: 'red',
+        text: 'Name',
+      },
+      {
+        type: NodeTypes.NEAREST_TOKENS,
+        icon: 'x>y',
+        text: 'Nearest Tokens',
       },
     ],
   },
@@ -451,6 +476,11 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.JOIN_STRING,
         icon: 'a+a',
         text: 'Join String',
+      },
+      {
+        type: NodeTypes.SPLIT_STRING,
+        icon: 'a|a',
+        text: 'Split String',
       },
       {
         type: NodeTypes.UPPERCASE,

@@ -155,6 +155,7 @@ export enum NodeTypes {
 
   // Color
   CONTRASTING = "studio.tokens.color.contrasting",
+  CONTRASTING_FROM_SET = "studio.tokens.color.contrastingFromSet",
   SCALE = "studio.tokens.color.scale",
   CONVERT_COLOR = "studio.tokens.color.convert",
   BLEND = "studio.tokens.color.blend",
@@ -165,6 +166,8 @@ export enum NodeTypes {
   WHEEL = "studio.tokens.color.wheel",
   POLINE = "studio.tokens.color.poline",
   COLOR_DISTANCE = "studio.tokens.color.distance",
+  COLOR_NAME = "studio.tokens.color.name",
+  NEAREST_TOKENS = "studio.tokens.color.nearestTokens",
 
   //Sets
   FLATTEN = "studio.tokens.sets.flatten",
@@ -174,7 +177,9 @@ export enum NodeTypes {
   SET = "studio.tokens.sets.external",
   INVERT_SET = "studio.tokens.sets.invert",
   GROUP = "studio.tokens.sets.group",
-  EXTRACT_TOKENS = "studio.tokens.sets.extract",
+  UNGROUP = "studio.tokens.sets.ungroup",
+  EXTRACT_SINGLE_TOKEN = "studio.tokens.sets.extractSingleToken",
+  EXTRACT_TOKENS = "studio.tokens.sets.extractTokens",
 
   //Series
   ARITHMETIC_SERIES = "studio.tokens.sets.arithmetic",
@@ -184,6 +189,7 @@ export enum NodeTypes {
   //String
   UPPERCASE = "studio.tokens.string.uppercase",
   JOIN_STRING = "studio.tokens.string.join",
+  SPLIT_STRING = "studio.tokens.string.split",
   LOWER = "studio.tokens.string.lowercase",
   REGEX = "studio.tokens.string.regex",
   PASS_UNIT = "studio.tokens.typing.passUnit",

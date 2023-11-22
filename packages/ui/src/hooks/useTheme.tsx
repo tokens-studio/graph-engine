@@ -1,4 +1,4 @@
-import { theme } from '#/redux/selectors/index.ts';
+import { theme } from '@/redux/selectors/index.ts';
 import { useSelector } from 'react-redux';
 
 export function useTheme() {

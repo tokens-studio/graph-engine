@@ -1,5 +1,5 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/math/pow.js";
+import { executeNode } from "@/core.js";
+import { node } from "@/nodes/math/pow.js";
 
 describe("math/pow", () => {
   it("produces the expected input", async () => {

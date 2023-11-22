@@ -1,5 +1,5 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/math/multiply.js";
+import { executeNode } from "@/core.js";
+import { node } from "@/nodes/math/multiply.js";
 
 describe("math/multiply", () => {
   it("multiplies two numbers", async () => {

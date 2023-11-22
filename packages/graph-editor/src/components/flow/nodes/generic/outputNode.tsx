@@ -6,7 +6,7 @@ import { Cross1Icon, DotsVerticalIcon, PlusIcon } from '@radix-ui/react-icons';
 import { PreviewAny } from '../../preview/any.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/generic/output.js';
-import { useOnEnter } from '#/hooks/onEnter.ts';
+import { useOnEnter } from '@/hooks/onEnter.ts';
 import { v4 as uuidv4 } from 'uuid';
 
 const OutputNode = () => {

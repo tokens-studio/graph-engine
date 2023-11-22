@@ -1,7 +1,7 @@
-import scale from '#/examples/scale.json';
-import card from '#/examples/card.json';
-import contrast from '#/examples/contrast.json';
-import { IExample } from '#/types/IExample.tsx';
+import scale from '@/examples/scale.json';
+import card from '@/examples/card.json';
+import contrast from '@/examples/contrast.json';
+import { IExample } from '@/types/IExample.tsx';
 
 export const examples: IExample[] = [
   {

@@ -1,0 +1,1 @@
+export type Type = "void" | "bool" | "bool[]" | "float" | "float[]" | "int" | "int[]" | "vec2" | "vec2[]" | "vec3" | "vec3[]" | "vec4" | "vec4[]" | "string" | "string[]" | "color" | "color[]" | "curve" | "curve[]" | "array";

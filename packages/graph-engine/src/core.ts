@@ -1,15 +1,16 @@
 import { ExternalLoader, NodeDefinition } from "./types.js";
 import {
-  FlowGraph,
   MinimizedFlowGraph,
   MinimizedNode,
-  convertFlowGraphToGraphlib,
   findTerminals,
-  minimizeFlowGraph,
   topologicalSort,
 } from "./graph/index.js";
 import { NodeTypes } from "./types.js";
 import isPromise from "is-promise";
+import cmp from "semver-compare";
+import { VERSION } from "./constants.js";
+
+
 
 type Lookup = {
   [key: string]: NodeDefinition<any, any, any>;
@@ -36,6 +37,10 @@ export interface ExecuteOptions {
    * A function responsible for loading externally requested data. This can be used to source token sets, etc
    */
   externalLoader?: ExternalLoader;
+  /**
+   * If true, no warnings will be logged
+   */
+  quiet?: boolean;
 }
 
 export interface NodeExecutionOptions {
@@ -104,10 +109,15 @@ export const executeNode = async (opts: NodeExecutionOptions) => {
 // Perform boxing //TODO
 
 export const execute = async (opts: ExecuteOptions) => {
-  const { graph, inputValues, nodes } = opts;
+  const { graph, inputValues, nodes, quiet } = opts;
 
-  //First convert to Graphlib compat
-  const g = convertFlowGraphToGraphlib(graph);
+  //Previously graphs didn't contain the version
+  if (!quiet && cmp(graph.version || "0.0.0", VERSION) == -1) {
+    console.warn(
+      `Graph version is older than engine version. This might cause unexpected behaviour. Graph version: ${graph.version}, Engine version: ${VERSION}`
+    );
+  }
+  const g = graph;
 
   //Create the lookup
   const lookup: Lookup = nodes.reduce((acc, node) => {
@@ -181,7 +191,7 @@ export const execute = async (opts: ExecuteOptions) => {
     const outEdges = g.outEdges(nodeId) || [];
     outEdges.forEach((edge) => {
       //Retrieve the edge
-      const edgeData = g.edge(edge.id);
+      const edgeData = g.getEdge(edge.id);
       if (!edgeData) {
         throw new Error(`No edge data found for ${edge.id}`);
       }
@@ -198,26 +208,4 @@ export const execute = async (opts: ExecuteOptions) => {
   }
 
   return stateTracker[terminals.output.id].output;
-};
-
-/**
- * Forcefully cleans a graph to remove dangling edges
- * @param graph
- */
-export const clean = (graph: FlowGraph): FlowGraph => {
-  const newGraph = { ...graph };
-  const minimized = minimizeFlowGraph(newGraph);
-  const nodeLookup = flowGraphToNodeLookup(minimized);
-
-  newGraph.edges = newGraph.edges.filter((edge) => {
-    const sourceNode = nodeLookup[edge.source];
-    const targetNode = nodeLookup[edge.target];
-
-    if (!sourceNode || !targetNode) {
-      return false;
-    }
-
-    return true;
-  });
-  return newGraph;
 };

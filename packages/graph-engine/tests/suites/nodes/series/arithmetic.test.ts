@@ -1,5 +1,5 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/series/arithmetic.js";
+import { executeNode } from "@/core.js";
+import { node } from "@/nodes/series/arithmetic.js";
 
 describe("series/arithmetic", () => {
   it("generates the expected series", async () => {

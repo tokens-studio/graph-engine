@@ -1,5 +1,5 @@
 import { NodeDefinition, NodeTypes } from "../../types.js";
-import { SingleToken } from "@tokens-studio/types";
+import { setProperty } from "dot-prop";
 
 export const type = NodeTypes.SET;
 
@@ -18,34 +18,44 @@ export const defaults: State = {
 };
 
 export const EXTERNAL_SET_ID = "as Set";
+export const EXTERNAL_OBJECT_ID = "as Object";
 
 const external = (_, state) => {
   return state;
 };
 
 export const process = (input: Input, state: State, ephemeral: Ephemeral) => {
-  return ephemeral.tokens;
-};
-
-export const mapOutput = (input: Input, state, tokens: SingleToken[]) => {
+  let tokens = ephemeral.tokens || [];
   if (!tokens) return {};
 
-  const map = tokens.reduce((acc, item) => {
-    //Some protection against undefined which can happen if the user deletes a token
-    if (!item) {
+  const map = tokens.reduce(
+    (acc, item) => {
+      //Some protection against undefined which can happen if the user deletes a token
+      if (!item) {
+        return acc;
+      }
+      const { name, ...rest } = item;
+      acc.values[name] = item.value;
+      setProperty(acc.raw, name, rest);
       return acc;
+    },
+    {
+      raw: {},
+      values: {},
     }
-    acc[item.name] = item.value;
-    return acc;
-  }, {});
+  );
 
   return {
     [EXTERNAL_SET_ID]: tokens,
-    ...map,
+    [EXTERNAL_OBJECT_ID]: map.raw,
+    ...map.values,
   };
 };
 
-export const node: NodeDefinition<Input, State, SingleToken[]> = {
+export const mapOutput = (input: Input, state, output) => output;
+
+export const node: NodeDefinition<Input, State> = {
+  description: "Retrieves and exposes a remote set of tokens",
   description: "Retrieves and exposes a remote set of tokens",
   type,
   process,

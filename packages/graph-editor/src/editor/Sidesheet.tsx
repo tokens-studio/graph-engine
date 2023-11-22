@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, IconButton, Stack, Heading, Text } from '@tokens-studio/ui';
 import * as Portal from '@radix-ui/react-portal';
 import { CloseIcon } from '@iconicicons/react';
-import { isSideSheetMinimizedSelector } from '#/redux/selectors/ui';
+import { isSideSheetMinimizedSelector } from '@/redux/selectors/ui';
 import { useDispatch, useSelector } from 'react-redux';
 
 export function Sidesheet({ title, children }) {

@@ -1,5 +1,5 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/array/join.js";
+import { executeNode } from "@/core.js";
+import { node } from "@/nodes/array/join.js";
 
 describe("array/join", () => {
   it("joins the values as expected", async () => {

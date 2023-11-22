@@ -12,7 +12,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { Cross1Icon, PlusIcon } from '@radix-ui/react-icons';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/input/enumeratedConstant.js';
-import { useOnEnter } from '#/hooks/onEnter.ts';
+import { useOnEnter } from '@/hooks/onEnter.ts';
 
 const EnumeratedConstantNode = () => {
   const { output, state, setState } = useNode();

@@ -1,5 +1,5 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/array/arrify.js";
+import { executeNode } from "@/core.js";
+import { node } from "@/nodes/array/arrify.js";
 
 describe("array/arrify", () => {
   it("creates an empty array with no inputs", async () => {

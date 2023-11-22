@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["es5", "es6", "es2017", "dom"],
+    "types": ["jest", "node"]
+  }
+}

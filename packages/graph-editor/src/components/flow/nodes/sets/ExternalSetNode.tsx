@@ -2,16 +2,17 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import { IconButton, Spinner, Stack, Text } from '@tokens-studio/ui';
 import { ClipboardCopyIcon, DownloadIcon } from '@radix-ui/react-icons';
 import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
-import { flatTokensRestoreToMap } from '#/utils/index.ts';
+import { flatTokensRestoreToMap } from '@/utils/index.ts';
 import { NodeProps } from 'reactflow';
 import {
   EXTERNAL_SET_ID,
+  EXTERNAL_OBJECT_ID,
   node,
 } from '@tokens-studio/graph-engine/nodes/set/externalTokens.js';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import copy from 'copy-to-clipboard';
 import { TokenSetHandles } from './tokensHandles.tsx';
-import { EditorExternalSet } from '#/context/ExternalDataContext.tsx';
+import { EditorExternalSet } from '@/context/ExternalDataContext.tsx';
 
 const ExternalSetNode: FC<NodeProps<EditorExternalSet>> = () => {
   const { setControls, setTitle, state, output, loadingEphemeralData } =
@@ -90,7 +91,10 @@ const ExternalSetNode: FC<NodeProps<EditorExternalSet>> = () => {
       <Stack direction="row" gap={2} justify="end">
         <HandleContainer type="source">
           <Handle id={EXTERNAL_SET_ID}>
-            <HandleText>Set</HandleText>
+            <HandleText>As Token Array</HandleText>
+          </Handle>
+          <Handle id={EXTERNAL_OBJECT_ID}>
+            <HandleText>As Token Object</HandleText>
           </Handle>
         </HandleContainer>
       </Stack>

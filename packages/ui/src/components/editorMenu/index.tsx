@@ -7,15 +7,15 @@ import {
   PhotoIcon,
   SunIcon,
 } from '@iconicicons/react';
-import SlackIcon from '#/assets/svgs/slack.svg';
-import YoutubeIcon from '#/assets/svgs/youtube.svg';
+import SlackIcon from '@/assets/svgs/slack.svg';
+import YoutubeIcon from '@/assets/svgs/youtube.svg';
 import { useCallback } from 'react';
-import { ResolverData } from '#/types/file.ts';
+import { ResolverData } from '@/types/file.ts';
 import { getRectOfNodes, getTransformForBounds } from 'reactflow';
 import { Box, IconButton, Stack } from '@tokens-studio/ui';
 import { toPng } from 'html-to-image';
-import { store } from '#/redux/store.tsx';
-import { usePreviewContext } from '#/providers/preview.tsx';
+import { store } from '@/redux/store.tsx';
+import { usePreviewContext } from '@/providers/preview.tsx';
 
 const imageWidth = 1024;
 const imageHeight = 768;

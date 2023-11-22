@@ -1,5 +1,5 @@
-import { ColorModifierTypes, node } from "#/nodes/color/blend.js";
-import { executeNode } from "#/core.js";
+import { ColorModifierTypes, node } from "@/nodes/color/blend.js";
+import { executeNode } from "@/core.js";
 
 describe("color/blend", () => {
   it("darkens the color correctly", async () => {

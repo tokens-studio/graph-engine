@@ -1,5 +1,5 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/color/create.js";
+import { executeNode } from "@/core.js";
+import { node } from "@/nodes/color/create.js";
 
 describe("color/create", () => {
   it("creates the expected color with rgb", async () => {

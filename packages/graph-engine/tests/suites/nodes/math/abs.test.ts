@@ -1,5 +1,5 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/math/abs.js";
+import { executeNode } from "@/core.js";
+import { node } from "@/nodes/math/abs.js";
 
 describe("math/abs", () => {
   it("absolutes the input", async () => {

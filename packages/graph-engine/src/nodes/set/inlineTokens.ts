@@ -1,5 +1,6 @@
 import { NodeDefinition, NodeTypes } from "../../types.js";
 import { SingleToken } from "@tokens-studio/types";
+import { setProperty } from "dot-prop";
 
 export const type = NodeTypes.INLINE_SET;
 
@@ -19,32 +20,40 @@ export const defaults: State = {
 };
 
 export const SET_ID = "as Set";
+export const EXTERNAL_OBJECT_ID = "as Object";
 
 export const process = (input: Input, state: State) => {
-  //Override with state if defined
-  if (input.input) {
-    return input.input;
-  }
-  return state.tokens;
-};
+  let tokens = input.input ? input.input : state.tokens;
+  const map = tokens.reduce(
+    (acc, item) => {
+      //Some protection against undefined which can happen if the user deletes a token
+      if (!item) {
+        return acc;
+      }
+      const { name, ...rest } = item;
 
-export const mapOutput = (input: Input, state, processed: SingleToken[]) => {
-  const map = processed.reduce((acc, item) => {
-    //Some protection against undefined which can happen if the user deletes a token
-    if (!item) {
+      acc.values[name] = item.value;
+
+      setProperty(acc.raw, name, rest);
       return acc;
+    },
+    {
+      raw: {},
+      values: {},
     }
-    acc[item.name] = item.value;
-    return acc;
-  }, {});
+  );
 
   return {
-    [SET_ID]: processed,
-    ...map,
+    [SET_ID]: tokens,
+    [EXTERNAL_OBJECT_ID]: map.raw,
+    ...map.values,
   };
 };
 
-export const node: NodeDefinition<Input, State, SingleToken[]> = {
+export const mapOutput = (input: Input, state, processed) => processed;
+
+export const node: NodeDefinition<Input, State> = {
+  description: "Creates a set of tokens and stores it directly in the graph",
   description: "Creates a set of tokens and stores it directly in the graph",
   type,
   process,

@@ -9,9 +9,9 @@ import { IconButton, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { PreviewAny } from '../../preview/any.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/logic/switch.js';
-import { useOnEnter } from '#/hooks/onEnter.ts';
+import { useOnEnter } from '@/hooks/onEnter.ts';
 import React, { useCallback, useState } from 'react';
-import { styled } from '#/lib/stitches/stitches.config.ts';
+import { styled } from '@/lib/stitches/stitches.config.ts';
 
 const StyledRemoveButton = styled(IconButton, {
   opacity: 0,

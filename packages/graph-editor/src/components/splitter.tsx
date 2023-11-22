@@ -1,4 +1,4 @@
-import { styled } from '#/lib/stitches/index.ts';
+import { styled } from '@/lib/stitches/index.ts';
 import React from 'react';
 
 const DragBar = styled('div', {

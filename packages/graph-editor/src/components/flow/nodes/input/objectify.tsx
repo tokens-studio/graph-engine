@@ -4,7 +4,7 @@ import { IconButton, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { PreviewAny } from '../../preview/any.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/input/objectify.js';
-import { useOnEnter } from '#/hooks/onEnter.ts';
+import { useOnEnter } from '@/hooks/onEnter.ts';
 import React, { useCallback, useState } from 'react';
 
 const Objectify = () => {

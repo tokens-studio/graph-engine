@@ -1,31 +1,36 @@
 import { NodeDefinition, NodeTypes } from "../../types.js";
 import { SingleToken } from "@tokens-studio/types";
 
-export const type = NodeTypes.EXTRACT_TOKENS;
+export const type = NodeTypes.UNGROUP;
 
 /**
  * Defines the starting state of the node
  */
 export const defaults = {
-  name: "",
   tokens: [],
 };
 
 export type MappedInput = {
   tokens: SingleToken[];
-  name: string;
-
 };
-export const process = (input, state) => {
+
+export const process = (input: MappedInput, state) => {
   const final = {
     ...state,
     ...input,
   };
-  return final.tokens.filter((token) => token.name.startsWith(final.name));
+  return final.tokens.map((token) => {
+    const parts = token.name.split(".");
+    const name = parts.length > 1 ? parts.slice(1).join(".") : parts[0];
+    return {
+      ...token,
+      name,
+    };
+  });
 };
 
 export const node: NodeDefinition<MappedInput, any> = {
-  description: "Extracts tokens from a set of tokens",
+  description: "Ungroups tokens by removing their namespace",
   type,
   defaults,
   process,

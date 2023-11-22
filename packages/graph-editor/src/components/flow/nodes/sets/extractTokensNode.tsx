@@ -1,18 +1,15 @@
 import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { PreviewAny } from '../../preview/any.tsx';
 import { PreviewArray } from '../../preview/array.tsx';
-import { Stack, TextInput } from '@tokens-studio/ui';
+import { Stack, TextInput, Text, Checkbox } from '@tokens-studio/ui';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
-import { node } from '@tokens-studio/graph-engine/nodes/set/extract.js';
+import { node } from '@tokens-studio/graph-engine/nodes/set/extractTokens.js';
 import React, { useCallback } from 'react';
 
 const TokenGroupNode = () => {
   const { input, state, output, setState } = useNode();
-  const setValue = useCallback(
-    (ev) => {
-      const value = ev.target.value;
-      const key = ev.currentTarget.dataset.key;
-
+  const setField = useCallback(
+    (key, value) => {
       setState((state) => ({
         ...state,
         [key]: value,
@@ -30,7 +27,29 @@ const TokenGroupNode = () => {
         </Handle>
         <Handle id="name">
           <HandleText>Name</HandleText>
-          <TextInput onChange={setValue} value={state.name} data-key="name" />
+          {input.name !== undefined ? (
+            <Text>{input.name}</Text>
+          ) : (
+            <TextInput
+              onChange={(e) => setField('name', e.target.value)}
+              value={state.name}
+              data-key="name"
+            />
+          )}
+        </Handle>
+        <Handle id="enableRegex">
+          <HandleText>Enable Regex</HandleText>
+          <Checkbox
+            checked={state.enableRegex}
+            onCheckedChange={(checked) => setField('enableRegex', checked)}
+          />
+        </Handle>
+        <Handle id="omitted">
+          <HandleText>Omitted</HandleText>
+          <Checkbox
+            checked={state.omitted}
+            onCheckedChange={(checked) => setField('omitted', checked)}
+          />
         </Handle>
       </HandleContainer>
       <HandleContainer type="source">

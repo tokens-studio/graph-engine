@@ -1,5 +1,5 @@
-import { node } from "#/nodes/color/convert.js";
-import { executeNode } from "#/core.js";
+import { node } from "@/nodes/color/convert.js";
+import { executeNode } from "@/core.js";
 
 describe("color/convert", () => {
   it("converts csslike colors to rgb", async () => {

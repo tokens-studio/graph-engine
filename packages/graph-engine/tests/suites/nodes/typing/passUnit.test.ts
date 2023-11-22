@@ -1,5 +1,5 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/typing/passUnit.js";
+import { executeNode } from "@/core.js";
+import { node } from "@/nodes/typing/passUnit.js";
 
 describe("typing/passUnit", () => {
   it("adds unit if falsey value", async () => {

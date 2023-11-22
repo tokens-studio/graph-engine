@@ -1,4 +1,4 @@
-import { styled } from '#/lib/stitches';
+import { styled } from '@/lib/stitches';
 import { Item } from 'react-contexify';
 
 const ContextMenuItem = styled(Item, {

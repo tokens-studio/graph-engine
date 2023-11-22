@@ -6,13 +6,13 @@ import {
   Stack,
   ToggleGroup,
 } from '@tokens-studio/ui';
-import { Preview as ComponentPreview } from '#/components/preview/index.tsx';
+import { Preview as ComponentPreview } from '@/components/preview/index.tsx';
 
 import { LiveEditor, LiveError } from 'react-live';
 import { MinusIcon, PictureInPictureIcon, VideoIcon } from '@iconicicons/react';
-import Code3Icon from '#/assets/svgs/code-3.svg';
+import Code3Icon from '@/assets/svgs/code-3.svg';
 import { useCallback, useState } from 'react';
-import { usePreviewContext } from '#/providers/preview.tsx';
+import { usePreviewContext } from '@/providers/preview.tsx';
 
 export const Preview = ({ codeRef }) => {
   const { setCode, code } = usePreviewContext();

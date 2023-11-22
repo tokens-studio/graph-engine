@@ -14,7 +14,7 @@ import {
   OrderMap,
 } from '@tokens-studio/graph-engine/nodes/array/sort.js';
 import React, { useCallback } from 'react';
-import { LabelNoWrap } from '#/components/label.tsx';
+import { LabelNoWrap } from '@/components/label.tsx';
 import { sentenceCase } from 'sentence-case';
 
 const keys: string[] = Object.values(OrderMap);

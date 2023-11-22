@@ -1,5 +1,5 @@
-import { node, WcagVersion } from "#/nodes/color/contrasting.js";
-import { executeNode } from "#/core.js";
+import { node, WcagVersion } from "@/nodes/color/contrasting.js";
+import { executeNode } from "@/core.js";
 
 describe("color/blend", () => {
   it("should return the more contrasting color correctly with WCAG 3", async () => {

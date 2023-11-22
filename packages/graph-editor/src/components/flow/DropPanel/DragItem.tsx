@@ -1,8 +1,8 @@
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import React, { useCallback } from 'react';
-import { styled } from '#/lib/stitches';
-import { NodeHoverCard } from '#/components/NodeHoverCard';
-import { GrabberIcon } from '#/components/icons/GrabberIcon';
+import { styled } from '@/lib/stitches';
+import { NodeHoverCard } from '@/components/NodeHoverCard';
+import { GrabberIcon } from '@/components/icons/GrabberIcon';
 
 type DragItemProps = {
   data?: any;

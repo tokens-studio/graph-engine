@@ -3,82 +3,79 @@
  *
  * @packageDocumentation
  */
-
+import { Node } from "@/programmatic/node/index.js";
 import { NodeDefinition, NodeTypes, Type } from "../../types.js";
+import { Input } from "@/programmatic/input/index.js";
+import z from 'zod';
+import { Output } from "@/programmatic/output/index.js";
+;
 
-type Inputs = {
-  visualAcuity: number;
-  lightingCondition: number;
-  distance: number;
-  xHeightRatio: number;
-  ppi: number;
-  pixelDensity: number;
-  correctionFactor: number;
-};
 
-const process = (input: Inputs) => {
-  const {
-    visualAcuity,
-    lightingCondition,
-    distance,
-    xHeightRatio,
-    ppi,
-    pixelDensity,
-    correctionFactor,
-  } = input;
+const NumberSchema = z.number();
 
-  const visualCorrection =
-    correctionFactor * (lightingCondition / visualAcuity);
-  const xHeightMM =
-    Math.tan((visualCorrection * Math.PI) / 21600) * (distance * 10) * 2;
-  const xHeightPX = (xHeightMM / 25.4) * (ppi / pixelDensity);
-  // const fontSizePT = (2.83465 * xHeightMM * 1) / xHeightRatio;
-  const fontSizePX = (1 * xHeightPX) / xHeightRatio;
+class BaseFontsizeNode extends Node {
+  type = NodeTypes.BASE_FONT_SIZE;
+  description: "Base Font node allows you to calculate the base font size with DIN 1450.";
 
-  return {
-    output: fontSizePX,
-  };
-};
-
-export const node: NodeDefinition<Inputs> = {
-
-  inputs: [{
-    name: "visualAcuity",
-    type: Type.NUMBER,
-    default: 0.7,
-  }, {
-    name: "correctionFactor",
-    type: Type.NUMBER,
-    default: 13,
-  }, {
-    name: "lightingCondition",
-    type: Type.NUMBER,
-    default: 0.83,
-  }, {
-    name: "distance",
-    type: Type.NUMBER,
-    default: 30,
-  }, {
-    name: "xHeightRatio",
-    type: Type.NUMBER,
-    default: 0.53,
-  }, {
-    name: "ppi",
-    type: Type.NUMBER,
-    default: 458,
-  }, {
-    name: "pixelDensity",
-    type: Type.NUMBER,
-    default: 3,
+  inputs = {
+    visualAcuity: new Input<typeof NumberSchema>({
+      type: NumberSchema,
+      defaultValue: 0.7,
+    }),
+    correctionFactor: new Input<typeof NumberSchema>({
+      type: NumberSchema,
+      defaultValue: 13,
+    }),
+    lightingCondition: new Input<typeof NumberSchema>({
+      type: NumberSchema,
+      defaultValue: 0.83,
+    }),
+    distance: new Input<typeof NumberSchema>({
+      type: NumberSchema,
+      defaultValue: 30,
+    }),
+    xHeightRatio: new Input<typeof NumberSchema>({
+      type: NumberSchema,
+      defaultValue: 0.53,
+    }),
+    ppi: new Input<typeof NumberSchema>({
+      type: NumberSchema,
+      defaultValue: 458,
+    }),
+    pixelDensity: new Input<typeof NumberSchema>({
+      type: NumberSchema,
+      defaultValue: 3,
+    }),
   }
-  ],
-  outputs: [{
-    name: "output",
-    type: Type.NUMBER,
-    description: "Font Size",
-  }],
-  description: "Base Font node allows you to calculate the base font size with DIN 1450.",
-  type: NodeTypes.BASE_FONT_SIZE,
-  process,
-};
+  outputs = {
+    output: new Output<typeof NumberSchema>({
+      type: NumberSchema,
+      description: "The generated font size"
+    })
+  }
+
+  process(): void {
+
+
+    const {
+      visualAcuity,
+      lightingCondition,
+      distance,
+      xHeightRatio,
+      ppi,
+      pixelDensity,
+      correctionFactor,
+    } = this.getAllInputs();
+
+    const visualCorrection =
+      correctionFactor * (lightingCondition / visualAcuity);
+    const xHeightMM =
+      Math.tan((visualCorrection * Math.PI) / 21600) * (distance * 10) * 2;
+    const xHeightPX = (xHeightMM / 25.4) * (ppi / pixelDensity);
+    // const fontSizePT = (2.83465 * xHeightMM * 1) / xHeightRatio;
+    const fontSizePX = (1 * xHeightPX) / xHeightRatio;
+
+    this.outputs.output.set(fontSizePX);
+  }
+}
 

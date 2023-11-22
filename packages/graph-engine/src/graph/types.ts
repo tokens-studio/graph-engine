@@ -1,18 +1,15 @@
-import type { Edge, Node } from "reactflow";
 
-export type FlowGraph = {
-  nodes: Node[];
-  edges: Edge[];
-  state: Record<string, any>;
-};
+export interface SerializedInput  {
+  value: any;
+}
 
-export type MinimizedNode = {
+export interface SerializedNode  {
   id: string;
   type: string;
-  data: any;
+  inputs: Record<string, SerializedInput>;
 };
 
-export type MinimizedEdge = {
+export interface SerializedEdge  {
   id: string;
   source: string;
   target: string;
@@ -20,7 +17,13 @@ export type MinimizedEdge = {
   targetHandle: string;
 };
 
-export type MinimizedFlowGraph = {
-  nodes: MinimizedNode[];
-  edges: MinimizedEdge[];
+export interface SerializedGraphOptions{
+  description: string;
+}
+
+export interface SerializedGraph  {
+  version: string;
+  graph: SerializedGraphOptions;
+  nodes: SerializedNode[];
+  edges: SerializedEdge[];
 };

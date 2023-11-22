@@ -1,5 +1,5 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/math/divide.js";
+import { executeNode } from "@/core.js";
+import { node } from "@/nodes/math/divide.js";
 
 describe("math/divide", () => {
   it("divides two numbers", async () => {

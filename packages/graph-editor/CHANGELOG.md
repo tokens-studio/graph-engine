@@ -1,5 +1,105 @@
 # @tokens-studio/graph-editor
 
+## 2.6.0
+
+### Minor Changes
+
+- 612bc38: Exposes an extra output in token sets to allow users to interact with the set as an object
+
+### Patch Changes
+
+- Updated dependencies [612bc38]
+- Updated dependencies [612bc38]
+  - @tokens-studio/graph-engine@0.15.0
+
+## 2.5.0
+
+### Minor Changes
+
+- bd2346b: Exposes an extra output in token sets to allow users to interact with the set as an object
+
+### Patch Changes
+
+- Updated dependencies [bd2346b]
+  - @tokens-studio/graph-engine@0.14.0
+
+## 2.4.1
+
+### Patch Changes
+
+- ed4bdcb: Fixes an issue with the EditorProps which did not allow additional properties and forced certain properties to be required when they were optional
+
+## 2.4.0
+
+### Minor Changes
+
+- 00941fe: Add an option to show or hide the side menu
+- c0fcbd6: Add Node Nearest to Color
+- 4296c47: Add color name node
+- bf4f5a1: Add regex support to select tokens node
+- 53b29d3: Add split string node
+
+### Patch Changes
+
+- 35e0533: showMenu is an optional value in the editor to hide the default menu sidebar
+- Updated dependencies [c0fcbd6]
+- Updated dependencies [4296c47]
+- Updated dependencies [bf4f5a1]
+- Updated dependencies [53b29d3]
+  - @tokens-studio/graph-engine@0.13.0
+
+## 2.3.0
+
+### Minor Changes
+
+- a7baf6d: add ungroup node, add select single token node, fix input issue on group and extract tokens
+
+### Patch Changes
+
+- 91da25d: Fix an issue with ESM loading not working correctly. Converts the input of the extract Tokens and Extract Single Token Node to use Regex
+- Updated dependencies [a7baf6d]
+- Updated dependencies [91da25d]
+  - @tokens-studio/graph-engine@0.12.0
+
+## 2.2.0
+
+### Minor Changes
+
+- de6a6f0: add ungroup node, add select single token node, fix input issue on group and extract tokens
+
+### Patch Changes
+
+- de6a6f0: Fix an issue with ESM loading not working correctly. Converts the input of the extract Tokens and Extract Single Token Node to use Regex
+- Updated dependencies [de6a6f0]
+- Updated dependencies [de6a6f0]
+  - @tokens-studio/graph-engine@0.11.0
+
+## 2.1.0
+
+### Minor Changes
+
+- eefa966: add ungroup node, add select single token node, fix input issue on group and extract tokens
+- eaf05cd: Add Contrasting from Set node to return the first element of an array that has sufficient contrast
+
+### Patch Changes
+
+- Updated dependencies [eefa966]
+- Updated dependencies [eaf05cd]
+  - @tokens-studio/graph-engine@0.10.0
+
+## 2.0.3
+
+### Patch Changes
+
+- 08ddaf2: Adjusts error styling for nodes
+- 4de167b: Force bump to fix the pan drag setting
+- b4d5c8a: Fixes Preview to have resize on the left
+  Fixes behavior of opening and closing Preview
+- 9c017b0: Adds hints on hover of node types to the drop panel as well as the Shift + K menu
+- cce0c72: Adds Load example dialog to the empty state as well as to the toolbar
+- 9ee84c2: Moves Settings to the left menu
+- 9dd9239: Changes markerEnd to not include arrow head
+
 ## 2.0.2
 
 ### Patch Changes

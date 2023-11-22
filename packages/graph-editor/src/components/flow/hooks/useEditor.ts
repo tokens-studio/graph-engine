@@ -1,8 +1,8 @@
-import { createNode } from '#/editor/create';
+import { createNode } from '@/editor/create';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import { useDispatch, useSelector } from 'react-redux';
 import { useReactFlow } from 'reactflow';
-import { storeNodeInsertPositionSelector } from '#/redux/selectors/ui';
+import { storeNodeInsertPositionSelector } from '@/redux/selectors/ui';
 
 export function useEditor() {
   const dispatch = useDispatch();

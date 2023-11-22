@@ -1,5 +1,5 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/math/add.js";
+import { executeNode } from "@/core.js";
+import { node } from "@/nodes/math/add.js";
 
 describe("math/add", () => {
   it("adds two numbers", async () => {

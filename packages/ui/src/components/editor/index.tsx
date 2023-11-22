@@ -1,14 +1,14 @@
-import { useRegisterRef } from '#/hooks/ref.ts';
-import { useDispatch } from '#/hooks/useDispatch.ts';
+import { useRegisterRef } from '@/hooks/ref.ts';
+import { useDispatch } from '@/hooks/useDispatch.ts';
 import { Editor } from '@tokens-studio/graph-editor';
 import { Box, Stack } from '@tokens-studio/ui';
 import { Preview } from '../Preview.tsx';
 import { Menubar } from '../editorMenu/index.tsx';
 import { useCallback } from 'react';
-import { useTheme } from '#/hooks/useTheme.tsx';
+import { useTheme } from '@/hooks/useTheme.tsx';
 import { EmptyStateEditor } from '../EmptyStateEditor.tsx';
 import { ExamplesPicker } from '../ExamplesPicker.tsx';
-import { showExamplePickerSelector } from '#/redux/selectors/index.ts';
+import { showExamplePickerSelector } from '@/redux/selectors/index.ts';
 import { useSelector } from 'react-redux';
 
 export const EditorTab = ({ ...rest }) => {

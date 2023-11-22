@@ -1,7 +1,7 @@
 import { Handle, HandleContainer, HandleText } from '../../handles.tsx';
 import { PreviewAny } from '../../preview/any.tsx';
 import { PreviewArray } from '../../preview/array.tsx';
-import { Stack, TextInput } from '@tokens-studio/ui';
+import { Stack, TextInput, Text } from '@tokens-studio/ui';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/set/group.js';
 import React, { useCallback } from 'react';
@@ -30,7 +30,11 @@ const TokenGroupNode = () => {
         </Handle>
         <Handle id="name">
           <HandleText>Name</HandleText>
-          <TextInput onChange={setValue} value={state.name} data-key="name" />
+          {input.name !== undefined ? (
+            <Text>{input.name}</Text>
+          ) : (
+            <TextInput onChange={setValue} value={state.name} data-key="name" />
+          )}
         </Handle>
       </HandleContainer>
       <HandleContainer type="source">

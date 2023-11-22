@@ -1,7 +1,7 @@
 import { Dispatch } from '../redux/store.tsx';
 import { Node, ReactFlowInstance } from 'reactflow';
 import { NodeTypes } from '@tokens-studio/graph-engine';
-import { processJson, processTokensFile } from '#/utils/tokenFiles.ts';
+import { processJson, processTokensFile } from '@/utils/tokenFiles.ts';
 import JSZip from 'jszip';
 import React from 'react';
 import { createNode } from './create.ts';

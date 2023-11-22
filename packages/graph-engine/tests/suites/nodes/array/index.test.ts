@@ -1,5 +1,5 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/array/indexArray.js";
+import { executeNode } from "@/core.js";
+import { node } from "@/nodes/array/indexArray.js";
 
 describe("array/indexArray", () => {
   it("returns the expected value", async () => {

@@ -1,6 +1,6 @@
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Position, Handle as RawHandle } from 'reactflow';
-import { styled } from '#/lib/stitches/index.ts';
+import { styled } from '@/lib/stitches/index.ts';
 import { useIsValidConnection } from './nodes/hooks/useIsValidConnection.ts';
 import { useNode } from './wrapper/nodeV2.tsx';
 import React, { createContext, useContext } from 'react';

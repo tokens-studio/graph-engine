@@ -1,5 +1,5 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/array/sort.js";
+import { executeNode } from "@/core.js";
+import { node } from "@/nodes/array/sort.js";
 
 describe("array/sort", () => {
   it("sorts the values as expected", async () => {

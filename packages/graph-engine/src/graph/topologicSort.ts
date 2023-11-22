@@ -3,7 +3,7 @@
  * This is a simplified topologic sort that does not use a graph library like graphlib which causes bloat in the bundle size
  */
 
-import { Graph, Node } from "./graph.js";
+import { Graph } from "./graph.js";
 
 /**
  * Note that this will fail if there are cycles in the graph
@@ -20,7 +20,7 @@ export function topologicalSort(graph: Graph): string[] {
     const neighbors = graph.successors(node);
     for (const neighbor of neighbors) {
       if (!visited.has(neighbor)) {
-        dfs(neighbor);
+        dfs(neighbor.id);
       }
     }
     stack.unshift(node); // Add node to the front of the stack

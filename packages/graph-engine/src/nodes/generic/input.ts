@@ -4,7 +4,7 @@
  * @packageDocumentation
  */
 
-import { IResolvedToken, flatten } from "#/utils/index.js";
+import { IResolvedToken, flatten } from "@/utils/index.js";
 import { NodeDefinition, NodeTypes } from "../../types.js";
 import { DeepKeyTokenMap } from "@tokens-studio/types";
 

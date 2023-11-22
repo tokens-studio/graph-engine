@@ -1,7 +1,7 @@
 import { Box, Stack } from '@tokens-studio/ui';
 import { PreviewColor } from './color.tsx';
-import { TokenType } from '#/utils/index.ts';
-import { styled } from '#/lib/stitches/index.ts';
+import { TokenType } from '@/utils/index.ts';
+import { styled } from '@/lib/stitches/index.ts';
 import React from 'react';
 
 const StyledInputWrapper = styled('div', {

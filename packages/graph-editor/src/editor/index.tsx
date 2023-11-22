@@ -48,7 +48,7 @@ import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolba
 import groupNode from '../components/flow/groupNode.tsx';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
 import { Box, IconButton, Stack, Tooltip } from '@tokens-studio/ui';
-import { OnOutputChangeContextProvider } from '#/context/OutputContext.tsx';
+import { OnOutputChangeContextProvider } from '@/context/OutputContext.tsx';
 import { createNode } from './create.ts';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import { useContextMenu } from 'react-contexify';
@@ -57,19 +57,21 @@ import { NodeContextMenu } from './nodeContextMenu.tsx';
 import { EdgeContextMenu } from './edgeContextMenu.tsx';
 import { PaneContextMenu } from './paneContextMenu.tsx';
 import { useSelector } from 'react-redux';
-import { showGrid, snapGrid } from '#/redux/selectors/settings.ts';
-import { showNodesPanelSelector } from '#/redux/selectors/ui.ts';
-import { forceUpdate } from '#/redux/selectors/graph.ts';
-import { DropPanel } from '#/components/index.ts';
-import { AppsIcon } from '#/components/icons/AppsIcon.tsx';
-import { CommandMenu } from '#/components/CommandPalette.tsx';
-import { ExternalLoaderProvider } from '#/context/ExternalLoaderContext.tsx';
-import { defaultPanelItems } from '#/components/flow/DropPanel/PanelItems.tsx';
-import { Settings } from '#/components/Settings.tsx';
+import { showGrid, snapGrid } from '@/redux/selectors/settings.ts';
+import { showNodesPanelSelector } from '@/redux/selectors/ui.ts';
+import { forceUpdate } from '@/redux/selectors/graph.ts';
+import { DropPanel } from '@/components/index.ts';
+import { AppsIcon } from '@/components/icons/AppsIcon.tsx';
+import { CommandMenu } from '@/components/CommandPalette.tsx';
+import { ExternalLoaderProvider } from '@/context/ExternalLoaderContext.tsx';
+import { defaultPanelItems } from '@/components/flow/DropPanel/PanelItems.tsx';
+import { Settings } from '@/components/Settings.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
 const panOnDrag = [1, 2];
+
+const noop = () => {};
 
 const edgeTypes = {
   custom: CustomEdge,
@@ -89,6 +91,7 @@ const defaultEdgeOptions = {
 export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
     const {
+      showMenu = true,
       panelItems = defaultPanelItems,
       nodeTypes = defaultNodeTypes,
       stateInitializer = defaultStateInitializer,
@@ -512,25 +515,27 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           >
             <ForceUpdateProvider value={forceUpdate}>
               <Box css={{ display: 'flex', flexDirection: 'row', zIndex: 0 }}>
-                <Stack
-                  direction="column"
-                  gap={2}
-                  css={{
-                    position: 'relative',
-                    backgroundColor: '$bgDefault',
-                    padding: '$1',
-                    borderRight: '1px solid $borderSubtle',
-                  }}
-                >
-                  <IconButton
-                    tooltip="Add nodes (n)"
-                    onClick={handleTogglePanel}
-                    icon={<AppsIcon />}
-                    variant={showNodesPanel ? 'primary' : 'invisible'}
-                  />
-                  {props.menuContent}
-                  <Settings />
-                </Stack>
+                {showMenu && (
+                  <Stack
+                    direction="column"
+                    gap={2}
+                    css={{
+                      position: 'relative',
+                      backgroundColor: '$bgDefault',
+                      padding: '$1',
+                      borderRight: '1px solid $borderSubtle',
+                    }}
+                  >
+                    <IconButton
+                      tooltip="Add nodes (n)"
+                      onClick={handleTogglePanel}
+                      icon={<AppsIcon />}
+                      variant={showNodesPanel ? 'primary' : 'invisible'}
+                    />
+                    {props.menuContent}
+                    <Settings />
+                  </Stack>
+                )}
                 {showNodesPanel && (
                   <Box
                     css={{
@@ -623,7 +628,9 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
     return (
       <ReduxProvider>
         <ReactFlowProvider>
-          <OnOutputChangeContextProvider onOutputChange={onOutputChange}>
+          <OnOutputChangeContextProvider
+            onOutputChange={onOutputChange || noop}
+          >
             <ExternalLoaderProvider externalLoader={externalLoader}>
               <Tooltip.Provider>
                 <EditorApp {...props} ref={ref} />
