@@ -1,5 +1,13 @@
 # @tokens-studio/graph-engine-ui
 
+## 2.1.1
+
+### Patch Changes
+
+- 9fc6bd7: Add support for stringify node, fix an issue with subtract on initial load
+- Updated dependencies [9fc6bd7]
+  - @tokens-studio/graph-editor@2.7.2
+
 ## 2.1.0
 
 ### Minor Changes
