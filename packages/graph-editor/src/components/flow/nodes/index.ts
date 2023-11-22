@@ -48,6 +48,7 @@ import UpperNode from './string/upperCaseNode.tsx';
 import advancedBlend from './color/advancedBlend.tsx';
 import arrayIndex from './array/arrayIndex.tsx';
 import blendNode from './color/blendNode.tsx';
+import stringifyNode from './string/stringify.tsx';
 import cssMapNode from './output/cssMapNode.tsx';
 import extract from './color/extract.tsx';
 import geometricNode from './series/geometricNode.tsx';
@@ -200,4 +201,5 @@ export const {
   ContrastingFromSetNode,
   colorNameNode,
   NearestTokensNode,
+  stringifyNode,
 ]);

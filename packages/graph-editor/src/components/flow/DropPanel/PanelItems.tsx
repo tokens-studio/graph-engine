@@ -497,6 +497,11 @@ export const defaultPanelItems: PanelGroup[] = [
         icon: '^$',
         text: 'Regex',
       },
+      {
+        type: NodeTypes.STRINGIFY,
+        icon: '"a"',
+        text: 'Stringify',
+      },
     ],
   },
   {
