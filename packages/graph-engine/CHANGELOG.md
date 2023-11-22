@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 0.15.2
+
+### Patch Changes
+
+- 1270113: Fix error on empty state for contrast node
+
 ## 0.15.1
 
 ### Patch Changes
