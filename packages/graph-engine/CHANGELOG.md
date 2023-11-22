@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 0.15.3
+
+### Patch Changes
+
+- be2fe56: Bump engine for latest changes
+
 ## 0.15.2
 
 ### Patch Changes
