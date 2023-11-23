@@ -29,6 +29,7 @@ const keys = [
   'boxShadow',
   'boxSizing',
   'clip',
+  'clipPath',
   'color',
   'contain',
   'content',
