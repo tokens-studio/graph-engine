@@ -4,17 +4,16 @@ export const type = NodeTypes.HARMONIC_SERIES;
 
 export const defaults = {
   base: 16,
-  ratio: 1.5,
+  ratio: 2,
   stepsDown: 0,
   steps: 5,
-  notes: 1,
+  notes: 5,
   precision: 2,
 };
 
 type HarmonicValue = {
-  size: number;
-  frequency: number;
-  note: number;
+  index: number;
+  value: number;
 };
 
 export const process = (input, state) => {
@@ -25,28 +24,24 @@ export const process = (input, state) => {
 
   const values: HarmonicValue[] = [];
 
-  for (let i = 0 - final.stepsDown; i < final.steps; i++) {
-    for (let j = 0; j < final.notes; j++) {
-      const shift = 10 ** final.precision;
-      const size =
-        final.base * Math.pow(final.ratio, (i * final.notes + j) / final.notes);
-      const rounded = Math.round(size * shift) / shift;
-      values.push({
-        size: rounded,
-        frequency: i,
-        note: j,
-      });
-    }
+  for (let i = 0 - final.stepsDown; i <= final.steps; i++) {
+    const shift = 10 ** final.precision;
+    const size = final.base * Math.pow(final.ratio, (i / final.notes));
+    const rounded = Math.round(size * shift) / shift;
+    values.push({
+      index: i,
+      value: rounded,
+    });
   }
 
-  return values;
+  return values; 
 };
 
 export const mapOutput = (input, state, processed: HarmonicValue[]) => {
   const mapped = { asArray: processed };
 
   processed.forEach((item) => {
-    mapped[`${item.frequency}-${item.note}`] = item.size;
+    mapped[item.index] = item.value;
   });
   return mapped;
 };

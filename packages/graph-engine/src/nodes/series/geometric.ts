@@ -24,13 +24,13 @@ export const process = (input, state) => {
   const values: GeometricValue[] = [];
   const shift = 10 ** final.precision;
 
-  for (let i = 0 - final.stepsDown; i < final.steps; i++) {
+  for (let i = 0 - final.stepsDown; i <= final.steps; i++) {
     const value = Math.round((final.base * Math.pow(final.ratio, i)) * shift) / shift;
     values.push({
-      value,
       index: i,
+      value
     });
-  }
+  } 
 
   return values;
 };

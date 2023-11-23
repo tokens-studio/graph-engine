@@ -39,26 +39,7 @@ const HarmonicNode = (props) => {
   return (
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
-        <Handle id="base">
-          <LabelNoWrap>Base</LabelNoWrap>
-          {input.base ? (
-            <PreviewNumber value={input.base} />
-          ) : (
-            <TextInput data-key="base" value={state.base} onChange={onChange} />
-          )}
-        </Handle>
-        <Handle id="ratio">
-          <LabelNoWrap>Ratio</LabelNoWrap>
-          {input.ratio ? (
-            <PreviewNumber value={input.ratio} />
-          ) : (
-            <TextInput
-              data-key="ratio"
-              value={state.ratio}
-              onChange={onChange}
-            />
-          )}
-        </Handle>
+
         <Handle id="stepsDown">
           <LabelNoWrap>Steps Down</LabelNoWrap>
           {input.stepsDown ? (
@@ -71,8 +52,9 @@ const HarmonicNode = (props) => {
             />
           )}
         </Handle>
+
         <Handle id="steps">
-          <LabelNoWrap>Steps</LabelNoWrap>
+          <LabelNoWrap>Steps Up</LabelNoWrap>
           {input.steps ? (
             <PreviewNumber value={input.steps} />
           ) : (
@@ -83,6 +65,29 @@ const HarmonicNode = (props) => {
             />
           )}
         </Handle>
+
+        <Handle id="base">
+          <LabelNoWrap>Base</LabelNoWrap>
+          {input.base ? (
+            <PreviewNumber value={input.base} />
+          ) : (
+            <TextInput data-key="base" value={state.base} onChange={onChange} />
+          )}
+        </Handle>
+
+        <Handle id="ratio">
+          <LabelNoWrap>Ratio</LabelNoWrap>
+          {input.ratio ? (
+            <PreviewNumber value={input.ratio} />
+          ) : (
+            <TextInput
+              data-key="ratio"
+              value={state.ratio}
+              onChange={onChange}
+            />
+          )}
+        </Handle>
+
         <Handle id="notes">
           <LabelNoWrap>Notes</LabelNoWrap>
           {input.notes ? (
