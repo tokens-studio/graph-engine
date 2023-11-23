@@ -262,6 +262,11 @@ export const defaultPanelItems: PanelGroup[] = [
         icon: '[][]',
         text: 'Concat Array',
       },
+      {
+        type: NodeTypes.ARRAY_PASS_UNIT,
+        icon: '[]px',
+        text: 'Array Pass Unit',
+      },
     ],
   },
   {
