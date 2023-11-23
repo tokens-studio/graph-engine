@@ -16,6 +16,7 @@ const keys = [
   'border',
   'borderBottom',
   'borderColor',
+  'borderImage',
   'borderInline',
   'borderLeft',
   'borderRadius',
