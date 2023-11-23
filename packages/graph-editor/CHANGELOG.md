@@ -1,5 +1,22 @@
 # @tokens-studio/graph-editor
 
+## 2.8.0
+
+### Minor Changes
+
+- 41f6a49: Add border-image to css map
+- 41f6a49: Add clip-path to css map
+- 22c6c01: Add Array Pass Unit Node
+- 990b5a6: Update Series nodes to be more aligned
+- 1c8fa1c: Added precision to arithmetic, geometric and harmonic series
+
+### Patch Changes
+
+- Updated dependencies [22c6c01]
+- Updated dependencies [990b5a6]
+- Updated dependencies [1c8fa1c]
+  - @tokens-studio/graph-engine@0.16.0
+
 ## 2.7.2
 
 ### Patch Changes
