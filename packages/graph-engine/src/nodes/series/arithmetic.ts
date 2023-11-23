@@ -7,7 +7,7 @@ export const defaults = {
   stepsDown: 0,
   steps: 1,
   increment: 1,
-  precision: 0,
+  precision: 2,
 };
 
 export const process = (input, state) => {

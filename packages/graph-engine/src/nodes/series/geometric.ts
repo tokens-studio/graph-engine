@@ -7,7 +7,7 @@ export const defaults = {
   ratio: 1.5,
   stepsDown: 0,
   steps: 5,
-  precision: 0,
+  precision: 2,
 };
 
 type GeometricValue = {
