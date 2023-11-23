@@ -17,7 +17,6 @@ const ArrayPassUnit = (props) => {
     }));
   }, []);
 
-
   const outputHandles = useMemo(() => {
     const { asArray, ...rest } = output || {};
 
@@ -31,7 +30,7 @@ const ArrayPassUnit = (props) => {
         </Handle>
       );
     });
-  }, [output]); 
+  }, [output]);
 
   return (
     <Stack direction="row" gap={4}>

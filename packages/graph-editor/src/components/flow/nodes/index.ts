@@ -203,5 +203,5 @@ export const {
   colorNameNode,
   NearestTokensNode,
   stringifyNode,
-  ArrayPassUnit
+  ArrayPassUnit,
 ]);

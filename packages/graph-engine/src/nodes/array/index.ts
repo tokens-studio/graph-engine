@@ -17,5 +17,5 @@ export const nodes = [
   slice,
   join,
   sort,
-  arrayPassUnit
+  arrayPassUnit,
 ];
