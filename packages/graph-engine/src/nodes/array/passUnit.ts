@@ -29,8 +29,6 @@ const process = (input, state) => {
   const values: Value[] = [];
 
   final.value.map((item) => {
-    console.log(item);
-
     values.push({
       index: item.index,
       value: `${item.value}${final.unit || ""}`,
