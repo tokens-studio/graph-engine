@@ -33,7 +33,6 @@ export const process = (input, state: State) => {
     ...input,
   };
 
-
   const compareFunctions = {
     Contrast: (foreground, background) => {
       if (final.wcag == WcagVersion.V2) {
@@ -48,8 +47,7 @@ export const process = (input, state: State) => {
       Math.abs(foreground.contrast(background, "Lstar")),
     Saturation: (foreground, background) =>
       Math.abs(foreground.hsl[1] - background.hsl[1]),
-    Distance: (foreground, background) => 
-      foreground.deltaE(background, "2000"),
+    Distance: (foreground, background) => foreground.deltaE(background, "2000"),
   };
 
   const sortedTokens = orderBy(
@@ -60,7 +58,7 @@ export const process = (input, state: State) => {
         let background = new Color(final.sourceColor);
 
         return compareFunctions[final.compare](foreground, background);
-      }
+      },
     ],
     [final.inverted ? "desc" : "asc"]
   );

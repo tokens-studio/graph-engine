@@ -7,6 +7,12 @@ export const defaults = {
   stepsDown: 0,
   steps: 1,
   increment: 1,
+  precision: 2,
+};
+
+export type ArithemeticValue = {
+  index: number;
+  value: number;
 };
 
 export const process = (input, state) => {
@@ -15,43 +21,40 @@ export const process = (input, state) => {
     ...input,
   };
 
-  const sizes: Output = [];
+  const values: ArithemeticValue[] = [];
   //Fixes issue with string concatenation
   const base = parseFloat(final.base);
+  const shift = 10 ** final.precision;
 
   for (let i = Math.abs(final.stepsDown); i > 0; i--) {
-    const value = base - final.increment * i;
-    sizes.push({
-      step: 0 - i,
-      size: value,
+    const value = Math.round((base - final.increment * i) * shift) / shift;
+    values.push({
+      index: 0 - i,
+      value: value,
     });
   }
-  sizes.push({
-    step: 0,
-    size: final.base,
+  values.push({
+    index: 0,
+    value: Math.round(final.base * shift) / shift,
   });
 
   for (let i = 0; i < Math.abs(final.steps); i++) {
-    const value = base + final.increment * (i + 1);
-    sizes.push({
-      step: i + 1,
-      size: value,
+    const value =
+      Math.round((base + final.increment * (i + 1)) * shift) / shift;
+    values.push({
+      index: i + 1,
+      value: value,
     });
   }
 
-  return sizes;
+  return values;
 };
 
-export type Output = {
-  size: number;
-  step: number;
-}[];
-
-export const mapOutput = (input, state, processed) => {
-  const mapped = { asArray: processed.map((item) => item.size) };
+export const mapOutput = (input, state, processed: ArithemeticValue[]) => {
+  const mapped = { asArray: processed };
 
   processed.forEach((item) => {
-    mapped[`${item.step}`] = item.size;
+    mapped[item.index] = item.value;
   });
   return mapped;
 };
