@@ -6,10 +6,18 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
     "prettier",
+    "plugin:react/recommended",
   ],
   parser: "@typescript-eslint/parser",
-  plugins: ["sort-imports-es6-autofix", "jest", "@typescript-eslint"],
+  plugins: [
+    "sort-imports-es6-autofix",
+    "jest",
+    "@typescript-eslint",
+    "unused-imports",
+  ],
   rules: {
+    'indent': ['error', 2],
+    "react/react-in-jsx-scope": "off",
     "react/jsx-key": "off",
     //If we do this, it must be a good reason
     "@typescript-eslint/ban-ts-comment": "off",
@@ -18,8 +26,12 @@ module.exports = {
       {
         ignoreCase: false,
         ignoreMemberSort: false,
-        memberSyntaxSortOrder: ["none", "all", "multiple", "single"],
-      },
+        memberSyntaxSortOrder: ["none", "all", "multiple", "single"]
+      }
     ],
-  },
+    "react/jsx-curly-spacing": ["error", "never"],
+    "react/jsx-indent-props": ["error", 2],
+    "no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error"
+  }
 };

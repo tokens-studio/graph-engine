@@ -41,7 +41,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "eslint": "^8.30.0",
+    "eslint": "^8.53.0",
     "eslint-config-custom": "*",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.1",
