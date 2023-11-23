@@ -39,7 +39,6 @@ const ArithmeticNode = (props) => {
   return (
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
-
         <Handle id="stepsDown">
           <LabelNoWrap>Steps Down</LabelNoWrap>
           {input?.stepsDown ? (
@@ -96,7 +95,6 @@ const ArithmeticNode = (props) => {
           </Stack>
         </Handle>
 
-
         <Handle id="precision">
           <Stack direction="row" justify="between" align="center" gap={3}>
             <Text>Precision</Text>
@@ -106,7 +104,8 @@ const ArithmeticNode = (props) => {
               <TextInput
                 data-key="precision"
                 value={state.precision}
-                onChange={onChange} />
+                onChange={onChange}
+              />
             )}
           </Stack>
         </Handle>

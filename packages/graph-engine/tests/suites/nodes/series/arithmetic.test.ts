@@ -20,18 +20,19 @@ describe("series/arithmetic", () => {
       "-1": 15,
       0: 16,
       1: 17,
-      asArray: [{
-              index: -1,
-              value: 15,
-            },
-                {
-                 index: 0,
-                 value: 16,
-               },
-                {
-                 index: 1,
-                 value: 17,
-           },
+      asArray: [
+        {
+          index: -1,
+          value: 15,
+        },
+        {
+          index: 0,
+          value: 16,
+        },
+        {
+          index: 1,
+          value: 17,
+        },
       ],
     });
   });

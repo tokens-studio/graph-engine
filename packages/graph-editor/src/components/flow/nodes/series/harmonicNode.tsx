@@ -39,7 +39,6 @@ const HarmonicNode = (props) => {
   return (
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
-
         <Handle id="stepsDown">
           <LabelNoWrap>Steps Down</LabelNoWrap>
           {input.stepsDown ? (
@@ -110,11 +109,11 @@ const HarmonicNode = (props) => {
               <TextInput
                 data-key="precision"
                 value={state.precision}
-                onChange={onChange} />
+                onChange={onChange}
+              />
             )}
           </Stack>
         </Handle>
-
       </HandleContainer>
       <HandleContainer type="source">
         <Handle id={'asArray'}>as Array</Handle>

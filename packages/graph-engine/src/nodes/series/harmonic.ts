@@ -26,7 +26,7 @@ export const process = (input, state) => {
 
   for (let i = 0 - final.stepsDown; i <= final.steps; i++) {
     const shift = 10 ** final.precision;
-    const size = final.base * Math.pow(final.ratio, (i / final.notes));
+    const size = final.base * Math.pow(final.ratio, i / final.notes);
     const rounded = Math.round(size * shift) / shift;
     values.push({
       index: i,
@@ -34,7 +34,7 @@ export const process = (input, state) => {
     });
   }
 
-  return values; 
+  return values;
 };
 
 export const mapOutput = (input, state, processed: HarmonicValue[]) => {

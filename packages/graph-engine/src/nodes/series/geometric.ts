@@ -25,12 +25,13 @@ export const process = (input, state) => {
   const shift = 10 ** final.precision;
 
   for (let i = 0 - final.stepsDown; i <= final.steps; i++) {
-    const value = Math.round((final.base * Math.pow(final.ratio, i)) * shift) / shift;
+    const value =
+      Math.round(final.base * Math.pow(final.ratio, i) * shift) / shift;
     values.push({
       index: i,
-      value
+      value,
     });
-  } 
+  }
 
   return values;
 };

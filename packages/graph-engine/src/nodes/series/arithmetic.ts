@@ -39,7 +39,8 @@ export const process = (input, state) => {
   });
 
   for (let i = 0; i < Math.abs(final.steps); i++) {
-    const value = Math.round((base + final.increment * (i + 1)) * shift) / shift;
+    const value =
+      Math.round((base + final.increment * (i + 1)) * shift) / shift;
     values.push({
       index: i + 1,
       value: value,
@@ -48,7 +49,6 @@ export const process = (input, state) => {
 
   return values;
 };
-
 
 export const mapOutput = (input, state, processed: ArithemeticValue[]) => {
   const mapped = { asArray: processed };

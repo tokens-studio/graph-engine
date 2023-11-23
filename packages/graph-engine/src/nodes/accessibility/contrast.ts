@@ -23,8 +23,8 @@ type Inputs = {
 };
 
 const defaults = {
-  a: '#000000',
-  b: '#ffffff'
+  a: "#000000",
+  b: "#ffffff",
 };
 
 const process = (input: Inputs, state) => {
@@ -35,7 +35,7 @@ const process = (input: Inputs, state) => {
 
   let color = new Color(final.a);
   let background = new Color(final.b);
-  
+
   const calculated = background.contrast(color, "APCA");
 
   return final.absolute ? Math.abs(calculated) : calculated;

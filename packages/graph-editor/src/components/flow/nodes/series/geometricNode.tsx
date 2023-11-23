@@ -39,7 +39,6 @@ const GeometricNode = (props) => {
   return (
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
-
         <Handle id="stepsDown">
           <LabelNoWrap>Steps Down</LabelNoWrap>
           {input.stepsDown ? (
@@ -74,7 +73,7 @@ const GeometricNode = (props) => {
             <TextInput data-key="base" value={state.base} onChange={onChange} />
           )}
         </Handle>
-        
+
         <Handle id="ratio">
           <LabelNoWrap>Ratio</LabelNoWrap>
           {input.ratio ? (
@@ -97,7 +96,8 @@ const GeometricNode = (props) => {
               <TextInput
                 data-key="precision"
                 value={state.precision}
-                onChange={onChange} />
+                onChange={onChange}
+              />
             )}
           </Stack>
         </Handle>
