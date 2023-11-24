@@ -11,6 +11,7 @@ import { node as scale } from "./scale.js";
 import { node as wheel } from "./wheel.js";
 import { node as name } from "./name.js";
 import { node as nearest } from "./nearest.js";
+import { node as setColorValue } from "./set-color-value.js";
 
 export const nodes = [
   advancedBlend,
@@ -26,4 +27,5 @@ export const nodes = [
   wheel,
   name,
   nearest,
+  setColorValue
 ];

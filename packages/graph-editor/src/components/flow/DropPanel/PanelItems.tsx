@@ -267,6 +267,11 @@ export const defaultPanelItems: PanelGroup[] = [
         icon: '[]px',
         text: 'Array Pass Unit',
       },
+      {
+        type: NodeTypes.NAME,
+        icon: '[][]',
+        text: 'Incremental name array',
+      },
     ],
   },
   {
@@ -429,6 +434,11 @@ export const defaultPanelItems: PanelGroup[] = [
         icon: 'x>y',
         text: 'Nearest Tokens',
       },
+      {
+        type: NodeTypes.SET_COLOR_VALUE,
+        icon: '+/-l',
+        text: 'Set Color Value',
+      }
     ],
   },
   {

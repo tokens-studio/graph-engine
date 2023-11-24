@@ -10,6 +10,7 @@ import { Handle, HandleContainer } from '../../handles.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/input/constant.js';
 import React, { useCallback } from 'react';
+import { ColorPickerPopover } from '#/components/ColorPicker.tsx';
 
 const getValue = (type, value) => {
   switch (type) {
@@ -34,6 +35,13 @@ const ConstantNode = () => {
     [setState],
   );
 
+  const handleColorChange = useCallback((color) => {
+    setState((state) => ({
+      ...state,
+      input: color,
+    }));
+  }, [setState]);
+
   const onChangeType = useCallback(
     (ev: any) => {
       const key = ev.currentTarget.dataset.key;
@@ -48,6 +56,7 @@ const ConstantNode = () => {
   return (
     <HandleContainer type="source">
       <Handle id="output">
+        {state.type == 'color' && <ColorPickerPopover value={state.input} onChange={handleColorChange} />}
         <TextInput value={state.input} onChange={onChange} />
         <DropdownMenu>
           <DropdownMenu.Trigger asChild>
@@ -72,6 +81,12 @@ const ConstantNode = () => {
                 <Stack direction="row" align="center" gap={1}>
                   <Text>Number</Text>
                   {state.type == 'number' && <CheckIcon />}
+                </Stack>
+              </DropdownMenu.Item>
+              <DropdownMenu.Item data-key={'color'} onClick={onChangeType}>
+                <Stack direction="row" align="center" gap={1}>
+                  <Text>Color</Text>
+                  {state.type == 'color' && <CheckIcon />}
                 </Stack>
               </DropdownMenu.Item>
             </DropdownMenu.Content>
