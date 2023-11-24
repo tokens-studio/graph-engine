@@ -1,5 +1,11 @@
 # @tokens-studio/graph-editor
 
+## 2.8.2
+
+### Patch Changes
+
+- ff9ab59: Fix contrasting from array nodes output
+
 ## 2.8.1
 
 ### Patch Changes
