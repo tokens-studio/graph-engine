@@ -7,6 +7,7 @@ import {
   DropdownMenu,
   IconButton,
   Label,
+  Select,
   Stack,
   TextInput,
 } from '@tokens-studio/ui';
@@ -30,24 +31,45 @@ const sortedTypes = Object.entries(TokenTypes).sort((a, b) => {
 const RemapNode = () => {
   const { input, state, setState, disconnectInput } = useNode();
 
+  const inputLength = input.input?.length || 0;
+
   const ref = useRef(input?.input?.length || 0);
   useEffect(() => {
     ref.current += 1;
+    console.log('inputLength', inputLength);
     //We don't care about the values, just the length
-  }, [input.input?.length || 0]);
+  }, [inputLength]);
 
-  const handles = useMemo(() => {
-    const onChangeType = (ev) => {
-      const key = ev.target.dataset.key;
-      const value = ev.target.dataset.value;
+  useEffect(() => {
+    console.log('input', input);
+    //We don't care about the values, just the length
+  }, [input]);
 
+  const onCreateNew = useCallback(
+    (e) => {
+      e.preventDefault();
       setState((state) => {
         return {
           ...state,
           lookup: {
             ...state.lookup,
-            [key]: {
-              ...state.lookup[key],
+            [Object.values(state.lookup).length + 1]: {},
+          },
+        };
+      });
+    },
+    [setState],
+  );
+
+  const handles = useMemo(() => {
+    const onChangeType = (pos, value) => {
+      setState((state) => {
+        return {
+          ...state,
+          lookup: {
+            ...state.lookup,
+            [pos]: {
+              ...state.lookup[pos],
               type: value,
             },
           },
@@ -95,6 +117,8 @@ const RemapNode = () => {
               <Stack direction="row">
                 <Handle id={key} />
                 <Box
+                  as="form"
+                  onSubmit={onCreateNew}
                   css={{
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -109,32 +133,21 @@ const RemapNode = () => {
                     data-key={key}
                     onChange={onNameChange}
                     value={value.name}
+                    autoFocus
                   />
-                  <DropdownMenu>
-                    <DropdownMenu.Trigger asChild>
-                      <Button variant="secondary" asDropdown size="small">
-                        {value.type}
-                      </Button>
-                    </DropdownMenu.Trigger>
-
-                    <DropdownMenu.Portal>
-                      {/* @ts-ignore */}
-                      <DropdownMenu.Content css={{ maxHeight: '$10' }}>
-                        {sortedTypes.map(([_, type]) => {
-                          return (
-                            <DropdownMenu.Item
-                              key={key}
-                              data-key={key}
-                              data-value={type}
-                              onClick={onChangeType}
-                            >
-                              {type}
-                            </DropdownMenu.Item>
-                          );
-                        })}
-                      </DropdownMenu.Content>
-                    </DropdownMenu.Portal>
-                  </DropdownMenu>
+                  <Select
+                    onValueChange={(val) => onChangeType(key, val)}
+                    value={value.type || sortedTypes[0][1]}
+                  >
+                    <Select.Trigger value={value.type || sortedTypes[0][1]} />
+                    <Select.Content>
+                      {sortedTypes.map(([_, type]) => (
+                        <Select.Item key={type} value={type}>
+                          {type}
+                        </Select.Item>
+                      ))}
+                    </Select.Content>
+                  </Select>
                   <IconButton
                     data-key={key}
                     onClick={onDelete}
@@ -152,32 +165,11 @@ const RemapNode = () => {
         );
       },
     );
-  }, [disconnectInput, setState, state.lookup]);
-
-  const onClick = useCallback(() => {
-    const key = ref.current;
-    setState((state) => {
-      return {
-        ...state,
-        lookup: {
-          ...state.lookup,
-          [key]: {},
-        },
-      };
-    });
-    ref.current += 1;
-  }, [setState]);
+  }, [onCreateNew, disconnectInput, setState, state.lookup]);
 
   return (
     <Stack direction="column" gap={2}>
-      <Stack direction="row" gap={2} align="center">
-        <HandleContainer type="target">
-          <Stack direction="row" justify="between" align="center" gap={3}>
-            <Button icon={<PlusIcon />} onClick={onClick}>
-              New
-            </Button>
-          </Stack>
-        </HandleContainer>
+      <Stack direction="row" gap={2} justify="end">
         <HandleContainer type="source">
           <Handle id={SET_ID}>
             <HandleText>Set</HandleText>
@@ -185,6 +177,11 @@ const RemapNode = () => {
         </HandleContainer>
       </Stack>
       {handles}
+      <Stack direction="row" justify="between" align="center" gap={3}>
+        <Button icon={<PlusIcon />} onClick={onCreateNew}>
+          New
+        </Button>
+      </Stack>
     </Stack>
   );
 };
