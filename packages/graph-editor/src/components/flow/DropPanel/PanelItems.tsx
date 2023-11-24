@@ -412,7 +412,7 @@ export const defaultPanelItems: PanelGroup[] = [
       {
         type: NodeTypes.POLINE,
         icon: <ColorWheelIcon />,
-        text: 'Generate Color Palette (Poline)',
+        text: 'Poline Color Scale',
       },
       {
         type: NodeTypes.COLOR_DISTANCE,
