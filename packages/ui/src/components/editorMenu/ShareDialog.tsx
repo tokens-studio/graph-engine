@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useGetEditor } from "#/hooks/useGetEditor.ts";
 
 // Create a single supabase client for interacting with your database
-const supabaseUrl = 'https://yxbewbnfxixieqxqyjlt.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4YmV3Ym5meGl4aWVxeHF5amx0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDAxNzI0MTMsImV4cCI6MjAxNTc0ODQxM30.UGz_mZlyBeIDdJa8YQMbjveLQ0mIPcPWkWoQbaBnLSQ'
+const supabaseUrl = process.env.SUPABASE_URL
+const supabaseKey = process.env.SUPABASE_KEY
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 
