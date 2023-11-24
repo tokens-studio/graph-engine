@@ -35,12 +35,15 @@ const ConstantNode = () => {
     [setState],
   );
 
-  const handleColorChange = useCallback((color) => {
-    setState((state) => ({
-      ...state,
-      input: color,
-    }));
-  }, [setState]);
+  const handleColorChange = useCallback(
+    (color) => {
+      setState((state) => ({
+        ...state,
+        input: color,
+      }));
+    },
+    [setState],
+  );
 
   const onChangeType = useCallback(
     (ev: any) => {
@@ -56,7 +59,12 @@ const ConstantNode = () => {
   return (
     <HandleContainer type="source">
       <Handle id="output">
-        {state.type == 'color' && <ColorPickerPopover value={state.input} onChange={handleColorChange} />}
+        {state.type == 'color' && (
+          <ColorPickerPopover
+            value={state.input}
+            onChange={handleColorChange}
+          />
+        )}
         <TextInput value={state.input} onChange={onChange} />
         <DropdownMenu>
           <DropdownMenu.Trigger asChild>

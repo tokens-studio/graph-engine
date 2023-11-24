@@ -8,11 +8,9 @@ interface IInputPopover {
   trigger: React.ReactNode;
 }
 
-const InputPopover = ({children, trigger}: IInputPopover) => (
+const InputPopover = ({ children, trigger }: IInputPopover) => (
   <Popover.Root>
-    <Popover.Trigger asChild>
-      {trigger}
-    </Popover.Trigger>
+    <Popover.Trigger asChild>{trigger}</Popover.Trigger>
     <Popover.Portal>
       <PopoverContent sideOffset={5}>
         {children}
@@ -51,7 +49,8 @@ const PopoverContent = styled(Popover.Content, {
   padding: 0,
   width: 300,
   backgroundColor: '$bgDefault',
-  boxShadow: 'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
+  boxShadow:
+    'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
   animationDuration: '400ms',
   animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
   willChange: 'transform, opacity',
