@@ -41,7 +41,6 @@ const RemapNode = () => {
   }, [inputLength]);
 
   useEffect(() => {
-    console.log('input', input);
     //We don't care about the values, just the length
   }, [input]);
 
