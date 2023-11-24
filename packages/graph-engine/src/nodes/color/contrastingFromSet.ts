@@ -40,7 +40,6 @@ export const process = (input, state: State) => {
     final.wcag,
     false
   );
-  console.log(sorted);
 
   for (let i = 0; i < sorted.length; i++) {
     if (sorted[i].compareValue > final.threshold) {
