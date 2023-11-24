@@ -1,3 +1,4 @@
+import { sortTokens } from "#/utils/sortTokens.js";
 import { NodeDefinition, NodeTypes } from "../../types.js";
 import { SingleToken } from "@tokens-studio/types";
 import Color from "colorjs.io";
@@ -32,27 +33,37 @@ export const process = (input, state: State) => {
   let contrast, index;
   let sufficient = false;
 
-  for (let i = 0; i < final.tokens.length; i++) {
-    let token = final.tokens[i];
-    let value = token.value;
-    let background = new Color(final.background);
-    let foreground = new Color(value);
+  const sorted = sortTokens(
+    final.tokens,
+    final.background,
+    "Contrast",
+    final.wcag,
+    false
+  );
+  console.log(sorted);
 
-    if (final.wcag == WcagVersion.V2) {
-      contrast = foreground.contrast(background, "WCAG21");
-    } else {
-      contrast = Math.abs(foreground.contrast(background, "APCA"));
-    }
-
-    if (contrast >= final.threshold) {
+  for (let i = 0; i < sorted.length; i++) {
+    if (sorted[i].compareValue > final.threshold) {
       index = i;
       sufficient = true;
       break;
     }
+
+    if (!sufficient) {
+      let maxIndex = 0;
+      let maxValue = sorted[0].compareValue;
+
+      if (sorted[i].compareValue > maxValue) {
+        maxIndex = i;
+        maxValue = sorted[i].compareValue;
+      }
+
+      index = maxIndex;
+    }
   }
 
   return {
-    token: final.tokens[index],
+    token: sorted[index],
     index,
     sufficient,
   };
