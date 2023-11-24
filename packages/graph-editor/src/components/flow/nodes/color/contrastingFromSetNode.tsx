@@ -110,11 +110,11 @@ const ContrastingFromSetNode = () => {
         </Handle>
         <Handle id="index">
           <HandleText>Index</HandleText>
-          <Text>{output.index}</Text>
+          <Text>{output?.index}</Text>
         </Handle>
         <Handle id="sufficient">
           <Text>Sufficient</Text>
-          <PreviewBoolean value={output.sufficient} />
+          <PreviewBoolean value={output?.sufficient} />
         </Handle>
       </HandleContainer>
     </Stack>
