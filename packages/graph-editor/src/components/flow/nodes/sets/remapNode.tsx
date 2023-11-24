@@ -40,9 +40,6 @@ const RemapNode = () => {
     //We don't care about the values, just the length
   }, [inputLength]);
 
-  useEffect(() => {
-    //We don't care about the values, just the length
-  }, [input]);
 
   const onCreateNew = useCallback(
     (e) => {
