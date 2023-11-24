@@ -36,7 +36,6 @@ const RemapNode = () => {
   const ref = useRef(input?.input?.length || 0);
   useEffect(() => {
     ref.current += 1;
-    console.log('inputLength', inputLength);
     //We don't care about the values, just the length
   }, [inputLength]);
 
