@@ -1,5 +1,11 @@
 # @tokens-studio/graph-editor
 
+## 2.8.1
+
+### Patch Changes
+
+- 23cc354: Fix output of Contrasting from Set
+
 ## 2.8.0
 
 ### Minor Changes
