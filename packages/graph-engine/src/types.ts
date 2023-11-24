@@ -126,6 +126,7 @@ export enum NodeTypes {
   CONTRASTING = "studio.tokens.color.contrasting",
   CONTRASTING_FROM_SET = "studio.tokens.color.contrastingFromSet",
   SCALE = "studio.tokens.color.scale",
+  SCALE2 = "studio.tokens.color.scale2",
   CONVERT_COLOR = "studio.tokens.color.convert",
   BLEND = "studio.tokens.color.blend",
   ADVANCED_BLEND = "studio.tokens.color.blendAdv",

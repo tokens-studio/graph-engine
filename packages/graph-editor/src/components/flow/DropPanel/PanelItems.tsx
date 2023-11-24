@@ -377,7 +377,12 @@ export const defaultPanelItems: PanelGroup[] = [
       {
         type: NodeTypes.SCALE,
         icon: '...',
-        text: 'Generate Scale',
+        text: 'Generate Scale (deprecated)',
+      },
+      {
+        type: NodeTypes.SCALE2,
+        icon: '...',
+        text: 'Generate Scale (new)',
       },
       {
         type: NodeTypes.CREATE_COLOR,

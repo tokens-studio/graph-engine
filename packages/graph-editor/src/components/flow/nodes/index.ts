@@ -37,6 +37,7 @@ import ResolveAliasesNode from './sets/resolveAliases.tsx';
 import ReverseArrayNode from './array/reverse.tsx';
 import SortArrayNode from './array/sort.tsx';
 import ScaleNode from './color/scaleNode.tsx';
+import Scale2Node from './color/scale2Node.tsx';
 import SinNode from './math/sinNode.tsx';
 import SliceNode from './array/slice.tsx';
 import SquashNode from './sets/squashNode.tsx';
@@ -177,6 +178,7 @@ export const {
   modNode,
   CreateColorNode,
   ScaleNode,
+  Scale2Node,
   EnumeratedInputNode,
   CountNode,
   RemapNode,
