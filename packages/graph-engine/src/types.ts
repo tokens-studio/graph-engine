@@ -84,6 +84,7 @@ export enum NodeTypes {
 
   CSS_MAP = "studio.tokens.css.map",
   CSS_BOX = "studio.tokens.css.box",
+  CSS_FUNCTIONS = "studio.tokens.css.function",
 
   //Logic
   IF = "studio.tokens.logic.if",

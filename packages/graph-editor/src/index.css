@@ -165,6 +165,8 @@
     color: var(--colors-fgMuted);
     width: 100%;
     max-width: 640px;
+    max-height: 70vh;
+    overflow: hidden;
     position: relative;
 }
 
