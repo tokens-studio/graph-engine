@@ -13,36 +13,38 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useGetEditor } from '#/hooks/useGetEditor.ts';
 import { examples } from '#/examples/examples.tsx';
+import { previewCodeSelector } from '#/redux/selectors/index.ts';
 
 export const EditorTab = ({ ...rest }) => {
   const dispatch = useDispatch();
+  const previewCode = useSelector(previewCodeSelector);
   const [, ref] = useRegisterRef('editor');
   const [, setCodeRef] = useRegisterRef('codeEditor');
   const showExamplePicker = useSelector(showExamplePickerSelector);
   const [loading, setLoading] = React.useState(false);
-  const {loadExample} = useGetEditor();
+  const { loadExample } = useGetEditor();
 
-  const router = useRouter()
-  const loadParam = router.query.load
-  
-  console.log("Load param", loadParam)
+  const router = useRouter();
+  const loadParam = router.query.load;
 
-  async function tryLoadExample(file: string) {
-    if (loadParam) {
-      setLoading(true)
-      const example = examples.find((e) => e.key === loadParam)
-      if (example) {
-        await loadExample(example.file);
-      }
-      setLoading(false);
-    }
-  }
+  console.log('Load param', loadParam);
 
   React.useEffect(() => {
-    if (loadParam) {
-      tryLoadExample(loadParam)
+    async function tryLoadExample(file: string) {
+      if (loadParam) {
+        setLoading(true);
+        const example = examples.find((e) => e.key === loadParam);
+        if (example) {
+          await loadExample(example.file);
+        }
+        setLoading(false);
+      }
     }
-  }, [loadParam])
+
+    if (loadParam) {
+      tryLoadExample(loadParam);
+    }
+  }, [loadParam, loadExample]);
 
   const onCloseExamplePicker = useCallback(() => {
     dispatch.ui.setShowExamplePicker(false);
@@ -76,6 +78,8 @@ export const EditorTab = ({ ...rest }) => {
             toggleTheme={toggleTheme}
             theme={theme}
             onLoadExamples={onOpenExamplePicker}
+            previewCode={previewCode}
+            setPreviewCode={dispatch.ui.setPreviewCode}
           />
         }
         emptyContent={<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />}
@@ -84,6 +88,7 @@ export const EditorTab = ({ ...rest }) => {
         <ExamplesPicker
           open={showExamplePicker}
           onClose={onCloseExamplePicker}
+          loadExample={loadExample}
         />
       </Editor>
       <Stack
@@ -95,7 +100,7 @@ export const EditorTab = ({ ...rest }) => {
         <Preview codeRef={setCodeRef} />
       </Stack>
       {loading && (
-       <Box
+        <Box
           css={{
             position: 'absolute',
             top: 0,
@@ -109,7 +114,9 @@ export const EditorTab = ({ ...rest }) => {
             alignItems: 'center',
             justifyContent: 'center',
           }}
-          >Loading</Box>
+        >
+          Loading
+        </Box>
       )}
     </Box>
   );

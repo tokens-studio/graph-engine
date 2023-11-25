@@ -71,7 +71,7 @@ export const uiState = createModel<RootModel>()({
         ...state,
         previewCode,
       };
-    }
+    },
   },
   effects: (dispatch) => ({
     toggleTheme(_, state) {

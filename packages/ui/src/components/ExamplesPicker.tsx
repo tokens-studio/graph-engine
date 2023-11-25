@@ -5,23 +5,10 @@ import React, { useCallback } from 'react';
 import { store } from '#/redux/store.tsx';
 import { examples } from '../examples/examples.tsx';
 import { IExample } from '../types/IExample.tsx';
-import { GraphFile } from '#/types/file.ts';
-import { useGetEditor } from '#/hooks/useGetEditor.ts';
-import { useDispatch } from 'react-redux';
 
-const ExamplesPicker = ({ open, onClose }) => {
-  const dispatch = useDispatch();
-  const {loadExample} = useGetEditor();
-
-  const onLoadExample = useCallback(
-    (file: GraphFile) => {
-      loadExample(file)
-    },
-    [loadExample],
-  );
-
+const ExamplesPicker = ({ open, onClose, loadExample }) => {
   const handleSelectItem = (example: IExample) => {
-    onLoadExample(example.file);
+    loadExample(example.file);
     onClose();
   };
 

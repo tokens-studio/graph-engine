@@ -262,6 +262,11 @@ export const defaultPanelItems: PanelGroup[] = [
         icon: '[][]',
         text: 'Concat Array',
       },
+      {
+        type: NodeTypes.ARRAY_PASS_UNIT,
+        icon: '[]px',
+        text: 'Array Pass Unit',
+      },
     ],
   },
   {
@@ -496,6 +501,11 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.REGEX,
         icon: '^$',
         text: 'Regex',
+      },
+      {
+        type: NodeTypes.STRINGIFY,
+        icon: '"a"',
+        text: 'Stringify',
       },
     ],
   },

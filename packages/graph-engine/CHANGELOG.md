@@ -1,5 +1,25 @@
 # @tokens-studio/graph-engine
 
+## 0.16.0
+
+### Minor Changes
+
+- 22c6c01: Add Array Pass Unit Node
+- 990b5a6: Update Series nodes to be more aligned
+- 1c8fa1c: Added precision to arithmetic, geometric and harmonic series
+
+## 0.15.3
+
+### Patch Changes
+
+- be2fe56: Bump engine for latest changes
+
+## 0.15.2
+
+### Patch Changes
+
+- 1270113: Fix error on empty state for contrast node
+
 ## 0.15.1
 
 ### Patch Changes

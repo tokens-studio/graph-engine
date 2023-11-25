@@ -102,6 +102,7 @@ export enum NodeTypes {
   JOIN = "studio.tokens.array.join",
   CONCAT = "studio.tokens.array.concat",
   DOT_PROP = "studio.tokens.array.dotProp",
+  ARRAY_PASS_UNIT = "studio.tokens.array.passUnit",
 
   // Math
   ADD = "studio.tokens.math.add",
@@ -162,6 +163,7 @@ export enum NodeTypes {
   REGEX = "studio.tokens.string.regex",
   PASS_UNIT = "studio.tokens.typing.passUnit",
   PARSE_UNIT = "studio.tokens.typing.parseUnit",
+  STRINGIFY = "studio.tokens.string.stringify",
 
   //Accessibility
   CONTRAST = "studio.tokens.accessibility.contrast",

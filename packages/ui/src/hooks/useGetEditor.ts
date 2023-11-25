@@ -1,8 +1,11 @@
-import { usePreviewContext } from '#/providers/preview.tsx';
+import { previewCodeSelector } from '#/redux/selectors/index.ts';
 import { store } from '#/redux/store.tsx';
+import { useSelector } from 'react-redux';
+import { useDispatch } from './useDispatch.ts';
 
 export function useGetEditor() {
-  const { setCode, code } = usePreviewContext();
+  const previewCode = useSelector(previewCodeSelector);
+  const dispatch = useDispatch();
 
   async function loadExample(file) {
     const editor = store.getState().refs.editor;
@@ -21,7 +24,7 @@ export function useGetEditor() {
 
     setTimeout(async () => {
       if (loadedCode !== undefined) {
-        setCode(loadedCode);
+        dispatch.ui.setPreviewCode(loadedCode);
       }
 
       await editor.current.load({
@@ -30,7 +33,7 @@ export function useGetEditor() {
         edges,
       });
     }, 0);
-    return Promise.resolve()
+    return Promise.resolve();
   }
 
   function getJSON() {
@@ -50,7 +53,7 @@ export function useGetEditor() {
       nodes,
       ...rest,
       state: finalState,
-      code,
+      previewCode,
     };
 
     return fileContent;

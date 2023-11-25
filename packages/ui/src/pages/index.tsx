@@ -4,7 +4,10 @@ import { scope } from '#/components/preview/scope.tsx';
 import { useDispatch } from '#/hooks/index.ts';
 import { useSelector } from 'react-redux';
 import React, { useState } from 'react';
-import { previewCodeSelector, showJourneySelector } from '#/redux/selectors/index.ts';
+import {
+  previewCodeSelector,
+  showJourneySelector,
+} from '#/redux/selectors/index.ts';
 import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 // @ts-ignore
 import { themes } from 'prism-react-renderer';
@@ -19,10 +22,6 @@ const Wrapper = () => {
   const showJourney = useSelector(showJourneySelector);
   const theme = useTheme();
   const previewCode = useSelector(previewCodeSelector);
-
-  function handleSetCode(code: string) {
-    console.log("new code", code)
-  }
 
   const [{ steps }] = useJourney();
   const handleJoyrideCallback = (data: CallBackProps) => {
@@ -64,17 +63,16 @@ const Wrapper = () => {
           background: '$bgDefault',
         }}
       >
-          <LiveProvider
-            code={previewCode}
-            scope={scope}
-            theme={theme === 'light' ? themes.vsLight : themes.vsDark}
-            noInline={true}
-            enableTypeScript={true}
-            language="jsx"
-          >
-            {JSON.stringify(previewCode)}
-            <EditorTab />
-          </LiveProvider>
+        <LiveProvider
+          code={previewCode}
+          scope={scope}
+          theme={theme === 'light' ? themes.vsLight : themes.vsDark}
+          noInline={true}
+          enableTypeScript={true}
+          language="jsx"
+        >
+          <EditorTab />
+        </LiveProvider>
       </Box>
     </>
   );
