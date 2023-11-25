@@ -1,16 +1,29 @@
 import { NodeDefinition, NodeTypes } from "../../types.js";
-import chroma from "chroma-js";
+import { scaleGenerator } from "./lib/colorScale.js";
 
 export const type = NodeTypes.SCALE2;
 
 export type State = {
-  stepsUp: number;
-  stepsDown: number;
+  color: string;
+  backgroundColor: string;
+  steps: number;
+  distribution: "lightness" | "contrast";
+  min: number;
+  max: number;
+  wcag: WcagVersion;
 };
-
+export enum WcagVersion {
+  V2 = "2.1",
+  V3 = "3.0"
+}
 export const defaults: State = {
-  stepsUp: 4,
-  stepsDown: 4,
+  color: "#FFFFFF",
+  backgroundColor: "#000000",
+  steps: 10,
+  distribution: "lightness",
+  min: 0,
+  max: 100, // Default max value based on WCAG version
+  wcag: WcagVersion.V3
 };
 
 export type Input = {
@@ -23,24 +36,19 @@ export const process = (input: Input, state: State) => {
     ...input,
   };
 
-  const stepsUp = Math.max(0, parseInt("" + final.stepsUp)) + 2;
-  const stepsDown = Math.max(0, parseInt("" + final.stepsDown)) + 2;
+  const steps = final.steps
+  const {scale, closestStepIndex} = scaleGenerator({
+    baseColor: final.color,
+    steps,
+    min: final.min,
+    max: final.max,
+  })
 
-  const lighter = chroma
-    .scale(["white", final.color])
-    .mode("hsl")
-    .colors(stepsUp)
-    .slice(1, -1);
-  const darker = chroma
-    .scale([final.color, "black"])
-    .mode("hsl")
-    .colors(stepsDown)
-    .slice(1, -1);
-  return ([] as string[]).concat(lighter, final.color, darker) as string[];
+  return {scale, closestStepIndex}
 };
 
 export const mapOutput = (input, state, processed) => {
-  const array = processed.map((x, i) => {
+  const array = processed.scale.map((x, i) => {
     return {
       name: "" + i,
       value: x,
@@ -48,13 +56,14 @@ export const mapOutput = (input, state, processed) => {
     };
   });
 
-  return processed.reduce(
+  return processed.scale.reduce(
     (acc, color, i) => {
       acc[i] = color;
       return acc;
     },
     {
       array,
+      closestStepIndex: processed.closestStepIndex
     }
   );
 };

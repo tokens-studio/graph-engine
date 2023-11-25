@@ -556,6 +556,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 ref={reactFlowWrapper}
                 fitView
                 nodes={nodes}
+                fitViewOptions={{maxZoom: 1.5}}
                 onNodesChange={onNodesChange}
                 onEdgesChange={onEdgesChange}
                 onEdgeDoubleClick={onEdgeDblClick}

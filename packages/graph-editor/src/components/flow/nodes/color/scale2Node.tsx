@@ -12,21 +12,50 @@ import PreviewColor from '../../preview/color.tsx';
 import PreviewNumber from '../../preview/number.tsx';
 import React, { useCallback, useMemo } from 'react';
 import { PaintbucketIcon } from '@iconicicons/react';
+import { ColorPickerPopover } from '#/components/ColorPicker.tsx';
 
 const Scale2Node = () => {
   const { input, state, output, setState } = useNode();
 
+  console.log("Output", output)
+
+  const handleColorChange = useCallback(
+    (color) => {
+      setState((state) => ({
+        ...state,
+        color,
+      }));
+    },
+    [setState],
+  );
+
+  const setMin = useCallback((ev) => {
+    const min = ev.target.value;
+    setState((state) => ({
+      ...state,
+      min,
+    }));
+  }, [setState]);
+
+  const setMax = useCallback((ev) => {
+    const max = ev.target.value;
+    setState((state) => ({
+      ...state,
+      max,
+    }));
+  }, [setState]);
+
   const outputHandles = useMemo(() => {
     const values = output || {};
 
-    const { array, ...rest } = values;
+    const { array, closestStepIndex, ...rest } = values;
 
     const handles = Object.entries(rest)
       .sort(([a], [b]) => {
         //Force numeric sorting
         return ~~a < ~~b ? -1 : 1;
       })
-      .map(([key, value]) => {
+      .map(([key, value], index) => {
         return (
           <Handle id={key} key={key}>
             <Text
@@ -36,7 +65,8 @@ const Scale2Node = () => {
                 color: '$fgMuted',
               }}
             >
-              {key}
+              {index === closestStepIndex ? '➡️' : ''}
+              {index}
             </Text>
             <PreviewColor value={value} />
           </Handle>
@@ -47,7 +77,7 @@ const Scale2Node = () => {
       <>
         <Handle id="array">
           <HandleText>Set</HandleText>
-          <PreviewArray value={array} />
+          <PreviewArray value={array}  />
         </Handle>
         {handles}
       </>
@@ -67,17 +97,38 @@ const Scale2Node = () => {
       <HandleContainer type="target">
         <Handle id="color">
           <Stack direction="row" justify="between" gap={3} align="center">
+            <ColorPickerPopover value={state.color} onChange={handleColorChange}  />
             <HandleText>Color</HandleText>
             <PreviewColor value={input.color} />
           </Stack>
         </Handle>
-        <Handle id="stepsUp">
+        <Handle id="steps">
           <Stack direction="row" justify="between" gap={3} align="center">
-            <HandleText secondary>Steps ↑</HandleText>
-            {input.stepsUp !== undefined ? (
+            <HandleText secondary>Steps</HandleText>
+            {input.steps !== undefined ? (
               <PreviewNumber value={input.steps} />
             ) : (
               <TextInput onChange={setSteps} value={state.steps} />
+            )}
+          </Stack>
+        </Handle>
+        <Handle id="min">
+          <Stack direction="row" justify="between" gap={3} align="center">
+            <HandleText secondary>Min</HandleText>
+            {input.min !== undefined ? (
+              <PreviewNumber value={input.min} />
+            ) : (
+              <TextInput onChange={setMin} value={state.min} />
+            )}
+          </Stack>
+        </Handle>
+        <Handle id="max">
+          <Stack direction="row" justify="between" gap={3} align="center">
+            <HandleText secondary>Max</HandleText>
+            {input.max !== undefined ? (
+              <PreviewNumber value={input.max} />
+            ) : (
+              <TextInput onChange={setMax} value={state.max} />
             )}
           </Stack>
         </Handle>
