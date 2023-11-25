@@ -1,17 +1,21 @@
-import { Button, DropdownMenu, Label, Stack, Text } from '@tokens-studio/ui';
+import { Select, Button, Label, Stack, Text } from '@tokens-studio/ui';
 import { Handle, HandleContainer } from '../../handles.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/typing/passUnit.js';
 import { useCallback } from 'react';
 import React from 'react';
+import unitsData from 'mdn-data/css/units.json';
+
+// Convert JSON keys to an array of unit strings
+const unitOptions = Object.keys(unitsData);
 
 const PassUnit = (props) => {
   const { input, output, state, setState } = useNode();
-  const setFallback = useCallback((ev) => {
-    const key = ev.currentTarget.dataset.key;
+
+  const onChangeUnit = useCallback((unit) => {
     setState((state) => ({
       ...state,
-      fallback: key,
+      fallback: unit,
     }));
   }, []);
 
@@ -28,52 +32,19 @@ const PassUnit = (props) => {
           {input.fallback !== undefined ? (
             <Text>{input.fallback}</Text>
           ) : (
-            <DropdownMenu>
-              <DropdownMenu.Trigger asChild>
-                <Button variant="secondary" asDropdown size="small">
-                  {state.fallback}
-                </Button>
-              </DropdownMenu.Trigger>
-
-              <DropdownMenu.Portal>
-                <DropdownMenu.Content>
-                  <DropdownMenu.Item onClick={setFallback} data-key="px">
-                    px
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item onClick={setFallback} data-key="em">
-                    em
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item onClick={setFallback} data-key="rem">
-                    rem
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item onClick={setFallback} data-key="%">
-                    %
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item onClick={setFallback} data-key="pt">
-                    pt
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item onClick={setFallback} data-key="pc">
-                    pc
-                  </DropdownMenu.Item>
-
-                  <DropdownMenu.Item onClick={setFallback} data-key="vw">
-                    vw
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item onClick={setFallback} data-key="vh">
-                    vh
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item onClick={setFallback} data-key="mm">
-                    mm
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item onClick={setFallback} data-key="cm">
-                    cm
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item onClick={setFallback} data-key="in">
-                    in
-                  </DropdownMenu.Item>
-                </DropdownMenu.Content>
-              </DropdownMenu.Portal>
-            </DropdownMenu>
+            <Select
+              onValueChange={onChangeUnit}
+              value={state.fallback || unitOptions[0]}
+            >
+              <Select.Trigger value={state.fallback || unitOptions[0]} />
+              <Select.Content>
+                {unitOptions.map((unit) => (
+                  <Select.Item key={unit} value={unit}>
+                    {unit}
+                  </Select.Item>
+                ))}
+              </Select.Content>
+            </Select>
           )}
         </Handle>
       </HandleContainer>
