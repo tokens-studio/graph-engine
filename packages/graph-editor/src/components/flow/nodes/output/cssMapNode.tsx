@@ -1,125 +1,23 @@
-import { Button, Label, Stack, Text } from '@tokens-studio/ui';
+import { Box, Button, Label, Stack, Text } from '@tokens-studio/ui';
 import { Handle, HandleContainer } from '../../handles.tsx';
+import { Command, useCommandState } from 'cmdk';
 import { sentenceCase } from 'sentence-case';
-import React, { useCallback, useMemo } from 'react';
-
+import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/css/map.js';
-//Curated list of commont properties
-const keys = [
-  'animation',
-  'aspectRatio',
-  'align-items',
-  'backdrop-filter',
-  'background',
-  'background-blend-mode',
-  'border',
-  'borderBottom',
-  'borderColor',
-  'borderImage',
-  'borderInline',
-  'borderLeft',
-  'borderRadius',
-  'borderRight',
-  'borderSpacing',
-  'borderStyle',
-  'borderTop',
-  'borderWidth',
-  'bottom',
-  'boxShadow',
-  'boxSizing',
-  'clip',
-  'clipPath',
-  'color',
-  'contain',
-  'content',
-  'cursor',
-  'direction',
-  'display',
-  'flex',
-  'flexBasis',
-  'flexDirection',
-  'flexFlow',
-  'flexGrow',
-  'flexShrink',
-  'flexWrap',
-  'float',
-  'font',
-  'fontDisplay',
-  'fontFamily',
-  'fontSize',
-  'fontStretch',
-  'fontStyle',
-  'fontWeight',
-  'gap',
-  'height',
-  'justify-content',
-  'left',
-  'letterSpacing',
-  'lineBreak',
-  'lineHeight',
-  'listStyle',
-  'listStyleImage',
-  'listStylePosition',
-  'listStyleType',
-  'margin',
-  'marginBottom',
-  'marginLeft',
-  'marginRight',
-  'marginTop',
-  'mask',
-  'maskType',
-  'maxHeight',
-  'maxWidth',
-  'minHeight',
-  'minWidth',
-  'mixBlendMode',
-  'opacity',
-  'outline',
-  'overflow',
-  'overflowX',
-  'overflowY',
-  'padding',
-  'paddingBottom',
-  'paddingLeft',
-  'paddingRight',
-  'paddingTop',
-  'position',
-  'right',
-  'rotate',
-  'src',
-  'stroke',
-  'textAlign',
-  'textTransform',
-  'textDecoration',
-  'top',
-  'transform',
-  'transition',
-  'translate',
-  'userSelect',
-  'verticalAlign',
-  'visibility',
-  'whiteSpace',
-  'width',
-  'wordBreak',
-  'wordSpacing',
-  'wordWrap',
-  'x',
-  'y',
-  'zIndex',
-];
+import cssPropertiesData from 'mdn-data/css/properties.json';
 
 const CssMapNode = (props) => {
-  const { input } = useNode();
-  const [hideMissing, setHideMissing] = React.useState(false);
+  const { input, state, setState } = useNode();
+  const [open, setOpen] = useState(false);
   const handles = useMemo(() => {
-    return keys
-      .map((x) => {
-        if (hideMissing && input[x] === undefined) return null;
+    return Object.entries(cssPropertiesData)
+      .map(([key, value]) => {
+        if (input[key] === undefined && state[key] === undefined) return null;
 
         return (
-          <Handle id={x} key={x}>
-            <Label>{sentenceCase(x)}</Label>
+          <Handle id={key} key={key}>
+            <Label>{key}</Label>
             <Text
               css={{
                 overflow: 'hidden',
@@ -128,22 +26,46 @@ const CssMapNode = (props) => {
                 whiteSpace: 'nowrap',
               }}
             >
-              {input[x]}
+              {input[key] || state[key]}
             </Text>
           </Handle>
         );
       })
       .filter((x) => x !== null);
-  }, [hideMissing, input]);
+  }, [state, input]);
 
-  const toggleDefined = useCallback(() => {
-    setHideMissing(!hideMissing);
-  }, [hideMissing]);
+  const handleSelectProperty = (e, property) => {
+    setState({ ...state, [property]: null });
+    setOpen(false);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
+  const handleButtonClick = () => {
+    setOpen(!open);
+  };
+
+  const [cssProperties, setCssProperties] = useState([]);
+
+  useEffect(() => {
+    // Transform the MDN data to include property name and syntax
+    const properties = Object.entries(cssPropertiesData).map(([key, value]) => {
+      return { name: key, syntax: value.syntax };
+    });
+    setCssProperties(properties);
+  }, []);
 
   return (
     <Stack direction="column" gap={2}>
+      <Button onClick={handleButtonClick}>Add CSS properties</Button>
+
       <Stack direction="row" gap={4} justify="between">
-        <span></span>
+        <HandleContainer type="target" full>
+          {handles}
+        </HandleContainer>
+
         <HandleContainer type="source">
           <Handle id="output">
             <Text>Output</Text>
@@ -151,10 +73,71 @@ const CssMapNode = (props) => {
         </HandleContainer>
       </Stack>
 
-      <HandleContainer type="target" full>
-        {handles}
-      </HandleContainer>
-      <Button onClick={toggleDefined}>Toggle Defined</Button>
+      <Command.Dialog
+        filter={(value, search) => {
+          console.log(value, search);
+          if (value.startsWith(search)) return 1;
+          return 0;
+        }}
+        open={open}
+        label="Select a CSS Function"
+        onOpenChange={() => setOpen(!open)}
+      >
+        <Box
+          css={{
+            display: 'flex',
+            flexDirection: 'row',
+            gap: 1,
+            marginBottom: '$3',
+            padding: '0 $4',
+          }}
+        >
+          <Command.Input placeholder="Search CSS properties" />
+        </Box>
+        <Command.List>
+          <Command.Empty>No results found.</Command.Empty>
+          {cssProperties
+            .sort((a, b) => {
+              if (a.name.startsWith('-') && !b.name.startsWith('-')) {
+                return 1;
+              } else if (!a.name.startsWith('-') && b.name.startsWith('-')) {
+                return -1;
+              } else {
+                return 0;
+              }
+            })
+            .map(({ name, syntax }) => (
+              <Command.Item
+                key={name}
+                value={name}
+                onSelect={(e) => handleSelectProperty(e, name)}
+              >
+                <Stack
+                  direction="row"
+                  gap={6}
+                  align="start"
+                  justify="between"
+                  css={{ alignItems: 'baseline' }}
+                >
+                  <Text css={{ flexShrink: 0 }}>{name}:</Text>
+                  <Text
+                    muted
+                    css={{
+                      fontFamily: 'monospace',
+                      fontSize: '$xsmall',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      textWrap: 'nowrap',
+                      maxWidth: '260px',
+                    }}
+                  >
+                    {syntax}
+                  </Text>
+                </Stack>
+              </Command.Item>
+            ))}
+        </Command.List>
+      </Command.Dialog>
     </Stack>
   );
 };

@@ -166,7 +166,7 @@
     width: 100%;
     max-width: 640px;
     max-height: 70vh;
-    overflow: hidden;
+    overflow: auto;
     position: relative;
 }
 

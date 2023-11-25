@@ -56,8 +56,8 @@ const CSSFunctionNodeUI = () => {
           </Handle>
         </HandleContainer>
       </Stack>
-      <Button onClick={handleButtonClick}>Select Function</Button>{' '}
-      {/* Add the button component and attach the onClick event handler */}
+      <Button onClick={handleButtonClick}>Select Function</Button>
+
       <Command.Dialog
         open={open}
         label="Select a CSS Function"
