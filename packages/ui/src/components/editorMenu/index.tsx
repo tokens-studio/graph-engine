@@ -16,6 +16,7 @@ import { getRectOfNodes, getTransformForBounds } from 'reactflow';
 import { Box, IconButton, Stack } from '@tokens-studio/ui';
 import { toPng } from 'html-to-image';
 import { store } from '#/redux/store.tsx';
+import { ShareDialog } from './ShareDialog.tsx';
 
 const imageWidth = 1024;
 const imageHeight = 768;
@@ -33,6 +34,7 @@ export const Menubar = ({
   previewCode: string;
   setPreviewCode: (code: string) => void;
 }) => {
+  const [shareDialogVisible, setShareDialogVisible] = useState(false);
   const findCurrentEditor = useCallback(() => {
     const activeEditor = store.getState().refs.editor;
 

@@ -14,37 +14,39 @@ import { useRouter } from 'next/router';
 import { useGetEditor } from '#/hooks/useGetEditor.ts';
 import { examples } from '#/examples/examples.tsx';
 import { previewCodeSelector } from '#/redux/selectors/index.ts';
+import { useShareURL } from '#/hooks/useShareURL.ts';
+import { useSearchParams } from 'next/navigation'
 
 export const EditorTab = ({ ...rest }) => {
   const dispatch = useDispatch();
   const previewCode = useSelector(previewCodeSelector);
+  const { getSupabaseEntry } = useShareURL();
   const [, ref] = useRegisterRef('editor');
   const [, setCodeRef] = useRegisterRef('codeEditor');
   const showExamplePicker = useSelector(showExamplePickerSelector);
-  const [loading, setLoading] = React.useState(false);
   const { loadExample } = useGetEditor();
-
   const router = useRouter();
-  const loadParam = router.query.load;
 
-  console.log('Load param', loadParam);
+  // console.log('Load param', idParam);
+
+  const isLoading = React.useRef(false);
 
   React.useEffect(() => {
-    async function tryLoadExample(file: string) {
-      if (loadParam) {
-        setLoading(true);
-        const example = examples.find((e) => e.key === loadParam);
-        if (example) {
-          await loadExample(example.file);
-        }
-        setLoading(false);
+    async function tryLoadExample(idParam: string) {
+      console.log("Trying to load", idParam)
+      if (idParam && !isLoading.current) {
+        isLoading.current = true;
+        console.log("IS FETCHING NOOOW")
+        await getSupabaseEntry(idParam);
+        console.log("is done, setting to false")
+        isLoading.current = false;
       }
     }
 
-    if (loadParam) {
-      tryLoadExample(loadParam);
+    if (router.query.id) {
+      tryLoadExample(router.query.id);
     }
-  }, [loadParam, loadExample]);
+  }, [router.query.id, isLoading.current]);
 
   const onCloseExamplePicker = useCallback(() => {
     dispatch.ui.setShowExamplePicker(false);
@@ -99,7 +101,7 @@ export const EditorTab = ({ ...rest }) => {
       >
         <Preview codeRef={setCodeRef} />
       </Stack>
-      {loading && (
+      {isLoading.current && (
         <Box
           css={{
             position: 'absolute',

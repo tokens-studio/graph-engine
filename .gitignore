@@ -6,3 +6,4 @@ dist
 docs
 yarn-error.log
 .env
+.env.local

@@ -26,11 +26,14 @@ export function useGetEditor() {
       if (loadedCode !== undefined) {
         dispatch.ui.setPreviewCode(loadedCode);
       }
+      
+      console.log('loadedState', loadedState)
 
       await editor.current.load({
         nodeState: loadedState,
         nodes,
         edges,
+        code: previewCode
       });
     }, 0);
     return Promise.resolve();
