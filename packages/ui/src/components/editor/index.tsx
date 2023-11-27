@@ -27,8 +27,6 @@ export const EditorTab = ({ ...rest }) => {
   const router = useRouter();
   const loadParam = router.query.load;
 
-  console.log('Load param', loadParam);
-
   React.useEffect(() => {
     async function tryLoadExample(file: string) {
       if (loadParam) {
