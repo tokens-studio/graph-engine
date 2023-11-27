@@ -33,7 +33,7 @@ export const scope = {
   useTokenProps,
 };
 
-export const code = `const Example = () => {
+export const initialPreviewCode = `const Example = () => {
     /* The parameter inside useTokens maps to the name of your Output node parameters. The CSS Map node lets you connect to any css property, but you can also just pass in any other output, for example a string or a color value. */
     const cardCSSMap = useTokens('card');
     const titleCSSMap= useTokens('title');

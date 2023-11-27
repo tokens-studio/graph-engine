@@ -30,6 +30,7 @@
     "@rematch/core": "2.2.0",
     "@rematch/persist": "2.1.2",
     "@stitches/react": "1.2.8",
+    "@supabase/supabase-js": "2.38.4",
     "@tanstack/react-table": "8.9.3",
     "@tokens-studio/graph-editor": "*",
     "@tokens-studio/graph-engine": "*",

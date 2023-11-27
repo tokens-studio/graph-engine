@@ -3,43 +3,21 @@ import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Command } from 'cmdk';
 import React, { useCallback } from 'react';
 import { store } from '#/redux/store.tsx';
-import { usePreviewContext } from '#/providers/preview.tsx';
 import { examples } from '../examples/examples.tsx';
 import { IExample } from '../types/IExample.tsx';
 import { GraphFile } from '#/types/file.ts';
+import { useGetEditor } from '#/hooks/useGetEditor.ts';
+import { useDispatch } from 'react-redux';
 
 const ExamplesPicker = ({ open, onClose }) => {
-  const { setCode, code } = usePreviewContext();
+  const dispatch = useDispatch();
+  const {loadExample} = useGetEditor();
 
   const onLoadExample = useCallback(
     (file: GraphFile) => {
-      const editor = store.getState().refs.editor;
-
-      if (!editor) {
-        return;
-      }
-
-      const { state: loadedState, code: loadedCode, nodes, edges } = file;
-
-      // TODO, this needs a refactor. We need to wait for the clear to finish
-      // as the nodes still get one final update by the dispatch before they are removed which
-      // causes nulls to occur everywhere. They need to be unmounted
-
-      editor.current.clear();
-
-      setTimeout(() => {
-        if (loadedCode !== undefined) {
-          setCode(loadedCode);
-        }
-
-        editor.current.load({
-          nodeState: loadedState,
-          nodes,
-          edges,
-        });
-      }, 0);
+      loadExample(file)
     },
-    [setCode],
+    [loadExample],
   );
 
   const handleSelectItem = (example: IExample) => {

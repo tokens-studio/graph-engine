@@ -4,18 +4,45 @@ import { Editor } from '@tokens-studio/graph-editor';
 import { Box, Stack } from '@tokens-studio/ui';
 import { Preview } from '../Preview.tsx';
 import { Menubar } from '../editorMenu/index.tsx';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useTheme } from '#/hooks/useTheme.tsx';
 import { EmptyStateEditor } from '../EmptyStateEditor.tsx';
 import { ExamplesPicker } from '../ExamplesPicker.tsx';
 import { showExamplePickerSelector } from '#/redux/selectors/index.ts';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import { useGetEditor } from '#/hooks/useGetEditor.ts';
+import { examples } from '#/examples/examples.tsx';
 
 export const EditorTab = ({ ...rest }) => {
   const dispatch = useDispatch();
   const [, ref] = useRegisterRef('editor');
   const [, setCodeRef] = useRegisterRef('codeEditor');
   const showExamplePicker = useSelector(showExamplePickerSelector);
+  const [loading, setLoading] = React.useState(false);
+  const {loadExample} = useGetEditor();
+
+  const router = useRouter()
+  const loadParam = router.query.load
+  
+  console.log("Load param", loadParam)
+
+  async function tryLoadExample(file: string) {
+    if (loadParam) {
+      setLoading(true)
+      const example = examples.find((e) => e.key === loadParam)
+      if (example) {
+        await loadExample(example.file);
+      }
+      setLoading(false);
+    }
+  }
+
+  React.useEffect(() => {
+    if (loadParam) {
+      tryLoadExample(loadParam)
+    }
+  }, [loadParam])
 
   const onCloseExamplePicker = useCallback(() => {
     dispatch.ui.setShowExamplePicker(false);
@@ -67,6 +94,23 @@ export const EditorTab = ({ ...rest }) => {
       >
         <Preview codeRef={setCodeRef} />
       </Stack>
+      {loading && (
+       <Box
+          css={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: '$bgDefault',
+            opacity: 0.5,
+            zIndex: 1000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          >Loading</Box>
+      )}
     </Box>
   );
 };
