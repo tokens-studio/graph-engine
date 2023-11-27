@@ -26,6 +26,7 @@ export const process = (input, state) => {
       size: value,
     });
   }
+
   sizes.push({
     step: 0,
     size: final.base,
