@@ -8,9 +8,11 @@ import { node as distance } from "./distance.js";
 import { node as extract } from "./extract.js";
 import { node as poline } from "./poline.js";
 import { node as scale } from "./scale.js";
+import { node as scale2 } from "./scale2.js";
 import { node as wheel } from "./wheel.js";
 import { node as name } from "./name.js";
 import { node as nearest } from "./nearest.js";
+import { node as setColorValue } from "./set-color-value.js";
 
 export const nodes = [
   advancedBlend,
@@ -23,7 +25,9 @@ export const nodes = [
   extract,
   poline,
   scale,
+  scale2,
   wheel,
   name,
   nearest,
+  setColorValue
 ];

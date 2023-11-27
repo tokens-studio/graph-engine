@@ -103,6 +103,7 @@ export enum NodeTypes {
   CONCAT = "studio.tokens.array.concat",
   DOT_PROP = "studio.tokens.array.dotProp",
   ARRAY_PASS_UNIT = "studio.tokens.array.passUnit",
+  NAME = "studio.tokens.array.name",
 
   // Math
   ADD = "studio.tokens.math.add",
@@ -126,6 +127,7 @@ export enum NodeTypes {
   CONTRASTING = "studio.tokens.color.contrasting",
   CONTRASTING_FROM_SET = "studio.tokens.color.contrastingFromSet",
   SCALE = "studio.tokens.color.scale",
+  SCALE2 = "studio.tokens.color.scale2",
   CONVERT_COLOR = "studio.tokens.color.convert",
   BLEND = "studio.tokens.color.blend",
   ADVANCED_BLEND = "studio.tokens.color.blendAdv",
@@ -137,6 +139,7 @@ export enum NodeTypes {
   COLOR_DISTANCE = "studio.tokens.color.distance",
   COLOR_NAME = "studio.tokens.color.name",
   NEAREST_TOKENS = "studio.tokens.color.nearestTokens",
+  SET_COLOR_VALUE = "studio.tokens.color.set_color_value",
 
   //Sets
   FLATTEN = "studio.tokens.sets.flatten",

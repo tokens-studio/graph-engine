@@ -13,6 +13,7 @@ import ContrastingNode from './color/contrastingNode.tsx';
 import CosNode from './math/cosNode.tsx';
 import CountNode from './math/countNode.tsx';
 import CreateColorNode from './color/createColorNode.tsx';
+import SetColorValueNode from './color/setColorValueNode.tsx';
 import DivisionNode from './math/divNode.tsx';
 import EnumeratedInputNode from './input/enumeratedInputNode.tsx';
 import HarmonicNode from './series/harmonicNode.tsx';
@@ -37,6 +38,7 @@ import ResolveAliasesNode from './sets/resolveAliases.tsx';
 import ReverseArrayNode from './array/reverse.tsx';
 import SortArrayNode from './array/sort.tsx';
 import ScaleNode from './color/scaleNode.tsx';
+import Scale2Node from './color/scale2Node.tsx';
 import SinNode from './math/sinNode.tsx';
 import SliceNode from './array/slice.tsx';
 import SquashNode from './sets/squashNode.tsx';
@@ -79,6 +81,7 @@ import ContrastingFromSetNode from './color/contrastingFromSetNode.tsx';
 import colorNameNode from './color/colorNameNode.tsx';
 import NearestTokensNode from './color/nearestNode.tsx';
 import ArrayPassUnit from './array/passUnit.tsx';
+import NameArrayNode from './array/name.tsx';
 
 export type NodeTypeLookup = Record<string, React.ReactNode | React.FC>;
 export type StateInitializer = Record<string, Record<string, any>>;
@@ -176,7 +179,9 @@ export const {
   blendNode,
   modNode,
   CreateColorNode,
+  SetColorValueNode,
   ScaleNode,
+  Scale2Node,
   EnumeratedInputNode,
   CountNode,
   RemapNode,
@@ -204,4 +209,5 @@ export const {
   NearestTokensNode,
   stringifyNode,
   ArrayPassUnit,
+  NameArrayNode,
 ]);
