@@ -96,6 +96,11 @@ export const defaultPanelItems: PanelGroup[] = [
       },
 
       {
+        type: NodeTypes.CSS_FUNCTIONS,
+        icon: 'x()',
+        text: 'CSS Function',
+      },
+      {
         type: NodeTypes.OBJECTIFY,
         icon: '{ }',
         text: 'Objectify',
