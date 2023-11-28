@@ -10,14 +10,14 @@ import { NodeDefinition, NodeTypes } from "../../types.js";
 const type = NodeTypes.NAME;
 
 export type NamedInput = {
-  tokens: SingleToken[]
+  tokens: SingleToken[];
 };
 
 export const process = (input: NamedInput) => {
   return input.tokens.map((token, index) => {
     return {
       ...token,
-      name: `${(index + 1) * 100}`
+      name: `${(index + 1) * 100}`,
     };
   });
 };

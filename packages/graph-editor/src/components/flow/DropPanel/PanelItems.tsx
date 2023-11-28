@@ -435,7 +435,7 @@ export const defaultPanelItems: PanelGroup[] = [
         text: 'Nearest Tokens',
       },
       {
-        type: NodeTypes.SET_COLOR_VALUE,
+        type: NodeTypes.SET_COLOR_LUMINANCE,
         icon: '+/-l',
         text: 'Set Color Value',
       },

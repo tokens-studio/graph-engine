@@ -27,5 +27,5 @@ export const nodes = [
   wheel,
   name,
   nearest,
-  setColorValue
+  setColorValue,
 ];

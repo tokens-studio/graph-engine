@@ -138,7 +138,7 @@ export enum NodeTypes {
   COLOR_DISTANCE = "studio.tokens.color.distance",
   COLOR_NAME = "studio.tokens.color.name",
   NEAREST_TOKENS = "studio.tokens.color.nearestTokens",
-  SET_COLOR_VALUE = "studio.tokens.color.set_color_value",
+  SET_COLOR_LUMINANCE = "studio.tokens.color.setColorLuminance",
 
   //Sets
   FLATTEN = "studio.tokens.sets.flatten",
