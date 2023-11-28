@@ -94,22 +94,7 @@ export const defaultPanelItems: PanelGroup[] = [
         icon: <ButtonIcon />,
         text: 'Enumerated Constant',
       },
-      {
-        type: NodeTypes.CSS_MAP,
-        icon: './x',
-        text: 'CSS Map',
-        docs: 'https://docs.graph.tokens.studio/nodes/generic-nodes/css-map',
-      },
-      {
-        type: NodeTypes.CSS_BOX,
-        icon: <BoxIcon />,
-        text: 'CSS Box',
-      },
-      {
-        type: NodeTypes.CSS_FUNCTIONS,
-        icon: 'x()',
-        text: 'CSS Function',
-      },
+
       {
         type: NodeTypes.OBJECTIFY,
         icon: '{ }',
@@ -134,6 +119,28 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.JSON,
         icon: '{/}',
         text: 'JSON',
+      },
+    ],
+  },
+  {
+    title: 'CSS',
+    key: 'css',
+    items: [
+      {
+        type: NodeTypes.CSS_MAP,
+        icon: './x',
+        text: 'CSS Map',
+        docs: 'https://docs.graph.tokens.studio/nodes/generic-nodes/css-map',
+      },
+      {
+        type: NodeTypes.CSS_BOX,
+        icon: <BoxIcon />,
+        text: 'CSS Box',
+      },
+      {
+        type: NodeTypes.CSS_FUNCTIONS,
+        icon: 'x()',
+        text: 'CSS Function',
       },
     ],
   },

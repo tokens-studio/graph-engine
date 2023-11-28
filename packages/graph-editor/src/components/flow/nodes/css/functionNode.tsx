@@ -4,37 +4,24 @@ import { Command } from 'cmdk';
 import { Box, Stack, Text, Button } from '@tokens-studio/ui'; // Import the Button component
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/css/cssFunction.js';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import cssFunctionsData from 'mdn-data/css/functions.json';
+
+const FUNCTION_NAMES = Object.keys(cssFunctionsData);
 
 const CSSFunctionNodeUI = () => {
   const { input, output, setState, state } = useNode();
-  const [selectedFunction, setSelectedFunction] = useState(
-    input.functionName || '',
-  );
+
   const [open, setOpen] = useState(false);
 
   const handleSelectFunction = (functionName) => {
-    setSelectedFunction(functionName);
     setState({ ...state, functionName });
-    setOpen(false);
-  };
-
-  const onClose = () => {
     setOpen(false);
   };
 
   const handleButtonClick = () => {
     setOpen(!open);
   };
-
-  const [cssFunctions, setCssFunctions] = useState([]);
-
-  useEffect(() => {
-    // Transform the MDN data into a list of function names
-    const functionNames = Object.keys(cssFunctionsData);
-    setCssFunctions(functionNames);
-  }, []);
 
   return (
     <Stack direction="column" gap={4}>
@@ -76,7 +63,7 @@ const CSSFunctionNodeUI = () => {
         </Box>
         <Command.List>
           <Command.Empty>No results found.</Command.Empty>
-          {cssFunctions.map((func) => (
+          {FUNCTION_NAMES.map((func) => (
             <Command.Item
               key={func}
               value={func}
