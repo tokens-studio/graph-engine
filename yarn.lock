@@ -10837,6 +10837,11 @@ mdn-data@2.0.30:
   resolved "https://registry.yarnpkg.com/mdn-data/-/mdn-data-2.0.30.tgz#ce4df6f80af6cfbe218ecd5c552ba13c4dfa08cc"
   integrity sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==
 
+mdn-data@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/mdn-data/-/mdn-data-2.3.0.tgz#70df66e8c8826547a054668b148cd1bb8abc80b2"
+  integrity sha512-BhLaX4PxsBIBRqqmO3EIVpwUL0dma/evS8RjGwIVomw61jRikAMpeivHEMqH+VBZWQhuL+DWiImGbEIcDqu8/Q==
+
 memfs@4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/memfs/-/memfs-4.2.0.tgz#b30d4b70626b1015f4c35548eab34087a903a5f5"
