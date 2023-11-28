@@ -1,5 +1,16 @@
 # @tokens-studio/graph-engine
 
+## 0.17.0
+
+### Minor Changes
+
+- 248400c: Added new set color value node, added color as constant input type, added new array name node for incremental naming
+- 6e58e27: Add CSS function node
+
+### Patch Changes
+
+- 69ea7b7: extract functions and presort items
+
 ## 0.16.0
 
 ### Minor Changes
