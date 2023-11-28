@@ -39,16 +39,22 @@ const RemapNode = () => {
     //We don't care about the values, just the length
   }, [inputLength]);
 
-
   const onCreateNew = useCallback(
     (e) => {
       e.preventDefault();
       setState((state) => {
+        const newIndex =
+          Math.max(
+            ...Object.keys(state.lookup)
+              .map((x) => Number(x))
+              .concat([-1]),
+          ) + 1;
+
         return {
           ...state,
           lookup: {
             ...state.lookup,
-            [Object.values(state.lookup).length + 1]: {},
+            [newIndex]: {},
           },
         };
       });

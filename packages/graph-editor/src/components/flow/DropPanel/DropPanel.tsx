@@ -139,6 +139,10 @@ export const DropPanel = React.forwardRef<ImperativeDropPanelRef, IDropPanel>(
                     </DragItem>
                   ));
 
+                if (filteredValues.length === 0) {
+                  return <></>;
+                }
+
                 return (
                   <Accordion.Item value={value.key} key={value.key}>
                     <StyledAccordionTrigger>
