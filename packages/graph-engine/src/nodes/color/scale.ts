@@ -31,12 +31,15 @@ export const process = (input: Input, state: State) => {
     .mode("hsl")
     .colors(stepsUp)
     .slice(1, -1);
+
+  const mid = [chroma(final.color).hex()];
+
   const darker = chroma
     .scale([final.color, "black"])
     .mode("hsl")
     .colors(stepsDown)
     .slice(1, -1);
-  return ([] as string[]).concat(lighter, final.color, darker) as string[];
+  return ([] as string[]).concat(lighter, mid, darker) as string[];
 };
 
 export const mapOutput = (input, state, processed) => {
