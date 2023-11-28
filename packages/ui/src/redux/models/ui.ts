@@ -1,3 +1,4 @@
+import { initialPreviewCode } from '#/components/preview/scope.tsx';
 import { RootModel } from './root.ts';
 import { createModel } from '@rematch/core';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,6 +9,7 @@ export type Tab = {
 };
 
 export interface UIState {
+  previewCode: string;
   currentTab: Tab;
   tabs: Tab[];
   theme: string;
@@ -23,6 +25,7 @@ const starting = [
 
 export const uiState = createModel<RootModel>()({
   state: {
+    previewCode: initialPreviewCode,
     currentTab: starting[0],
     tabs: starting,
     theme: 'dark',
@@ -61,6 +64,12 @@ export const uiState = createModel<RootModel>()({
       return {
         ...state,
         showExamplePicker,
+      };
+    },
+    setPreviewCode(state, previewCode: string) {
+      return {
+        ...state,
+        previewCode,
       };
     },
   },

@@ -13,6 +13,7 @@ import ContrastingNode from './color/contrastingNode.tsx';
 import CosNode from './math/cosNode.tsx';
 import CountNode from './math/countNode.tsx';
 import CreateColorNode from './color/createColorNode.tsx';
+import SetColorValueNode from './color/setColorValueNode.tsx';
 import DivisionNode from './math/divNode.tsx';
 import EnumeratedInputNode from './input/enumeratedInputNode.tsx';
 import HarmonicNode from './series/harmonicNode.tsx';
@@ -80,6 +81,7 @@ import colorNameNode from './color/colorNameNode.tsx';
 import NearestTokensNode from './color/nearestNode.tsx';
 import ArrayPassUnit from './array/passUnit.tsx';
 import cssFunctions from './css/functionNode.tsx';
+import NameArrayNode from './array/name.tsx';
 
 export type NodeTypeLookup = Record<string, React.ReactNode | React.FC>;
 export type StateInitializer = Record<string, Record<string, any>>;
@@ -177,6 +179,7 @@ export const {
   blendNode,
   modNode,
   CreateColorNode,
+  SetColorValueNode,
   ScaleNode,
   EnumeratedInputNode,
   CountNode,
@@ -206,4 +209,5 @@ export const {
   stringifyNode,
   ArrayPassUnit,
   cssFunctions,
+  NameArrayNode,
 ]);

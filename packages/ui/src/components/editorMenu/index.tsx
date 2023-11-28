@@ -15,7 +15,6 @@ import { getRectOfNodes, getTransformForBounds } from 'reactflow';
 import { Box, IconButton, Stack } from '@tokens-studio/ui';
 import { toPng } from 'html-to-image';
 import { store } from '#/redux/store.tsx';
-import { usePreviewContext } from '#/providers/preview.tsx';
 
 const imageWidth = 1024;
 const imageHeight = 768;
@@ -24,12 +23,15 @@ export const Menubar = ({
   toggleTheme,
   theme,
   onLoadExamples,
+  previewCode,
+  setPreviewCode,
 }: {
   toggleTheme: () => void;
   theme: string;
   onLoadExamples: () => void;
+  previewCode: string;
+  setPreviewCode: (code: string) => void;
 }) => {
-  const { setCode, code } = usePreviewContext();
   const findCurrentEditor = useCallback(() => {
     const activeEditor = store.getState().refs.editor;
 
@@ -53,7 +55,7 @@ export const Menubar = ({
       nodes,
       ...rest,
       state: finalState,
-      code,
+      code: previewCode,
     });
 
     const blob = new Blob([fileContent], { type: 'application/json' });
@@ -68,7 +70,7 @@ export const Menubar = ({
     // Clean up the URL and link
     URL.revokeObjectURL(url);
     document.body.removeChild(link);
-  }, [code, findCurrentEditor]);
+  }, [previewCode, findCurrentEditor]);
 
   const onLoad = useCallback(() => {
     const editor = findCurrentEditor();
@@ -94,7 +96,7 @@ export const Menubar = ({
         // causes nulls to occur everywhere. They need to be unmounted
         setTimeout(() => {
           if (code !== undefined) {
-            setCode(code);
+            setPreviewCode(code);
           }
 
           editor.current.load({
@@ -109,7 +111,7 @@ export const Menubar = ({
 
     // simulate a click on the input element to trigger the file picker dialog
     input.click();
-  }, [findCurrentEditor, setCode]);
+  }, [findCurrentEditor, setPreviewCode]);
 
   const onPrint = useCallback(async () => {
     function downloadImage(dataUrl) {
