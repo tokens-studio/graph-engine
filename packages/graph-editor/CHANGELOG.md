@@ -1,5 +1,21 @@
 # @tokens-studio/graph-editor
 
+## 2.9.0
+
+### Minor Changes
+
+- 248400c: Added new set color value node, added color as constant input type, added new array name node for incremental naming
+- 217deb1: Change passUnit nodes to use MDN unit definitions
+- 6e58e27: Add CSS function node
+
+### Patch Changes
+
+- 632150a: Rename Poline node in UI
+- Updated dependencies [69ea7b7]
+- Updated dependencies [248400c]
+- Updated dependencies [6e58e27]
+  - @tokens-studio/graph-engine@0.17.0
+
 ## 2.8.2
 
 ### Patch Changes
