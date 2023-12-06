@@ -12,6 +12,9 @@ export class Port<TType extends Type, TNode extends Node = Node> {
     /** Port Value Type */
     public type: TType;
 
+    
+
+
     constructor(node: TNode, props: IPortProps<TType>) {
         this.node = node;
         this.id = props.id || uuid();

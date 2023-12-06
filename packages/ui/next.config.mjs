@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 
-const config = {
+module.exports = {
   swcMinify: true,
   reactStrictMode: true,
   // basePath: '/beta',
@@ -42,5 +42,3 @@ const config = {
     return config;
   }
 };
-
-export default config;

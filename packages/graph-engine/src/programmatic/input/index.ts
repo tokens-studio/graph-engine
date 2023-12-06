@@ -13,6 +13,10 @@ export class Input<T extends z.ZodTypeAny = z.ZodTypeAny> {
      * Name to show in the side panel.Optional
      * */
     public name?: string;
+    /**
+     * An optional description for the Input
+     */
+    private _description?: string;
     /** Type */
     public type: T;
     /** 
@@ -31,7 +35,7 @@ export class Input<T extends z.ZodTypeAny = z.ZodTypeAny> {
     /**
      * Whether this port is variadic. Can only be used with a type that is an array
      */
-    public variadic :boolean = false;
+    public variadic: boolean = false;
 
     constructor(props: IInputProps<T>) {
         this.name = props.name;
@@ -59,6 +63,6 @@ export class Input<T extends z.ZodTypeAny = z.ZodTypeAny> {
      * Returns the description of the input as relayed through the zod type
      */
     get description() {
-        return this.type.description;
+        return this._description || this.type.description;
     }
 }

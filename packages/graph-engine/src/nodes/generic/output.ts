@@ -4,37 +4,33 @@
  * @packageDocumentation
  */
 
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { Input, Node,Output  } from "@/index.js";
+import { NodeTypes } from "../../types.js";
+import { z } from 'zod';
 
 const type = NodeTypes.OUTPUT;
 
-const defaults = {
-  mappings: [],
-};
+const AnySchema = z.array(z.number());
 
-//Passthrough
-const process = (input) => {
-  return input;
-};
 
-const mapOutput = (input, state, processed) => {
-  //convert the mappings to a lookup
-  const lookup = state.mappings.reduce((acc, { key, name }) => {
-    acc[key] = name;
-    return acc;
-  }, {});
+export class OutputNode extends Node {
 
-  return Object.entries(processed).reduce((acc, [key, value]) => {
-    acc[lookup[key]] = value;
-    return acc;
-  }, {});
-};
+  description = "Allows you to expose outputs of the node"
+  type = type
+  inputs = {
+    value: new Input<typeof AnySchema>({
+      type: AnySchema
+    })
+  }
+  output = {
+    value: new Output<typeof AnySchema>({
+      type: AnySchema
+    })
+  }
 
-export const node: NodeDefinition = {
-  description:
-    "Allows you to provide initial values for the whole graph. An input node can be used only once at the start of the graph. You can use this node to set brand decisions or any initial values.",
-  type,
-  defaults,
-  process,
-  mapOutput,
-};
+  execute(): void {
+
+    this.output.value.set(this.inputs.value.get(), );
+  }
+
+}

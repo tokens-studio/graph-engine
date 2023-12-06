@@ -4,6 +4,8 @@ import {
 import { VERSION } from "@/constants.js";
 import cmp from "semver-compare";
 import { Node, NodeFactory } from "@/programmatic/node/index.js";
+import { ExternalLoader } from "@/types.js";
+import { Input, Output } from "@/index.js";
 /**
  * Generates a stable edge
  * @param v The starting node
@@ -89,6 +91,8 @@ export class Graph {
   description?: string = "";
   nodes: Record<string, Node>;
   edges: Record<string, Edge>;
+
+  externalLoader?: ExternalLoader;
   /**
    * Outgoing edges from a node as an array of edgeIds
    * First key is the source node
@@ -103,17 +107,10 @@ export class Graph {
   }
 
 
-  connect(source, sourceHandle, target, targetHandle, data) {
+  connect(source :Node, sourceHandle :Output, target:Node, targetHandle: Input, data?: any) {
     //TODO validation of type
-    this.createEdge(genEdgeId(source.id, target.id, source.name, target.name), source.id, target.id, source.name, target.name, { data })
+    this.createEdge(genEdgeId(source.id, target.id, sourceHandle.name, targetHandle.name), source.id, target.id, sourceHandle.name, targetHandle.name, { data })
   }
-  enqueueConnection(source, sourceHandle, target, targetHandle) {
-    //Get all existing connections for the source and target
-
-
-    this.connect(source, target, {});
-  }
-
 
   /**
    * Clears the graph
@@ -139,18 +136,24 @@ export class Graph {
       return false;
     }
 
+    const inEdges = this.inEdges(nodeId);
+    const outEdges = this.outEdges(nodeId);
+
+    //Remove the edges
+    inEdges.forEach(edge => this.removeEdge(edge.id));
+    outEdges.forEach(edge => this.removeEdge(edge.id));
+
+
+    node.clear()
     //Remove from the lookup
     delete this.nodes[nodeId];
     //Remove reference of the graph 
     node.setGraph(undefined);
 
-    //Remove all incoming edges
-    const inEdges = this.in[nodeId] || {};
-
-    //Remove all outgoing edges
-    const outEdges = this.out[nodeId] || {};
-    Object.values(outEdges).forEach(edge => this.removeEdge(edge.id));
     this.emit(SubscriptionType.nodeRemoved, nodeId);
+
+
+
     return true;
   }
 

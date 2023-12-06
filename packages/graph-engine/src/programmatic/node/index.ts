@@ -19,13 +19,13 @@ export class Node {
      * Unique instance specific identifier
      */
     readonly id: string;
-    public readonly static description?: string;
+    public static readonly description?: string;
 
     static readonly type: string;
     public inputs: Record<string, Input> = {};
     public outputs: Record<string, Output> = {};
 
-    static input: Record<string, Input> ={};
+    static input: Record<string, Input> = {};
 
     private _graph: Graph;
 
@@ -88,36 +88,14 @@ export class Node {
 
 }
 
-export interface NodeFactory{
+export interface NodeFactory {
     deserialize(serialized: SerializedNode): Node
 }
 
 
 const AnySchema = z.array(z.number());
 
-class OutputNode extends Node {
 
-    type = "output"
-    inputs = {
-        value: new Input<typeof AnySchema>({
-            type: AnySchema
-        })
-    }
-    output = {
-        value: new Output<typeof AnySchema>({
-            type: AnySchema
-        })
-    }
-
-    execute(): void {
-
-
-        const x = this.inputs.value.get();
-
-        this.output.value.set(this.inputs.value.get());
-    }
-
-}
 
 class InputNode extends Node {
 
@@ -142,22 +120,3 @@ class InputNode extends Node {
 
 }
 
-const x = new InputNode({
-    id: "test",
-    inputs: {
-        value: new Input<typeof AnySchema>({
-            type: AnySchema
-        })
-    },
-    outputs: {
-        value: new Output<typeof AnySchema>({
-            type: AnySchema
-        })
-    }
-});
-const y = new OutputNode({
-    id: "test2"
-});
-
-
-x.execute();

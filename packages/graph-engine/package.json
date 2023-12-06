@@ -48,7 +48,6 @@
     "extract-colors": "^4.0.2",
     "get-pixels": "^3.3.3",
     "is-promise": "^4.0.0",
-
     "lodash.orderby": "^4.6.0",
     "poline": "^0.7.0",
     "postcss-value-parser": "^4.2.0",

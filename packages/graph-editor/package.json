@@ -1,5 +1,4 @@
 {
-  "private": false,
   "name": "@tokens-studio/graph-editor",
   "version": "2.6.0",
   "description": "UI for the graph engine",

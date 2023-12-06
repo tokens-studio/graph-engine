@@ -2,29 +2,6 @@ export type ExternalLoadOptions = { type: string; id: string; data: any };
 export type ExternalLoader = (opts: ExternalLoadOptions) => Promise<any> | any;
 
 
-export enum Type {
-  STRING = 'string',
-  ARRAY = 'array',
-  OBJECT = 'object',
-  NUMBER = 'number',
-  BOOLEAN = 'boolean'
-}
-
-
-/**
- * Type definitions are used to provide strong typing for node values
- */
-export type TypeDefinition = {
-  name: string;
-  description?: string;
-  type: Type;
-  //Whether the value is exposed to the user in the UI
-  hidden?: boolean;
-  default?: any;
-  //Used when the type is an array
-  items?: TypeDefinition;
-}
-
 
 
 export interface NodeDefinition<
