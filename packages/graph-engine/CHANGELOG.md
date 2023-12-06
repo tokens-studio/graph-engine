@@ -1,5 +1,12 @@
 # @tokens-studio/graph-engine
 
+## 0.17.1
+
+### Patch Changes
+
+- 473c0a3: Update miniizeFlowGraph to be quiet if disconnected edges are detected
+- e068662: Remove console.log message from join string
+
 ## 0.17.0
 
 ### Minor Changes
