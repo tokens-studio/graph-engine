@@ -1,6 +1,6 @@
 {
   "name": "@tokens-studio/graph-engine",
-  "version": "0.17.1",
+  "version": "0.17.2",
   "description": "An execution engine to handle Token Studios generators and resolvers",
   "license": "MIT",
   "author": "andrew@hyma.io",
