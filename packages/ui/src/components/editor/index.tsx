@@ -10,7 +10,7 @@ import { EmptyStateEditor } from '../EmptyStateEditor.tsx';
 import { ExamplesPicker } from '../ExamplesPicker.tsx';
 import { showExamplePickerSelector } from '#/redux/selectors/index.ts';
 import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router.js';
 import { useGetEditor } from '#/hooks/useGetEditor.ts';
 import { examples } from '#/examples/examples.tsx';
 import { previewCodeSelector } from '#/redux/selectors/index.ts';
@@ -40,7 +40,7 @@ export const EditorTab = ({ ...rest }) => {
     }
 
     if (loadParam) {
-      tryLoadExample(loadParam);
+      tryLoadExample(loadParam as string);
     }
   }, [loadParam, loadExample]);
 
