@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 0.17.2
+
+### Patch Changes
+
+- ba4bb9c: Update miniizeFlowGraph to be quiet if disconnected edges are detected
+
 ## 0.17.1
 
 ### Patch Changes
