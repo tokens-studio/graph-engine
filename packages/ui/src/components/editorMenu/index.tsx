@@ -9,12 +9,16 @@ import {
 } from '@iconicicons/react';
 import SlackIcon from '#/assets/svgs/slack.svg';
 import YoutubeIcon from '#/assets/svgs/youtube.svg';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { ResolverData } from '#/types/file.ts';
 import { getRectOfNodes, getTransformForBounds } from 'reactflow';
 import { Box, IconButton, Stack } from '@tokens-studio/ui';
 import { toPng } from 'html-to-image';
 import { store } from '#/redux/store.tsx';
+import AppsIcon from '#/assets/svgs/AppsIcon.svg';
+import { showNodesPanelSelector } from '#/redux/selectors/index.ts';
+import { useSelector } from 'react-redux';
+import { useDispatch } from '#/hooks/useDispatch.ts';
 
 const imageWidth = 1024;
 const imageHeight = 768;
@@ -32,12 +36,17 @@ export const Menubar = ({
   previewCode: string;
   setPreviewCode: (code: string) => void;
 }) => {
+
+  const showNodesPanel = useSelector(showNodesPanelSelector);
+  const dispatch = useDispatch();
+
   const findCurrentEditor = useCallback(() => {
     const activeEditor = store.getState().refs.editor;
 
     return activeEditor;
   }, []);
 
+  // TODO: Move all of this to a hook
   const onSave = useCallback(() => {
     const editor = findCurrentEditor();
 
@@ -72,6 +81,8 @@ export const Menubar = ({
     document.body.removeChild(link);
   }, [previewCode, findCurrentEditor]);
 
+
+  // TODO: Move all of this to a hook
   const onLoad = useCallback(() => {
     const editor = findCurrentEditor();
     if (!editor) {
@@ -113,6 +124,8 @@ export const Menubar = ({
     input.click();
   }, [findCurrentEditor, setPreviewCode]);
 
+
+  // TODO: Move all of this to a hook
   const onPrint = useCallback(async () => {
     function downloadImage(dataUrl) {
       const a = document.createElement('a');
@@ -163,7 +176,13 @@ export const Menubar = ({
       gap={2}
       css={{ flexGrow: 1 }}
     >
-      <Stack direction="column">
+      <Stack direction="column" css={{backgroundColor: '$bgDefault', padding: '$2', borderRadius: '$medium', border: '1px solid', borderColor: '$borderSubtle', boxShadow: '$small'}}>
+        <IconButton
+          tooltip="Add nodes (n)"
+          onClick={() => dispatch.ui.setShowNodesPanel(!showNodesPanel)}
+          icon={<AppsIcon />}
+          variant={showNodesPanel ? 'primary' : 'invisible'}
+        />
         <Box
           css={{
             height: '1px',

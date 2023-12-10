@@ -9,7 +9,7 @@ export interface UIState {
 
 export const uiState = createModel<RootModel>()({
   state: {
-    showNodesPanel: true,
+    showNodesPanel: false,
     showNodesCmdPalette: false,
     storeNodeInsertPosition: { x: 0, y: 0 },
   } as UIState,

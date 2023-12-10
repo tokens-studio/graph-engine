@@ -61,7 +61,6 @@ import { showGrid, snapGrid } from '#/redux/selectors/settings.ts';
 import { showNodesPanelSelector } from '#/redux/selectors/ui.ts';
 import { forceUpdate } from '#/redux/selectors/graph.ts';
 import { DropPanel } from '#/components/index.ts';
-import { AppsIcon } from '#/components/icons/AppsIcon.tsx';
 import { CommandMenu } from '#/components/CommandPalette.tsx';
 import { ExternalLoaderProvider } from '#/context/ExternalLoaderContext.tsx';
 import { defaultPanelItems } from '#/components/flow/DropPanel/PanelItems.tsx';
@@ -107,9 +106,15 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const showNodesPanel = useSelector(showNodesPanelSelector);
     const forceUpdateValue = useSelector(forceUpdate);
 
-    const handleTogglePanel = () => {
-      dispatch.ui.setShowNodesPanel(!showNodesPanel);
-    };
+    React.useEffect(() => {
+      if (!!props.shouldShowNodesPanel) dispatch.ui.setShowNodesPanel(props.shouldShowNodesPanel);
+    }, [props.shouldShowNodesPanel]);
+
+    React.useEffect(() => {
+      if (typeof props.onShowNodesPanelChange === 'function') {
+        props.onShowNodesPanelChange(showNodesPanel);
+      }
+    }, [showNodesPanel]);
 
     const [contextNode, setContextNode] = React.useState<Node | null>(null);
     const [contextEdge, setContextEdge] = React.useState<Edge | null>(null);
@@ -514,44 +519,42 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
             }}
           >
             <ForceUpdateProvider value={forceUpdate}>
-              <Box css={{ display: 'flex', flexDirection: 'row', zIndex: 0 }}>
+              <Box css={{ position: 'absolute', zIndex: 500, display: 'flex', flexDirection: 'row', height: '100%' }}>
                 {showMenu && (
                   <Stack
                     direction="column"
                     gap={2}
                     css={{
                       position: 'relative',
-                      backgroundColor: '$bgDefault',
-                      padding: '$1',
-                      borderRight: '1px solid $borderSubtle',
+                      padding: '$3',
+                      paddingRight: 0,
+                      zIndex: 600,
                     }}
                   >
-                    <IconButton
-                      tooltip="Add nodes (n)"
-                      onClick={handleTogglePanel}
-                      icon={<AppsIcon />}
-                      variant={showNodesPanel ? 'primary' : 'invisible'}
-                    />
                     {props.menuContent}
                     <Settings />
                   </Stack>
                 )}
                 {showNodesPanel && (
-                  <Box
-                    css={{
-                      backgroundColor: '$bgDefault',
-                      width: '240px',
-                      overflow: 'hidden',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      borderRight: '1px solid $borderMuted',
-                    }}
-                  >
-                    <DropPanel groups={[]} items={panelItems} />
+                  <Box css={{paddingLeft: '$3', paddingTop: '$3', paddingBottom: '$3'}}>
+                    <Box
+                      css={{
+                        backgroundColor: '$bgDefault',
+                        width: 'var(--globals-drop-panel-width)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        border: '1px solid $borderSubtle',
+                        boxShadow: '$small',
+                        borderRadius: '$medium',
+                        overflowY: 'auto',
+                        maxHeight: '100%'
+                      }}
+                    >
+                      <DropPanel groups={[]} items={panelItems} />
+                    </Box>
                   </Box>
                 )}
               </Box>
-              {/* @ts-ignore */}
               <ReactFlow
                 ref={reactFlowWrapper}
                 fitView
