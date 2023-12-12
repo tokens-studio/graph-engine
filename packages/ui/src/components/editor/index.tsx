@@ -8,7 +8,10 @@ import React, { useCallback } from 'react';
 import { useTheme } from '#/hooks/useTheme.tsx';
 import { EmptyStateEditor } from '../EmptyStateEditor.tsx';
 import { ExamplesPicker } from '../ExamplesPicker.tsx';
-import { showExamplePickerSelector, showNodesPanelSelector } from '#/redux/selectors/index.ts';
+import {
+  showExamplePickerSelector,
+  showNodesPanelSelector,
+} from '#/redux/selectors/index.ts';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router.js';
 import { useGetEditor } from '#/hooks/useGetEditor.ts';

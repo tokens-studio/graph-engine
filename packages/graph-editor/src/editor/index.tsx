@@ -107,7 +107,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const forceUpdateValue = useSelector(forceUpdate);
 
     React.useEffect(() => {
-      if (!!props.shouldShowNodesPanel) dispatch.ui.setShowNodesPanel(props.shouldShowNodesPanel);
+      if (!!props.shouldShowNodesPanel)
+        dispatch.ui.setShowNodesPanel(props.shouldShowNodesPanel);
     }, [props.shouldShowNodesPanel]);
 
     React.useEffect(() => {
@@ -519,7 +520,15 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
             }}
           >
             <ForceUpdateProvider value={forceUpdate}>
-              <Box css={{ position: 'absolute', zIndex: 500, display: 'flex', flexDirection: 'row', height: '100%' }}>
+              <Box
+                css={{
+                  position: 'absolute',
+                  zIndex: 500,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  height: '100%',
+                }}
+              >
                 {showMenu && (
                   <Stack
                     direction="column"
@@ -536,7 +545,13 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                   </Stack>
                 )}
                 {showNodesPanel && (
-                  <Box css={{paddingLeft: '$3', paddingTop: '$3', paddingBottom: '$3'}}>
+                  <Box
+                    css={{
+                      paddingLeft: '$3',
+                      paddingTop: '$3',
+                      paddingBottom: '$3',
+                    }}
+                  >
                     <Box
                       css={{
                         backgroundColor: '$bgDefault',
@@ -547,7 +562,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                         boxShadow: '$small',
                         borderRadius: '$medium',
                         overflowY: 'auto',
-                        maxHeight: '100%'
+                        maxHeight: '100%',
                       }}
                     >
                       <DropPanel groups={[]} items={panelItems} />

@@ -61,7 +61,7 @@ const Wrapper = () => {
           height: '100%',
           overflow: 'hidden',
           background: '$bgDefault',
-          isolation: 'isolate'
+          isolation: 'isolate',
         }}
       >
         <LiveProvider

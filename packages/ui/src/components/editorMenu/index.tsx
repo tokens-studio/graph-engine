@@ -36,7 +36,6 @@ export const Menubar = ({
   previewCode: string;
   setPreviewCode: (code: string) => void;
 }) => {
-
   const showNodesPanel = useSelector(showNodesPanelSelector);
   const dispatch = useDispatch();
 
@@ -81,7 +80,6 @@ export const Menubar = ({
     document.body.removeChild(link);
   }, [previewCode, findCurrentEditor]);
 
-
   // TODO: Move all of this to a hook
   const onLoad = useCallback(() => {
     const editor = findCurrentEditor();
@@ -123,7 +121,6 @@ export const Menubar = ({
     // simulate a click on the input element to trigger the file picker dialog
     input.click();
   }, [findCurrentEditor, setPreviewCode]);
-
 
   // TODO: Move all of this to a hook
   const onPrint = useCallback(async () => {
@@ -176,7 +173,17 @@ export const Menubar = ({
       gap={2}
       css={{ flexGrow: 1 }}
     >
-      <Stack direction="column" css={{backgroundColor: '$bgDefault', padding: '$2', borderRadius: '$medium', border: '1px solid', borderColor: '$borderSubtle', boxShadow: '$small'}}>
+      <Stack
+        direction="column"
+        css={{
+          backgroundColor: '$bgDefault',
+          padding: '$2',
+          borderRadius: '$medium',
+          border: '1px solid',
+          borderColor: '$borderSubtle',
+          boxShadow: '$small',
+        }}
+      >
         <IconButton
           tooltip="Add nodes (n)"
           onClick={() => dispatch.ui.setShowNodesPanel(!showNodesPanel)}
