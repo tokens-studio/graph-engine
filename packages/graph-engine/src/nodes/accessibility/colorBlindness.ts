@@ -4,11 +4,12 @@
  * @packageDocumentation
  */
 
-import { NodeDefinition, NodeTypes } from "../../types.js";
 import blinder from "color-blind";
 import chroma from "chroma-js";
-
-const type = NodeTypes.COLOR_BLINDNESS;
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/index.js";
+import { NumberSchema, ColorSchema } from "@/schemas/index.js";
 
 export enum ColorBlindnessTypes {
   TRITANOPIA = "tritanopia",
@@ -21,58 +22,66 @@ export enum ColorBlindnessTypes {
   ACHROMATOMALY = "achromatomaly",
 }
 
-type Inputs = {
-  color: string;
-};
-
-const defaults = {
-  type: ColorBlindnessTypes.PROTANOPIA,
-};
-
-type STATE = {
-  type: ColorBlindnessTypes;
-};
-
-const process = (input: Inputs, state: STATE) => {
-  const color = chroma(input.color).hex();
-
-  let processed = color;
-
-  switch (state.type) {
-    case ColorBlindnessTypes.TRITANOPIA:
-      processed = blinder.tritanopia(color);
-      break;
-    case ColorBlindnessTypes.TRITANOMALY:
-      processed = blinder.tritanomaly(color);
-      break;
-    case ColorBlindnessTypes.DEUTERANOPIA:
-      processed = blinder.deuteranopia(color);
-      break;
-    case ColorBlindnessTypes.DEUTERANOMALY:
-      processed = blinder.deuteranomaly(color);
-      break;
-
-    case ColorBlindnessTypes.PROTANOMALY:
-      processed = blinder.protanomaly(color);
-      break;
-    case ColorBlindnessTypes.ACHROMATOPSIA:
-      processed = blinder.achromatopsia(color);
-      break;
-    case ColorBlindnessTypes.ACHROMATOMALY:
-      processed = blinder.achromatomaly(color);
-      break;
-    default:
-      processed = blinder.protanopia(color);
-      break;
+export class NodeDefinition extends Node {
+  title = "Color Blindness";
+  type = NodeTypes.COLOR_BLINDNESS;
+  description = "Converts provided colors to the colors as perceived by the specified color blindness type.";
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("color", {
+      type: ColorSchema,
+      visible: true,
+    });
+    this.addInput("type", {
+      type: {
+        $id: "https://schemas.tokens.studio/colorBlindness/type.json",
+        title: "Color Blindness Type",
+        enum: Object.values(ColorBlindnessTypes),
+        type: "string",
+        default: ColorBlindnessTypes.PROTANOPIA
+      }
+    });
+    this.addOutput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
   }
 
-  return processed;
-};
+  execute(): void | Promise<void> {
+    const {type , color} = this.getAllInputs();
 
-export const node: NodeDefinition<Inputs, STATE> = {
-  description:
-    "Converts provided colors to the colors as perceived by the specified color blindness type.",
-  defaults,
-  type,
-  process,
-};
+    const col = chroma(color).hex();
+
+    let processed = col;
+
+    switch (type) {
+      case ColorBlindnessTypes.TRITANOPIA:
+        processed = blinder.tritanopia(color);
+        break;
+      case ColorBlindnessTypes.TRITANOMALY:
+        processed = blinder.tritanomaly(color);
+        break;
+      case ColorBlindnessTypes.DEUTERANOPIA:
+        processed = blinder.deuteranopia(color);
+        break;
+      case ColorBlindnessTypes.DEUTERANOMALY:
+        processed = blinder.deuteranomaly(color);
+        break;
+
+      case ColorBlindnessTypes.PROTANOMALY:
+        processed = blinder.protanomaly(color);
+        break;
+      case ColorBlindnessTypes.ACHROMATOPSIA:
+        processed = blinder.achromatopsia(color);
+        break;
+      case ColorBlindnessTypes.ACHROMATOMALY:
+        processed = blinder.achromatomaly(color);
+        break;
+      default:
+        processed = blinder.protanopia(color);
+        break;
+    }
+
+    this.setOutput("value", processed);
+  }
+}

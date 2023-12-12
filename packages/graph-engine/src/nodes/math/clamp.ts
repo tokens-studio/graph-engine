@@ -1,39 +1,41 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/index.js";
+import { NumberSchema } from "@/schemas/index.js";
 
-export const type = NodeTypes.CLAMP;
+export class NodeDefinition extends Node {
+  title = "Clamp";
+  type = NodeTypes.CLAMP;
+  description = "Clamp node allows you to restricts a value within a specified minimum and maximum range.", ;
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("value", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+        visible: true,
+      }
+    });
+    this.addInput("min", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+      }
+    });
+    this.addInput("max", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+      }
+    });
+    this.addOutput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
+  }
 
-export const defaults = {
-  value: 0,
-  min: 0,
-  max: 0,
-};
-
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-export const process = (input, state) => {
-  //Override with state if defined
-  const final = {
-    ...state,
-    ...input,
-  };
-
-  const value = parseFloat(final.value);
-  const min = parseFloat(final.min);
-  const max = parseFloat(final.max);
-
-  return value > max ? max : value < min ? min : value;
-};
-
-export const node: NodeDefinition = {
-  description:
-    "Clamp node allows you to restricts a value within a specified minimum and maximum range.",
-  type,
-  defaults,
-  process,
-};
+  execute(): void | Promise<void> {
+    const { value, min, max } = this.getAllInputs();
+    this.setOutput("value", value > max ? max : value < min ? min : value);
+  }
+}

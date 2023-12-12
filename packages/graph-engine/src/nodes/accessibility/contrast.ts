@@ -1,43 +1,46 @@
-/**
- * Performs a contrast calculation between two colors using APCA-W3 calcs
- *
- * @packageDocumentation
- */
 
-import { NodeDefinition, NodeTypes } from "../../types.js";
-import Color from "colorjs.io";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/index.js";
+import { NumberSchema, ColorSchema, BooleanSchema } from "@/schemas/index.js";
 
-const type = NodeTypes.CONTRAST;
+export class NodeDefinition extends Node {
+  title = "Contrast";
+  type = NodeTypes.CONTRAST;
+  description = "Calculates the contrast between two colors";
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("a", {
+      type: ColorSchema,
+      visible: true,
+    });
+    this.addInput("b", {
+      type: ColorSchema,
+      visible: true,
+    });
+    this.addInput("absolute", {
+      type: {
+        ...BooleanSchema,
+        default: false
+      },
+      visible: true,
+    });
 
-type Inputs = {
-  /**
-   * Color
-   */
-  a: string;
-  /**
-   * Color
-   */
-  b: string;
+    this.addOutput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
+  }
 
-  absolute?: boolean;
-};
+  execute(): void | Promise<void> {
+    const { a, b, absolute } = this.getAllInputs();
 
-const process = (input: Inputs, state) => {
-  const final = {
-    ...state,
-    ...input,
-  };
 
-  let color = new Color(final.a);
-  let background = new Color(final.b);
-  
-  const calculated = background.contrast(color, "APCA");
+    let color = new Color(a);
+    let background = new Color(b);
 
-  return final.absolute ? Math.abs(calculated) : calculated;
-};
+    const calculated = background.contrast(color, "APCA");
 
-export const node: NodeDefinition<Inputs> = {
-  description: "Calculates the contrast between two colors",
-  type,
-  process,
-};
+    this.setOutput("value", absolute ? Math.abs(calculated) : calculated);
+  }
+}

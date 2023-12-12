@@ -1,32 +1,32 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/index.js";
+import { NumberSchema } from "@/schemas/index.js";
 
-export const type = NodeTypes.POW;
+export class NodeDefinition extends Node {
+  title = "Power";
+  type = NodeTypes.POW;
+  description = "Power node allows you to Raises a base number to the power of an exponent."
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("base", {
+      type: NumberSchema,
+      visible: true,
+    });
+    this.addInput("exponent", {
+      type: {
+        ...NumberSchema,
+        default: 2,
+      }
+    });
+    this.addOutput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
+  }
 
-export type State = {
-  base: number;
-  exponent: number;
-};
-
-export const defaults: State = {
-  base: 0,
-  exponent: 0,
-};
-export const process = (input, state: State) => {
-  const final = {
-    ...state,
-    ...input,
-  };
-
-  const base = parseFloat(final.base);
-  const exponent = parseFloat(final.exponent);
-
-  return Math.pow(base, exponent);
-};
-
-export const node: NodeDefinition<State, State> = {
-  defaults,
-  type,
-  description:
-    "Power node allows you to Raises a base number to the power of an exponent.",
-  process,
-};
+  execute(): void | Promise<void> {
+    const { base, exponent } = this.getAllInputs();
+    this.setOutput("value", Math.pow(base, exponent));
+  }
+}

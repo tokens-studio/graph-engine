@@ -22,7 +22,7 @@ export interface TypeDefinition {
   /**
    * Whether the input is visible by default in the UI
    */
-  visible: boolean;
+  visible?: boolean;
 }
 
 export class Node {
@@ -130,7 +130,7 @@ export class Node {
     this.outputs[name].set(value);
     //Update the type if its dynamic
     if (type) {
-      this.outputs[name].type = type;
+      this.outputs[name].setDynamic(value, type);
     }
   };
 
@@ -155,86 +155,7 @@ export interface NodeFactory {
   deserialize(serialized: SerializedNode): Node;
 }
 
-export class AddNode extends Node {
-  title = "Add Node";
-  type = NodeTypes.ADD;
-  description = "Add node allows you to add two or more numbers.";
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("inputs", {
-      type: {
-        ...NumberArraySchema,
-        default: [],
-      },
-      variadic: true,
-      visible: true,
-    });
-    this.addOutput("value", {
-      type: NumberSchema,
-      visible: true,
-    });
-  }
 
-  execute(): void | Promise<void> {
-    const inputs = this.getInput("inputs") as number[];
-    const output = Object.values(inputs).reduce((acc, curr) => acc + curr, 0);
-    this.setOutput("value", output);
-  }
-}
 
-export class SubtractNode extends Node {
-  title = "Subtract Node";
-  type = NodeTypes.SUBTRACT;
-  description = "Allows you to subtract two or more numbers.";
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("inputs", {
-      type: {
-        ...NumberArraySchema,
-        default: [],
-      },
-      variadic: true,
-      visible: true,
-    });
-    this.addOutput("value", {
-      type: NumberSchema,
-      visible: true,
-    });
-  }
 
-  execute(): void | Promise<void> {
-    const inputs = this.getInput("inputs") as number[];
 
-    const [start, ...rest] = inputs;
-    const output = rest.reduce((acc, x) => acc - x, start);
-    this.setOutput("value", output);
-  }
-}
-
-export class OutputNode extends Node {
-  title = "Output";
-  type = NodeTypes.OUTPUT;
-  description = "Specifies the output of the program.";
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("input", {
-      type: AnySchema,
-      visible: true,
-    });
-    this.addOutput("output", {
-      type: AnySchema,
-      visible: true,
-    });
-  }
-
-  execute(): void | Promise<void> {
-    const input = this.getRawInput("input");
-    input.type;
-
-    this.setOutput("output", input.get());
-
-    const [start, ...rest] = inputs;
-    const output = rest.reduce((acc, x) => acc - x, start);
-    this.setOutput("value", output);
-  }
-}

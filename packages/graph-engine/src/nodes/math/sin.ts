@@ -1,21 +1,29 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/index.js";
+import { NumberSchema } from "@/schemas/index.js";
 
-export const type = NodeTypes.SIN;
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-export const process = (input) => {
-  if (input.input === undefined) throw new Error("Input is undefined");
-  return Math.sin(input.input);
-};
+export class NodeDefinition extends Node {
+  title = "Sine";
+  type = NodeTypes.SIN;
+  description = "Sin node allows you to get the sin of a number.",
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("value", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+        visible: true,
+      }
+    });
+    this.addOutput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
+  }
 
-export const node: NodeDefinition = {
-  description: "Sin node allows you to get the sin of a number.",
-  type,
-  process,
-};
+  execute(): void | Promise<void> {
+    const value = this.getInput('value');
+    this.setOutput("value", Math.sin(value));
+  }
+}

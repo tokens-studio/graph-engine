@@ -1,13 +1,31 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/index.js";
+import { NumberSchema } from "@/schemas/index.js";
 
-export const type = NodeTypes.MOD;
 
-export const process = (input) => {
-  return input.a % input.b;
-};
+export class NodeDefinition extends Node {
+  title = "Modulo";
+  type = NodeTypes.MOD;
+  description = "Modulo node allows you to get the remainder of a division."
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("a", {
+      type: NumberSchema,
+      visible: true,
+    });
+    this.addInput("b", {
+      type: NumberSchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
+  }
 
-export const node: NodeDefinition = {
-  description: "Modulo node allows you to get the remainder of a division.",
-  type,
-  process,
-};
+  execute(): void | Promise<void> {
+    const { a, b } = this.getAllInputs();
+    this.setOutput("value",a%b);
+  }
+}

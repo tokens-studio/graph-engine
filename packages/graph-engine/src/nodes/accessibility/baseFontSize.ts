@@ -1,61 +1,70 @@
-/**
- * Calculates the base font size
- *
- * @packageDocumentation
- */
-import { Node } from "@/programmatic/node/index.js";
-import { NodeDefinition, NodeTypes, Type } from "../../types.js";
-import { Input } from "@/programmatic/input/index.js";
-import z from 'zod';
-import { Output } from "@/programmatic/output/index.js";
-;
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/index.js";
+import { NumberSchema } from "@/schemas/index.js";
 
-
-const NumberSchema = z.number();
-
-class BaseFontsizeNode extends Node {
+export class NodeDefinition extends Node {
+  title = "Base Font Size";
   type = NodeTypes.BASE_FONT_SIZE;
-  description: "Base Font node allows you to calculate the base font size with DIN 1450.";
+  description = "Base Font node allows you to calculate the base font size with DIN 1450."
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("visualAcuity", {
+      type: {
+        ...NumberSchema,
+        default: 0.7
+      },
+      visible: true,
+    });
+    this.addInput("correctionFactor", {
+      type: {
+        ...NumberSchema,
+        default: 13
+      }
+    });
+    this.addInput("lightingCondition", {
+      type: {
+        ...NumberSchema,
+        default: 0.83
+      }
+    });
+    this.addInput("distance", {
+      type: {
+        ...NumberSchema,
+        default: 30
+      }
+    });
 
-  inputs = {
-    visualAcuity: new Input<typeof NumberSchema>({
-      type: NumberSchema,
-      defaultValue: 0.7,
-    }),
-    correctionFactor: new Input<typeof NumberSchema>({
-      type: NumberSchema,
-      defaultValue: 13,
-    }),
-    lightingCondition: new Input<typeof NumberSchema>({
-      type: NumberSchema,
-      defaultValue: 0.83,
-    }),
-    distance: new Input<typeof NumberSchema>({
-      type: NumberSchema,
-      defaultValue: 30,
-    }),
-    xHeightRatio: new Input<typeof NumberSchema>({
-      type: NumberSchema,
-      defaultValue: 0.53,
-    }),
-    ppi: new Input<typeof NumberSchema>({
-      type: NumberSchema,
-      defaultValue: 458,
-    }),
-    pixelDensity: new Input<typeof NumberSchema>({
-      type: NumberSchema,
-      defaultValue: 3,
-    }),
+    this.addInput("xHeightRatio", {
+      type: {
+        ...NumberSchema,
+        default: 0.53
+      }
+    });
+
+    this.addInput("ppi", {
+      type: {
+        ...NumberSchema,
+        default: 458
+      }
+    });
+    this.addInput("pixelDensity", {
+      type: {
+        ...NumberSchema,
+        default: 3
+      }
+    });
+
+    this.addOutput("value", {
+      type: {
+        ...NumberSchema,
+        description: "The generated font size"
+      },
+      visible: true,
+    });
   }
-  outputs = {
-    output: new Output<typeof NumberSchema>({
-      type: NumberSchema,
-      description: "The generated font size"
-    })
-  }
 
-  process(): void {
-
+  execute(): void | Promise<void> {
 
     const {
       visualAcuity,
@@ -72,10 +81,9 @@ class BaseFontsizeNode extends Node {
     const xHeightMM =
       Math.tan((visualCorrection * Math.PI) / 21600) * (distance * 10) * 2;
     const xHeightPX = (xHeightMM / 25.4) * (ppi / pixelDensity);
-    // const fontSizePT = (2.83465 * xHeightMM * 1) / xHeightRatio;
     const fontSizePX = (1 * xHeightPX) / xHeightRatio;
 
-    this.outputs.output.set(fontSizePX);
+    this.setOutput('value', fontSizePX);
   }
 }
 

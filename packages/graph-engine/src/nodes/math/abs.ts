@@ -1,22 +1,25 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/index.js";
+import { NumberSchema } from "@/schemas/index.js";
 
-export const type = NodeTypes.ABS;
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-export const process = (input) => {
-  if (input.input === undefined) return undefined;
-  return Math.abs(input.input);
-};
+export class NodeDefinition extends Node {
+  title = "Absolute";
+  type = NodeTypes.ABS;
+  description = "Absolute node allows you to get the absolute value of a number. Turning a negative number to positive.";
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("input", {
+      type: NumberSchema
+    });
+    this.addOutput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
+  }
 
-export const node: NodeDefinition = {
-  description:
-    "Absolute node allows you to get the absolute value of a number. Turning a negative number to positive.",
-  type,
-  process,
-};
+  execute(): void | Promise<void> {
+    const input = this.getInput("input") as number;
+    this.setOutput("value", Math.abs(input));
+  }
+}

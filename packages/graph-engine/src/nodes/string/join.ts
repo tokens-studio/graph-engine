@@ -1,26 +1,34 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
 
-const type = NodeTypes.JOIN_STRING;
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/index.js";
+import { AnyArraySchema, StringSchema } from "@/schemas/index.js";
 
-export type NamedInput = {
-  array: string[];
-  separator: string;
-};
 
-export const defaults = {
-  array: [],
-  separator: "",
-};
+export class NodeDefinition extends Node {
+  title = "Join String";
+  type = NodeTypes.JOIN_STRING;
+  description = "Joins an array of strings into a single string";
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("array", {
+      type: AnyArraySchema,
+      visible: true,
+    });
+    this.addInput("separator", {
+      type: {
+        ...StringSchema,
+        default: ''
+      },
+    });
+    this.addOutput("value", {
+      type: StringSchema,
+      visible: true,
+    });
+  }
 
-export const process = (input: NamedInput, state: NamedInput) => {
-  const { array, separator } = { ...state, ...input };
-  console.log(separator, array);
-  return array.join(separator);
-};
-
-export const node: NodeDefinition<NamedInput, NamedInput> = {
-  description: "Joins an array of strings into a single string",
-  defaults,
-  type,
-  process,
-};
+  execute(): void | Promise<void> {
+    const { array, separator } = this.getAllInputs();
+    this.setOutput("value", array.join(separator));
+  }
+}

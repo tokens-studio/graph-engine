@@ -3,34 +3,31 @@
  *
  * @packageDocumentation
  */
-
-import { Input, Node,Output  } from "@/index.js";
-import { NodeTypes } from "../../types.js";
-import { z } from 'zod';
-
-const type = NodeTypes.OUTPUT;
-
-const AnySchema = z.array(z.number());
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/index.js";
+import { AnySchema } from "@/schemas/index.js";
 
 
-export class OutputNode extends Node {
 
-  description = "Allows you to expose outputs of the node"
-  type = type
-  inputs = {
-    value: new Input<typeof AnySchema>({
-      type: AnySchema
-    })
-  }
-  output = {
-    value: new Output<typeof AnySchema>({
-      type: AnySchema
-    })
+export class NodeDefinition extends Node {
+  title = "Output";
+  type = NodeTypes.OUTPUT;
+  description = "Allows you to expose outputs of the node";
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("input", {
+      type: AnySchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: AnySchema,
+    });
   }
 
-  execute(): void {
-
-    this.output.value.set(this.inputs.value.get(), );
+  execute(): void | Promise<void> {
+    const input = this.getRawInput("input");
+    this.setOutput("value", input, input.type);
   }
-
 }
+

@@ -1,19 +1,19 @@
-import { node as abs } from "./abs.js";
-import { node as add } from "./add.js";
-import { node as clamp } from "./clamp.js";
-import { node as cos } from "./cos.js";
-import { node as count } from "./count.js";
-import { node as divide } from "./divide.js";
-import { node as lerp } from "./lerp.js";
-import { node as mod } from "./mod.js";
-import { node as multiply } from "./multiply.js";
-import { node as random } from "./random.js";
-import { node as round } from "./round.js";
-import { node as sin } from "./sin.js";
-import { node as pow } from "./pow.js";
-import { node as subtract } from "./subtract.js";
-import { node as tan } from "./tan.js";
-import { node as fluid } from "./fluid.js";
+import { NodeDefinition as abs } from "./abs.js";
+import { NodeDefinition as add } from "./add.js";
+import { NodeDefinition as clamp } from "./clamp.js";
+import { NodeDefinition as cos } from "./cos.js";
+import { NodeDefinition as count } from "./count.js";
+import { NodeDefinition as divide } from "./divide.js";
+import { NodeDefinition as lerp } from "./lerp.js";
+import { NodeDefinition as mod } from "./mod.js";
+import { NodeDefinition as multiply } from "./multiply.js";
+import { NodeDefinition as random } from "./random.js";
+import { NodeDefinition as round } from "./round.js";
+import { NodeDefinition as sin } from "./sin.js";
+import { NodeDefinition as pow } from "./pow.js";
+import { NodeDefinition as subtract } from "./subtract.js";
+import { NodeDefinition as tan } from "./tan.js";
+import { NodeDefinition as fluid } from "./fluid.js";
 
 export const nodes = [
   abs,

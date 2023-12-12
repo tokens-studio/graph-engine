@@ -1,30 +1,31 @@
-import { MappedInput } from "./common.js";
-import { NodeDefinition, NodeTypes } from "../../types.js";
-import { mapInput, validateInputs } from "./common.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/index.js";
+import { NumberSchema, NumberArraySchema } from "@/schemas/index.js";
 
-export const type = NodeTypes.ADD;
+export class NodeDefinition extends Node {
+  title = "Add Node";
+  type = NodeTypes.ADD;
+  description = "Add node allows you to add two or more numbers.";
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("inputs", {
+      type: {
+        ...NumberArraySchema,
+        default: [],
+      },
+      variadic: true,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
+  }
 
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-export const process = (input: MappedInput) => {
-  return input.inputs.reduce((acc, x) => {
-    if (isNaN(x.value)) {
-      throw new Error("Invalid input");
-    }
-    return acc + x.value;
-  }, 0);
-};
-
-export const node: NodeDefinition<MappedInput> = {
-  mapInput,
-  description: "Add node allows you to add two or more numbers.",
-  validateInputs,
-  type,
-  process,
-};
+  execute(): void | Promise<void> {
+    const inputs = this.getInput("inputs") as number[];
+    const output = inputs.reduce((acc, curr) => acc + curr, 0);
+    this.setOutput("value", output);
+  }
+}

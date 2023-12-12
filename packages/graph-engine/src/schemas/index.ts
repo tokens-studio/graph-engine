@@ -21,6 +21,17 @@ export const StringSchema: SchemaObject = {
   title: "String",
   type: "string",
 };
+
+
+export const COLOR = "https://schemas.tokens.studio/color.json";
+export const ColorSchema: SchemaObject = {
+  $id: COLOR,
+  title: "Color",
+  type: "string",
+};
+
+
+
 export const STRING_ARRAY = "https://schemas.tokens.studio/string-array.json";
 export const StringArraySchema: SchemaObject = {
   $id: STRING_ARRAY,
@@ -35,6 +46,15 @@ export const AnySchema: SchemaObject = {
   title: "Any",
   //We don't specify a type here because we want to allow any type
 };
+
+export const ANY_ARRAY = "https://schemas.tokens.studio/anyArray.json";
+export const AnyArraySchema: SchemaObject = {
+  $id: ANY_ARRAY,
+  title: "Any[]",
+  type: 'array'
+  //We don't specify a type here because we want to allow any type
+};
+
 export const BOOLEAN = "https://schemas.tokens.studio/boolean.json";
 export const BooleanSchema: SchemaObject = {
   $id: BOOLEAN,
