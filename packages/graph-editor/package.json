@@ -60,6 +60,7 @@
     "is-promise": "4.0.0",
     "json5": "2.2.3",
     "jszip": "3.10.1",
+    "mdn-data": "^2.3.0",
     "poline": "^0.7.0",
     "postcss-value-parser": "4.2.0",
     "react-color": "2.19.3",
