@@ -55,7 +55,7 @@
     "react-mosaic-component": "^6.0.1",
     "reactflow": "^11.9.4",
     "semver-compare": "^1.0.0",
-    "token-transformer": "^0.0.32"
+    "token-transformer": "^0.0.33"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.21.5",
