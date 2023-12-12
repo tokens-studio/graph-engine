@@ -1,5 +1,11 @@
 # @tokens-studio/graph-editor
 
+## 2.9.2
+
+### Patch Changes
+
+- bb8893a: Fixes an issue with required type assertion of json for imports
+
 ## 2.9.1
 
 ### Patch Changes
