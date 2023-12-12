@@ -1,5 +1,18 @@
 # @tokens-studio/graph-engine-ui
 
+## 2.1.2
+
+### Patch Changes
+
+- 9d729f6: Fixed code editor state updates
+- Updated dependencies [69ea7b7]
+- Updated dependencies [248400c]
+- Updated dependencies [217deb1]
+- Updated dependencies [6e58e27]
+- Updated dependencies [632150a]
+  - @tokens-studio/graph-engine@0.17.0
+  - @tokens-studio/graph-editor@2.9.0
+
 ## 2.1.1
 
 ### Patch Changes

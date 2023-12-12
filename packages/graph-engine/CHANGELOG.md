@@ -1,5 +1,29 @@
 # @tokens-studio/graph-engine
 
+## 0.17.2
+
+### Patch Changes
+
+- ba4bb9c: Update miniizeFlowGraph to be quiet if disconnected edges are detected
+
+## 0.17.1
+
+### Patch Changes
+
+- 473c0a3: Update miniizeFlowGraph to be quiet if disconnected edges are detected
+- e068662: Remove console.log message from join string
+
+## 0.17.0
+
+### Minor Changes
+
+- 248400c: Added new set color value node, added color as constant input type, added new array name node for incremental naming
+- 6e58e27: Add CSS function node
+
+### Patch Changes
+
+- 69ea7b7: extract functions and presort items
+
 ## 0.16.0
 
 ### Minor Changes

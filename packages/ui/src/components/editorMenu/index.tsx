@@ -9,13 +9,16 @@ import {
 } from '@iconicicons/react';
 import SlackIcon from '#/assets/svgs/slack.svg';
 import YoutubeIcon from '#/assets/svgs/youtube.svg';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { ResolverData } from '#/types/file.ts';
 import { getRectOfNodes, getTransformForBounds } from 'reactflow';
 import { Box, IconButton, Stack } from '@tokens-studio/ui';
 import { toPng } from 'html-to-image';
 import { store } from '#/redux/store.tsx';
-import { usePreviewContext } from '#/providers/preview.tsx';
+import AppsIcon from '#/assets/svgs/AppsIcon.svg';
+import { showNodesPanelSelector } from '#/redux/selectors/index.ts';
+import { useSelector } from 'react-redux';
+import { useDispatch } from '#/hooks/useDispatch.ts';
 
 const imageWidth = 1024;
 const imageHeight = 768;
@@ -24,18 +27,25 @@ export const Menubar = ({
   toggleTheme,
   theme,
   onLoadExamples,
+  previewCode,
+  setPreviewCode,
 }: {
   toggleTheme: () => void;
   theme: string;
   onLoadExamples: () => void;
+  previewCode: string;
+  setPreviewCode: (code: string) => void;
 }) => {
-  const { setCode, code } = usePreviewContext();
+  const showNodesPanel = useSelector(showNodesPanelSelector);
+  const dispatch = useDispatch();
+
   const findCurrentEditor = useCallback(() => {
     const activeEditor = store.getState().refs.editor;
 
     return activeEditor;
   }, []);
 
+  // TODO: Move all of this to a hook
   const onSave = useCallback(() => {
     const editor = findCurrentEditor();
 
@@ -53,7 +63,7 @@ export const Menubar = ({
       nodes,
       ...rest,
       state: finalState,
-      code,
+      code: previewCode,
     });
 
     const blob = new Blob([fileContent], { type: 'application/json' });
@@ -68,8 +78,9 @@ export const Menubar = ({
     // Clean up the URL and link
     URL.revokeObjectURL(url);
     document.body.removeChild(link);
-  }, [code, findCurrentEditor]);
+  }, [previewCode, findCurrentEditor]);
 
+  // TODO: Move all of this to a hook
   const onLoad = useCallback(() => {
     const editor = findCurrentEditor();
     if (!editor) {
@@ -94,7 +105,7 @@ export const Menubar = ({
         // causes nulls to occur everywhere. They need to be unmounted
         setTimeout(() => {
           if (code !== undefined) {
-            setCode(code);
+            setPreviewCode(code);
           }
 
           editor.current.load({
@@ -109,8 +120,9 @@ export const Menubar = ({
 
     // simulate a click on the input element to trigger the file picker dialog
     input.click();
-  }, [findCurrentEditor, setCode]);
+  }, [findCurrentEditor, setPreviewCode]);
 
+  // TODO: Move all of this to a hook
   const onPrint = useCallback(async () => {
     function downloadImage(dataUrl) {
       const a = document.createElement('a');
@@ -161,7 +173,23 @@ export const Menubar = ({
       gap={2}
       css={{ flexGrow: 1 }}
     >
-      <Stack direction="column">
+      <Stack
+        direction="column"
+        css={{
+          backgroundColor: '$bgDefault',
+          padding: '$2',
+          borderRadius: '$medium',
+          border: '1px solid',
+          borderColor: '$borderSubtle',
+          boxShadow: '$small',
+        }}
+      >
+        <IconButton
+          tooltip="Add nodes (n)"
+          onClick={() => dispatch.ui.setShowNodesPanel(!showNodesPanel)}
+          icon={<AppsIcon />}
+          variant={showNodesPanel ? 'primary' : 'invisible'}
+        />
         <Box
           css={{
             height: '1px',

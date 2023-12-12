@@ -1,3 +1,4 @@
+import { showNodesPanelSelector } from '#/redux/selectors/index.ts';
 import {
   BatteryChargingIcon,
   FilePlusIcon,
@@ -6,7 +7,7 @@ import {
 import { Box, Button, EmptyState, Stack } from '@tokens-studio/ui';
 import { useCallback } from 'react';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface IEmptyStateProps {
   onLoadExamples: () => void;
@@ -14,6 +15,7 @@ interface IEmptyStateProps {
 
 export function EmptyStateEditor({ onLoadExamples }: IEmptyStateProps) {
   const dispatch = useDispatch();
+  const showNodesPanel = useSelector(showNodesPanelSelector);
 
   const handleTriggerAddNode = useCallback(
     (e) => {
@@ -40,6 +42,7 @@ export function EmptyStateEditor({ onLoadExamples }: IEmptyStateProps) {
         height: '100%',
         position: 'relative',
         zIndex: 100,
+        paddingLeft: showNodesPanel ? 'var(--globals-drop-panel-width)' : '0',
       }}
     >
       <EmptyState

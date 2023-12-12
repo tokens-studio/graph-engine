@@ -84,6 +84,7 @@ export enum NodeTypes {
 
   CSS_MAP = "studio.tokens.css.map",
   CSS_BOX = "studio.tokens.css.box",
+  CSS_FUNCTIONS = "studio.tokens.css.function",
 
   //Logic
   IF = "studio.tokens.logic.if",
@@ -103,6 +104,7 @@ export enum NodeTypes {
   CONCAT = "studio.tokens.array.concat",
   DOT_PROP = "studio.tokens.array.dotProp",
   ARRAY_PASS_UNIT = "studio.tokens.array.passUnit",
+  NAME = "studio.tokens.array.name",
 
   // Math
   ADD = "studio.tokens.math.add",
@@ -137,6 +139,7 @@ export enum NodeTypes {
   COLOR_DISTANCE = "studio.tokens.color.distance",
   COLOR_NAME = "studio.tokens.color.name",
   NEAREST_TOKENS = "studio.tokens.color.nearestTokens",
+  SET_COLOR_LUMINANCE = "studio.tokens.color.setColorLuminance",
 
   //Sets
   FLATTEN = "studio.tokens.sets.flatten",

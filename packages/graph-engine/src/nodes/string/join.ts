@@ -14,7 +14,6 @@ export const defaults = {
 
 export const process = (input: NamedInput, state: NamedInput) => {
   const { array, separator } = { ...state, ...input };
-  console.log(separator, array);
   return array.join(separator);
 };
 

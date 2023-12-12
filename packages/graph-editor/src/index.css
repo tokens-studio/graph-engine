@@ -1,5 +1,10 @@
 @import url('reactflow/dist/style.css');
 @import url('react-contexify/ReactContexify.css');
+
+:root {
+    --globals-drop-panel-width: 240px;
+}
+
 .react-flow__node {
     position: absolute;
     -webkit-user-select: none;
@@ -165,6 +170,8 @@
     color: var(--colors-fgMuted);
     width: 100%;
     max-width: 640px;
+    max-height: 70vh;
+    overflow: hidden;
     position: relative;
 }
 
