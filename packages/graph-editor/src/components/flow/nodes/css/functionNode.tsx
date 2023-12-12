@@ -5,7 +5,7 @@ import { Box, Stack, Text, Button } from '@tokens-studio/ui'; // Import the Butt
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/css/cssFunction.js';
 import React, { useState } from 'react';
-import cssFunctionsData from 'mdn-data/css/functions.json';
+import cssFunctionsData from 'mdn-data/css/functions.json' assert { type: 'json' };
 
 const FUNCTION_NAMES = Object.keys(cssFunctionsData);
 

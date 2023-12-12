@@ -1,12 +1,11 @@
-import { Button, Label, Select, Stack, Text } from '@tokens-studio/ui';
+import { Label, Select, Stack, Text } from '@tokens-studio/ui';
 import { Handle, HandleContainer } from '../../handles.tsx';
 import { PreviewAny } from '../../preview/any.tsx';
-import { PreviewArray } from '../../preview/array.tsx';
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/array/passUnit.js';
 import { useCallback, useMemo } from 'react';
 import React from 'react';
-import unitsData from 'mdn-data/css/units.json';
+import unitsData from 'mdn-data/css/units.json' assert { type: 'json' };
 
 // Convert JSON keys to an array of unit strings
 const unitOptions = Object.keys(unitsData);

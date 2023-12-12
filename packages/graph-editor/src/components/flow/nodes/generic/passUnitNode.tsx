@@ -4,7 +4,7 @@ import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/typing/passUnit.js';
 import { useCallback } from 'react';
 import React from 'react';
-import unitsData from 'mdn-data/css/units.json';
+import unitsData from 'mdn-data/css/units.json' assert { type: 'json' };
 
 // Convert JSON keys to an array of unit strings
 const unitOptions = Object.keys(unitsData);
