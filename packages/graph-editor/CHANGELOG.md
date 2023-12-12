@@ -1,5 +1,13 @@
 # @tokens-studio/graph-editor
 
+## 2.9.3
+
+### Patch Changes
+
+- 1160ca8: Fixed an issue with the dropPanel height overflow. Fixed the resolve Tokens node to properly adhere to the existing typography and boxshadow structure
+- Updated dependencies [1160ca8]
+  - @tokens-studio/graph-engine@0.17.4
+
 ## 2.9.2
 
 ### Patch Changes
