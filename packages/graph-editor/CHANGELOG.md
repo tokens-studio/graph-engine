@@ -1,5 +1,16 @@
 # @tokens-studio/graph-editor
 
+## 2.9.1
+
+### Patch Changes
+
+- 59dbbb2: Fixed an issue with missing package "mdn-data"
+- 08de54a: Fixed Remap Node and updated usability
+- a0f7a9f: Added new props to the editor: `showNodesPanel` and `onShowNodesPanelChange` to make appearance of nodes panel optional and controllable.
+  Fixed vertical scroll of nodes panel
+- Updated dependencies [08de54a]
+  - @tokens-studio/graph-engine@0.17.3
+
 ## 2.9.0
 
 ### Minor Changes
