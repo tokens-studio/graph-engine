@@ -31,6 +31,14 @@ export interface EditorProps {
    * Whether or not to show the menu
    */
   showMenu?: boolean;
+  /**
+   * Whether or not to show the nodes panel
+   */
+  shouldShowNodesPanel?: boolean;
+  /**
+   * Callback to be called when the nodes panel is shown or hidden
+   */
+  onShowNodesPanelChange?: (show: boolean) => void;
 }
 
 export type EditorState = {

@@ -9,6 +9,10 @@ export const previewCodeSelector = createSelector(
   ui,
   (state) => state.previewCode,
 );
+export const showNodesPanelSelector = createSelector(
+  ui,
+  (state) => state.showNodesPanel,
+);
 
 export const outputSelector = (state: RootState) => state.editorOutput;
 
