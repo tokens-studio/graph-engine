@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 0.17.3
+
+### Patch Changes
+
+- 08de54a: Fixed Remap Node and updated usability
+
 ## 0.17.2
 
 ### Patch Changes

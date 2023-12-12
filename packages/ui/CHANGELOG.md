@@ -1,5 +1,17 @@
 # @tokens-studio/graph-engine-ui
 
+## 2.1.3
+
+### Patch Changes
+
+- a0f7a9f: Added new props to the editor: `showNodesPanel` and `onShowNodesPanelChange` to make appearance of nodes panel optional and controllable.
+  Fixed vertical scroll of nodes panel
+- Updated dependencies [59dbbb2]
+- Updated dependencies [08de54a]
+- Updated dependencies [a0f7a9f]
+  - @tokens-studio/graph-editor@2.9.1
+  - @tokens-studio/graph-engine@0.17.3
+
 ## 2.1.2
 
 ### Patch Changes
