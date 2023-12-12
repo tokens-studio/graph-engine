@@ -1,29 +1,32 @@
-
-export interface SerializedInput  {
+export interface SerializedInput {
   value: any;
 }
 
-export interface SerializedNode  {
+export interface SerializedNode {
+  /**
+   * The version of the node
+   */
+  v: number;
   id: string;
   type: string;
   inputs: Record<string, SerializedInput>;
-};
+}
 
-export interface SerializedEdge  {
+export interface SerializedEdge {
   id: string;
   source: string;
   target: string;
   sourceHandle: string;
   targetHandle: string;
-};
+}
 
-export interface SerializedGraphOptions{
+export interface SerializedGraphOptions {
   description: string;
 }
 
-export interface SerializedGraph  {
+export interface SerializedGraph {
   version: string;
   graph: SerializedGraphOptions;
   nodes: SerializedNode[];
   edges: SerializedEdge[];
-};
+}

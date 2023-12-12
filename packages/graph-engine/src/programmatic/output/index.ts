@@ -1,95 +1,86 @@
-import { Graph } from '@/index.js';
-import { z } from 'zod';
-import { Input } from '../input/index.js';
-import { Node } from '../node/index.js';
-import { Type } from '../types/index.js';
+import { Graph, TypeDefinition } from "@/index.js";
 
-export interface IOutputProps<T extends z.ZodTypeAny> {
-    id?: string;
-    name?: string;
-    type: T;
-    value?: z.infer<T>
+import { Input } from "../input/index.js";
+import { Node } from "../node/index.js";
+import { Type } from "../types/index.js";
+
+export interface IOutputProps {
+  id?: string;
+  name?: string;
+  type: TypeDefinition;
+  value?: any;
 }
 
-export class Output<T extends z.ZodTypeAny = z.ZodTypeAny> {
-    /** 
-     * Name to show in the side panel.Optional
-     * */
-    public name?: string;
-    /**
-     * An optional description for the Output
-     */
-    public description?: string;
-    /** Type */
-    public type: T;
+export class Output {
+  /** Type */
+  public type: TypeDefinition;
+  public value: any;
+  public graph: Graph;
+  public node: Node;
+  /**
+   * Whether this port has a dynamic output
+   */
+  private _isDynamic: boolean = false;
 
-    public value: z.infer<T>;
-    public graph: Graph;
-    public node: Node;
-    /**
-     * Whether this port has dynamic keys 
-     */
-    public dynamic: boolean = false;
+  private dynamicValues: Map<string, any> = new Map();
 
-    private dynamicValues: Map<string, any> = new Map();
+  /**
+   * Whether to show this Output in the side panel
+   */
+  public visible: boolean = true;
 
-    /**
-     * Whether to show this Output in the side panel
-     */
-    public visible: boolean = true;
+  /**
+   * The runtime type of the value. This might change if the value is dynamic, a union ,etc
+   */
+  private runtimeType: TypeDefinition;
 
-    /**
-     * The runtime type of the value. This might change if the value is dynamic, a union ,etc
-     */
-    private runtimeType: Type;
+  constructor(props: IOutputProps) {
+    this.type = props.type;
+    this.value = props.value;
+  }
 
-    constructor(props: IOutputProps<T>) {
-        this.name = props.name;
-        this.type = props.type;
-        this.value = props.value;
+  setNode(node: Node) {
+    this.node = node;
+  }
+
+  set(value: any, type?: Type) {
+    this.value = value;
+    //Reset the dynamic value
+    this._isDynamic = false;
+  }
+
+  clear() {
+    this.dynamicValues.clear();
+  }
+
+  setDynamic(key: string, value: any, type: Type) {
+    if (!this.dynamic) {
+      throw new Error("Cannot set dynamic value on non-dynamic output");
     }
 
-    setNode(node: Node) {
-        this.node = node;
+    this.dynamicValues.set(key, {
+      value,
+      type,
+    });
+    this._isDynamic = true;
+  }
+
+  getDynamics() {
+    if (!this.dynamic) {
+      throw new Error("Not a dynamic value");
     }
+    return this.dynamicValues;
+  }
 
-    set(value: z.infer<T>, type?: Type) {
-
-        this.value = value;
-        this.runtimeType = type;
+  /**
+   * Use a key to access dynamic values off the port
+   * @param target
+   * @param key
+   */
+  connect(target: Input, key: string = "") {
+    if (this._isDynamic && key === "") {
+      throw new Error("Cannot connect to dynamic output without key");
     }
-
-    clear() {
-        this.dynamicValues.clear();
-    }
-
-    setDynamic(key: string, value: z.infer<T>, type: Type) {
-        if (!this.dynamic) {
-            throw new Error('Cannot set dynamic value on non-dynamic output');
-        }
-
-        this.dynamicValues.set(key, {
-            value,
-            type
-        });
-    }
-
-    getDynamics() {
-        if (!this.dynamic) {
-            throw new Error('Not a dynamic value');
-        }
-        return this.dynamicValues;
-    }
-
-    /**
-     * Use a key to access dynamic values off the port
-     * @param target 
-     * @param key 
-     */
-    connect(target: Input, key: string = "") {
-        if (this.dynamic && key === "") {
-            throw new Error('Cannot connect to dynamic output without key');
-        }
-        this.graph.connect(this.node, this, target.node, target, key);
-    }
+    this.graph.connect(this.node, this, target.node, target, key);
+  }
 }
