@@ -526,7 +526,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                   zIndex: 500,
                   display: 'flex',
                   flexDirection: 'row',
-                  height: '100%',
+                  height: 'inherit',
                 }}
               >
                 {showMenu && (

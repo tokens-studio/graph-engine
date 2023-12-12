@@ -19,8 +19,8 @@ const resolveValues = (tokens: IResolvedToken[], context: IResolvedToken[]) => {
   const excludes = ["excludes"];
 
   const resolved = transformTokens(rawTokens, setsToUse, excludes, {
-    expandTypography: true,
-    expandShadow: true,
+    expandTypography: false,
+    expandShadow: false,
     expandComposition: true,
     preserveRawValue: false,
     throwErrorWhenNotResolved: false,
