@@ -1,6 +1,6 @@
 import { Handle, HandleContainer } from '../../handles.tsx';
 import { Stack, Text } from '@tokens-studio/ui';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import { WrapNode, useNode } from '../../wrapper/nodeV2.tsx';
 import { node } from '@tokens-studio/graph-engine/nodes/set/flatten.js';
@@ -9,11 +9,16 @@ const SquashNode = () => {
   const { input } = useNode();
   const [nextId, setNextId] = useState(0);
 
-  const newHandle = useMemo(() => {
-    setNextId(nextId + 1);
-    return nextId + 1;
+  const ref = useRef(input?.input?.length || 0);
+  useEffect(() => {
+    ref.current += 1;
     //We don't care about the values, just the length
-  }, [input.inputs.length]);
+  }, [input.input?.length || 0]);
+
+  const newHandle = useMemo(() => {
+    setNextId(ref.current++);
+    //We don't care about the values, just the length
+  }, []);
 
   const handles = useMemo(() => {
     return input.inputs.map((input, index) => {
@@ -21,7 +26,7 @@ const SquashNode = () => {
         <Handle id={input.key} key={input.key}>
           <Stack direction="row" justify="between">
             <Text>{index}</Text>
-            <Text>{!input.value && Missing}</Text>
+            <Text>{!input.value && 'Missing'}</Text>
           </Stack>
         </Handle>
       );
