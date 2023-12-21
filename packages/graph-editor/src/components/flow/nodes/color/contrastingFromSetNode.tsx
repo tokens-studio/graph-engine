@@ -48,19 +48,6 @@ const ContrastingFromSetNode = () => {
     [setState],
   );
 
-  const entries = useMemo(() => {
-    if (!output || typeof output !== 'object' || !output.token) {
-      return null;
-    }
-
-    return Object.entries(output.token).map(([key, value]) => (
-      <Handle id={key} key={key}>
-        <HandleText>{key}</HandleText>
-        <PreviewAny value={value} />
-      </Handle>
-    ));
-  }, [output]);
-
   return (
     <Stack direction="row" gap={4}>
       <HandleContainer type="target">
@@ -117,14 +104,17 @@ const ContrastingFromSetNode = () => {
         </Handle>
       </HandleContainer>
       <HandleContainer type="source">
-        {entries}
+        <Handle id="token">
+          <HandleText>Token</HandleText>
+          <PreviewAny value={output?.token} />
+        </Handle>
         <Handle id="index">
           <HandleText>Index</HandleText>
-          <Text>{output.index}</Text>
+          <Text>{output?.index}</Text>
         </Handle>
         <Handle id="sufficient">
           <Text>Sufficient</Text>
-          <PreviewBoolean value={output.sufficient} />
+          <PreviewBoolean value={output?.sufficient} />
         </Handle>
       </HandleContainer>
     </Stack>

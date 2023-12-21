@@ -94,16 +94,11 @@ export const defaultPanelItems: PanelGroup[] = [
         icon: <ButtonIcon />,
         text: 'Enumerated Constant',
       },
+
       {
-        type: NodeTypes.CSS_MAP,
-        icon: './x',
-        text: 'CSS Map',
-        docs: 'https://docs.graph.tokens.studio/nodes/generic-nodes/css-map',
-      },
-      {
-        type: NodeTypes.CSS_BOX,
-        icon: <BoxIcon />,
-        text: 'CSS Box',
+        type: NodeTypes.CSS_FUNCTIONS,
+        icon: 'x()',
+        text: 'CSS Function',
       },
       {
         type: NodeTypes.OBJECTIFY,
@@ -129,6 +124,28 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.JSON,
         icon: '{/}',
         text: 'JSON',
+      },
+    ],
+  },
+  {
+    title: 'CSS',
+    key: 'css',
+    items: [
+      {
+        type: NodeTypes.CSS_MAP,
+        icon: './x',
+        text: 'CSS Map',
+        docs: 'https://docs.graph.tokens.studio/nodes/generic-nodes/css-map',
+      },
+      {
+        type: NodeTypes.CSS_BOX,
+        icon: <BoxIcon />,
+        text: 'CSS Box',
+      },
+      {
+        type: NodeTypes.CSS_FUNCTIONS,
+        icon: 'x()',
+        text: 'CSS Function',
       },
     ],
   },
@@ -261,6 +278,16 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.CONCAT,
         icon: '[][]',
         text: 'Concat Array',
+      },
+      {
+        type: NodeTypes.ARRAY_PASS_UNIT,
+        icon: '[]px',
+        text: 'Array Pass Unit',
+      },
+      {
+        type: NodeTypes.NAME,
+        icon: '[][]',
+        text: 'Incremental name array',
       },
     ],
   },
@@ -407,7 +434,7 @@ export const defaultPanelItems: PanelGroup[] = [
       {
         type: NodeTypes.POLINE,
         icon: <ColorWheelIcon />,
-        text: 'Generate Color Palette (Poline)',
+        text: 'Poline Color Scale',
       },
       {
         type: NodeTypes.COLOR_DISTANCE,
@@ -423,6 +450,11 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.NEAREST_TOKENS,
         icon: 'x>y',
         text: 'Nearest Tokens',
+      },
+      {
+        type: NodeTypes.SET_COLOR_LUMINANCE,
+        icon: '+/-l',
+        text: 'Set Color Value',
       },
     ],
   },
@@ -496,6 +528,11 @@ export const defaultPanelItems: PanelGroup[] = [
         type: NodeTypes.REGEX,
         icon: '^$',
         text: 'Regex',
+      },
+      {
+        type: NodeTypes.STRINGIFY,
+        icon: '"a"',
+        text: 'Stringify',
       },
     ],
   },

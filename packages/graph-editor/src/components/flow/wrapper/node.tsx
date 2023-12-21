@@ -247,7 +247,7 @@ export const Node = (props: NodeProps) => {
         value={{ collapsed, hide: !showContent }}
       >
         <FocusTrap>
-          <Stack direction="column" gap={0} {...rest}>
+          <Stack css={{ maxWidth: 500 }} direction="column" gap={0} {...rest}>
             {title && (
               <>
                 <Stack

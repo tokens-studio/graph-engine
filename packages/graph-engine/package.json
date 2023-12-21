@@ -1,6 +1,6 @@
 {
   "name": "@tokens-studio/graph-engine",
-  "version": "0.15.2",
+  "version": "0.17.4",
   "description": "An execution engine to handle Token Studios generators and resolvers",
   "license": "MIT",
   "author": "andrew@hyma.io",
@@ -49,12 +49,13 @@
     "get-pixels": "^3.3.3",
     "is-promise": "^4.0.0",
     "lodash.orderby": "^4.6.0",
+    "mdn-data": "^2.3.0",
     "poline": "^0.7.0",
     "postcss-value-parser": "^4.2.0",
     "react-mosaic-component": "^6.0.1",
     "reactflow": "^11.9.4",
     "semver-compare": "^1.0.0",
-    "token-transformer": "^0.0.32"
+    "token-transformer": "^0.0.33"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.21.5",

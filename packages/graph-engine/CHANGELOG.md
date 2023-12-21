@@ -1,5 +1,55 @@
 # @tokens-studio/graph-engine
 
+## 0.17.4
+
+### Patch Changes
+
+- 1160ca8: Fixed an issue with the dropPanel height overflow. Fixed the resolve Tokens node to properly adhere to the existing typography and boxshadow structure
+
+## 0.17.3
+
+### Patch Changes
+
+- 08de54a: Fixed Remap Node and updated usability
+
+## 0.17.2
+
+### Patch Changes
+
+- ba4bb9c: Update miniizeFlowGraph to be quiet if disconnected edges are detected
+
+## 0.17.1
+
+### Patch Changes
+
+- 473c0a3: Update miniizeFlowGraph to be quiet if disconnected edges are detected
+- e068662: Remove console.log message from join string
+
+## 0.17.0
+
+### Minor Changes
+
+- 248400c: Added new set color value node, added color as constant input type, added new array name node for incremental naming
+- 6e58e27: Add CSS function node
+
+### Patch Changes
+
+- 69ea7b7: extract functions and presort items
+
+## 0.16.0
+
+### Minor Changes
+
+- 22c6c01: Add Array Pass Unit Node
+- 990b5a6: Update Series nodes to be more aligned
+- 1c8fa1c: Added precision to arithmetic, geometric and harmonic series
+
+## 0.15.3
+
+### Patch Changes
+
+- be2fe56: Bump engine for latest changes
+
 ## 0.15.2
 
 ### Patch Changes

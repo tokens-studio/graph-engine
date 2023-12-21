@@ -6,6 +6,8 @@ import { node as join } from "./join.js";
 import { node as reverse } from "./reverse.js";
 import { node as slice } from "./slice.js";
 import { node as sort } from "./sort.js";
+import { node as arrayPassUnit } from "./passUnit.js";
+import { node as name } from "./name.js";
 
 export const nodes = [
   arrify,
@@ -16,4 +18,6 @@ export const nodes = [
   slice,
   join,
   sort,
+  arrayPassUnit,
+  name,
 ];

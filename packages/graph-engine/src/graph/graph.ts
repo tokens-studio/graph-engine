@@ -36,6 +36,7 @@ export const minimizeFlowGraph = (
   opts: IMinimizedFlowGraph = { quiet: false }
 ): MinimizedFlowGraph => {
   const state = graph.state || {};
+  const { quiet } = opts;
 
   const nodeLookup = {};
 
@@ -54,7 +55,7 @@ export const minimizeFlowGraph = (
     version: graph.version,
     nodes,
     edges: graph.edges.reduce((acc, x) => {
-      if (!nodeLookup[x.source] || !nodeLookup[x.target]) {
+      if (!quiet && (!nodeLookup[x.source] || !nodeLookup[x.target])) {
         console.warn("Edge is not connected to a node. Ignoring...", x);
         return acc;
       }
