@@ -1,5 +1,11 @@
 # @tokens-studio/graph-editor
 
+## 2.9.4
+
+### Patch Changes
+
+- 72eae83: Fix flatten node being stupid
+
 ## 2.9.3
 
 ### Patch Changes
