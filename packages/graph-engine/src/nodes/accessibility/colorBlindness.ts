@@ -8,8 +8,8 @@ import blinder from "color-blind";
 import chroma from "chroma-js";
 import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
-import { Node } from "@/index.js";
-import { NumberSchema, ColorSchema } from "@/schemas/index.js";
+import { Node } from "@/programmatic/node.js";
+import { NumberSchema, ColorSchema, StringSchema } from "@/schemas/index.js";
 
 export enum ColorBlindnessTypes {
   TRITANOPIA = "tritanopia",
@@ -22,11 +22,12 @@ export enum ColorBlindnessTypes {
   ACHROMATOMALY = "achromatomaly",
 }
 
-export class NodeDefinition extends Node {
-  title = "Color Blindness";
-  type = NodeTypes.COLOR_BLINDNESS;
-  description = "Converts provided colors to the colors as perceived by the specified color blindness type.";
-  constructor(props: INodeDefinition) {
+export default class NodeDefinition extends Node {
+  static title = "Color Blindness";
+  static type = NodeTypes.COLOR_BLINDNESS;
+  static description =
+    "Converts provided colors to the colors as perceived by the specified color blindness type.";
+  constructor(props?: INodeDefinition) {
     super(props);
     this.addInput("color", {
       type: ColorSchema,
@@ -34,12 +35,11 @@ export class NodeDefinition extends Node {
     });
     this.addInput("type", {
       type: {
-        $id: "https://schemas.tokens.studio/colorBlindness/type.json",
+        ...StringSchema,
         title: "Color Blindness Type",
         enum: Object.values(ColorBlindnessTypes),
-        type: "string",
-        default: ColorBlindnessTypes.PROTANOPIA
-      }
+        default: ColorBlindnessTypes.PROTANOPIA,
+      },
     });
     this.addOutput("value", {
       type: NumberSchema,
@@ -48,7 +48,7 @@ export class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
-    const {type , color} = this.getAllInputs();
+    const { type, color } = this.getAllInputs();
 
     const col = chroma(color).hex();
 

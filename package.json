@@ -36,7 +36,8 @@
       "packages/*"
     ],
     "nohoist": [
-      "**/next-export-i18n"
+      "**/next-export-i18n",
+      "**/typescript-transform-paths"
     ]
   },
   "dependencies": {},

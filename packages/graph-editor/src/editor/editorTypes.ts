@@ -1,5 +1,8 @@
 import { PanelGroup } from '@/components/flow/DropPanel/PanelItems';
-import { ExternalLoadOptions } from '@tokens-studio/graph-engine';
+import {
+  ExternalLoadOptions,
+  SerializedGraph,
+} from '@tokens-studio/graph-engine';
 import { Edge, Node, ReactFlowInstance } from 'reactflow';
 
 export interface EditorProps {
@@ -31,12 +34,20 @@ export interface EditorProps {
    * Whether or not to show the menu
    */
   showMenu?: boolean;
+  /**
+   * Whether or not to show the nodes panel
+   */
+  shouldShowNodesPanel?: boolean;
+  /**
+   * Callback to be called when the nodes panel is shown or hidden
+   */
+  onShowNodesPanelChange?: (show: boolean) => void;
 }
 
 export type EditorState = {
+  graph: SerializedGraph;
   nodes: Node[];
   edges: Edge[];
-  nodeState: Record<string, unknown>;
 };
 
 export type ImperativeEditorRef = {

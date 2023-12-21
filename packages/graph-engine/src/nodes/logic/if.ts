@@ -1,28 +1,32 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { AnySchema, BooleanSchema } from "@/schemas/index.js";
 
-export const type = NodeTypes.IF;
+export default class NodeDefinition extends Node {
+  static title = "If";
+  static type = NodeTypes.IF;
+  static description =
+    "If node allows you to conditionally choose a value based on a condition.";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("condition", {
+      type: AnySchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: BooleanSchema,
+      visible: true,
+    });
+  }
 
-type Input = {
-  condition: boolean;
-  a: any;
-  b: any;
-};
+  execute(): void | Promise<void> {
+    const { condition } = this.getAllInputs();
+    const a = this.getRawInput("a");
+    const b = this.getRawInput("b");
 
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-export const process = (input: Input) => {
-  return input.condition ? input.a : input.b;
-};
+    const val = condition ? a : b;
 
-export const node: NodeDefinition<Input> = {
-  description:
-    "If node allows you to conditionally choose a value based on a condition.",
-  type,
-  process,
-};
+    this.setOutput("value", val.value, val.type());
+  }
+}

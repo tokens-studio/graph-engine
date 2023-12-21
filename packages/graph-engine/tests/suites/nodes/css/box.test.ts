@@ -1,23 +1,16 @@
-import { executeNode } from "@/core.js";
-import { node } from "@/nodes/css/box.js";
+import Node from "@/nodes/css/box.js";
 
 describe("css/box", () => {
   it("produces the css box descriptionbs", async () => {
-    const output = await executeNode({
-      input: {
-        top: 5,
-        right: 6,
-      },
-      node,
-      state: {
-        bottom: 3,
-        left: 4,
-      },
-      nodeId: "",
-    });
+    const node = new Node();
 
-    expect(output).toStrictEqual({
-      output: "5 6 3 4",
-    });
+    node.inputs.top.setValue(5);
+    node.inputs.right.setValue(6);
+    node.inputs.bottom.setValue(3);
+    node.inputs.left.setValue(4);
+
+    await node.execute();
+
+    expect(node.outputs.value.value).toStrictEqual("5 6 3 4");
   });
 });

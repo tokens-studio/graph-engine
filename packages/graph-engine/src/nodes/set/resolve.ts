@@ -1,12 +1,14 @@
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { TokenArrayArraySchema, TokenArraySchema } from "@/schemas/index.js";
 import {
   IResolvedToken,
   flatTokensRestoreToMap,
   flatten,
 } from "../../utils/index.js";
-import { NodeDefinition, NodeTypes } from "../../types.js";
 import { transformTokens } from "token-transformer";
 
-export const type = NodeTypes.ALIAS;
 const resolveValues = (tokens: IResolvedToken[], context: IResolvedToken[]) => {
   const setsToUse = ["root", "excludes"];
 
@@ -19,8 +21,8 @@ const resolveValues = (tokens: IResolvedToken[], context: IResolvedToken[]) => {
   const excludes = ["excludes"];
 
   const resolved = transformTokens(rawTokens, setsToUse, excludes, {
-    expandTypography: true,
-    expandShadow: true,
+    expandTypography: false,
+    expandShadow: false,
     expandComposition: true,
     preserveRawValue: false,
     throwErrorWhenNotResolved: false,
@@ -30,74 +32,30 @@ const resolveValues = (tokens: IResolvedToken[], context: IResolvedToken[]) => {
   return flatten(resolved);
 };
 
-type KeyValuePair = {
-  key: string;
-  value: any;
-};
+export default class NodeDefinition extends Node {
+  static title = "Resolve tokens";
+  static type = NodeTypes.ALIAS;
+  static description = "Resolves a set of tokens";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("inputs", {
+      type: TokenArrayArraySchema,
+      visible: true,
+    });
+    this.addInput("context", {
+      type: TokenArrayArraySchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: TokenArraySchema,
+      visible: true,
+    });
+  }
 
-type MappedInput = {
-  inputs: KeyValuePair[];
-  context: KeyValuePair[];
-};
+  execute(): void | Promise<void> {
+    const { inputs, context } = this.getAllInputs();
 
-/**
- * Pure function
- * @param input
- * @param state
- */
-export const mapInput = (input): MappedInput => {
-  const { inputs, context } = Object.entries(input)
-    .sort((a, b) => {
-      return a[0].localeCompare(b[0]);
-    })
-    .reduce(
-      (acc, [key, value]) => {
-        if (key.startsWith("context")) {
-          acc.context.push({
-            key,
-            value,
-          });
-        } else if (key.startsWith("inputs")) {
-          acc.inputs.push({
-            key,
-            value,
-          });
-        }
-        return acc;
-      },
-      { context: [] as KeyValuePair[], inputs: [] as KeyValuePair[] }
-    );
-
-  //Returns the expected array of inputs
-  return {
-    inputs,
-    context,
-  };
-};
-
-//Passthrough
-export const process = (input: MappedInput) => {
-  return resolveValues(
-    (input.inputs || []).flatMap((x) => x.value),
-    (input.context || []).flatMap((x) => x.value)
-  );
-};
-
-export const mapOutput = (input, state, processed) => {
-  const mapping = {};
-
-  //We use this to expose the resolved set as a node output
-  mapping["as Set"] = processed;
-  processed.forEach((x) => {
-    mapping[x.name] = x;
-  });
-  return mapping;
-};
-
-export const node: NodeDefinition<MappedInput> = {
-  description: "Resolves a set of tokens",
-  type,
-  mapInput,
-  process,
-  mapOutput,
-};
+    const resolved = resolveValues(inputs.flat(), context.flat());
+    this.setOutput("value", resolved);
+  }
+}

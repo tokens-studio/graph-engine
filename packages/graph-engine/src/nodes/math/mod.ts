@@ -1,14 +1,14 @@
 import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
-import { Node } from "@/index.js";
+import { Node } from "@/programmatic/node.js";
 import { NumberSchema } from "@/schemas/index.js";
 
-
-export class NodeDefinition extends Node {
-  title = "Modulo";
-  type = NodeTypes.MOD;
-  description = "Modulo node allows you to get the remainder of a division."
-  constructor(props: INodeDefinition) {
+export default class NodeDefinition extends Node {
+  static title = "Modulo";
+  static type = NodeTypes.MOD;
+  static description =
+    "Modulo node allows you to get the remainder of a division.";
+  constructor(props?: INodeDefinition) {
     super(props);
     this.addInput("a", {
       type: NumberSchema,
@@ -26,6 +26,6 @@ export class NodeDefinition extends Node {
 
   execute(): void | Promise<void> {
     const { a, b } = this.getAllInputs();
-    this.setOutput("value",a%b);
+    this.setOutput("value", a % b);
   }
 }

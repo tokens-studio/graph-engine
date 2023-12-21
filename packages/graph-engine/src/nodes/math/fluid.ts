@@ -1,17 +1,14 @@
-
-
-
-
 import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
-import { Node } from "@/index.js";
+import { Node } from "@/programmatic/node.js";
 import { NumberSchema } from "@/schemas/index.js";
 
-export class NodeDefinition extends Node {
-  title = "Fluid";
-  type = NodeTypes.FLUID_VALUE;
-  description = "Fluid node allows you to dynamically calculates a dimension based on the current viewport width, transitioning smoothly between a minimum and maximum dimension as the viewport width changes within a defined range (from min viewport to max viewport)"
-  constructor(props: INodeDefinition) {
+export default class NodeDefinition extends Node {
+  static title = "Fluid";
+  static type = NodeTypes.FLUID_VALUE;
+  static description =
+    "Fluid node allows you to dynamically calculates a dimension based on the current viewport width, transitioning smoothly between a minimum and maximum dimension as the viewport width changes within a defined range (from min viewport to max viewport)";
+  constructor(props?: INodeDefinition) {
     super(props);
     this.addInput("minSize", {
       type: NumberSchema,
@@ -40,7 +37,8 @@ export class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
-    const { minSize, maxSize, minViewport, maxViewport, viewport } = this.getAllInputs();
+    const { minSize, maxSize, minViewport, maxViewport, viewport } =
+      this.getAllInputs();
     const fontV = (100 * (maxSize - minSize)) / (maxViewport - minViewport);
     const fontR =
       (minViewport * maxSize - maxViewport * minSize) /

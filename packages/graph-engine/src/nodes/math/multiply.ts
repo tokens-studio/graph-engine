@@ -1,13 +1,14 @@
 import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
-import { Node } from "@/index.js";
+import { Node } from "@/programmatic/node.js";
 import { NumberSchema, NumberArraySchema } from "@/schemas/index.js";
 
-export class NodeDefinition extends Node {
-  title = "Multiply";
-  type = NodeTypes.MULTIPLY;
-  description = "Multiply node allows you to multiply two or more numbers.";
-  constructor(props: INodeDefinition) {
+export default class NodeDefinition extends Node {
+  static title = "Multiply";
+  static type = NodeTypes.MULTIPLY;
+  static description =
+    "Multiply node allows you to multiply two or more numbers.";
+  constructor(props?: INodeDefinition) {
     super(props);
     this.addInput("inputs", {
       type: {

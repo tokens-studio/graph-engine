@@ -22,7 +22,6 @@ export const StringSchema: SchemaObject = {
   type: "string",
 };
 
-
 export const COLOR = "https://schemas.tokens.studio/color.json";
 export const ColorSchema: SchemaObject = {
   $id: COLOR,
@@ -30,7 +29,13 @@ export const ColorSchema: SchemaObject = {
   type: "string",
 };
 
-
+export const COLOR_ARRAY = "https://schemas.tokens.studio/color.json";
+export const ColorArraySchema: SchemaObject = {
+  $id: COLOR,
+  title: "Color[]",
+  type: "array",
+  items: ColorSchema,
+};
 
 export const STRING_ARRAY = "https://schemas.tokens.studio/string-array.json";
 export const StringArraySchema: SchemaObject = {
@@ -38,6 +43,7 @@ export const StringArraySchema: SchemaObject = {
   title: "String[]",
   type: "array",
   items: StringSchema,
+  default: [],
 };
 
 export const ANY = "https://schemas.tokens.studio/any.json";
@@ -51,7 +57,8 @@ export const ANY_ARRAY = "https://schemas.tokens.studio/anyArray.json";
 export const AnyArraySchema: SchemaObject = {
   $id: ANY_ARRAY,
   title: "Any[]",
-  type: 'array'
+  type: "array",
+  default: [],
   //We don't specify a type here because we want to allow any type
 };
 
@@ -60,6 +67,7 @@ export const BooleanSchema: SchemaObject = {
   $id: BOOLEAN,
   title: "Boolean",
   type: "boolean",
+  default: false,
 };
 
 export const TOKEN = "https://schemas.tokens.studio/token.json";
@@ -71,6 +79,43 @@ export const TokenSchema: SchemaObject = {
     name: StringSchema,
     token: StringSchema,
   },
+};
+
+export const TOKEN_ARRAY = "https://schemas.tokens.studio/tokenArray.json";
+export const TokenArraySchema: SchemaObject = {
+  $id: TOKEN_ARRAY,
+  title: "Token[]",
+  type: "array",
+  default: [],
+  items: TokenSchema,
+};
+
+export const TOKEN_ARRAY_ARRAY =
+  "https://schemas.tokens.studio/tokenArrayArray.json";
+export const TokenArrayArraySchema: SchemaObject = {
+  $id: TOKEN_ARRAY_ARRAY,
+  title: "Token[][]",
+  type: "array",
+  default: [],
+  items: TokenArraySchema,
+};
+
+export const TOKEN_SET = "https://schemas.tokens.studio/tokenSet.json";
+export const TokenSetSchema: SchemaObject = {
+  $id: TOKEN_SET,
+  title: "Token Set",
+  type: "object",
+  properties: {
+    name: StringSchema,
+    token: StringSchema,
+  },
+};
+
+export const OBJECT = "https://schemas.tokens.studio/object.json";
+export const ObjectSchema: SchemaObject = {
+  $id: OBJECT,
+  title: "Object",
+  type: "object",
 };
 
 /**
@@ -143,6 +188,8 @@ export const convertSchemaType = (
   }
   return src;
 };
+
+export type GraphSchema = SchemaObject;
 
 export const AllSchemas = [
   NumberSchema,

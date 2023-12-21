@@ -1,5 +1,98 @@
 # @tokens-studio/graph-editor
 
+## 2.9.3
+
+### Patch Changes
+
+- 1160ca8: Fixed an issue with the dropPanel height overflow. Fixed the resolve Tokens node to properly adhere to the existing typography and boxshadow structure
+- Updated dependencies [1160ca8]
+  - @tokens-studio/graph-engine@0.17.4
+
+## 2.9.2
+
+### Patch Changes
+
+- bb8893a: Fixes an issue with required type assertion of json for imports
+
+## 2.9.1
+
+### Patch Changes
+
+- 59dbbb2: Fixed an issue with missing package "mdn-data"
+- 08de54a: Fixed Remap Node and updated usability
+- a0f7a9f: Added new props to the editor: `showNodesPanel` and `onShowNodesPanelChange` to make appearance of nodes panel optional and controllable.
+  Fixed vertical scroll of nodes panel
+- Updated dependencies [08de54a]
+  - @tokens-studio/graph-engine@0.17.3
+
+## 2.9.0
+
+### Minor Changes
+
+- 248400c: Added new set color value node, added color as constant input type, added new array name node for incremental naming
+- 217deb1: Change passUnit nodes to use MDN unit definitions
+- 6e58e27: Add CSS function node
+
+### Patch Changes
+
+- 632150a: Rename Poline node in UI
+- Updated dependencies [69ea7b7]
+- Updated dependencies [248400c]
+- Updated dependencies [6e58e27]
+  - @tokens-studio/graph-engine@0.17.0
+
+## 2.8.2
+
+### Patch Changes
+
+- ff9ab59: Fix contrasting from array nodes output
+
+## 2.8.1
+
+### Patch Changes
+
+- 23cc354: Fix output of Contrasting from Set
+
+## 2.8.0
+
+### Minor Changes
+
+- 41f6a49: Add border-image to css map
+- 41f6a49: Add clip-path to css map
+- 22c6c01: Add Array Pass Unit Node
+- 990b5a6: Update Series nodes to be more aligned
+- 1c8fa1c: Added precision to arithmetic, geometric and harmonic series
+
+### Patch Changes
+
+- Updated dependencies [22c6c01]
+- Updated dependencies [990b5a6]
+- Updated dependencies [1c8fa1c]
+  - @tokens-studio/graph-engine@0.16.0
+
+## 2.7.2
+
+### Patch Changes
+
+- 9fc6bd7: Add support for stringify node, fix an issue with subtract on initial load
+
+## 2.7.1
+
+### Patch Changes
+
+- bb77dae: Fixes an import issue with elkjs
+
+## 2.7.0
+
+### Minor Changes
+
+- dba5c05: add blending and blur to css map
+
+### Patch Changes
+
+- Updated dependencies [f52e0d7]
+  - @tokens-studio/graph-engine@0.15.1
+
 ## 2.6.0
 
 ### Minor Changes

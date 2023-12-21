@@ -1,5 +1,51 @@
 # @tokens-studio/graph-engine-ui
 
+## 2.1.3
+
+### Patch Changes
+
+- a0f7a9f: Added new props to the editor: `showNodesPanel` and `onShowNodesPanelChange` to make appearance of nodes panel optional and controllable.
+  Fixed vertical scroll of nodes panel
+- Updated dependencies [59dbbb2]
+- Updated dependencies [08de54a]
+- Updated dependencies [a0f7a9f]
+  - @tokens-studio/graph-editor@2.9.1
+  - @tokens-studio/graph-engine@0.17.3
+
+## 2.1.2
+
+### Patch Changes
+
+- 9d729f6: Fixed code editor state updates
+- Updated dependencies [69ea7b7]
+- Updated dependencies [248400c]
+- Updated dependencies [217deb1]
+- Updated dependencies [6e58e27]
+- Updated dependencies [632150a]
+  - @tokens-studio/graph-engine@0.17.0
+  - @tokens-studio/graph-editor@2.9.0
+
+## 2.1.1
+
+### Patch Changes
+
+- 9fc6bd7: Add support for stringify node, fix an issue with subtract on initial load
+- Updated dependencies [9fc6bd7]
+  - @tokens-studio/graph-editor@2.7.2
+
+## 2.1.0
+
+### Minor Changes
+
+- dba5c05: add blending and blur to css map
+
+### Patch Changes
+
+- Updated dependencies [dba5c05]
+- Updated dependencies [f52e0d7]
+  - @tokens-studio/graph-editor@2.7.0
+  - @tokens-studio/graph-engine@0.15.1
+
 ## 2.0.3
 
 ### Patch Changes

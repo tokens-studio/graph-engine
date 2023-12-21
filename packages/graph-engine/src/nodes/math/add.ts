@@ -1,13 +1,13 @@
 import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
-import { Node } from "@/index.js";
+import { Node } from "@/programmatic/node.js";
 import { NumberSchema, NumberArraySchema } from "@/schemas/index.js";
 
-export class NodeDefinition extends Node {
-  title = "Add Node";
-  type = NodeTypes.ADD;
-  description = "Add node allows you to add two or more numbers.";
-  constructor(props: INodeDefinition) {
+export default class NodeDefinition extends Node {
+  static title = "Add Node";
+  static type = NodeTypes.ADD;
+  static description = "Add node allows you to add two or more numbers.";
+  constructor(props?: INodeDefinition) {
     super(props);
     this.addInput("inputs", {
       type: {

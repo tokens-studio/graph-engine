@@ -8,42 +8,9 @@ import { examples } from '../examples/examples.tsx';
 import { IExample } from '../types/IExample.tsx';
 import { GraphFile } from '@/types/file.ts';
 
-const ExamplesPicker = ({ open, onClose }) => {
-  const { setCode, code } = usePreviewContext();
-
-  const onLoadExample = useCallback(
-    (file: GraphFile) => {
-      const editor = store.getState().refs.editor;
-
-      if (!editor) {
-        return;
-      }
-
-      const { state: loadedState, code: loadedCode, nodes, edges } = file;
-
-      // TODO, this needs a refactor. We need to wait for the clear to finish
-      // as the nodes still get one final update by the dispatch before they are removed which
-      // causes nulls to occur everywhere. They need to be unmounted
-
-      editor.current.clear();
-
-      setTimeout(() => {
-        if (loadedCode !== undefined) {
-          setCode(loadedCode);
-        }
-
-        editor.current.load({
-          nodeState: loadedState,
-          nodes,
-          edges,
-        });
-      }, 0);
-    },
-    [setCode],
-  );
-
+const ExamplesPicker = ({ open, onClose, loadExample }) => {
   const handleSelectItem = (example: IExample) => {
-    onLoadExample(example.file);
+    loadExample(example.file);
     onClose();
   };
 

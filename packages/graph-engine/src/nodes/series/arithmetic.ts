@@ -1,67 +1,112 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { NodeTypes } from "@/types.js";
+import { INodeDefinition, Node } from "@/programmatic/node.js";
+import { NumberSchema, NumberArraySchema } from "@/schemas/index.js";
+import { Input } from "@/programmatic/input.js";
 
-export const type = NodeTypes.ARITHMETIC_SERIES;
-
-export const defaults = {
-  base: 16,
-  stepsDown: 0,
-  steps: 1,
-  increment: 1,
+export type ArithemeticValue = {
+  index: number;
+  value: number;
 };
 
-export const process = (input, state) => {
-  const final = {
-    ...state,
-    ...input,
+export default class NodeDefinition extends Node {
+  static title = "Arithmetic Series";
+
+  declare inputs: {
+    base: Input<number>;
+    stepsDown: Input<number>;
+    steps: Input<number>;
+    increment: Input<number>;
+    precision: Input<number>;
   };
+  static type = NodeTypes.ARITHMETIC_SERIES;
+  static description =
+    "Generates an arithmetic f(n)= c + (f(n-1)) series of numbers based on the base value, steps down, steps and increment.";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("base", {
+      type: {
+        ...NumberSchema,
+        default: 16,
+      },
+    });
+    this.addInput("stepsDown", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+      },
+    });
+    this.addInput("steps", {
+      type: {
+        ...NumberSchema,
+        default: 1,
+      },
+    });
 
-  const sizes: Output = [];
-  //Fixes issue with string concatenation
-  const base = parseFloat(final.base);
+    this.addInput("increment", {
+      type: {
+        ...NumberSchema,
+        default: 1,
+      },
+    });
 
-  for (let i = Math.abs(final.stepsDown); i > 0; i--) {
-    const value = base - final.increment * i;
-    sizes.push({
-      step: 0 - i,
-      size: value,
+    this.addInput("precision", {
+      type: {
+        ...NumberSchema,
+        default: 2,
+      },
+    });
+    this.addOutput("array", {
+      type: NumberArraySchema,
+      visible: true,
+    });
+    this.addOutput("indexed", {
+      type: {
+        $id: `https://schemas.tokens.studio/${NodeTypes.ARITHMETIC_SERIES}/indexed.json`,
+        type: "object",
+        properties: {
+          index: {
+            type: NumberSchema,
+          },
+          value: {
+            type: NumberSchema,
+          },
+        },
+      },
+      visible: false,
     });
   }
 
-  sizes.push({
-    step: 0,
-    size: final.base,
-  });
+  execute(): void | Promise<void> {
+    const { base, precision, increment, stepsDown, steps } =
+      this.getAllInputs();
 
-  for (let i = 0; i < Math.abs(final.steps); i++) {
-    const value = base + final.increment * (i + 1);
-    sizes.push({
-      step: i + 1,
-      size: value,
+    const values: ArithemeticValue[] = [];
+    const shift = 10 ** precision;
+
+    for (let i = Math.abs(stepsDown); i > 0; i--) {
+      const value = Math.round((base - increment * i) * shift) / shift;
+      values.push({
+        index: 0 - i,
+        value: value,
+      });
+    }
+    values.push({
+      index: 0,
+      value: Math.round(base * shift) / shift,
     });
+
+    for (let i = 0; i < Math.abs(steps); i++) {
+      const value = Math.round((base + increment * (i + 1)) * shift) / shift;
+      values.push({
+        index: i + 1,
+        value: value,
+      });
+    }
+
+    this.setOutput(
+      "array",
+      values.map((x) => x.value)
+    );
+    this.setOutput("value", values);
   }
-
-  return sizes;
-};
-
-export type Output = {
-  size: number;
-  step: number;
-}[];
-
-export const mapOutput = (input, state, processed) => {
-  const mapped = { asArray: processed.map((item) => item.size) };
-
-  processed.forEach((item) => {
-    mapped[`${item.step}`] = item.size;
-  });
-  return mapped;
-};
-
-export const node: NodeDefinition = {
-  description:
-    "Generates an arithmetic f(n)= c + (f(n-1)) series of numbers based on the base value, steps down, steps and increment.",
-  defaults,
-  type,
-  process,
-  mapOutput,
-};
+}

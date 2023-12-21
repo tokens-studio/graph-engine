@@ -1,46 +1,46 @@
-/**
- * Performs an array join using a string delimiter
- *
- * @packageDocumentation
- */
+import { Input } from "@/programmatic/input.js";
+import { NodeTypes } from "@/types.js";
+import { INodeDefinition, Node } from "@/programmatic/node.js";
+import { AnyArraySchema } from "@/schemas/index.js";
+import { Output } from "@/programmatic";
+export default class NodeDefinition extends Node {
+  static title = "Concat Array";
+  static type = NodeTypes.CONCAT;
+  declare inputs: {
+    a: Input;
+    b: Input;
+  };
 
-import { NodeDefinition, NodeTypes } from "../../types.js";
+  declare outputs: {
+    value: Output;
+  };
 
-const type = NodeTypes.CONCAT;
+  static description = "Performs an array join using a string delimiter";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("a", {
+      type: AnyArraySchema,
+      visible: true,
+    });
+    this.addInput("b", {
+      type: AnyArraySchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: AnyArraySchema,
+      visible: true,
+    });
+  }
 
-export type MappedInput = {
-  array: {
-    key: string;
-    value: any[];
-  }[];
-};
+  execute(): void | Promise<void> {
+    const a = this.getRawInput("a");
+    const b = this.getRawInput("b");
 
-/**
- * Pure function
- * @param input
- * @param state
- */
-export const mapInput = (input: Record<string, any>): MappedInput => {
-  const values = Object.entries(input).sort((a, b) => {
-    return a[0].localeCompare(b[0]);
-  });
+    //Verify types
+    if (a.type().$id !== b.type().$id)
+      throw new Error("Array types must match");
 
-  //Returns the expected array of inputs
-  return {
-    array: values.map(([key, value]) => ({ key, value })),
-  } as MappedInput;
-};
-
-export const process = (input: MappedInput) => {
-  return input.array.reduce((acc, x) => {
-    acc.push.apply(acc, x.value);
-    return acc;
-  }, [] as any[]);
-};
-
-export const node: NodeDefinition<MappedInput> = {
-  description: "Performs an array join using a string delimiter",
-  type,
-  mapInput,
-  process,
-};
+    const calculated = a.value.concat(b.value);
+    this.setOutput("value", calculated, a.type());
+  }
+}

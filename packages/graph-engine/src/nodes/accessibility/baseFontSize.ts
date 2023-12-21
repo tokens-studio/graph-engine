@@ -1,71 +1,72 @@
 import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
-import { Node } from "@/index.js";
+import { Node } from "@/programmatic/node.js";
 import { NumberSchema } from "@/schemas/index.js";
 
-export class NodeDefinition extends Node {
-  title = "Base Font Size";
-  type = NodeTypes.BASE_FONT_SIZE;
-  description = "Base Font node allows you to calculate the base font size with DIN 1450."
-  constructor(props: INodeDefinition) {
+export default class NodeDefinition extends Node {
+  static title = "Base Font Size";
+  static type = NodeTypes.BASE_FONT_SIZE;
+
+  static description =
+    "Base Font node allows you to calculate the base font size with DIN 1450.";
+  constructor(props?: INodeDefinition) {
     super(props);
     this.addInput("visualAcuity", {
       type: {
         ...NumberSchema,
-        default: 0.7
+        default: 0.7,
       },
       visible: true,
     });
     this.addInput("correctionFactor", {
       type: {
         ...NumberSchema,
-        default: 13
-      }
+        default: 13,
+      },
     });
     this.addInput("lightingCondition", {
       type: {
         ...NumberSchema,
-        default: 0.83
-      }
+        default: 0.83,
+      },
     });
     this.addInput("distance", {
       type: {
         ...NumberSchema,
-        default: 30
-      }
+        default: 30,
+      },
     });
 
     this.addInput("xHeightRatio", {
       type: {
         ...NumberSchema,
-        default: 0.53
-      }
+        default: 0.53,
+      },
     });
 
     this.addInput("ppi", {
       type: {
         ...NumberSchema,
-        default: 458
-      }
+        default: 458,
+      },
     });
     this.addInput("pixelDensity", {
       type: {
         ...NumberSchema,
-        default: 3
-      }
+        default: 3,
+      },
     });
 
     this.addOutput("value", {
       type: {
         ...NumberSchema,
-        description: "The generated font size"
+        description: "The generated font size",
       },
       visible: true,
     });
   }
 
   execute(): void | Promise<void> {
-
     const {
       visualAcuity,
       lightingCondition,
@@ -83,7 +84,6 @@ export class NodeDefinition extends Node {
     const xHeightPX = (xHeightMM / 25.4) * (ppi / pixelDensity);
     const fontSizePX = (1 * xHeightPX) / xHeightRatio;
 
-    this.setOutput('value', fontSizePX);
+    this.setOutput("value", fontSizePX);
   }
 }
-

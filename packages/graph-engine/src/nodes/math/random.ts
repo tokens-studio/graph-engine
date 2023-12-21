@@ -1,20 +1,19 @@
-
-
 import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
-import { Node } from "@/index.js";
+import { Node } from "@/programmatic/node.js";
 import { NumberSchema } from "@/schemas/index.js";
 
-export class NodeDefinition extends Node {
-  title = "Random";
-  type = NodeTypes.RANDOM;
-  description = "Random node allows you to generate a random number between 0 and 1."
-  constructor(props: INodeDefinition) {
+export default class NodeDefinition extends Node {
+  static title = "Random";
+  static type = NodeTypes.RANDOM;
+  static description =
+    "Random node allows you to generate a random number between 0 and 1.";
+  constructor(props?: INodeDefinition) {
     super(props);
     this.addOutput("value", {
       type: {
         ...NumberSchema,
-        default: Math.random()
+        default: Math.random(),
       },
       visible: true,
     });

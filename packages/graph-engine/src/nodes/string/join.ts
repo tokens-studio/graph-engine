@@ -1,15 +1,13 @@
-
 import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
-import { Node } from "@/index.js";
+import { Node } from "@/programmatic/node.js";
 import { AnyArraySchema, StringSchema } from "@/schemas/index.js";
 
-
-export class NodeDefinition extends Node {
-  title = "Join String";
-  type = NodeTypes.JOIN_STRING;
-  description = "Joins an array of strings into a single string";
-  constructor(props: INodeDefinition) {
+export default class NodeDefinition extends Node {
+  static title = "Join String";
+  static type = NodeTypes.JOIN_STRING;
+  static description = "Joins an array of strings into a single string";
+  constructor(props?: INodeDefinition) {
     super(props);
     this.addInput("array", {
       type: AnyArraySchema,
@@ -18,7 +16,7 @@ export class NodeDefinition extends Node {
     this.addInput("separator", {
       type: {
         ...StringSchema,
-        default: ''
+        default: "",
       },
     });
     this.addOutput("value", {

@@ -2,7 +2,6 @@ import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Position, Handle as RawHandle } from 'reactflow';
 import { styled } from '@/lib/stitches/index.ts';
 import { useIsValidConnection } from './nodes/hooks/useIsValidConnection.ts';
-import { useNode } from './wrapper/nodeV2.tsx';
 import React, { createContext, useContext } from 'react';
 
 export const HandleContext = createContext<{
@@ -169,7 +168,6 @@ export const Handle = (props) => {
   const { position, type } = useHandle();
   const isValidConnection = useIsValidConnection();
   const { collapsed, hide } = useContext(HandleContainerContext);
-  const { onConnect } = useNode();
 
   return (
     <HandleHolder collapsed={collapsed}>
@@ -183,7 +181,6 @@ export const Handle = (props) => {
         hide={hide}
         isValidConnection={isValidConnection}
         {...rest}
-        onConnect={onConnect}
       />
       <Stack
         direction="row"

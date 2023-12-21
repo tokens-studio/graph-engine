@@ -28,10 +28,7 @@ import {
 } from '../components/flow/utils.ts';
 import { handleDrop } from './fileInput.tsx';
 import { keyMap, useHotkeys } from './hotkeys.ts';
-import {
-  defaultNodeTypes,
-  defaultStateInitializer,
-} from '../components/flow/nodes/index.ts';
+
 import { useDispatch } from '../hooks/index.ts';
 import { v4 as uuidv4 } from 'uuid';
 import CustomEdge from '../components/flow/edges/edge.tsx';
@@ -50,7 +47,12 @@ import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
 import { Box, IconButton, Stack, Tooltip } from '@tokens-studio/ui';
 import { OnOutputChangeContextProvider } from '@/context/OutputContext.tsx';
 import { createNode } from './create.ts';
-import { NodeTypes } from '@tokens-studio/graph-engine';
+import {
+  Graph,
+  Node as GraphNode,
+  NodeTypes,
+  nodeLookup,
+} from '@tokens-studio/graph-engine';
 import { useContextMenu } from 'react-contexify';
 import { version } from '../../package.json';
 import { NodeContextMenu } from './nodeContextMenu.tsx';
@@ -60,12 +62,13 @@ import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '@/redux/selectors/settings.ts';
 import { showNodesPanelSelector } from '@/redux/selectors/ui.ts';
 import { forceUpdate } from '@/redux/selectors/graph.ts';
-import { DropPanel } from '@/components/index.ts';
-import { AppsIcon } from '@/components/icons/AppsIcon.tsx';
+import { DropPanel, NodeV2 } from '@/components/index.ts';
 import { CommandMenu } from '@/components/CommandPalette.tsx';
 import { ExternalLoaderProvider } from '@/context/ExternalLoaderContext.tsx';
 import { defaultPanelItems } from '@/components/flow/DropPanel/PanelItems.tsx';
 import { Settings } from '@/components/Settings.tsx';
+import { Sidesheet } from './Sidesheet.tsx';
+import { GraphProvider } from '@/context/GraphContext.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -93,8 +96,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const {
       showMenu = true,
       panelItems = defaultPanelItems,
-      nodeTypes = defaultNodeTypes,
-      stateInitializer = defaultStateInitializer,
+      nodeTypes = {},
+      stateInitializer = {},
     } = props;
 
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
@@ -107,9 +110,19 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const showNodesPanel = useSelector(showNodesPanelSelector);
     const forceUpdateValue = useSelector(forceUpdate);
 
-    const handleTogglePanel = () => {
-      dispatch.ui.setShowNodesPanel(!showNodesPanel);
-    };
+    //Internal graph
+    const [graph, setGraph] = React.useState<Graph>(new Graph());
+
+    React.useEffect(() => {
+      if (!!props.shouldShowNodesPanel)
+        dispatch.ui.setShowNodesPanel(props.shouldShowNodesPanel);
+    }, [props.shouldShowNodesPanel]);
+
+    React.useEffect(() => {
+      if (typeof props.onShowNodesPanelChange === 'function') {
+        props.onShowNodesPanelChange(showNodesPanel);
+      }
+    }, [showNodesPanel]);
 
     const [contextNode, setContextNode] = React.useState<Node | null>(null);
     const [contextEdge, setContextEdge] = React.useState<Edge | null>(null);
@@ -201,21 +214,17 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
     const onEdgesDeleted = useCallback((edges) => {
       edges.forEach((edge) => {
-        dispatch.input.remove({
-          id: edge.target,
-          key: edge.targetHandle,
-        });
+        graph.removeEdge(edge.id);
       });
     }, []);
 
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
-    const nodeState = dispatch.node.getState();
-
     // Create flow node types here, instead of the global scope to ensure that custom nodes added by the user are available in nodeTypes
     const fullNodeTypesRef = useRef({
       ...nodeTypes,
+      GenericNode: NodeV2,
       [EditorNodeTypes.GROUP]: groupNode,
     });
 
@@ -226,43 +235,29 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           reactFlowInstance.setNodes([]);
           reactFlowInstance.setEdges([]);
         },
-        save: () => ({
-          graph: {
+        save: () => {
+          return {
             version,
-          },
-          viewport: reactFlowInstance.getViewport(),
-          nodes: reactFlowInstance.getNodes(),
-          edges: reactFlowInstance.getEdges(),
-          nodeState,
-        }),
+            viewport: reactFlowInstance.getViewport(),
+            nodes: reactFlowInstance.getNodes(),
+            edges: reactFlowInstance.getEdges(),
+            graph: graph.serialize(),
+          };
+        },
         forceUpdate: () => {
           dispatch.graph.forceNewUpdate();
         },
-        load: ({ nodes, edges, nodeState }) => {
-          const input = nodes.reduce((acc, node) => {
-            acc[node.id] = {};
-            return acc;
-          }, {});
-
-          dispatch.input.setState(input);
-          dispatch.node.setState(nodeState);
+        load: ({ nodes, edges, graph: serializedGraph }) => {
+          console.log(graph);
+          setGraph(Graph.deserialize(serializedGraph, nodeLookup));
 
           reactFlowInstance.setNodes(() => nodes);
           reactFlowInstance.setEdges(() => edges);
           //Force delay of 1 tick to allow input state to update
-          setTimeout(() => {
-            dispatch.graph.forceNewUpdate();
-          }, 1);
         },
         getFlow: () => reactFlowInstance,
       }),
-      [
-        reactFlowInstance,
-        nodeState,
-        dispatch.graph,
-        dispatch.input,
-        dispatch.node,
-      ],
+      [reactFlowInstance, graph, dispatch.graph, dispatch.input, dispatch.node],
     );
 
     const onConnect = useCallback((params) => {
@@ -348,15 +343,15 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
         event.preventDefault();
 
         const processed = await handleDrop(event, {
+          graph,
           reactFlowInstance,
           reactFlowWrapper,
           dispatch,
-          stateInitializer,
         });
 
         reactFlowInstance.setNodes((nodes) => [...nodes, ...processed]);
       },
-      [dispatch, reactFlowInstance, stateInitializer],
+      [dispatch, graph, reactFlowInstance],
     );
 
     const onEdgeDblClick = useCallback(
@@ -468,40 +463,53 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
         x: dropPanelPosition.x,
         y: dropPanelPosition.y,
       };
-      const nodes = reactFlowInstance.getNodes();
+
+      const nodes = Object.values(graph.nodes);
+
       // Couldn't determine the type
       if (!nodeRequest.type) {
         return;
       }
       if (
         nodeRequest.type == NodeTypes.INPUT &&
-        nodes.some((x) => x.type == NodeTypes.INPUT)
+        nodes.some((x) => x.nodeType() == NodeTypes.INPUT)
       ) {
         alert('Only one input node allowed');
         return null;
       }
       if (
         nodeRequest.type == NodeTypes.OUTPUT &&
-        nodes.some((x) => x.type == NodeTypes.OUTPUT)
+        nodes.some((x) => x.nodeType() == NodeTypes.OUTPUT)
       ) {
         alert('Only one output node allowed');
         return null;
       }
       // set x y coordinates in instance
       const position = reactFlowInstance.project(dropPosition);
-      const newNode = createNode({
-        nodeRequest,
-        stateInitializer,
-        dispatch,
-        position,
-      });
-      reactFlowInstance.addNodes(newNode);
+
+      //Lookup the node type
+      const Factory: typeof GraphNode = nodeLookup[nodeRequest.type];
+
+      //Generate the new node
+      const node = new Factory();
+      //Add it to the existing graph
+      graph.addNode(node);
+
+      //Add the node to the react flow instance
+      const reactFlowNode = {
+        id: node.id,
+        type: 'GenericNode',
+        data: {},
+        position: position || { x: 0, y: 0 },
+      };
+
+      reactFlowInstance.addNodes(reactFlowNode);
     };
 
     const nodeCount = nodes.length;
 
     return (
-      <>
+      <GraphProvider graph={graph}>
         <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
           <Box
             className="editor"
@@ -513,102 +521,110 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
               flexGrow: 1,
             }}
           >
-            <ForceUpdateProvider value={forceUpdate}>
-              <Box css={{ display: 'flex', flexDirection: 'row', zIndex: 0 }}>
-                {showMenu && (
-                  <Stack
-                    direction="column"
-                    gap={2}
-                    css={{
-                      position: 'relative',
-                      backgroundColor: '$bgDefault',
-                      padding: '$1',
-                      borderRight: '1px solid $borderSubtle',
-                    }}
-                  >
-                    <IconButton
-                      tooltip="Add nodes (n)"
-                      onClick={handleTogglePanel}
-                      icon={<AppsIcon />}
-                      variant={showNodesPanel ? 'primary' : 'invisible'}
-                    />
-                    {props.menuContent}
-                    <Settings />
-                  </Stack>
-                )}
-                {showNodesPanel && (
+            <Box
+              css={{
+                position: 'absolute',
+                zIndex: 500,
+                display: 'flex',
+                flexDirection: 'row',
+                height: 'inherit',
+              }}
+            >
+              {showMenu && (
+                <Stack
+                  direction="column"
+                  gap={2}
+                  css={{
+                    position: 'relative',
+                    padding: '$3',
+                    paddingRight: 0,
+                    zIndex: 600,
+                  }}
+                >
+                  {props.menuContent}
+                  <Settings />
+                </Stack>
+              )}
+              {showNodesPanel && (
+                <Box
+                  css={{
+                    paddingLeft: '$3',
+                    paddingTop: '$3',
+                    paddingBottom: '$3',
+                  }}
+                >
                   <Box
                     css={{
                       backgroundColor: '$bgDefault',
-                      width: '240px',
-                      overflow: 'hidden',
+                      width: 'var(--globals-drop-panel-width)',
                       display: 'flex',
                       flexDirection: 'column',
-                      borderRight: '1px solid $borderMuted',
+                      border: '1px solid $borderSubtle',
+                      boxShadow: '$small',
+                      borderRadius: '$medium',
+                      overflowY: 'auto',
+                      maxHeight: '100%',
                     }}
                   >
                     <DropPanel groups={[]} items={panelItems} />
                   </Box>
-                )}
-              </Box>
-              {/* @ts-ignore */}
-              <ReactFlow
-                ref={reactFlowWrapper}
-                fitView
-                nodes={nodes}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onEdgeDoubleClick={onEdgeDblClick}
-                onEdgesDelete={onEdgesDeleted}
-                edges={edges}
-                elevateNodesOnSelect={false}
-                onNodeDragStop={onNodeDragStop}
-                snapToGrid={snapGridValue}
-                edgeTypes={edgeTypes}
-                nodeTypes={fullNodeTypesRef.current}
-                snapGrid={snapGridCoords}
-                onNodeDrag={onNodeDrag}
-                onConnect={onConnect}
-                onDrop={onDrop}
-                onConnectEnd={onConnectEnd}
-                selectNodesOnDrag={true}
-                defaultEdgeOptions={defaultEdgeOptions}
-                panOnScroll={true}
-                //Note that we cannot use pan on drag or it will affect the context menu
-                onPaneContextMenu={handleContextMenu}
-                onEdgeContextMenu={handleEdgeContextMenu}
-                onNodeContextMenu={handleNodeContextMenu}
-                selectionMode={SelectionMode.Partial}
-                onDragOver={onDragOver}
-                selectionOnDrag={true}
-                panOnDrag={panOnDrag}
-                minZoom={-Infinity}
-                zoomOnDoubleClick={false}
-                defaultViewport={defaultViewport}
-                //This causes weirdness with the minimap
-                // onlyRenderVisibleElements={true}
-                maxZoom={Infinity}
-                proOptions={proOptions}
-              >
-                {showGridValue && (
-                  <Background
-                    color="var(--colors-borderMuted)"
-                    gap={16}
-                    size={2}
-                    variant={BackgroundVariant.Dots}
-                  />
-                )}
-                {nodeCount === 0 && props.emptyContent}
-                <SelectedNodesToolbar />
-                <CustomControls position="bottom-center" />
-                <CommandMenu
-                  reactFlowWrapper={reactFlowWrapper}
-                  items={panelItems}
-                  handleSelectNewNodeType={handleSelectNewNodeType}
+                </Box>
+              )}
+            </Box>
+            <ReactFlow
+              ref={reactFlowWrapper}
+              nodes={nodes}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              onEdgeDoubleClick={onEdgeDblClick}
+              onEdgesDelete={onEdgesDeleted}
+              edges={edges}
+              elevateNodesOnSelect={false}
+              onNodeDragStop={onNodeDragStop}
+              snapToGrid={snapGridValue}
+              edgeTypes={edgeTypes}
+              nodeTypes={fullNodeTypesRef.current}
+              snapGrid={snapGridCoords}
+              onNodeDrag={onNodeDrag}
+              onConnect={onConnect}
+              onDrop={onDrop}
+              onConnectEnd={onConnectEnd}
+              selectNodesOnDrag={true}
+              defaultEdgeOptions={defaultEdgeOptions}
+              panOnScroll={true}
+              //Note that we cannot use pan on drag or it will affect the context menu
+              onPaneContextMenu={handleContextMenu}
+              onEdgeContextMenu={handleEdgeContextMenu}
+              // onNodeContextMenu={handleNodeContextMenu}
+              selectionMode={SelectionMode.Partial}
+              onDragOver={onDragOver}
+              selectionOnDrag={true}
+              panOnDrag={panOnDrag}
+              minZoom={-Infinity}
+              zoomOnDoubleClick={false}
+              defaultViewport={defaultViewport}
+              onlyRenderVisibleElements={true}
+              maxZoom={Infinity}
+              proOptions={proOptions}
+            >
+              {showGridValue && (
+                <Background
+                  color="var(--colors-borderMuted)"
+                  gap={16}
+                  size={2}
+                  variant={BackgroundVariant.Dots}
                 />
-                {props.children}
-              </ReactFlow>
-            </ForceUpdateProvider>
+              )}
+              {nodeCount === 0 && props.emptyContent}
+              <SelectedNodesToolbar />
+              <CustomControls position="bottom-center" />
+              <CommandMenu
+                reactFlowWrapper={reactFlowWrapper}
+                items={panelItems}
+                handleSelectNewNodeType={handleSelectNewNodeType}
+              />
+              {props.children}
+            </ReactFlow>
           </Box>
         </GlobalHotKeys>
         <PaneContextMenu
@@ -617,7 +633,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
         />
         <NodeContextMenu id={props.id + '_node'} node={contextNode} />
         <EdgeContextMenu id={props.id + '_edge'} edge={contextEdge} />
-      </>
+        <Sidesheet graph={graph} />
+      </GraphProvider>
     );
   },
 );

@@ -1,20 +1,11 @@
-import { executeNode } from "@/core.js";
-import { node } from "@/nodes/math/pow.js";
+import Node from "@/nodes/math/pow";
 
 describe("math/pow", () => {
-  it("produces the expected input", async () => {
-    const output = await executeNode({
-      input: {
-        base: 2,
-        exponent: 3,
-      },
-      node,
-      state: {},
-      nodeId: "",
-    });
-
-    expect(output).toStrictEqual({
-      output: 8,
-    });
+  it("powers two numbers", async () => {
+    const node = new Node();
+    node.inputs.base.setValue(2);
+    node.inputs.exponent.setValue(2);
+    await node.execute();
+    expect(node.outputs.value.value).toStrictEqual(4);
   });
 });

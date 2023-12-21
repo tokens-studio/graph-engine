@@ -1,15 +1,15 @@
+import { TypeDefinition } from "..";
+
 export interface SerializedInput {
+  name: string;
   value: any;
+  type: TypeDefinition;
 }
 
 export interface SerializedNode {
-  /**
-   * The version of the node
-   */
-  v: number;
   id: string;
   type: string;
-  inputs: Record<string, SerializedInput>;
+  inputs: SerializedInput[];
 }
 
 export interface SerializedEdge {

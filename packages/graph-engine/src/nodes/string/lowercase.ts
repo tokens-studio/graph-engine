@@ -1,14 +1,13 @@
 import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
-import { Node } from "@/index.js";
+import { Node } from "@/programmatic/node.js";
 import { StringSchema } from "@/schemas/index.js";
 
-
-export class NodeDefinition extends Node {
-  title = "Lowercase";
-  type = NodeTypes.LOWER;
-  description = "Converts a string to lowercase";
-  constructor(props: INodeDefinition) {
+export default class NodeDefinition extends Node {
+  static title = "Lowercase";
+  static type = NodeTypes.LOWER;
+  static description = "Converts a string to lowercase";
+  constructor(props?: INodeDefinition) {
     super(props);
     this.addInput("value", {
       type: StringSchema,

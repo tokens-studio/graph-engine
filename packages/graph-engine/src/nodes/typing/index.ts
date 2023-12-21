@@ -1,4 +1,4 @@
-import { node as passUnit } from "./passUnit.js";
-import { node as parseUnit } from "./parseUnit.js";
+import passUnit from "./passUnit.js";
+import parseUnit from "./parseUnit.js";
 
 export const nodes = [passUnit, parseUnit];

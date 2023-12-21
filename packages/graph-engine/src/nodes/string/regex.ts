@@ -1,14 +1,13 @@
 import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
-import { Node } from "@/index.js";
+import { Node } from "@/programmatic/node.js";
 import { StringSchema } from "@/schemas/index.js";
 
-
-export class NodeDefinition extends Node {
-  title = "Regex";
-  type = NodeTypes.REGEX;
-  description = "Replaces a string with a regex";
-  constructor(props: INodeDefinition) {
+export default class NodeDefinition extends Node {
+  static title = "Regex";
+  static type = NodeTypes.REGEX;
+  static description = "Replaces a string with a regex";
+  constructor(props?: INodeDefinition) {
     super(props);
     this.addInput("input", {
       type: StringSchema,
@@ -17,19 +16,19 @@ export class NodeDefinition extends Node {
     this.addInput("match", {
       type: {
         ...StringSchema,
-        default: ""
-      }
+        default: "",
+      },
     });
     this.addInput("flags", {
       type: {
         ...StringSchema,
-        default: ""
-      }
+        default: "",
+      },
     });
     this.addInput("replace", {
       type: {
         ...StringSchema,
-        default: ""
+        default: "",
       },
       visible: true,
     });

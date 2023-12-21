@@ -1,41 +1,52 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
-
 import valueParser from "postcss-value-parser";
-const type = NodeTypes.PASS_UNIT;
 
-const defaults = {
-  fallback: "px",
-};
+import { NodeTypes } from "@/types.js";
+import { INodeDefinition, Node } from "@/programmatic/node.js";
+import { StringSchema } from "@/schemas/index.js";
+import { Input } from "@/programmatic/input.js";
+import { Output } from "@/programmatic/output.js";
 
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-const process = (input, state) => {
-  //Override with state if defined
-  const final = {
-    ...state,
-    ...input,
+export default class NodeDefinition extends Node {
+  static title = "Pass unit";
+  static type = NodeTypes.PARSE_UNIT;
+  declare inputs: {
+    value: Input<String>;
+    fallback: Input<String>;
   };
-
-  const x = valueParser.unit("" + final.value);
-  if (!x) {
-    return undefined;
+  declare outputs: {
+    value: Output<String>;
+  };
+  static description = "Adds a unit to a value if it doesn't already have one";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("value", {
+      type: StringSchema,
+      visible: true,
+    });
+    this.addInput("fallback", {
+      type: {
+        ...StringSchema,
+        default: "px",
+      },
+    });
+    this.addOutput("value", {
+      type: StringSchema,
+      visible: true,
+    });
   }
 
-  if (x.unit) {
-    return final.value;
-  }
-  return `${final.value}${final.fallback || ""}`;
-};
+  execute(): void | Promise<void> {
+    const { value, fallback } = this.getAllInputs();
 
-export const node: NodeDefinition = {
-  description: "Adds a unit to a value if it doesn't already have one",
-  type,
-  defaults,
-  process,
-};
+    const x = valueParser.unit(value);
+    if (!x) {
+      throw Error("Could not parse unit");
+    }
+
+    if (x.unit) {
+      this.setOutput("value", value);
+    } else {
+      this.setOutput("value", `${value}${fallback || ""}`);
+    }
+  }
+}

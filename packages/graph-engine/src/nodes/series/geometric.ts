@@ -1,52 +1,91 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
-
-export const type = NodeTypes.GEOMETRIC_SERIES;
-
-export const defaults = {
-  base: 16,
-  ratio: 1.5,
-  stepsDown: 0,
-  steps: 5,
-};
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { NumberSchema, NumberArraySchema } from "@/schemas/index.js";
 
 type GeometricValue = {
   index: number;
   value: number;
 };
 
-export const process = (input, state) => {
-  const final = {
-    ...state,
-    ...input,
-  };
+export default class NodeDefinition extends Node {
+  static title = "Geometric Series";
+  static type = NodeTypes.GEOMETRIC_SERIES;
+  static description =
+    "Generates a geometric series f(n)= c * (f(n-1)) of numbers based on the base value, steps down, steps and increment.";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("base", {
+      type: {
+        ...NumberSchema,
+        default: 16,
+      },
+    });
+    this.addInput("stepsDown", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+      },
+    });
+    this.addInput("steps", {
+      type: {
+        ...NumberSchema,
+        default: 1,
+      },
+    });
 
-  const values: GeometricValue[] = [];
+    this.addInput("ratio", {
+      type: {
+        ...NumberSchema,
+        default: 1.5,
+      },
+    });
 
-  for (let i = 0 - final.stepsDown; i < final.steps; i++) {
-    const value = final.base * Math.pow(final.ratio, i);
-    values.push({
-      value,
-      index: i,
+    this.addInput("precision", {
+      type: {
+        ...NumberSchema,
+        default: 2,
+      },
+    });
+    this.addOutput("array", {
+      type: NumberArraySchema,
+      visible: true,
+    });
+    this.addOutput("indexed", {
+      type: {
+        $id: `https://schemas.tokens.studio/${NodeTypes.GEOMETRIC_SERIES}/indexed.json`,
+        type: "object",
+        properties: {
+          index: {
+            type: NumberSchema,
+          },
+          value: {
+            type: NumberSchema,
+          },
+        },
+      },
+      visible: false,
     });
   }
 
-  return values;
-};
+  execute(): void | Promise<void> {
+    const { base, precision, ratio, stepsDown, steps } = this.getAllInputs();
 
-export const mapOutput = (input, state, processed: GeometricValue[]) => {
-  const mapped = { asArray: processed };
+    const values: GeometricValue[] = [];
+    const shift = 10 ** precision;
 
-  processed.forEach((item) => {
-    mapped[item.index] = item.value;
-  });
-  return mapped;
-};
+    for (let i = 0 - stepsDown; i <= steps; i++) {
+      const value = Math.round(base * Math.pow(ratio, i) * shift) / shift;
+      values.push({
+        index: i,
+        value,
+      });
+    }
 
-export const node: NodeDefinition = {
-  description:
-    "Generates a geometric series f(n)= c * (f(n-1)) of numbers based on the base value, steps down, steps and increment.",
-  defaults,
-  type,
-  process,
-  mapOutput,
-};
+    this.setOutput(
+      "array",
+      values.map((x) => x.value)
+    );
+    this.setOutput("value", values);
+  }
+}

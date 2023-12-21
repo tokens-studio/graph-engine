@@ -5,7 +5,6 @@ import React from 'react';
 import { PanelGroup, PanelItem } from './flow/DropPanel/PanelItems';
 import { useDispatch, useSelector } from 'react-redux';
 import { showNodesCmdPaletteSelector } from '@/redux/selectors/ui';
-import { useEditor } from './flow/hooks/useEditor';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import { styled } from '@/lib/stitches';
 
@@ -28,7 +27,11 @@ const CommandMenu = ({
   const wrapperBounds = reactFlowWrapper.current?.getBoundingClientRect();
 
   const handleSelectItem = (item) => {
-    handleSelectNewNodeType(item);
+    console.log(item);
+    handleSelectNewNodeType({
+      position: cursorPositionRef.current,
+      ...item,
+    });
     dispatch.ui.setShowNodesCmdPalette(false);
   };
 
@@ -125,7 +128,7 @@ const CommandMenu = ({
                 </Command.Item>
               ));
               return (
-                <Command.Group heading={value.title}>
+                <Command.Group key={value.key} heading={value.title}>
                   {childValues}
                 </Command.Group>
               );

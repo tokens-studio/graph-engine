@@ -1,20 +1,16 @@
-import { executeNode } from "@/core.js";
-import { node } from "@/nodes/array/concat.js";
+import Node from "@/nodes/array/concat.js";
 
 describe("array/concat", () => {
   it("concats the expected nodes", async () => {
-    const output = await executeNode({
-      input: {
-        0: [1, 2, 3],
-        1: [4, 5, 6],
-      },
-      node,
-      state: {},
-      nodeId: "",
-    });
+    const node = new Node();
 
-    expect(output).toStrictEqual({
-      output: [1, 2, 3, 4, 5, 6],
-    });
+    node.inputs.a.setValue([1, 2, 3]);
+    node.inputs.b.setValue([4, 5, 6]);
+
+    await node.execute();
+
+    const actual = node.outputs.value.value;
+
+    expect(actual).toStrictEqual([1, 2, 3, 4, 5, 6]);
   });
 });

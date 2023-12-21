@@ -3,18 +3,25 @@
  *
  * @packageDocumentation
  */
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, Input, Output } from "@/index.js";
 import { NodeTypes } from "@/types.js";
-import { Node } from "@/index.js";
+import { Node } from "@/programmatic/node.js";
 import { AnySchema } from "@/schemas/index.js";
 
+export default class NodeDefinition extends Node {
+  static title = "Output";
+  static type = NodeTypes.OUTPUT;
 
+  //Override with static typing
+  public declare inputs: {
+    input: Input;
+  };
+  public declare outputs: {
+    value: Output;
+  };
 
-export class NodeDefinition extends Node {
-  title = "Output";
-  type = NodeTypes.OUTPUT;
-  description = "Allows you to expose outputs of the node";
-  constructor(props: INodeDefinition) {
+  static description = "Allows you to expose outputs of the node";
+  constructor(props?: INodeDefinition) {
     super(props);
     this.addInput("input", {
       type: AnySchema,
@@ -22,12 +29,12 @@ export class NodeDefinition extends Node {
     });
     this.addOutput("value", {
       type: AnySchema,
+      visible: false,
     });
   }
 
   execute(): void | Promise<void> {
     const input = this.getRawInput("input");
-    this.setOutput("value", input, input.type);
+    this.setOutput("value", input.value, input.type());
   }
 }
-

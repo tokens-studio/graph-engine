@@ -1,21 +1,21 @@
 import { Dispatch } from '../redux/store.tsx';
 import { Node, ReactFlowInstance } from 'reactflow';
-import { NodeTypes } from '@tokens-studio/graph-engine';
+import { Graph, NodeTypes, nodeLookup } from '@tokens-studio/graph-engine';
 import { processJson, processTokensFile } from '@/utils/tokenFiles.ts';
 import JSZip from 'jszip';
 import React from 'react';
 import { createNode } from './create.ts';
 
 type DropOptions = {
+  graph: Graph;
   reactFlowInstance: ReactFlowInstance;
   reactFlowWrapper: React.RefObject<HTMLDivElement>;
-  stateInitializer: Record<string, any>;
+
   dispatch: Dispatch;
 };
 
 export const handleDrop = async (event, opts: DropOptions): Promise<Node[]> => {
-  const { reactFlowInstance, reactFlowWrapper, stateInitializer, dispatch } =
-    opts;
+  const { reactFlowInstance, reactFlowWrapper, dispatch, graph } = opts;
 
   if (!reactFlowWrapper.current) {
     return [];
@@ -23,7 +23,7 @@ export const handleDrop = async (event, opts: DropOptions): Promise<Node[]> => {
 
   const reactFlowBounds = reactFlowWrapper?.current?.getBoundingClientRect();
 
-  const nodes = reactFlowInstance.getNodes();
+  const nodes = Object.values(graph.nodes);
 
   let processed: Node[] = [];
 
@@ -39,7 +39,7 @@ export const handleDrop = async (event, opts: DropOptions): Promise<Node[]> => {
     }
     if (
       nodeRequest.type == NodeTypes.INPUT &&
-      nodes.some((x) => x.type == NodeTypes.INPUT)
+      nodes.some((x) => x.nodeType() == NodeTypes.INPUT)
     ) {
       alert('Only one input node allowed');
       return null;
@@ -47,18 +47,27 @@ export const handleDrop = async (event, opts: DropOptions): Promise<Node[]> => {
 
     if (
       nodeRequest.type == NodeTypes.OUTPUT &&
-      nodes.some((x) => x.type == NodeTypes.OUTPUT)
+      nodes.some((x) => x.nodeType() == NodeTypes.OUTPUT)
     ) {
       alert('Only one output node allowed');
       return null;
     }
 
-    return createNode({
-      nodeRequest,
-      position,
-      stateInitializer,
-      dispatch,
-    });
+    const Factory = nodeLookup[nodeRequest.type];
+
+    const newNode = new Factory();
+    graph.addNode(newNode);
+
+    const editorNode = {
+      id: newNode.id,
+      type: 'GenericNode',
+      data: {
+        graph,
+      },
+      position: position || { x: 0, y: 0 },
+    };
+
+    return editorNode;
   }
 
   if (event.dataTransfer.files?.length > 0) {

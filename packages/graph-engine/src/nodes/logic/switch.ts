@@ -1,35 +1,35 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { AnySchema, StringSchema } from "@/schemas/index.js";
 
-export const type = NodeTypes.SWITCH;
+export default class NodeDefinition extends Node {
+  static title = "Switch";
+  static type = NodeTypes.SWITCH;
+  static description =
+    "Switch node allows you to conditionally choose a value based on a condition.";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("default", {
+      type: AnySchema,
+    });
 
-export const defaults = {
-  //Orders the cases in the UI as the input is an object
-  order: [] as string[],
-};
+    this.addInput("condition", {
+      type: StringSchema,
+    });
 
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-export const process = (input) => {
-  const candidate = input[input.condition];
-
-  //TODO I don't like this but we'd need to change the input mapping which will break this node
-  if (candidate === undefined) {
-    return input.default;
+    this.addOutput("value", {
+      type: AnySchema,
+      visible: true,
+    });
   }
 
-  return candidate;
-};
+  execute(): void | Promise<void> {
+    const { condition } = this.getAllInputs();
+    const defaultVal = this.getRawInput("default");
 
-export const node: NodeDefinition = {
-  description:
-    "Switch node allows you to conditionally choose a value based on a condition.",
-  defaults,
-  type,
-  process,
-};
+    //TODO
+
+    this.setOutput("value", defaultVal.value, defaultVal.type());
+  }
+}

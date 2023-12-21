@@ -92,86 +92,88 @@ export const DropPanel = React.forwardRef<ImperativeDropPanelRef, IDropPanel>(
         }}
         id="drop-panel"
       >
-        <Scroll height="100%">
+        <Stack
+          direction="column"
+          gap={3}
+          css={{ paddingTop: '$1', width: '100%' }}
+        >
           <Stack
             direction="column"
-            gap={3}
-            css={{ paddingTop: '$1', width: '100%' }}
+            gap={2}
+            css={{ padding: '0 $5', paddingTop: '$4' }}
           >
-            <Stack
-              direction="column"
-              gap={2}
-              css={{ padding: '0 $5', paddingTop: '$4' }}
+            <Text
+              css={{
+                fontSize: '$xxsmall',
+                fontWeight: '$sansMedium',
+                textTransform: 'uppercase',
+                letterSpacing: '0.15px',
+              }}
             >
-              <Text
-                css={{
-                  fontSize: '$xxsmall',
-                  fontWeight: '$sansMedium',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.15px',
-                }}
-              >
-                Nodes
-              </Text>
-              <TextInput
-                placeholder="Search…"
-                value={search}
-                onChange={onSearch}
-              />
-            </Stack>
-            <StyledAccordion type="multiple" defaultValue={defaultValue}>
-              {items.map((value) => {
-                const filteredValues = value.items
-                  .filter((item) =>
-                    item.text.toLowerCase().includes(search.toLowerCase()),
-                  )
-                  .map((item) => (
-                    <DragItem
-                      type={item.type}
-                      data={item.data || null}
-                      key={item.text}
-                      docs={item.docs}
-                      description={item.description}
-                      title={item.text}
-                      icon={item.icon}
-                    >
-                      <NodeEntry icon={item.icon} text={item.text} />
-                    </DragItem>
-                  ));
-
-                return (
-                  <Accordion.Item value={value.key} key={value.key}>
-                    <StyledAccordionTrigger>
-                      <Box
-                        css={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          color: '$fgSubtle',
-                          width: '24px',
-                          height: '24px',
-                        }}
-                      >
-                        <StyledChevron />
-                      </Box>
-                      <Text size="xsmall" bold>
-                        {value.title}
-                      </Text>
-                    </StyledAccordionTrigger>
-                    <Accordion.Content>
-                      <Stack
-                        direction="column"
-                        css={{ padding: 0, marginBottom: '$4' }}
-                      >
-                        {filteredValues}
-                      </Stack>
-                    </Accordion.Content>
-                  </Accordion.Item>
-                );
-              })}
-            </StyledAccordion>
+              Nodes
+            </Text>
+            <TextInput
+              placeholder="Search…"
+              value={search}
+              onChange={onSearch}
+            />
           </Stack>
-        </Scroll>
+          <StyledAccordion type="multiple" defaultValue={defaultValue}>
+            {items.map((value) => {
+              const filteredValues = value.items
+                .filter((item) =>
+                  item.text.toLowerCase().includes(search.toLowerCase()),
+                )
+                .map((item) => (
+                  <DragItem
+                    type={item.type}
+                    data={item.data || null}
+                    key={item.text}
+                    docs={item.docs}
+                    description={item.description}
+                    title={item.text}
+                    icon={item.icon}
+                  >
+                    <NodeEntry icon={item.icon} text={item.text} />
+                  </DragItem>
+                ));
+
+              if (filteredValues.length === 0) {
+                return <></>;
+              }
+
+              return (
+                <Accordion.Item value={value.key} key={value.key}>
+                  <StyledAccordionTrigger>
+                    <Box
+                      css={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '$fgSubtle',
+                        width: '24px',
+                        height: '24px',
+                      }}
+                    >
+                      <StyledChevron />
+                    </Box>
+                    <Text size="xsmall" bold>
+                      {value.title}
+                    </Text>
+                  </StyledAccordionTrigger>
+                  <Accordion.Content>
+                    <Stack
+                      direction="column"
+                      css={{ padding: 0, marginBottom: '$4' }}
+                    >
+                      {filteredValues}
+                    </Stack>
+                  </Accordion.Content>
+                </Accordion.Item>
+              );
+            })}
+          </StyledAccordion>
+        </Stack>
       </Box>
     );
   },

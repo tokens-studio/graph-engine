@@ -1,26 +1,31 @@
-import { MappedInput, mapInput } from "./common.js";
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { AnyArraySchema, BooleanSchema } from "@/schemas/index.js";
 
-export const type = NodeTypes.AND;
+export default class NodeDefinition extends Node {
+  static title = "Logical and";
+  static type = NodeTypes.AND;
+  static description = "AND node allows you to check if all inputs are true.";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("inputs", {
+      type: {
+        ...AnyArraySchema,
+        default: [],
+      },
+      variadic: true,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: BooleanSchema,
+      visible: true,
+    });
+  }
 
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-export const process = (input: MappedInput) => {
-  return input.inputs.reduce((acc, x) => {
-    //coerce to bool
-    return acc && !!x.value;
-  }, true);
-};
-
-export const node: NodeDefinition<MappedInput> = {
-  description: "AND node allows you to check if all inputs are true.",
-  type,
-  mapInput,
-  process,
-};
+  execute(): void | Promise<void> {
+    const inputs = this.getInput("inputs") as number[];
+    const output = inputs.reduce((acc, curr) => acc && !!curr, true);
+    this.setOutput("value", output);
+  }
+}

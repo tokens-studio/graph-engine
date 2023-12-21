@@ -1,21 +1,14 @@
-import {
-  Box,
-  Button,
-  Heading,
-  IconButton,
-  Stack,
-  ToggleGroup,
-} from '@tokens-studio/ui';
+import { Box, Stack, ToggleGroup } from '@tokens-studio/ui';
 import { Preview as ComponentPreview } from '@/components/preview/index.tsx';
 
 import { LiveEditor, LiveError } from 'react-live';
 import { MinusIcon, PictureInPictureIcon, VideoIcon } from '@iconicicons/react';
-import Code3Icon from '@/assets/svgs/code-3.svg';
 import { useCallback, useState } from 'react';
-import { usePreviewContext } from '@/providers/preview.tsx';
+import { useDispatch } from 'react-redux';
+import Code3Icon from '@/assets/svgs/code-3.svg';
 
 export const Preview = ({ codeRef }) => {
-  const { setCode, code } = usePreviewContext();
+  const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(false);
   const [visibleTab, setVisibleTab] = useState('preview');
 
@@ -38,9 +31,9 @@ export const Preview = ({ codeRef }) => {
 
   const handleChangeCode = useCallback(
     (code) => {
-      setCode(code);
+      dispatch.ui.setPreviewCode(code);
     },
-    [setCode],
+    [dispatch.ui],
   );
 
   return (

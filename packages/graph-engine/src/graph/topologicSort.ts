@@ -11,7 +11,7 @@ import { Graph } from "./graph.js";
  * @returns
  */
 export function topologicalSort(graph: Graph): string[] {
-  const visited = new Set();
+  const visited = new Set<String>();
   const stack: string[] = [];
 
   function dfs(node: string) {
@@ -19,18 +19,22 @@ export function topologicalSort(graph: Graph): string[] {
 
     const neighbors = graph.successors(node);
     for (const neighbor of neighbors) {
-      if (!visited.has(neighbor)) {
+      if (!visited.has(neighbor.id)) {
         dfs(neighbor.id);
       }
     }
     stack.unshift(node); // Add node to the front of the stack
   }
 
-  graph.getNodeIds().forEach((node) => {
-    if (!visited.has(node)) {
-      dfs(node);
-    }
-  });
+  //Sort the ids to ensure stability
+  graph
+    .getNodeIds()
+    .sort()
+    .forEach((node) => {
+      if (!visited.has(node)) {
+        dfs(node);
+      }
+    });
 
   return stack;
 }

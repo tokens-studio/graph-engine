@@ -29,6 +29,7 @@ import useDetachNodes from '../hooks/useDetachNodes.ts';
 import { useSelector } from 'react-redux';
 import { debugMode, obscureDistance } from '@/redux/selectors/settings.ts';
 import GraphLib from 'graphlib';
+import { useDispatch } from '@/hooks/useDispatch.ts';
 const { Graph, alg } = GraphLib;
 const CollapserContainer = styled('div', {});
 
@@ -45,7 +46,6 @@ interface NodeProps {
   children?: React.ReactNode;
   controls?: React.ReactNode;
   style?: React.CSSProperties;
-  stats: Stats;
 }
 
 const convertToGraph = (flow: ReactFlowInstance) => {
@@ -149,8 +149,8 @@ export const Node = (props: NodeProps) => {
   const { id, icon, title, error, isAsync, children, controls, ...rest } =
     props;
   const flow = useReactFlow();
+  const dispatch = useDispatch();
   const obscureDistanceValue = useSelector(obscureDistance);
-  const debugModeValue = useSelector(debugMode);
   const limiter = useCallback(
     (s) => s.transform[2] >= obscureDistanceValue,
     [obscureDistanceValue],
@@ -196,6 +196,10 @@ export const Node = (props: NodeProps) => {
   }, [flow]);
 
   const onDetach = () => detachNodes([id]);
+
+  const onClick = useCallback(() => {
+    dispatch.graph.setCurrentNode(id);
+  }, [id]);
 
   return (
     <NodeWrapper error={Boolean(error)} className={error ? 'error' : ''}>
@@ -247,7 +251,13 @@ export const Node = (props: NodeProps) => {
         value={{ collapsed, hide: !showContent }}
       >
         <FocusTrap>
-          <Stack direction="column" gap={0} {...rest}>
+          <Stack
+            css={{ maxWidth: 500 }}
+            direction="column"
+            gap={0}
+            onClick={onClick}
+            {...rest}
+          >
             {title && (
               <>
                 <Stack
@@ -287,17 +297,7 @@ export const Node = (props: NodeProps) => {
                     >
                       {title}
                     </Text>
-                    {debugModeValue && (
-                      <Text
-                        css={{
-                          fontSize: '$xxsmall',
-                          fontFamily: 'monospace',
-                          color: '$fgSubtle',
-                        }}
-                      >
-                        {props.stats.executionTime}ms
-                      </Text>
-                    )}
+
                     {isAsync && <Spinner />}
                   </Stack>
                   <Stack direction="row" gap={2}>

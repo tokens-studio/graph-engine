@@ -1,13 +1,13 @@
 import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
-import { Node } from "@/index.js";
+import { Node } from "@/programmatic/node.js";
 import { NumberSchema, NumberArraySchema } from "@/schemas/index.js";
 
-export class NodeDefinition extends Node {
-  title = "Subtract Node";
-  type = NodeTypes.SUBTRACT;
-  description = "Allows you to subtract two or more numbers.";
-  constructor(props: INodeDefinition) {
+export default class NodeDefinition extends Node {
+  static title = "Subtract Node";
+  static type = NodeTypes.SUBTRACT;
+  static description = "Allows you to subtract two or more numbers.";
+  constructor(props?: INodeDefinition) {
     super(props);
     this.addInput("inputs", {
       type: {

@@ -1,4 +1,4 @@
-import { Node } from "@/programmatic/node/index.js";
+import { Node } from "@/programmatic/node.js";
 import { NodeTypes } from "../types.js";
 import { Graph } from "./graph.js";
 
@@ -14,7 +14,7 @@ export const findTerminals = (graph: Graph): Terminals => {
   };
 
   Object.values(graph.nodes).forEach((node) => {
-    switch (node.type) {
+    switch (node.factory.type) {
       case NodeTypes.INPUT:
         terminals.input = node;
         break;

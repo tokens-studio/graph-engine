@@ -1,6 +1,7 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
-
-export const type = NodeTypes.COMPARE;
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { AnySchema, BooleanSchema, StringSchema } from "@/schemas/index.js";
 
 export enum Operator {
   EQUAL = "==",
@@ -11,40 +12,60 @@ export enum Operator {
   LESS_THAN_OR_EQUAL = "<=",
 }
 
-export const defaults = {
-  operator: Operator.EQUAL,
-};
+export default class NodeDefinition extends Node {
+  static title = "Compare";
+  static type = NodeTypes.COMPARE;
+  static description =
+    "Compare node allows you to compare two values using multiple operators.";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("a", {
+      type: AnySchema,
+      visible: true,
+    });
+    this.addInput("b", {
+      type: AnySchema,
+      visible: true,
+    });
+    this.addInput("operator", {
+      type: {
+        ...StringSchema,
+        enum: Object.values(Operator),
+        default: Operator.EQUAL,
+      },
+      visible: true,
+    });
 
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-export const process = (input, state) => {
-  switch (state.operator) {
-    case Operator.EQUAL:
-      return input.a === input.b;
-    case Operator.NOT_EQUAL:
-      return input.a !== input.b;
-    case Operator.GREATER_THAN:
-      return input.a > input.b;
-    case Operator.LESS_THAN:
-      return input.a < input.b;
-    case Operator.GREATER_THAN_OR_EQUAL:
-      return input.a >= input.b;
-    case Operator.LESS_THAN_OR_EQUAL:
-      return input.a <= input.b;
-    default:
-      return undefined;
+    this.addOutput("value", {
+      type: BooleanSchema,
+      visible: true,
+    });
   }
-};
 
-export const node: NodeDefinition = {
-  description:
-    "Compare node allows you to compare two values using multiple operators.",
-  type,
-  process,
-};
+  execute(): void | Promise<void> {
+    const { operator, a, b } = this.getAllInputs();
+
+    let answer = false;
+    switch (operator) {
+      case Operator.EQUAL:
+        answer = a === b;
+        break;
+      case Operator.NOT_EQUAL:
+        answer = a !== b;
+        break;
+      case Operator.GREATER_THAN:
+        answer = a > b;
+        break;
+      case Operator.LESS_THAN:
+        answer = a < b;
+      case Operator.GREATER_THAN_OR_EQUAL:
+        answer = a >= b;
+        break;
+      case Operator.LESS_THAN_OR_EQUAL:
+        answer = a <= b;
+        break;
+    }
+
+    this.setOutput("value", answer);
+  }
+}

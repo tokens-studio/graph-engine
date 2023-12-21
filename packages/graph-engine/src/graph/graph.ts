@@ -1,11 +1,14 @@
-import {
-  SerializedGraph,
-} from "./types.js";
+import { SerializedGraph } from "./types.js";
 import { VERSION } from "@/constants.js";
 import cmp from "semver-compare";
-import { Node, NodeFactory } from "@/programmatic/node/index.js";
-import { ExternalLoader } from "@/types.js";
-import { Input, Output } from "@/index.js";
+import { Node, NodeFactory } from "@/programmatic/node.js";
+
+import { ExternalLoader } from "./externalLoader.js";
+import { GraphSchema } from "@/schemas/index.js";
+import { Output } from "@/programmatic/output.js";
+import { Input } from "@/programmatic/input.js";
+import { topologicalSort } from "./topologicSort.js";
+
 /**
  * Generates a stable edge
  * @param v The starting node
@@ -32,6 +35,15 @@ export type Edge<T = any> = {
   data: T;
 };
 
+export type InputDefinition = {
+  value: any;
+  type?: GraphSchema;
+};
+
+export type GraphExecuteOptions = {
+  inputs?: Record<string, InputDefinition>;
+};
+
 export type EdgeOpts = {
   /**
    * Any additional data to be stored on the edge
@@ -41,11 +53,14 @@ export type EdgeOpts = {
 
 const dedup = (arr: string[]) => [...new Set(arr)];
 
-
-
-export enum SubscriptionType { nodeAdded, nodeRemoved, edgeAdded, edgeRemoved, nodeUpdated, edgeUpdated };
-
-
+export enum SubscriptionType {
+  nodeAdded,
+  nodeRemoved,
+  edgeAdded,
+  edgeRemoved,
+  nodeUpdated,
+  edgeUpdated,
+}
 
 export interface IGraph {
   /**
@@ -61,13 +76,13 @@ export interface IUpdateOpts {
    */
   noMemo?: boolean;
   /**
-   * If true, the update will not be propagated to the successor nodes  
+   * If true, the update will not be propagated to the successor nodes
    */
   noRecursive?: boolean;
   /**
    * If true, we won't compare the input values to see if the node needs to be updated
    */
-  noCompare?: boolean
+  noCompare?: boolean;
 }
 
 const defaultGraphOpts: IGraph = {};
@@ -75,15 +90,14 @@ const defaultGraphOpts: IGraph = {};
  * This is our internal graph representation that we use to perform transformations on
  */
 export class Graph {
-
   private listeners = {
     nodeAdded: [],
     nodeRemoved: [],
     edgeAdded: [],
     edgeRemoved: [],
     nodeUpdated: [],
-    edgeUpdated: []
-  }
+    edgeUpdated: [],
+  };
 
   /**
    * Optional description of the graph
@@ -98,7 +112,7 @@ export class Graph {
    * First key is the source node
    * Values are the edgeIds
    */
-  successorNodes: Record<string, string[]>;
+  successorNodes: Record<string, string[]> = {};
 
   constructor(input: IGraph = defaultGraphOpts) {
     this.description = input.description;
@@ -106,10 +120,37 @@ export class Graph {
     this.edges = {};
   }
 
-
-  connect(source :Node, sourceHandle :Output, target:Node, targetHandle: Input, data?: any) {
+  connect(
+    source: Node,
+    sourceHandle: Output,
+    target: Node,
+    targetHandle: Input,
+    data?: any
+  ) {
     //TODO validation of type
-    this.createEdge(genEdgeId(source.id, target.id, sourceHandle.name, targetHandle.name), source.id, target.id, sourceHandle.name, targetHandle.name, { data })
+    this.createEdge(
+      genEdgeId(source.id, target.id, sourceHandle.name, targetHandle.name),
+      source.id,
+      target.id,
+      sourceHandle.name,
+      targetHandle.name,
+      { data }
+    );
+
+    //Then update the connection on the ports
+    targetHandle.setConnected(true);
+  }
+
+  /**
+   * Checks to see if there exists any connection for an inpurt
+   * @param source
+   * @param port
+   * @returns
+   */
+  hasConnectedInput(source: Node, input: Input): boolean {
+    const edges = this.inEdges(source.id);
+
+    return edges.some((x) => x.targetHandle === input.name);
   }
 
   /**
@@ -117,7 +158,7 @@ export class Graph {
    */
   clear() {
     //Clear all the nodes. This will also remove all the edges
-    this.getNodeIds().forEach(x => this.removeNode(x));
+    this.getNodeIds().forEach((x) => this.removeNode(x));
   }
 
   addNode(node: Node) {
@@ -127,7 +168,7 @@ export class Graph {
   }
   /**
    * Removes a node from the graph and disconnects all the edges.
-   * @param nodeId 
+   * @param nodeId
    * @returns true if the node was removed, false if the node was not found
    */
   removeNode(nodeId: string): boolean {
@@ -140,44 +181,43 @@ export class Graph {
     const outEdges = this.outEdges(nodeId);
 
     //Remove the edges
-    inEdges.forEach(edge => this.removeEdge(edge.id));
-    outEdges.forEach(edge => this.removeEdge(edge.id));
+    inEdges.forEach((edge) => this.removeEdge(edge.id));
+    outEdges.forEach((edge) => this.removeEdge(edge.id));
 
-
-    node.clear()
+    //Cleanup the node
+    node.clear();
     //Remove from the lookup
     delete this.nodes[nodeId];
-    //Remove reference of the graph 
-    node.setGraph(undefined);
 
     this.emit(SubscriptionType.nodeRemoved, nodeId);
-
-
-
     return true;
   }
 
   removeEdge(edgeId: string) {
-
     const edge = this.edges[edgeId];
     if (!edge) {
       return;
     }
+
+    //Get the node
+    const target = this.getNode(edge.target);
+    if (target) {
+      const input = target.inputs[edge.targetHandle];
+      if (input) {
+        input.setConnected(false);
+      }
+    }
+
     //Remove from the lookup
     delete this.edges[edgeId];
-    //Remove from the outgoing edges
-    const outEdges = this.out[edge.source] || {};
 
-
-    delete outEdges[edgeId];
-    //Remove from lookup
-    delete this.out[edge.source];
+    //We do not update the value or recalculate here since that might result in a lot of unnecessary updates
 
     this.emit(SubscriptionType.edgeRemoved, edgeId);
   }
   /**
    * Retrieves a flat list of all the nodes ids in the graph
-   * @returns 
+   * @returns
    */
   getNodeIds() {
     return Object.keys(this.nodes);
@@ -186,93 +226,63 @@ export class Graph {
   /**
    * Will update a node in the graph. This will also update all the edges that are connected to the node recursively
    * @throws[Error] if the node is not found
-   * @param nodeID 
+   * @param nodeID
    */
   async update(nodeID: string, opts: IUpdateOpts) {
+    const { noRecursive = true } = opts;
 
     const node = this.nodes[nodeID];
     if (!node) {
       throw new Error(`No node found with id ${nodeID}`);
     }
-
-
-
     //Update the node
     await node.execute();
 
-    if (opts.noRecursive) {
+    if (noRecursive) {
       return;
     }
 
     //Update all the outgoing edges
     const outEdges = this.outEdges(nodeID);
-    //Get all the values from the outputs 
+    //Get all the values from the outputs
 
-    Object.entries(node.outputs).forEach(([key, output]) => {
-
-      output.
-
-
-    })
-
-
-    //The values should be in the nodes output 
-
-
-
-
-
-
-
-
-
-
-    const outNodes = dedup(outEdges.map(x => x.target));
-
-    outNodes.forEach(outNode => outNode.
-
-      outEdges.forEach(edge => {
-        //Update the edge
-        this.updateEdge(edge.id);
-        //Update the target node
-        this.update(edge.target, {} opts);
-      });
+    //TODO
   }
 
   serialize(): SerializedGraph {
     return {
       version: VERSION,
       graph: {
-        description: this.description,
+        description: this.description || "",
       },
-      nodes: Object.values(this.nodes).map(x => x.serialize()),
-      edges: Object.values(this.edges).map(x => ({
+      nodes: Object.values(this.nodes).map((x) => x.serialize()),
+      edges: Object.values(this.edges).map((x) => ({
         id: x.id,
         source: x.source,
         target: x.target,
         sourceHandle: x.sourceHandle,
-        targetHandle: x.targetHandle
-      }))
-    }
+        targetHandle: x.targetHandle,
+      })),
+    };
   }
 
   /**
    * Extracts the nodes types from a serialized graph
-   * @param graph 
+   * @param graph
    */
   static extractTypes(graph: SerializedGraph): string[] {
-    return Object.values(graph.nodes.map(x => x.type));
+    return Object.values(graph.nodes.map((x) => x.type));
   }
-
 
   /**
    * Creates a graph from a serialized graph. Note that the types of the nodes must be present in the lookup.
-   * @param input 
-   * @param lookup 
+   * @param input
+   * @param lookup
    */
-  static deserialize(input: SerializedGraph, lookup: Record<string, NodeFactory>): Graph {
-
-
+  static deserialize(
+    input: SerializedGraph,
+    lookup: Record<string, NodeFactory>
+  ): Graph {
     //Previously graphs didn't contain the version
     if (cmp(input.version || "0.0.0", VERSION) == -1) {
       throw new Error(
@@ -283,14 +293,14 @@ export class Graph {
     const g = new Graph({ ...input.graph });
 
     //Life cycle
-    // 1 - Create the nodes 
+    // 1 - Create the nodes
     // 2 - Create the edges
 
     //We don't execute anything here till needed
 
     g.nodes = input.nodes.reduce((acc, node) => {
       const factory = lookup[node.type];
-      const newNode = acc[node.id] = factory.deserialize({ ...node });
+      const newNode = (acc[node.id] = factory.deserialize({ ...node }));
       newNode.setGraph(g);
       return acc;
     }, {});
@@ -305,6 +315,85 @@ export class Graph {
     return g;
   }
 
+  async execute(opts?: GraphExecuteOptions): Promise<any> {
+    const { inputs = {} } = opts || {};
+
+    const input = Object.values(this.nodes).find(
+      (x) => x.factory.type === "studio.tokens.generic.input"
+    );
+
+    if (!input) {
+      throw new Error("No input node found");
+    }
+
+    //Set the inputs for execution
+    Object.entries(inputs).forEach(([key, value]) => {
+      input.inputs[key].setValue(value.value, value.type);
+    });
+
+    //Perform a topological sort
+
+    const topologic = topologicalSort(this);
+
+    //This stores intermediate states during execution
+    for (let i = 0, c = topologic.length; i < c; i++) {
+      const nodeId = topologic[i];
+
+      const node = this.getNode(nodeId);
+
+      // Might happen with graphs that have not cleaned up their edges to nowhere
+      if (!node) {
+        continue;
+      }
+
+      //Execute the node
+      await node.execute();
+
+      //Get the nodes values
+      node.outputs;
+
+      //Get the nodes edges
+
+      const edges = this.outEdges(node.id);
+
+      edges.forEach((edge) => {
+        const target = this.getNode(edge.target);
+
+        if (!target) {
+          return;
+        }
+
+        const srcOutput = node.outputs[edge.sourceHandle] as Output;
+        const targetInput = target.inputs[edge.targetHandle];
+
+        //Possible dynamic, eg, if it does not exist, ignore
+        if (!targetInput) {
+          return;
+        }
+        //Set the value on the target
+        targetInput.setValue(srcOutput.value, srcOutput.type);
+      });
+    }
+
+    //Get the output node
+    const output = Object.values(this.nodes).find(
+      (x) => x.factory.type === "studio.tokens.generic.output"
+    );
+
+    if (!output) {
+      throw new Error("No output node found");
+    }
+
+    //Get the value of the output node
+    const outputPort = output.outputs.value;
+    return {
+      output: {
+        value: outputPort.value,
+        type: outputPort.type,
+      },
+    };
+  }
+
   /**
    * Returns the ids of the node that are immediate successors of the given node. O(m) the amount of edges
    * @param nodeId
@@ -313,7 +402,7 @@ export class Graph {
   successors(nodeId): Node[] {
     const outEdges = this.outEdges(nodeId);
     //Since we might have multiple connections between the same nodes, we need to remove duplicates
-    return dedup(outEdges.map(x => x.target)).map(x => this.nodes[x]);
+    return dedup(outEdges.map((x) => x.target)).map((x) => this.nodes[x]);
   }
 
   /**
@@ -331,22 +420,20 @@ export class Graph {
 
     //This returns all edge ids that target this node
     const out = Object.values(this.edges).reduce((acc, x) => {
-
       if (x.target === nodeId) {
         acc.push(x.source);
       }
       return acc;
-    }, []);
+    }, [] as string[]);
 
-    return dedup(out).map(x => this.nodes[x]);
+    return dedup(out).map((x) => this.nodes[x]);
   }
-
   /**
-     * Creates an edge connection between two nodes
-     * @param source 
-     * @param target 
-     * @param data 
-     */
+   * Creates an edge connection between two nodes
+   * @param source
+   * @param target
+   * @param data
+   */
   createEdge(
     id: string,
     source: string,
@@ -371,14 +458,12 @@ export class Graph {
     this.edges[id] = edge;
     this.emit(SubscriptionType.edgeAdded, edge);
   }
-
-
   /**
    * Return all edges that are pointed in by node v.
    * O(m) the amount of edges
    */
   inEdges(nodeId: string): Edge[] {
-    return Object.values(this.edges).filter(x => x.target === nodeId);
+    return Object.values(this.edges).filter((x) => x.target === nodeId);
   }
 
   /**
@@ -386,13 +471,13 @@ export class Graph {
    * O(m) the amount of edges
    */
   outEdges(nodeId: string): Edge[] {
-    return Object.values(this.edges).filter(x => x.source === nodeId);
+    return Object.values(this.edges).filter((x) => x.source === nodeId);
   }
 
   /**
    * Looks up a node by its id
-   * @param nodeId 
-   * @returns 
+   * @param nodeId
+   * @returns
    */
   getNode(nodeId: string): Node | undefined {
     return this.nodes[nodeId];
@@ -400,21 +485,21 @@ export class Graph {
 
   /**
    * Looks up an edge by its id
-   * @param edgeId 
-   * @returns 
+   * @param edgeId
+   * @returns
    */
   getEdge(edgeId: string): Edge | undefined {
     return this.edges[edgeId];
   }
 
   private emit(type: SubscriptionType, data: any) {
-    this.listeners[type].forEach(x => x(data));
+    (this.listeners[type] || []).forEach((x) => x(data));
   }
 
   subscribe(type: SubscriptionType, listener: (data: any) => void) {
     this.listeners[type].push(listener);
     return () => {
-      this.listeners[type] = this.listeners[type].filter(x => x !== listener);
-    }
+      this.listeners[type] = this.listeners[type].filter((x) => x !== listener);
+    };
   }
 }

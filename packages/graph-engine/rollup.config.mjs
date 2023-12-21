@@ -2,11 +2,39 @@ import cleanupDir from 'rollup-plugin-cleanup-dir';
 import swcImport from 'rollup-plugin-swc'
 import typescript from 'rollup-plugin-typescript2';
 
+import json from '@rollup/plugin-json';
+import { exec } from 'child_process';
 
 const swc = swcImport.default;
 
+
+const tscAlias = () => {
+    return {
+        name: "tsAlias",
+        writeBundle: () => {
+
+            return new Promise((resolve, reject) => {
+
+                exec("tsc-alias -p tsconfig.prod.json --dir dist/esm", function callback(error, stdout, stderr) {
+                    if (stderr || error) {
+                        reject(stderr || error);
+                    } else {
+                        resolve(stdout);
+                    }
+                });
+            });
+        },
+    };
+};
+
+
 const defaultEntries = [
     {
+        external: [
+            require.resolve('mdn-data/css/functions.json'),
+            require.resolve('mdn-data/css/properties.json'),
+            /node_modules/
+        ],
         input: './src/index.ts',
         output: [
             {
@@ -24,15 +52,18 @@ const defaultEntries = [
             }
         ],
         plugins: [
+            json(),
             cleanupDir.default(),
             typescript({
-                tsconfig: 'tsconfig.prod.json'
+                tsconfig: 'tsconfig.prod.json',
             }),
+
             swc({
                 env: {
                     dynamicImport: true,
                 },
             }),
+            tscAlias(),
         ]
     }
 ];
