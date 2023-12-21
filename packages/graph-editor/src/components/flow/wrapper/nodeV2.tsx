@@ -364,6 +364,10 @@ export const WrapNode = (
       return Node;
     }, [nodeDef.wrapper]);
 
+    const logError = useCallback((error, info) => {
+      console.error(error, info);
+    }, []);
+
     return (
       <NodeContext.Provider value={values}>
         <Wrapped
@@ -376,7 +380,10 @@ export const WrapNode = (
           controls={controls}
           stats={stats}
         >
-          <ErrorBoundary fallbackRender={() => 'Oops I just accidentally ...'}>
+          <ErrorBoundary
+            fallbackRender={() => 'Oops I just accidentally ...'}
+            onError={logError}
+          >
             <InnerNode />
           </ErrorBoundary>
         </Wrapped>
