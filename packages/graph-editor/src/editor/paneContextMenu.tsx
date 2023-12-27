@@ -1,7 +1,4 @@
-import {
-  Menu,
-  Separator,
-} from 'react-contexify';
+import { Menu, Separator } from 'react-contexify';
 import React, { useCallback } from 'react';
 import { useReactFlow } from 'reactflow';
 import { useAutoLayout } from './hooks/useAutolayout';

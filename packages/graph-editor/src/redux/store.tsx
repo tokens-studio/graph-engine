@@ -21,5 +21,5 @@ export type RootState = {
   graph: GraphState;
   settings: SettingsState;
   ui: UIState;
-  refs: RefState
+  refs: RefState;
 };

@@ -1,1 +1,1 @@
-import {makeAuto} from 'mobx';
+import { makeAuto } from 'mobx';

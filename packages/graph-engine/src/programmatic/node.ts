@@ -115,7 +115,7 @@ export class Node {
    * This can be used directly, but you should preferably never call this and instead execute from the graph which will control the lifecycle of the node
    * @override
    */
-  execute(): Promise<void> | void { }
+  execute(): Promise<void> | void {}
 
   /**
    * Runs the node. Internally this calls the execute method, but the run entrypoint allows for additional tracking and lifecycle management
@@ -126,8 +126,7 @@ export class Node {
     try {
       await this.execute();
       this.error = undefined;
-    }
-    catch (err) {
+    } catch (err) {
       this.error = err as Error;
     }
     const end = performance.now();
@@ -184,8 +183,7 @@ export class Node {
     return {
       id: this.id,
       type: this.nodeType(),
-      inputs: Object.values(this.inputs)
-        .map((x) => x.serialize()),
+      inputs: Object.values(this.inputs).map((x) => x.serialize()),
     };
   }
 
@@ -194,7 +192,10 @@ export class Node {
    * @param serialized
    * @returns
    */
-  public static deserialize(serialized: SerializedNode, lookup: Record<string, NodeFactory>): Node {
+  public static deserialize(
+    serialized: SerializedNode,
+    lookup: Record<string, NodeFactory>
+  ): Node {
     const newNode = new this({
       id: serialized.id,
     });
@@ -273,5 +274,8 @@ export class Node {
 }
 
 export interface NodeFactory {
-  deserialize(serialized: SerializedNode, lookup: Record<string, NodeFactory>): Node;
+  deserialize(
+    serialized: SerializedNode,
+    lookup: Record<string, NodeFactory>
+  ): Node;
 }

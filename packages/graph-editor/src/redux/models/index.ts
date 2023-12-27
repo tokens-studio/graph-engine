@@ -9,7 +9,7 @@ export const models: RootModel = {
   graph: graphState,
   settings: settingsState,
   ui: uiState,
-  refs:refState
+  refs: refState,
 };
 
 export type { RootModel } from './root.ts';

@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '@/redux/selectors/settings';
 import { Graph } from '@tokens-studio/graph-engine';
 
-
 export const keyMap = {
   AUTO_LAYOUT: 'ctrl+alt+f',
   COPY: ['command+c', 'ctrl+c'],
@@ -39,10 +38,9 @@ export const keyMap = {
   TOGGLE_NODES_PANEL: ['n'],
 };
 
-
 export interface IUseHotkeys {
-  graph: Graph,
-  onEdgesDeleted: (edges: Edge[]) => void,
+  graph: Graph;
+  onEdgesDeleted: (edges: Edge[]) => void;
 }
 
 export const useHotkeys = ({ onEdgesDeleted, graph }: IUseHotkeys) => {
@@ -93,18 +91,21 @@ export const useHotkeys = ({ onEdgesDeleted, graph }: IUseHotkeys) => {
         event.stopPropagation();
         event.preventDefault();
 
-        const nodes = reactFlowInstance.getNodes().filter((x) => x.selected).map((x) => graph.getNode(x.id)).flatMap((x) => x.serialize());
+        const nodes = reactFlowInstance
+          .getNodes()
+          .filter((x) => x.selected)
+          .map((x) => graph.getNode(x.id))
+          .flatMap((x) => x.serialize());
         //get the values from the graph
         const values = {
           nodes,
         };
 
         copy(JSON.stringify(values, null, 4), {
-          debug: true
+          debug: true,
         });
       },
       PASTE: async (event) => {
-
         try {
           const text = await navigator.clipboard.readText();
 
@@ -112,8 +113,7 @@ export const useHotkeys = ({ onEdgesDeleted, graph }: IUseHotkeys) => {
 
           const nodes = values.nodes as SerializedNode[];
           //TODO - finish this
-        }
-        catch (e) {
+        } catch (e) {
           console.error(e);
         }
       },
@@ -196,7 +196,16 @@ export const useHotkeys = ({ onEdgesDeleted, graph }: IUseHotkeys) => {
         dispatch.settings.setSnapGrid(!snapGridValue);
       },
     }),
-    [dispatch.input, dispatch.node, dispatch.settings, layout, onEdgesDeleted, reactFlowInstance, showGridValue, snapGridValue],
+    [
+      dispatch.input,
+      dispatch.node,
+      dispatch.settings,
+      layout,
+      onEdgesDeleted,
+      reactFlowInstance,
+      showGridValue,
+      snapGridValue,
+    ],
   );
 
   return {

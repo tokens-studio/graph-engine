@@ -7,9 +7,7 @@ import React, { useCallback } from 'react';
 import { useTheme } from '@/hooks/useTheme.tsx';
 import { EmptyStateEditor } from '../EmptyStateEditor.tsx';
 import { ExamplesPicker } from '../ExamplesPicker.tsx';
-import {
-  showExamplePickerSelector,
-} from '@/redux/selectors/index.ts';
+import { showExamplePickerSelector } from '@/redux/selectors/index.ts';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router.js';
 import { useGetEditor } from '@/hooks/useGetEditor.ts';
@@ -24,7 +22,6 @@ export const EditorTab = ({ ...rest }) => {
   const showExamplePicker = useSelector(showExamplePickerSelector);
   const [loading, setLoading] = React.useState(false);
   const { loadExample } = useGetEditor();
-
 
   const router = useRouter();
   const loadParam = router.query.load;

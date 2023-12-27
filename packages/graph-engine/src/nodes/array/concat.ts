@@ -37,8 +37,7 @@ export default class NodeDefinition extends Node {
     const b = this.getRawInput("b");
 
     //Verify types
-    if (a.type.$id !== b.type.$id)
-      throw new Error("Array types must match");
+    if (a.type.$id !== b.type.$id) throw new Error("Array types must match");
 
     const calculated = a.value.concat(b.value);
     this.setOutput("value", calculated, a.type);

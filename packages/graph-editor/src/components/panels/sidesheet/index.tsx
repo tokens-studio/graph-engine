@@ -38,19 +38,16 @@ import { InlineTypeLabel } from '../../flow';
 import { CurveEditor } from '@/components/curveEditor';
 import { useGraph } from '@/hooks/useGraph';
 
-
 export interface ISideSheet {
   graph: Graph;
 }
 
 const InputNodeSpecifics = observer(({ node }: { node: Node }) => {
-  return <Box>
-
-    <Button variant='primary'>
-      Add Input
-    </Button>
-
-  </Box>;
+  return (
+    <Box>
+      <Button variant="primary">Add Input</Button>
+    </Box>
+  );
 });
 
 const specifics = {
@@ -75,7 +72,11 @@ export function Sidesheet() {
   }
 
   return (
-    <Stack direction="column" gap={4} css={{ height: '100%', flex: 1, padding: '$3' }}>
+    <Stack
+      direction="column"
+      gap={4}
+      css={{ height: '100%', flex: 1, padding: '$3' }}
+    >
       <Stack direction="column" gap={3}>
         <Stack gap={2} align="start" justify="between">
           <Heading size="large"> {selectedNode.factory.title}</Heading>
@@ -86,7 +87,6 @@ export function Sidesheet() {
         </Stack>
       </Stack>
 
-
       <Tabs defaultValue="inputs" style={{ flex: 1, overflow: 'hidden' }}>
         <Tabs.List>
           <Tabs.Trigger value="inputs">Inputs</Tabs.Trigger>
@@ -94,17 +94,17 @@ export function Sidesheet() {
           <Tabs.Trigger value="settings">Settings</Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content value="inputs" css={{ height: '100%', overflow: 'auto' }}>
-
           <Box css={{ padding: '$3' }}>
             {Specific ? <Specific node={selectedNode} /> : null}
-            <Stack width='full' css={{ paddingTop: '$3', paddingBottom: '$3' }}>
+            <Stack width="full" css={{ paddingTop: '$3', paddingBottom: '$3' }}>
               <PortPanel ports={selectedNode?.inputs} />
             </Stack>
           </Box>
-
         </Tabs.Content>
-        <Tabs.Content value="outputs" css={{ height: '100%', overflow: 'auto' }}>
-
+        <Tabs.Content
+          value="outputs"
+          css={{ height: '100%', overflow: 'auto' }}
+        >
           <Box css={{ padding: '$3' }}>
             {Specific ? <Specific node={selectedNode} /> : null}
             <Box css={{ paddingTop: '$3', paddingBottom: '$3' }}>
@@ -112,7 +112,10 @@ export function Sidesheet() {
             </Box>
           </Box>
         </Tabs.Content>
-        <Tabs.Content value="settings" css={{ height: '100%', overflow: 'auto' }}>
+        <Tabs.Content
+          value="settings"
+          css={{ height: '100%', overflow: 'auto' }}
+        >
           <Box css={{ padding: '$3' }}>
             <Stack direction="column" gap={2}>
               <Label>Node ID</Label>
@@ -127,12 +130,10 @@ export function Sidesheet() {
               <TextInput value={selectedNode?.factory.title || ''} />
               <Label>Description</Label>
               <Textarea value={selectedNode?.factory.description} />
-
             </Stack>
           </Box>
         </Tabs.Content>
       </Tabs>
-
     </Stack>
   );
 }
@@ -146,7 +147,7 @@ const PortPanel = observer(({ ports, readOnly }: IPortPanel) => {
   const entries = Object.values(ports).sort();
 
   return (
-    <Stack direction="column" gap={3} width='full'>
+    <Stack direction="column" gap={3} width="full">
       {entries.map((x) => (
         <Port port={x} key={x.name} readOnly={readOnly} />
       ))}
@@ -158,7 +159,6 @@ const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
   const type = port.type;
   const readOnly = isReadOnly || port.isConnected;
   const inner = useMemo(() => {
-
     switch (type.$id) {
       case CURVE:
         return <CurveField port={port} readOnly={readOnly} />;
@@ -169,7 +169,9 @@ const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
       case COLOR:
         return <ColorField port={port} readOnly={readOnly} />;
       case COLOR_ARRAY:
-        return port.value.map((x) => <ColorField port={port} readOnly={readOnly} />);
+        return port.value.map((x) => (
+          <ColorField port={port} readOnly={readOnly} />
+        ));
       case NUMBER:
         return <NumericField port={port} readOnly={readOnly} />;
       case STRING:
@@ -188,11 +190,11 @@ const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
   }, [port]);
 
   return (
-    <Stack direction='column' gap={3}>
-      <Stack direction='row' gap={2} align='center' justify='between'>
+    <Stack direction="column" gap={3}>
+      <Stack direction="row" gap={2} align="center" justify="between">
         <Stack direction="row" gap={2} align="center">
           <IconButton
-            size='small'
+            size="small"
             onClick={onClick}
             variant={'invisible'}
             icon={port.visible ? <EyeIcon /> : <EyeClosedIcon />}
@@ -211,10 +213,10 @@ const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
 const DefaultShown = observer(({ port }: IField) => {
   let value = toJS(port.value);
   if (Array.isArray(value)) {
-    value = { items: value }
+    value = { items: value };
   }
 
-  return <JSONTree data={value} />
+  return <JSONTree data={value} />;
 });
 
 const Textfield = observer(({ port, readOnly }: IField) => {
@@ -223,7 +225,7 @@ const Textfield = observer(({ port, readOnly }: IField) => {
   };
 
   if (readOnly) {
-    return <Text>{port.value}</Text>
+    return <Text>{port.value}</Text>;
   }
 
   return <TextInput width={'100%'} value={port.value} onChange={onChange} />;
@@ -235,18 +237,15 @@ const AnyField = observer(({ port, readOnly }: IField) => {
   };
 
   if (readOnly) {
-    return <Text>{port.value}</Text>
+    return <Text>{port.value}</Text>;
   }
 
   return <TextInput width={'100%'} value={port.value} onChange={onChange} />;
 });
 
-
 const CurveField = observer(({ port, readOnly }: IField) => {
-
   return <CurveEditor />;
 });
-
 
 const NumericField = observer(({ port, readOnly }: IField) => {
   const onChange = useCallback(
@@ -259,7 +258,15 @@ const NumericField = observer(({ port, readOnly }: IField) => {
     [port, readOnly],
   );
 
-  return <TextInput type="number" width={'100%'} value={port.value} onChange={onChange} disabled={readOnly} />;
+  return (
+    <TextInput
+      type="number"
+      width={'100%'}
+      value={port.value}
+      onChange={onChange}
+      disabled={readOnly}
+    />
+  );
 });
 
 const ColorField = observer(({ port, readOnly }: IField) => {
@@ -271,26 +278,28 @@ const ColorField = observer(({ port, readOnly }: IField) => {
   );
 
   if (readOnly) {
-    return <Stack direction='row' justify='between' align='center'>
-      <Box
-        as="button"
-        css={{
-          all: 'unset',
-          cursor: 'pointer',
-          borderRadius: '$small',
-          backgroundColor: port.value,
-          width: 16,
-          height: 16,
-          outline: '1px solid $borderMuted',
-          flexShrink: 0,
-          '&:hover': {
-            outline: '1px solid $borderDefault',
-          },
-        }}
-        type="button"
-      />
-      <Text>{port.value}</Text>
-    </Stack>;
+    return (
+      <Stack direction="row" justify="between" align="center">
+        <Box
+          as="button"
+          css={{
+            all: 'unset',
+            cursor: 'pointer',
+            borderRadius: '$small',
+            backgroundColor: port.value,
+            width: 16,
+            height: 16,
+            outline: '1px solid $borderMuted',
+            flexShrink: 0,
+            '&:hover': {
+              outline: '1px solid $borderDefault',
+            },
+          }}
+          type="button"
+        />
+        <Text>{port.value}</Text>
+      </Stack>
+    );
   }
 
   return (
@@ -302,15 +311,13 @@ const ColorField = observer(({ port, readOnly }: IField) => {
 });
 
 export interface IField {
-  port: GraphPort,
-  readOnly?: boolean
+  port: GraphPort;
+  readOnly?: boolean;
 }
-
 
 const BooleanField = observer(({ port, readOnly }: IField) => {
   const onChange = useCallback(
     (checked) => {
-
       if (!readOnly) {
         (port as Input).setValue(checked);
       }
@@ -318,11 +325,8 @@ const BooleanField = observer(({ port, readOnly }: IField) => {
     [port, readOnly],
   );
 
-  return (
-    <Checkbox checked={port.value} onCheckedChange={onChange} />
-  );
+  return <Checkbox checked={port.value} onCheckedChange={onChange} />;
 });
-
 
 const EnumeratedTextfield = observer(({ port, readOnly }: IField) => {
   const onChange = useCallback(
@@ -334,14 +338,14 @@ const EnumeratedTextfield = observer(({ port, readOnly }: IField) => {
     [port],
   );
 
-
-
   return (
     <Select value={port.value} onValueChange={onChange}>
       <Select.Trigger label="Value" value={port.value} />
       <Select.Content>
         {port.type.enum.map((x, i) => (
-          <Select.Item value={x} key={i}>{x}</Select.Item>
+          <Select.Item value={x} key={i}>
+            {x}
+          </Select.Item>
         ))}
       </Select.Content>
     </Select>

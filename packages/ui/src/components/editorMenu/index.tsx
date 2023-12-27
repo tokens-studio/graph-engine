@@ -45,7 +45,6 @@ export const Menubar = ({
     return activeEditor;
   }, []);
 
-
   // TODO: Move all of this to a hook
   const onPrint = useCallback(async () => {
     function downloadImage(dataUrl) {
@@ -97,7 +96,6 @@ export const Menubar = ({
       gap={2}
       css={{ flexGrow: 1 }}
     >
-
       <Stack direction="column" justify="end" css={{ flexGrow: 1 }}>
         <IconButton
           variant="invisible"

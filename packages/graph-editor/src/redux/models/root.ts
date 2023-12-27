@@ -8,5 +8,5 @@ export interface RootModel extends Models<RootModel> {
   settings: typeof settingsState;
   ui: typeof uiState;
   graph: typeof graphState;
-  refs: typeof refState
+  refs: typeof refState;
 }

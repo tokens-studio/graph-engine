@@ -23,7 +23,7 @@ export const graphState = createModel<RootModel>()({
     setGraph(state, graph: Graph) {
       return {
         ...state,
-        graph
+        graph,
       };
     },
   },

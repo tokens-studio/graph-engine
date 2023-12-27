@@ -2,7 +2,11 @@ import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import Color from "colorjs.io";
-import { ColorModifier, ColorModifierTypes, ColorSpaceTypes } from "@tokens-studio/types";
+import {
+  ColorModifier,
+  ColorModifierTypes,
+  ColorSpaceTypes,
+} from "@tokens-studio/types";
 import {
   AnySchema,
   ColorSchema,

@@ -1,18 +1,17 @@
-
 import { NodeTypes } from "@/types.js";
 import { INodeDefinition, Node, NodeFactory } from "@/programmatic/node.js";
 import { AnySchema, StringSchema } from "@/schemas/index.js";
-import InputNode from "./input.js"
-import OutputNode from './output.js'
+import InputNode from "./input.js";
+import OutputNode from "./output.js";
 import { SerializedGraph, SerializedNode } from "@/graph/types.js";
 import { Graph } from "@/graph/graph.js";
 
 export interface SerializedSubgraphNode extends SerializedNode {
-  graph: SerializedGraph
+  graph: SerializedGraph;
 }
 
 export interface ISubgraphNodeDefinition extends INodeDefinition {
-  graph: Graph
+  graph: Graph;
 }
 
 export default class SubgraphNode extends Node {
@@ -38,16 +37,19 @@ export default class SubgraphNode extends Node {
   }
 
   override serialize(): SerializedSubgraphNode {
-    const serialized = super.serialize()
+    const serialized = super.serialize();
     return {
       ...serialized,
-      graph: this._innerGraph.serialize()
+      graph: this._innerGraph.serialize(),
     };
   }
 
-  static override  deserialize(serialized: SerializedSubgraphNode, lookup: Record<string, NodeFactory>) {
+  static override deserialize(
+    serialized: SerializedSubgraphNode,
+    lookup: Record<string, NodeFactory>
+  ) {
     const node = super.deserialize(serialized, lookup) as SubgraphNode;
-    node._innerGraph = Graph.deserialize(serialized.graph, lookup)
+    node._innerGraph = Graph.deserialize(serialized.graph, lookup);
     return node;
   }
 

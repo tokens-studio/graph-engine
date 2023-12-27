@@ -20,8 +20,7 @@ export type PolineNodeOptions = {
   positionFunctionZ?: PositionFunction;
 };
 
-
-const positionFuncs = Object.keys(positionFunctions)
+const positionFuncs = Object.keys(positionFunctions);
 
 const convertHexToHsl = (hexColor: string): Vector3 => {
   let hsl = converter("hsl");
@@ -54,7 +53,6 @@ export default class NodeDefinition extends Node {
         ...StringSchema,
         enum: positionFuncs,
       },
-
     });
     this.addInput("positionFnY", {
       type: {

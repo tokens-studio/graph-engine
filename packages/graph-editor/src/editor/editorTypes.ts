@@ -27,7 +27,6 @@ export interface EditorProps {
    */
   showMenu?: boolean;
 
-
   menuItems?: Menu;
 }
 

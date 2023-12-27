@@ -9,7 +9,6 @@ describe("color/blend", () => {
     node.inputs.modifierType.setValue(ColorModifierTypes.DARKEN);
     node.inputs.value.setValue(0.5);
 
-    
     await node.execute();
     const output = node.outputs.value.value;
     expect(output).toStrictEqual("#800000");

@@ -43,11 +43,7 @@ import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolba
 import groupNode from '../components/flow/nodes/groupNode.js';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
 import { Box } from '@tokens-studio/ui';
-import {
-  Graph,
-  NodeTypes,
-  nodeLookup,
-} from '@tokens-studio/graph-engine';
+import { Graph, NodeTypes, nodeLookup } from '@tokens-studio/graph-engine';
 import { useContextMenu } from 'react-contexify';
 import { version } from '../../package.json';
 import { NodeContextMenu } from './nodeContextMenu.js';
@@ -67,7 +63,6 @@ const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
 const panOnDrag = [1, 3];
 
-
 const edgeTypes = {
   custom: CustomEdge,
 } as unknown as EdgeTypes;
@@ -85,13 +80,12 @@ const defaultEdgeOptions = {
 
 export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
-    const {
-      panelItems,
-      nodeTypes = {},
-    } = props;
+    const { panelItems, nodeTypes = {} } = props;
 
     const registerRef = useRegisterRef('graphEditor');
-    const graphRef = useSelector(graphEditorSelector) as MutableRefObject<ImperativeEditorRef>;
+    const graphRef = useSelector(
+      graphEditorSelector,
+    ) as MutableRefObject<ImperativeEditorRef>;
 
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
     const reactFlowInstance = useReactFlow();
@@ -101,7 +95,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const graph = useGraph();
     const showGridValue = useSelector(showGrid);
     const snapGridValue = useSelector(snapGrid);
-
 
     const [contextNode, setContextNode] = React.useState<Node[]>([]);
     const [contextEdge, setContextEdge] = React.useState<Edge | null>(null);
@@ -155,7 +148,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
         if (targetIsPane) {
           dispatch.ui.setShowNodesCmdPalette(true);
 
-
           const position = reactFlowInstance?.screenToFlowPosition({
             x: event.clientX,
             y: event.clientY,
@@ -204,7 +196,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       graphRef,
       () => ({
         clear: () => {
-
           clear(reactFlowInstance, graph);
         },
         save: () => {
@@ -217,8 +208,9 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           };
         },
         load: ({ nodes, edges, graph: serializedGraph }) => {
-
-          dispatch.graph.setGraph(Graph.deserialize(serializedGraph, nodeLookup));
+          dispatch.graph.setGraph(
+            Graph.deserialize(serializedGraph, nodeLookup),
+          );
 
           reactFlowInstance.setNodes(() => nodes);
           reactFlowInstance.setEdges(() => edges);
@@ -241,7 +233,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
         targetHandle: newEdge.targetHandle,
       });
 
-
       return setEdges((eds) => {
         const newEdgs = eds.reduce(
           (acc, edge) => {
@@ -260,7 +251,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
         return newEdgs;
       });
     }, []);
-
 
     const onNodeDragStop = useCallback(
       (_: MouseEvent, node: Node) => {
@@ -319,28 +309,26 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       [reactFlowInstance],
     );
 
-
     const onNodesDelete = useCallback(
       (nodes: Node[]) => {
         nodes.forEach((node) => {
           graph.removeNode(node.id);
         });
-      }, [graph]);
+      },
+      [graph],
+    );
 
     const onEdgeDblClick = useCallback(
       (event, clickedEdge) => {
         event.stopPropagation();
-
 
         const position = reactFlowInstance?.screenToFlowPosition({
           x: event.clientX,
           y: event.clientY,
         });
 
-
         const newNode = new nodeLookup[NodeTypes.PASS_THROUGH]();
         graph.addNode(newNode);
-
 
         const editorNode = {
           id: newNode.id,
@@ -363,7 +351,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           target: clickedEdge.target,
           targetHandle: clickedEdge.targetHandle,
         };
-        //Create the edges 
+        //Create the edges
         graph.createEdge(aEdge);
         graph.createEdge(bEdge);
 
@@ -391,8 +379,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
           return [...filtered, newEdge, newEdge2];
         });
-
-
       },
       [graph, reactFlowInstance, setEdges, setNodes],
     );
@@ -434,11 +420,13 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
     const { handlers } = useHotkeys({
       onEdgesDeleted,
-      graph
+      graph,
     });
 
-    const handleSelectNewNodeType = useMemo(() => createNode(reactFlowInstance, graph, nodeLookup, dropPanelPosition), [reactFlowInstance, graph, dropPanelPosition]);
-
+    const handleSelectNewNodeType = useMemo(
+      () => createNode(reactFlowInstance, graph, nodeLookup, dropPanelPosition),
+      [reactFlowInstance, graph, dropPanelPosition],
+    );
 
     const onDrop = useCallback(
       async (event) => {
@@ -466,7 +454,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
               flexGrow: 1,
             }}
           >
-
             <Box
               css={{
                 position: 'absolute',
@@ -475,11 +462,13 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 flexDirection: 'row',
               }}
             >
-              <Box css={{
-                position: 'relative',
-                padding: '$3',
-                zIndex: 600,
-              }}>
+              <Box
+                css={{
+                  position: 'relative',
+                  padding: '$3',
+                  zIndex: 600,
+                }}
+              >
                 <SettingsDialog />
               </Box>
             </Box>
@@ -544,7 +533,12 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           id={props.id + '_pane'}
           onSelectItem={handleSelectNewNodeType}
         />
-        <NodeContextMenu id={props.id + '_node'} nodes={contextNode} graph={graph} lookup={nodeLookup} />
+        <NodeContextMenu
+          id={props.id + '_node'}
+          nodes={contextNode}
+          graph={graph}
+          lookup={nodeLookup}
+        />
         <EdgeContextMenu id={props.id + '_edge'} edge={contextEdge} />
       </>
     );

@@ -20,8 +20,6 @@ export interface ISetValue {
 }
 
 export class Input<T = any> extends Port<T> {
-
-
   constructor(props: IInputProps<T>) {
     super(props);
 
@@ -44,7 +42,6 @@ export class Input<T = any> extends Port<T> {
     }
   }
 
-
   /**
    * Resets the value of the input to the default value
    */
@@ -56,11 +53,9 @@ export class Input<T = any> extends Port<T> {
     return {
       type: this._type,
       visible: this.visible,
-      variadic: false
+      variadic: false,
     };
   }
-
-
 
   serialize(): SerializedInput {
     return {

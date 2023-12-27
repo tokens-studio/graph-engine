@@ -47,18 +47,17 @@ export type GraphExecuteOptions = {
    */
   stats?: boolean;
   /**
-   * Whether to provide a journal of the execution 
+   * Whether to provide a journal of the execution
    */
   journal?: boolean;
 };
 
 export type EdgeOpts = {
-
-  id: string,
-  source: string,
-  target: string,
-  sourceHandle: string,
-  targetHandle: string,
+  id: string;
+  source: string;
+  target: string;
+  sourceHandle: string;
+  targetHandle: string;
 
   /**
    * Any additional data to be stored on the edge
@@ -107,18 +106,18 @@ export interface IUpdateOpts {
 export interface StatRecord {
   start: number;
   end: number;
-  error?: Error
+  error?: Error;
 }
 
 export interface BatchExecution {
-  start: number,
-  end: number,
+  start: number;
+  end: number;
   stats?: Record<string, StatRecord>;
   order: string[];
   output?: {
     value: any;
     type: GraphSchema;
-  }
+  };
 }
 
 const defaultGraphOpts: IGraph = {};
@@ -170,10 +169,8 @@ export class Graph {
       target: target.id,
       sourceHandle: sourceHandle.name,
       targetHandle: targetHandle.name,
-      data
-    }
-    );
-
+      data,
+    });
 
     this.propagate(source.id);
   }
@@ -349,8 +346,6 @@ export class Graph {
     }, {});
 
     g.edges = serialized.edges.reduce((acc, edge) => {
-
-
       //Don't change the edge
       acc[edge.id] = {
         ...edge,
@@ -388,8 +383,8 @@ export class Graph {
 
   /**
    * Executes the graph as a single batch. This will execute all the nodes in the graph and return the output of the output node
-   * @param opts 
-   * @returns 
+   * @param opts
+   * @returns
    */
   async execute(opts?: GraphExecuteOptions): Promise<BatchExecution> {
     const { inputs, stats, journal } = opts || {};
@@ -397,9 +392,7 @@ export class Graph {
     const start = performance.now();
     const statsTracker = {};
 
-
     if (inputs) {
-
       const input = Object.values(this.nodes).find(
         (x) => x.factory.type === "studio.tokens.generic.input"
       );
@@ -412,13 +405,10 @@ export class Graph {
         input.inputs[key].setValue(value.value, {
           type: value.type,
           //We are controlling propagation
-          noPropagate: true
+          noPropagate: true,
         });
       });
-
     }
-
-
 
     //Perform a topological sort
 
@@ -438,7 +428,7 @@ export class Graph {
       const res = await node.run();
 
       if (stats) {
-        statsTracker[nodeId] = res
+        statsTracker[nodeId] = res;
       }
 
       //Get the nodes values
@@ -466,12 +456,12 @@ export class Graph {
         targetInput.setValue(srcOutput.value, {
           type: srcOutput.type,
           //We are controlling propagation
-          noPropagate: true
+          noPropagate: true,
         });
       });
     }
 
-    let output: BatchExecution['output'] = undefined;
+    let output: BatchExecution["output"] = undefined;
 
     //Get the output node
     const outputNode = Object.values(this.nodes).find(
@@ -483,7 +473,7 @@ export class Graph {
       output = {
         value: outputPort.value,
         type: outputPort.type,
-      }
+      };
     }
 
     const end = performance.now();
@@ -492,7 +482,7 @@ export class Graph {
       stats: statsTracker,
       start,
       end,
-      output
+      output,
     };
   }
 
@@ -532,7 +522,6 @@ export class Graph {
   }
 
   async propagate(nodeId: string) {
-
     const node = this.getNode(nodeId);
     if (!node) {
       return;
@@ -542,36 +531,37 @@ export class Graph {
     /**
      * This is a heuristic to not attempt to update nodes that don't have a detected port at the end-
      */
-    const affectedNodes = outEdges.map((edge) => {
-      const output = node.outputs[edge.sourceHandle] as Output;
+    const affectedNodes = outEdges
+      .map((edge) => {
+        const output = node.outputs[edge.sourceHandle] as Output;
 
-      //It might be dynamic 
-      if (!output) {
-        return;
-      }
-      const value = node.outputs[edge.sourceHandle].value;
-      //write the value to the input port of the target
-      const target = this.getNode(edge.target);
-      if (!target) {
-        return;
-      }
-      const input = target.inputs[edge.targetHandle];
-      if (!input) {
-        return;
-      }
-      input.setValue(value, {
-        type: node.outputs[edge.sourceHandle].type,
-        //We are controlling propagation
-        noPropagate: true
-      });
-      return edge.target
-    })
+        //It might be dynamic
+        if (!output) {
+          return;
+        }
+        const value = node.outputs[edge.sourceHandle].value;
+        //write the value to the input port of the target
+        const target = this.getNode(edge.target);
+        if (!target) {
+          return;
+        }
+        const input = target.inputs[edge.targetHandle];
+        if (!input) {
+          return;
+        }
+        input.setValue(value, {
+          type: node.outputs[edge.sourceHandle].type,
+          //We are controlling propagation
+          noPropagate: true,
+        });
+        return edge.target;
+      })
       //Remove holes
       .filter(Boolean) as string[];
 
     //These are the nodes to be update
     const nodes = dedup(affectedNodes);
-    await Promise.all(nodes.map(x => this.update(x)));
+    await Promise.all(nodes.map((x) => this.update(x)));
   }
   /**
    * Creates an edge connection between two nodes
@@ -580,11 +570,7 @@ export class Graph {
    * @param data
    */
   createEdge(opts: EdgeOpts) {
-    const { source,
-      target,
-      sourceHandle,
-      targetHandle,
-      id, data } = opts;
+    const { source, target, sourceHandle, targetHandle, id, data } = opts;
     const edge = {
       source,
       target,
@@ -605,13 +591,11 @@ export class Graph {
       throw new Error(`Target node ${target} does not exist`);
     }
 
-
     //Initialize the successors
     this.successorNodes[source] = this.successorNodes[source] || [];
     this.successorNodes[source].push(target);
     //Store the edge
     this.edges[id] = edge;
-
 
     const targetPort = targetNode.inputs[targetHandle];
     const sourcePort = sourceNode.outputs[sourceHandle];
@@ -628,7 +612,6 @@ export class Graph {
    */
   inEdges(nodeId: string, sourceHandle?: string): Edge[] {
     return Object.values(this.edges).filter((x) => {
-
       if (x.target !== nodeId) {
         return false;
       }
@@ -645,7 +628,6 @@ export class Graph {
    */
   outEdges(nodeId: string, targetHandle?: string): Edge[] {
     return Object.values(this.edges).filter((x) => {
-
       if (x.source !== nodeId) {
         return false;
       }
@@ -653,7 +635,6 @@ export class Graph {
         return x.targetHandle === targetHandle;
       }
       return true;
-
     });
   }
 

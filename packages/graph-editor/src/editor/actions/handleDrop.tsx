@@ -4,28 +4,19 @@ import JSZip from 'jszip';
 
 import { NodeRequest } from './createNode';
 
-
-
 export const handleDrop = async (event): Promise<NodeRequest[]> => {
-
-
-
   let processed: NodeRequest[] = [];
 
-
   function process(nodeRequest, offset = { x: 0, y: 0 }) {
-
     const position = {
       x: event.clientX + offset.x,
       y: event.clientY + offset.y,
     };
 
-
     return {
       ...nodeRequest,
       position,
     };
-
   }
 
   if (event.dataTransfer.files?.length > 0) {

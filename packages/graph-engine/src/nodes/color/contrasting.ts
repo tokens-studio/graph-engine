@@ -24,7 +24,6 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.CONTRASTING;
   static description = "Returns the name of the color";
 
-
   declare inputs: {
     a: Input;
     b: Input;

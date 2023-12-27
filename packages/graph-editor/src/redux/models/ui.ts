@@ -12,7 +12,6 @@ export const uiState = createModel<RootModel>()({
     storeNodeInsertPosition: { x: 0, y: 0 },
   } as UIState,
   reducers: {
-
     setShowNodesCmdPalette(state, showNodesCmdPalette: boolean) {
       return {
         ...state,
@@ -25,5 +24,5 @@ export const uiState = createModel<RootModel>()({
         storeNodeInsertPosition: nodeInsertPosition,
       };
     },
-  }
+  },
 });

@@ -1,11 +1,6 @@
 import { AnySchema, GraphSchema } from "@/schemas/index.js";
 import { Node } from "./node.js";
-import {
-  action,
-  computed,
-  makeObservable,
-  observable,
-} from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 import { Edge } from "@/graph/graph.js";
 
 export interface IPort<T = any> {
@@ -13,13 +8,13 @@ export interface IPort<T = any> {
   visible: boolean;
   node: Node;
   type: GraphSchema;
-  value: T
+  value: T;
 }
 
 export class Port<T = any> {
   /**
- * Name to show in the side panel.Optional
- * */
+   * Name to show in the side panel.Optional
+   * */
   public readonly name: string;
   public visible: boolean = false;
   public node: Node;
@@ -38,7 +33,6 @@ export class Port<T = any> {
     this._type = props.type;
     this._value = props.value;
 
-
     makeObservable(this, {
       //@ts-ignore
       _type: observable,
@@ -54,7 +48,7 @@ export class Port<T = any> {
     });
   }
 
-  get isConnected(){
+  get isConnected() {
     return this._edges.length > 0;
   }
 
@@ -65,11 +59,10 @@ export class Port<T = any> {
     return this._value;
   }
 
-
   /**
- * Gets the current type . This might be different from the static type if the value is dynamic
- * @returns
- */
+   * Gets the current type . This might be different from the static type if the value is dynamic
+   * @returns
+   */
   get type(): GraphSchema {
     return this._dynamicType || this._type;
   }
