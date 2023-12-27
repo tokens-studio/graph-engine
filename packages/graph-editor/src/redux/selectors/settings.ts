@@ -11,6 +11,7 @@ export const obscureDistance = createSelector(
 );
 
 export const debugMode = createSelector(settings, (state) => state.debugMode);
+export const inlineTypes = createSelector(settings, (state) => state.inlineTypes);
 
 export const showGrid = createSelector(settings, (state) => state.showGrid);
 

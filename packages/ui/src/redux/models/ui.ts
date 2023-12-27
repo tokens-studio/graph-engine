@@ -68,12 +68,7 @@ export const uiState = createModel<RootModel>()({
         showExamplePicker,
       };
     },
-    setShowNodesPanel(state, showNodesPanel: boolean) {
-      return {
-        ...state,
-        showNodesPanel,
-      };
-    },
+
     setPreviewCode(state, previewCode: string) {
       return {
         ...state,

@@ -30,6 +30,13 @@ export default class NodeDefinition extends Node {
 
   execute(): void | Promise<void> {
     const inputs = this.getAllInputs();
-    this.setOutput("value", inputs);
+    const output = Object.entries(inputs).reduce((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = value;
+      }
+      return acc;
+    }, {});
+
+    this.setOutput("value", output);
   }
 }

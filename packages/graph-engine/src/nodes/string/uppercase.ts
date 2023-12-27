@@ -4,7 +4,7 @@ import { Node } from "@/programmatic/node.js";
 import { StringSchema } from "@/schemas/index.js";
 
 export default class NodeDefinition extends Node {
-  static title = "Lowercase";
+  static title = "Uppercase";
   static type = NodeTypes.UPPERCASE;
   static description = "Converts a string to uppercase";
   constructor(props?: INodeDefinition) {

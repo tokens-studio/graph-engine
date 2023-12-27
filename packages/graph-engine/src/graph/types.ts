@@ -3,6 +3,7 @@ import { TypeDefinition } from "..";
 export interface SerializedInput {
   name: string;
   value: any;
+  visible: boolean;
   type: TypeDefinition;
 }
 
@@ -20,13 +21,8 @@ export interface SerializedEdge {
   targetHandle: string;
 }
 
-export interface SerializedGraphOptions {
-  description: string;
-}
-
 export interface SerializedGraph {
   version: string;
-  graph: SerializedGraphOptions;
   nodes: SerializedNode[];
   edges: SerializedEdge[];
 }

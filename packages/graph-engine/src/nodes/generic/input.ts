@@ -29,7 +29,7 @@ export default class NodeDefinition extends Node {
       const rawInput = this.getRawInput(input);
 
       this.addOutput(input, {
-        type: rawInput.type(),
+        type: rawInput.type,
         visible: true,
       });
       this.setOutput(input, rawInput.value);

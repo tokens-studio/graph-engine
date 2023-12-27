@@ -2,23 +2,6 @@ import { Edge, Node } from 'reactflow';
 import { NodeTypes } from './types.tsx';
 import React from 'react';
 
-export const getOutgoingEdges = (node: Node | undefined, edges: Edge[]) => {
-  if (!node) {
-    return [];
-  }
-
-  return edges.filter((edge) => edge.source === node.id);
-};
-
-export const getOutgoingEdgesPairs = (edges: Edge[]) => {
-  return edges.map((edge) => {
-    return {
-      source: edge.source,
-      target: edge.target,
-    };
-  });
-};
-
 // we have to make sure that parent nodes are rendered before their children
 export const sortNodes = (a: Node, b: Node): number => {
   if (a.type === b.type) {

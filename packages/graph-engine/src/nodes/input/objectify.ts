@@ -1,31 +1,38 @@
-// /**
-//  *
-//  * @packageDocumentation
-//  */
-// import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { AnySchema, ObjectSchema } from "@/schemas/index.js";
 
-// const static type = NodeTypes.OBJECTIFY;
+export default class NodeDefinition extends Node {
+    static title = "Objectify";
+    static type = NodeTypes.OBJECTIFY;
+    static description =
+        "Objectify node allows you to convert multiple inputs to an object.";
+    constructor(props?: INodeDefinition) {
+        super(props);
+        //Purely runtime inputs
+        this.addOutput("value", {
+            type: ObjectSchema,
+            visible: true,
+        });
+    }
 
-// export type Input = Record<string, any>;
+    execute(): void | Promise<void> {
 
-// export const defaults = {
-//   //Orders the cases in the UI as the input is an object
-//   order: [] as string[],
-// };
+        const finalType = {
+            ...ObjectSchema,
+            properties: {}
+        };
 
-// /**
-//  * This should be a passthrough on the input. We expect the names of the inputs to be the keys of the object
-//  * @param input
-//  * @returns
-//  */
-// const process = (input: Input) => {
-//   return input;
-// };
+        const { value, schema } = Object.entries(this.inputs).reduce((acc, [key, input]) => {
 
-// export const node: NodeDefinition<Input> = {
-//   defaults,
-//   type,
-//   process,
-//   description:
-//     "Objectify node allows you to convert multiple inputs to an object.",
-// };
+            acc.value[key] = input.value;
+            acc.schema.properties[key] = input.type;
+            return acc;
+        }, {
+            value: {},
+            schema: finalType
+        });
+        this.setOutput("value", value, schema);
+    }
+}

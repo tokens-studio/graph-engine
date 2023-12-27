@@ -1,661 +1,217 @@
+
 /* eslint-disable react/display-name */
 // import 'reactflow/dist/style.css';
 import '../index.css';
-
+import { DockLayout, LayoutData, TabGroup } from 'rc-dock';
 import {
-  Background,
-  BackgroundVariant,
-  Edge,
-  EdgeTypes,
-  MarkerType,
-  Node,
-  SelectionMode,
-  SnapGrid,
-  useEdgesState,
-  useNodesState,
-  useReactFlow,
-  useStoreApi,
-  ReactFlowProvider,
-  XYPosition,
+    ReactFlowProvider,
 } from 'reactflow';
-import { CustomControls } from '../components/flow/controls.tsx';
-import { NodeTypes as EditorNodeTypes } from '../components/flow/types.tsx';
-import { ForceUpdateProvider } from './forceUpdateContext.tsx';
-import { GlobalHotKeys } from 'react-hotkeys';
-import {
-  getNodePositionInsideParent,
-  sortNodes,
-} from '../components/flow/utils.ts';
-import { handleDrop } from './fileInput.tsx';
-import { keyMap, useHotkeys } from './hotkeys.ts';
 
-import { useDispatch } from '../hooks/index.ts';
-import { v4 as uuidv4 } from 'uuid';
-import CustomEdge from '../components/flow/edges/edge.tsx';
 import React, {
-  MouseEvent,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useRef,
+    useMemo,
 } from 'react';
-import ReactFlow from 'reactflow';
-import { ReduxProvider } from '../redux/index.tsx';
-import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.tsx';
-import groupNode from '../components/flow/groupNode.tsx';
+import { ReduxProvider } from '../redux/index.js';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
-import { Box, IconButton, Stack, Tooltip } from '@tokens-studio/ui';
-import { OnOutputChangeContextProvider } from '@/context/OutputContext.tsx';
-import { createNode } from './create.ts';
-import {
-  Graph,
-  Node as GraphNode,
-  NodeTypes,
-  nodeLookup,
-} from '@tokens-studio/graph-engine';
-import { useContextMenu } from 'react-contexify';
-import { version } from '../../package.json';
-import { NodeContextMenu } from './nodeContextMenu.tsx';
-import { EdgeContextMenu } from './edgeContextMenu.tsx';
-import { PaneContextMenu } from './paneContextMenu.tsx';
-import { useSelector } from 'react-redux';
-import { showGrid, snapGrid } from '@/redux/selectors/settings.ts';
-import { showNodesPanelSelector } from '@/redux/selectors/ui.ts';
-import { forceUpdate } from '@/redux/selectors/graph.ts';
-import { DropPanel, NodeV2 } from '@/components/index.ts';
-import { CommandMenu } from '@/components/CommandPalette.tsx';
-import { ExternalLoaderProvider } from '@/context/ExternalLoaderContext.tsx';
-import { defaultPanelItems } from '@/components/flow/DropPanel/PanelItems.tsx';
-import { Settings } from '@/components/Settings.tsx';
-import { Sidesheet } from './Sidesheet.tsx';
-import { GraphProvider } from '@/context/GraphContext.tsx';
+import { IconButton, Stack, Tooltip } from '@tokens-studio/ui';
+import { DropPanel } from '@/components/panels/dropPanel/index.js';
+import { ExternalLoaderProvider } from '@/context/ExternalLoaderContext.js';
+import { defaultPanelGroupsFactory } from '@/components/panels/dropPanel/index.js';
+import { Sidesheet } from '../components/panels/sidesheet/index.js';
+import { Legend } from '@/components/panels/legend/index.js';
+import { MenuBar } from '@/components/menubar/index.js';
+import { EditorApp } from './graph.js';
+import { useRegisterRef } from '@/hooks/useRegisterRef.ts';
+import { ArrowUpRightIcon, MaximizeIcon, MinimizeIcon } from '@iconicicons/react';
+import { Cross1Icon } from '@radix-ui/react-icons';
+import { defaultMenuDataFactory } from '@/components/menubar/defaults.tsx'
 
-const snapGridCoords: SnapGrid = [16, 16];
-const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
-const panOnDrag = [1, 2];
-
-const noop = () => {};
-
-const edgeTypes = {
-  custom: CustomEdge,
-} as unknown as EdgeTypes;
-
-const proOptions = {
-  account: 'paid-pro',
-  hideAttribution: true,
+const DockButton = (rest) => {
+    return (
+        <IconButton
+            size="small"
+            variant="invisible"
+            css={{ padding: '$2' }}
+            {...rest}
+        />
+    );
 };
 
-const defaultEdgeOptions = {
-  style: {
-    strokeWidth: 2,
-  },
-};
 
-export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
-  (props: EditorProps, ref) => {
-    const {
-      showMenu = true,
-      panelItems = defaultPanelItems,
-      nodeTypes = {},
-      stateInitializer = {},
-    } = props;
-
-    const reactFlowWrapper = useRef<HTMLDivElement>(null);
-    const reactFlowInstance = useReactFlow();
-    const dispatch = useDispatch();
-    const { getIntersectingNodes } = reactFlowInstance;
-    const store = useStoreApi();
-    const showGridValue = useSelector(showGrid);
-    const snapGridValue = useSelector(snapGrid);
-    const showNodesPanel = useSelector(showNodesPanelSelector);
-    const forceUpdateValue = useSelector(forceUpdate);
-
-    //Internal graph
-    const [graph, setGraph] = React.useState<Graph>(new Graph());
-
-    React.useEffect(() => {
-      if (!!props.shouldShowNodesPanel)
-        dispatch.ui.setShowNodesPanel(props.shouldShowNodesPanel);
-    }, [props.shouldShowNodesPanel]);
-
-    React.useEffect(() => {
-      if (typeof props.onShowNodesPanelChange === 'function') {
-        props.onShowNodesPanelChange(showNodesPanel);
-      }
-    }, [showNodesPanel]);
-
-    const [contextNode, setContextNode] = React.useState<Node | null>(null);
-    const [contextEdge, setContextEdge] = React.useState<Edge | null>(null);
-    const [dropPanelPosition, setDropPanelPosition] =
-      React.useState<XYPosition>({ x: 0, y: 0 });
-
-    const { show } = useContextMenu({
-      id: props.id + '_pane',
-    });
-    const { show: showEdge } = useContextMenu({
-      id: props.id + '_edge',
-    });
-    const { show: showNode } = useContextMenu({
-      id: props.id + '_node',
-    });
-    // const { show: showPicker } = useContextMenu({
-    //   id: props.id + '_picker',
-    // });
-
-    const handleContextMenu = useCallback(
-      (event) => {
-        setDropPanelPosition({ x: event.clientX, y: event.clientY });
-        show({ event });
-      },
-      [show],
-    );
-
-    const [isHoldingDownOption, setIsHoldingDownOption] = React.useState(false);
-
-    useEffect(() => {
-      const down = (e) => {
-        if (e.altKey) {
-          e.preventDefault();
-
-          setIsHoldingDownOption(true);
-        } else {
-          setIsHoldingDownOption(false);
-        }
-      };
-
-      document.addEventListener('keydown', down);
-      return () => document.removeEventListener('keydown', down);
-    }, [dispatch.ui]);
-
-    const onConnectEnd = useCallback(
-      (event) => {
-        if (!isHoldingDownOption) {
-          return;
-        }
-
-        const targetIsPane =
-          event.target.classList.contains('react-flow__pane');
-
-        if (targetIsPane) {
-          dispatch.ui.setShowNodesCmdPalette(true);
-
-          const reactFlowBounds =
-            reactFlowWrapper?.current?.getBoundingClientRect();
-          if (!reactFlowBounds) {
-            return;
-          }
-          const position = reactFlowInstance?.project({
-            x: event.clientX - reactFlowBounds.left,
-            y: event.clientY - reactFlowBounds.top,
-          });
-          dispatch.ui.setNodeInsertPosition(position);
-
-          // TODO: After dropping the node we should try to connect the node if it has 1 handler only
-        }
-      },
-      [dispatch.ui, isHoldingDownOption, reactFlowInstance, reactFlowWrapper],
-    );
-
-    const handleEdgeContextMenu = useCallback(
-      (event, edge) => {
-        setContextEdge(edge);
-        showEdge({ event });
-      },
-      [showEdge],
-    );
-
-    const handleNodeContextMenu = useCallback(
-      (event, node) => {
-        setContextNode(node);
-        showNode({ event });
-      },
-      [showNode],
-    );
-
-    const onEdgesDeleted = useCallback((edges) => {
-      edges.forEach((edge) => {
-        graph.removeEdge(edge.id);
-      });
-    }, []);
-
-    const [nodes, setNodes, onNodesChange] = useNodesState([]);
-    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-
-    // Create flow node types here, instead of the global scope to ensure that custom nodes added by the user are available in nodeTypes
-    const fullNodeTypesRef = useRef({
-      ...nodeTypes,
-      GenericNode: NodeV2,
-      [EditorNodeTypes.GROUP]: groupNode,
-    });
-
-    useImperativeHandle(
-      ref,
-      () => ({
-        clear: () => {
-          reactFlowInstance.setNodes([]);
-          reactFlowInstance.setEdges([]);
-        },
-        save: () => {
-          return {
-            version,
-            viewport: reactFlowInstance.getViewport(),
-            nodes: reactFlowInstance.getNodes(),
-            edges: reactFlowInstance.getEdges(),
-            graph: graph.serialize(),
-          };
-        },
-        forceUpdate: () => {
-          dispatch.graph.forceNewUpdate();
-        },
-        load: ({ nodes, edges, graph: serializedGraph }) => {
-          console.log(graph);
-          setGraph(Graph.deserialize(serializedGraph, nodeLookup));
-
-          reactFlowInstance.setNodes(() => nodes);
-          reactFlowInstance.setEdges(() => edges);
-          //Force delay of 1 tick to allow input state to update
-        },
-        getFlow: () => reactFlowInstance,
-      }),
-      [reactFlowInstance, graph, dispatch.graph, dispatch.input, dispatch.node],
-    );
-
-    const onConnect = useCallback((params) => {
-      const newEdge = { ...params, id: uuidv4(), type: 'custom' };
-      return setEdges((eds) => {
-        const newEdgs = eds.reduce(
-          (acc, edge) => {
-            //All our inputs take a single input only, disconnect if we have a connection already
-            if (
-              edge.targetHandle == params.targetHandle &&
-              edge.target === params.target
-            ) {
-              return acc;
+let groups: Record<string, TabGroup> = {
+    popout: {
+        animated: false,
+        floatable: true,
+        panelExtra: (panelData, context) => {
+            let buttons: React.ReactElement[] = [];
+            if (panelData?.parent?.mode !== 'window') {
+                const maxxed = panelData?.parent?.mode === 'maximize';
+                buttons.push(
+                    <DockButton
+                        key="maximize"
+                        title={
+                            panelData?.parent?.mode === 'maximize' ? 'Restore' : 'Maximize'
+                        }
+                        icon={maxxed ? <MinimizeIcon /> : <MaximizeIcon />}
+                        onClick={() => context.dockMove(panelData, null, 'maximize')}
+                    ></DockButton>,
+                );
+                buttons.push(
+                    <DockButton
+                        key="new-window"
+                        title="Open in new window"
+                        icon={<ArrowUpRightIcon />}
+                        onClick={() => context.dockMove(panelData, null, 'new-window')}
+                    ></DockButton>,
+                );
             }
-            acc.push(edge);
-            return acc;
-          },
-          [newEdge] as Edge[],
-        );
-        return newEdgs;
-      });
-    }, []);
-
-    const onNodeDragStop = useCallback(
-      (_: MouseEvent, node: Node) => {
-        if (!node.parentNode) {
-          return;
-        }
-
-        const intersections = getIntersectingNodes(node).filter(
-          (n) => n.type === EditorNodeTypes.GROUP,
-        );
-        const groupNode = intersections[0];
-
-        // when there is an intersection on drag stop, we want to attach the node to its new parent
-        if (intersections.length && node.parentNode !== groupNode?.id) {
-          const nextNodes: Node[] = store
-            .getState()
-            .getNodes()
-            .map((n) => {
-              if (n.id === groupNode.id) {
-                return {
-                  ...n,
-                  className: '',
-                };
-              } else if (n.id === node.id) {
-                const position = getNodePositionInsideParent(n, groupNode) ?? {
-                  x: 0,
-                  y: 0,
-                };
-
-                return {
-                  ...n,
-                  position,
-                  parentNode: groupNode.id,
-                  extent: 'parent' as const,
-                };
-              }
-
-              return n;
-            })
-            .sort(sortNodes);
-
-          setNodes(nextNodes);
-        }
-      },
-      [getIntersectingNodes, setNodes, store],
-    );
-
-    const onDragOver = useCallback(
-      (event) => {
-        if (!reactFlowWrapper.current || !reactFlowInstance) {
-          return;
-        }
-        event.preventDefault();
-        event.dataTransfer.dropEffect = 'move';
-      },
-      [reactFlowInstance],
-    );
-
-    const onDrop = useCallback(
-      async (event) => {
-        event.preventDefault();
-
-        const processed = await handleDrop(event, {
-          graph,
-          reactFlowInstance,
-          reactFlowWrapper,
-          dispatch,
-        });
-
-        reactFlowInstance.setNodes((nodes) => [...nodes, ...processed]);
-      },
-      [dispatch, graph, reactFlowInstance],
-    );
-
-    const onEdgeDblClick = useCallback(
-      (event, clickedEdge) => {
-        event.stopPropagation();
-
-        const reactFlowBounds =
-          reactFlowWrapper!.current!.getBoundingClientRect();
-
-        const position = reactFlowInstance?.project({
-          x: event.clientX - reactFlowBounds.left,
-          y: event.clientY - reactFlowBounds.top,
-        });
-
-        const newNode = createNode({
-          nodeRequest: {
-            type: NodeTypes.PASS_THROUGH,
-          },
-          stateInitializer,
-          dispatch,
-          position,
-        });
-
-        //Set the initial value
-        dispatch.input.copyInputKey({
-          id: newNode.id,
-          key: 'input',
-          source: clickedEdge.target,
-          sourceKey: clickedEdge.targetHandle,
-        });
-
-        setEdges((eds) => {
-          //Remove the old edge
-          const filtered = eds.filter((edge) => {
-            return !(
-              edge.target == clickedEdge.target &&
-              edge.targetHandle == clickedEdge.targetHandle
+            buttons.push(
+                <DockButton
+                    key="close"
+                    title="Close"
+                    icon={<Cross1Icon />}
+                    onClick={() => context.dockMove(panelData, null, 'remove')}
+                ></DockButton>,
             );
-          });
-          //Add a new edge from the old target to the new node
-          const newEdge = {
-            source: clickedEdge.source,
-            sourceHandle: clickedEdge.sourceHandle,
-            target: newNode.id,
-            targetHandle: 'input',
-            id: uuidv4(),
-            type: 'custom',
-          };
-          //Create another edge from the new node to the old target
-          const newEdge2 = {
-            source: newNode.id,
-            sourceHandle: 'output',
-            target: clickedEdge.target,
-            targetHandle: clickedEdge.targetHandle,
-            id: uuidv4(),
-            type: 'custom',
-          };
-
-          return [...filtered, newEdge, newEdge2];
-        });
-
-        //Create a proxy node
-        setNodes((nds) => [...nds, newNode]);
-      },
-      [dispatch, reactFlowInstance, setEdges, setNodes],
-    );
-
-    const onNodeDrag = useCallback(
-      (_: MouseEvent, node: Node) => {
-        if (!node.parentNode) {
-          return;
-        }
-
-        const intersections = getIntersectingNodes(node).filter(
-          (n) => n.type === EditorNodeTypes.GROUP,
-        );
-        const groupClassName =
-          intersections.length && node.parentNode !== intersections[0]?.id
-            ? 'active'
-            : '';
-
-        setNodes((nds) => {
-          return nds.map((n) => {
-            if (n.type === EditorNodeTypes.GROUP) {
-              return {
-                ...n,
-                className: groupClassName,
-              };
-            } else if (n.id === node.id) {
-              return {
-                ...n,
-                position: node.position,
-              };
+            return <Stack gap={2}>{buttons}</Stack>;
+        },
+    },
+    /**
+     * Note that the graph has a huge issue when ran in a popout window, as such we disable it for now
+     */
+    graph: {
+        animated: false,
+        floatable: true,
+        panelExtra: (panelData, context) => {
+            let buttons: React.ReactElement[] = [];
+            if (panelData?.parent?.mode !== 'window') {
+                const maxxed = panelData?.parent?.mode === 'maximize';
+                buttons.push(
+                    <DockButton
+                        key="maximize"
+                        title={
+                            panelData?.parent?.mode === 'maximize' ? 'Restore' : 'Maximize'
+                        }
+                        icon={maxxed ? <MinimizeIcon /> : <MaximizeIcon />}
+                        onClick={() => context.dockMove(panelData, null, 'maximize')}
+                    ></DockButton>,
+                );
             }
 
-            return { ...n };
-          });
-        });
-      },
-      [getIntersectingNodes, setNodes],
-    );
+            return <Stack gap={2}>{buttons}</Stack>;
+        },
+    },
+};
 
-    const { handlers } = useHotkeys({
-      onEdgesDeleted,
-    });
 
-    const handleSelectNewNodeType = async (nodeRequest) => {
-      const dropPosition = nodeRequest.position || {
-        x: dropPanelPosition.x,
-        y: dropPanelPosition.y,
-      };
+const layoutDataFactory = (props, panelItems, ref): LayoutData => {
+    return {
+        dockbox: {
+            mode: 'vertical',
+            children: [
+                {
+                    mode: 'horizontal',
+                    children: [{
+                        mode: 'vertical',
+                        children: [
+                            {
+                                size: 300,
+                                tabs: [
+                                    {
+                                        group: 'popout',
+                                        id: 'dropPanel',
+                                        title: 'Nodes',
+                                        content: <DropPanel  data={panelItems} />,
+                                    },
+                                ],
+                            },
+                            {
+                                size: 300,
+                                tabs: [
+                                    {
+                                        group: 'popout',
+                                        id: 'legend',
+                                        title: 'Legend',
+                                        content: <Legend />,
+                                    }],
+                            }
+                        ]
+                    },
 
-      const nodes = Object.values(graph.nodes);
+                    {
+                        id: 'graphs',
+                        size: 700,
+                        group: 'graph',
 
-      // Couldn't determine the type
-      if (!nodeRequest.type) {
-        return;
-      }
-      if (
-        nodeRequest.type == NodeTypes.INPUT &&
-        nodes.some((x) => x.nodeType() == NodeTypes.INPUT)
-      ) {
-        alert('Only one input node allowed');
-        return null;
-      }
-      if (
-        nodeRequest.type == NodeTypes.OUTPUT &&
-        nodes.some((x) => x.nodeType() == NodeTypes.OUTPUT)
-      ) {
-        alert('Only one output node allowed');
-        return null;
-      }
-      // set x y coordinates in instance
-      const position = reactFlowInstance.project(dropPosition);
-
-      //Lookup the node type
-      const Factory: typeof GraphNode = nodeLookup[nodeRequest.type];
-
-      //Generate the new node
-      const node = new Factory();
-      //Add it to the existing graph
-      graph.addNode(node);
-
-      //Add the node to the react flow instance
-      const reactFlowNode = {
-        id: node.id,
-        type: 'GenericNode',
-        data: {},
-        position: position || { x: 0, y: 0 },
-      };
-
-      reactFlowInstance.addNodes(reactFlowNode);
+                        panelLock: { panelStyle: 'graph' },
+                        tabs: [{
+                            cached: true,
+                            id: 'graph1',
+                            group: 'graph',
+                            title: 'Graph',
+                            content:
+                                <ReactFlowProvider>
+                                    <EditorApp {...props} ref={ref} />
+                                </ReactFlowProvider>
+                        }],
+                    },
+                    {
+                        size: 300,
+                        group: 'popout',
+                        panelLock: { panelStyle: 'graph' },
+                        tabs: [{
+                            cached: true,
+                            group: 'popout',
+                            id: 'sideSheet',
+                            title: 'Side Sheet',
+                            content: <Sidesheet />,
+                        }],
+                    },
+                    ],
+                },
+            ],
+        },
     };
 
-    const nodeCount = nodes.length;
+}
 
-    return (
-      <GraphProvider graph={graph}>
-        <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
-          <Box
-            className="editor"
-            css={{
-              height: '100%',
-              backgroundColor: '$bgCanvas',
-              display: 'flex',
-              flexDirection: 'row',
-              flexGrow: 1,
-            }}
-          >
-            <Box
-              css={{
-                position: 'absolute',
-                zIndex: 500,
-                display: 'flex',
-                flexDirection: 'row',
-                height: 'inherit',
-              }}
-            >
-              {showMenu && (
-                <Stack
-                  direction="column"
-                  gap={2}
-                  css={{
-                    position: 'relative',
-                    padding: '$3',
-                    paddingRight: 0,
-                    zIndex: 600,
-                  }}
-                >
-                  {props.menuContent}
-                  <Settings />
-                </Stack>
-              )}
-              {showNodesPanel && (
-                <Box
-                  css={{
-                    paddingLeft: '$3',
-                    paddingTop: '$3',
-                    paddingBottom: '$3',
-                  }}
-                >
-                  <Box
-                    css={{
-                      backgroundColor: '$bgDefault',
-                      width: 'var(--globals-drop-panel-width)',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      border: '1px solid $borderSubtle',
-                      boxShadow: '$small',
-                      borderRadius: '$medium',
-                      overflowY: 'auto',
-                      maxHeight: '100%',
-                    }}
-                  >
-                    <DropPanel groups={[]} items={panelItems} />
-                  </Box>
-                </Box>
-              )}
-            </Box>
-            <ReactFlow
-              ref={reactFlowWrapper}
-              nodes={nodes}
-              onNodesChange={onNodesChange}
-              onEdgesChange={onEdgesChange}
-              onEdgeDoubleClick={onEdgeDblClick}
-              onEdgesDelete={onEdgesDeleted}
-              edges={edges}
-              elevateNodesOnSelect={false}
-              onNodeDragStop={onNodeDragStop}
-              snapToGrid={snapGridValue}
-              edgeTypes={edgeTypes}
-              nodeTypes={fullNodeTypesRef.current}
-              snapGrid={snapGridCoords}
-              onNodeDrag={onNodeDrag}
-              onConnect={onConnect}
-              onDrop={onDrop}
-              onConnectEnd={onConnectEnd}
-              selectNodesOnDrag={true}
-              defaultEdgeOptions={defaultEdgeOptions}
-              panOnScroll={true}
-              //Note that we cannot use pan on drag or it will affect the context menu
-              onPaneContextMenu={handleContextMenu}
-              onEdgeContextMenu={handleEdgeContextMenu}
-              // onNodeContextMenu={handleNodeContextMenu}
-              selectionMode={SelectionMode.Partial}
-              onDragOver={onDragOver}
-              selectionOnDrag={true}
-              panOnDrag={panOnDrag}
-              minZoom={-Infinity}
-              zoomOnDoubleClick={false}
-              defaultViewport={defaultViewport}
-              onlyRenderVisibleElements={true}
-              maxZoom={Infinity}
-              proOptions={proOptions}
-            >
-              {showGridValue && (
-                <Background
-                  color="var(--colors-borderMuted)"
-                  gap={16}
-                  size={2}
-                  variant={BackgroundVariant.Dots}
-                />
-              )}
-              {nodeCount === 0 && props.emptyContent}
-              <SelectedNodesToolbar />
-              <CustomControls position="bottom-center" />
-              <CommandMenu
-                reactFlowWrapper={reactFlowWrapper}
-                items={panelItems}
-                handleSelectNewNodeType={handleSelectNewNodeType}
-              />
-              {props.children}
-            </ReactFlow>
-          </Box>
-        </GlobalHotKeys>
-        <PaneContextMenu
-          id={props.id + '_pane'}
-          onSelectItem={handleSelectNewNodeType}
-        />
-        <NodeContextMenu id={props.id + '_node'} node={contextNode} />
-        <EdgeContextMenu id={props.id + '_edge'} edge={contextEdge} />
-        <Sidesheet graph={graph} />
-      </GraphProvider>
-    );
-  },
-);
 
-export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
-  (props: EditorProps, ref) => {
-    const { onOutputChange, externalLoader } = props;
-    return (
-      <ReduxProvider>
-        <ReactFlowProvider>
-          <OnOutputChangeContextProvider
-            onOutputChange={onOutputChange || noop}
-          >
+
+export const LayoutController = React.forwardRef<ImperativeEditorRef, EditorProps>(
+    (props: EditorProps, ref) => {
+        const { externalLoader,
+            menuItems = defaultMenuDataFactory(),
+            panelItems = defaultPanelGroupsFactory(), } = props;
+
+        const registerDocker = useRegisterRef<DockLayout>('docker');
+
+        //Generate once
+        const defaultDockLayout: LayoutData = useMemo(() => layoutDataFactory(props, panelItems, ref), []);
+
+
+        return (
             <ExternalLoaderProvider externalLoader={externalLoader}>
-              <Tooltip.Provider>
-                <EditorApp {...props} ref={ref} />
-              </Tooltip.Provider>
+
+                <Stack direction='column' css={{ height: '100%' }}>
+                    <MenuBar menu={menuItems} />
+                    <Tooltip.Provider>
+                        <DockLayout
+                            ref={registerDocker}
+                            defaultLayout={defaultDockLayout}
+                            groups={groups}
+                            style={{ flex: 1 }}
+                        />
+                    </Tooltip.Provider>
+                </Stack>
+
             </ExternalLoaderProvider>
-          </OnOutputChangeContextProvider>
-        </ReactFlowProvider>
-      </ReduxProvider>
-    );
-  },
+
+        );
+    },
 );
+
+
+export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>((props: EditorProps, ref) => {
+    return <ReduxProvider>
+        <LayoutController {...props} ref={ref} />
+    </ReduxProvider >
+});

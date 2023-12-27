@@ -1,4 +1,5 @@
-import { PanelGroup } from '@/components/flow/DropPanel/PanelItems';
+import { Menu } from '@/components/menubar/data';
+import { PanelGroup } from '@/components/panels/dropPanel/index.js';
 import {
   ExternalLoadOptions,
   SerializedGraph,
@@ -11,21 +12,12 @@ export interface EditorProps {
    * Items to display in the drop panel.
    * Not populating this will result in the default items being displayed.
    */
-  panelItems?: PanelGroup[];
+  panelItems: PanelGroup[];
   /**
    * A lookup of the custom node types to display in the editor.
    * Not populating this will result in the default items being displayed.
    */
   nodeTypes?: Record<string, React.ReactElement>;
-  /**
-   * A lookup of the initial state of the custom nodes.
-   * Not populating this will result in the default items being displayed.
-   */
-  stateInitializer?: Record<string, Record<string, unknown>>;
-  /**
-   * Menu content to displya
-   */
-  menuContent?: React.ReactNode;
   emptyContent?: React.ReactNode;
   children?: React.ReactNode;
   onOutputChange?: (output: Record<string, unknown>) => void;
@@ -34,14 +26,9 @@ export interface EditorProps {
    * Whether or not to show the menu
    */
   showMenu?: boolean;
-  /**
-   * Whether or not to show the nodes panel
-   */
-  shouldShowNodesPanel?: boolean;
-  /**
-   * Callback to be called when the nodes panel is shown or hidden
-   */
-  onShowNodesPanelChange?: (show: boolean) => void;
+
+
+  menuItems?: Menu;
 }
 
 export type EditorState = {
@@ -57,7 +44,6 @@ export type ImperativeEditorRef = {
    */
   clear: () => void;
   save: () => EditorState;
-  forceUpdate: () => void;
   load: (state: EditorState) => void;
   getFlow: () => ReactFlowInstance;
 };

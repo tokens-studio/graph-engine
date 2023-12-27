@@ -1,0 +1,1 @@
+import {makeAuto} from 'mobx';

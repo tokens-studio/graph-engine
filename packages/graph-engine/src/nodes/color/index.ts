@@ -1,6 +1,6 @@
 // import { node as advancedBlend } from "./advancedBlend.js";
 import blend from "./blend.js";
-// import { node as contrasting } from "./contrasting.js";
+import contrasting from "./contrasting.js";
 // import { node as contrastingFromSet } from "./contrastingFromSet.js";
 // import { node as convert } from "./convert.js";
 import create from "./create.js";
@@ -16,6 +16,7 @@ import nearest from "./nearest.js";
 export const nodes = [
   blend,
   poline,
+  contrasting,
   scale,
   name,
   create,

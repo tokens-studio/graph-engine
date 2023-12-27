@@ -1,17 +1,16 @@
 import {
   Menu,
-  Item,
   Separator,
-  Submenu,
-  useContextMenu,
 } from 'react-contexify';
 import React, { useCallback } from 'react';
-import { useReactFlow, Node } from 'reactflow';
+import { useReactFlow } from 'reactflow';
 import { useAutoLayout } from './hooks/useAutolayout';
 import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '@/redux/selectors/settings';
 import { useDispatch } from '@/hooks';
 import { ContextMenuItem } from './ContextMenuStyles';
+import { clear } from './actions/clear';
+import { useGraph } from '@/hooks/useGraph';
 
 export interface IPaneContextMenu {
   id: string;
@@ -23,6 +22,7 @@ export const PaneContextMenu = ({ id, onSelectItem }: IPaneContextMenu) => {
   const showGridValue = useSelector(showGrid);
   const snapGridValue = useSelector(snapGrid);
   const dispatch = useDispatch();
+  const graph = useGraph();
 
   const handleTriggerAddNode = useCallback(
     (e) => {
@@ -43,18 +43,13 @@ export const PaneContextMenu = ({ id, onSelectItem }: IPaneContextMenu) => {
     dispatch.settings.setSnapGrid(!snapGridValue);
   }, [dispatch.settings, snapGridValue]);
 
-  const forceUpdate = useCallback(() => {
-    dispatch.graph.forceNewUpdate();
-  }, [dispatch.graph]);
-
-  const clear = useCallback(() => {
-    reactFlowInstance.setNodes([]);
-    reactFlowInstance.setEdges([]);
-  }, [reactFlowInstance]);
+  const clearCallback = useCallback(() => {
+    clear(reactFlowInstance, graph);
+  }, [graph, reactFlowInstance]);
 
   const layout = useAutoLayout();
   return (
-    <Menu id={id} preventDefaultOnKeydown animation="">
+    <Menu id={id}>
       <ContextMenuItem onClick={handleTriggerAddNode}>Add node</ContextMenuItem>
       <ContextMenuItem onClick={layout}>Apply Layout</ContextMenuItem>
       <ContextMenuItem onClick={setShowGrid}>
@@ -63,9 +58,8 @@ export const PaneContextMenu = ({ id, onSelectItem }: IPaneContextMenu) => {
       <ContextMenuItem onClick={recenter}>Recenter</ContextMenuItem>
       <Separator />
       <ContextMenuItem onClick={setSnapGrid}>Snap Grid</ContextMenuItem>
-      <ContextMenuItem onClick={forceUpdate}>Force Update</ContextMenuItem>
       <Separator />
-      <ContextMenuItem onClick={clear}>Clear</ContextMenuItem>
+      <ContextMenuItem onClick={clearCallback}>Clear</ContextMenuItem>
     </Menu>
   );
 };

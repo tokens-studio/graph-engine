@@ -48,15 +48,19 @@ export class Node {
   private _graph?: Graph;
   private _isRunning: boolean = false;
 
+  public error?: Error;
+
   constructor(props?: INodeDefinition) {
     this.id = props?.id || uuid();
 
     makeObservable(this, {
       inputs: observable,
       outputs: observable,
+      error: observable,
       addInput: action,
       isRunning: computed,
       run: action,
+      execute: action,
       addOutput: action,
       clearOutputs: action,
     });
@@ -70,20 +74,40 @@ export class Node {
    */
   addInput<T = any>(name: string, type: TypeDefinition) {
     //Extract the default value from the schema
-    const value = getDefaults(type.type);
     this.inputs[name] = new Input<T>({
       name,
-      type,
-      value,
+      ...type,
+      visible: Boolean(type.visible),
+      value: getDefaults(type.type),
       node: this,
     });
   }
   addOutput<T = any>(name: string, type: TypeDefinition) {
     this.outputs[name] = new Output<T>({
       name,
-      type,
+      ...type,
+      type: type.type,
+      visible: Boolean(type.visible),
+      value: getDefaults(type.type),
       node: this,
     });
+  }
+
+  removeInput(name: string) {
+    if (this._graph) {
+      this._graph.inEdges(this.id, name).forEach((edge) => {
+        if (edge.id) {
+          return;
+        }
+        this._graph?.removeEdge(edge.id);
+      });
+    }
+    delete this.inputs[name];
+
+    if (this._graph) {
+      //Ask to be recalculated
+      this._graph?.update(this.id);
+    }
   }
 
   /**
@@ -91,7 +115,7 @@ export class Node {
    * This can be used directly, but you should preferably never call this and instead execute from the graph which will control the lifecycle of the node
    * @override
    */
-  execute(): Promise<void> | void {}
+  execute(): Promise<void> | void { }
 
   /**
    * Runs the node. Internally this calls the execute method, but the run entrypoint allows for additional tracking and lifecycle management
@@ -99,12 +123,20 @@ export class Node {
   async run() {
     this._isRunning = true;
     const start = performance.now();
-    await this.execute();
+    try {
+      await this.execute();
+      this.error = undefined;
+    }
+    catch (err) {
+      this.error = err as Error;
+    }
     const end = performance.now();
     this._isRunning = false;
 
     return {
-      executionTime: end - start,
+      error: this.error,
+      start,
+      end,
     };
   }
 
@@ -153,7 +185,6 @@ export class Node {
       id: this.id,
       type: this.nodeType(),
       inputs: Object.values(this.inputs)
-        .filter((value) => !value.isConnected())
         .map((x) => x.serialize()),
     };
   }
@@ -163,7 +194,7 @@ export class Node {
    * @param serialized
    * @returns
    */
-  public static deserialize(serialized: SerializedNode): Node {
+  public static deserialize(serialized: SerializedNode, lookup: Record<string, NodeFactory>): Node {
     const newNode = new this({
       id: serialized.id,
     });
@@ -178,6 +209,7 @@ export class Node {
         newNode.inputs[input.name] = new Input({
           name: input.name,
           type: input.type,
+          visible: input.visible,
           value: input.value,
           node: newNode,
         });
@@ -241,5 +273,5 @@ export class Node {
 }
 
 export interface NodeFactory {
-  deserialize(serialized: SerializedNode): Node;
+  deserialize(serialized: SerializedNode, lookup: Record<string, NodeFactory>): Node;
 }

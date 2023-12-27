@@ -58,6 +58,6 @@ export default class NodeDefinition extends Node {
     const array = this.getRawInput("array");
     const sorted = orderBy(array.value, [sortBy], order);
 
-    this.setOutput("value", sorted, array.type());
+    this.setOutput("value", sorted, array.type);
   }
 }

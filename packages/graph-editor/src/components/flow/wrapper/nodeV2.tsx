@@ -1,15 +1,16 @@
 import { Node } from './node.tsx';
-import type {
-  Node as GraphNode,
-  Input,
-  Output,
-} from '@tokens-studio/graph-engine';
+import type { Node as GraphNode } from '@tokens-studio/graph-engine';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { useDispatch } from '@/hooks/useDispatch.ts';
-import { Box, Stack } from '@tokens-studio/ui';
+import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Handle, HandleContainer } from '../handles.tsx';
-import { useGraph } from '@/context/GraphContext.tsx';
+import { COLOR, CURVE, Port } from '@tokens-studio/graph-engine';
+import colors from '@/tokens/colors.ts';
+import { BezierIcon } from '@/components/icons/BezierIcon.tsx';
+import { ColorWheelIcon } from '@radix-ui/react-icons';
+import { useGraph } from '@/hooks/useGraph.ts';
+import { useSelector } from 'react-redux';
+import { inlineTypes } from '@/redux/selectors/settings.ts';
 
 export type UiNodeDefinition = {
   //Name of the Node
@@ -47,66 +48,98 @@ export interface INodeWrap {
   node: GraphNode;
 }
 const NodeWrap = observer(({ node }: INodeWrap) => {
-  const dispath = useDispatch();
-
   return (
     <Node
       id={node.id}
       isAsync={node.isRunning}
       // icon={nodeDef.icon}
       title={node.factory.title || 'Node'}
-      error={null}
+      error={node.error || null}
       controls={''}
     >
       <Stack direction="column" gap={2}>
         <Stack direction="row" gap={2}>
-          <Inputs ports={node.inputs} />
-          <Outputs ports={node.outputs} />
+          <HandleContainer type="target" full>
+            <PortArray ports={node.inputs} />
+          </HandleContainer>
+          <HandleContainer type="source" full>
+            <PortArray ports={node.outputs} />
+          </HandleContainer>
         </Stack>
       </Stack>
-      {/* <Node /> */}
-
-      {/* <NodeToolbar>
-          <Sidesheet title={nodeDef.title}>{settingsContent}</Sidesheet>
-        </NodeToolbar> */}
     </Node>
   );
 });
 
-export interface IInputs {
-  ports: Record<string, Input>;
+export interface IPortArray {
+  ports: Record<string, Port>;
 }
-export const Inputs = observer(({ ports }: IInputs) => {
+export const PortArray = observer(({ ports }: IPortArray) => {
   const entries = Object.values(ports).sort();
   return (
-    <HandleContainer type="target" full>
+    <>
       {entries.map((input) => (
         <InputHandle port={input} />
       ))}
-    </HandleContainer>
+    </>
   );
 });
 
-export interface IOutputs {
-  ports: Record<string, Output>;
-}
-export const Outputs = observer(({ ports }: IOutputs) => {
-  const entries = Object.values(ports)
-    .sort()
-    .filter((x) => x.visible);
+const extractTypeIcon = (port: Port) => {
+  //TODO first check if the port has an explicit custom type defined
+
+  //Default primitives
+
+  //Lookup icons
+  const icons = {
+    [COLOR]: <ColorWheelIcon />,
+    [CURVE]: <BezierIcon />,
+  };
+
+  const icon = icons[port.type.$id || ''];
+  const isArray = Boolean(port.type.items);
+
+  if (icon) {
+    return { icon, array: isArray };
+  }
+
+  const primitive = colors[port.type.type];
+
+  const color = primitive ? primitive.value : colors.any.value;
+
+  return { icon, color, isArray };
+};
+
+export const InlineTypeLabel = ({ port }: { port: Port }) => {
+  //TODO add support for specific types through the $id
   return (
-    <HandleContainer type="source" full>
-      {entries.map((input) => (
-        <Handle id={input.name} key={input.name}>
-          {input.name}
-        </Handle>
-      ))}
-    </HandleContainer>
+    <Box
+      css={{
+        background: '$accentMuted',
+        color: '$fgOnEmphasis',
+        padding: '$1 $2',
+        fontSize: '$xxsmall',
+        borderRadius: '$small',
+        textTransform: 'uppercase',
+      }}
+    >
+      {port.type.type || 'any'}
+    </Box>
   );
-});
+};
 
-const InputHandle = observer(({ port }: { port: Input }) => {
-  if (!port.visible) return null;
-
-  return <Handle id={port.name}>{port.name}</Handle>;
+const InputHandle = observer(({ port }: { port: Port }) => {
+  const inlineTypesValue = useSelector(inlineTypes);
+  const typeCol = extractTypeIcon(port);
+  return (
+    <Handle
+      {...typeCol}
+      visible={port.visible || port.isConnected}
+      id={port.name}
+      full
+    >
+      <Text>{port.name}</Text>
+      {inlineTypesValue && <InlineTypeLabel port={port} />}
+    </Handle>
+  );
 });

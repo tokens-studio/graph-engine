@@ -1,10 +1,6 @@
 import { createSelector } from 'reselect';
 import { ui } from './roots.ts';
 
-export const showNodesPanelSelector = createSelector(
-  ui,
-  (state) => state.showNodesPanel,
-);
 
 export const showNodesCmdPaletteSelector = createSelector(
   ui,
@@ -14,9 +10,4 @@ export const showNodesCmdPaletteSelector = createSelector(
 export const storeNodeInsertPositionSelector = createSelector(
   ui,
   (state) => state.storeNodeInsertPosition,
-);
-
-export const isSideSheetMinimizedSelector = createSelector(
-  ui,
-  (state) => state.isSideSheetMinimized,
 );

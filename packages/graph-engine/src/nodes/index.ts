@@ -2,6 +2,7 @@ import { Node } from "@/programmatic/node.js";
 import { nodes as accessibility } from "./accessibility/index.js";
 import { nodes as array } from "./array/index.js";
 import { nodes as color } from "./color/index.js";
+import { nodes as curve } from "./curves/index.js";
 import { nodes as css } from "./css/index.js";
 import { nodes as generic } from "./generic/index.js";
 import { nodes as input } from "./input/index.js";
@@ -20,6 +21,7 @@ export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
   array,
   color,
   css,
+  curve,
   generic,
   input,
   logic,

@@ -31,6 +31,6 @@ export default class NodeDefinition extends Node {
     const array = this.getRawInput("array");
     const calculated = array.value.slice(start, end);
 
-    this.setOutput("value", calculated, array.type());
+    this.setOutput("value", calculated, array.type);
   }
 }

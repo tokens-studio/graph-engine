@@ -23,6 +23,6 @@ export default class NodeDefinition extends Node {
     //Normal reverse mutates the array. We don't want that.
     const reversed = [...array.value].reverse();
 
-    this.setOutput("value", reversed, array.type());
+    this.setOutput("value", reversed, array.type);
   }
 }

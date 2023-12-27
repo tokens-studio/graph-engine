@@ -32,6 +32,7 @@
     }
   },
   "include": [
+    "stories/**/*",
     "src/**/*",
     "tests/**/*"
   ],

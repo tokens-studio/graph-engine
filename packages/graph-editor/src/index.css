@@ -1,5 +1,11 @@
 @import url('reactflow/dist/style.css');
 @import url('react-contexify/ReactContexify.css');
+@import url('rc-dock/dist/rc-dock.css');
+@import url('./css/rc-dock.css');
+@import url('rc-menu/assets/index.css');
+@import url('./components/menubar/menubar.css');
+@import url("mafs/core.css");
+@import url('./components/curveEditor/override.css');
 
 :root {
     --globals-drop-panel-width: 240px;
@@ -28,38 +34,47 @@
     opacity: 0.25;
 }
 
-.react-flow__node.selectable.selected, .react-flow__node.selectable:focus {
+.react-flow__node.selectable.selected,
+.react-flow__node.selectable:focus {
     --nodeBorderColor: var(--colors-accentMuted);
     --nodeBgColor: var(--colors-accentBg);
     --nodeTextColor: var(--colors-fgDefault);
     outline: 2px solid var(--colors-accentMuted);
 }
 
-.react-flow__edge.selected .react-flow__edge-path, .react-flow__edge:focus .react-flow__edge-path, .react-flow__edge:focus-visible .react-flow__edge-path {
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:focus .react-flow__edge-path,
+.react-flow__edge:focus-visible .react-flow__edge-path {
     stroke: var(--colors-bgSubtle);
 }
+
 .group-color-picker {
     display: none;
     position: absolute;
     top: 100%;
     margin-top: 1em;
 }
+
 .react-flow__node.selectable.selected .group-color-picker {
     display: block;
 }
+
 .react-flow__node-studio_tokens_group {
     background: transparent;
 }
+
 .react-flow__minimap {
     background: var(--colors-bgCanvas);
-} 
+}
 
 .react-flow__minimap-mask {
     fill: var(--colors-borderDefault) !important;
 }
+
 .react-flow__handle-right {
     right: -1.3em;
 }
+
 .react-flow__handle-left {
     left: -1.3em;
 }
@@ -68,58 +83,34 @@
     margin: 0;
 }
 
-.react-flow__edge-path, .react-flow__connection-path {
+.react-flow__edge-path,
+.react-flow__connection-path {
     stroke: var(--colors-borderMuted);
 }
-.react-flow__edge.selected .react-flow__edge-path, .react-flow__edge:focus .react-flow__edge-path, .react-flow__edge:focus-visible .react-flow__edge-path {
+
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:focus .react-flow__edge-path,
+.react-flow__edge:focus-visible .react-flow__edge-path {
     stroke-width: 5 !important;
     stroke: var(--colors-focus);
 }
-.react-flow__handle.react-flow__handle-connecting:after {
-    background: #ff6060;
+
+.react-flow__handle-connecting:not(.react-flow__handle-valid) {
+    cursor:not-allowed;
 }
-.react-flow__handle.react-flow__handle-valid:after {
-    background: #5d9 !important;
+
+.react-flow__handle-connecting:not(.react-flow__handle-valid):after,
+.react-flow__handle-connecting:not(.react-flow__handle-valid)>* {
+    background: #ff6060 !important;
+}
+
+.react-flow__handle.react-flow__handle-valid {
+    border: 3px solid #5d9 !important;
 }
 
 
-.mosaic-window .mosaic-window-toolbar, .mosaic-preview .mosaic-window-toolbar{
-    color:var(--colors-fgMuted);
-    background:var(--colors-bgCanvas); ;
-}
 
-.mosaic-root{
-    background:var(--colors-borderMuted); ;
-    top:2px;
-    left:2px;
-    right:2px;
-    bottom:2px;
-}
-
-.mosaic-split,.mosaic.mosaic-blueprint-theme{
-    background:var(--colors-borderMuted); ;
-}
-
-.mosaic-split.-row{
-    width:4px;
-    margin-left:2px;
-}
-.mosaic-split.-column {
-    margin-top: -2px;
-    height: 4px;
-}
-
-.mosaic.mosaic-blueprint-theme .mosaic-window .mosaic-window-title, .mosaic.mosaic-blueprint-theme .mosaic-preview .mosaic-window-title,
-.mosaic.mosaic-blueprint-theme .mosaic-window .mosaic-window-toolbar.draggable:hover .mosaic-window-title, .mosaic.mosaic-blueprint-theme .mosaic-preview .mosaic-window-toolbar.draggable:hover .mosaic-window-title{
-    color:var(--colors-fgMuted);
-    font-size: var(--fontSizes-xsmall);
-}
-
-.mosaic.mosaic-blueprint-theme .mosaic-window .mosaic-window-toolbar.draggable:hover, .mosaic.mosaic-blueprint-theme .mosaic-preview .mosaic-window-toolbar.draggable:hover {
-    background:var(--colors-bgEmphasis); ;
-}
-
-.contexify{
+.contexify {
     --contexify-menu-bgColor: var(--colors-contextMenuBg);
     --contexify-separator-color: var(--colors-contextMenuSeparator);
     --contexify-item-color: var(--colors-contextMenuFg);
@@ -128,7 +119,7 @@
     --contexify-rightSlot-color: var(--colors-contextMenuFgMuted);
     --contexify-activeRightSlot-color: var(--colors-contextMenuFg);
     --contexify-arrow-color: var(--colors-contextMenuFgMuted);
-    --contexify-activeArrow-color:  var(--colors-contextMenuFgMuted);
+    --contexify-activeArrow-color: var(--colors-contextMenuFgMuted);
     --contexify-menu-shadow: var(--shadows-contextMenu);
 }
 
@@ -179,6 +170,7 @@
     border: none;
     width: 100%;
     cursor: text;
+
     &:focus {
         outline: none;
     }
@@ -207,13 +199,13 @@
     border: 0;
     margin-right: 8px;
     background: var(--gray6);
-  }
+}
 
-  [cmdk-framer-right] {
+[cmdk-framer-right] {
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
     margin-left: 8px;
     width: 60%;
-  }
+}

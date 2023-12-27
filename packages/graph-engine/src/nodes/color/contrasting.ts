@@ -12,6 +12,7 @@ import {
 import { NodeTypes } from "@/types.js";
 import { INodeDefinition, Node } from "@/programmatic/node.js";
 import Color from "colorjs.io";
+import { Input, Output } from "@/programmatic";
 
 export enum WcagVersion {
   V2 = "2.1",
@@ -22,6 +23,21 @@ export default class NodeDefinition extends Node {
   static title = "Contrasting Color";
   static type = NodeTypes.CONTRASTING;
   static description = "Returns the name of the color";
+
+
+  declare inputs: {
+    a: Input;
+    b: Input;
+    background: Input;
+    wcag: Input;
+    threshold: Input<number>;
+  };
+  declare outputs: {
+    color: Output;
+    sufficient: Output<boolean>;
+    contrast: Output<number>;
+  };
+
   constructor(props?: INodeDefinition) {
     super(props);
     this.addInput("a", {

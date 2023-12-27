@@ -11,11 +11,19 @@ export default class NodeDefinition extends Node {
   constructor(props?: INodeDefinition) {
     super(props);
     this.addInput("condition", {
+      type: BooleanSchema,
+      visible: true,
+    });
+    this.addInput("a", {
+      type: AnySchema,
+      visible: true,
+    });
+    this.addInput("b", {
       type: AnySchema,
       visible: true,
     });
     this.addOutput("value", {
-      type: BooleanSchema,
+      type: AnySchema,
       visible: true,
     });
   }
@@ -27,6 +35,6 @@ export default class NodeDefinition extends Node {
 
     const val = condition ? a : b;
 
-    this.setOutput("value", val.value, val.type());
+    this.setOutput("value", val.value, val.type);
   }
 }

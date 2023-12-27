@@ -1,7 +1,7 @@
 import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
-import { StringSchema } from "@/schemas/index.js";
+import { AnySchema, StringSchema } from "@/schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Stringify";
@@ -10,7 +10,7 @@ export default class NodeDefinition extends Node {
   constructor(props?: INodeDefinition) {
     super(props);
     this.addInput("value", {
-      type: StringSchema,
+      type: AnySchema,
       visible: true,
     });
     this.addOutput("value", {

@@ -3,6 +3,24 @@ import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { AnySchema, StringSchema } from "@/schemas/index.js";
 
+/**
+ * @example
+ * The expected way to use the switch since it relies on dynamic inputs, is to add new Inputs for the switch node 
+ * ```ts
+ * const switchNode = new SwitchNode();
+ * switchNode.addInput("foo", {
+ *  type: AnySchema,
+ * });
+ * 
+ * switchNode.addInput("bar", {
+ * type: AnySchema,
+ * });
+ * 
+ * //Now if the condition matches the name 'foo' it will output the value of the foo input
+ * // If no condition matches, it will output the value of the `default` input
+ * 
+ * ```
+ */
 export default class NodeDefinition extends Node {
   static title = "Switch";
   static type = NodeTypes.SWITCH;
@@ -28,8 +46,13 @@ export default class NodeDefinition extends Node {
     const { condition } = this.getAllInputs();
     const defaultVal = this.getRawInput("default");
 
-    //TODO
+    //Check if an input matches the condition
+    if (this.inputs[condition]) {
+      const input = this.getRawInput(condition);
+      this.setOutput("value", input.value, input.type);
+      return;
+    }
 
-    this.setOutput("value", defaultVal.value, defaultVal.type());
+    this.setOutput("value", defaultVal.value, defaultVal.type);
   }
 }

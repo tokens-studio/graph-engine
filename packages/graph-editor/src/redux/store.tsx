@@ -3,6 +3,7 @@ import { RootModel, models } from './models/index.ts';
 import { SettingsState } from './models/settings.ts';
 import { UIState } from './models/ui.ts';
 import { GraphState } from './models/graph.ts';
+import { RefState } from './models/refs.ts';
 
 export const store = init({
   models,
@@ -20,4 +21,5 @@ export type RootState = {
   graph: GraphState;
   settings: SettingsState;
   ui: UIState;
+  refs: RefState
 };

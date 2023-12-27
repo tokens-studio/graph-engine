@@ -5,9 +5,9 @@ export enum NodeTypes {
   INPUT = "studio.tokens.generic.input",
   OUTPUT = "studio.tokens.generic.output",
   SUBGRAPH = "studio.tokens.generic.subgraph",
+  ARRAY = "studio.tokens.generic.array",
   PASS_THROUGH = "studio.tokens.generic.passthrough",
 
-  ENUMERATED_INPUT = "studio.tokens.input.enumerated-constant",
   CONSTANT = "studio.tokens.input.constant",
   SLIDER = "studio.tokens.input.slider",
   SPREAD = "studio.tokens.input.extract",
@@ -17,6 +17,9 @@ export enum NodeTypes {
   CSS_MAP = "studio.tokens.css.map",
   CSS_BOX = "studio.tokens.css.box",
   CSS_FUNCTIONS = "studio.tokens.css.function",
+
+  //Curves
+  SAMPLE_CURVE = "studio.tokens.curve.sample",
 
   //Logic
   IF = "studio.tokens.logic.if",
@@ -86,9 +89,9 @@ export enum NodeTypes {
   EXTRACT_TOKENS = "studio.tokens.sets.extractTokens",
 
   //Series
-  ARITHMETIC_SERIES = "studio.tokens.sets.arithmetic",
-  HARMONIC_SERIES = "studio.tokens.sets.harmonic",
-  GEOMETRIC_SERIES = "studio.tokens.sets.geometric",
+  ARITHMETIC_SERIES = "studio.tokens.series.arithmetic",
+  HARMONIC_SERIES = "studio.tokens.series.harmonic",
+  GEOMETRIC_SERIES = "studio.tokens.series.geometric",
 
   //String
   UPPERCASE = "studio.tokens.string.uppercase",

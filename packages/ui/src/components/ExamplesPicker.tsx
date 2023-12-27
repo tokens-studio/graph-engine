@@ -14,6 +14,8 @@ const ExamplesPicker = ({ open, onClose, loadExample }) => {
     onClose();
   };
 
+  return <></>
+
   return (
     <Command.Dialog
       open={open}

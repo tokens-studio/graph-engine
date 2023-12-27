@@ -35,6 +35,6 @@ export default class NodeDefinition extends Node {
 
   execute(): void | Promise<void> {
     const input = this.getRawInput("input");
-    this.setOutput("value", input.value, input.type());
+    this.setOutput("value", input.value, input.type);
   }
 }

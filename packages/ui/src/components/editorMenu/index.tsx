@@ -15,7 +15,7 @@ import { getRectOfNodes, getTransformForBounds } from 'reactflow';
 import { Box, IconButton, Stack } from '@tokens-studio/ui';
 import { toPng } from 'html-to-image';
 import { store } from '@/redux/store.tsx';
-import AppsIcon from '@/assets/svgs/AppsIcon.svg';
+
 import { showNodesPanelSelector } from '@/redux/selectors/index.ts';
 import { useSelector } from 'react-redux';
 import { useDispatch } from '@/hooks/useDispatch.ts';
@@ -45,66 +45,6 @@ export const Menubar = ({
     return activeEditor;
   }, []);
 
-  // TODO: Move all of this to a hook
-  const onSave = useCallback(() => {
-    const editor = findCurrentEditor();
-
-    if (!editor) {
-      return;
-    }
-    const state = editor.current.save();
-    const fileContent = JSON.stringify(state);
-
-    const blob = new Blob([fileContent], { type: 'application/json' });
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `tokens-studio-export.json`;
-    document.body.appendChild(link);
-    link.click();
-
-    // Clean up the URL and link
-    URL.revokeObjectURL(url);
-    document.body.removeChild(link);
-  }, [previewCode, findCurrentEditor]);
-
-  // TODO: Move all of this to a hook
-  const onLoad = useCallback(() => {
-    const editor = findCurrentEditor();
-    if (!editor) {
-      return;
-    }
-    // create an input element
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.addEventListener('change', function (event) {
-      //@ts-ignore
-      const files = event?.target?.files;
-      const file = files[0];
-
-      // do something with the file, like reading its contents
-      const reader = new FileReader();
-      reader.onload = function () {
-        const resolver = JSON.parse(reader.result as string) as ResolverData;
-
-        //TODO , this needs a refactor. We need to wait for the clear to finish
-        // as the nodes still get one final update by the dispatch before they are removed which
-        // causes nulls to occur everywhere. They need to be unmounted
-        setTimeout(() => {
-          if (resolver.code !== undefined) {
-            setPreviewCode(resolver.code);
-          }
-
-          editor.current.load(resolver);
-        }, 0);
-      };
-      reader.readAsText(file);
-    });
-
-    // simulate a click on the input element to trigger the file picker dialog
-    input.click();
-  }, [findCurrentEditor, setPreviewCode]);
 
   // TODO: Move all of this to a hook
   const onPrint = useCallback(async () => {
@@ -157,52 +97,7 @@ export const Menubar = ({
       gap={2}
       css={{ flexGrow: 1 }}
     >
-      <Stack
-        direction="column"
-        css={{
-          backgroundColor: '$bgDefault',
-          padding: '$2',
-          borderRadius: '$medium',
-          border: '1px solid',
-          borderColor: '$borderSubtle',
-          boxShadow: '$small',
-        }}
-      >
-        <IconButton
-          tooltip="Add nodes (n)"
-          onClick={() => dispatch.ui.setShowNodesPanel(!showNodesPanel)}
-          icon={<AppsIcon />}
-          variant={showNodesPanel ? 'primary' : 'invisible'}
-        />
-        <Box
-          css={{
-            height: '1px',
-            backgroundColor: '$borderSubtle',
-            margin: '$2',
-          }}
-        />
-        <IconButton
-          tooltip="Load .json"
-          variant="invisible"
-          size="medium"
-          icon={<FolderIcon />}
-          onClick={onLoad}
-        />
-        <IconButton
-          tooltip="Save as .json"
-          variant="invisible"
-          size="medium"
-          icon={<FloppyDiscIcon />}
-          onClick={onSave}
-        />
-        <IconButton
-          tooltip="Load example"
-          variant="invisible"
-          size="medium"
-          icon={<FilePlusIcon />}
-          onClick={onLoadExamples}
-        />
-      </Stack>
+
       <Stack direction="column" justify="end" css={{ flexGrow: 1 }}>
         <IconButton
           variant="invisible"

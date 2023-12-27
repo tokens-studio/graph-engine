@@ -2,10 +2,8 @@ import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import {
-  AnySchema,
   BooleanSchema,
   ColorArraySchema,
-  ColorSchema,
   NumberSchema,
   StringArraySchema,
   StringSchema,
@@ -21,6 +19,9 @@ export type PolineNodeOptions = {
   positionFunctionY?: PositionFunction;
   positionFunctionZ?: PositionFunction;
 };
+
+
+const positionFuncs = Object.keys(positionFunctions)
 
 const convertHexToHsl = (hexColor: string): Vector3 => {
   let hsl = converter("hsl");
@@ -49,13 +50,23 @@ export default class NodeDefinition extends Node {
       type: BooleanSchema,
     });
     this.addInput("positionFnX", {
-      type: StringSchema,
+      type: {
+        ...StringSchema,
+        enum: positionFuncs,
+      },
+
     });
     this.addInput("positionFnY", {
-      type: StringSchema,
+      type: {
+        ...StringSchema,
+        enum: positionFuncs,
+      },
     });
     this.addInput("positionFnZ", {
-      type: StringSchema,
+      type: {
+        ...StringSchema,
+        enum: positionFuncs,
+      },
     });
 
     this.addInput("hueShift", {
