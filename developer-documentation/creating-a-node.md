@@ -32,7 +32,7 @@ Create `./packages/ui/src/components/flow/nodes/[TYPE]/[NODE_NAME].tsx` which wi
 
 ```tsx
 import { Stack, Text } from "@tokens-studio/ui";
-import { Handle, HandleContainer } from "#/components/flow/handles.tsx";
+import { Handle, HandleContainer } from "@/components/flow/handles.tsx";
 import { WrapNode, useNode } from "../../wrapper/nodeV2.tsx";
 import { node } from "@tokens-studio/graph-engine/nodes/TYPE/NODE_NAME.js";
 import PreviewAny from "../../preview/any.tsx";

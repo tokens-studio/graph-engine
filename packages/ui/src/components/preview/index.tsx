@@ -3,7 +3,7 @@ import { OutputProvider } from './scope.tsx';
 import { useSelector } from 'react-redux';
 import { Box } from '@tokens-studio/ui';
 import React from 'react';
-import { outputSelector } from '#/redux/selectors/index.ts';
+import { outputSelector } from '@/redux/selectors/index.ts';
 import { TokenContextProvider } from './contextExamples/lion/context.ts';
 
 export const Preview = () => {

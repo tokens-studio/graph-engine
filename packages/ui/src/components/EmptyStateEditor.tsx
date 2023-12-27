@@ -1,4 +1,4 @@
-import { showNodesPanelSelector } from '#/redux/selectors/index.ts';
+import { showNodesPanelSelector } from '@/redux/selectors/index.ts';
 import {
   BatteryChargingIcon,
   FilePlusIcon,

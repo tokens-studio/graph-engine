@@ -1,35 +1,58 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
-
-export const type = NodeTypes.SWITCH;
-
-export const defaults = {
-  //Orders the cases in the UI as the input is an object
-  order: [] as string[],
-};
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { AnySchema, StringSchema } from "@/schemas/index.js";
 
 /**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
+ * @example
+ * The expected way to use the switch since it relies on dynamic inputs, is to add new Inputs for the switch node
+ * ```ts
+ * const switchNode = new SwitchNode();
+ * switchNode.addInput("foo", {
+ *  type: AnySchema,
+ * });
+ *
+ * switchNode.addInput("bar", {
+ * type: AnySchema,
+ * });
+ *
+ * //Now if the condition matches the name 'foo' it will output the value of the foo input
+ * // If no condition matches, it will output the value of the `default` input
+ *
+ * ```
  */
-export const process = (input) => {
-  const candidate = input[input.condition];
+export default class NodeDefinition extends Node {
+  static title = "Switch";
+  static type = NodeTypes.SWITCH;
+  static description =
+    "Switch node allows you to conditionally choose a value based on a condition.";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("default", {
+      type: AnySchema,
+    });
 
-  //TODO I don't like this but we'd need to change the input mapping which will break this node
-  if (candidate === undefined) {
-    return input.default;
+    this.addInput("condition", {
+      type: StringSchema,
+    });
+
+    this.addOutput("value", {
+      type: AnySchema,
+      visible: true,
+    });
   }
 
-  return candidate;
-};
+  execute(): void | Promise<void> {
+    const { condition } = this.getAllInputs();
+    const defaultVal = this.getRawInput("default");
 
-export const node: NodeDefinition = {
-  description:
-    "Switch node allows you to conditionally choose a value based on a condition.",
-  defaults,
-  type,
-  process,
-};
+    //Check if an input matches the condition
+    if (this.inputs[condition]) {
+      const input = this.getRawInput(condition);
+      this.setOutput("value", input.value, input.type);
+      return;
+    }
+
+    this.setOutput("value", defaultVal.value, defaultVal.type);
+  }
+}

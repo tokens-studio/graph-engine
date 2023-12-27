@@ -1,34 +1,38 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { StringSchema } from "@/schemas/index.js";
+//@ts-ignore
+import cssFunctionsData from "mdn-data/css/functions.json" assert { type: "json" };
 
-const type = NodeTypes.CSS_FUNCTIONS;
+const FUNCTION_NAMES = Object.keys(cssFunctionsData);
 
-export type Input = {
-  functionName: string;
-  value: string;
-};
+export default class NodeDefinition extends Node {
+  static title = "CSS Function";
+  static type = NodeTypes.CSS_FUNCTIONS;
+  static description = "Applies a CSS function to the value";
+  constructor(props?: INodeDefinition) {
+    super(props);
 
-export type State = {
-  functionName: string;
-  value: string;
-};
+    this.addInput("functionName", {
+      type: {
+        ...StringSchema,
+        enum: FUNCTION_NAMES,
+      },
+      visible: true,
+    });
+    this.addInput("value", {
+      type: StringSchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: StringSchema,
+      visible: true,
+    });
+  }
 
-const defaults = {
-  functionName: "",
-  value: "",
-};
-
-const process = (input: Input, state: State) => {
-  const final = {
-    ...state,
-    ...input,
-  };
-
-  return `${final.functionName.replace("()", "")}(${final.value})`;
-};
-
-export const node: NodeDefinition<Input, State> = {
-  type,
-  defaults,
-  description: "Applies a selected CSS function to a value.",
-  process,
-};
+  execute(): void | Promise<void> {
+    const { functionName, value } = this.getAllInputs();
+    this.setOutput("value", functionName.replace("()", `(${value})`));
+  }
+}

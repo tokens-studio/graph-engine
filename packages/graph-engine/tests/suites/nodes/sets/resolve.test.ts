@@ -1,104 +1,78 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/set/resolve.js";
-import { IResolvedToken, flatten } from "#/utils/index.js";
+import Node from "@/nodes/set/resolve.js";
+import { IResolvedToken, flatten } from "@/utils/index.js";
+import {
+  DeepKeyTokenMap,
+  SingleBorderToken,
+  SingleBoxShadowToken,
+  SingleToken,
+  SingleTypographyToken,
+  TokenTypes,
+  TypographyValues,
+} from "@tokens-studio/types";
 
 describe("set/resolve", () => {
   it("resolves complex values correctly", async () => {
-    const output = await executeNode({
-      input: {
-        context: flatten({
-          border: {
-            value: {
-              color: "#ff5757",
-              style: "dashed",
-              width: "2px",
-            },
-            type: "border",
-            description: "",
-          },
-          box: {
-            value: [
-              {
-                color: "#eb0000",
-                type: "dropShadow",
-                x: "14",
-                y: "51",
-              },
-            ],
-            type: "boxShadow",
-            description: "",
-          },
-          typo: {
-            value: {
-              lineHeight: "1.5",
-              fontFamily: "Inter",
-              fontWeight: "500",
-            },
-            type: "typography",
-            description: "",
-          },
-        } as unknown as Record<string, IResolvedToken>),
-
-        inputs: flatten({
-          "ref-border": {
-            value: "{border}",
-            type: "border",
-            description: "",
-          },
-          "ref-box": {
-            value: "{box}",
-            type: "boxShadow",
-            description: "",
-          },
-          "ref-typo": {
-            value: "{typo}",
-            type: "typography",
-            description: "",
-          },
-        } as unknown as Record<string, IResolvedToken>),
-      },
-      node,
-      state: {},
-      nodeId: "",
-    });
-
-    expect(output).toStrictEqual({
-      "as Set": [
-        {
+    const node = new Node();
+    node.inputs.inputs.setValue([
+      flatten({
+        "ref-border": {
+          value: "{border}",
+          type: TokenTypes.BORDER,
           description: "",
-          name: "ref-border",
-          type: "border",
+        },
+        "ref-box": {
+          value: "{box}",
+          type: TokenTypes.BOX_SHADOW,
+          description: "",
+        },
+        "ref-typo": {
+          value: "{typo}",
+          type: TokenTypes.TYPOGRAPHY,
+          description: "",
+        },
+      } as unknown as DeepKeyTokenMap),
+    ]);
+    node.inputs.context.setValue([
+      flatten({
+        border: {
           value: {
             color: "#ff5757",
             style: "dashed",
             width: "2px",
           },
-        },
-        {
-          name: "ref-box",
+          type: "border",
           description: "",
-          type: "boxShadow",
+        } as SingleBorderToken,
+        box: {
           value: [
             {
               color: "#eb0000",
               type: "dropShadow",
-              x: 14,
-              y: 51,
+              x: "14",
+              y: "51",
             },
           ],
-        },
-        {
+          type: TokenTypes.BOX_SHADOW,
           description: "",
-          name: "ref-typo",
-          type: "typography",
+        } as SingleBoxShadowToken,
+        typo: {
           value: {
-            lineHeight: 1.5,
+            lineHeight: "1.5",
             fontFamily: "Inter",
-            fontWeight: 500,
+            fontWeight: "500",
           },
-        },
-      ],
-      "ref-border": {
+          type: TokenTypes.TYPOGRAPHY,
+          description: "",
+        } as SingleTypographyToken,
+      }),
+    ]);
+
+    await node.execute();
+
+    const output = node.outputs.value.value;
+
+    expect(output).toEqual([
+      {
         description: "",
         name: "ref-border",
         type: "border",
@@ -108,7 +82,7 @@ describe("set/resolve", () => {
           width: "2px",
         },
       },
-      "ref-box": {
+      {
         name: "ref-box",
         description: "",
         type: "boxShadow",
@@ -121,10 +95,9 @@ describe("set/resolve", () => {
           },
         ],
       },
-
-      "ref-typo": {
-        name: "ref-typo",
+      {
         description: "",
+        name: "ref-typo",
         type: "typography",
         value: {
           lineHeight: 1.5,
@@ -132,6 +105,6 @@ describe("set/resolve", () => {
           fontWeight: 500,
         },
       },
-    });
+    ]);
   });
 });

@@ -1,4 +1,7 @@
-import { WcagVersion } from "../nodes/color/nearest.js";
+export enum WcagVersion {
+  V2 = "2.1",
+  V3 = "3.0",
+}
 
 export const compareFunctions = {
   Contrast: (foreground, background, wcag) => {

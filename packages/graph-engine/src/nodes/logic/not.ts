@@ -1,11 +1,27 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { AnySchema, BooleanSchema } from "@/schemas/index.js";
 
-export const type = NodeTypes.NOT;
+export default class NodeDefinition extends Node {
+  static title = "Logical Not";
+  static type = NodeTypes.NOT;
+  static description = "Not node allows you to negate a boolean value.";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("value", {
+      type: AnySchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: BooleanSchema,
+      visible: true,
+    });
+  }
 
-export const process = (input) => !input.input;
+  execute(): void | Promise<void> {
+    const { value } = this.getAllInputs();
 
-export const node: NodeDefinition = {
-  description: "Not node allows you to negate a boolean value.",
-  type,
-  process,
-};
+    this.setOutput("value", !value);
+  }
+}

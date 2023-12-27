@@ -1,42 +1,35 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { NumberSchema } from "@/schemas/index.js";
 
-export const type = NodeTypes.ROUND;
+export default class NodeDefinition extends Node {
+  static title = "Round";
+  static type = NodeTypes.ROUND;
+  static description =
+    "Round node allows you to adjusts a floating-point number to the nearest integer or to a specified precision.";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
+    this.addInput("precision", {
+      type: NumberSchema,
+    });
 
-export type Options = {
-  value: number;
-  precision: number;
-  radix: number;
-};
+    this.addOutput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
+  }
 
-export const defaults: Options = {
-  value: 0,
-  precision: 0,
-  radix: 1,
-};
+  execute(): void | Promise<void> {
+    const { precision, value } = this.getAllInputs();
 
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-export const process = (input: Options, state: Options) => {
-  //Override with state if defined
-  const final = {
-    ...state,
-    ...input,
-  };
+    const shift = 10 ** precision;
+    const output = Math.round(value * shift) / shift;
 
-  const shift = 10 ** final.precision;
-  return Math.round(final.value * shift) / shift;
-};
-
-export const node: NodeDefinition<Options, Options> = {
-  description:
-    "Round node allows you to adjusts a floating-point number to the nearest integer or to a specified precision.",
-  type,
-  defaults,
-  process,
-};
+    this.setOutput("value", output);
+  }
+}

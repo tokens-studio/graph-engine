@@ -1,37 +1,39 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
-import { SingleToken } from "@tokens-studio/types";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { StringSchema, TokenSetSchema } from "@/schemas/index.js";
 
-export const type = NodeTypes.UNGROUP;
+export default class NodeDefinition extends Node {
+  static title = "Ungroup tokens";
+  static type = NodeTypes.UNGROUP;
+  static description = "Ungroups tokens by removing their namespace";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("accessor", {
+      type: StringSchema,
+      visible: true,
+    });
+    this.addInput("tokens", {
+      type: TokenSetSchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: TokenSetSchema,
+      visible: true,
+    });
+  }
 
-/**
- * Defines the starting state of the node
- */
-export const defaults = {
-  tokens: [],
-};
+  execute(): void | Promise<void> {
+    const { accessor, tokens } = this.getAllInputs();
 
-export type MappedInput = {
-  tokens: SingleToken[];
-};
+    const accessorParts = accessor.split(".");
 
-export const process = (input: MappedInput, state) => {
-  const final = {
-    ...state,
-    ...input,
-  };
-  return final.tokens.map((token) => {
-    const parts = token.name.split(".");
-    const name = parts.length > 1 ? parts.slice(1).join(".") : parts[0];
-    return {
-      ...token,
-      name,
-    };
-  });
-};
+    //We assume that we will throw an error if we cannot find the values
+    let output = tokens;
+    for (const accessor of accessorParts) {
+      output = output[accessor];
+    }
 
-export const node: NodeDefinition<MappedInput, any> = {
-  description: "Ungroups tokens by removing their namespace",
-  type,
-  defaults,
-  process,
-};
+    this.setOutput("value", output);
+  }
+}

@@ -1,19 +1,29 @@
 import { RootModel } from './root.ts';
 import { createModel } from '@rematch/core';
+import { Graph } from '@tokens-studio/graph-engine';
 
 export interface GraphState {
-  forceUpdate: number;
+  graph: Graph;
+  currentNode: string;
 }
 
 export const graphState = createModel<RootModel>()({
   state: {
-    forceUpdate: 0,
+    currentNode: '',
+    graph: new Graph(),
   } as GraphState,
   reducers: {
-    forceNewUpdate(state) {
+    setCurrentNode(state, payload: string) {
       return {
         ...state,
-        forceUpdate: state.forceUpdate + 1,
+        currentNode: payload,
+      };
+    },
+
+    setGraph(state, graph: Graph) {
+      return {
+        ...state,
+        graph,
       };
     },
   },

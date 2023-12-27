@@ -1,0 +1,64 @@
+.rc-menu {
+    color: var(--colors-fgDefault);
+    border: none;
+    font-size: var(--fontSizes-small);
+    box-shadow: var(--shadows-focus);
+}
+
+
+
+.rc-menu-horizontal {
+    margin: 0;
+    background-color: var(--colors-bgDefault);
+    color: var(--colors-fgDefault);
+    border-radius: 0;
+    border:none;
+    box-shadow: none;
+
+}
+
+.rc-menu-horizontal>.rc-menu-item,
+.rc-menu-horizontal>.rc-menu-submenu>.rc-menu-submenu-title {
+    padding: var(--sizes-2) var(--sizes-3);
+    border-radius: --var();
+}
+
+.rc-menu-item-selected {
+    background-color: unset;
+    transform: translateZ(0);
+}
+
+
+.rc-menu-horizontal>.rc-menu-submenu-active,
+.rc-menu-horizontal>.rc-menu-item-active {
+    border-bottom: 2px solid #2db7f5;
+    background-color: var(--colors-bgEmphasis);
+    color: #2baee9;
+}
+
+
+.rc-menu-submenu>.rc-menu {
+    background-color: var(--colors-bgDefault);
+}
+
+.rc-menu-item-active,
+.rc-menu-submenu-active>.rc-menu-submenu-title,
+.rc-menu-submenu-selected {
+    background-color: var(--colors-bgEmphasis);
+}
+
+.rc-menu-vertical>.rc-menu-item,
+.rc-menu-vertical-left>.rc-menu-item,
+.rc-menu-vertical-right>.rc-menu-item,
+.rc-menu-inline>.rc-menu-item,
+.rc-menu-vertical>.rc-menu-submenu>.rc-menu-submenu-title,
+.rc-menu-vertical-left>.rc-menu-submenu>.rc-menu-submenu-title,
+.rc-menu-vertical-right>.rc-menu-submenu>.rc-menu-submenu-title,
+.rc-menu-inline>.rc-menu-submenu>.rc-menu-submenu-title {
+    cursor: pointer;
+    padding: var(--sizes-2) var(--sizes-4);
+}
+
+.rc-menu-item-divider{
+    background-color: var(--colors-borderSubtle);
+}

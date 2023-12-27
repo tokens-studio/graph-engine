@@ -25,10 +25,9 @@ import { styled } from '@stitches/react';
 import FocusTrap from 'focus-trap-react';
 import React, { useCallback, useMemo, useState } from 'react';
 import classNames from 'classnames/dedupe.js';
-import useDetachNodes from '../hooks/useDetachNodes.ts';
-import { useSelector } from 'react-redux';
-import { debugMode, obscureDistance } from '#/redux/selectors/settings.ts';
+import useDetachNodes from '../../../hooks/useDetachNodes.ts';
 import GraphLib from 'graphlib';
+import { useDispatch } from '@/hooks/useDispatch.ts';
 const { Graph, alg } = GraphLib;
 const CollapserContainer = styled('div', {});
 
@@ -45,7 +44,6 @@ interface NodeProps {
   children?: React.ReactNode;
   controls?: React.ReactNode;
   style?: React.CSSProperties;
-  stats: Stats;
 }
 
 const convertToGraph = (flow: ReactFlowInstance) => {
@@ -99,7 +97,7 @@ const applyFilters = (
   );
 };
 
-export const Collapser = ({ icon, children, collapsed, showContent }) => {
+export const Collapser = ({ children, collapsed }) => {
   const styling = useMemo(() => {
     if (collapsed) {
       return {
@@ -112,19 +110,17 @@ export const Collapser = ({ icon, children, collapsed, showContent }) => {
     }
   }, [collapsed]);
 
-  const occluding = useMemo(() => {
-    return {
-      position: 'relative',
-      padding: '$3',
-      paddingBottom: '$5',
-      opacity: !showContent ? 0 : 1,
-      pointerEvents: !showContent ? 'none' : 'initial',
-    };
-  }, [showContent]);
-
   return (
     <CollapserContainer css={styling}>
-      <Box css={occluding}>{children}</Box>
+      <Box
+        css={{
+          position: 'relative',
+          padding: '$3',
+          paddingBottom: '$5',
+        }}
+      >
+        {children}
+      </Box>
     </CollapserContainer>
   );
 };
@@ -149,24 +145,30 @@ export const Node = (props: NodeProps) => {
   const { id, icon, title, error, isAsync, children, controls, ...rest } =
     props;
   const flow = useReactFlow();
-  const obscureDistanceValue = useSelector(obscureDistance);
-  const debugModeValue = useSelector(debugMode);
-  const limiter = useCallback(
-    (s) => s.transform[2] >= obscureDistanceValue,
-    [obscureDistanceValue],
-  );
+  const dispatch = useDispatch();
+  const node = flow.getNode(id);
 
-  const showContent = useStore(limiter);
-
-  const [collapsed, setCollapsed] = useState(false);
+  const isCollapsed = node?.data.collapsed || false;
+  const [collapsed, updateCollapsed] = useState(isCollapsed);
 
   const detachNodes = useDetachNodes();
   const hasParent = useStore(
     (store) => !!store.nodeInternals.get(id)?.parentNode,
   );
 
+  const setCollapsed = useCallback(
+    (collapsed) => {
+      if (!node) {
+        return;
+      }
+      node.data.collapsed = collapsed;
+      updateCollapsed(collapsed);
+    },
+    [node],
+  );
+
   const onDelete = useCallback(() => {
-    flow.setNodes((nodes) => nodes.filter((x) => x.id !== id));
+    flow.deleteElements({ nodes: [{ id }] });
   }, [id, flow]);
 
   const onTraceDown = useCallback(() => {
@@ -196,6 +198,10 @@ export const Node = (props: NodeProps) => {
   }, [flow]);
 
   const onDetach = () => detachNodes([id]);
+
+  const onClick = useCallback(() => {
+    dispatch.graph.setCurrentNode(id);
+  }, [id]);
 
   return (
     <NodeWrapper error={Boolean(error)} className={error ? 'error' : ''}>
@@ -243,11 +249,15 @@ export const Node = (props: NodeProps) => {
           />
         </Stack>
       </NodeToolbar>
-      <HandleContainerContext.Provider
-        value={{ collapsed, hide: !showContent }}
-      >
+      <HandleContainerContext.Provider value={{ collapsed }}>
         <FocusTrap>
-          <Stack css={{ maxWidth: 500 }} direction="column" gap={0} {...rest}>
+          <Stack
+            css={{ maxWidth: 500 }}
+            direction="column"
+            gap={0}
+            onClick={onClick}
+            {...rest}
+          >
             {title && (
               <>
                 <Stack
@@ -287,17 +297,7 @@ export const Node = (props: NodeProps) => {
                     >
                       {title}
                     </Text>
-                    {debugModeValue && (
-                      <Text
-                        css={{
-                          fontSize: '$xxsmall',
-                          fontFamily: 'monospace',
-                          color: '$fgSubtle',
-                        }}
-                      >
-                        {props.stats.executionTime}ms
-                      </Text>
-                    )}
+
                     {isAsync && <Spinner />}
                   </Stack>
                   <Stack direction="row" gap={2}>
@@ -313,11 +313,7 @@ export const Node = (props: NodeProps) => {
                 </Stack>
               </>
             )}
-            <Collapser
-              collapsed={collapsed}
-              showContent={showContent}
-              icon={icon}
-            >
+            <Collapser id={id} collapsed={collapsed} icon={icon}>
               {children}
             </Collapser>
           </Stack>

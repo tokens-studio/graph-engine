@@ -1,4 +1,4 @@
-import { initialPreviewCode } from '#/components/preview/scope.tsx';
+import { initialPreviewCode } from '@/components/preview/scope.tsx';
 import { RootModel } from './root.ts';
 import { createModel } from '@rematch/core';
 import { v4 as uuidv4 } from 'uuid';
@@ -68,12 +68,7 @@ export const uiState = createModel<RootModel>()({
         showExamplePicker,
       };
     },
-    setShowNodesPanel(state, showNodesPanel: boolean) {
-      return {
-        ...state,
-        showNodesPanel,
-      };
-    },
+
     setPreviewCode(state, previewCode: string) {
       return {
         ...state,

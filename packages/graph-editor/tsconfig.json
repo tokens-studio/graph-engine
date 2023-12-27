@@ -22,7 +22,7 @@
     "target": "esnext",
     "baseUrl": ".",
     "paths": {
-      "#/*": ["src/*"]
+      "@/*": ["src/*"]
     },
     "noImplicitAny": false,
     "rootDir": ".",

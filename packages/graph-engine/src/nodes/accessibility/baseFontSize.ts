@@ -1,60 +1,89 @@
-// node
-/**
- * Calculates the base font size
- *
- * @packageDocumentation
- */
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { NumberSchema } from "@/schemas/index.js";
 
-import { NodeDefinition, NodeTypes } from "../../types.js";
+export default class NodeDefinition extends Node {
+  static title = "Base Font Size";
+  static type = NodeTypes.BASE_FONT_SIZE;
 
-const type = NodeTypes.BASE_FONT_SIZE;
+  static description =
+    "Base Font node allows you to calculate the base font size with DIN 1450.";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("visualAcuity", {
+      type: {
+        ...NumberSchema,
+        default: 0.7,
+      },
+      visible: true,
+    });
+    this.addInput("correctionFactor", {
+      type: {
+        ...NumberSchema,
+        default: 13,
+      },
+    });
+    this.addInput("lightingCondition", {
+      type: {
+        ...NumberSchema,
+        default: 0.83,
+      },
+    });
+    this.addInput("distance", {
+      type: {
+        ...NumberSchema,
+        default: 30,
+      },
+    });
 
-type Inputs = {
-  visualAcuity: number;
-  lightingCondition: number;
-  distance: number;
-  xHeightRatio: number;
-  ppi: number;
-  pixelDensity: number;
-  correctionFactor: number;
-};
+    this.addInput("xHeightRatio", {
+      type: {
+        ...NumberSchema,
+        default: 0.53,
+      },
+    });
 
-const defaults = {
-  correctionFactor: 13,
-  visualAcuity: 0.7,
-  lightingCondition: 0.85,
-  distance: 30,
-  xHeightRatio: 0.53,
-  ppi: 458,
-  pixelDensity: 3,
-};
+    this.addInput("ppi", {
+      type: {
+        ...NumberSchema,
+        default: 458,
+      },
+    });
+    this.addInput("pixelDensity", {
+      type: {
+        ...NumberSchema,
+        default: 3,
+      },
+    });
 
-const process = (input: Inputs, state) => {
-  const {
-    visualAcuity,
-    lightingCondition,
-    distance,
-    xHeightRatio,
-    ppi,
-    pixelDensity,
-    correctionFactor,
-  } = input;
+    this.addOutput("value", {
+      type: {
+        ...NumberSchema,
+        description: "The generated font size",
+      },
+      visible: true,
+    });
+  }
 
-  const visualCorrection =
-    correctionFactor * (lightingCondition / visualAcuity);
-  const xHeightMM =
-    Math.tan((visualCorrection * Math.PI) / 21600) * (distance * 10) * 2;
-  const xHeightPX = (xHeightMM / 25.4) * (ppi / pixelDensity);
-  // const fontSizePT = (2.83465 * xHeightMM * 1) / xHeightRatio;
-  const fontSizePX = (1 * xHeightPX) / xHeightRatio;
+  execute(): void | Promise<void> {
+    const {
+      visualAcuity,
+      lightingCondition,
+      distance,
+      xHeightRatio,
+      ppi,
+      pixelDensity,
+      correctionFactor,
+    } = this.getAllInputs();
 
-  return fontSizePX;
-};
+    const visualCorrection =
+      correctionFactor * (lightingCondition / visualAcuity);
+    const xHeightMM =
+      Math.tan((visualCorrection * Math.PI) / 21600) * (distance * 10) * 2;
+    const xHeightPX = (xHeightMM / 25.4) * (ppi / pixelDensity);
+    const fontSizePX = (1 * xHeightPX) / xHeightRatio;
 
-export const node: NodeDefinition<Inputs> = {
-  description:
-    "Base Font node allows you to calculate the base font size with DIN 1450.",
-  type,
-  defaults,
-  process,
-};
+    this.setOutput("value", fontSizePX);
+  }
+}

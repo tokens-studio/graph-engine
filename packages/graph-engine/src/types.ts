@@ -1,81 +1,13 @@
 export type ExternalLoadOptions = { type: string; id: string; data: any };
 export type ExternalLoader = (opts: ExternalLoadOptions) => Promise<any> | any;
 
-export interface NodeDefinition<
-  MappedInput = Record<string, any>,
-  State = object,
-  Output = any,
-  Ephemeral = object,
-  ExternalRequest = object
-> {
-  /**
-   * A markdown based description of the node
-   */
-  description?: string;
-  /**
-   * Reverse domain name notation for the node
-   */
-  type: string;
-  /**
-   * Defaults of the state value. This is used to initialize the state of the node. State of the node is not persisted across executions,.
-   */
-  defaults?: undefined | Partial<State>;
-
-  /**
-   * An external function that causes a side effect to load ephemeral data. It is up to the node to expose the data to the user. Ephmeral data is not persisted across executions and will be requested to load each time. It is up to the user to cache the data if needed.
-   * @param state
-   * @returns
-   */
-  external?: (
-    mappedInput: MappedInput,
-    state: Partial<State>
-  ) => ExternalRequest;
-  /**
-   * Takes in the names inputs of the source handles and coerces the final mapped Input state
-   * @param input
-   * @param state
-   * @returns
-   */
-  mapInput?: (input: Record<string, any>, state: State) => MappedInput;
-  /**
-   * Validates the state
-   * @param inputs
-   * @throws Error if the inputs are invalid
-   * @returns
-   */
-  validateInputs?: (input: MappedInput, state: State) => void;
-  /**
-   * Processes the value
-   * @param input
-   * @param state
-   * @returns
-   */
-  process: (
-    input: MappedInput,
-    state: State,
-    ephemeral: Ephemeral
-  ) => Output | Promise<Output>;
-  /**
-   *  Maps the output to the final output
-   * @param input
-   * @param state
-   * @param output
-   * @returns
-   */
-  mapOutput?: (
-    input: MappedInput,
-    state: State,
-    output: Output,
-    ephemeral: Ephemeral
-  ) => Record<string, any>;
-}
-
 export enum NodeTypes {
   INPUT = "studio.tokens.generic.input",
   OUTPUT = "studio.tokens.generic.output",
+  SUBGRAPH = "studio.tokens.generic.subgraph",
+  ARRAY = "studio.tokens.generic.array",
   PASS_THROUGH = "studio.tokens.generic.passthrough",
 
-  ENUMERATED_INPUT = "studio.tokens.input.enumerated-constant",
   CONSTANT = "studio.tokens.input.constant",
   SLIDER = "studio.tokens.input.slider",
   SPREAD = "studio.tokens.input.extract",
@@ -85,6 +17,9 @@ export enum NodeTypes {
   CSS_MAP = "studio.tokens.css.map",
   CSS_BOX = "studio.tokens.css.box",
   CSS_FUNCTIONS = "studio.tokens.css.function",
+
+  //Curves
+  SAMPLE_CURVE = "studio.tokens.curve.sample",
 
   //Logic
   IF = "studio.tokens.logic.if",
@@ -154,9 +89,9 @@ export enum NodeTypes {
   EXTRACT_TOKENS = "studio.tokens.sets.extractTokens",
 
   //Series
-  ARITHMETIC_SERIES = "studio.tokens.sets.arithmetic",
-  HARMONIC_SERIES = "studio.tokens.sets.harmonic",
-  GEOMETRIC_SERIES = "studio.tokens.sets.geometric",
+  ARITHMETIC_SERIES = "studio.tokens.series.arithmetic",
+  HARMONIC_SERIES = "studio.tokens.series.harmonic",
+  GEOMETRIC_SERIES = "studio.tokens.series.geometric",
 
   //String
   UPPERCASE = "studio.tokens.string.uppercase",

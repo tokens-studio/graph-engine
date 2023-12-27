@@ -1,31 +1,45 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { NodeTypes } from "@/types.js";
+import { INodeDefinition, Node } from "@/programmatic/node.js";
+import { StringSchema } from "@/schemas/index.js";
+import { Input } from "@/programmatic/input.js";
+import { Output } from "@/programmatic";
 
-export const type = NodeTypes.SPLIT_STRING;
-
-export type State = {
-  string: string;
-  separator: string;
-};
-
-export const defaults: State = {
-  string: "",
-  separator: ",",
-};
-
-export const process = (input, state: State) => {
-  const final = {
-    ...state,
-    ...input,
+export default class NodeDefinition extends Node {
+  static title = "Split String";
+  static type = NodeTypes.SPLIT_STRING;
+  declare inputs: {
+    value: Input;
+    separator: Input;
   };
-
-  if (final.separator === undefined) {
-    return [final.string];
+  declare outputs: {
+    value: Output;
+  };
+  static description = "Converts a string to lowercase";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("value", {
+      type: StringSchema,
+      visible: true,
+    });
+    this.addInput("separator", {
+      type: {
+        ...StringSchema,
+        default: ",",
+      },
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: StringSchema,
+      visible: true,
+    });
   }
 
-  return final.string.split(final.separator);
-};
-export const node: NodeDefinition<State, State> = {
-  defaults,
-  type,
-  process,
-};
+  execute(): void | Promise<void> {
+    const { value, separator } = this.getAllInputs();
+    if (separator === undefined) {
+      this.setOutput("value", [value]);
+    } else {
+      this.setOutput("value", value.split(separator));
+    }
+  }
+}

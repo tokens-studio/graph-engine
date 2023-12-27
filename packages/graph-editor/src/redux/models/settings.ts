@@ -24,6 +24,10 @@ export interface SettingsState {
   layoutType: LayoutType;
   debugMode: boolean;
   showGrid: boolean;
+  /**
+   * Whether to show the types inline with the nodes
+   */
+  inlineTypes: boolean;
   snapGrid: boolean;
 }
 
@@ -33,6 +37,7 @@ export const settingsState = createModel<RootModel>()({
     edgeType: EdgeType.bezier,
     layoutType: LayoutType.dagre,
     showGrid: true,
+    inlineTypes: false,
     snapGrid: false,
     debugMode: false,
   } as SettingsState,
@@ -59,6 +64,12 @@ export const settingsState = createModel<RootModel>()({
       return {
         ...state,
         obscureDistance,
+      };
+    },
+    setInlineTypes(state, inlineTypes: boolean) {
+      return {
+        ...state,
+        inlineTypes,
       };
     },
     setEdgeType(state, edgeType: EdgeType) {

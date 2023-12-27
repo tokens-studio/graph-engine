@@ -1,6 +1,6 @@
 //@ts-ignore
 import { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react';
-import { styled } from '#/lib/stitches/index.ts';
+import { styled } from '@/lib/stitches/index.ts';
 import NextHead from 'next/head.js';
 
 export const Head = <T extends ElementType = 'body'>({

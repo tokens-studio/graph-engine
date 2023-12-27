@@ -1,8 +1,7 @@
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Position, Handle as RawHandle } from 'reactflow';
-import { styled } from '#/lib/stitches/index.ts';
-import { useIsValidConnection } from './nodes/hooks/useIsValidConnection.ts';
-import { useNode } from './wrapper/nodeV2.tsx';
+import { styled } from '@/lib/stitches/index.ts';
+import { useIsValidConnection } from '../../hooks/useIsValidConnection.ts';
 import React, { createContext, useContext } from 'react';
 
 export const HandleContext = createContext<{
@@ -16,6 +15,7 @@ export const HandleContext = createContext<{
 type HolderProps = {
   type: 'source' | 'target';
   children: React.ReactNode;
+  shouldHide?: boolean;
   full?: boolean;
 };
 
@@ -28,7 +28,13 @@ export const HandleContainerContext = createContext<{
   hide: false,
 });
 
-export const HandleContainer = ({ type, children, full }: HolderProps) => {
+export const HandleContainer = ({
+  type,
+  children,
+  shouldHide = false,
+  full,
+}: HolderProps) => {
+  if (shouldHide) return null;
   const position = type === 'source' ? Position.Right : Position.Left;
   return (
     <HandleContext.Provider value={{ type, position }}>
@@ -51,19 +57,19 @@ const StyledRawHandle = styled(RawHandle, {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  width: '1em !important',
-  height: '1em !important',
+  width: '12px !important',
+  height: '12px !important',
   background: 'transparent !important',
   border: 'none !important',
   '&::after': {
-    content: "''",
-    width: '4px',
-    height: '9px',
-    border: '1px solid var(--colors-accentBorder)',
-    background: 'var(--colors-accentEmphasis)',
-    borderRadius: '2px',
-    flexShrink: 0,
-    opacity: 1,
+    // content: "''",
+    // border: '1px solid var(--colors-accentBorder)',
+    // background: 'var(--colors-accentEmphasis)',
+    // borderRadius: '2px',
+    // flexShrink: 0,
+    // opacity: 1,
+    // width: '12px',
+    // height: '12px',
   },
   variants: {
     error: {
@@ -86,18 +92,16 @@ const StyledRawHandle = styled(RawHandle, {
     },
     left: {
       true: {
-        marginLeft: '4px',
+        marginLeft: '6px',
       },
       false: {
-        marginRight: '4px',
+        marginRight: '6px',
       },
     },
-  },
-  '&:hover': {
-    '&::after': {
-      opacity: 1,
-      width: '12px',
-      height: '12px',
+    shouldHideHandles: {
+      true: {
+        display: 'none',
+      },
     },
   },
 });
@@ -153,31 +157,74 @@ const HandleHolder = styled(Box, {
 });
 
 export const Handle = (props) => {
-  const { children, error, full, ...rest } = props;
+  const {
+    children,
+    visible,
+    shouldHideHandles = false,
+    error,
+    array,
+    full,
+    color,
+    icon,
+    ...rest
+  } = props;
   const { position, type } = useHandle();
   const isValidConnection = useIsValidConnection();
-  const { collapsed, hide } = useContext(HandleContainerContext);
-  const { onConnect } = useNode();
+  const { collapsed } = useContext(HandleContainerContext);
+
+  const shouldHide = !visible;
 
   return (
-    <HandleHolder collapsed={collapsed}>
+    <HandleHolder collapsed={collapsed || shouldHide}>
       <StyledRawHandle
+        css={{
+          background: `${color} !important`,
+          color: `${color} !important`,
+          borderRadius: !array ? '100%' : '0px !important',
+        }}
+        shouldHideHandles={shouldHideHandles}
         error={error}
         left={type === 'target'}
         isConnected={isValidConnection}
         type={type}
         position={position}
-        hide={hide}
+        hide={shouldHide}
         isValidConnection={isValidConnection}
         {...rest}
-        onConnect={onConnect}
-      />
+      >
+        {icon && (
+          <Stack
+            justify="center"
+            align="center"
+            css={{
+              color: 'white',
+              pointerEvents: 'none',
+              background: '$bgDefault',
+              borderRadius: !array ? '100%' : '0px !important',
+              border: '1px solid $borderDefault',
+              width: '24px',
+              height: '24px',
+              position: 'absolute',
+              alignItems: 'center',
+              justifyContent: 'center',
+              display: 'flex',
+            }}
+          >
+            {icon}
+          </Stack>
+        )}
+      </StyledRawHandle>
+
       <Stack
         direction="row"
         gap={2}
         justify={full ? 'between' : type === 'target' ? 'start' : 'end'}
         align="center"
-        css={{ flex: 1, paddingLeft: '$3', paddingRight: '$3' }}
+        css={{
+          flex: 1,
+          paddingLeft: shouldHideHandles ? 0 : '$3',
+          paddingRight: shouldHideHandles ? 0 : '$3',
+        }}
       >
         {children}
       </Stack>

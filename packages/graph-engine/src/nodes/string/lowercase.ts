@@ -1,36 +1,26 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { StringSchema } from "@/schemas/index.js";
 
-export const type = NodeTypes.LOWER;
-
-/**
- * Optional validation function.
- * @param inputs
- */
-export const validateInputs = (input) => {
-  if (typeof input.input !== "string") {
-    throw new Error("Invalid input, expected a string");
-  }
-};
-
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-export const process = (input) => {
-  if (input.input === undefined) {
-    return undefined;
+export default class NodeDefinition extends Node {
+  static title = "Lowercase";
+  static type = NodeTypes.LOWER;
+  static description = "Converts a string to lowercase";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("value", {
+      type: StringSchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: StringSchema,
+      visible: true,
+    });
   }
 
-  return ("" + input.input).toLowerCase();
-};
-
-export const node: NodeDefinition = {
-  description: "Converts a string to lowercase",
-  type,
-  validateInputs,
-  process,
-};
+  execute(): void | Promise<void> {
+    const { value } = this.getAllInputs();
+    this.setOutput("value", value.toLowerCase());
+  }
+}

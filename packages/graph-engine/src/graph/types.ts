@@ -1,28 +1,28 @@
-import type { Edge, Node } from "reactflow";
+import { TypeDefinition } from "..";
 
-export type FlowGraph = {
-  version: string;
-  nodes: Node[];
-  edges: Edge[];
-  state: Record<string, any>;
-};
+export interface SerializedInput {
+  name: string;
+  value: any;
+  visible: boolean;
+  type: TypeDefinition;
+}
 
-export type MinimizedNode = {
+export interface SerializedNode {
   id: string;
   type: string;
-  data: any;
-};
+  inputs: SerializedInput[];
+}
 
-export type MinimizedEdge = {
+export interface SerializedEdge {
   id: string;
   source: string;
   target: string;
   sourceHandle: string;
   targetHandle: string;
-};
+}
 
-export type MinimizedFlowGraph = {
+export interface SerializedGraph {
   version: string;
-  nodes: MinimizedNode[];
-  edges: MinimizedEdge[];
-};
+  nodes: SerializedNode[];
+  edges: SerializedEdge[];
+}

@@ -1,7 +1,7 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { CloseIcon } from '@iconicicons/react';
 import { IconButton } from '@tokens-studio/ui';
-import { keyframes, styled } from '#/lib/stitches/index.ts';
+import { keyframes, styled } from '@/lib/stitches/index.ts';
 import React, {
   createContext,
   useCallback,

@@ -1,11 +1,11 @@
 import { Box, Stack, ToggleGroup } from '@tokens-studio/ui';
-import { Preview as ComponentPreview } from '#/components/preview/index.tsx';
+import { Preview as ComponentPreview } from '@/components/preview/index.tsx';
 
 import { LiveEditor, LiveError } from 'react-live';
 import { MinusIcon, PictureInPictureIcon, VideoIcon } from '@iconicicons/react';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Code3Icon from '#/assets/svgs/code-3.svg';
+import Code3Icon from '@/assets/svgs/code-3.svg';
 
 export const Preview = ({ codeRef }) => {
   const dispatch = useDispatch();

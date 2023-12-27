@@ -1,33 +1,48 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { StringSchema } from "@/schemas/index.js";
 
-export const type = NodeTypes.REGEX;
+export default class NodeDefinition extends Node {
+  static title = "Regex";
+  static type = NodeTypes.REGEX;
+  static description = "Replaces a string with a regex";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("input", {
+      type: StringSchema,
+      visible: true,
+    });
+    this.addInput("match", {
+      type: {
+        ...StringSchema,
+        default: "",
+      },
+    });
+    this.addInput("flags", {
+      type: {
+        ...StringSchema,
+        default: "",
+      },
+    });
+    this.addInput("replace", {
+      type: {
+        ...StringSchema,
+        default: "",
+      },
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: StringSchema,
+      visible: true,
+    });
+  }
 
-export const defaults = {
-  match: "",
-  flags: "",
-  replace: "",
-};
+  execute(): void | Promise<void> {
+    const { input, match, flags, replace } = this.getAllInputs();
+    const regex = new RegExp(match, flags);
+    const output = input.replace(regex, replace);
 
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-export const process = (input, state) => {
-  const final = {
-    ...state,
-    ...input,
-  };
-  const regex = new RegExp(final.match, final.flags);
-  return final.input.replace(regex, final.replace);
-};
-
-export const node: NodeDefinition = {
-  description: "Replaces a string with a regex",
-  type,
-  defaults,
-  process,
-};
+    this.setOutput("value", output);
+  }
+}

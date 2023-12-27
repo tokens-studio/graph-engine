@@ -1,4 +1,4 @@
-import { TokenType } from '#/utils/index.ts';
+import { TokenType } from '@/utils/index.ts';
 
 export type Token = {
   name: string;

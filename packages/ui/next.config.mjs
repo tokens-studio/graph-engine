@@ -1,7 +1,8 @@
+/* eslint-disable import/no-anonymous-default-export */
 /** @type {import('next').NextConfig} */
 
 
-const config = {
+export default {
   swcMinify: true,
   reactStrictMode: true,
   // basePath: '/beta',
@@ -42,5 +43,3 @@ const config = {
     return config;
   }
 };
-
-export default config;

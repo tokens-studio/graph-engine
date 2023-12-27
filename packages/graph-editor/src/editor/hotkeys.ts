@@ -1,14 +1,13 @@
 import { Edge, useReactFlow } from 'reactflow';
-import { NodeTypes } from '@tokens-studio/graph-engine';
-import { useDispatch } from '#/hooks/useDispatch.ts';
+import { NodeTypes, SerializedNode } from '@tokens-studio/graph-engine';
+import { useDispatch } from '@/hooks/useDispatch.ts';
 import { useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import copy from 'copy-to-clipboard';
-import { LayoutType } from '#/redux/models/settings.ts';
 import { useAutoLayout } from './hooks/useAutolayout';
 import { useSelector } from 'react-redux';
-import { showGrid, snapGrid } from '#/redux/selectors/settings';
-import { showNodesPanelSelector } from '#/redux/selectors/ui';
+import { showGrid, snapGrid } from '@/redux/selectors/settings';
+import { Graph } from '@tokens-studio/graph-engine';
 
 export const keyMap = {
   AUTO_LAYOUT: 'ctrl+alt+f',
@@ -39,13 +38,17 @@ export const keyMap = {
   TOGGLE_NODES_PANEL: ['n'],
 };
 
-export const useHotkeys = ({ onEdgesDeleted }) => {
+export interface IUseHotkeys {
+  graph: Graph;
+  onEdgesDeleted: (edges: Edge[]) => void;
+}
+
+export const useHotkeys = ({ onEdgesDeleted, graph }: IUseHotkeys) => {
   const [showMinimap, setShowMinimap] = useState(true);
   const [hideZoom, setHideZoom] = useState(true);
 
   const showGridValue = useSelector(showGrid);
   const snapGridValue = useSelector(snapGrid);
-  const showNodesPanel = useSelector(showNodesPanelSelector);
 
   const layout = useAutoLayout();
 
@@ -87,16 +90,32 @@ export const useHotkeys = ({ onEdgesDeleted }) => {
       COPY: (event) => {
         event.stopPropagation();
         event.preventDefault();
-        const nodes = reactFlowInstance.getNodes().filter((x) => x.selected);
 
+        const nodes = reactFlowInstance
+          .getNodes()
+          .filter((x) => x.selected)
+          .map((x) => graph.getNode(x.id))
+          .flatMap((x) => x.serialize());
+        //get the values from the graph
         const values = {
           nodes,
         };
 
-        copy(JSON.stringify(values, null, 2), {
+        copy(JSON.stringify(values, null, 4), {
           debug: true,
-          format: 'application/json',
         });
+      },
+      PASTE: async (event) => {
+        try {
+          const text = await navigator.clipboard.readText();
+
+          const values = JSON.parse(text);
+
+          const nodes = values.nodes as SerializedNode[];
+          //TODO - finish this
+        } catch (e) {
+          console.error(e);
+        }
       },
       SELECT_ALL: (event) => {
         event.stopPropagation();
@@ -176,21 +195,16 @@ export const useHotkeys = ({ onEdgesDeleted }) => {
       TOGGLE_SNAP_GRID: () => {
         dispatch.settings.setSnapGrid(!snapGridValue);
       },
-      TOGGLE_NODES_PANEL: () => {
-        dispatch.ui.setShowNodesPanel(!showNodesPanel);
-      },
     }),
     [
       dispatch.input,
       dispatch.node,
       dispatch.settings,
-      dispatch.ui,
       layout,
       onEdgesDeleted,
       reactFlowInstance,
       showGridValue,
       snapGridValue,
-      showNodesPanel,
     ],
   );
 

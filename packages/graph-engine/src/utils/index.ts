@@ -1,29 +1,6 @@
 import { DeepKeyTokenMap, SingleToken, TokenTypes } from "@tokens-studio/types";
 import { setProperty } from "dot-prop";
 
-export enum TokenType {
-  color = "color",
-  spacing = "spacing",
-  sizing = "sizing",
-  border = "border",
-  dimension = "dimension",
-  borderRadius = "borderRadius",
-  borderWidth = "borderWidth",
-  opacity = "opacity",
-  composition = "composition",
-  boxShadow = "boxShadow",
-  fontSizes = "fontSizes",
-  lineHeights = "lineHeights",
-  fontFamilies = "fontFamilies",
-  fontWeights = "fontWeights",
-  typography = "typography",
-  letterSpacing = "letterSpacing",
-  textDecoration = "textDecoration",
-  paragraphSpacing = "paragraphSpacing",
-  textCase = "textCase",
-  other = "other",
-}
-
 export interface IResolvedToken {
   /**
    * Name of the token
@@ -32,11 +9,11 @@ export interface IResolvedToken {
   /**
    * Expression that represents the value of the token, botentially jsons stringified
    */
-  value: string;
+  value: SingleToken["value"];
   /**
    * The type of the token
    */
-  type: TokenType;
+  type: TokenTypes;
   /**
    * Optional description of the token
    */
@@ -50,26 +27,24 @@ export interface IResolvedToken {
  * @returns
  */
 export const flatten = (
-  nested: Record<string, IResolvedToken>,
+  nested: DeepKeyTokenMap,
   keyPath: string[] = []
 ): IResolvedToken[] => {
   return Object.entries(nested).reduce((acc, [key, val]) => {
     //Check if leaf node
     if (val && typeof val.value !== "undefined") {
+      let leaf = val as SingleToken;
       acc.push({
         name: [...keyPath, key].join("."),
-        value: val.value,
-        type: val.type,
-        description: val.description,
+        value: leaf.value,
+        type: leaf.type,
+        description: leaf.description,
       });
       return acc;
     }
 
     //else continue recursing
-    const flattened = flatten(
-      val as unknown as Record<string, IResolvedToken>,
-      [...keyPath, key]
-    );
+    const flattened = flatten(val as DeepKeyTokenMap, [...keyPath, key]);
     acc = acc.concat(flattened);
 
     return acc;

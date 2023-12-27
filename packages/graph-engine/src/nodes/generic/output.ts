@@ -3,38 +3,38 @@
  *
  * @packageDocumentation
  */
+import { INodeDefinition, Input, Output } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { AnySchema } from "@/schemas/index.js";
 
-import { NodeDefinition, NodeTypes } from "../../types.js";
+export default class NodeDefinition extends Node {
+  static title = "Output";
+  static type = NodeTypes.OUTPUT;
 
-const type = NodeTypes.OUTPUT;
+  //Override with static typing
+  public declare inputs: {
+    input: Input;
+  };
+  public declare outputs: {
+    value: Output;
+  };
 
-const defaults = {
-  mappings: [],
-};
+  static description = "Allows you to expose outputs of the node";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("input", {
+      type: AnySchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: AnySchema,
+      visible: false,
+    });
+  }
 
-//Passthrough
-const process = (input) => {
-  return input;
-};
-
-const mapOutput = (input, state, processed) => {
-  //convert the mappings to a lookup
-  const lookup = state.mappings.reduce((acc, { key, name }) => {
-    acc[key] = name;
-    return acc;
-  }, {});
-
-  return Object.entries(processed).reduce((acc, [key, value]) => {
-    acc[lookup[key]] = value;
-    return acc;
-  }, {});
-};
-
-export const node: NodeDefinition = {
-  description:
-    "Allows you to provide initial values for the whole graph. An input node can be used only once at the start of the graph. You can use this node to set brand decisions or any initial values.",
-  type,
-  defaults,
-  process,
-  mapOutput,
-};
+  execute(): void | Promise<void> {
+    const input = this.getRawInput("input");
+    this.setOutput("value", input.value, input.type);
+  }
+}

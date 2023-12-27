@@ -1,68 +1,47 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { TokenArraySchema } from "@/schemas/index.js";
 import { SingleToken } from "@tokens-studio/types";
 
-import { sortEntriesNumerically } from "../utils.js";
+export default class NodeDefinition extends Node {
+  static title = "Flatten Token Sets";
+  static type = NodeTypes.FLATTEN;
+  static description = "Flattens a set of tokens";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("tokens", {
+      type: TokenArraySchema,
+      variadic: true,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: TokenArraySchema,
+      visible: true,
+    });
+  }
 
-export const type = NodeTypes.FLATTEN;
+  execute(): void | Promise<void> {
+    const { tokens } = this.getAllInputs();
 
-type KeyValuePair = {
-  key: string;
-  value: any;
-};
-
-type Input = {
-  inputs: KeyValuePair[];
-};
-
-/**
- * Pure function
- * @param input
- * @param state
- */
-export const mapInput = (input) => {
-  const { inputs } = sortEntriesNumerically(Object.entries(input)).reduce(
-    (acc, [key, value]) => {
-      if (key.startsWith("inputs")) {
-        acc.inputs.push({
-          key,
-          value,
-        });
-      }
-      return acc;
-    },
-    { inputs: [] as KeyValuePair[] }
-  );
-
-  //Returns the expected array of inputs
-  return {
-    inputs,
-  };
-};
-
-export const process = (input) => {
-  const { vals } = input.inputs
-    .flatMap((x) => x.value)
-    .reduceRight(
-      (acc, val: SingleToken) => {
-        if (acc.lookup[val.name]) {
+    const { vals } = (tokens as SingleToken[][])
+      .flat()
+      .flat()
+      .reduceRight(
+        (acc, val: SingleToken) => {
+          if (acc.lookup[val.name]) {
+            return acc;
+          }
+          //Must be the first time we've seen this key
+          acc.lookup[val.name] = true;
+          acc.vals.push(val);
           return acc;
+        },
+        {
+          vals: [] as SingleToken[],
+          lookup: {},
         }
-        //Must be the first time we've seen this key
-        acc.lookup[val.name] = true;
-        acc.vals.push(val);
-        return acc;
-      },
-      {
-        vals: [] as SingleToken[],
-        lookup: {},
-      }
-    );
-  return vals.reverse();
-};
-
-export const node: NodeDefinition<Input, any> = {
-  description: "Flattens a set of tokens",
-  type,
-  mapInput,
-  process,
-};
+      );
+    this.setOutput("value", vals.reverse());
+  }
+}

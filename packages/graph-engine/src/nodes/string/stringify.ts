@@ -1,20 +1,26 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { AnySchema, StringSchema } from "@/schemas/index.js";
 
-export const type = NodeTypes.STRINGIFY;
-
-export const process = (input) => {
-  switch (typeof input.input) {
-    case "string":
-      return input.input;
-    case "object":
-      return JSON.stringify(input.input);
-    case "undefined":
-      return "";
-    default:
-      return String(input.input);
+export default class NodeDefinition extends Node {
+  static title = "Stringify";
+  static type = NodeTypes.STRINGIFY;
+  static description = "Converts a value to a string";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("value", {
+      type: AnySchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: StringSchema,
+      visible: true,
+    });
   }
-};
-export const node: NodeDefinition = {
-  type,
-  process,
-};
+
+  execute(): void | Promise<void> {
+    const { value } = this.getAllInputs();
+    this.setOutput("value", "" + value);
+  }
+}

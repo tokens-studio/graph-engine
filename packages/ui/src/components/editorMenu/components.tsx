@@ -1,5 +1,5 @@
 import * as MenubarPrimitive from '@radix-ui/react-menubar';
-import { styled } from '#/lib/stitches/index.ts';
+import { styled } from '@/lib/stitches/index.ts';
 
 export const Root = styled(MenubarPrimitive.Root, {
   display: 'flex',

@@ -1,5 +1,5 @@
-import { previewCodeSelector } from '#/redux/selectors/index.ts';
-import { store } from '#/redux/store.tsx';
+import { previewCodeSelector } from '@/redux/selectors/index.ts';
+import { store } from '@/redux/store.tsx';
 import { useSelector } from 'react-redux';
 import { useDispatch } from './useDispatch.ts';
 
