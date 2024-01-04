@@ -10,7 +10,11 @@ import React, { useCallback } from 'react';
 import { ReactFlowInstance, useReactFlow, Node, Edge } from 'reactflow';
 import { Graph } from 'graphlib';
 import { v4 as uuidv4 } from 'uuid';
-import { Graph as EngineGraph, NodeFactory } from '@tokens-studio/graph-engine';
+import {
+  Graph as EngineGraph,
+  NodeFactory,
+  Port,
+} from '@tokens-studio/graph-engine';
 
 export interface INodeContextMenuProps {
   id: string;
@@ -162,7 +166,7 @@ export const NodeContextMenu = ({
         const newEdges = Object.entries(graphNode.inputs)
           .map(([key, value]) => {
             // value._edges.
-            return value._edges.map((edge) => {
+            return (value as Port)._edges.map((edge) => {
               const newEdgeId = uuidv4();
 
               const vals = {
@@ -210,7 +214,7 @@ export const NodeContextMenu = ({
 
     reactFlowInstance.addNodes(addNodes);
     reactFlowInstance.addEdges(addEdges);
-  }, [nodes]);
+  }, [graph, lookup, nodes, reactFlowInstance]);
 
   return (
     <Menu id={id}>

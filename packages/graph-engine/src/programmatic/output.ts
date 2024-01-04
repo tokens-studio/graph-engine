@@ -12,6 +12,13 @@ export interface IOutputProps<T = any> {
   node: Node;
 }
 
+export interface ConnectionStatus {
+  /**
+   * Whether the connection is valid
+   */
+  valid: boolean;
+}
+
 export class Output<T = any> extends Port<T> {
   constructor(props: IOutputProps<T>) {
     super(props);
@@ -33,9 +40,11 @@ export class Output<T = any> extends Port<T> {
   connect(target: Input, key: string = "") {
     const graph = this.node.getGraph();
     if (!graph) {
-      return false;
+      return {
+        valid: false,
+      };
     }
 
-    graph.connect(this.node, this, target.node, target, key);
+    graph.connect(this.node, this, target.node, target);
   }
 }

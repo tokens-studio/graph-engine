@@ -1,5 +1,5 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { CloseIcon } from '@iconicicons/react';
+
 import { IconButton } from '@tokens-studio/ui';
 import { keyframes, styled } from '@/lib/stitches/index.ts';
 import React, {
@@ -8,6 +8,7 @@ import React, {
   useContext,
   useEffect,
 } from 'react';
+import { Cross1Icon } from '@radix-ui/react-icons';
 
 const overlayShow = keyframes({
   from: { opacity: 0 },
@@ -69,7 +70,7 @@ const CloseButton = () => {
       aria-label="Close"
       onClick={() => setOpenDialog(false)}
       variant="invisible"
-      icon={<CloseIcon />}
+      icon={<Cross1Icon />}
     />
   );
 };

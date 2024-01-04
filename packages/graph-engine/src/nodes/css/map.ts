@@ -3,7 +3,7 @@ import properties from "mdn-data/css/properties.json" assert { type: "json" };
 import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
-import { AnySchema, ObjectSchema } from "@/schemas/index.js";
+import { AnySchema, ObjectSchema, StringSchema } from "@/schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "CSS Map";
@@ -13,12 +13,11 @@ export default class NodeDefinition extends Node {
   constructor(props?: INodeDefinition) {
     super(props);
 
-    const self = this;
     Object.keys(properties)
       .filter((name) => !name.startsWith("-"))
       .forEach((name) => {
         this.addInput(name, {
-          type: AnySchema,
+          type: StringSchema,
         });
       });
 

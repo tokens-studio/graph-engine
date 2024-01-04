@@ -1,5 +1,5 @@
 import { Menu } from '@/components/menubar/data';
-import { PanelGroup } from '@/components/panels/dropPanel/index.js';
+import { DropPanelStore } from '@/components/panels/dropPanel/index.js';
 import {
   ExternalLoadOptions,
   SerializedGraph,
@@ -12,7 +12,7 @@ export interface EditorProps {
    * Items to display in the drop panel.
    * Not populating this will result in the default items being displayed.
    */
-  panelItems: PanelGroup[];
+  panelItems: DropPanelStore;
   /**
    * A lookup of the custom node types to display in the editor.
    * Not populating this will result in the default items being displayed.

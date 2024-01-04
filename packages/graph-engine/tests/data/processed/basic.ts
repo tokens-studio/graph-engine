@@ -3,9 +3,6 @@ import { StringSchema } from "@/schemas";
 
 export default {
   version: "100.0.0",
-  graph: {
-    description: "Basic",
-  },
   nodes: [
     {
       id: "c15d874f-f7e7-42a6-a6b3-8f238da52007",

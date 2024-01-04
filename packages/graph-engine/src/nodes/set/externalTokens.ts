@@ -1,64 +1,32 @@
-// import { NodeDefinition, NodeTypes } from "../../types.js";
-// import { setProperty } from "dot-prop";
+import { INodeDefinition } from "@/index.js";
+import { NodeTypes } from "@/types.js";
+import { Node } from "@/programmatic/node.js";
+import { StringSchema, TokenSetSchema } from "@/schemas/index.js";
 
-// export const static type = NodeTypes.SET;
+export default class NodeDefinition extends Node {
+  static title = "External Token Set";
+  static type = NodeTypes.EXTERNAL_TOKEN_SET;
+  static description =
+    "Retrives an external set of tokens and then exposes them";
+  constructor(props?: INodeDefinition) {
+    super(props);
+    this.addInput("uri", {
+      type: StringSchema,
+    });
+    this.addOutput("value", {
+      type: TokenSetSchema,
+      visible: true,
+    });
+  }
 
-// type Input = Record<string, any>;
+  async execute() {
+    const { uri } = this.getAllInputs();
 
-// type State = {
-//   title: string;
-//   urn: string;
-// };
+    if (!uri) {
+      throw new Error("No uri specified");
+    }
 
-// type Ephemeral = Record<string, any>;
-
-// export const defaults: State = {
-//   title: "",
-//   urn: "",
-// };
-
-// export const EXTERNAL_SET_ID = "as Set";
-// export const EXTERNAL_OBJECT_ID = "as Object";
-
-// const external = (_, state) => {
-//   return state;
-// };
-
-// export const process = (input: Input, state: State, ephemeral: Ephemeral) => {
-//   let tokens = ephemeral.tokens || [];
-//   if (!tokens) return {};
-
-//   const map = tokens.reduce(
-//     (acc, item) => {
-//       //Some protection against undefined which can happen if the user deletes a token
-//       if (!item) {
-//         return acc;
-//       }
-//       const { name, ...rest } = item;
-//       acc.values[name] = item.value;
-//       setProperty(acc.raw, name, rest);
-//       return acc;
-//     },
-//     {
-//       raw: {},
-//       values: {},
-//     }
-//   );
-
-//   return {
-//     [EXTERNAL_SET_ID]: tokens,
-//     [EXTERNAL_OBJECT_ID]: map.raw,
-//     ...map.values,
-//   };
-// };
-
-// export const mapOutput = (input: Input, state, output) => output;
-
-// export const node: NodeDefinition<Input, State> = {
-//   description: "Retrieves and exposes a remote set of tokens",
-//   type,
-//   process,
-//   defaults,
-//   mapOutput,
-//   external,
-// };
+    const tokens = await this.load(uri);
+    this.setOutput("value", tokens);
+  }
+}

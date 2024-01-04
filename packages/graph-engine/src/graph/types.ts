@@ -4,7 +4,9 @@ export interface SerializedInput {
   name: string;
   value: any;
   visible: boolean;
+  variadic?: boolean;
   type: TypeDefinition;
+  meta?: Record<string, any>;
 }
 
 export interface SerializedNode {

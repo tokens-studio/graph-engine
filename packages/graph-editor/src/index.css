@@ -11,6 +11,10 @@
     --globals-drop-panel-width: 240px;
 }
 
+.dock-panel{
+    color:inherit
+}
+
 .react-flow__node {
     position: absolute;
     -webkit-user-select: none;

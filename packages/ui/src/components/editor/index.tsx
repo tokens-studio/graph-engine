@@ -2,24 +2,25 @@ import { useRegisterRef } from '@/hooks/ref.ts';
 import { useDispatch } from '@/hooks/useDispatch.ts';
 import { Editor } from '@tokens-studio/graph-editor';
 import { Box, Stack } from '@tokens-studio/ui';
-import { Menubar } from '../editorMenu/index.tsx';
 import React, { useCallback } from 'react';
-import { useTheme } from '@/hooks/useTheme.tsx';
 import { EmptyStateEditor } from '../EmptyStateEditor.tsx';
 import { ExamplesPicker } from '../ExamplesPicker.tsx';
-import { showExamplePickerSelector } from '@/redux/selectors/index.ts';
+
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router.js';
 import { useGetEditor } from '@/hooks/useGetEditor.ts';
 import { examples } from '@/examples/examples.tsx';
 import { previewCodeSelector } from '@/redux/selectors/index.ts';
+import { menu } from '../editorMenu/index.tsx';
+import globalState, { GlobalState } from '@/mobx/index.tsx';
+import { observer } from 'mobx-react-lite';
 
-export const EditorTab = ({ ...rest }) => {
+export const EditorTab = observer(({ ui }: { ui: GlobalState['ui'] }) => {
   const dispatch = useDispatch();
   const previewCode = useSelector(previewCodeSelector);
 
   const [, ref] = useRegisterRef('editor');
-  const showExamplePicker = useSelector(showExamplePickerSelector);
+  const showExamplePicker = ui.showExamplePicker;
   const [loading, setLoading] = React.useState(false);
   const { loadExample } = useGetEditor();
 
@@ -31,6 +32,7 @@ export const EditorTab = ({ ...rest }) => {
       if (loadParam) {
         setLoading(true);
         const example = examples.find((e) => e.key === loadParam);
+        console.log('example', example);
         if (example) {
           await loadExample(example.file);
         }
@@ -44,14 +46,13 @@ export const EditorTab = ({ ...rest }) => {
   }, [loadParam, loadExample]);
 
   const onCloseExamplePicker = useCallback(() => {
-    dispatch.ui.setShowExamplePicker(false);
-  }, [dispatch.ui]);
+    globalState.ui.showExamplePicker.set(false);
+  }, []);
 
   const onOpenExamplePicker = useCallback(() => {
-    dispatch.ui.setShowExamplePicker(true);
-  }, [dispatch.ui]);
+    globalState.ui.showExamplePicker.set(true);
+  }, []);
 
-  const theme = useTheme();
   const onEditorOutputChange = (output: Record<string, unknown>) => {
     dispatch.editorOutput.set({
       name: 'output',
@@ -59,35 +60,21 @@ export const EditorTab = ({ ...rest }) => {
     });
   };
 
-  const toggleTheme = useCallback(
-    () => dispatch.ui.toggleTheme(null),
-    [dispatch.ui],
-  );
-
   return (
     <Box css={{ position: 'relative', width: '100%', height: '100%' }}>
       <Editor
         id={'editor'}
         ref={ref}
         onOutputChange={onEditorOutputChange}
-        menuContent={
-          <Menubar
-            toggleTheme={toggleTheme}
-            theme={theme}
-            onLoadExamples={onOpenExamplePicker}
-            previewCode={previewCode}
-            setPreviewCode={dispatch.ui.setPreviewCode}
-          />
-        }
+        showMenu
+        menuItems={menu}
         emptyContent={<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />}
-        {...rest}
-      >
-        <ExamplesPicker
-          open={showExamplePicker}
-          onClose={onCloseExamplePicker}
-          loadExample={loadExample}
-        />
-      </Editor>
+      ></Editor>
+      <ExamplesPicker
+        open={showExamplePicker.get()}
+        onClose={onCloseExamplePicker}
+        loadExample={loadExample}
+      />
       <Stack
         direction="column"
         align="end"
@@ -117,4 +104,4 @@ export const EditorTab = ({ ...rest }) => {
       )}
     </Box>
   );
-};
+});

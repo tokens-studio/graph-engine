@@ -1,6 +1,5 @@
 /* eslint-disable react/display-name */
 // import 'reactflow/dist/style.css';
-import '../index.css';
 import { createNode } from './actions/createNode.js';
 import {
   Background,
@@ -41,6 +40,7 @@ import React, {
 import ReactFlow from 'reactflow';
 import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.js';
 import groupNode from '../components/flow/nodes/groupNode.js';
+import noteNode from '../components/flow/nodes/noteNode.js';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
 import { Box } from '@tokens-studio/ui';
 import { Graph, NodeTypes, nodeLookup } from '@tokens-studio/graph-engine';
@@ -58,6 +58,8 @@ import { SettingsDialog } from '@/components/dialogs/settings.tsx';
 import { clear } from './actions/clear.ts';
 import { useRegisterRef } from '@/hooks/useRegisterRef.ts';
 import { graphEditorSelector } from '@/redux/selectors/refs.ts';
+import { copyNodeAction } from './actions/copyNodes.tsx';
+import { stripVariadic } from '@/utils/stripVariadic.ts';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -80,7 +82,7 @@ const defaultEdgeOptions = {
 
 export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
-    const { panelItems, nodeTypes = {} } = props;
+    const { panelItems, nodeTypes = {}, children } = props;
 
     const registerRef = useRegisterRef('graphEditor');
     const graphRef = useSelector(
@@ -190,6 +192,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       ...nodeTypes,
       GenericNode: NodeV2,
       [EditorNodeTypes.GROUP]: groupNode,
+      [EditorNodeTypes.NOTE]: noteNode,
     });
 
     useImperativeHandle(
@@ -221,36 +224,69 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       [reactFlowInstance, graph, dispatch.graph],
     );
 
-    const onConnect = useCallback((params) => {
-      const newEdge = { ...params, id: uuidv4(), type: 'custom' };
+    const onConnect = useCallback(
+      (params) => {
+        //Create the connection in the underlying graph
 
-      //Create the connection in the underlying graph
-      graph.createEdge({
-        id: newEdge.id,
-        source: newEdge.source,
-        target: newEdge.target,
-        sourceHandle: newEdge.sourceHandle,
-        targetHandle: newEdge.targetHandle,
-      });
+        let parameters = params;
+        const sourceNode = graph.getNode(params.source);
+        const targetNode = graph.getNode(params.target);
+        if (!sourceNode || !targetNode) {
+          throw new Error('Could not find node');
+        }
 
-      return setEdges((eds) => {
-        const newEdgs = eds.reduce(
-          (acc, edge) => {
-            //All our inputs take a single input only, disconnect if we have a connection already
-            if (
-              edge.targetHandle == params.targetHandle &&
-              edge.target === params.target
-            ) {
-              return acc;
-            }
-            acc.push(edge);
-            return acc;
-          },
-          [newEdge] as Edge[],
+        const sourcePort =
+          sourceNode.outputs[stripVariadic(params.sourceHandle)];
+        const targetPort =
+          targetNode.inputs[stripVariadic(params.targetHandle)];
+
+        const newGraphEdge = graph.connect(
+          sourceNode,
+          sourcePort,
+          targetNode,
+          targetPort,
         );
-        return newEdgs;
-      });
-    }, []);
+
+        let addData: any = undefined;
+
+        //If the target port is variadic, we need to add the index to the edge data
+        if (targetPort.variadic) {
+          addData = {
+            index: newGraphEdge.data.index,
+          };
+          parameters = {
+            ...parameters,
+            targetHandle: params.targetHandle + `[${newGraphEdge.data.index}]`,
+          };
+        }
+
+        const newEdge = {
+          ...parameters,
+          id: newGraphEdge.id,
+          type: 'custom',
+          data: addData,
+        };
+
+        return setEdges((eds) => {
+          const newEdgs = eds.reduce(
+            (acc, edge) => {
+              //All our inputs take a single input only, disconnect if we have a connection already
+              if (
+                edge.targetHandle == params.targetHandle &&
+                edge.target === params.target
+              ) {
+                return acc;
+              }
+              acc.push(edge);
+              return acc;
+            },
+            [newEdge] as Edge[],
+          );
+          return newEdgs;
+        });
+      },
+      [graph, setEdges],
+    );
 
     const onNodeDragStop = useCallback(
       (_: MouseEvent, node: Node) => {
@@ -418,8 +454,10 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       [getIntersectingNodes, setNodes],
     );
 
+    const copyNodes = copyNodeAction(reactFlowInstance, graph, nodeLookup);
     const { handlers } = useHotkeys({
       onEdgesDeleted,
+      copyNodes,
       graph,
     });
 
@@ -439,7 +477,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       [handleSelectNewNodeType],
     );
     const nodeCount = nodes.length;
-
     return (
       <>
         <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
@@ -495,7 +532,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
               defaultEdgeOptions={defaultEdgeOptions}
               panOnScroll={true}
               //Note that we cannot use pan on drag or it will affect the context menu
-              // onPaneContextMenu={handleContextMenu}
+              onPaneContextMenu={handleContextMenu}
               // onEdgeContextMenu={handleEdgeContextMenu}
               // onNodeContextMenu={handleNodeContextMenu}
               selectionMode={SelectionMode.Partial}
@@ -540,6 +577,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           lookup={nodeLookup}
         />
         <EdgeContextMenu id={props.id + '_edge'} edge={contextEdge} />
+        {children}
       </>
     );
   },

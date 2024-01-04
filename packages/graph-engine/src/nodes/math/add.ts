@@ -1,20 +1,27 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, Input, Output } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
-import { NumberSchema, NumberArraySchema } from "@/schemas/index.js";
+import { NumberSchema } from "@/schemas/index.js";
 
 export default class NodeDefinition extends Node {
-  static title = "Add Node";
+  static title = "Add";
   static type = NodeTypes.ADD;
-  static description = "Add node allows you to add two or more numbers.";
+  static description = "Add node allows you to add two numbers.";
+  declare inputs: {
+    a: Input<number>;
+    b: Input<number>;
+  };
+  declare outputs: {
+    value: Output<number>;
+  };
   constructor(props?: INodeDefinition) {
     super(props);
-    this.addInput("inputs", {
-      type: {
-        ...NumberArraySchema,
-        default: [],
-      },
-      variadic: true,
+    this.addInput("a", {
+      type: NumberSchema,
+      visible: true,
+    });
+    this.addInput("b", {
+      type: NumberSchema,
       visible: true,
     });
     this.addOutput("value", {
@@ -24,8 +31,7 @@ export default class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
-    const inputs = this.getInput("inputs") as number[];
-    const output = inputs.reduce((acc, curr) => acc + curr, 0);
-    this.setOutput("value", output);
+    const { a, b } = this.getAllInputs();
+    this.setOutput("value", a + b);
   }
 }

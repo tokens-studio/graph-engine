@@ -1,34 +1,93 @@
 import { DownloadIcon, FilePlusIcon, UploadIcon } from '@radix-ui/react-icons';
-import { Menu, Item, Seperator, SubMenu } from './data';
+import { Menu, MenuItem, Seperator, SubMenu } from './data';
 import React, { MutableRefObject, useCallback } from 'react';
-import { MenuItem } from './menuItem';
+import { MenuItemElement } from './menuItem';
 import { useSelector } from 'react-redux';
 import { dockerSelector, graphEditorSelector } from '@/redux/selectors/refs';
 import DockLayout, { TabData } from 'rc-dock';
-import { Sidesheet } from '../panels/sidesheet';
+import { OutputSheet } from '../panels/output';
 import { Legend } from '../panels/legend';
 import { FlameGraph } from '../panels/flamegraph';
 import { ImperativeEditorRef } from '@/editor/editorTypes';
+import { Settings } from '../panels/settings';
+import { Inputsheet } from '../panels/inputs';
+import { NodeSettingsPanel } from '../panels/nodeSettings';
 
-export const defaultMenuDataFactory = () =>
+const windowButton = ({
+  name,
+  id,
+  title,
+  content,
+}: {
+  //Id of the tab
+  id: string;
+  title: string;
+  //name ofthe menu item
+  name: string;
+  content: JSX.Element;
+}) =>
+  new MenuItem({
+    name: name,
+    render: function Toggle() {
+      const dockerRef = useSelector(
+        dockerSelector,
+      ) as MutableRefObject<DockLayout>;
+
+      const onToggle = () => {
+        const existing = dockerRef.current.find(id) as TabData;
+        if (existing) {
+          //Look for the panel
+          if (existing.parent?.tabs.length === 1) {
+            //Close the panel instead
+            dockerRef.current.dockMove(existing.parent, null, 'remove');
+          } else {
+            //Close the tab
+            dockerRef.current.dockMove(existing, null, 'remove');
+          }
+        } else {
+          dockerRef.current.dockMove(
+            {
+              cached: true,
+              group: 'popout',
+              id,
+              title,
+              content,
+            },
+            null,
+            'float',
+            {
+              left: 300,
+              top: 300,
+              width: 200,
+              height: 200,
+            },
+          );
+        }
+      };
+
+      return <MenuItemElement onClick={onToggle}>{title}</MenuItemElement>;
+    },
+  });
+
+export const defaultMenuDataFactory = (): Menu =>
   new Menu({
     items: [
       new SubMenu({
         title: 'File',
         name: 'file',
         items: [
-          new Item({
+          new MenuItem({
             name: 'newGraph',
             render: () => {
               return (
-                <MenuItem key="neww" icon={<FilePlusIcon />}>
+                <MenuItemElement key="neww" icon={<FilePlusIcon />}>
                   New Graph
-                </MenuItem>
+                </MenuItemElement>
               );
             },
           }),
           new Seperator(),
-          new Item({
+          new MenuItem({
             name: 'load',
             render: function FileLoad() {
               const graphRef = useSelector(
@@ -55,13 +114,13 @@ export const defaultMenuDataFactory = () =>
               };
 
               return (
-                <MenuItem icon={<UploadIcon />}>
+                <MenuItemElement onClick={onClick} icon={<UploadIcon />}>
                   <u>L</u>oad
-                </MenuItem>
+                </MenuItemElement>
               );
             },
           }),
-          new Item({
+          new MenuItem({
             name: 'save',
             render: function FileSave() {
               const graphRef = useSelector(
@@ -82,13 +141,13 @@ export const defaultMenuDataFactory = () =>
               };
 
               return (
-                <MenuItem
+                <MenuItemElement
                   disabled={!graphRef?.current}
                   icon={<DownloadIcon />}
                   onClick={onSave}
                 >
                   <u>S</u>ave
-                </MenuItem>
+                </MenuItemElement>
               );
             },
           }),
@@ -98,13 +157,13 @@ export const defaultMenuDataFactory = () =>
         title: 'Edit',
         name: 'edit',
         items: [
-          new Item({
+          new MenuItem({
             name: 'undo',
-            render: () => <MenuItem>Undo</MenuItem>,
+            render: () => <MenuItemElement>Undo</MenuItemElement>,
           }),
-          new Item({
+          new MenuItem({
             name: 'redo',
-            render: () => <MenuItem>Redo</MenuItem>,
+            render: () => <MenuItemElement>Redo</MenuItemElement>,
           }),
         ],
       }),
@@ -112,133 +171,52 @@ export const defaultMenuDataFactory = () =>
         name: 'window',
         title: 'Window',
         items: [
-          new Item({
-            name: 'sideSheet',
-            render: function SidesheetToggle() {
-              const dockerRef = useSelector(
-                dockerSelector,
-              ) as MutableRefObject<DockLayout>;
-
-              const onToggleSideSheet = () => {
-                const existing = dockerRef.current.find('sideSheet') as TabData;
-                if (existing) {
-                  //Look for the panel
-                  if (existing.parent?.tabs.length === 1) {
-                    //Close the panel instead
-                    dockerRef.current.dockMove(existing.parent, null, 'remove');
-                  } else {
-                    //Close the tab
-                    dockerRef.current.dockMove(existing, null, 'remove');
-                  }
-                } else {
-                  dockerRef.current.dockMove(
-                    {
-                      cached: true,
-                      group: 'popout',
-                      id: 'sideSheet',
-                      title: 'Side Sheet',
-                      content: <Sidesheet />,
-                    },
-                    dockerRef.current.getLayout().dockbox,
-                    'right',
-                  );
-                }
-              };
-
-              return (
-                <MenuItem onClick={onToggleSideSheet}>Side sheet</MenuItem>
-              );
-            },
+          windowButton({
+            name: 'inputs',
+            id: 'inputs',
+            title: 'Inputs',
+            content: <Inputsheet />,
           }),
-          new Item({
+          windowButton({
+            name: 'outputs',
+            id: 'outputs',
+            title: 'Outputs',
+            content: <OutputSheet />,
+          }),
+          windowButton({
+            name: 'nodeSettings',
+            id: 'nodeSettings',
+            title: 'Node Settings',
+            content: <NodeSettingsPanel />,
+          }),
+          windowButton({
             name: 'legend',
-            render: function LegendToggle() {
-              const dockerRef = useSelector(
-                dockerSelector,
-              ) as MutableRefObject<DockLayout>;
-              const onToggleLegend = () => {
-                const existing = dockerRef.current.find('legend') as TabData;
-                if (existing) {
-                  //Look for the panel
-                  if (existing.parent?.tabs.length === 1) {
-                    //Close the panel instead
-                    dockerRef.current.dockMove(existing.parent, null, 'remove');
-                  } else {
-                    //Close the tab
-                    dockerRef.current.dockMove(existing, null, 'remove');
-                  }
-                } else {
-                  dockerRef.current.dockMove(
-                    {
-                      group: 'popout',
-                      id: 'legend',
-                      title: 'Legend',
-                      content: <Legend />,
-                    },
-                    null,
-                    'float',
-                    {
-                      left: 300,
-                      top: 300,
-                      width: 200,
-                      height: 200,
-                    },
-                  );
-                }
-              };
-
-              return <MenuItem onClick={onToggleLegend}>Legend</MenuItem>;
-            },
+            id: 'legend',
+            title: 'Legend',
+            content: <Legend />,
           }),
-          new Item({
+          windowButton({
             name: 'flamegraph',
-            render: function FlameGraphToggle() {
-              const dockerRef = useSelector(
-                dockerSelector,
-              ) as MutableRefObject<DockLayout>;
-
-              const onToggleFlamegraph = () => {
-                const existing = dockerRef.current.find(
-                  'flamegraph',
-                ) as TabData;
-                if (existing) {
-                  //Look for the panel
-                  if (existing.parent?.tabs.length === 1) {
-                    //Close the panel instead
-                    dockerRef.current.dockMove(existing.parent, null, 'remove');
-                  } else {
-                    //Close the tab
-                    dockerRef.current.dockMove(existing, null, 'remove');
-                  }
-                } else {
-                  dockerRef.current.dockMove(
-                    {
-                      group: 'popout',
-                      id: 'flamegraph',
-                      title: 'FlameGraph',
-                      content: <FlameGraph />,
-                    },
-                    null,
-                    'float',
-                    {
-                      left: 300,
-                      top: 300,
-                      width: 200,
-                      height: 200,
-                    },
-                  );
-                }
-              };
-
-              return (
-                <MenuItem onClick={onToggleFlamegraph}>FlameGraph</MenuItem>
-              );
-            },
+            id: 'flamegraph',
+            title: 'FlameGraph',
+            content: <FlameGraph />,
+          }),
+          windowButton({
+            name: 'inputs',
+            id: 'inputs',
+            title: 'Inputs',
+            content: <Inputsheet />,
+          }),
+          windowButton({
+            name: 'settings',
+            id: 'settings',
+            title: 'Settings',
+            content: <Settings />,
           }),
 
           new Seperator(),
 
-          new Item({
+          new MenuItem({
             name: 'saveLayout',
             render: function SaveLayout() {
               const dockerRef = useSelector(
@@ -257,11 +235,14 @@ export const defaultMenuDataFactory = () =>
                 document.body.appendChild(link);
                 link.click();
               }, [dockerRef]);
-
-              return <MenuItem onClick={saveLayout}>Save Layout</MenuItem>;
+              return (
+                <MenuItemElement icon={<DownloadIcon />} onClick={saveLayout}>
+                  Save Layout
+                </MenuItemElement>
+              );
             },
           }),
-          new Item({
+          new MenuItem({
             name: 'loadLayout',
             render: function LoadLayout() {
               const dockerRef = useSelector(
@@ -288,12 +269,13 @@ export const defaultMenuDataFactory = () =>
                 input.click();
               }, [dockerRef]);
 
-              return <MenuItem onClick={loadLayout}>Load Layout</MenuItem>;
+              return (
+                <MenuItemElement icon={<UploadIcon />} onClick={loadLayout}>
+                  Load Layout
+                </MenuItemElement>
+              );
             },
           }),
-          //                     <Item onClick={saveLayout} >Save Layout</Item>
-
-          //                     <Item onClick={loadLayout} >Load Layout</Item>
         ],
       }),
     ],

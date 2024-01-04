@@ -1,7 +1,7 @@
 import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
-import { TokenSetSchema } from "@/schemas/index.js";
+import { TokenArraySchema, TokenSetSchema } from "@/schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Inline Token Set";
@@ -11,10 +11,10 @@ export default class NodeDefinition extends Node {
   constructor(props?: INodeDefinition) {
     super(props);
     this.addInput("value", {
-      type: TokenSetSchema,
+      type: TokenArraySchema,
     });
     this.addOutput("value", {
-      type: TokenSetSchema,
+      type: TokenArraySchema,
       visible: true,
     });
   }

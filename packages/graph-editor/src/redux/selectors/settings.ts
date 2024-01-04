@@ -19,3 +19,7 @@ export const inlineTypes = createSelector(
 export const showGrid = createSelector(settings, (state) => state.showGrid);
 
 export const snapGrid = createSelector(settings, (state) => state.snapGrid);
+export const showTimings = createSelector(
+  settings,
+  (state) => state.showTimings,
+);

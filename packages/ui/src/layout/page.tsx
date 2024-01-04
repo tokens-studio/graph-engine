@@ -1,15 +1,23 @@
-import { useTheme } from '../hooks/useTheme.tsx';
+import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
+import { GlobalState } from '@/mobx/index.tsx';
 
-export default function PageLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const theme = useTheme();
+const PageLayout = observer(
+  ({
+    theme,
+    children,
+  }: {
+    children: React.ReactNode;
+    theme: GlobalState['ui']['theme'];
+  }) => {
+    const theTheme = theme.get();
+    useEffect(() => {
+      if (theTheme) {
+        document.body.className = theTheme + '-theme';
+      }
+    }, [theTheme]);
+    return <>{children}</>;
+  },
+);
 
-  useEffect(() => {
-    if (theme) document.body.className = theme + '-theme';
-  }, [theme]);
-  return <>{children}</>;
-}
+export default PageLayout;

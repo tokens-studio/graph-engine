@@ -1,4 +1,4 @@
-import Node from "@/nodes/math/add.js";
+import Node from "@/nodes/math/addVariadic.js";
 
 describe("math/add", () => {
   it("adds two numbers", async () => {

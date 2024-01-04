@@ -119,8 +119,14 @@ const knownIcons = {
   [NodeTypes.CSS_FUNCTIONS]: 'x()',
 };
 
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+function CapitalCase(string) {
+  return (
+    string.charAt(0).toUpperCase() +
+    string
+      .slice(1)
+      .split(/(?=[A-Z])/)
+      .join(' ')
+  );
 }
 
 export const defaultPanelGroupsFactory = (): DropPanelStore => {
@@ -133,7 +139,7 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
         //If the group does not exist, create it
         if (!acc[group]) {
           acc[group] = new PanelGroup({
-            title: capitalizeFirstLetter(group),
+            title: CapitalCase(group),
             key: group,
             items: [],
           });
@@ -142,7 +148,7 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
           new PanelItem({
             type: node.type,
             icon: knownIcons[node.type] || '??',
-            text: capitalizeFirstLetter(
+            text: CapitalCase(
               node.title || defaultGroup[defaultGroup.length - 1],
             ),
             description: node.description,

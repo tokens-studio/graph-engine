@@ -1,5 +1,5 @@
-import { observable } from 'mobx';
-export type IItem = {
+import { observable, action } from 'mobx';
+export type IMenuItem = {
   name: string;
   render: () => React.ReactNode | JSX.Element;
 };
@@ -7,7 +7,7 @@ export type IItem = {
 export type ISubMenu = {
   title: string;
   name: string;
-  items: (Item | Seperator)[];
+  items: (MenuItem | Seperator)[];
 };
 export type IMenu = {
   items: SubMenu[];
@@ -15,12 +15,12 @@ export type IMenu = {
 
 export class Seperator {}
 
-export class Item {
+export class MenuItem {
   @observable
   name: string;
   @observable
   render: () => React.ReactNode;
-  constructor(vals: IItem) {
+  constructor(vals: IMenuItem) {
     this.name = vals.name;
     this.render = vals.render;
   }
@@ -28,7 +28,7 @@ export class Item {
 
 export class SubMenu {
   @observable
-  public items: (Item | Seperator)[] = [];
+  public items: (MenuItem | Seperator)[] = [];
   @observable
   public title: string;
   @observable
@@ -39,6 +39,11 @@ export class SubMenu {
     this.name = vals.name;
     this.items = vals.items;
   }
+
+  @action
+  setItems(items: (MenuItem | Seperator)[]) {
+    this.items = items;
+  }
 }
 
 export class Menu {
@@ -47,5 +52,9 @@ export class Menu {
 
   constructor(vals: IMenu) {
     this.items = vals.items || [];
+  }
+
+  setItems(items: SubMenu[]) {
+    this.items = items;
   }
 }

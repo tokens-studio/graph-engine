@@ -2,7 +2,6 @@ import { RootState } from '../store.tsx';
 import { ui } from './roots.ts';
 import { createSelector } from 'reselect';
 
-export const theme = createSelector(ui, (state) => state.theme);
 export const tabs = (state: RootState) => state.ui.tabs;
 export const currentTab = createSelector(ui, (state) => state.currentTab);
 export const previewCodeSelector = createSelector(

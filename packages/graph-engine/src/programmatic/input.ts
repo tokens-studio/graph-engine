@@ -3,8 +3,8 @@ import { Node } from "./node.js";
 import { TypeDefinition } from "./node.js";
 import { Port } from "./port.js";
 import getDefaults from "json-schema-defaults";
-import { Edge, SerializedInput } from "@/index.js";
-import { action, computed, makeObservable, observable } from "mobx";
+import { SerializedInput } from "@/index.js";
+import { action, makeObservable } from "mobx";
 
 export interface IInputProps<T = any> {
   name: string;
@@ -12,6 +12,8 @@ export interface IInputProps<T = any> {
   value: T;
   visible: boolean;
   node: Node;
+  variadic?: boolean;
+  meta?: Record<string, any>;
 }
 
 export interface ISetValue {
@@ -20,9 +22,15 @@ export interface ISetValue {
 }
 
 export class Input<T = any> extends Port<T> {
+  /**
+   * Expects to have connections to this node done by enqueing the edge
+   */
+  public readonly variadic: boolean;
+
   constructor(props: IInputProps<T>) {
     super(props);
 
+    this.variadic = props.variadic || false;
     makeObservable(this, {
       setValue: action,
       reset: action,
@@ -35,8 +43,9 @@ export class Input<T = any> extends Port<T> {
    */
   setValue(value: T, opts?: ISetValue) {
     this._value = value;
-    this._dynamicType = opts?.type;
-
+    if (opts?.type !== undefined) {
+      this._dynamicType = opts?.type;
+    }
     if (!opts?.noPropagate) {
       this.node.getGraph()?.update(this.node.id);
     }
@@ -46,6 +55,7 @@ export class Input<T = any> extends Port<T> {
    * Resets the value of the input to the default value
    */
   reset() {
+    this._dynamicType = undefined;
     return (this._value = getDefaults(this._type));
   }
 
@@ -53,7 +63,7 @@ export class Input<T = any> extends Port<T> {
     return {
       type: this._type,
       visible: this.visible,
-      variadic: false,
+      variadic: this.variadic,
     };
   }
 
@@ -61,8 +71,8 @@ export class Input<T = any> extends Port<T> {
     return {
       name: this.name,
       value: this.value,
-      visible: this.visible,
-      type: this.fullType(),
+      ...this.fullType(),
+      meta: this.meta,
     } as SerializedInput;
   }
 

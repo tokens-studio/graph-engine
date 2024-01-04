@@ -1,4 +1,4 @@
-import Node from "@/nodes/math/divide";
+import Node from "@/nodes/math/divideVariadic";
 
 describe("math/div", () => {
   it("divides two numbers", async () => {

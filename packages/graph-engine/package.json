@@ -46,18 +46,21 @@
     "colorjs.io": "^0.4.3",
     "culori": "^3.1.2",
     "dot-prop": "^8.0.2",
+    "expr-eval": "^2.0.2",
     "extract-colors": "^4.0.2",
     "get-pixels": "^3.3.3",
     "is-promise": "^4.0.0",
     "json-schema-defaults": "^0.4.0",
     "lodash.orderby": "^4.6.0",
-    "mafs": "^0.17.1",
     "mdn-data": "^2.3.0",
     "mobx": "^6.12.0",
     "poline": "^0.7.0",
     "postcss-value-parser": "^4.2.0",
     "semver-compare": "^1.0.0",
     "token-transformer": "^0.0.33"
+  },
+  "peerDependencies": {
+    "@tokens-studio/types": "^0.3.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.21.5",

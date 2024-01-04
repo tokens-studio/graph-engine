@@ -23,6 +23,7 @@ export interface SettingsState {
   edgeType: EdgeType;
   layoutType: LayoutType;
   debugMode: boolean;
+  showTimings: boolean;
   showGrid: boolean;
   /**
    * Whether to show the types inline with the nodes
@@ -37,6 +38,7 @@ export const settingsState = createModel<RootModel>()({
     edgeType: EdgeType.bezier,
     layoutType: LayoutType.dagre,
     showGrid: true,
+    showTimings: false,
     inlineTypes: false,
     snapGrid: false,
     debugMode: false,
@@ -76,6 +78,12 @@ export const settingsState = createModel<RootModel>()({
       return {
         ...state,
         edgeType,
+      };
+    },
+    setShowTimings(state, showTimings: boolean) {
+      return {
+        ...state,
+        showTimings,
       };
     },
     setLayoutType(state, layoutType: LayoutType) {

@@ -1,18 +1,76 @@
-import { SearchIcon } from '@iconicicons/react';
 import { Box, Heading, Stack, Text } from '@tokens-studio/ui';
 import { Command } from 'cmdk';
 import React from 'react';
-import { PanelGroup } from '../panels/dropPanel/index.js';
+import {
+  DropPanelStore,
+  PanelGroup,
+  PanelItem,
+} from '../panels/dropPanel/index.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { showNodesCmdPaletteSelector } from '@/redux/selectors/ui';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import { styled } from '@/lib/stitches';
+import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
+import { observer } from 'mobx-react-lite';
 
 export interface ICommandMenu {
   reactFlowWrapper: React.MutableRefObject<HTMLDivElement | null>;
-  items: PanelGroup[];
+  items: DropPanelStore;
   handleSelectNewNodeType: (node: { type: NodeTypes }) => void;
 }
+
+const CommandItem = observer(
+  ({
+    item,
+    handleSelectItem,
+  }: {
+    item: PanelItem;
+    handleSelectItem: (PanelItem) => void;
+  }) => {
+    return (
+      <Command.Item
+        key={item.type}
+        onSelect={() => handleSelectItem(item)}
+        value={item.text.toLowerCase()}
+      >
+        <Stack direction="row" gap={2} align="center">
+          <Box
+            css={{
+              fontSize: '$xxsmall',
+              color: '$fgSubtle',
+              width: '24px',
+              height: '24px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {item.icon}
+          </Box>
+          {item.text}
+        </Stack>
+      </Command.Item>
+    );
+  },
+);
+
+const CommandMenuGroup = observer(
+  ({
+    group,
+    handleSelectItem,
+  }: {
+    group: PanelGroup;
+    handleSelectItem: (PanelItem) => void;
+  }) => {
+    return (
+      <Command.Group key={group.key} heading={group.title}>
+        {group.items.map((item) => (
+          <CommandItem item={item} handleSelectItem={handleSelectItem} />
+        ))}
+      </Command.Group>
+    );
+  },
+);
 
 const CommandMenu = ({
   reactFlowWrapper,
@@ -64,8 +122,6 @@ const CommandMenu = ({
     return () => document.removeEventListener('keydown', down);
   }, [dispatch.ui, showNodesCmdPalette]);
 
-  return <></>;
-
   return (
     <Command.Dialog
       open={showNodesCmdPalette}
@@ -86,7 +142,7 @@ const CommandMenu = ({
           borderBottom: '1px solid $borderSubtle',
         }}
       >
-        <SearchIcon />
+        <MagnifyingGlassIcon />
         <Command.Input placeholder="Find nodes to add…" />
       </Box>
       <Command.List>
@@ -103,37 +159,12 @@ const CommandMenu = ({
               padding: '$4',
             }}
           >
-            {items.map((value) => {
-              const childValues = value.items.map((item) => (
-                <Command.Item
-                  key={item.type}
-                  onSelect={() => handleSelectItem(item)}
-                  value={item.text.toLowerCase()}
-                >
-                  <Stack direction="row" gap={2} align="center">
-                    <Box
-                      css={{
-                        fontSize: '$xxsmall',
-                        color: '$fgSubtle',
-                        width: '24px',
-                        height: '24px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      {item.icon}
-                    </Box>
-                    {item.text}
-                  </Stack>
-                </Command.Item>
-              ));
-              return (
-                <Command.Group key={value.key} heading={value.title}>
-                  {childValues}
-                </Command.Group>
-              );
-            })}
+            {items.groups.map((value) => (
+              <CommandMenuGroup
+                handleSelectItem={handleSelectItem}
+                group={value}
+              />
+            ))}
           </Box>
           <Box
             css={{
@@ -147,7 +178,7 @@ const CommandMenu = ({
               top: '$5',
             }}
           >
-            {items.map((value) =>
+            {items.groups.map((value) =>
               value.items.map(
                 (item) =>
                   selectedItem === item.text.toLowerCase() && (

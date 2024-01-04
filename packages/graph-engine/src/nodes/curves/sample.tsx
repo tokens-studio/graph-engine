@@ -1,18 +1,26 @@
 import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
-import { CurveSchema, NumberSchema } from "@/schemas/index.js";
-import { vec } from "mafs";
+import {
+  Curve,
+  CurveSchema,
+  NumberSchema,
+  Vec2Schema,
+} from "@/schemas/index.js";
 
-const sampleBezier = (bezier, sample) => {
-  const { a, b, c, d } = bezier;
+const scaleVec = (vec, scale) => vec.map((v) => v * scale);
+const addVec = (vec1, vec2) => vec1.map((v, i) => v + vec2[i]);
+
+const sampleBezier = (bezier: Curve["curves"][0], sample) => {
+  const { points } = bezier;
+  const [a, b, c, d] = points;
 
   return [
-    vec.scale(a, -(sample ** 3) + 3 * sample ** 2 - 3 * sample + 1),
-    vec.scale(b, 3 * sample ** 3 - 6 * sample ** 2 + 3 * sample),
-    vec.scale(c, -3 * sample ** 3 + 3 * sample ** 2),
-    vec.scale(d, sample ** 3),
-  ].reduce(vec.add, [0, 0]);
+    scaleVec(a, -(sample ** 3) + 3 * sample ** 2 - 3 * sample + 1),
+    scaleVec(b, 3 * sample ** 3 - 6 * sample ** 2 + 3 * sample),
+    scaleVec(c, -3 * sample ** 3 + 3 * sample ** 2),
+    scaleVec(d, sample ** 3),
+  ].reduce(addVec, [0, 0]);
 };
 
 export default class NodeDefinition extends Node {
@@ -30,18 +38,22 @@ export default class NodeDefinition extends Node {
       visible: true,
     });
     this.addOutput("value", {
-      type: NumberSchema,
+      type: Vec2Schema,
       visible: true,
     });
   }
 
   execute(): void | Promise<void> {
     const { curve, sample } = this.getAllInputs();
-
     //TODO this currently assumes that the curve is purely just beziers
-    const foundCurve = curve.find(
-      (piece) => piece.a <= sample && piece.d >= sample
+    //First look for the bezier that contains the sample
+    const foundCurve = (curve as Curve).curves.find(
+      (piece) =>
+        piece.points[0][0] <= sample &&
+        piece.points[piece.points.length - 1][0] >= sample
     );
+
+    if (!foundCurve) throw new Error("No curve found for sample");
 
     const output = sampleBezier(foundCurve, sample);
 

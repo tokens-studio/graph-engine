@@ -21,12 +21,25 @@ function genEdgeId(
   v: string,
   w: string,
   sourceHandle: string,
-  targetHandle: string
+  targetHandle: string,
+  index?: number
 ) {
-  return `${v}:${sourceHandle}→${w}:${targetHandle}}`;
+  return `${v}:${sourceHandle}→${w}:${targetHandle}${
+    index ? `[${index}]` : ""
+  }`;
 }
 
-export type Edge<T = any> = {
+/**
+ * Additional data stored on an edge
+ */
+export type EdgeData = {
+  /**
+   * The index of the edge in the variadic port
+   */
+  index?: number;
+};
+
+export type Edge<T = EdgeData> = {
   id: string;
   source: string;
   sourceHandle: string;
@@ -155,24 +168,54 @@ export class Graph {
     this.edges = {};
   }
 
+  /**
+   * Meant to be used internally by nodes to load resources
+   * @param uri
+   * @param node
+   * @param data
+   * @returns
+   */
+  async loadResource(uri: string, node: Node, data?: any) {
+    if (!this.externalLoader) {
+      throw new Error("No external loader specified");
+    }
+    return this.externalLoader({
+      uri,
+      graph: this,
+      node,
+      data,
+    });
+  }
+
   connect(
     source: Node,
     sourceHandle: Output,
     target: Node,
-    targetHandle: Input,
-    data?: any
-  ) {
+    targetHandle: Input
+  ): Edge {
+    //If its variadic we need to check the existing edges
+    const data: EdgeData = {};
+    if (targetHandle.variadic) {
+      const edges = this.inEdges(target.id, targetHandle.name);
+      //The number of edges is the new index
+      data.index = edges.length;
+    }
+
     //TODO validation of type
-    this.createEdge({
-      id: genEdgeId(source.id, target.id, sourceHandle.name, targetHandle.name),
+    return this.createEdge({
+      id: genEdgeId(
+        source.id,
+        target.id,
+        sourceHandle.name,
+        targetHandle.name,
+        data.index
+      ),
       source: source.id,
       target: target.id,
       sourceHandle: sourceHandle.name,
       targetHandle: targetHandle.name,
       data,
     });
-
-    this.propagate(source.id);
   }
 
   /**
@@ -373,8 +416,8 @@ export class Graph {
         );
       }
 
-      source.inputs[edge.sourceHandle]._edges.push(edge as Edge);
-      target.outputs[edge.targetHandle]._edges.push(edge as Edge);
+      source.outputs[edge.sourceHandle]._edges.push(edge as Edge);
+      target.inputs[edge.targetHandle]._edges.push(edge as Edge);
 
       return acc;
     }, {});
@@ -549,11 +592,24 @@ export class Graph {
         if (!input) {
           return;
         }
-        input.setValue(value, {
-          type: node.outputs[edge.sourceHandle].type,
-          //We are controlling propagation
-          noPropagate: true,
-        });
+
+        if (input.variadic) {
+          const newVal = [...(input.value || [])];
+          newVal[edge.data.index!] = output.value;
+          //Extend the variadic array
+          input.setValue(newVal, {
+            //TODO this might be fully dynamic, but for now we just preserve the underlying type
+            //We are controlling propagation
+            noPropagate: true,
+          });
+        } else {
+          input.setValue(value, {
+            type: node.outputs[edge.sourceHandle].type,
+            //We are controlling propagation
+            noPropagate: true,
+          });
+        }
+
         return edge.target;
       })
       //Remove holes
@@ -569,7 +625,7 @@ export class Graph {
    * @param target
    * @param data
    */
-  createEdge(opts: EdgeOpts) {
+  createEdge(opts: EdgeOpts): Edge {
     const { source, target, sourceHandle, targetHandle, id, data } = opts;
     const edge = {
       source,
@@ -602,9 +658,16 @@ export class Graph {
 
     //Then update the connection on the ports
     targetPort._edges.push(edge);
+
+    if (targetPort.variadic) {
+      //Extend the variadic array
+      targetPort.setValue((targetPort.value || []).concat([sourcePort.value]));
+    }
+
     sourcePort._edges.push(edge);
     this.emit(SubscriptionType.edgeAdded, edge);
     this.propagate(source);
+    return edge;
   }
   /**
    * Return all edges that point into the nodes inputs.

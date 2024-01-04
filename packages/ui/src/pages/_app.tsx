@@ -12,6 +12,7 @@ import PageLayout from '@/layout/page.tsx';
 import React from 'react';
 import Store from '../redux/index.tsx';
 import { Tooltip } from '@tokens-studio/ui';
+import { globalState } from '@/mobx/index.tsx';
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -25,7 +26,7 @@ export default function App(props: AppProps) {
         <NoSSR>
           <Tooltip.Provider>
             <Store>
-              <PageLayout>
+              <PageLayout theme={globalState.ui.theme}>
                 <Component {...pageProps} />
               </PageLayout>
             </Store>

@@ -1,12 +1,12 @@
 /* eslint-disable react/display-name */
 import { Box, Text, Stack, TextInput, Accordion } from '@tokens-studio/ui';
-import React, { useImperativeHandle, useState } from 'react';
-import { DropPanelStore, PanelGroup } from './data.js';
+import React from 'react';
+import { DropPanelStore } from './data.js';
 import { DragItem } from './DragItem.js';
 import { NodeEntry } from './NodeEntry.js';
 import { styled } from '@/lib/stitches/stitches.config.js';
-import { ChevronRightIcon } from '@iconicicons/react';
 import { observer } from 'mobx-react-lite';
+import { ChevronRightIcon } from '@radix-ui/react-icons';
 
 const StyledAccordionTrigger = styled(Accordion.Trigger, {
   display: 'flex',

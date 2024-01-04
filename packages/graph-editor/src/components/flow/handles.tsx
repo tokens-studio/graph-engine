@@ -100,6 +100,7 @@ const StyledRawHandle = styled(RawHandle, {
     },
     shouldHideHandles: {
       true: {
+        pointerEvents: 'none',
         display: 'none',
       },
     },

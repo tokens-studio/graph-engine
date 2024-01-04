@@ -9,6 +9,9 @@ import { ContextMenuItem } from './ContextMenuStyles';
 import { clear } from './actions/clear';
 import { useGraph } from '@/hooks/useGraph';
 
+import { v4 as uuidv4, v4 } from 'uuid';
+import { NodeTypes } from '@/components/flow/types';
+
 export interface IPaneContextMenu {
   id: string;
   onSelectItem: (item: any) => void;
@@ -26,6 +29,27 @@ export const PaneContextMenu = ({ id, onSelectItem }: IPaneContextMenu) => {
       dispatch.ui.setShowNodesCmdPalette(true);
     },
     [dispatch.ui],
+  );
+
+  const handleAddNote = useCallback(
+    (e) => {
+      const position = reactFlowInstance.screenToFlowPosition({
+        x: e.triggerEvent.screenX,
+        y: e.triggerEvent.screenY,
+      });
+
+      const noteNode = {
+        id: v4(),
+        type: NodeTypes.NOTE,
+        position,
+        data: {
+          text: '',
+        },
+      };
+
+      reactFlowInstance.addNodes([noteNode]);
+    },
+    [reactFlowInstance],
   );
 
   const recenter = useCallback(() => {
@@ -48,6 +72,8 @@ export const PaneContextMenu = ({ id, onSelectItem }: IPaneContextMenu) => {
   return (
     <Menu id={id}>
       <ContextMenuItem onClick={handleTriggerAddNode}>Add node</ContextMenuItem>
+      <ContextMenuItem onClick={handleAddNote}>Add note</ContextMenuItem>
+      <Separator />
       <ContextMenuItem onClick={layout}>Apply Layout</ContextMenuItem>
       <ContextMenuItem onClick={setShowGrid}>
         {showGridValue ? 'Hide' : 'Show'} Grid

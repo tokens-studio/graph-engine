@@ -3,9 +3,9 @@ import { AnyArraySchema } from "@/schemas/index.js";
 import SubgraphNode from "./subgraph";
 
 export default class ArraySubgraph extends SubgraphNode {
-  static title = "Array Processor";
+  static title = "Array Map";
   static type = NodeTypes.ARRAY;
-  static description = "Allows you to process an array of items";
+  static description = "Allows you to map an array of items";
 
   constructor(props) {
     super(props);

@@ -62,12 +62,6 @@ export const uiState = createModel<RootModel>()({
         tabs: state.tabs.filter((t) => t.id !== id),
       };
     },
-    setShowExamplePicker(state, showExamplePicker: boolean) {
-      return {
-        ...state,
-        showExamplePicker,
-      };
-    },
 
     setPreviewCode(state, previewCode: string) {
       return {

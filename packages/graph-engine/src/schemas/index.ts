@@ -1,5 +1,7 @@
 import type { SchemaObject } from "ajv";
 
+export type { SchemaObject } from "ajv";
+
 export const NUMBER = "https://schemas.tokens.studio/number.json";
 export const NumberSchema: SchemaObject = {
   $id: NUMBER,
@@ -77,7 +79,8 @@ export const TokenSchema: SchemaObject = {
   type: "object",
   properties: {
     name: StringSchema,
-    token: StringSchema,
+    value: StringSchema,
+    type: StringSchema,
   },
 };
 
@@ -121,84 +124,93 @@ export const ObjectSchema: SchemaObject = {
 export const CURVE = "https://schemas.tokens.studio/curve.json";
 export const CurveSchema: SchemaObject = {
   $id: CURVE,
-  title: "Object",
+  title: "Curve",
   type: "object",
+  default: {
+    curves: [
+      {
+        type: "bezier",
+        points: [
+          [0, 0],
+          [0.25, 0.6],
+          [0.75, 0.4],
+          [1, 1],
+        ],
+      },
+    ],
+  },
   properties: {
     curves: {
-      $id: "#root/curves",
-      title: "Curves",
       type: "array",
-      default: [],
-      items: {
-        $id: "#root/curves/items",
-        title: "Items",
-        type: "object",
-        required: ["type", "a", "b", "c", "d"],
-        properties: {
-          type: {
-            $id: "#root/curves/items/type",
-            title: "Type",
-            type: "string",
-            default: "",
-            examples: ["bezier"],
-            pattern: "^.*$",
-          },
-          a: {
-            $id: "#root/curves/items/a",
-            title: "A",
-            type: "array",
-            default: [],
-            items: {
-              $id: "#root/curves/items/a/items",
-              title: "Items",
-              type: "integer",
-              examples: [0],
-              default: 0,
+      items: [
+        {
+          type: "object",
+          properties: {
+            type: {
+              type: "string",
+            },
+            points: {
+              type: "array",
+              items: [
+                {
+                  type: "array",
+                  items: [
+                    {
+                      type: "integer",
+                    },
+                    {
+                      type: "integer",
+                    },
+                  ],
+                },
+                {
+                  type: "array",
+                  items: [
+                    {
+                      type: "number",
+                    },
+                    {
+                      type: "number",
+                    },
+                  ],
+                },
+                {
+                  type: "array",
+                  items: [
+                    {
+                      type: "number",
+                    },
+                    {
+                      type: "number",
+                    },
+                  ],
+                },
+                {
+                  type: "array",
+                  items: [
+                    {
+                      type: "integer",
+                    },
+                    {
+                      type: "integer",
+                    },
+                  ],
+                },
+              ],
             },
           },
-          b: {
-            $id: "#root/curves/items/b",
-            title: "B",
-            type: "array",
-            default: [],
-            items: {
-              $id: "#root/curves/items/b/items",
-              title: "Items",
-              type: "integer",
-              examples: [0],
-              default: 0,
-            },
-          },
-          c: {
-            $id: "#root/curves/items/c",
-            title: "C",
-            type: "array",
-            default: [],
-            items: {
-              $id: "#root/curves/items/c/items",
-              title: "Items",
-              type: "integer",
-              examples: [0],
-              default: 0,
-            },
-          },
-          d: {
-            $id: "#root/curves/items/d",
-            title: "D",
-            type: "array",
-            default: [],
-            items: {
-              $id: "#root/curves/items/d/items",
-              title: "Items",
-              type: "integer",
-              examples: [0],
-              default: 0,
-            },
-          },
+          required: ["type", "points"],
         },
-      },
+      ],
     },
   },
+  required: ["curves"],
+};
+export type Curve = {
+  curves: {
+    type: string;
+    points: [number, number][];
+  }[];
 };
 
 export const VEC2 = "https://schemas.tokens.studio/vec2.json";
@@ -234,6 +246,9 @@ export const canConvertSchemaTypes = (
   target: SchemaObject
 ) => {
   if (src.$id === target.$id) return true;
+  //Any can always accept anything
+  if (target.$id === ANY) return true;
+
   switch (src.$id) {
     case NUMBER_ARRAY:
       switch (target.$id) {
@@ -243,14 +258,24 @@ export const canConvertSchemaTypes = (
       break;
     case NUMBER:
       switch (target.$id) {
+        case NUMBER_ARRAY:
+          return true;
         case STRING:
           return true;
         case BOOLEAN:
           return true;
       }
       break;
-    case STRING:
-      return target.$id === BOOLEAN;
+    case STRING: {
+      switch (target.$id) {
+        case STRING_ARRAY:
+          return true;
+        case NUMBER:
+          return true;
+        case BOOLEAN:
+          return true;
+      }
+    }
   }
   return false;
 };

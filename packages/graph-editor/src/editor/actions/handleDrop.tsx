@@ -64,7 +64,7 @@ export const handleDrop = async (event): Promise<NodeRequest[]> => {
                     type: NodeTypes.INLINE_SET,
                     data,
                   },
-                  { x: 30 * i++, y: 30 * i++ },
+                  { x: 10 * i++, y: 10 * i++ },
                 );
               });
             return finalFiles;

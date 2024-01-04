@@ -201,7 +201,7 @@ export const Node = (props: NodeProps) => {
 
   const onClick = useCallback(() => {
     dispatch.graph.setCurrentNode(id);
-  }, [id]);
+  }, [dispatch.graph, id]);
 
   return (
     <NodeWrapper error={Boolean(error)} className={error ? 'error' : ''}>

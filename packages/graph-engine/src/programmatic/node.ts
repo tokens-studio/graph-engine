@@ -45,6 +45,8 @@ export class Node {
   public inputs: Record<string, Input> = {};
   public outputs: Record<string, Output> = {};
 
+  public lastExecutedDuration = 0;
+
   private _graph?: Graph;
   private _isRunning: boolean = false;
 
@@ -74,13 +76,13 @@ export class Node {
    */
   addInput<T = any>(name: string, type: TypeDefinition) {
     //Extract the default value from the schema
-    this.inputs[name] = new Input<T>({
+    return (this.inputs[name] = new Input<T>({
       name,
       ...type,
       visible: Boolean(type.visible),
       value: getDefaults(type.type),
       node: this,
-    });
+    }));
   }
   addOutput<T = any>(name: string, type: TypeDefinition) {
     this.outputs[name] = new Output<T>({
@@ -131,12 +133,17 @@ export class Node {
     }
     const end = performance.now();
     this._isRunning = false;
+    this.lastExecutedDuration = end - start;
 
     return {
       error: this.error,
       start,
       end,
     };
+  }
+
+  async load(uri: string, data?: any) {
+    this._graph?.loadResource(uri, this, data);
   }
 
   get isRunning() {
@@ -210,9 +217,11 @@ export class Node {
         newNode.inputs[input.name] = new Input({
           name: input.name,
           type: input.type,
+          variadic: input.variadic,
           visible: input.visible,
           value: input.value,
           node: newNode,
+          meta: input.meta,
         });
       } else {
         //Set the value from the saved value

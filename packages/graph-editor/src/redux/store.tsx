@@ -4,6 +4,7 @@ import { SettingsState } from './models/settings.ts';
 import { UIState } from './models/ui.ts';
 import { GraphState } from './models/graph.ts';
 import { RefState } from './models/refs.ts';
+import { RegistryState } from './models/registry.ts';
 
 export const store = init({
   models,
@@ -22,4 +23,5 @@ export type RootState = {
   settings: SettingsState;
   ui: UIState;
   refs: RefState;
+  registry: RegistryState;
 };

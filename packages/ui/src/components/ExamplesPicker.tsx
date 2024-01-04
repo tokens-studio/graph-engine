@@ -1,20 +1,15 @@
 import { SearchIcon } from '@iconicicons/react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Command } from 'cmdk';
-import React, { useCallback } from 'react';
-import { store } from '@/redux/store.tsx';
-import { usePreviewContext } from '@/providers/preview.tsx';
+import React from 'react';
 import { examples } from '../examples/examples.tsx';
 import { IExample } from '../types/IExample.tsx';
-import { GraphFile } from '@/types/file.ts';
 
 const ExamplesPicker = ({ open, onClose, loadExample }) => {
   const handleSelectItem = (example: IExample) => {
     loadExample(example.file);
     onClose();
   };
-
-  return <></>;
 
   return (
     <Command.Dialog

@@ -16,7 +16,7 @@ export default {
     value: '#91f3a9',
     type: 'color',
   },
-  integer: {
+  array: {
     value: '#91f3f2',
     type: 'color',
   },

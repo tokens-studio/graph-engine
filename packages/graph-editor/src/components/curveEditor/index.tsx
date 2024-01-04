@@ -9,6 +9,7 @@ import {
   Text,
   vec,
   ConstraintFunction,
+  MovablePoint,
 } from 'mafs';
 
 /**
@@ -50,26 +51,33 @@ const defaultConstraintPoint = ([x, y]) => {
 export interface ICurveEditor {
   domain?: [number, number];
   range?: [number, number];
+  onChange?: (index: number, vector: vec.Vector2) => void;
+  points: vec.Vector2[];
 }
 
+const x = (vec: vec.Vector2) => vec[0];
+const y = (vec: vec.Vector2) => vec[1];
+
 export function CurveEditor(props: ICurveEditor) {
-  const { domain = [0, 1], range = [0, 1] } = props;
+  const { domain = [0, 1], range = [0, 1], points, onChange } = props;
 
   const opacity = 0.25;
 
-  const p1 = useMovablePoint([0, 0], {
-    constrain: defaultConstraintPoint as ConstraintFunction,
-  });
-  const p2 = useMovablePoint([1, 1], {
-    constrain: defaultConstraintPoint as ConstraintFunction,
-  });
+  // const p1 = useMovablePoint([0, 0], {
+  //   constrain: defaultConstraintPoint as ConstraintFunction,
+  // });
+  // const p2 = useMovablePoint([1, 1], {
+  //   constrain: defaultConstraintPoint as ConstraintFunction,
+  // });
 
-  const c1 = useMovablePoint([0.25, 0.6], {
-    constrain: defaultConstraintPoint as ConstraintFunction,
-  });
-  const c2 = useMovablePoint([0.75, 0.4], {
-    constrain: defaultConstraintPoint as ConstraintFunction,
-  });
+  // const c1 = useMovablePoint([0.25, 0.6], {
+  //   constrain: defaultConstraintPoint as ConstraintFunction,
+  // });
+  // const c2 = useMovablePoint([0.75, 0.4], {
+  //   constrain: defaultConstraintPoint as ConstraintFunction,
+  // });
+
+  const [p1, c1, c2, p2] = points;
 
   function drawLineSegments(
     pointPath: vec.Vector2[],
@@ -102,32 +110,32 @@ export function CurveEditor(props: ICurveEditor) {
         />
 
         {/* Control lines */}
-        {drawLineSegments(
-          [p1.point, c1.point, c2.point, p2.point],
-          Theme.pink,
-          0.5,
-        )}
-        <Text size={10} x={c1.x} y={c1.y + 0.1}>
-          {round(c1.x)} {round(c1.y)}
+        {drawLineSegments([p1, c1, c2, p2], Theme.pink, 0.5)}
+        <Text size={10} x={x(c1)} y={y(c1) + 0.1}>
+          {round(x(c1))} {round(y(c1))}
         </Text>
 
-        <Text size={10} x={c2.x} y={c2.y + 0.1}>
-          {round(c2.x)} {round(c2.y)}
+        <Text size={10} x={x(c1)} y={y(c2) + 0.1}>
+          {round(x(c1))} {round(y(c2))}
         </Text>
 
         {/* Quadratic bezier lerp  */}
         <Plot.Parametric
           t={[0, 1]}
           weight={3}
-          xy={(t) =>
-            xyFromBernsteinPolynomial(p1.point, c1.point, c2.point, p2.point, t)
-          }
+          xy={(t) => xyFromBernsteinPolynomial(p1, c1, c2, p2, t)}
         />
-
-        {p1.element}
-        {p2.element}
-        {c1.element}
-        {c2.element}
+        {points.map((point, i) => (
+          <MovablePoint
+            key={i}
+            point={point}
+            color={Theme.blue}
+            constrain={defaultConstraintPoint as ConstraintFunction}
+            onMove={(newPoint) => {
+              onChange && onChange(i, newPoint);
+            }}
+          />
+        ))}
       </Mafs>
     </>
   );

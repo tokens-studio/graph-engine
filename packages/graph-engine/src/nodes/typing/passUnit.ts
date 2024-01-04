@@ -8,7 +8,7 @@ import { Output } from "@/programmatic/output.js";
 
 export default class NodeDefinition extends Node {
   static title = "Pass unit";
-  static type = NodeTypes.PARSE_UNIT;
+  static type = NodeTypes.PASS_UNIT;
   declare inputs: {
     value: Input<String>;
     fallback: Input<String>;

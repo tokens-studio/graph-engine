@@ -1,5 +1,5 @@
 import { Edge, useReactFlow } from 'reactflow';
-import { NodeTypes, SerializedNode } from '@tokens-studio/graph-engine';
+import { NodeTypes } from '@tokens-studio/graph-engine';
 import { useDispatch } from '@/hooks/useDispatch.ts';
 import { useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,6 +8,7 @@ import { useAutoLayout } from './hooks/useAutolayout';
 import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '@/redux/selectors/settings';
 import { Graph } from '@tokens-studio/graph-engine';
+import { SerializedNode } from '@/types/serializedNode';
 
 export const keyMap = {
   AUTO_LAYOUT: 'ctrl+alt+f',
@@ -40,10 +41,15 @@ export const keyMap = {
 
 export interface IUseHotkeys {
   graph: Graph;
+  copyNodes: (nodes: SerializedNode[]) => void;
   onEdgesDeleted: (edges: Edge[]) => void;
 }
 
-export const useHotkeys = ({ onEdgesDeleted, graph }: IUseHotkeys) => {
+export const useHotkeys = ({
+  onEdgesDeleted,
+  copyNodes,
+  graph,
+}: IUseHotkeys) => {
   const [showMinimap, setShowMinimap] = useState(true);
   const [hideZoom, setHideZoom] = useState(true);
 
@@ -94,8 +100,14 @@ export const useHotkeys = ({ onEdgesDeleted, graph }: IUseHotkeys) => {
         const nodes = reactFlowInstance
           .getNodes()
           .filter((x) => x.selected)
-          .map((x) => graph.getNode(x.id))
-          .flatMap((x) => x.serialize());
+          .map(
+            (x) =>
+              ({
+                //Its possible we are attempting to duplicate a note that does not exist in the engine
+                engine: graph.getNode(x.id)?.serialize(),
+                editor: reactFlowInstance.getNode(x.id),
+              } as SerializedNode),
+          );
         //get the values from the graph
         const values = {
           nodes,
@@ -106,13 +118,12 @@ export const useHotkeys = ({ onEdgesDeleted, graph }: IUseHotkeys) => {
         });
       },
       PASTE: async (event) => {
+        event.preventDefault();
         try {
           const text = await navigator.clipboard.readText();
-
           const values = JSON.parse(text);
-
           const nodes = values.nodes as SerializedNode[];
-          //TODO - finish this
+          copyNodes(nodes);
         } catch (e) {
           console.error(e);
         }

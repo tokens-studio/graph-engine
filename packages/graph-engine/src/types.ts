@@ -7,12 +7,11 @@ export enum NodeTypes {
   SUBGRAPH = "studio.tokens.generic.subgraph",
   ARRAY = "studio.tokens.generic.array",
   PASS_THROUGH = "studio.tokens.generic.passthrough",
+  PANIC = "studio.tokens.generic.panic",
+  CONSTANT = "studio.tokens.generic.constant",
+  OBJECTIFY = "studio.tokens.generic.objectify",
 
-  CONSTANT = "studio.tokens.input.constant",
-  SLIDER = "studio.tokens.input.slider",
   SPREAD = "studio.tokens.input.extract",
-  OBJECTIFY = "studio.tokens.input.objectify",
-  JSON = "studio.tokens.input.json",
 
   CSS_MAP = "studio.tokens.css.map",
   CSS_BOX = "studio.tokens.css.box",
@@ -43,9 +42,14 @@ export enum NodeTypes {
 
   // Math
   ADD = "studio.tokens.math.add",
+  ADD_VARIADIC = "studio.tokens.math.addVariadic",
+  EVAL = "studio.tokens.math.eval",
   SUBTRACT = "studio.tokens.math.subtract",
+  SUBTRACT_VARIADIC = "studio.tokens.math.subtractVariadic",
   MULTIPLY = "studio.tokens.math.multiply",
+  MULTIPLY_VARIADIC = "studio.tokens.math.multiplyVariadic",
   DIV = "studio.tokens.math.divide",
+  DIV_VARIADIC = "studio.tokens.math.divideVariadic",
   ABS = "studio.tokens.math.abs",
   ROUND = "studio.tokens.math.round",
   SIN = "studio.tokens.math.sin",
@@ -76,17 +80,21 @@ export enum NodeTypes {
   NEAREST_TOKENS = "studio.tokens.color.nearestTokens",
   SET_COLOR_LUMINANCE = "studio.tokens.color.setColorLuminance",
 
-  //Sets
-  FLATTEN = "studio.tokens.sets.flatten",
-  ALIAS = "studio.tokens.sets.alias",
-  REMAP = "studio.tokens.sets.remap",
-  INLINE_SET = "studio.tokens.sets.inline",
-  SET = "studio.tokens.sets.external",
-  INVERT_SET = "studio.tokens.sets.invert",
-  GROUP = "studio.tokens.sets.group",
-  UNGROUP = "studio.tokens.sets.ungroup",
-  EXTRACT_SINGLE_TOKEN = "studio.tokens.sets.extractSingleToken",
-  EXTRACT_TOKENS = "studio.tokens.sets.extractTokens",
+  //Design Tokens
+  CREATE_DESIGN_TOKEN = "studio.tokens.designTokens.create",
+
+  //Token Sets
+  EXTERNAL_TOKEN_SET = "studio.tokens.tokenSets.external",
+  FLATTEN = "studio.tokens.tokenSets.flatten",
+  ALIAS = "studio.tokens.tokenSets.alias",
+  REMAP = "studio.tokens.tokenSets.remap",
+  INLINE_SET = "studio.tokens.tokenSets.inline",
+  SET = "studio.tokens.tokenSets.external",
+  INVERT_SET = "studio.tokens.tokenSets.invert",
+  GROUP = "studio.tokens.tokenSets.group",
+  UNGROUP = "studio.tokens.tokenSets.ungroup",
+  EXTRACT_SINGLE_TOKEN = "studio.tokens.tokenSets.extractSingleToken",
+  EXTRACT_TOKENS = "studio.tokens.tokenSets.extractTokens",
 
   //Series
   ARITHMETIC_SERIES = "studio.tokens.series.arithmetic",

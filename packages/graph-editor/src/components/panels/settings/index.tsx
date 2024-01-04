@@ -16,10 +16,11 @@ import {
   inlineTypes,
   layoutType,
   obscureDistance,
+  showTimings,
 } from '@/redux/selectors/settings';
 import { useDispatch } from '@/hooks/useDispatch.ts';
 import { EdgeType, LayoutType } from '@/redux/models/settings.ts';
-import { InformationIcon } from '@iconicicons/react';
+import { InfoCircledIcon } from '@radix-ui/react-icons';
 
 const EdgeValues = Object.values(EdgeType);
 const LayoutValues = Object.values(LayoutType);
@@ -28,7 +29,7 @@ export const Settings = () => {
   const edgeTypeValue = useSelector(edgeType);
   const layoutTypeValue = useSelector(layoutType);
   const obscureDistanceValue = useSelector(obscureDistance);
-  const debugModeValue = useSelector(debugMode);
+  const showTimingsValue = useSelector(showTimings);
   const inlineTypesValue = useSelector(inlineTypes);
   const dispatch = useDispatch();
 
@@ -47,7 +48,7 @@ export const Settings = () => {
             }
           >
             <Box>
-              <InformationIcon />
+              <InfoCircledIcon />
             </Box>
           </Tooltip>
         </Stack>
@@ -63,15 +64,15 @@ export const Settings = () => {
           <Label>Show execution time</Label>
           <Tooltip label={'Shows how long it takes for a node to process'}>
             <Box>
-              <InformationIcon />
+              <InfoCircledIcon />
             </Box>
           </Tooltip>
         </Stack>
         <Checkbox
           onCheckedChange={(checked) =>
-            dispatch.settings.setDebugMode(Boolean(checked))
+            dispatch.settings.setShowTimings(Boolean(checked))
           }
-          checked={debugModeValue}
+          checked={showTimingsValue}
         />
       </Stack>
       <Stack direction="column" gap={2} justify="between">
@@ -83,7 +84,7 @@ export const Settings = () => {
             }
           >
             <Box>
-              <InformationIcon />
+              <InfoCircledIcon />
             </Box>
           </Tooltip>
         </Stack>

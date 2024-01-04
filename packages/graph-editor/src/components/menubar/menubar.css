@@ -27,12 +27,15 @@
     background-color: unset;
     transform: translateZ(0);
 }
+.rc-menu-submenu-selected {
+    background-color: unset;
+}
 
 
 .rc-menu-horizontal>.rc-menu-submenu-active,
 .rc-menu-horizontal>.rc-menu-item-active {
     border-bottom: 2px solid #2db7f5;
-    background-color: var(--colors-bgEmphasis);
+    background-color: var(--colors-accentBg);
     color: #2baee9;
 }
 
@@ -42,9 +45,8 @@
 }
 
 .rc-menu-item-active,
-.rc-menu-submenu-active>.rc-menu-submenu-title,
-.rc-menu-submenu-selected {
-    background-color: var(--colors-bgEmphasis);
+.rc-menu-submenu-active>.rc-menu-submenu-title {
+    background-color: var(--colors-accentBg);
 }
 
 .rc-menu-vertical>.rc-menu-item,

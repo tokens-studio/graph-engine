@@ -12,15 +12,15 @@ import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 // @ts-ignore
 import { themes } from 'prism-react-renderer';
 
-import { useTheme } from '@/hooks/useTheme.tsx';
 import { useJourney } from '@/journeys/basic.tsx';
 import { JoyrideTooltip } from '@/components/joyride/tooltip.tsx';
 import { EditorTab } from '@/components/editor/index.tsx';
+import globalState, { GlobalState } from '@/mobx/index.tsx';
+import { observer } from 'mobx-react-lite';
 
-const Wrapper = () => {
+const Wrapper = observer(({ theme }: { theme: GlobalState['ui']['theme'] }) => {
   const dispatch = useDispatch();
   const showJourney = useSelector(showJourneySelector);
-  const theme = useTheme();
   const previewCode = useSelector(previewCodeSelector);
 
   const [{ steps }] = useJourney();
@@ -72,11 +72,11 @@ const Wrapper = () => {
           enableTypeScript={true}
           language="jsx"
         >
-          <EditorTab />
+          <EditorTab ui={globalState.ui} />
         </LiveProvider>
       </Box>
     </>
   );
-};
+});
 
 export default Wrapper;

@@ -11,18 +11,16 @@ import { IconButton, Stack, Tooltip } from '@tokens-studio/ui';
 import { DropPanel } from '@/components/panels/dropPanel/index.js';
 import { ExternalLoaderProvider } from '@/context/ExternalLoaderContext.js';
 import { defaultPanelGroupsFactory } from '@/components/panels/dropPanel/index.js';
-import { Sidesheet } from '../components/panels/sidesheet/index.js';
+import { OutputSheet } from '../components/panels/output/index.js';
 import { Legend } from '@/components/panels/legend/index.js';
 import { MenuBar } from '@/components/menubar/index.js';
 import { EditorApp } from './graph.js';
 import { useRegisterRef } from '@/hooks/useRegisterRef.ts';
-import {
-  ArrowUpRightIcon,
-  MaximizeIcon,
-  MinimizeIcon,
-} from '@iconicicons/react';
+import { MaximizeIcon, MinimizeIcon } from '@iconicicons/react';
 import { Cross1Icon } from '@radix-ui/react-icons';
 import { defaultMenuDataFactory } from '@/components/menubar/defaults.tsx';
+import { Inputsheet } from '@/components/panels/inputs/index.tsx';
+import { NodeSettingsPanel } from '@/components/panels/nodeSettings/index.tsx';
 
 const DockButton = (rest) => {
   return (
@@ -53,14 +51,15 @@ let groups: Record<string, TabGroup> = {
             onClick={() => context.dockMove(panelData, null, 'maximize')}
           ></DockButton>,
         );
-        buttons.push(
-          <DockButton
-            key="new-window"
-            title="Open in new window"
-            icon={<ArrowUpRightIcon />}
-            onClick={() => context.dockMove(panelData, null, 'new-window')}
-          ></DockButton>,
-        );
+        //@todo fix. Caused by stitches not working when moved across to popup
+        // buttons.push(
+        //   <DockButton
+        //     key="new-window"
+        //     title="Open in new window"
+        //     icon={<ArrowUpRightIcon />}
+        //     onClick={() => context.dockMove(panelData, null, 'new-window')}
+        //   ></DockButton>,
+        // );
       }
       buttons.push(
         <DockButton
@@ -150,7 +149,7 @@ const layoutDataFactory = (props, panelItems, ref): LayoutData => {
                   title: 'Graph',
                   content: (
                     <ReactFlowProvider>
-                      <EditorApp {...props} ref={ref} />
+                      <EditorApp {...props} panelItems={panelItems} ref={ref} />
                     </ReactFlowProvider>
                   ),
                 },
@@ -158,15 +157,38 @@ const layoutDataFactory = (props, panelItems, ref): LayoutData => {
             },
             {
               size: 300,
-              group: 'popout',
-              panelLock: { panelStyle: 'graph' },
-              tabs: [
+              mode: 'vertical',
+              children: [
                 {
-                  cached: true,
-                  group: 'popout',
-                  id: 'sideSheet',
-                  title: 'Side Sheet',
-                  content: <Sidesheet />,
+                  size: 300,
+                  tabs: [
+                    {
+                      cached: true,
+                      group: 'popout',
+                      id: 'input',
+                      title: 'Inputs',
+                      content: <Inputsheet />,
+                    },
+                    {
+                      cached: true,
+                      group: 'popout',
+                      id: 'nodeSettings',
+                      title: 'Node Settings',
+                      content: <NodeSettingsPanel />,
+                    },
+                  ],
+                },
+                {
+                  size: 300,
+                  tabs: [
+                    {
+                      cached: true,
+                      group: 'popout',
+                      id: 'outputs',
+                      title: 'Outputs',
+                      content: <OutputSheet />,
+                    },
+                  ],
                 },
               ],
             },
@@ -198,7 +220,7 @@ export const LayoutController = React.forwardRef<
   return (
     <ExternalLoaderProvider externalLoader={externalLoader}>
       <Stack direction="column" css={{ height: '100%' }}>
-        <MenuBar menu={menuItems} />
+        {props.showMenu && <MenuBar menu={menuItems} />}
         <Tooltip.Provider>
           <DockLayout
             ref={registerDocker}

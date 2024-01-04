@@ -4,13 +4,13 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Handle, HandleContainer } from '../handles.tsx';
-import { COLOR, CURVE, Port } from '@tokens-studio/graph-engine';
+import { Input, Port } from '@tokens-studio/graph-engine';
 import colors from '@/tokens/colors.ts';
-import { BezierIcon } from '@/components/icons/BezierIcon.tsx';
-import { ColorWheelIcon } from '@radix-ui/react-icons';
+
 import { useGraph } from '@/hooks/useGraph.ts';
 import { useSelector } from 'react-redux';
-import { inlineTypes } from '@/redux/selectors/settings.ts';
+import { inlineTypes, showTimings } from '@/redux/selectors/settings.ts';
+import { icons } from '@/redux/selectors/registry.ts';
 
 export type UiNodeDefinition = {
   //Name of the Node
@@ -41,19 +41,25 @@ export const NodeV2 = (args) => {
     return <Box>Node not found</Box>;
   }
 
-  return <NodeWrap node={node} />;
+  return <NodeWrap node={node} title={data.title} />;
 };
 
 export interface INodeWrap {
+  /**
+   * Optional title to override the default title
+   */
+  title?: string;
   node: GraphNode;
 }
-const NodeWrap = observer(({ node }: INodeWrap) => {
+const NodeWrap = observer(({ node, title }: INodeWrap) => {
+  const showTimingsValue = useSelector(showTimings);
+
   return (
     <Node
       id={node.id}
       isAsync={node.isRunning}
       // icon={nodeDef.icon}
-      title={node.factory.title || 'Node'}
+      title={title || node.factory.title || 'Node'}
       error={node.error || null}
       controls={''}
     >
@@ -67,6 +73,13 @@ const NodeWrap = observer(({ node }: INodeWrap) => {
           </HandleContainer>
         </Stack>
       </Stack>
+      {showTimingsValue && (
+        <Box css={{ position: 'absolute', bottom: '-1.5em' }}>
+          <Text size="xsmall" muted>
+            {node.lastExecutedDuration}ms
+          </Text>
+        </Box>
+      )}
     </Node>
   );
 });
@@ -85,18 +98,11 @@ export const PortArray = observer(({ ports }: IPortArray) => {
   );
 });
 
-const extractTypeIcon = (port: Port) => {
-  //TODO first check if the port has an explicit custom type defined
-
-  //Default primitives
-
-  //Lookup icons
-  const icons = {
-    [COLOR]: <ColorWheelIcon />,
-    [CURVE]: <BezierIcon />,
-  };
-
-  const icon = icons[port.type.$id || ''];
+const extractTypeIcon = (
+  port: Port,
+  iconLookup: Record<string, React.ReactNode>,
+) => {
+  const icon = iconLookup[port.type.$id || ''];
   const isArray = Boolean(port.type.items);
 
   if (icon) {
@@ -130,7 +136,43 @@ export const InlineTypeLabel = ({ port }: { port: Port }) => {
 
 const InputHandle = observer(({ port }: { port: Port }) => {
   const inlineTypesValue = useSelector(inlineTypes);
-  const typeCol = extractTypeIcon(port);
+  const iconTypeRegistry = useSelector(icons);
+  const typeCol = extractTypeIcon(port, iconTypeRegistry);
+  const input = port as unknown as Input;
+
+  if (input.variadic) {
+    return (
+      <>
+        <Handle
+          {...typeCol}
+          visible={port.visible || port.isConnected}
+          id={port.name}
+          full
+        >
+          <Text>{port.name} + </Text>
+          {inlineTypesValue && <InlineTypeLabel port={port} />}
+        </Handle>
+        {port._edges.map((edge, i) => {
+          return (
+            <Handle
+              {...typeCol}
+              visible={port.visible || port.isConnected}
+              id={port.name + `[${edge.data.index}]`}
+              key={i}
+              full
+            >
+              <Text>
+                {port.name} - [{i}]
+              </Text>
+              {inlineTypesValue && <InlineTypeLabel port={port} />}
+            </Handle>
+          );
+        })}
+      </>
+    );
+    //We need to render additional handles
+  }
+
   return (
     <Handle
       {...typeCol}
