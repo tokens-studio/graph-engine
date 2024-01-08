@@ -7,18 +7,14 @@ import { node } from '@tokens-studio/graph-engine/nodes/set/flatten.js';
 
 const SquashNode = () => {
   const { input } = useNode();
-  const [nextId, setNextId] = useState(0);
 
-  const ref = useRef(input?.input?.length || 0);
-  useEffect(() => {
-    ref.current += 1;
-    //We don't care about the values, just the length
-  }, [input.input?.length || 0]);
+  const [nextId, setNextId] = useState(() => input.inputs.length);
 
   const newHandle = useMemo(() => {
-    setNextId(ref.current++);
+    setNextId(nextId + 1);
+    return nextId + 1;
     //We don't care about the values, just the length
-  }, []);
+  }, [input.inputs]);
 
   const handles = useMemo(() => {
     return input.inputs.map((input, index) => {
