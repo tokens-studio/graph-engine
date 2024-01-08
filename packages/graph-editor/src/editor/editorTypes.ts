@@ -1,5 +1,6 @@
 import { Menu } from '@/components/menubar/data';
 import { DropPanelStore } from '@/components/panels/dropPanel/index.js';
+import { CompactEdge, CompactNode } from '@/utils/compact';
 import {
   ExternalLoadOptions,
   SerializedGraph,
@@ -32,8 +33,8 @@ export interface EditorProps {
 
 export type EditorState = {
   graph: SerializedGraph;
-  nodes: Node[];
-  edges: Edge[];
+  nodes: CompactNode[];
+  edges: CompactEdge[];
 };
 
 export type ImperativeEditorRef = {

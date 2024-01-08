@@ -1,8 +1,6 @@
-// import { node as arrify } from "./arrify.js";
-
-// import { node as dotProp } from "./dotProp.js";
+import arrify from "./arrify.js";
 import sort from "./sort.js";
-// import { node as arrayPassUnit } from "./passUnit.js";
+import push from "./push.js";
 import indexArray from "./indexArray.js";
 import concat from "./concat.js";
 import join from "./join.js";
@@ -12,12 +10,10 @@ import slice from "./slice.js";
 import name from "./name.js";
 
 export const nodes = [
-  // arrify,
-  // sort,
-  // arrayPassUnit,
-  // dotProp,
+  arrify,
   concat,
   sort,
+  push,
   indexArray,
   reverse,
   slice,

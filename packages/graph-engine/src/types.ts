@@ -37,7 +37,7 @@ export enum NodeTypes {
   JOIN = "studio.tokens.array.join",
   CONCAT = "studio.tokens.array.concat",
   DOT_PROP = "studio.tokens.array.dotProp",
-  ARRAY_PASS_UNIT = "studio.tokens.array.passUnit",
+  ARRAY_PUSH = "studio.tokens.array.push",
   NAME = "studio.tokens.array.name",
 
   // Math

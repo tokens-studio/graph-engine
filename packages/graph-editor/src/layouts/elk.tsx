@@ -15,6 +15,7 @@ const getLayoutedElements = async (
   options = {},
 ): Promise<LayoutElementsOutput> => {
   const isHorizontal = options?.['elk.direction'] === 'RIGHT';
+
   const graph = {
     id: 'root',
     layoutOptions: options,

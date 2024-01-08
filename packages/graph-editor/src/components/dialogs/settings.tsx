@@ -1,7 +1,8 @@
 import React from 'react';
 import { IconButton, Dialog } from '@tokens-studio/ui';
-import { SettingsIcon } from '@iconicicons/react';
+
 import { Settings } from '../panels/settings';
+import { GearIcon } from '@radix-ui/react-icons';
 
 export const SettingsDialog = () => {
   return (
@@ -9,7 +10,7 @@ export const SettingsDialog = () => {
       <Dialog.Trigger asChild>
         <IconButton
           css={{ flexShrink: 0 }}
-          icon={<SettingsIcon />}
+          icon={<GearIcon />}
           variant="invisible"
           tooltip="Settings"
         />

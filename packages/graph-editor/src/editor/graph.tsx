@@ -23,7 +23,7 @@ import {
   sortNodes,
 } from '../components/flow/utils.ts';
 import { handleDrop } from './actions/handleDrop.js';
-import { keyMap, useHotkeys } from './hotkeys.ts';
+import { keyMap, useHotkeys } from './hooks/hotkeys.ts';
 
 import { useDispatch } from '../hooks/index.ts';
 import { v4 as uuidv4 } from 'uuid';
@@ -46,9 +46,9 @@ import { Box } from '@tokens-studio/ui';
 import { Graph, NodeTypes, nodeLookup } from '@tokens-studio/graph-engine';
 import { useContextMenu } from 'react-contexify';
 import { version } from '../../package.json';
-import { NodeContextMenu } from './nodeContextMenu.js';
-import { EdgeContextMenu } from './edgeContextMenu.js';
-import { PaneContextMenu } from './paneContextMenu.js';
+import { NodeContextMenu } from '../components/contextMenus/nodeContextMenu.js';
+import { EdgeContextMenu } from '../components/contextMenus/edgeContextMenu.js';
+import { PaneContextMenu } from '../components/contextMenus/paneContextMenu.js';
 import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '@/redux/selectors/settings.ts';
 import { NodeV2 } from '@/components/index.ts';
@@ -60,6 +60,8 @@ import { useRegisterRef } from '@/hooks/useRegisterRef.ts';
 import { graphEditorSelector } from '@/redux/selectors/refs.ts';
 import { copyNodeAction } from './actions/copyNodes.tsx';
 import { stripVariadic } from '@/utils/stripVariadic.ts';
+import { compactNodes, compactEdges } from '@/utils/compact.ts';
+import { uncompactNode } from '@/utils/uncompact.ts';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -205,8 +207,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           return {
             version,
             viewport: reactFlowInstance.getViewport(),
-            nodes: reactFlowInstance.getNodes(),
-            edges: reactFlowInstance.getEdges(),
+            nodes: compactNodes(reactFlowInstance.getNodes()),
+            edges: compactEdges(reactFlowInstance.getEdges()),
             graph: graph.serialize(),
           };
         },
@@ -215,7 +217,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
             Graph.deserialize(serializedGraph, nodeLookup),
           );
 
-          reactFlowInstance.setNodes(() => nodes);
+          reactFlowInstance.setNodes(() => uncompactNode(nodes));
           reactFlowInstance.setEdges(() => edges);
           //Force delay of 1 tick to allow input state to update
         },
@@ -533,8 +535,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
               panOnScroll={true}
               //Note that we cannot use pan on drag or it will affect the context menu
               onPaneContextMenu={handleContextMenu}
-              // onEdgeContextMenu={handleEdgeContextMenu}
-              // onNodeContextMenu={handleNodeContextMenu}
+              onEdgeContextMenu={handleEdgeContextMenu}
+              onNodeContextMenu={handleNodeContextMenu}
               selectionMode={SelectionMode.Partial}
               onDragOver={onDragOver}
               selectionOnDrag={true}

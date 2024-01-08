@@ -4,7 +4,7 @@ import { useDispatch } from '@/hooks/useDispatch.ts';
 import { useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import copy from 'copy-to-clipboard';
-import { useAutoLayout } from './hooks/useAutolayout';
+import { useAutoLayout } from './useAutolayout';
 import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '@/redux/selectors/settings';
 import { Graph } from '@tokens-studio/graph-engine';

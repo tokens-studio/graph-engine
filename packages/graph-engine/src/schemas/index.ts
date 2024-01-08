@@ -249,7 +249,18 @@ export const canConvertSchemaTypes = (
   //Any can always accept anything
   if (target.$id === ANY) return true;
 
+  if (src.type == "array" && target.$id == ANY_ARRAY) {
+    return true;
+  }
+
   switch (src.$id) {
+    case COLOR:
+      switch (target.$id) {
+        case STRING:
+          return true;
+      }
+      break;
+
     case NUMBER_ARRAY:
       switch (target.$id) {
         case STRING_ARRAY:
@@ -332,6 +343,10 @@ export const AllSchemas = [
   AnyArraySchema,
   BooleanSchema,
   TokenSchema,
+  TokenSetSchema,
+  TokenArraySchema,
+  TokenArrayArraySchema,
+  ObjectSchema,
   CurveSchema,
   Vec2Schema,
   Vec3Schema,

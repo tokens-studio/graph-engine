@@ -12,6 +12,7 @@ import { ImperativeEditorRef } from '@/editor/editorTypes';
 import { Settings } from '../panels/settings';
 import { Inputsheet } from '../panels/inputs';
 import { NodeSettingsPanel } from '../panels/nodeSettings';
+import { FindDialog } from '../dialogs/findDialog';
 
 const windowButton = ({
   name,
@@ -164,6 +165,16 @@ export const defaultMenuDataFactory = (): Menu =>
           new MenuItem({
             name: 'redo',
             render: () => <MenuItemElement>Redo</MenuItemElement>,
+          }),
+
+          new Seperator(),
+          new MenuItem({
+            name: 'find',
+            render: () => (
+              <FindDialog>
+                <MenuItemElement>Find</MenuItemElement>
+              </FindDialog>
+            ),
           }),
         ],
       }),

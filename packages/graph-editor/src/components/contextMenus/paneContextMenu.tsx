@@ -1,12 +1,12 @@
 import { Menu, Separator } from 'react-contexify';
 import React, { useCallback } from 'react';
 import { useReactFlow } from 'reactflow';
-import { useAutoLayout } from './hooks/useAutolayout';
+import { useAutoLayout } from '../../editor/hooks/useAutolayout';
 import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '@/redux/selectors/settings';
 import { useDispatch } from '@/hooks';
 import { ContextMenuItem } from './ContextMenuStyles';
-import { clear } from './actions/clear';
+import { clear } from '../../editor/actions/clear';
 import { useGraph } from '@/hooks/useGraph';
 
 import { v4 as uuidv4, v4 } from 'uuid';

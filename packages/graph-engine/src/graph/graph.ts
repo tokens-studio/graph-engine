@@ -4,7 +4,7 @@ import cmp from "semver-compare";
 import { Node, NodeFactory } from "@/programmatic/node.js";
 
 import { ExternalLoader } from "./externalLoader.js";
-import { GraphSchema } from "@/schemas/index.js";
+import { AnySchema, GraphSchema } from "@/schemas/index.js";
 import { Output } from "@/programmatic/output.js";
 import { Input } from "@/programmatic/input.js";
 import { topologicalSort } from "./topologicSort.js";
@@ -339,13 +339,7 @@ export class Graph {
     return {
       version: VERSION,
       nodes: Object.values(this.nodes).map((x) => x.serialize()),
-      edges: Object.values(this.edges).map((x) => ({
-        id: x.id,
-        source: x.source,
-        target: x.target,
-        sourceHandle: x.sourceHandle,
-        targetHandle: x.targetHandle,
-      })),
+      edges: Object.values(this.edges),
     };
   }
 
@@ -388,6 +382,8 @@ export class Graph {
       return acc;
     }, {});
 
+    Object.values(g.nodes).forEach((node) => node.execute());
+
     g.edges = serialized.edges.reduce((acc, edge) => {
       //Don't change the edge
       acc[edge.id] = {
@@ -406,9 +402,13 @@ export class Graph {
       }
 
       if (!source.outputs[edge.sourceHandle]) {
-        throw new Error(
+        console.warn(
           `No output found on source node ${source.id} with handle ${edge.sourceHandle}`
         );
+        //This must be a dynamic output. We create a new one with any type as its likely dependent on runtime anyway
+        source.addOutput(edge.sourceHandle, {
+          type: AnySchema,
+        });
       }
       if (!target.inputs[edge.targetHandle]) {
         throw new Error(

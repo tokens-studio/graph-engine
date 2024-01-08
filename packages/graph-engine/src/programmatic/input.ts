@@ -34,6 +34,7 @@ export class Input<T = any> extends Port<T> {
     makeObservable(this, {
       setValue: action,
       reset: action,
+      deserialize: action,
     });
   }
 
@@ -68,15 +69,34 @@ export class Input<T = any> extends Port<T> {
   }
 
   serialize(): SerializedInput {
-    return {
+    const type = this.fullType();
+    const serialized = {
       name: this.name,
       value: this.value,
-      ...this.fullType(),
-      meta: this.meta,
+      type: type.type,
     } as SerializedInput;
+
+    //Try compact the serialization by omitting the value if its the default
+    if (type.variadic) {
+      serialized.variadic = true;
+    }
+    if (type.visible) {
+      serialized.visible = true;
+    }
+
+    if (Object.keys(this.meta).length > 0) {
+      serialized.meta = this.meta;
+    }
+
+    return serialized;
   }
 
   deserialize(serialized: SerializedInput) {
+    this.visible = serialized.visible || false;
+    this._dynamicType = serialized.type;
+    this.meta = serialized.meta || {};
     this._value = serialized.value;
+
+    console.log("Deserializing input", serialized, this.type);
   }
 }

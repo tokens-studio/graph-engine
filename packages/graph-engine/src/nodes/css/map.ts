@@ -1,10 +1,15 @@
-//@ts-ignore If this is not ignored, rollup acts stupid and tries to import this file as a module
-import properties from "mdn-data/css/properties.json" assert { type: "json" };
 import { INodeDefinition } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
-import { AnySchema, ObjectSchema, StringSchema } from "@/schemas/index.js";
+import { ObjectSchema } from "@/schemas/index.js";
 
+/**
+ * Similar to the Objectify node, this expects that inputs will be added to it dynamically.
+ * Technically this performs the exact same function as the Objectify node, but it's more
+ * convenient to have a node here that could use strong typing on the property names if need
+ * be. Note that you should using something like the "mdn-data" package to get the list of
+ * properties and their types. This is just a convenience node.
+ */
 export default class NodeDefinition extends Node {
   static title = "CSS Map";
   static type = NodeTypes.CSS_MAP;
@@ -12,14 +17,6 @@ export default class NodeDefinition extends Node {
     "Exposes all the css properties. You can link the input of any other node to the any property that is there in the css map node.";
   constructor(props?: INodeDefinition) {
     super(props);
-
-    Object.keys(properties)
-      .filter((name) => !name.startsWith("-"))
-      .forEach((name) => {
-        this.addInput(name, {
-          type: StringSchema,
-        });
-      });
 
     this.addOutput("value", {
       type: ObjectSchema,

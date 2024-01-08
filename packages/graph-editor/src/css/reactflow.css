@@ -1,0 +1,87 @@
+@import url('reactflow/dist/style.css');
+
+.react-flow__node {
+    position: absolute;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    pointer-events: all;
+    transform-origin: 0 0;
+    box-sizing: content-box;
+    padding: 0;
+    cursor: -webkit-grab;
+    cursor: grab;
+    background: transparent;
+    width: initial;
+    border-radius: var(--radii-medium);
+    background: var(--colors-bgDefault);
+    box-shadow: var(--shadows-small);
+    outline: 2px solid transparent;
+}
+
+.react-flow__node.filtered {
+    opacity: 0.25;
+}
+
+.react-flow__node.selectable.selected,
+.react-flow__node.selectable:focus {
+    --nodeBorderColor: var(--colors-accentMuted);
+    --nodeBgColor: var(--colors-accentBg);
+    --nodeTextColor: var(--colors-fgDefault);
+    outline: 2px solid var(--colors-accentMuted);
+}
+
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:focus .react-flow__edge-path,
+.react-flow__edge:focus-visible .react-flow__edge-path {
+    stroke: var(--colors-bgSubtle);
+}
+
+.react-flow__node.selectable.selected .group-color-picker {
+    display: block;
+}
+
+.react-flow__node-studio_tokens_group {
+    background: transparent;
+}
+
+.react-flow__minimap {
+    background: var(--colors-bgCanvas);
+}
+
+.react-flow__minimap-mask {
+    fill: var(--colors-borderDefault) !important;
+}
+
+.react-flow__handle-right {
+    right: -1.3em;
+}
+
+.react-flow__handle-left {
+    left: -1.3em;
+}
+
+.react-flow__edge-path,
+.react-flow__connection-path {
+    stroke: var(--colors-borderMuted);
+}
+
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:focus .react-flow__edge-path,
+.react-flow__edge:focus-visible .react-flow__edge-path {
+    stroke-width: 5 !important;
+    stroke: var(--colors-focus);
+}
+
+.react-flow__handle-connecting:not(.react-flow__handle-valid) {
+    cursor: not-allowed;
+}
+
+.react-flow__handle-connecting:not(.react-flow__handle-valid):after,
+.react-flow__handle-connecting:not(.react-flow__handle-valid)>* {
+    background: #ff6060 !important;
+}
+
+.react-flow__handle.react-flow__handle-valid {
+    border: 3px solid #5d9 !important;
+}
