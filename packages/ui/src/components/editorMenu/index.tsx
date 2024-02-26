@@ -219,7 +219,7 @@ export const Menubar = ({
           onClick={onLoadExamples}
         />
       </Stack>
-      <Stack direction="column" justify="end" css={{ flexGrow: 1 }}>
+      <Stack direction="column" justify="end" css={{ flexGrow: 1 }} align='center'>
         <IconButton
           variant="invisible"
           tooltip={theme === 'light' ? 'Dark mode' : 'Light mode'}

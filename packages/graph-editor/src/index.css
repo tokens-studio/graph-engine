@@ -3,6 +3,7 @@
 
 :root {
     --globals-drop-panel-width: 240px;
+    --globals-sidebar-width: 60px;
 }
 
 .react-flow__node {
