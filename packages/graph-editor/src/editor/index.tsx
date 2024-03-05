@@ -70,7 +70,7 @@ const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
 const panOnDrag = [1, 2];
 
-const noop = () => {};
+const noop = () => { };
 
 const edgeTypes = {
   custom: CustomEdge,
@@ -509,67 +509,57 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     return (
       <>
         <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
-          <Box
+          <Stack
             className="editor"
+            direction='row'
             css={{
               height: '100%',
               backgroundColor: '$bgCanvas',
-              display: 'flex',
-              flexDirection: 'row',
               flexGrow: 1,
             }}
           >
             <ForceUpdateProvider value={forceUpdate}>
-              <Box
-                css={{
-                  position: 'absolute',
-                  zIndex: 500,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  height: 'inherit',
-                }}
-              >
-                {showMenu && (
-                  <Stack
-                    direction="column"
-                    gap={2}
-                    css={{
-                      position: 'relative',
-                      padding: '$3',
-                      paddingRight: 0,
-                      zIndex: 600,
-                    }}
-                  >
-                    {props.menuContent}
-                    <Settings />
-                  </Stack>
-                )}
-                {showNodesPanel && (
-                  <Box
-                    css={{
-                      paddingLeft: '$3',
-                      paddingTop: '$3',
-                      paddingBottom: '$3',
-                    }}
-                  >
-                    <Box
-                      css={{
-                        backgroundColor: '$bgDefault',
-                        width: 'var(--globals-drop-panel-width)',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        border: '1px solid $borderSubtle',
-                        boxShadow: '$small',
-                        borderRadius: '$medium',
-                        overflowY: 'auto',
-                        maxHeight: '100%',
-                      }}
-                    >
-                      <DropPanel groups={[]} items={panelItems} />
-                    </Box>
-                  </Box>
-                )}
-              </Box>
+
+              {showMenu && (
+                <Stack
+                  direction="column"
+                  align='center'
+                  justify='center'
+                  gap={2}
+                  css={{
+                    position: 'relative',
+                    paddingTop: '$3',
+                    zIndex: 600,
+                    backgroundColor: '$bgCanvas',
+                    width: 'var(--globals-sidebar-width)',
+                    borderRight: '1px solid $borderMuted',
+                  }}
+                >
+                  {props.menuContent}
+                  <Settings />
+                </Stack>
+              )}
+              {showNodesPanel && (
+                <Stack
+                  css={{
+                    position: 'absolute',
+                    backgroundColor: '$bgDefault',
+                    border: '1px solid $borderMuted',
+                    width: 'var(--globals-drop-panel-width)',
+                    left: 'calc(var(--globals-sidebar-width) + $3)',
+                    top: '$3',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    boxShadow: '$small',
+                    borderRadius: '$medium',
+                    overflowY: 'auto',
+                    height: 'fit-content'
+                  }}
+                >
+                  <DropPanel groups={[]} items={panelItems} />
+                </Stack>
+              )}
+
               <ReactFlow
                 ref={reactFlowWrapper}
                 fitView
@@ -627,7 +617,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
                 {props.children}
               </ReactFlow>
             </ForceUpdateProvider>
-          </Box>
+          </Stack>
         </GlobalHotKeys>
         <PaneContextMenu
           id={props.id + '_pane'}
