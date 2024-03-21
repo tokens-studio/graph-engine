@@ -1,5 +1,12 @@
 # @tokens-studio/graph-editor
 
+## 2.10.0
+
+### Minor Changes
+
+- bdc94f2: Prevent toolpanel from covering canvas
+- f954273: Add pointer-events to css map
+
 ## 2.9.5
 
 ### Patch Changes
