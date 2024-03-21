@@ -84,6 +84,7 @@ const keys = [
   'paddingLeft',
   'paddingRight',
   'paddingTop',
+  'pointer-events',
   'position',
   'right',
   'rotate',
