@@ -1,4 +1,4 @@
-import { DownloadIcon, FilePlusIcon, UploadIcon } from '@radix-ui/react-icons';
+import { DownloadIcon, FilePlusIcon, GearIcon, InputIcon, PlayIcon, UploadIcon } from '@radix-ui/react-icons';
 import { Menu, MenuItem, Seperator, SubMenu } from './data';
 import React, { MutableRefObject, useCallback } from 'react';
 import { MenuItemElement } from './menuItem';
@@ -13,11 +13,16 @@ import { Settings } from '../panels/settings';
 import { Inputsheet } from '../panels/inputs';
 import { NodeSettingsPanel } from '../panels/nodeSettings';
 import { FindDialog } from '../dialogs/findDialog';
+import { PlayPanel } from '../panels/play';
+import { LogsPanel } from '../panels/logs';
+import { AnnotationDotsIcon, CpuIcon, RedoIcon, UndoIcon } from '@iconicicons/react';
+import { GraphPanel } from '../panels/graph';
 
 const windowButton = ({
   name,
   id,
   title,
+  icon,
   content,
 }: {
   //Id of the tab
@@ -25,6 +30,7 @@ const windowButton = ({
   title: string;
   //name ofthe menu item
   name: string;
+  icon?: JSX.Element;
   content: JSX.Element;
 }) =>
   new MenuItem({
@@ -66,7 +72,7 @@ const windowButton = ({
         }
       };
 
-      return <MenuItemElement onClick={onToggle}>{title}</MenuItemElement>;
+      return <MenuItemElement onClick={onToggle} key={title} icon={icon}>{title}</MenuItemElement >;
     },
   });
 
@@ -79,9 +85,9 @@ export const defaultMenuDataFactory = (): Menu =>
         items: [
           new MenuItem({
             name: 'newGraph',
-            render: () => {
+            render: (rest) => {
               return (
-                <MenuItemElement key="neww" icon={<FilePlusIcon />}>
+                <MenuItemElement key="neww" icon={<FilePlusIcon />} {...rest}>
                   New Graph
                 </MenuItemElement>
               );
@@ -90,7 +96,7 @@ export const defaultMenuDataFactory = (): Menu =>
           new Seperator(),
           new MenuItem({
             name: 'load',
-            render: function FileLoad() {
+            render: function FileLoad(rest) {
               const graphRef = useSelector(
                 graphEditorSelector,
               ) as MutableRefObject<ImperativeEditorRef>;
@@ -115,7 +121,7 @@ export const defaultMenuDataFactory = (): Menu =>
               };
 
               return (
-                <MenuItemElement onClick={onClick} icon={<UploadIcon />}>
+                <MenuItemElement onClick={onClick} icon={<UploadIcon />} {...rest}>
                   <u>L</u>oad
                 </MenuItemElement>
               );
@@ -123,7 +129,7 @@ export const defaultMenuDataFactory = (): Menu =>
           }),
           new MenuItem({
             name: 'save',
-            render: function FileSave() {
+            render: function FileSave(rest) {
               const graphRef = useSelector(
                 graphEditorSelector,
               ) as MutableRefObject<ImperativeEditorRef>;
@@ -146,6 +152,7 @@ export const defaultMenuDataFactory = (): Menu =>
                   disabled={!graphRef?.current}
                   icon={<DownloadIcon />}
                   onClick={onSave}
+                  {...rest}
                 >
                   <u>S</u>ave
                 </MenuItemElement>
@@ -160,20 +167,24 @@ export const defaultMenuDataFactory = (): Menu =>
         items: [
           new MenuItem({
             name: 'undo',
-            render: () => <MenuItemElement>Undo</MenuItemElement>,
+            render: (rest) => <MenuItemElement icon={<UndoIcon />} {...rest} >Undo</MenuItemElement>,
           }),
           new MenuItem({
             name: 'redo',
-            render: () => <MenuItemElement>Redo</MenuItemElement>,
+            render: (rest) => <MenuItemElement icon={<RedoIcon />} {...rest}>Redo</MenuItemElement>,
           }),
 
           new Seperator(),
           new MenuItem({
             name: 'find',
-            render: () => (
-              <FindDialog>
-                <MenuItemElement>Find</MenuItemElement>
-              </FindDialog>
+            render: (rest) => (
+              <MenuItemElement {...rest} inner={(children) => (
+                <FindDialog>
+                  {children}
+                </FindDialog>
+              )}>
+                Find
+              </MenuItemElement>
             ),
           }),
         ],
@@ -186,6 +197,7 @@ export const defaultMenuDataFactory = (): Menu =>
             name: 'inputs',
             id: 'inputs',
             title: 'Inputs',
+
             content: <Inputsheet />,
           }),
           windowButton({
@@ -198,7 +210,28 @@ export const defaultMenuDataFactory = (): Menu =>
             name: 'nodeSettings',
             id: 'nodeSettings',
             title: 'Node Settings',
+            icon : <CpuIcon/>,
             content: <NodeSettingsPanel />,
+          }),
+          windowButton({
+            name: 'graphSettings',
+            id: 'graphSettings',
+            title: 'Graph Settings',
+            content: <GraphPanel />,
+          }),
+          windowButton({
+            name: 'logs',
+            id: 'logs',
+            title: 'Logs',
+            icon: <AnnotationDotsIcon/>,
+            content: <LogsPanel />,
+          }),
+          windowButton({
+            name: 'playControls',
+            id: 'playControls',
+            title: 'Play Controls',
+            icon: <PlayIcon />,
+            content: <PlayPanel />,
           }),
           windowButton({
             name: 'legend',
@@ -213,15 +246,10 @@ export const defaultMenuDataFactory = (): Menu =>
             content: <FlameGraph />,
           }),
           windowButton({
-            name: 'inputs',
-            id: 'inputs',
-            title: 'Inputs',
-            content: <Inputsheet />,
-          }),
-          windowButton({
             name: 'settings',
             id: 'settings',
             title: 'Settings',
+            icon: <GearIcon />,
             content: <Settings />,
           }),
 
@@ -229,7 +257,7 @@ export const defaultMenuDataFactory = (): Menu =>
 
           new MenuItem({
             name: 'saveLayout',
-            render: function SaveLayout() {
+            render: function SaveLayout(rest) {
               const dockerRef = useSelector(
                 dockerSelector,
               ) as MutableRefObject<DockLayout>;
@@ -247,7 +275,7 @@ export const defaultMenuDataFactory = (): Menu =>
                 link.click();
               }, [dockerRef]);
               return (
-                <MenuItemElement icon={<DownloadIcon />} onClick={saveLayout}>
+                <MenuItemElement icon={<DownloadIcon />} onClick={saveLayout} {...rest}>
                   Save Layout
                 </MenuItemElement>
               );
@@ -255,7 +283,7 @@ export const defaultMenuDataFactory = (): Menu =>
           }),
           new MenuItem({
             name: 'loadLayout',
-            render: function LoadLayout() {
+            render: function LoadLayout(rest) {
               const dockerRef = useSelector(
                 dockerSelector,
               ) as MutableRefObject<DockLayout>;
@@ -281,7 +309,7 @@ export const defaultMenuDataFactory = (): Menu =>
               }, [dockerRef]);
 
               return (
-                <MenuItemElement icon={<UploadIcon />} onClick={loadLayout}>
+                <MenuItemElement icon={<UploadIcon />} onClick={loadLayout} {...rest}>
                   Load Layout
                 </MenuItemElement>
               );

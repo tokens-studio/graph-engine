@@ -15,7 +15,7 @@ export default class NodeDefinition extends Node {
     value: Output<number>;
   };
 
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("inputs", {
       type: {

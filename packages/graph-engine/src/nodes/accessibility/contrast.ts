@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static title = "Contrast";
   static type = NodeTypes.CONTRAST;
   static description = "Calculates the contrast between two colors";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("a", {
       type: {

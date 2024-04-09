@@ -13,7 +13,7 @@ export default class NodeDefinition extends Node {
   static title = "Panic";
   static type = NodeTypes.PANIC;
   static description = "Panics if passed a truthy value";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("trigger", {
       type: AnySchema,

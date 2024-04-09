@@ -11,7 +11,7 @@ import { useRouter } from 'next/router.js';
 import { useGetEditor } from '@/hooks/useGetEditor.ts';
 import { examples } from '@/examples/examples.tsx';
 import { previewCodeSelector } from '@/redux/selectors/index.ts';
-import { menu } from '../editorMenu/index.tsx';
+import { menu, panelItems,nodeTypes } from '../editorMenu/index.tsx';
 import globalState, { GlobalState } from '@/mobx/index.tsx';
 import { observer } from 'mobx-react-lite';
 
@@ -19,7 +19,7 @@ export const EditorTab = observer(({ ui }: { ui: GlobalState['ui'] }) => {
   const dispatch = useDispatch();
   const previewCode = useSelector(previewCodeSelector);
 
-  const [, ref] = useRegisterRef('editor');
+  const [editorRef, ref] = useRegisterRef('editor');
   const showExamplePicker = ui.showExamplePicker;
   const [loading, setLoading] = React.useState(false);
   const { loadExample } = useGetEditor();
@@ -50,6 +50,7 @@ export const EditorTab = observer(({ ui }: { ui: GlobalState['ui'] }) => {
   }, []);
 
   const onOpenExamplePicker = useCallback(() => {
+    console.log(editorRef)
     globalState.ui.showExamplePicker.set(true);
   }, []);
 
@@ -68,6 +69,8 @@ export const EditorTab = observer(({ ui }: { ui: GlobalState['ui'] }) => {
         onOutputChange={onEditorOutputChange}
         showMenu
         menuItems={menu}
+        panelItems={panelItems}
+        nodeTypes = {nodeTypes}
         emptyContent={<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />}
       ></Editor>
       <ExamplesPicker

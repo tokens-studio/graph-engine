@@ -1,0 +1,41 @@
+{
+    "version": "0.12.0",
+    "nodes": [
+        {
+            "id": "45afa62e-09c6-4d2e-95af-2ccffae0b204",
+            "type": "studio.tokens.generic.input",
+            "inputs": [],
+            "annotations": {
+                "ui.position.x": 69.78470865885419,
+                "ui.position.y": 179.80323791503906
+            }
+        },
+        {
+            "id": "7ad87b26-59a2-4c91-9108-e53a6ed04bf5",
+            "type": "studio.tokens.generic.output",
+            "inputs": [
+                {
+                    "name": "input",
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/any.json",
+                        "title": "Any"
+                    },
+                    "visible": true
+                }
+            ],
+            "annotations": {
+                "ui.position.x": 458.45137532552076,
+                "ui.position.y": 175.1365712483724
+            }
+        }
+    ],
+    "edges": [],
+    "annotations": {
+        "ui.viewport": {
+            "x": 0,
+            "y": 0,
+            "zoom": 1.5
+        },
+        "ui.version": "2.9.4"
+    }
+}

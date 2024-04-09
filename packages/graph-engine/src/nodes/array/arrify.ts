@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.ARRIFY;
   static description = "Dynamically generates an array";
 
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("items", {
       type: AnySchema,

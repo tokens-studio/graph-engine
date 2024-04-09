@@ -1,8 +1,10 @@
 import Node from "@/nodes/string/lowercase.js";
+import { Graph } from "@/graph/graph.js";
 
 describe("string/lowercase", () => {
   it("lowercases all characters", async () => {
-    const node = new Node();
+    const graph = new Graph();
+    const node = new Node({ graph });
 
     node.inputs.value.setValue("HHH");
 

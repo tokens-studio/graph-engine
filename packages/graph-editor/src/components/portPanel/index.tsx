@@ -24,6 +24,7 @@ import { useGraph } from '@/hooks/useGraph';
 import { controls } from '@/redux/selectors/registry';
 import { IField } from '@/components/controls/interface';
 import copy from 'copy-to-clipboard';
+import { deletable, resetable } from '@/annotations';
 
 export interface IPortPanel {
   ports: Record<string, GraphPort>;
@@ -48,8 +49,8 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
   const controlSelector = useSelector(controls);
   const graph = useGraph();
   const isInput = NodeTypes.INPUT === port.node.factory.type;
-  const isDynamicInput = Boolean(port.meta.deletable);
-  const resettable = Boolean(port.meta.reset);
+  const isDynamicInput = Boolean(port.annotations[deletable]);
+  const resettable = Boolean(port.annotations[resetable]);
   const inner = useMemo(() => {
     const field = controlSelector.find((x) => x.matcher(type, readOnly));
     const Component = field?.component!;
@@ -76,7 +77,7 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
 
   const onReset = useCallback(() => {
     (port as Input).reset();
-    port.meta.reset = false;
+    delete port.annotations[resetable];
   }, [port]);
 
   const onCopySchema = useCallback(() => {

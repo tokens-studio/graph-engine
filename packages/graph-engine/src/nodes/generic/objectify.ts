@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.OBJECTIFY;
   static description =
     "Objectify node allows you to convert multiple inputs to an object.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     //Purely runtime inputs
     this.addOutput("value", {

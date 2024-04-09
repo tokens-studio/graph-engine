@@ -1,5 +1,17 @@
 import type { SchemaObject } from "ajv";
 
+
+export const variadicId = (id: string) => id.replace(".json", "-variadic.json")
+
+export const createVariadicSchema = (baseSchema) => {
+  return {
+    $id: variadicId(baseSchema.$id),
+    title: baseSchema.title + "[]",
+    type: "array",
+    items: baseSchema
+  };
+}
+
 export type { SchemaObject } from "ajv";
 
 export const NUMBER = "https://schemas.tokens.studio/number.json";
@@ -20,6 +32,13 @@ export const NumberArraySchema: SchemaObject = {
 export const STRING = "https://schemas.tokens.studio/string.json";
 export const StringSchema: SchemaObject = {
   $id: STRING,
+  title: "String",
+  type: "string",
+};
+
+export const TEXT = "https://schemas.tokens.studio/text.json";
+export const TextSchema: SchemaObject = {
+  $id: TEXT,
   title: "String",
   type: "string",
 };

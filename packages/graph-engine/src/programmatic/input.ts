@@ -13,7 +13,7 @@ export interface IInputProps<T = any> {
   visible: boolean;
   node: Node;
   variadic?: boolean;
-  meta?: Record<string, any>;
+  annotations?: Record<string, any>;
 }
 
 export interface ISetValue {
@@ -84,8 +84,8 @@ export class Input<T = any> extends Port<T> {
       serialized.visible = true;
     }
 
-    if (Object.keys(this.meta).length > 0) {
-      serialized.meta = this.meta;
+    if (Object.keys(this.annotations).length > 0) {
+      serialized.annotations = this.annotations;
     }
 
     return serialized;
@@ -94,9 +94,23 @@ export class Input<T = any> extends Port<T> {
   deserialize(serialized: SerializedInput) {
     this.visible = serialized.visible || false;
     this._dynamicType = serialized.type;
-    this.meta = serialized.meta || {};
+    this.annotations = serialized.annotations || {};
     this._value = serialized.value;
-
-    console.log("Deserializing input", serialized, this.type);
   }
 }
+
+
+/**
+ * Converts a type definition to a map of inputs 
+ * @example
+ * ```ts
+ * type myType = {
+ * a: number,
+ * b: string
+ * }
+ * type myInputs = ToInput<myType>
+ * ```
+ */
+export type ToInput<T> = {
+  [P in keyof T]: Input<T[P]>;
+};

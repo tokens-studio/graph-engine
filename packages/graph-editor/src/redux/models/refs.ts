@@ -9,7 +9,7 @@ export interface RefState {
 export const refState = createModel<RootModel>()({
   state: {} as RefState,
   reducers: {
-    set(state, payload: { key: string; value: MutableRefObject<any> }) {
+    setRef(state, payload: { key: string; value: MutableRefObject<any> }) {
       return {
         ...state,
         [payload.key]: payload.value,

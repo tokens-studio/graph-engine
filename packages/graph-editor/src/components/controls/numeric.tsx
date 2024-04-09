@@ -8,18 +8,19 @@ export const NumericField = observer(({ port, readOnly }: IField) => {
   const [intermediate, setIntermediate] = React.useState<string | undefined>(
     undefined,
   );
+  const [hadErr,setHadErr] = React.useState<boolean>(false);
 
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       if (!readOnly) {
         const number = Number.parseFloat(e.target.value);
-
         if (!Number.isNaN(number)) {
           (port as Input).setValue(number);
-          setIntermediate(undefined);
-        } else {
-          setIntermediate(e.target.value);
+          setHadErr(false);
+        } else{
+          setHadErr(true);
         }
+        setIntermediate(e.target.value);
       }
     },
     [port, readOnly],
@@ -27,7 +28,7 @@ export const NumericField = observer(({ port, readOnly }: IField) => {
 
   return (
     <TextInput
-      validationStatus={!!intermediate ? 'error' : undefined}
+      validationStatus={hadErr ? 'error' : undefined}
       width={'100%'}
       value={intermediate === undefined ? port.value : intermediate}
       onChange={onChange}

@@ -7,7 +7,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.JOIN;
   static description =
     "Join node allows you to join an array into a string using a delimiter.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("array", {
       type: AnyArraySchema,

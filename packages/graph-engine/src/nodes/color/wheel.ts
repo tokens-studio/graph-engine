@@ -9,7 +9,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.WHEEL;
   static description =
     "Generate Color Wheel node allows you to create a color scale based on a base color and rotation in hue. You can use this node to generate a color scale for a specific color property.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
 
     this.addInput("hueAmount", {

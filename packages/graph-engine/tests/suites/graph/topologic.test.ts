@@ -4,23 +4,61 @@ import { Node } from "@/programmatic";
 
 describe("Graph/topologic", () => {
   it("Creates the expected topologic output ", async () => {
-    const g = new Graph();
+    const graph = new Graph();
 
-    g.addNode(new Node({ id: "a" }));
-    g.addNode(new Node({ id: "b" }));
-    g.addNode(new Node({ id: "c" }));
-    g.addNode(new Node({ id: "d" }));
-    g.addNode(new Node({ id: "e" }));
-    g.addNode(new Node({ id: "f" }));
+    graph.addNode(new Node({ id: "a", graph }));
+    graph.addNode(new Node({ id: "b", graph }));
+    graph.addNode(new Node({ id: "c", graph }));
+    graph.addNode(new Node({ id: "d", graph }));
+    graph.addNode(new Node({ id: "e", graph }));
+    graph.addNode(new Node({ id: "f", graph }));
 
-    g.createEdge("a->b", "a", "b", "input", "output");
-    g.createEdge("a->c", "a", "c", "input", "output");
-    g.createEdge("b->d", "b", "d", "input", "output");
-    g.createEdge("b->e", "b", "e", "input", "output");
-    g.createEdge("c->f", "c", "f", "input", "output");
-    g.createEdge("e->g", "e", "f", "input", "output");
+    graph.createEdge({
+      id: "a->b",
+      source: "a",
+      target: "b",
+      sourceHandle: "input",
+      targetHandle: "output",
 
-    const sorted = topologicalSort(g);
+    });
+    graph.createEdge({
+      id: "a->c",
+      source: "a",
+      target: "c",
+      sourceHandle: "input",
+      targetHandle: "output",
+    });
+    graph.createEdge({
+      id: "b->d",
+      source: "b",
+      target: "d",
+      sourceHandle: "input",
+      targetHandle: "output",
+    });
+    graph.createEdge({
+      id: "b->e",
+      source: "b",
+      target: "e",
+      sourceHandle: "input",
+      targetHandle: "output",
+    });
+    graph.createEdge({
+      id: "c->f",
+      source: "c",
+      target: "f",
+      sourceHandle: "input",
+      targetHandle: "output",
+    });
+    graph.createEdge({
+      id: "e->g",
+      source: "e",
+      target: "f",
+      sourceHandle: "input",
+      targetHandle: "output",
+    });
+  
+
+    const sorted = topologicalSort(graph);
 
     expect(sorted).toEqual(["a", "c", "b", "e", "f", "d"]);
   });

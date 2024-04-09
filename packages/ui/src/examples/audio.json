@@ -1,0 +1,186 @@
+{
+    "version": "0.12.0",
+    "nodes": [
+        {
+            "id": "52e87f7f-82ca-4df4-b72b-92cb727defcf",
+            "type": "studio.tokens.audio.context",
+            "inputs": [],
+            "annotations": {
+                "ui.position.x": -108.21529134114576,
+                "ui.position.y": 356.4699045817058
+            }
+        },
+        {
+            "id": "2be6ed0b-874e-4506-9113-4bf66790a52e",
+            "type": "studio.tokens.audio.gain",
+            "inputs": [
+                {
+                    "name": "context",
+                    "value": {},
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/audio/context.json",
+                        "title": "Context",
+                        "type": "object"
+                    },
+                    "visible": true
+                },
+                {
+                    "name": "gain",
+                    "value": 1,
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/number.json",
+                        "title": "Number",
+                        "type": "number",
+                        "default": 1
+                    },
+                    "visible": true
+                }
+            ],
+            "annotations": {
+                "ui.position.x": 301.11804199218744,
+                "ui.position.y": 202.46990458170563
+            }
+        },
+        {
+            "id": "8ca2fa6b-b462-487a-ab68-1646a65cb501",
+            "type": "studio.tokens.audio.connect",
+            "inputs": [
+                {
+                    "name": "source",
+                    "value": [
+                    ],
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/audio/source-variadic.json",
+                        "title": "Source[]",
+                        "type": "array",
+                        "items": {
+                            "$id": "https://schemas.tokens.studio/audio/source.json",
+                            "title": "Source",
+                            "type": "object"
+                        },
+                        "default": []
+                    },
+                    "variadic": true,
+                    "visible": true
+                },
+                {
+                    "name": "destination",
+                    "value": {},
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/audio/destination.json",
+                        "title": "Destination",
+                        "type": "object"
+                    },
+                    "visible": true
+                }
+            ],
+            "annotations": {
+                "ui.position.x": 672.5612937097673,
+                "ui.position.y": 311.1437276095615
+            }
+        },
+        {
+            "id": "3cbec6b4-d95d-4b38-b54b-808a964a1b1c",
+            "type": "studio.tokens.audio.oscillator",
+            "inputs": [
+                {
+                    "name": "context",
+                    "value": {},
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/audio/context.json",
+                        "title": "Context",
+                        "type": "object"
+                    },
+                    "visible": true
+                },
+                {
+                    "name": "type",
+                    "value": "sine",
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/string.json",
+                        "title": "String",
+                        "type": "string",
+                        "enum": [
+                            "sawtooth",
+                            "sine",
+                            "square",
+                            "triangle"
+                        ],
+                        "default": "sine"
+                    }
+                },
+                {
+                    "name": "frequency",
+                    "value": 3000,
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/number.json",
+                        "title": "Number",
+                        "type": "number",
+                        "default": 3000
+                    }
+                }
+            ],
+            "annotations": {
+                "ui.position.x": 299.6758912532524,
+                "ui.position.y": 87.58285065722427
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "52e87f7f-82ca-4df4-b72b-92cb727defcf:destination→8ca2fa6b-b462-487a-ab68-1646a65cb501:destination",
+            "source": "52e87f7f-82ca-4df4-b72b-92cb727defcf",
+            "sourceHandle": "destination",
+            "target": "8ca2fa6b-b462-487a-ab68-1646a65cb501",
+            "targetHandle": "destination",
+            "annotations": {}
+        },
+        {
+            "id": "52e87f7f-82ca-4df4-b72b-92cb727defcf:context→2be6ed0b-874e-4506-9113-4bf66790a52e:context",
+            "source": "52e87f7f-82ca-4df4-b72b-92cb727defcf",
+            "sourceHandle": "context",
+            "target": "2be6ed0b-874e-4506-9113-4bf66790a52e",
+            "targetHandle": "context",
+            "annotations": {}
+        },
+        {
+            "id": "52e87f7f-82ca-4df4-b72b-92cb727defcf:context→3cbec6b4-d95d-4b38-b54b-808a964a1b1c:context",
+            "source": "52e87f7f-82ca-4df4-b72b-92cb727defcf",
+            "sourceHandle": "context",
+            "target": "3cbec6b4-d95d-4b38-b54b-808a964a1b1c",
+            "targetHandle": "context",
+            "annotations": {}
+        },
+        {
+            "id": "3cbec6b4-d95d-4b38-b54b-808a964a1b1c:node→8ca2fa6b-b462-487a-ab68-1646a65cb501:source",
+            "source": "3cbec6b4-d95d-4b38-b54b-808a964a1b1c",
+            "sourceHandle": "node",
+            "target": "8ca2fa6b-b462-487a-ab68-1646a65cb501",
+            "targetHandle": "source",
+            "annotations": {
+                "engine.index": 0
+            }
+        },
+        {
+            "id": "2be6ed0b-874e-4506-9113-4bf66790a52e:node→8ca2fa6b-b462-487a-ab68-1646a65cb501:source[1]",
+            "source": "2be6ed0b-874e-4506-9113-4bf66790a52e",
+            "sourceHandle": "node",
+            "target": "8ca2fa6b-b462-487a-ab68-1646a65cb501",
+            "targetHandle": "source",
+            "annotations": {
+                "engine.index": 1
+            }
+        }
+    ],
+    "annotations": {
+        "engine.id": "5746b34b-dd4b-4964-832e-e974741f3f1e",
+        "engine.title": "Basic Audio",
+        "engine.description": "A very basic example of audio processing",
+        "ui.viewport": {
+            "x": 92.75429851231036,
+            "y": 74.96999596174487,
+            "zoom": 1.2858659690326675
+        },
+        "ui.version": "2.9.4"
+    }
+}

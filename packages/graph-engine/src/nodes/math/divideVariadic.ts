@@ -7,7 +7,7 @@ export default class NodeDefinition extends Node {
   static title = "Divide (Variadic)";
   static type = NodeTypes.DIV_VARIADIC;
   static description = "Divide node allows you to divide two or more numbers.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("inputs", {
       type: {

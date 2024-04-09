@@ -10,7 +10,7 @@ export default class NodeDefinition extends Node {
   static title = "Create Design Token";
   static type = NodeTypes.CREATE_DESIGN_TOKEN;
   static description = "Creates a design token from inputs";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("name", {
       type: StringSchema,

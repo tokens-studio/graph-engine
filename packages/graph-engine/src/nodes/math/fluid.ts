@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.FLUID_VALUE;
   static description =
     "Fluid node allows you to dynamically calculates a dimension based on the current viewport width, transitioning smoothly between a minimum and maximum dimension as the viewport width changes within a defined range (from min viewport to max viewport)";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("minSize", {
       type: NumberSchema,

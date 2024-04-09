@@ -13,7 +13,7 @@ export default class NodeDefinition extends Node {
 
   static description =
     "Allows you to provide initial values for the whole graph. An input node can be used only once at the start of the graph. You can use this node to set brand decisions or any initial values.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     //By default we don't define any ports, these are all dynamic
   }

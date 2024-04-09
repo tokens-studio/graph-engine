@@ -3,14 +3,12 @@ import { IField } from './interface';
 import { AllSchemas, Input, STRING } from '@tokens-studio/graph-engine';
 import {
   Button,
-  Scroll,
   Select,
   Stack,
-  Text,
-  TextInput,
 } from '@tokens-studio/ui';
 import React from 'react';
 import { JSONTree } from 'react-json-tree';
+import { resetable } from '@/annotations';
 
 export const AnyField = observer(({ port, readOnly }: IField) => {
   const [inputType, setInputType] = React.useState(port.type.$id!);
@@ -23,7 +21,7 @@ export const AnyField = observer(({ port, readOnly }: IField) => {
     (port as Input).setValue(schema.default, {
       type: schema,
     });
-    port.meta.reset = true;
+    port.annotations[resetable] = true;
   };
 
   if (readOnly) {

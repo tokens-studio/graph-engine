@@ -15,7 +15,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.CSS_MAP;
   static description =
     "Exposes all the css properties. You can link the input of any other node to the any property that is there in the css map node.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
 
     this.addOutput("value", {

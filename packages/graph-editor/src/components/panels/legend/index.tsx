@@ -9,9 +9,9 @@ export const Legend = () => {
     () =>
       Object.entries(colorTokens).map(([key, value]) => {
         return (
-          <Stack gap={2} align="center">
+          <Stack gap={2} align="center" key={key}>
             <Box
-              key={key}
+
               css={{
                 background: value.value,
                 height: '12px',

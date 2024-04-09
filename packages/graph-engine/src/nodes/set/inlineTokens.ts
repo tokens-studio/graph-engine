@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.INLINE_SET;
   static description =
     "Creates a set of tokens and stores it directly in the graph";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {
       type: TokenArraySchema,

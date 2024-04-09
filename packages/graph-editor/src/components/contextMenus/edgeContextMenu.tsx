@@ -2,8 +2,6 @@ import {
   Menu,
   Item,
   Separator,
-  Submenu,
-  useContextMenu,
 } from 'react-contexify';
 import React, { useCallback } from 'react';
 import { useReactFlow, Edge } from 'reactflow';

@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.EXTERNAL_TOKEN_SET;
   static description =
     "Retrives an external set of tokens and then exposes them";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("uri", {
       type: StringSchema,

@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.ABS;
   static description =
     "Absolute node allows you to get the absolute value of a number. Turning a negative number to positive.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("input", {
       type: NumberSchema,

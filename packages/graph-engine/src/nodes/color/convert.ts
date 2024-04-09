@@ -38,7 +38,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.CONVERT_COLOR;
   static description =
     "Converts a color from one color space to another and exposes the channels as outputs";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("color", {
       type: ColorSchema,

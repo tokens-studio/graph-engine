@@ -6,7 +6,7 @@ export default class NodeDefinition extends Node {
   static title = "Slice Array";
   static type = NodeTypes.SLICE;
   static description = "Slices an input array";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("array", {
       type: AnyArraySchema,

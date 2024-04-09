@@ -3,6 +3,8 @@ export type ExternalLoader = (opts: ExternalLoadOptions) => Promise<any> | any;
 
 export enum NodeTypes {
   INPUT = "studio.tokens.generic.input",
+  NOTE = "studio.tokens.generic.note",
+  INLINE = "studio.tokens.generic.inline",
   OUTPUT = "studio.tokens.generic.output",
   SUBGRAPH = "studio.tokens.generic.subgraph",
   ARRAY = "studio.tokens.generic.array",
@@ -116,3 +118,7 @@ export enum NodeTypes {
   COLOR_BLINDNESS = "studio.tokens.accessibility.colorBlindness",
   BASE_FONT_SIZE = "studio.tokens.accessibility.baseFontSize",
 }
+
+export type BatchRunError = Error & {
+  nodeId: string
+};

@@ -36,7 +36,7 @@ export default class NodeDefinition extends Node {
   static title = "Resolve tokens";
   static type = NodeTypes.ALIAS;
   static description = "Resolves a set of tokens";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("inputs", {
       type: TokenArrayArraySchema,

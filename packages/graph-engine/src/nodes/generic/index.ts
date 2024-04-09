@@ -6,6 +6,8 @@ import arraySubgraph from "./arraySubgraph.js";
 import panic from "./panic.js";
 import constant from "./constant.js";
 import objectify from "./objectify.js";
+import inline from "./inline.js";
+import note from "./note.js";
 
 export const nodes = [
   constant,
@@ -16,4 +18,6 @@ export const nodes = [
   subgraph,
   arraySubgraph,
   panic,
+  inline,
+  note
 ];

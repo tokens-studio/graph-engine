@@ -16,7 +16,7 @@ export default class NodeDefinition extends Node {
 
   static description =
     "Constant node allows you to provide a constant value. You can use this node to set a constant value for a specific property.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {
       type: AnySchema,

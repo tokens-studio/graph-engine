@@ -27,7 +27,7 @@ export default class NodeDefinition extends Node {
   static title = "Sample Curve";
   static type = NodeTypes.SAMPLE_CURVE;
   static description = "Samples a curve at a specified point";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("curve", {
       type: CurveSchema,

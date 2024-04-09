@@ -38,6 +38,7 @@ const ExamplesPicker = ({ open, onClose, loadExample }) => {
             key={example.key}
             value={example.key}
             onSelect={() => handleSelectItem(example)}
+            style={{cursor:'pointer'}}
           >
             <Stack direction="column" gap={2} align="start">
               <Text css={{ fontWeight: '$sansMedium', fontSize: '$xsmall' }}>

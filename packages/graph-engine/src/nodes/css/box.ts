@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.CSS_BOX;
   static description =
     "CSS Box node allows you to generate a CSS box from 4 values";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("top", {
       type: {

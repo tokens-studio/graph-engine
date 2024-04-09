@@ -30,7 +30,7 @@ export default class NodeDefinition extends Node {
   };
 
   static description = "Sorts an array";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("array", {
       type: AnyArraySchema,

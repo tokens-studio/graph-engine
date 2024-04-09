@@ -16,7 +16,7 @@ export default class NodeDefinition extends Node {
   };
 
   static description = "Performs an array join using a string delimiter";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("a", {
       type: AnyArraySchema,

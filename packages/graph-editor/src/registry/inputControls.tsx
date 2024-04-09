@@ -22,6 +22,7 @@ import React, { useMemo } from 'react';
 import { Node } from '@tokens-studio/graph-engine';
 
 import properties from 'mdn-data/css/properties.json' assert { type: 'json' };
+import { deletable } from '@/annotations';
 
 const CSSProperties = Object.keys(properties);
 
@@ -45,7 +46,7 @@ const InputNodeSpecifics = observer(({ node }: { node: Node }) => {
     const input = node.addInput(inputName, {
       type,
     });
-    input.meta.deletable = true;
+    input.annotations[deletable] = true;
     //We trigger running the node to either propagate the new input or to update the node
     node.run();
   };
@@ -130,7 +131,7 @@ const EvalNodeSpecifics = observer(({ node }: { node: Node }) => {
     const input = node.addInput(inputName, {
       type: NumberSchema,
     });
-    input.meta.deletable = true;
+    input.annotations[deletable] = true;
     setInputName('');
     node.run();
   };
@@ -162,7 +163,7 @@ const SwitchNodeSpecifics = observer(({ node }: { node: Node }) => {
     const input = node.addInput(inputName, {
       type: AnySchema,
     });
-    input.meta.deletable = true;
+    input.annotations[deletable] = true;
     setInputName('');
     node.run();
   };
@@ -194,7 +195,7 @@ const CSSMapSpecifics = observer(({ node }: { node: Node }) => {
     const input = node.addInput(inputName, {
       type: StringSchema,
     });
-    input.meta.deletable = true;
+    input.annotations[deletable] = true;
     setInputName('');
     node.run();
   };

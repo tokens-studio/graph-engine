@@ -17,7 +17,7 @@ export default class NodeDefinition extends Node {
     value: Output<String>;
   };
   static description = "Adds a unit to a value if it doesn't already have one";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {
       type: StringSchema,

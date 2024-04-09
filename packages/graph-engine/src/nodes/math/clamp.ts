@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.CLAMP;
   static description =
     "Clamp node allows you to restricts a value within a specified minimum and maximum range.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {
       type: {

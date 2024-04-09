@@ -7,7 +7,7 @@ export default class NodeDefinition extends Node {
   static title = "Group tokens";
   static type = NodeTypes.GROUP;
   static description = "Groups tokens by adding a namespace";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("accessor", {
       type: StringSchema,

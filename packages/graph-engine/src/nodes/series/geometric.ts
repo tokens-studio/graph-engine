@@ -13,7 +13,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.GEOMETRIC_SERIES;
   static description =
     "Generates a geometric series f(n)= c * (f(n-1)) of numbers based on the base value, steps down, steps and increment.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("base", {
       type: {

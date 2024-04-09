@@ -6,7 +6,7 @@ export default class NodeDefinition extends Node {
   static title = "Index Array";
   static type = NodeTypes.ARRAY_INDEX;
   static description = "Extracts a value from an array at a given index";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("array", {
       type: AnyArraySchema,

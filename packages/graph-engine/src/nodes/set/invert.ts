@@ -7,7 +7,7 @@ export default class NodeDefinition extends Node {
   static title = "Invert Token Set";
   static type = NodeTypes.INVERT_SET;
   static description = "Inverts the order of a set of tokens";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {
       type: TokenSetSchema,

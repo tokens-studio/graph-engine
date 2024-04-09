@@ -10,6 +10,7 @@ import {
   VEC3,
   ANY,
   TOKEN_ARRAY,
+  TEXT,
 } from '@tokens-studio/graph-engine';
 import { CurveField } from '@/components/controls/curve';
 import { BooleanField } from '@/components/controls/boolean';
@@ -22,6 +23,7 @@ import { AnyField } from '@/components/controls/any';
 import { Vec2field } from '@/components/controls/vec2';
 import { Vec3field } from '@/components/controls/vec3';
 import { TokenArrayField } from '@/components/controls/tokenArray';
+import { TextArea } from '@/components/controls/text';
 
 export const controls = [
   {
@@ -43,6 +45,10 @@ export const controls = [
   {
     matcher: (schema: SchemaObject) => schema.$id === STRING && schema.enum,
     component: EnumeratedTextfield,
+  },
+  {
+    matcher: (schema: SchemaObject) => schema.$id === TEXT,
+    component: TextArea,
   },
   {
     matcher: (schema: SchemaObject) => schema.$id === STRING,

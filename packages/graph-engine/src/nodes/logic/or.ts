@@ -7,7 +7,7 @@ export default class NodeDefinition extends Node {
   static title = "Logical or";
   static type = NodeTypes.OR;
   static description = "OR node allows you to check if all inputs are true.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("inputs", {
       type: {

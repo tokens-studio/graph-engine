@@ -1,8 +1,10 @@
 import Node from "@/nodes/series/arithmetic.js";
+import { Graph } from "@/graph/graph.js";
 
 describe("series/arithmetic", () => {
   it("generates the expected series", async () => {
-    const node = new Node();
+    const graph = new Graph();
+    const node = new Node({ graph });
     node.inputs.base.setValue(16);
     node.inputs.stepsDown.setValue(1);
     node.inputs.steps.setValue(1);

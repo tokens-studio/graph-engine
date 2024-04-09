@@ -1,15 +1,16 @@
 import { Input } from "./input.js";
 import { Output } from "./output.js";
-import pkg from "uuid";
-import { Graph, SerializedNode } from "@/index.js";
+import { v4 as uuid } from 'uuid';
+import { Graph, IDeserializeOpts, SerializedNode } from "@/index.js";
 import { GraphSchema } from "@/schemas/index.js";
 import getDefaults from "json-schema-defaults";
 import { action, computed, makeObservable, observable } from "mobx";
 
-const { v4: uuid } = pkg;
+
 
 export interface INodeDefinition {
-  id: string;
+  graph: Graph;
+  id?: string;
   inputs?: Record<string, Input>;
   outputs?: Record<string, Output>;
 }
@@ -44,21 +45,24 @@ export class Node {
    */
   public inputs: Record<string, Input> = {};
   public outputs: Record<string, Output> = {};
+  public annotations: Record<string, any> = {};
 
   public lastExecutedDuration = 0;
 
-  private _graph?: Graph;
+  private _graph: Graph;
   private _isRunning: boolean = false;
 
   public error?: Error;
 
-  constructor(props?: INodeDefinition) {
-    this.id = props?.id || uuid();
+  constructor(props: INodeDefinition) {
+    this.id = props.id || uuid();
+    this._graph = props.graph;
 
     makeObservable(this, {
       inputs: observable,
       outputs: observable,
       error: observable,
+      annotations: observable,
       addInput: action,
       isRunning: computed,
       run: action,
@@ -95,6 +99,10 @@ export class Node {
     });
   }
 
+  /**
+   * Removes a named input from the node. This should only be used for dynamic inputs
+   * @param name 
+   */
   removeInput(name: string) {
     if (this._graph) {
       this._graph.inEdges(this.id, name).forEach((edge) => {
@@ -117,7 +125,7 @@ export class Node {
    * This can be used directly, but you should preferably never call this and instead execute from the graph which will control the lifecycle of the node
    * @override
    */
-  execute(): Promise<void> | void {}
+  execute(): Promise<void> | void { }
 
   /**
    * Runs the node. Internally this calls the execute method, but the run entrypoint allows for additional tracking and lifecycle management
@@ -142,6 +150,12 @@ export class Node {
     };
   }
 
+  /**
+   * Asks the controlling graph to load a resource.
+   * This cannot be called if the node is not part of a graph
+   * @param uri 
+   * @param data 
+   */
   async load(uri: string, data?: any) {
     this._graph?.loadResource(uri, this, data);
   }
@@ -187,11 +201,15 @@ export class Node {
    * @returns
    */
   public serialize(): SerializedNode {
-    return {
+    const serialized = {
       id: this.id,
       type: this.nodeType(),
       inputs: Object.values(this.inputs).map((x) => x.serialize()),
-    };
+    } as SerializedNode;
+    if (Object.keys(this.annotations).length > 0) {
+      serialized.annotations = this.annotations;
+    }
+    return serialized;
   }
 
   /**
@@ -199,16 +217,16 @@ export class Node {
    * @param serialized
    * @returns
    */
-  public static deserialize(
-    serialized: SerializedNode,
-    lookup: Record<string, NodeFactory>
-  ): Node {
+  public static deserialize(opts: IDeserializeOpts): Node {
     const newNode = new this({
-      id: serialized.id,
+      id: opts.serialized.id,
+      graph: opts.graph,
     });
 
+    newNode.annotations = opts.serialized.annotations || {};
+
     //Set the values directly from the save values
-    serialized.inputs.forEach((input) => {
+    opts.serialized.inputs.forEach((input) => {
       //Attempt a lookup by  name
       const foundInput = newNode.inputs[input.name];
 
@@ -221,7 +239,7 @@ export class Node {
           visible: input.visible,
           value: input.value,
           node: newNode,
-          meta: input.meta,
+          annotations: input.annotations,
         });
       } else {
         //Set the value from the saved value
@@ -236,10 +254,10 @@ export class Node {
     return this.type;
   };
 
-  protected getAllInputs = () => {
+  protected getAllInputs = <T = Record<string, any>>(): T => {
     return Object.fromEntries(
       Object.entries(this.inputs).map(([key, value]) => [key, value.value])
-    );
+    ) as T;
   };
 
   /**
@@ -247,6 +265,7 @@ export class Node {
    * Use the super method to clear the graph reference
    */
   clear = () => {
+    //@ts-ignore This is forcing manual cleanup
     this._graph = undefined;
   };
 
@@ -280,11 +299,21 @@ export class Node {
       Object.entries(this.outputs).map(([key, value]) => [key, value.value()])
     );
   }
+
+  /**
+   * Function to call when the graph has been started.
+   * This is only really necessary for nodes that need to do something when the graph is expected to be running continuously
+   */
+  public onStart = () => { };
+  public onStop = () => { };
+  public onPause = () => { };
+  public onResume = () => { };
+  /**
+   * Triggered when a message is received from the graph.
+   * @param action 
+   * @param data 
+   */
+  public onAction = (action: string, data: any) => { };
+
 }
 
-export interface NodeFactory {
-  deserialize(
-    serialized: SerializedNode,
-    lookup: Record<string, NodeFactory>
-  ): Node;
-}

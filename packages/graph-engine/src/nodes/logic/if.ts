@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.IF;
   static description =
     "If node allows you to conditionally choose a value based on a condition.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("condition", {
       type: BooleanSchema,

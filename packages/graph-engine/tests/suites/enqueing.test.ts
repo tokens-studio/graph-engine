@@ -7,8 +7,8 @@ describe("enqueing", () => {
   it("automatically enqueues when using variadic types", async () => {
     const graph = new Graph();
 
-    const input1 = new ConstantNode();
-    const input2 = new ConstantNode();
+    const input1 = new ConstantNode({graph});
+    const input2 = new ConstantNode({ graph });
 
     input1.inputs.value.setValue(2, {
       type: NumberSchema,
@@ -18,7 +18,7 @@ describe("enqueing", () => {
       type: NumberSchema,
     });
 
-    const output = new SubtractNode();
+    const output = new SubtractNode({ graph });
     graph.addNode(input1);
     graph.addNode(input2);
     graph.addNode(output);

@@ -21,7 +21,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.ARITHMETIC_SERIES;
   static description =
     "Generates an arithmetic f(n)= c + (f(n-1)) series of numbers based on the base value, steps down, steps and increment.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("base", {
       type: {

@@ -15,7 +15,7 @@ export default class NodeDefinition extends Node {
   static title = "Name Color";
   static type = NodeTypes.COLOR_NAME;
   static description = "Returns the name of the color";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("color", {
       type: ColorSchema,

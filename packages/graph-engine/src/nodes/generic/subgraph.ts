@@ -1,18 +1,16 @@
 import { NodeTypes } from "@/types.js";
-import { INodeDefinition, Node, NodeFactory } from "@/programmatic/node.js";
+import { INodeDefinition, Node } from "@/programmatic/node.js";
 import { AnySchema, StringSchema } from "@/schemas/index.js";
 import InputNode from "./input.js";
 import OutputNode from "./output.js";
-import { SerializedGraph, SerializedNode } from "@/graph/types.js";
+import { IDeserializeOpts, SerializedGraph, SerializedNode } from "@/graph/types.js";
 import { Graph } from "@/graph/graph.js";
+import { autorun } from "mobx";
 
 export interface SerializedSubgraphNode extends SerializedNode {
-  graph: SerializedGraph;
+  innergraph: SerializedGraph;
 }
 
-export interface ISubgraphNodeDefinition extends INodeDefinition {
-  graph: Graph;
-}
 
 export default class SubgraphNode extends Node {
   static title = "Subgraph";
@@ -20,36 +18,40 @@ export default class SubgraphNode extends Node {
   static description = "Allows you to run another subgraph internally";
 
   _innerGraph: Graph;
-  constructor(props?: ISubgraphNodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
 
-    this._innerGraph = props?.graph || new Graph();
+    this._innerGraph = new Graph();
 
-    this._innerGraph.addNode(new InputNode());
-    this._innerGraph.addNode(new OutputNode());
+    //Pass capabilities down
+    this._innerGraph.capabilities = this.getGraph().capabilities;
+
+    const input = new InputNode({ graph: this._innerGraph });
+    input.annotations['engine.deletable'] = false;
+    const output = new OutputNode({ graph: this._innerGraph });
+    output.annotations['engine.deletable'] = false;
+
+    //Create the initial input and output nodes
+    this._innerGraph.addNode(input);
+    this._innerGraph.addNode(output);
 
     this.addOutput("value", {
       type: AnySchema,
       visible: false,
     });
-
-    //No inputs initiallly
   }
 
   override serialize(): SerializedSubgraphNode {
     const serialized = super.serialize();
     return {
       ...serialized,
-      graph: this._innerGraph.serialize(),
+      innergraph: this._innerGraph.serialize(),
     };
   }
 
-  static override deserialize(
-    serialized: SerializedSubgraphNode,
-    lookup: Record<string, NodeFactory>
-  ) {
-    const node = super.deserialize(serialized, lookup) as SubgraphNode;
-    node._innerGraph = Graph.deserialize(serialized.graph, lookup);
+  static override deserialize(opts: IDeserializeOpts) {
+    const node = super.deserialize(opts) as SubgraphNode;
+    node._innerGraph = Graph.deserialize((opts.serialized as SerializedSubgraphNode).innergraph, opts.lookup);
     return node;
   }
 

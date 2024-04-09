@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.RANDOM;
   static description =
     "Random node allows you to generate a random number between 0 and 1.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addOutput("value", {
       type: {

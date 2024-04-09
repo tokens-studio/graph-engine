@@ -1,8 +1,10 @@
 import Node, { ColorModifierTypes } from "@/nodes/color/blend.js";
+import { Graph } from "@/graph/graph.js";
 
 describe("color/blend", () => {
   it("darkens the color correctly", async () => {
-    const node = new Node();
+    const graph = new Graph();
+    const node = new Node({ graph });
 
     node.inputs.color.setValue("red");
     node.inputs.space.setValue("srgb");
@@ -15,7 +17,8 @@ describe("color/blend", () => {
   });
 
   it("lightens the color correctly", async () => {
-    const node = new Node();
+    const graph = new Graph();
+    const node = new Node({ graph });
 
     node.inputs.color.setValue("red");
     node.inputs.space.setValue("srgb");

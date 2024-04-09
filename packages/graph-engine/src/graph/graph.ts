@@ -1,52 +1,17 @@
-import { SerializedGraph } from "./types.js";
+import type { NodeFactory, SerializedGraph } from "./types.js";
 import { VERSION } from "@/constants.js";
 import cmp from "semver-compare";
-import { Node, NodeFactory } from "@/programmatic/node.js";
-
+import { Node } from "@/programmatic/node.js";
+import { v4 as uuid } from 'uuid';
 import { ExternalLoader } from "./externalLoader.js";
 import { AnySchema, GraphSchema } from "@/schemas/index.js";
 import { Output } from "@/programmatic/output.js";
 import { Input } from "@/programmatic/input.js";
 import { topologicalSort } from "./topologicSort.js";
+import { makeObservable, observable } from "mobx";
+import { Edge, VariadicEdgeData } from "@/programmatic/edge.js";
+import { annotatedVariadicIndex, annotatedVersion } from "@/annotations/index.js";
 
-/**
- * Generates a stable edge
- * @param v The starting node
- * @param w The end node
- * @param sourceHandle The property on the starting node
- * @param targetHandle The property on the end node
- * @returns
- */
-function genEdgeId(
-  v: string,
-  w: string,
-  sourceHandle: string,
-  targetHandle: string,
-  index?: number
-) {
-  return `${v}:${sourceHandle}→${w}:${targetHandle}${
-    index ? `[${index}]` : ""
-  }`;
-}
-
-/**
- * Additional data stored on an edge
- */
-export type EdgeData = {
-  /**
-   * The index of the edge in the variadic port
-   */
-  index?: number;
-};
-
-export type Edge<T = EdgeData> = {
-  id: string;
-  source: string;
-  sourceHandle: string;
-  target: string;
-  targetHandle: string;
-  data: T;
-};
 
 export type InputDefinition = {
   value: any;
@@ -75,7 +40,7 @@ export type EdgeOpts = {
   /**
    * Any additional data to be stored on the edge
    */
-  data?: any;
+  annotations?: Record<string, any>;
   /**
    * Whether to automatically update the graph when the state changes or to wait for an explicit call to update
    */
@@ -84,21 +49,15 @@ export type EdgeOpts = {
 
 const dedup = (arr: string[]) => [...new Set(arr)];
 
-export enum SubscriptionType {
-  nodeAdded,
-  nodeRemoved,
-  edgeAdded,
-  edgeRemoved,
-  nodeUpdated,
-  edgeUpdated,
-}
+export type SubscriptionType = "nodeAdded" | "nodeRemoved" | "edgeAdded" | "edgeRemoved" | "nodeUpdated" | "edgeUpdated" | "start" | "stop" | "pause" | "resume" | "edgeIndexUpdated";
+
 
 export interface IGraph {
   /**
    * Whether to automatically update the graph when the state changes or to wait for an explicit call to update
    */
   autoUpdate?: boolean;
-  description?: string;
+  annotations?: Record<string, any>;
 }
 
 export interface IUpdateOpts {
@@ -133,26 +92,24 @@ export interface BatchExecution {
   };
 }
 
-const defaultGraphOpts: IGraph = {};
+const defaultGraphOpts: IGraph = {
+  annotations: {}
+};
 /**
  * This is our internal graph representation that we use to perform transformations on
  */
 export class Graph {
-  private listeners = {
-    nodeAdded: [],
-    nodeRemoved: [],
-    edgeAdded: [],
-    edgeRemoved: [],
-    nodeUpdated: [],
-    edgeUpdated: [],
-  };
+  private listeners = {};
+  public annotations: Record<string, any> = {};
 
-  /**
-   * Optional description of the graph
-   */
-  description?: string = "";
   nodes: Record<string, Node>;
   edges: Record<string, Edge>;
+  capabilities: Record<string, any> = {};
+  messageQueue: {
+    eventName: string;
+    data: any;
+    origin: Node;
+  }[] = [];
 
   externalLoader?: ExternalLoader;
   /**
@@ -163,9 +120,15 @@ export class Graph {
   successorNodes: Record<string, string[]> = {};
 
   constructor(input: IGraph = defaultGraphOpts) {
-    this.description = input.description;
+    this.annotations = input.annotations || {};
     this.nodes = {};
     this.edges = {};
+
+    makeObservable(this, {
+      annotations: observable,
+    });
+
+    this.annotations['engine.id'] || (this.annotations['engine.id'] = uuid());
   }
 
   /**
@@ -187,34 +150,38 @@ export class Graph {
     });
   }
 
+  /**
+   * Connects two nodes together. If the target is variadic, it will automatically add the index to the edge data if not provided
+   * @param source 
+   * @param sourceHandle 
+   * @param target 
+   * @param targetHandle 
+   * @param variadicIndex 
+   * @returns 
+   */
   connect(
     source: Node,
     sourceHandle: Output,
     target: Node,
-    targetHandle: Input
+    targetHandle: Input,
+    variadicIndex: number = -1
   ): Edge {
     //If its variadic we need to check the existing edges
-    const data: EdgeData = {};
+    let annotations = {};
     if (targetHandle.variadic) {
       const edges = this.inEdges(target.id, targetHandle.name);
       //The number of edges is the new index
-      data.index = edges.length;
+      annotations = { annotatedVariadicIndex: variadicIndex == -1 ? edges.length : variadicIndex } as VariadicEdgeData;
     }
 
     //TODO validation of type
     return this.createEdge({
-      id: genEdgeId(
-        source.id,
-        target.id,
-        sourceHandle.name,
-        targetHandle.name,
-        data.index
-      ),
+      id: uuid(),
       source: source.id,
       target: target.id,
       sourceHandle: sourceHandle.name,
       targetHandle: targetHandle.name,
-      data,
+      annotations,
     });
   }
 
@@ -240,8 +207,7 @@ export class Graph {
 
   addNode(node: Node) {
     this.nodes[node.id] = node;
-    node.setGraph(this);
-    this.emit(SubscriptionType.nodeAdded, node);
+    this.emit("nodeAdded", node);
   }
   /**
    * Removes a node from the graph and disconnects all the edges.
@@ -266,7 +232,7 @@ export class Graph {
     //Remove from the lookup
     delete this.nodes[nodeId];
 
-    this.emit(SubscriptionType.nodeRemoved, nodeId);
+    this.emit("nodeRemoved", nodeId);
     return true;
   }
 
@@ -279,9 +245,31 @@ export class Graph {
     //Get the node
     const target = this.getNode(edge.target);
     if (target) {
+      const index = edge.annotations[annotatedVariadicIndex]!;
       const input = target.inputs[edge.targetHandle];
       if (input) {
-        input._edges = input._edges.filter((x) => x.id !== edgeId);
+        //Note that the edges might not be in order 
+        input._edges = input._edges.reduce((acc, x) => {
+          //Excluded the edge
+          if (x.id === edgeId) {
+            return acc;
+          }
+          if (x.annotations[annotatedVariadicIndex]! > index) {
+            //Update the index
+            x.annotations[annotatedVariadicIndex] = x.annotations[annotatedVariadicIndex] - 1;
+            this.emit('edgeIndexUpdated', x);
+          }
+          return acc.concat(x);
+        }, [] as Edge[]);
+      }
+      //We need to check if its pointing to a variadic input and compact it if needed
+      if (input.variadic) {
+        //Remove the index
+        const newVal = [...(input.value || [])];
+        newVal.splice(index, 1);
+        input.setValue(newVal, {
+          noPropagate: true,
+        });
       }
     }
 
@@ -299,7 +287,7 @@ export class Graph {
 
     //We do not update the value or recalculate here since that might result in a lot of unnecessary updates
 
-    this.emit(SubscriptionType.edgeRemoved, edgeId);
+    this.emit("edgeRemoved", edgeId);
   }
   /**
    * Retrieves a flat list of all the nodes ids in the graph
@@ -336,10 +324,12 @@ export class Graph {
   }
 
   serialize(): SerializedGraph {
+    //Ensure we update the version
+    this.annotations['engine.version'] = VERSION;
     return {
-      version: VERSION,
       nodes: Object.values(this.nodes).map((x) => x.serialize()),
-      edges: Object.values(this.edges),
+      edges: Object.values(this.edges).map((x) => x.serialize()),
+      annotations: this.annotations,
     };
   }
 
@@ -360,14 +350,18 @@ export class Graph {
     serialized: SerializedGraph,
     lookup: Record<string, NodeFactory>
   ): Graph {
+
+    const version = serialized.annotations && serialized.annotations['engine.version'] || '0.0.0';
+
     //Previously graphs didn't contain the version
-    if (cmp(serialized.version || "0.0.0", VERSION) == -1) {
+    if (cmp(version || "0.0.0", VERSION) == -1) {
       throw new Error(
-        `Graph version is older than engine version. This might cause unexpected behaviour. Graph version: ${serialized.version}, Engine version: ${VERSION}`
+        `Graph version is older than engine version. This might cause unexpected behaviour. Graph version: ${version}, Engine version: ${VERSION}`
       );
     }
 
     const g = new Graph();
+    g.annotations = serialized.annotations;
 
     //Life cycle
     // 1 - Create the nodes
@@ -375,14 +369,14 @@ export class Graph {
 
     //We don't execute anything here till needed
 
-    g.nodes = serialized.nodes.reduce((acc, node) => {
+    serialized.nodes.forEach((node) => {
       const factory = lookup[node.type];
-      const newNode = (acc[node.id] = factory.deserialize({ ...node }, lookup));
-      newNode.setGraph(g);
-      return acc;
-    }, {});
-
-    Object.values(g.nodes).forEach((node) => node.execute());
+      g.addNode(factory.deserialize({
+        serialized: node,
+        graph: g,
+        lookup
+      }));
+    });
 
     g.edges = serialized.edges.reduce((acc, edge) => {
       //Don't change the edge
@@ -424,9 +418,60 @@ export class Graph {
     return g;
   }
 
+  registerCapability(capability: string, factory) {
+
+    this.capabilities[capability] = factory(this);
+  }
+  /**
+   * Starts the graph in network mode 
+   * TODO Complete
+   */
+  start = () => {
+    this.emit("start", {});
+    //Trigger the start of all the nodes
+    Object.values(this.nodes).forEach((node) => node.onStart());
+  }
+  /**
+   * Stops the graph in network mode
+   */
+  stop = () => {
+    this.emit("stop", {});
+    //Trigger the start of all the nodes
+    Object.values(this.nodes).forEach((node) => node.onStop());
+  }
+
+  pause = () => {
+    this.emit("pause", {});
+    //Trigger the start of all the nodes
+    Object.values(this.nodes).forEach((node) => node.onPause());
+  }
+  resume = () => {
+    this.emit("resume", {});
+    //Trigger the start of all the nodes
+    Object.values(this.nodes).forEach((node) => node.onResume());
+  }
+
+  /**
+   * Triggers a message on the graph
+   * TODO Complete
+   * @param eventName 
+   * @param data 
+   * @param origin 
+   */
+  trigger = (eventName: string, data: any, origin: Node) => {
+    //Add to the message queue
+    this.messageQueue.push({
+      eventName,
+      data,
+      origin
+    });
+  }
+
+
   /**
    * Executes the graph as a single batch. This will execute all the nodes in the graph and return the output of the output node
    * @param opts
+   * @throws {BatchRunError}
    * @returns
    */
   async execute(opts?: GraphExecuteOptions): Promise<BatchExecution> {
@@ -456,7 +501,6 @@ export class Graph {
     //Perform a topological sort
 
     const topologic = topologicalSort(this);
-
     //This stores intermediate states during execution
     for (let i = 0, c = topologic.length; i < c; i++) {
       const nodeId = topologic[i];
@@ -469,39 +513,18 @@ export class Graph {
       }
       //Execute the node
       const res = await node.run();
+      if (res.error) {
+        //@ts-ignore
+        (res.error as BatchRunError).nodeId = nodeId;
+        throw res.error;
+      }
 
       if (stats) {
         statsTracker[nodeId] = res;
       }
 
-      //Get the nodes values
-      node.outputs;
-
-      //Get the nodes edges
-
-      const edges = this.outEdges(node.id);
-
-      edges.forEach((edge) => {
-        const target = this.getNode(edge.target);
-
-        if (!target) {
-          return;
-        }
-
-        const srcOutput = node.outputs[edge.sourceHandle] as Output;
-        const targetInput = target.inputs[edge.targetHandle];
-
-        //Possible dynamic, eg, if it does not exist, ignore
-        if (!targetInput) {
-          return;
-        }
-        //Set the value on the target
-        targetInput.setValue(srcOutput.value, {
-          type: srcOutput.type,
-          //We are controlling propagation
-          noPropagate: true,
-        });
-      });
+      //Propagate the values
+      this.propagate(nodeId, true);
     }
 
     let output: BatchExecution["output"] = undefined;
@@ -564,7 +587,7 @@ export class Graph {
     return dedup(out).map((x) => this.nodes[x]);
   }
 
-  async propagate(nodeId: string) {
+  async propagate(nodeId: string, oneShot: boolean = false) {
     const node = this.getNode(nodeId);
     if (!node) {
       return;
@@ -594,8 +617,9 @@ export class Graph {
         }
 
         if (input.variadic) {
+          //Don't attempt mutation of the original array
           const newVal = [...(input.value || [])];
-          newVal[edge.data.index!] = output.value;
+          newVal[edge.annotations[annotatedVariadicIndex]!] = output.value;
           //Extend the variadic array
           input.setValue(newVal, {
             //TODO this might be fully dynamic, but for now we just preserve the underlying type
@@ -615,9 +639,13 @@ export class Graph {
       //Remove holes
       .filter(Boolean) as string[];
 
-    //These are the nodes to be update
-    const nodes = dedup(affectedNodes);
-    await Promise.all(nodes.map((x) => this.update(x)));
+    if (!oneShot) {
+      //These are the nodes to be update
+      const nodes = dedup(affectedNodes);
+      await Promise.all(nodes.map((x) => this.update(x)));
+    }
+
+
   }
   /**
    * Creates an edge connection between two nodes
@@ -626,15 +654,8 @@ export class Graph {
    * @param data
    */
   createEdge(opts: EdgeOpts): Edge {
-    const { source, target, sourceHandle, targetHandle, id, data } = opts;
-    const edge = {
-      source,
-      target,
-      sourceHandle,
-      targetHandle,
-      id,
-      data,
-    };
+    const { source, target, sourceHandle, targetHandle, id } = opts;
+    const edge = new Edge(opts);
 
     //Validate that the targets exist. This helps to prevent ghost edges
     const sourceNode = this.getNode(source);
@@ -665,7 +686,7 @@ export class Graph {
     }
 
     sourcePort._edges.push(edge);
-    this.emit(SubscriptionType.edgeAdded, edge);
+    this.emit("edgeAdded", edge);
     this.propagate(source);
     return edge;
   }
@@ -723,8 +744,8 @@ export class Graph {
     (this.listeners[type] || []).forEach((x) => x(data));
   }
 
-  subscribe(type: SubscriptionType, listener: (data: any) => void) {
-    this.listeners[type].push(listener);
+  on(type: SubscriptionType, listener: (data: any) => void) {
+    (this.listeners[type] || (this.listeners[type] = [])).push(listener);
     return () => {
       this.listeners[type] = this.listeners[type].filter((x) => x !== listener);
     };

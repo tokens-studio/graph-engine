@@ -13,7 +13,7 @@ export default class NodeDefinition extends Node {
   static title = "Name Color";
   static type = NodeTypes.NEAREST_TOKENS;
   static description = "Sorts Token Set by distance to Color";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
 
     this.addInput("tokens", {

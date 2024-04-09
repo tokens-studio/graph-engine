@@ -5,9 +5,12 @@ import {
   Background,
   BackgroundVariant,
   Edge,
+  EdgeChange,
   EdgeTypes,
   MiniMap,
   Node,
+  NodeChange,
+  NodePositionChange,
   SelectionMode,
   SnapGrid,
   useEdgesState,
@@ -41,9 +44,9 @@ import ReactFlow from 'reactflow';
 import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.js';
 import groupNode from '../components/flow/nodes/groupNode.js';
 import noteNode from '../components/flow/nodes/noteNode.js';
-import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
+import { EditorProps, GraphEditorProps, ImperativeEditorRef } from './editorTypes.ts';
 import { Box } from '@tokens-studio/ui';
-import { Graph, NodeTypes, nodeLookup } from '@tokens-studio/graph-engine';
+import { BatchRunError, Graph, NodeFactory, NodeTypes, nodeLookup } from '@tokens-studio/graph-engine';
 import { useContextMenu } from 'react-contexify';
 import { version } from '../../package.json';
 import { NodeContextMenu } from '../components/contextMenus/nodeContextMenu.js';
@@ -59,9 +62,12 @@ import { clear } from './actions/clear.ts';
 import { useRegisterRef } from '@/hooks/useRegisterRef.ts';
 import { graphEditorSelector } from '@/redux/selectors/refs.ts';
 import { copyNodeAction } from './actions/copyNodes.tsx';
-import { stripVariadic } from '@/utils/stripVariadic.ts';
-import { compactNodes, compactEdges } from '@/utils/compact.ts';
-import { uncompactNode } from '@/utils/uncompact.ts';
+import { selectNode } from './actions/selectNode.tsx';
+import { deleteNode } from './actions/deleteNode.tsx';
+import { PassthroughNode } from '@/components/flow/nodes/passthroughNode.tsx';
+import { uiNodeType, uiVersion, uiViewport, xpos, ypos } from '@/annotations/index.ts';
+import { connectNodes } from './actions/connect.ts';
+import { panelItemsState } from '@/redux/selectors/registry.ts';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -82,9 +88,19 @@ const defaultEdgeOptions = {
   },
 };
 
-export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
-  (props: EditorProps, ref) => {
-    const { panelItems, nodeTypes = {}, children } = props;
+
+export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>(
+  (props: GraphEditorProps, ref) => {
+    const panelItems = useSelector(panelItemsState);
+    const { nodeTypes = {}, customNodeUI = {}, children } = props;
+
+
+    const fullNodeLookup = useMemo(() => {
+      return {
+        ...nodeLookup,
+        ...nodeTypes,
+      } as unknown as Record<string, NodeFactory>;
+    }, [nodeTypes]);
 
     const registerRef = useRegisterRef('graphEditor');
     const graphRef = useSelector(
@@ -99,6 +115,25 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const graph = useGraph();
     const showGridValue = useSelector(showGrid);
     const snapGridValue = useSelector(snapGrid);
+
+    //Attach sideeffect listeners
+    useMemo(() => {
+      graph.on('edgeIndexUpdated', (edge) => {
+        setEdges((eds) => {
+          return eds.map((ed) => {
+            if (ed.id == edge.id) {
+              const newEdge = {
+                ...ed,
+                targetHandle: edge.targetHandle + `[${edge.annotations['engine.index']}]`,
+              };
+
+              return newEdge
+            }
+            return ed;
+          });
+        });
+      });
+    }, [graph])
 
     const [contextNode, setContextNode] = React.useState<Node[]>([]);
     const [contextEdge, setContextEdge] = React.useState<Edge | null>(null);
@@ -184,18 +219,90 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       edges.forEach((edge) => {
         graph.removeEdge(edge.id);
       });
-    }, []);
+    }, [graph]);
 
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
+
+    const managedNodesChange = useCallback((changes: NodeChange[]) => {
+      //Note this needs to happen first to clean up ui resources
+      onNodesChange(changes);
+
+      //Update annotations 
+      changes.forEach(change => {
+        //TODO clean this up, this is a mess
+        //@ts-ignore
+        const id = change.id
+        const node = graph.getNode(id);
+        if (!node) {
+          return;
+        }
+        switch (change.type) {
+
+          case 'remove':
+            graph.removeNode(id);
+            break;
+
+          case 'position':
+            if ((change as NodePositionChange).position) {
+              node.annotations['ui.position.x'] = (change as NodePositionChange).position?.x;
+              node.annotations['ui.position.y'] = (change as NodePositionChange).position?.y;
+            }
+            break;
+        }
+      });
+
+
+    }, [graph, onNodesChange]);
+
+
+    const managedEdgeChange = useCallback((changes: EdgeChange[]) => {
+      //TODO , we will want to add onto this at a later point for multiplayer
+      onEdgesChange(changes)
+    }, [onEdgesChange]);
+
+
+
     // Create flow node types here, instead of the global scope to ensure that custom nodes added by the user are available in nodeTypes
     const fullNodeTypesRef = useRef({
-      ...nodeTypes,
+      ...customNodeUI,
       GenericNode: NodeV2,
+      [NodeTypes.PASS_THROUGH]: PassthroughNode,
       [EditorNodeTypes.GROUP]: groupNode,
-      [EditorNodeTypes.NOTE]: noteNode,
+      [NodeTypes.NOTE]: noteNode,
     });
+
+    const customNodeMap = useMemo(() => {
+      //Turn it into an O(1) lookup object
+      return Object.fromEntries(Object.entries(
+        {
+          ...customNodeUI,
+          [NodeTypes.NOTE]: NodeTypes.NOTE
+        }).map(([k, _]) => [k, k]))
+    }, [customNodeUI]);
+
+
+    const handleSelectNode = useMemo(() => {
+      return selectNode(dispatch);
+    }, [dispatch])
+
+    const handleDeleteNode = useMemo(() => {
+      return deleteNode(graph, dispatch);
+    }, [graph, dispatch])
+
+    const handleSelectNewNodeType = useMemo(
+      () => createNode({
+        reactFlowInstance,
+        graph,
+        nodeLookup: fullNodeLookup,
+
+        customUI: customNodeMap,
+        dropPanelPosition,
+        dispatch
+      }),
+      [reactFlowInstance, graph, fullNodeLookup, customNodeUI, dropPanelPosition, dispatch],
+    );
 
     useImperativeHandle(
       graphRef,
@@ -204,90 +311,85 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           clear(reactFlowInstance, graph);
         },
         save: () => {
-          return {
-            version,
-            viewport: reactFlowInstance.getViewport(),
-            nodes: compactNodes(reactFlowInstance.getNodes()),
-            edges: compactEdges(reactFlowInstance.getEdges()),
-            graph: graph.serialize(),
-          };
+          //Lazily update the graph annotations
+          graph.annotations[uiViewport] = reactFlowInstance.getViewport();
+          graph.annotations[uiVersion] = version;
+          return graph.serialize();
         },
-        load: ({ nodes, edges, graph: serializedGraph }) => {
-          dispatch.graph.setGraph(
-            Graph.deserialize(serializedGraph, nodeLookup),
-          );
+        load: (serializedGraph) => {
+          const loadedGraph = Graph.deserialize(serializedGraph, fullNodeLookup);
+          //Read the annotaions 
+          const viewport = loadedGraph.annotations[uiViewport];
 
-          reactFlowInstance.setNodes(() => uncompactNode(nodes));
-          reactFlowInstance.setEdges(() => edges);
-          //Force delay of 1 tick to allow input state to update
+          //Might not exist
+          if (viewport) {
+            reactFlowInstance.setViewport(viewport);
+          }
+          //Set the graph
+          dispatch.graph.setGraph(loadedGraph);
+
+          const nodes = Object.entries(loadedGraph.nodes).map(([id, node]) => {
+            //Generate the react flow nodes
+            return {
+              id: node.id,
+              type: node.annotations[uiNodeType] || 'GenericNode',
+              data: {},
+              position: {
+                x: node.annotations[xpos] || 0,
+                y: node.annotations[ypos] || 0,
+              },
+            } as Node;
+          });
+          const edges = Object.values(loadedGraph.edges).map((edge) => {
+            //This is the only point of difference for the edges
+            const indexed = edge.annotations['engine.index'];
+            if (indexed !== undefined) {
+              return {
+                id: edge.id,
+                source: edge.source,
+                target: edge.target,
+                sourceHandle: edge.sourceHandle,
+                targetHandle: edge.targetHandle + `[${indexed}]`,
+                type: 'custom',
+              } as Edge;
+            }
+            return edge;
+          });
+
+          setNodes(nodes);
+          setEdges(edges);
+
+
+
+          dispatch.graph.appendLog({
+            type: 'info',
+            time: new Date,
+            data: {
+              msg: `Graph loaded with ${nodes.length} nodes and ${edges.length} edges`
+            },
+          });
+          //Execute the graph once to propagate values and update the UI
+          loadedGraph.execute().catch((e: BatchRunError) => {
+            dispatch.graph.appendLog({
+              type: 'error',
+              time: new Date,
+              data: {
+                node: e.nodeId,
+                error: e.message,
+                msg: `Error executing graph`
+              },
+            });
+          });
+
         },
         getFlow: () => reactFlowInstance,
       }),
-      [reactFlowInstance, graph, dispatch.graph],
+      [reactFlowInstance, graph, fullNodeLookup, dispatch.graph, setNodes, setEdges],
     );
 
-    const onConnect = useCallback(
-      (params) => {
-        //Create the connection in the underlying graph
-
-        let parameters = params;
-        const sourceNode = graph.getNode(params.source);
-        const targetNode = graph.getNode(params.target);
-        if (!sourceNode || !targetNode) {
-          throw new Error('Could not find node');
-        }
-
-        const sourcePort =
-          sourceNode.outputs[stripVariadic(params.sourceHandle)];
-        const targetPort =
-          targetNode.inputs[stripVariadic(params.targetHandle)];
-
-        const newGraphEdge = graph.connect(
-          sourceNode,
-          sourcePort,
-          targetNode,
-          targetPort,
-        );
-
-        let addData: any = undefined;
-
-        //If the target port is variadic, we need to add the index to the edge data
-        if (targetPort.variadic) {
-          addData = {
-            index: newGraphEdge.data.index,
-          };
-          parameters = {
-            ...parameters,
-            targetHandle: params.targetHandle + `[${newGraphEdge.data.index}]`,
-          };
-        }
-
-        const newEdge = {
-          ...parameters,
-          id: newGraphEdge.id,
-          type: 'custom',
-          data: addData,
-        };
-
-        return setEdges((eds) => {
-          const newEdgs = eds.reduce(
-            (acc, edge) => {
-              //All our inputs take a single input only, disconnect if we have a connection already
-              if (
-                edge.targetHandle == params.targetHandle &&
-                edge.target === params.target
-              ) {
-                return acc;
-              }
-              acc.push(edge);
-              return acc;
-            },
-            [newEdge] as Edge[],
-          );
-          return newEdgs;
-        });
-      },
-      [graph, setEdges],
+    const onConnect = useMemo(
+      () => connectNodes({ graph, setEdges, dispatch }),
+      [dispatch, graph, setEdges],
     );
 
     const onNodeDragStop = useCallback(
@@ -350,10 +452,10 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const onNodesDelete = useCallback(
       (nodes: Node[]) => {
         nodes.forEach((node) => {
-          graph.removeNode(node.id);
+          // handleDeleteNode(node.id);
         });
       },
-      [graph],
+      [dispatch.graph, graph],
     );
 
     const onEdgeDblClick = useCallback(
@@ -365,15 +467,18 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           y: event.clientY,
         });
 
-        const newNode = new nodeLookup[NodeTypes.PASS_THROUGH]();
+        const newNode = new fullNodeLookup[NodeTypes.PASS_THROUGH]({
+          graph
+        });
+        newNode.annotations[uiNodeType] = NodeTypes.PASS_THROUGH;
         graph.addNode(newNode);
 
         const editorNode = {
           id: newNode.id,
-          type: 'GenericNode',
+          type: NodeTypes.PASS_THROUGH,
           data: {},
           position: position || { x: 0, y: 0 },
-        };
+        } as Node;
 
         const aEdge = {
           id: uuidv4(),
@@ -456,27 +561,28 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
       [getIntersectingNodes, setNodes],
     );
 
-    const copyNodes = copyNodeAction(reactFlowInstance, graph, nodeLookup);
+    const copyNodes = copyNodeAction(reactFlowInstance, graph, fullNodeLookup);
     const { handlers } = useHotkeys({
       onEdgesDeleted,
       copyNodes,
+      handleDeleteNode,
       graph,
     });
 
-    const handleSelectNewNodeType = useMemo(
-      () => createNode(reactFlowInstance, graph, nodeLookup, dropPanelPosition),
-      [reactFlowInstance, graph, dropPanelPosition],
-    );
+
 
     const onDrop = useCallback(
       async (event) => {
         event.preventDefault();
         const processed = await handleDrop(event);
-        processed.forEach((nodeRequest) => {
-          handleSelectNewNodeType(nodeRequest);
-        });
+        //Some of the nodes might be invalid, so remember to filter them out
+        const newNodes = processed.map((nodeRequest) => handleSelectNewNodeType(nodeRequest)).filter(x => !!x);
+
+        if (newNodes.length == 1) {
+          handleSelectNode(newNodes[0]!.id);
+        }
       },
-      [handleSelectNewNodeType],
+      [handleSelectNewNodeType, handleSelectNode],
     );
     const nodeCount = nodes.length;
     return (
@@ -514,9 +620,9 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
             <ReactFlow
               ref={reactFlowWrapper}
               nodes={nodes}
-              onNodesChange={onNodesChange}
+              onNodesChange={managedNodesChange}
               onNodesDelete={onNodesDelete}
-              onEdgesChange={onEdgesChange}
+              onEdgesChange={managedEdgeChange}
               onEdgeDoubleClick={onEdgeDblClick}
               onEdgesDelete={onEdgesDeleted}
               edges={edges}
@@ -534,9 +640,9 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
               defaultEdgeOptions={defaultEdgeOptions}
               panOnScroll={true}
               //Note that we cannot use pan on drag or it will affect the context menu
-              onPaneContextMenu={handleContextMenu}
+              /*onPaneContextMenu={handleContextMenu}
               onEdgeContextMenu={handleEdgeContextMenu}
-              onNodeContextMenu={handleNodeContextMenu}
+              onNodeContextMenu={handleNodeContextMenu}*/
               selectionMode={SelectionMode.Partial}
               onDragOver={onDragOver}
               selectionOnDrag={true}
@@ -576,7 +682,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, EditorProps>(
           id={props.id + '_node'}
           nodes={contextNode}
           graph={graph}
-          lookup={nodeLookup}
+          lookup={fullNodeLookup}
         />
         <EdgeContextMenu id={props.id + '_edge'} edge={contextEdge} />
         {children}

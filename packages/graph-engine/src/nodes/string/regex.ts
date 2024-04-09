@@ -7,7 +7,7 @@ export default class NodeDefinition extends Node {
   static title = "Regex";
   static type = NodeTypes.REGEX;
   static description = "Replaces a string with a regex";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("input", {
       type: StringSchema,

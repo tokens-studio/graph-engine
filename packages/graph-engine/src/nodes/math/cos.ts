@@ -7,7 +7,7 @@ export default class NodeDefinition extends Node {
   static title = "Cosine";
   static type = NodeTypes.COS;
   static description = "Cos node allows you to get the cosine of a number.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {
       type: {

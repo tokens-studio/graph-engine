@@ -21,7 +21,7 @@ export default class NodeDefinition extends Node {
   };
 
   static description = "Allows you to expose outputs of the node";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("input", {
       type: AnySchema,

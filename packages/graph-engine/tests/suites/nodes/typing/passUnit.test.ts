@@ -1,8 +1,10 @@
 import Node from "@/nodes/typing/passUnit.js";
+import { Graph } from "@/graph/graph.js";
 
 describe("typing/passUnit", () => {
   it("adds unit if falsey value", async () => {
-    const node = new Node();
+    const graph = new Graph();
+    const node = new Node({ graph });
 
     node.inputs.value.setValue("0");
     node.inputs.fallback.setValue("px");
@@ -14,7 +16,8 @@ describe("typing/passUnit", () => {
   });
 
   it("adds unit if not detected", async () => {
-    const node = new Node();
+    const graph = new Graph();
+    const node = new Node({ graph });
 
     node.inputs.value.setValue("3");
     node.inputs.fallback.setValue("px");
@@ -26,7 +29,8 @@ describe("typing/passUnit", () => {
   });
 
   it("does not add unit if  detected", async () => {
-    const node = new Node();
+    const graph = new Graph();
+    const node = new Node({ graph });
 
     node.inputs.value.setValue("3px");
     node.inputs.fallback.setValue("px");

@@ -9,7 +9,7 @@ export default class NodeDefinition extends Node {
 
   static description =
     "Base Font node allows you to calculate the base font size with DIN 1450.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("visualAcuity", {
       type: {

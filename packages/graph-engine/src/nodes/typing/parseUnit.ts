@@ -13,7 +13,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.PARSE_UNIT;
   static description =
     "Parse unit node allows you to seperate units from a number.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {
       type: StringSchema,

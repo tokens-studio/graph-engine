@@ -3,10 +3,18 @@ import { createModel } from '@rematch/core';
 import { Graph } from '@tokens-studio/graph-engine';
 import { ReactFlowInstance } from 'reactflow';
 
+
+export interface ILog{
+  data: Record<string,any>;
+  time: Date;
+  type: 'info' | 'error' | 'warning';
+}
+
 export interface GraphState {
   graph: Graph;
   currentNode: string;
   flow: Record<string, ReactFlowInstance>;
+  logs: ILog[];
 }
 
 export const graphState = createModel<RootModel>()({
@@ -14,6 +22,7 @@ export const graphState = createModel<RootModel>()({
     flow: {},
     currentNode: '',
     graph: new Graph(),
+    logs: [],
   } as GraphState,
   reducers: {
     setCurrentNode(state, payload: string) {
@@ -22,7 +31,16 @@ export const graphState = createModel<RootModel>()({
         currentNode: payload,
       };
     },
+    checkClearSelectedNode(state, payload: string) {
 
+      if (state.currentNode === payload) {
+        return {
+          ...state,
+          currentNode: '',
+        };
+      }
+      return state;
+    },
     registerFlow(state, payload: { key: string; value: ReactFlowInstance }) {
       return {
         ...state,
@@ -32,7 +50,19 @@ export const graphState = createModel<RootModel>()({
         },
       };
     },
+    appendLog(state, payload: ILog) {
+      return {
+        ...state,
+        logs: [...state.logs, payload],
+      };
+    },
 
+    clearLogs(state) {
+      return {
+        ...state,
+        logs: [],
+      };
+    },
     setGraph(state, graph: Graph) {
       return {
         ...state,

@@ -2,8 +2,6 @@ import {
   Menu,
   Item,
   Separator,
-  Submenu,
-  useContextMenu,
 } from 'react-contexify';
 import classNames from 'classnames/dedupe.js';
 import React, { useCallback } from 'react';

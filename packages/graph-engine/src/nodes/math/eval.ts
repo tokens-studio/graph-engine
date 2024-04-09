@@ -12,7 +12,7 @@ export default class NodeDefinition extends Node {
   static title = "Evaluate math";
   static type = NodeTypes.EVAL;
   static description = "Allows you to evaluate arbitrary math expressions";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("expression", {
       type: StringSchema,

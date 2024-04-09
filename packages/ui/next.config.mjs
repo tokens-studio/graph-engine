@@ -16,8 +16,8 @@ export default {
   },
   output: "export",
   images: {
-    formats: ['image/avif', 'image/webp'],
-    domains: ['raw.githubusercontent.com'],
+    //Needed for electron
+    unoptimized: true
   },
   webpack: (config, { dev, isServer }) => {
 

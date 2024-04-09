@@ -26,7 +26,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.SWITCH;
   static description =
     "Switch node allows you to conditionally choose a value based on a condition.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("default", {
       type: AnySchema,

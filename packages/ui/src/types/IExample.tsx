@@ -1,8 +1,7 @@
-import { GraphFile } from './file.ts';
-
+import { SerializedGraph } from '@tokens-studio/graph-engine';
 export interface IExample {
   title: string;
   description: string;
-  file: GraphFile;
+  file: SerializedGraph;
   key: string;
 }

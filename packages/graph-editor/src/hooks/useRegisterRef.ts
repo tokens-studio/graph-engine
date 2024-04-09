@@ -9,13 +9,12 @@ export const useRegisterRef = <T>(name: string): ((x: T) => void) => {
   const register = useCallback(
     (value) => {
       ref.current = value;
-      console.log('registering ref', name, ref);
-      dispatch.refs.set({
+      dispatch.refs.setRef({
         key: name,
         value: ref,
       });
     },
-    [dispatch.refs, name],
+    [dispatch, name],
   );
 
   return register;

@@ -20,14 +20,14 @@ const SubMenuObserver = observer(({ submenu }: { submenu: SubMenuData }) => {
   //https://github.com/react-component/menu/blob/master/src/SubMenu/index.tsx
   //However just populating the key seems to be broken
   return (
-    <SubMenu title={submenu.title} eventKey={'xx' + submenu.name}>
-      {submenu.items.map((item) => {
+    <SubMenu title={submenu.title} eventKey={'xx' + submenu.name} key={submenu.name}>
+      {submenu.items.map((item, i) => {
         if (item instanceof MenuItemData) {
-          return item.render();
+          return item.render({key: item.name});
         } else {
-          return <Divider />;
+          return <Divider key={i} />;
         }
-      })}
+      }).flat()}
     </SubMenu>
   );
 });

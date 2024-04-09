@@ -7,7 +7,7 @@ export default class NodeDefinition extends Node {
   static title = "Ungroup tokens";
   static type = NodeTypes.UNGROUP;
   static description = "Ungroups tokens by removing their namespace";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("accessor", {
       type: StringSchema,

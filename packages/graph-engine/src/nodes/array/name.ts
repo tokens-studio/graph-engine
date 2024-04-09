@@ -6,7 +6,7 @@ export default class NodeDefinition extends Node {
   static title = "Name tokens";
   static type = NodeTypes.NAME;
   static description = "Names an array of tokens by their index";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("array", {
       type: TokenArraySchema,

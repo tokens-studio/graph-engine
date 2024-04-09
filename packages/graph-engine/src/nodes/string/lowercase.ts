@@ -7,7 +7,7 @@ export default class NodeDefinition extends Node {
   static title = "Lowercase";
   static type = NodeTypes.LOWER;
   static description = "Converts a string to lowercase";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {
       type: StringSchema,

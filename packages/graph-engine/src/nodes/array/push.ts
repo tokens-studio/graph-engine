@@ -6,7 +6,7 @@ export default class NodeDefinition extends Node {
   static title = "Array push";
   static type = NodeTypes.ARRAY_PUSH;
   static description = "Pushes an item to an array";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("array", {
       type: AnyArraySchema,

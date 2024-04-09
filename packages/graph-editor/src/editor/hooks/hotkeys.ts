@@ -1,4 +1,4 @@
-import { Edge, useReactFlow } from 'reactflow';
+import { Edge, Node, useReactFlow } from 'reactflow';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import { useDispatch } from '@/hooks/useDispatch.ts';
 import { useMemo, useState } from 'react';
@@ -42,11 +42,13 @@ export const keyMap = {
 export interface IUseHotkeys {
   graph: Graph;
   copyNodes: (nodes: SerializedNode[]) => void;
+  handleDeleteNode: (id: string) => void;
   onEdgesDeleted: (edges: Edge[]) => void;
 }
 
 export const useHotkeys = ({
   onEdgesDeleted,
+  handleDeleteNode,
   copyNodes,
   graph,
 }: IUseHotkeys) => {
@@ -70,7 +72,8 @@ export const useHotkeys = ({
       DELETE: (event) => {
         event.preventDefault();
 
-        reactFlowInstance.setNodes((nodes) => nodes.filter((x) => !x.selected));
+
+
         reactFlowInstance.setEdges((edges) => {
           const filtered = edges.reduce(
             (acc, edge) => {
@@ -92,6 +95,29 @@ export const useHotkeys = ({
 
           return filtered.remaining;
         });
+        reactFlowInstance.setNodes((nodes) => {
+
+          const { remaining, removed } = nodes.reduce(
+            (acc, node) => {
+              if (node.selected) {
+                acc.removed.push(node);
+              } else {
+                acc.remaining.push(node);
+              }
+              return acc;
+            },
+            {
+              remaining: [] as Node[],
+              removed: [] as Node[],
+            },
+          );
+
+          removed.map(x => handleDeleteNode(x.id));
+
+          return remaining;
+        });
+
+
       },
       COPY: (event) => {
         event.stopPropagation();
@@ -102,11 +128,11 @@ export const useHotkeys = ({
           .filter((x) => x.selected)
           .map(
             (x) =>
-              ({
-                //Its possible we are attempting to duplicate a note that does not exist in the engine
-                engine: graph.getNode(x.id)?.serialize(),
-                editor: reactFlowInstance.getNode(x.id),
-              } as SerializedNode),
+            ({
+              //Its possible we are attempting to duplicate a note that does not exist in the engine
+              engine: graph.getNode(x.id)?.serialize(),
+              editor: reactFlowInstance.getNode(x.id),
+            } as SerializedNode),
           );
         //get the values from the graph
         const values = {

@@ -34,7 +34,7 @@ export default class NodeDefinition extends Node {
   static title = "Poline";
   static type = NodeTypes.POLINE;
   static description = "";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("anchorColors", {
       type: StringArraySchema,

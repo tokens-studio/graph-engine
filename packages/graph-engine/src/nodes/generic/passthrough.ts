@@ -13,7 +13,7 @@ export default class NodeDefinition extends Node {
   static title = "Passthrough";
   static type = NodeTypes.PASS_THROUGH;
   static description = "Passes a value through to the output";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {
       type: AnySchema,

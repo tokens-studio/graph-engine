@@ -6,7 +6,7 @@ export default class NodeDefinition extends Node {
   static title = "Reverse Array";
   static type = NodeTypes.REVERSE;
   static description = "Reverses a given array without mutating the original";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("array", {
       type: AnyArraySchema,

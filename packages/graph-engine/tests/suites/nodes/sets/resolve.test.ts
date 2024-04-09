@@ -9,10 +9,13 @@ import {
   TokenTypes,
   TypographyValues,
 } from "@tokens-studio/types";
+import { Graph } from "@/graph/graph.js";
+
 
 describe("set/resolve", () => {
   it("resolves complex values correctly", async () => {
-    const node = new Node();
+    const graph = new Graph();
+    const node = new Node({ graph });
     node.inputs.inputs.setValue([
       flatten({
         "ref-border": {

@@ -1,16 +1,18 @@
-import { TypeDefinition } from "..";
+import { Graph, TypeDefinition } from "..";
+import { Node } from "../programmatic/node";
 
 export interface SerializedInput {
   name: string;
-  value: any;
+  value?: any;
   visible: boolean;
   variadic?: boolean;
   type: TypeDefinition;
-  meta?: Record<string, any>;
+  annotations?: Record<string, any>;
 }
 
 export interface SerializedNode {
   id: string;
+  annotations?: Record<string, any>;
   type: string;
   inputs: SerializedInput[];
 }
@@ -21,10 +23,21 @@ export interface SerializedEdge {
   target: string;
   sourceHandle: string;
   targetHandle: string;
+  annotations?: Record<string, any>;
 }
 
 export interface SerializedGraph {
-  version: string;
+  annotations: Record<string, any>;
   nodes: SerializedNode[];
   edges: SerializedEdge[];
 }
+
+
+export type IDeserializeOpts = {
+  serialized: SerializedNode;
+  graph: Graph;
+  lookup: Record<string, NodeFactory>;
+};
+
+
+export type NodeFactory = typeof Node;

@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.LERP;
   static description =
     "Lerp (linear interpolation) calculates a value between two numbers, A and B, based on a fraction t. For t = 0 returns A, for t = 1 returns B. It's widely used in graphics and animations for smooth transitions.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("a", {
       type: {

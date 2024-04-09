@@ -28,7 +28,7 @@ export default class NodeDefinition extends Node {
   static title = "Blend Colors";
   static type = NodeTypes.BLEND;
   static description = "Blends two colors together";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("color", {
       type: ColorSchema,

@@ -14,7 +14,7 @@ export default class NodeDefinition extends Node {
   declare outputs: {
     value: Output<number>;
   };
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("a", {
       type: NumberSchema,

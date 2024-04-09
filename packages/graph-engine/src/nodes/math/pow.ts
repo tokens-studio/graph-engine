@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.POW;
   static description =
     "Power node allows you to Raises a base number to the power of an exponent.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("base", {
       type: NumberSchema,

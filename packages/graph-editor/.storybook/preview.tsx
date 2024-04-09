@@ -100,8 +100,6 @@ const Wrapper = ({ children }) => (
 );
 
 const withTheme: Decorator = (StoryFn, context) => {
-  console.log('Storyfn', context);
-
   const theme = context.parameters.theme || context.globals.theme;
 
   if (context.viewMode === 'docs') {

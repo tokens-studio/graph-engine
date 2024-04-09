@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.MULTIPLY_VARIADIC;
   static description =
     "Multiply node allows you to multiply two or more numbers.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("inputs", {
       type: {

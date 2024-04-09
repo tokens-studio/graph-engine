@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { IField } from './interface';
 import React from 'react';
 import { Input } from '@tokens-studio/graph-engine';
-import { Stack, Box, Accordion, Separator } from '@tokens-studio/ui';
+import { Stack, Box, Accordion, Separator, Button } from '@tokens-studio/ui';
 import { PreviewColor } from '../tokenPreview/color.js';
 import { TokenType } from '@/utils/index.ts';
 
@@ -83,6 +83,17 @@ export const TokenArrayField = observer(({ port, readOnly }: IField) => {
     (port as Input).setValue([port.value[0], e.target.value]);
   };
 
+  const downloadTokens = () => {
+    const element = document.createElement('a');
+    const file = new Blob([JSON.stringify(port.value)], {
+      type: 'application/json',
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = 'tokens.json';
+    document.body.appendChild(element);
+    element.click();
+  }
+
   return (
     <Stack gap={4} direction="column" align="center">
       <Accordion type="multiple" defaultValue={[]}>
@@ -111,7 +122,6 @@ export const TokenArrayField = observer(({ port, readOnly }: IField) => {
                       alignItems: 'center',
                       gap: '$2',
                       overflow: 'hidden',
-                      width: '100%',
                       paddingLeft: '$3',
                     }}
                   >
@@ -137,6 +147,8 @@ export const TokenArrayField = observer(({ port, readOnly }: IField) => {
           </Accordion.Content>
         </Accordion.Item>
       </Accordion>
+
+      <Button onClick={downloadTokens}>Download</Button>
     </Stack>
   );
 });

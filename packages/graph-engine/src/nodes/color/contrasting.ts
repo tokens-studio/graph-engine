@@ -37,7 +37,7 @@ export default class NodeDefinition extends Node {
     contrast: Output<number>;
   };
 
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("a", {
       type: ColorSchema,

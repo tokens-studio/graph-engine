@@ -7,7 +7,7 @@ export default class NodeDefinition extends Node {
   static title = "Logical and";
   static type = NodeTypes.AND;
   static description = "AND node allows you to check if all inputs are true.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("inputs", {
       type: {

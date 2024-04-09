@@ -23,7 +23,7 @@ export default class NodeDefinition extends Node {
   static title = "Create Color";
   static type = NodeTypes.CREATE_COLOR;
   static description = "Creates a color";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("space", {
       type: {

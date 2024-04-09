@@ -1,0 +1,41 @@
+import { SchemaObject } from "@tokens-studio/graph-engine";
+
+export const GAIN = "https://schemas.tokens.studio/audio/gain.json";
+export const GainSchema: SchemaObject = {
+    $id: GAIN,
+    title: "Gain",
+    type: "object"
+};
+
+
+export const CONTEXT = "https://schemas.tokens.studio/audio/context.json";
+export const ContextSchema: SchemaObject = {
+    $id: CONTEXT,
+    title: "Context",
+    type: "object"
+};
+
+export const SOURCE = "https://schemas.tokens.studio/audio/source.json";
+export const SourceSchema: SchemaObject = {
+    $id: SOURCE,
+    title: "Source",
+    type: "object"
+};
+
+
+
+
+export const DESTINATION = "https://schemas.tokens.studio/audio/destination.json";
+export const DestinationSchema: SchemaObject = {
+    $id: DESTINATION,
+    title: "Destination",
+    type: "object"
+};
+
+
+export const OSCILLATOR = "https://schemas.tokens.studio/audio/oscillator.json";
+export const OscillatorSchema: SchemaObject = {
+    $id: OSCILLATOR,
+    title: "Oscillator",
+    type: "object"
+};

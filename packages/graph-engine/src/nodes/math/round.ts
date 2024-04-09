@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.ROUND;
   static description =
     "Round node allows you to adjusts a floating-point number to the nearest integer or to a specified precision.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {
       type: NumberSchema,

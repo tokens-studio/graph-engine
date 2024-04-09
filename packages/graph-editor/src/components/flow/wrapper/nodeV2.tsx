@@ -10,7 +10,8 @@ import colors from '@/tokens/colors.ts';
 import { useGraph } from '@/hooks/useGraph.ts';
 import { useSelector } from 'react-redux';
 import { inlineTypes, showTimings } from '@/redux/selectors/settings.ts';
-import { icons } from '@/redux/selectors/registry.ts';
+import { icons, nodeSpecifics } from '@/redux/selectors/registry.ts';
+import { title } from '@/annotations/index.ts';
 
 export type UiNodeDefinition = {
   //Name of the Node
@@ -33,7 +34,7 @@ export type WrappedNodeDefinition = {
  * @returns
  */
 export const NodeV2 = (args) => {
-  const { id, data } = args;
+  const { id } = args;
   const graph = useGraph();
   const node = graph.getNode(id);
 
@@ -41,7 +42,7 @@ export const NodeV2 = (args) => {
     return <Box>Node not found</Box>;
   }
 
-  return <NodeWrap node={node} title={data.title} />;
+  return <NodeWrap node={node} />;
 };
 
 export interface INodeWrap {
@@ -51,15 +52,18 @@ export interface INodeWrap {
   title?: string;
   node: GraphNode;
 }
-const NodeWrap = observer(({ node, title }: INodeWrap) => {
+const NodeWrap = observer(({ node }: INodeWrap) => {
   const showTimingsValue = useSelector(showTimings);
+  const specifics = useSelector(nodeSpecifics);
+
+  const Specific = specifics[node.factory.type];
 
   return (
     <Node
       id={node.id}
       isAsync={node.isRunning}
       // icon={nodeDef.icon}
-      title={title || node.factory.title || 'Node'}
+      title={node.annotations[title] || node.factory.title || 'Node'}
       error={node.error || null}
       controls={''}
     >
@@ -72,6 +76,7 @@ const NodeWrap = observer(({ node, title }: INodeWrap) => {
             <PortArray ports={node.outputs} />
           </HandleContainer>
         </Stack>
+        {Specific && <Specific node={node} />}
       </Stack>
       {showTimingsValue && (
         <Box css={{ position: 'absolute', bottom: '-1.5em' }}>
@@ -86,13 +91,14 @@ const NodeWrap = observer(({ node, title }: INodeWrap) => {
 
 export interface IPortArray {
   ports: Record<string, Port>;
+  hideNames?: boolean
 }
-export const PortArray = observer(({ ports }: IPortArray) => {
+export const PortArray = observer(({ ports, hideNames }: IPortArray) => {
   const entries = Object.values(ports).sort();
   return (
     <>
       {entries.map((input) => (
-        <InputHandle port={input} />
+        <InputHandle port={input} hideName={hideNames} />
       ))}
     </>
   );
@@ -134,7 +140,7 @@ export const InlineTypeLabel = ({ port }: { port: Port }) => {
   );
 };
 
-const InputHandle = observer(({ port }: { port: Port }) => {
+const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boolean }) => {
   const inlineTypesValue = useSelector(inlineTypes);
   const iconTypeRegistry = useSelector(icons);
   const typeCol = extractTypeIcon(port, iconTypeRegistry);
@@ -149,7 +155,7 @@ const InputHandle = observer(({ port }: { port: Port }) => {
           id={port.name}
           full
         >
-          <Text>{port.name} + </Text>
+          {!hideName && <Text>{port.name} + </Text>}
           {inlineTypesValue && <InlineTypeLabel port={port} />}
         </Handle>
         {port._edges.map((edge, i) => {
@@ -157,13 +163,14 @@ const InputHandle = observer(({ port }: { port: Port }) => {
             <Handle
               {...typeCol}
               visible={port.visible || port.isConnected}
-              id={port.name + `[${edge.data.index}]`}
+              id={port.name + `[${edge.annotations['engine.index']}]`}
               key={i}
               full
             >
-              <Text>
+              {!hideName && <Text>
                 {port.name} - [{i}]
-              </Text>
+              </Text>}
+
               {inlineTypesValue && <InlineTypeLabel port={port} />}
             </Handle>
           );
@@ -180,7 +187,7 @@ const InputHandle = observer(({ port }: { port: Port }) => {
       id={port.name}
       full
     >
-      <Text>{port.name}</Text>
+      {!hideName && <Text>{port.name}</Text>}
       {inlineTypesValue && <InlineTypeLabel port={port} />}
     </Handle>
   );

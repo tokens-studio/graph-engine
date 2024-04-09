@@ -12,7 +12,7 @@ export default class NodeDefinition extends Node {
   static title = "Scale colors";
   static type = NodeTypes.SCALE;
   static description = "";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("color", {
       type: ColorSchema,

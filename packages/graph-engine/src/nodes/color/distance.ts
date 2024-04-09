@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.COLOR_DISTANCE;
   static description =
     "Distance node allows you to calculate the distance between two colors.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("color1", {
       type: ColorSchema,

@@ -1,8 +1,10 @@
 import Node from "@/nodes/math/pow";
+import { Graph } from "@/graph/graph.js";
 
 describe("math/pow", () => {
   it("powers two numbers", async () => {
-    const node = new Node();
+    const graph = new Graph();
+    const node = new Node({ graph });
     node.inputs.base.setValue(2);
     node.inputs.exponent.setValue(2);
     await node.execute();

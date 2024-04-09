@@ -53,7 +53,8 @@ const defaultEntries = [
         ],
         plugins: [
             json(),
-            cleanupDir.default(),
+            // Todo: This is being tempermental
+            // cleanupDir.default(),
             typescript({
                 tsconfig: 'tsconfig.prod.json',
             }),

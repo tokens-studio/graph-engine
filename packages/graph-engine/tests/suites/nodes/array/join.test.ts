@@ -1,8 +1,11 @@
 import Node from "@/nodes/array/join.js";
+import { Graph } from "@/graph/graph.js";
+
 
 describe("array/join", () => {
   it("joins the values as expected", async () => {
-    const node = new Node();
+    const graph = new Graph();
+    const node = new Node({ graph });
 
     node.inputs.array.setValue([1, 2, 3]);
     node.inputs.delimiter.setValue(",");
@@ -12,7 +15,8 @@ describe("array/join", () => {
     expect(node.outputs.value.value).toStrictEqual("1,2,3");
   });
   it("uses the default delimiter if not specified", async () => {
-    const node = new Node();
+    const graph = new Graph();
+    const node = new Node({ graph });
 
     node.inputs.array.setValue([1, 2, 3]);
 

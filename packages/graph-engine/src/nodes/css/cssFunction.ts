@@ -11,7 +11,7 @@ export default class NodeDefinition extends Node {
   static title = "CSS Function";
   static type = NodeTypes.CSS_FUNCTIONS;
   static description = "Applies a CSS function to the value";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
 
     this.addInput("functionName", {

@@ -1,34 +1,52 @@
 import React, { useCallback } from 'react';
-import { NodeProps, useReactFlow, useStoreApi } from 'reactflow';
+import { NodeProps, NodeResizer, useReactFlow, useStoreApi } from 'reactflow';
 import { Box, Stack, Text, Textarea } from '@tokens-studio/ui';
 import { useDispatch } from '@/hooks';
+import { observer } from 'mobx-react-lite';
+import { description, title } from '@/annotations';
+import { useGraph } from '@/hooks/useGraph';
+import { Node } from '@tokens-studio/graph-engine';
 
+const minWidth = 120;
 function NoteNode(props: NodeProps) {
-  const { id, data } = props;
+  const { id, } = props;
+  const graph = useGraph();
+  const node = graph.getNode(id);
 
-  const flow = useReactFlow();
-  const flowNode = flow.getNode(id);
-  const [text, setText] = React.useState(flowNode?.data.text || '');
-  const dispatch = useDispatch();
-
-  const onClick = useCallback(() => {
-    dispatch.graph.setCurrentNode('');
-  }, [dispatch.graph]);
-
-  const onChange = useCallback(
-    (newString: string) => {
-      flowNode!.data.text = newString;
-      setText(newString);
-    },
-    [flowNode],
-  );
-
-  if (!flowNode) {
+  if (!node) {
     return <Box>Node not found</Box>;
   }
 
-  return (
-    <Box onClick={onClick}>
+
+  return <Note node={node} annotations={node.annotations} />;
+}
+
+interface IAnnotation {
+  node: Node;
+  annotations: Record<string, string>;
+}
+
+const Note = observer(({ node, annotations }: IAnnotation) => {
+
+  const dispatch = useDispatch();
+
+  const onClick = useCallback(() => {
+    dispatch.graph.setCurrentNode(node.id);
+  }, [dispatch.graph, node.id]);
+
+
+  return <div
+    style={{
+      height: '100%',
+      width: '100%',
+      position: 'relative',
+    }}
+  >
+    <NodeResizer
+
+      minWidth={minWidth}
+      minHeight={minWidth}
+    /><Stack direction='column' onClick={onClick} css={{ height: '100%' }}>
       <Stack
         direction="row"
         justify="between"
@@ -51,19 +69,30 @@ function NoteNode(props: NodeProps) {
               letterSpacing: '0.15px',
             }}
           >
-            {data.title || 'Note'}
+            {annotations[title] || 'Note'}
           </Text>
         </Stack>
       </Stack>
-      <Box css={{ padding: '$3' }}>
+      <Box css={{ padding: '$3', flex: 1,
+      //Fix limitation with text area
+      '>*':{
+        height: '100%'
+      
+      } }}>
         <Textarea
-          onChange={onChange}
-          value={text}
-          placeholder="Write text here"
-        />
+          css={{
+            height: '100%',
+            width: '100%'
+          }}
+          disabled
+          placeholder='Add a description in the node settings'
+          value={annotations[description]}
+        >
+        </Textarea>
       </Box>
-    </Box>
-  );
-}
+    </Stack>
+  </div>
+
+})
 
 export default NoteNode;

@@ -27,7 +27,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.COLOR_BLINDNESS;
   static description =
     "Converts provided colors to the colors as perceived by the specified color blindness type.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("color", {
       type: ColorSchema,

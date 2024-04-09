@@ -21,6 +21,10 @@ import { Cross1Icon } from '@radix-ui/react-icons';
 import { defaultMenuDataFactory } from '@/components/menubar/defaults.tsx';
 import { Inputsheet } from '@/components/panels/inputs/index.tsx';
 import { NodeSettingsPanel } from '@/components/panels/nodeSettings/index.tsx';
+import { LogsPanel } from '@/components/panels/logs/index.tsx';
+import { PlayPanel } from '@/components/panels/play/index.tsx';
+import { GraphPanel } from '@/components/panels/graph/index.tsx';
+import { FlameGraph } from '@/components/panels/flamegraph/index.tsx';
 
 const DockButton = (rest) => {
   return (
@@ -111,7 +115,18 @@ const layoutDataFactory = (props, panelItems, ref): LayoutData => {
               mode: 'vertical',
               children: [
                 {
-                  size: 300,
+                  size: 78,
+                  tabs: [
+                    {
+                      group: 'popout',
+                      id: 'playControls',
+                      title: 'Play Controls',
+                      content: <PlayPanel />,
+                    },
+                  ],
+                },
+                {
+                  size: 545,
                   tabs: [
                     {
                       group: 'popout',
@@ -139,7 +154,6 @@ const layoutDataFactory = (props, panelItems, ref): LayoutData => {
               id: 'graphs',
               size: 700,
               group: 'graph',
-
               panelLock: { panelStyle: 'graph' },
               tabs: [
                 {
@@ -176,6 +190,13 @@ const layoutDataFactory = (props, panelItems, ref): LayoutData => {
                       title: 'Node Settings',
                       content: <NodeSettingsPanel />,
                     },
+                    {
+                      cached: true,
+                      group: 'popout',
+                      id: 'logs',
+                      title: 'Logs',
+                      content: <LogsPanel />,
+                    },
                   ],
                 },
                 {
@@ -187,6 +208,18 @@ const layoutDataFactory = (props, panelItems, ref): LayoutData => {
                       id: 'outputs',
                       title: 'Outputs',
                       content: <OutputSheet />,
+                    },
+                    {
+                      group: 'popout',
+                      id: 'graphSettings',
+                      title: 'Graph Settings',
+                      content: <GraphPanel />,
+                    },
+                    {
+                      group: 'popout',
+                      id: 'flamegraph',
+                      title: 'Flamegraph',
+                      content: <FlameGraph />,
                     },
                   ],
                 },
@@ -218,28 +251,35 @@ export const LayoutController = React.forwardRef<
   );
 
   return (
-    <ExternalLoaderProvider externalLoader={externalLoader}>
-      <Stack direction="column" css={{ height: '100%' }}>
-        {props.showMenu && <MenuBar menu={menuItems} />}
-        <Tooltip.Provider>
-          <DockLayout
-            ref={registerDocker}
-            defaultLayout={defaultDockLayout}
-            groups={groups}
-            style={{ flex: 1 }}
-          />
-        </Tooltip.Provider>
-      </Stack>
-    </ExternalLoaderProvider>
+      <ExternalLoaderProvider externalLoader={externalLoader}>
+        <Stack direction="column" css={{ height: '100%' }}>
+          {props.showMenu && <MenuBar menu={menuItems} />}
+          <Tooltip.Provider>
+            <DockLayout
+              ref={registerDocker}
+              defaultLayout={defaultDockLayout}
+              groups={groups}
+              style={{ flex: 1 }}
+            />
+          </Tooltip.Provider>
+        </Stack>
+      </ExternalLoaderProvider>
   );
 });
 
+
+/**
+ * The main editor component
+ * 
+ */
 export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
+    // Note that the provider exists around the layout controller so that the layout controller can register itself during mount
     return (
-      <ReduxProvider>
+      <ReduxProvider panelItems={props.panelItems}>
         <LayoutController {...props} ref={ref} />
       </ReduxProvider>
     );
   },
 );
+

@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx';
 export type IMenuItem = {
   name: string;
-  render: () => React.ReactNode | JSX.Element;
+  render: (rest: any) => React.ReactNode | JSX.Element;
 };
 
 export type ISubMenu = {
@@ -13,13 +13,13 @@ export type IMenu = {
   items: SubMenu[];
 };
 
-export class Seperator {}
+export class Seperator { }
 
 export class MenuItem {
   @observable
   name: string;
   @observable
-  render: () => React.ReactNode;
+  render: (rest: any) => React.ReactNode;
   constructor(vals: IMenuItem) {
     this.name = vals.name;
     this.render = vals.render;

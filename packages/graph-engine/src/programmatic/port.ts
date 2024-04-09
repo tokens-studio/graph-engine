@@ -1,7 +1,7 @@
 import { AnySchema, GraphSchema } from "@/schemas/index.js";
 import { Node } from "./node.js";
 import { action, computed, makeObservable, observable } from "mobx";
-import { Edge } from "@/graph/graph.js";
+import { Edge } from "./edge.js";
 
 export interface IPort<T = any> {
   name: string;
@@ -9,7 +9,7 @@ export interface IPort<T = any> {
   node: Node;
   type: GraphSchema;
   value: T;
-  meta?: Record<string, any>;
+  annotations?: Record<string, any>;
 }
 
 export class Port<T = any> {
@@ -23,7 +23,7 @@ export class Port<T = any> {
   protected _type: GraphSchema = AnySchema;
   protected _value: T;
   // Used to store arbitrary meta data. Most commonly used in the UI
-  public meta = {} as Record<string, any>;
+  public annotations = {} as Record<string, any>;
   /**
    * Unless the port is variadic this will always be a single edge on an input port, however on an output port it can be multiple edges
    */
@@ -35,7 +35,7 @@ export class Port<T = any> {
     this.node = props.node;
     this._type = props.type;
     this._value = props.value;
-    this.meta = props.meta || {};
+    this.annotations = props.annotations || {};
 
     makeObservable(this, {
       //@ts-ignore
@@ -44,7 +44,7 @@ export class Port<T = any> {
       _value: observable,
       _edges: observable,
       visible: observable,
-      meta: observable,
+      annotations: observable,
       type: computed,
       value: computed,
       isConnected: computed,

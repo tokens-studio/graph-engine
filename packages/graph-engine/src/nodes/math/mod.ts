@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.MOD;
   static description =
     "Modulo node allows you to get the remainder of a division.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("a", {
       type: NumberSchema,

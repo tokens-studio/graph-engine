@@ -4,3 +4,5 @@ import { graph } from './roots.ts';
 export const currentNode = createSelector(graph, (state) => state.currentNode);
 
 export const graphSelector = createSelector(graph, (state) => state.graph);
+
+export const logSelector = createSelector(graph, (state) => state.logs);

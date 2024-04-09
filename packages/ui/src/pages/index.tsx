@@ -33,6 +33,7 @@ const Wrapper = observer(({ theme }: { theme: GlobalState['ui']['theme'] }) => {
     }
   };
 
+
   return (
     <>
       {/* @ts-ignore */}
@@ -67,7 +68,7 @@ const Wrapper = observer(({ theme }: { theme: GlobalState['ui']['theme'] }) => {
         <LiveProvider
           code={previewCode}
           scope={scope}
-          theme={theme === 'light' ? themes.vsLight : themes.vsDark}
+          theme={theme.get() === 'light' ? themes.vsLight : themes.vsDark}
           noInline={true}
           enableTypeScript={true}
           language="jsx"
@@ -79,4 +80,9 @@ const Wrapper = observer(({ theme }: { theme: GlobalState['ui']['theme'] }) => {
   );
 });
 
-export default Wrapper;
+const Index = () => {
+  return <Wrapper theme={globalState.ui.theme} />;
+}
+
+
+export default Index;

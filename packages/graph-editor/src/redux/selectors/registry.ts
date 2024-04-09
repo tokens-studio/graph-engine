@@ -7,3 +7,7 @@ export const inputControls = createSelector(
   (state) => state.inputControls,
 );
 export const controls = createSelector(registry, (state) => state.controls);
+
+export const nodeSpecifics = createSelector(registry, (state) => state.nodeSpecifics);
+
+export const panelItemsState = createSelector(registry, (state) => state.panelItems);

@@ -161,6 +161,7 @@ const CommandMenu = ({
           >
             {items.groups.map((value) => (
               <CommandMenuGroup
+                key={value.key}
                 handleSelectItem={handleSelectItem}
                 group={value}
               />
@@ -183,6 +184,7 @@ const CommandMenu = ({
                 (item) =>
                   selectedItem === item.text.toLowerCase() && (
                     <NodePreview
+                      key={item.type}
                       title={item.text}
                       description={item.description}
                       docs={item.docs}

@@ -7,7 +7,7 @@ export default class NodeDefinition extends Node {
   static title = "Count";
   static type = NodeTypes.COUNT;
   static description = "Counts the amount of items in an array.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {
       type: AnyArraySchema,

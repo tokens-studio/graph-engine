@@ -1,9 +1,11 @@
 import Node from "@/nodes/color/convert.js";
 import { getAllOutputs } from "../utils";
+import { Graph } from "@/graph/graph.js";
 
 describe("color/convert", () => {
   it("converts csslike colors to rgb", async () => {
-    const node = new Node();
+    const graph = new Graph();
+    const node = new Node({ graph });
     node.inputs.color.setValue("red");
     node.inputs.space.setValue("rgb");
 
@@ -20,7 +22,8 @@ describe("color/convert", () => {
   });
 
   it("converts csslike colors to gl", async () => {
-    const node = new Node();
+    const graph = new Graph();
+    const node = new Node({ graph });
     node.inputs.color.setValue("red");
     node.inputs.space.setValue("gl");
 
@@ -37,7 +40,8 @@ describe("color/convert", () => {
   });
 
   it("converts to p3 from hex", async () => {
-    const node = new Node();
+    const graph = new Graph();
+    const node = new Node({ graph });
     node.inputs.color.setValue("#52F234");
     node.inputs.space.setValue("p3");
 
@@ -59,7 +63,8 @@ describe("color/convert", () => {
   });
 
   it("converts to oklab from hex", async () => {
-    const node = new Node();
+    const graph = new Graph();
+    const node = new Node({ graph });
     node.inputs.color.setValue("#52F234");
     node.inputs.space.setValue("oklab");
 
@@ -80,7 +85,8 @@ describe("color/convert", () => {
   });
 
   it("converts to oklab from oklab", async () => {
-    const node = new Node();
+    const graph = new Graph();
+    const node = new Node({ graph });
     node.inputs.color.setValue("oklab(40.1% 0.1143 0.045)");
     node.inputs.space.setValue("cubehelix");
 

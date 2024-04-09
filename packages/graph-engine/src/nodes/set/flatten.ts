@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static title = "Flatten Token Sets";
   static type = NodeTypes.FLATTEN;
   static description = "Flattens a set of tokens";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("tokens", {
       type: TokenArraySchema,

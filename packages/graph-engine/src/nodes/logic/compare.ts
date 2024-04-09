@@ -17,7 +17,7 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.COMPARE;
   static description =
     "Compare node allows you to compare two values using multiple operators.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("a", {
       type: AnySchema,

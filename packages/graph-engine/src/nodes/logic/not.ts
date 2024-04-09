@@ -7,7 +7,7 @@ export default class NodeDefinition extends Node {
   static title = "Logical Not";
   static type = NodeTypes.NOT;
   static description = "Not node allows you to negate a boolean value.";
-  constructor(props?: INodeDefinition) {
+  constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {
       type: AnySchema,

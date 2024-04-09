@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-yarn run lint-staged
+# Disable as this is no longer working 
+# yarn run lint-staged
