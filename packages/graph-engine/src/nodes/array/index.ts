@@ -1,23 +1,36 @@
-import { node as arrify } from "./arrify.js";
-import { node as concat } from "./concat.js";
-import { node as dotProp } from "./dotProp.js";
-import { node as indexArray } from "./indexArray.js";
-import { node as join } from "./join.js";
-import { node as reverse } from "./reverse.js";
-import { node as slice } from "./slice.js";
-import { node as sort } from "./sort.js";
-import { node as arrayPassUnit } from "./passUnit.js";
-import { node as name } from "./name.js";
+import { node as arrifyNode } from "./arrify.js";
+import { node as concatNode } from "./concat.js";
+import { node as dotPropNode } from "./dotProp.js";
+import { node as indexArrayNode } from "./indexArray.js";
+import { node as joinNode } from "./join.js";
+import { node as reverseNode } from "./reverse.js";
+import { node as sliceNode } from "./slice.js";
+import { node as sortNode } from "./sort.js";
+import { node as arrayPassUnitNode } from "./passUnit.js";
+import { node as nameNode } from "./name.js";
 
-export const nodes = [
-  arrify,
-  concat,
-  dotProp,
-  indexArray,
-  reverse,
-  slice,
-  join,
-  sort,
-  arrayPassUnit,
-  name,
+export const arrayNodes = [
+  arrifyNode,
+  concatNode,
+  dotPropNode,
+  indexArrayNode,
+  reverseNode,
+  sliceNode,
+  joinNode,
+  sortNode,
+  arrayPassUnitNode,
+  nameNode,
 ];
+
+export {
+  arrifyNode,
+  concatNode,
+  dotPropNode,
+  indexArrayNode,
+  reverseNode,
+  sliceNode,
+  joinNode,
+  sortNode,
+  arrayPassUnitNode,
+  nameNode as arrayNameNode,
+};

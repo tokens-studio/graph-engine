@@ -1,5 +1,7 @@
-import { node as arithmetic } from "./arithmetic.js";
-import { node as geometric } from "./geometric.js";
-import { node as harmonic } from "./harmonic.js";
+import { node as arithmeticNode } from "./arithmetic.js";
+import { node as geometricNode } from "./geometric.js";
+import { node as harmonicNode } from "./harmonic.js";
 
-export const nodes = [arithmetic, harmonic, geometric];
+export const seriesNodes = [arithmeticNode, harmonicNode, geometricNode];
+
+export { arithmeticNode, harmonicNode, geometricNode };

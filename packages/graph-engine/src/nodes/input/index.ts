@@ -1,15 +1,24 @@
-import { node as constant } from "./constant.js";
-import { node as enumeratedConstant } from "./enumeratedConstant.js";
-import { node as objectify } from "./objectify.js";
-import { node as slider } from "./slider.js";
-import { node as spread } from "./spread.js";
-import { node as json } from "./json.js";
+import { node as constantNode } from "./constant.js";
+import { node as enumeratedConstantNode } from "./enumeratedConstant.js";
+import { node as objectifyNode } from "./objectify.js";
+import { node as sliderNode } from "./slider.js";
+import { node as spreadNode } from "./spread.js";
+import { node as jsonNode } from "./json.js";
 
-export const nodes = [
-  constant,
-  enumeratedConstant,
-  objectify,
-  slider,
-  spread,
-  json,
+export const inputNodes = [
+  constantNode,
+  enumeratedConstantNode,
+  objectifyNode,
+  sliderNode,
+  spreadNode,
+  jsonNode,
 ];
+
+export {
+  constantNode,
+  enumeratedConstantNode,
+  objectifyNode,
+  sliderNode,
+  spreadNode,
+  jsonNode,
+};

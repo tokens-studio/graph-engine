@@ -1,35 +1,54 @@
-import { node as abs } from "./abs.js";
-import { node as add } from "./add.js";
-import { node as clamp } from "./clamp.js";
-import { node as cos } from "./cos.js";
-import { node as count } from "./count.js";
-import { node as divide } from "./divide.js";
-import { node as lerp } from "./lerp.js";
-import { node as mod } from "./mod.js";
-import { node as multiply } from "./multiply.js";
-import { node as random } from "./random.js";
-import { node as round } from "./round.js";
-import { node as sin } from "./sin.js";
-import { node as pow } from "./pow.js";
-import { node as subtract } from "./subtract.js";
-import { node as tan } from "./tan.js";
-import { node as fluid } from "./fluid.js";
+import { node as absNode } from "./abs.js";
+import { node as addNode } from "./add.js";
+import { node as clampNode } from "./clamp.js";
+import { node as cosNode } from "./cos.js";
+import { node as countNode } from "./count.js";
+import { node as divideNode } from "./divide.js";
+import { node as lerpNode } from "./lerp.js";
+import { node as modNode } from "./mod.js";
+import { node as multiplyNode } from "./multiply.js";
+import { node as randomNode } from "./random.js";
+import { node as roundNode } from "./round.js";
+import { node as sinNode } from "./sin.js";
+import { node as powNode } from "./pow.js";
+import { node as subtractNode } from "./subtract.js";
+import { node as tanNode } from "./tan.js";
+import { node as fluidNode } from "./fluid.js";
 
-export const nodes = [
-  abs,
-  add,
-  clamp,
-  cos,
-  count,
-  divide,
-  lerp,
-  mod,
-  pow,
-  multiply,
-  random,
-  round,
-  sin,
-  subtract,
-  tan,
-  fluid,
+export const mathNodes = [
+  absNode,
+  addNode,
+  clampNode,
+  cosNode,
+  countNode,
+  divideNode,
+  lerpNode,
+  modNode,
+  powNode,
+  multiplyNode,
+  randomNode,
+  roundNode,
+  sinNode,
+  subtractNode,
+  tanNode,
+  fluidNode,
 ];
+
+export {
+  absNode,
+  addNode,
+  clampNode,
+  cosNode,
+  countNode,
+  divideNode,
+  lerpNode,
+  modNode,
+  powNode,
+  multiplyNode,
+  randomNode,
+  roundNode,
+  sinNode,
+  subtractNode,
+  tanNode,
+  fluidNode,
+};

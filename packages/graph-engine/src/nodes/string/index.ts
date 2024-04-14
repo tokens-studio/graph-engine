@@ -1,15 +1,24 @@
-import { node as lowercase } from "./lowercase.js";
-import { node as joinString } from "./join.js";
-import { node as regex } from "./regex.js";
-import { node as uppercase } from "./uppercase.js";
-import { node as split } from "./split.js";
-import { node as stringify } from "./stringify.js";
+import { node as lowercaseNode } from "./lowercase.js";
+import { node as joinStringNode } from "./join.js";
+import { node as regexNode } from "./regex.js";
+import { node as uppercaseNode } from "./uppercase.js";
+import { node as splitNode } from "./split.js";
+import { node as stringifyNode } from "./stringify.js";
 
-export const nodes = [
-  lowercase,
-  stringify,
-  joinString,
-  regex,
-  uppercase,
-  split,
+export const stringNodes = [
+  lowercaseNode,
+  stringifyNode,
+  joinStringNode,
+  regexNode,
+  uppercaseNode,
+  splitNode,
 ];
+
+export {
+  lowercaseNode,
+  stringifyNode,
+  joinStringNode,
+  regexNode,
+  uppercaseNode,
+  splitNode,
+};

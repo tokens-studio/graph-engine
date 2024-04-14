@@ -1,5 +1,7 @@
-import { node as box } from "./box.js";
-import { node as cssFunction } from "./cssFunction.js";
-import { node as map } from "./map.js";
+import { node as boxNode } from "./box.js";
+import { node as cssFunctionNode } from "./cssFunction.js";
+import { node as mapNode } from "./map.js";
 
-export const nodes = [box, cssFunction, map];
+export const cssNodes = [boxNode, cssFunctionNode, mapNode];
+
+export { boxNode, cssFunctionNode, mapNode };
