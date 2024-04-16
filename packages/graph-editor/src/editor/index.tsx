@@ -104,7 +104,7 @@ let groups: Record<string, TabGroup> = {
   },
 };
 
-const layoutDataFactory = (props,  ref): LayoutData => {
+const layoutDataFactory = (props, ref): LayoutData => {
   return {
     dockbox: {
       mode: 'vertical',
@@ -245,14 +245,13 @@ export const LayoutController = React.forwardRef<
   const {
     externalLoader,
     menuItems = defaultMenuDataFactory(),
-    panelItems = defaultPanelGroupsFactory(),
   } = props;
 
   const registerDocker = useRegisterRef<DockLayout>('docker');
 
   //Generate once
   const defaultDockLayout: LayoutData = useMemo(
-    () => layoutDataFactory(props, panelItems, ref),
+    () => layoutDataFactory(props, ref),
     [],
   );
 
@@ -289,10 +288,10 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
     // Note that the provider exists around the layout controller so that the layout controller can register itself during mount
     return (
-      <ReduxProvider 
-      icons={icons}
-      panelItems={panelItems} 
-      capabilities={capabilities}>
+      <ReduxProvider
+        icons={icons}
+        panelItems={panelItems}
+        capabilities={capabilities}>
         <LayoutController {...props} ref={ref} />
       </ReduxProvider>
     );

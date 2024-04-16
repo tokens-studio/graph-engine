@@ -57,7 +57,6 @@ import { showGrid, snapGrid } from '@/redux/selectors/settings.ts';
 import { NodeV2 } from '@/components/index.ts';
 import { CommandMenu } from '@/components/commandPalette/index.js';
 import { useGraph } from '@/hooks/useGraph.ts';
-import { SettingsDialog } from '@/components/dialogs/settings.tsx';
 import { clear } from './actions/clear.ts';
 import { useRegisterRef } from '@/hooks/useRegisterRef.ts';
 import { graphEditorSelector } from '@/redux/selectors/refs.ts';
@@ -609,24 +608,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
               flexGrow: 1,
             }}
           >
-            <Box
-              css={{
-                position: 'absolute',
-                zIndex: 500,
-                display: 'flex',
-                flexDirection: 'row',
-              }}
-            >
-              <Box
-                css={{
-                  position: 'relative',
-                  padding: '$3',
-                  zIndex: 600,
-                }}
-              >
-                <SettingsDialog />
-              </Box>
-            </Box>
             <ReactFlow
               ref={reactFlowWrapper}
               nodes={nodes}

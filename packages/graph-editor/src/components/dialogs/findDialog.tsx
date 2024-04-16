@@ -1,8 +1,6 @@
 import React from 'react';
 import { Button, Dialog, TextInput, Text } from '@tokens-studio/ui';
 
-import { Settings } from '../panels/settings';
-
 export const FindDialog = ({ children }) => {
   const [id, setId] = React.useState('');
 
