@@ -1,40 +1,41 @@
-import { INodeDefinition, ToInput, Node, NumberSchema, StringSchema } from "@tokens-studio/graph-engine";
-import { ContextSchema, SourceSchema } from "../schemas/index.js";
+import { INodeDefinition, ToInput, BooleanSchema } from "@tokens-studio/graph-engine";
+import { BufferSchema, NodeSchema } from "../schemas/index.js";
+import { AudioBaseNode } from "./base.js";
 
 
 type inputs = {
-    context: AudioContext;
     /**
-     * A string for the uri of the audio source
+     * The audio buffer
      */
-    audioSource: string
+    buffer: AudioBuffer,
+    loop?: boolean
 };
 
 
-export class AudioSourceNode extends Node {
+export class AudioSourceNode extends AudioBaseNode {
     static title = "Audio Source node";
     static type = "studio.tokens.audio.source";
 
-    audioNode: AudioBufferSourceNode | undefined;
-    loaded = false;
-    memoizedSource = "";
-
-
+    audioNode: GainNode | undefined;
+    bufferNode: AudioBufferSourceNode | undefined;
 
     declare inputs: ToInput<inputs>
 
+    _values: any = {};
+
     constructor(props: INodeDefinition) {
         super(props);
-        this.addInput("context", {
-            type: ContextSchema,
-            visible: true,
+
+        this.addInput("buffer", {
+            type: BufferSchema,
+            visible: true
         });
-        this.addInput("audioSource", {
-            type: StringSchema
+        this.addInput("loop", {
+            type: BooleanSchema
         });
         this.addOutput("node", {
             type: {
-                ...SourceSchema,
+                ...NodeSchema,
                 description: "The generated oscillator node",
             },
             visible: true,
@@ -43,30 +44,47 @@ export class AudioSourceNode extends Node {
 
     async execute(): Promise<void> {
 
-        const { context, audioSource } = this.getAllInputs<inputs>();
+        const context = this.getAudioCtx();
+        const { buffer, loop } = this.getAllInputs<inputs>();
+
+
+
 
         if (!this.audioNode) {
-            this.audioNode = context.createBufferSource();
-        }
-
-        if (!this.loaded || audioSource != this.memoizedSource) {
-            const audioFile = await this.getGraph().loadResource(audioSource, this);
-
-            const buffer = await context.decodeAudioData(audioFile);
-
-            this.audioNode.buffer = buffer;
-            this.loaded = true;
-            this.memoizedSource = audioSource;
+            this.audioNode = context.createGain();
         }
 
         this.setOutput('node', this.audioNode);
     }
 
     onStart = () => {
-        this.audioNode?.start();
+        //Buffer nodes cannot be reused, so we need to create a new one each time
+        try {
+            const context = this.getAudioCtx();
+            const { buffer, loop } = this._values;
+            const newBufferSource = context.createBufferSource();
+            newBufferSource.buffer = buffer;
+            newBufferSource.loop = loop;
+
+            if (this.bufferNode) {
+                //Cleanup old buffer
+                this.bufferNode.disconnect(this.audioNode!);
+            }
+
+            newBufferSource.connect(this.audioNode!);
+            newBufferSource.start();
+            this.bufferNode = newBufferSource;
+
+        } catch (e) {
+            console.log(e)
+        }
     }
     onStop = () => {
-        this.audioNode?.stop();
+
+        try {
+            this.bufferNode?.stop();
+        } catch (e) {
+        }
     }
 
 }

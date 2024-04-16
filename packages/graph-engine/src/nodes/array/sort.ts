@@ -2,7 +2,7 @@ import { NodeTypes } from "@/types.js";
 import { INodeDefinition, Node } from "@/programmatic/node.js";
 import orderBy from "lodash.orderby";
 
-import { AnyArraySchema, NumberSchema, StringSchema } from "@/schemas/index.js";
+import { AnyArraySchema, StringSchema } from "@/schemas/index.js";
 import { Input } from "@/programmatic/input.js";
 
 export enum Order {

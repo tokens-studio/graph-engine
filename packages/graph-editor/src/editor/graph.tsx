@@ -67,7 +67,8 @@ import { deleteNode } from './actions/deleteNode.tsx';
 import { PassthroughNode } from '@/components/flow/nodes/passthroughNode.tsx';
 import { uiNodeType, uiVersion, uiViewport, xpos, ypos } from '@/annotations/index.ts';
 import { connectNodes } from './actions/connect.ts';
-import { panelItemsState } from '@/redux/selectors/registry.ts';
+import { capabilitiesSelector, panelItemsState } from '@/redux/selectors/registry.ts';
+import { contextMenuSelector } from '@/redux/selectors/ui.ts';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -91,6 +92,7 @@ const defaultEdgeOptions = {
 
 export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>(
   (props: GraphEditorProps, ref) => {
+
     const panelItems = useSelector(panelItemsState);
     const { nodeTypes = {}, customNodeUI = {}, children } = props;
 
@@ -107,6 +109,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
       graphEditorSelector,
     ) as MutableRefObject<ImperativeEditorRef>;
 
+    const capabilities = useSelector(capabilitiesSelector);
+    const contextMenus = useSelector(contextMenuSelector);
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
     const reactFlowInstance = useReactFlow();
     const dispatch = useDispatch();
@@ -118,6 +122,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
     //Attach sideeffect listeners
     useMemo(() => {
+      capabilities.forEach((factory) => graph.registerCapability(factory));
       graph.on('edgeIndexUpdated', (edge) => {
         setEdges((eds) => {
           return eds.map((ed) => {
@@ -301,7 +306,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
         dropPanelPosition,
         dispatch
       }),
-      [reactFlowInstance, graph, fullNodeLookup, customNodeUI, dropPanelPosition, dispatch],
+      [reactFlowInstance, graph, fullNodeLookup, customNodeMap, dropPanelPosition, dispatch],
     );
 
     useImperativeHandle(
@@ -316,8 +321,10 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           graph.annotations[uiVersion] = version;
           return graph.serialize();
         },
-        load: (serializedGraph) => {
-          const loadedGraph = Graph.deserialize(serializedGraph, fullNodeLookup);
+        load: (loadedGraph) => {
+          //const graph = new Graph();
+          //capabilities.forEach(cap => graph.registerCapability(cap));
+          //const loadedGraph = graph.deserialize(serializedGraph, fullNodeLookup);
           //Read the annotaions 
           const viewport = loadedGraph.annotations[uiViewport];
 
@@ -359,8 +366,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           setNodes(nodes);
           setEdges(edges);
 
-
-
           dispatch.graph.appendLog({
             type: 'info',
             time: new Date,
@@ -384,7 +389,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
         },
         getFlow: () => reactFlowInstance,
       }),
-      [reactFlowInstance, graph, fullNodeLookup, dispatch.graph, setNodes, setEdges],
+      [reactFlowInstance, graph, capabilities, fullNodeLookup, dispatch.graph, setNodes, setEdges],
     );
 
     const onConnect = useMemo(
@@ -640,9 +645,9 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
               defaultEdgeOptions={defaultEdgeOptions}
               panOnScroll={true}
               //Note that we cannot use pan on drag or it will affect the context menu
-              /*onPaneContextMenu={handleContextMenu}
-              onEdgeContextMenu={handleEdgeContextMenu}
-              onNodeContextMenu={handleNodeContextMenu}*/
+              onPaneContextMenu={contextMenus ? handleContextMenu : undefined}
+              onEdgeContextMenu={contextMenus ? handleEdgeContextMenu : undefined}
+              onNodeContextMenu={contextMenus ? handleNodeContextMenu : undefined}
               selectionMode={SelectionMode.Partial}
               onDragOver={onDragOver}
               selectionOnDrag={true}

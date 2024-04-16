@@ -48,3 +48,19 @@ export class Output<T = any> extends Port<T> {
     graph.connect(this.node, this, target.node, target);
   }
 }
+
+
+/**
+ * Converts a type definition to a map of inputs 
+ * @example
+ * ```ts
+ * type myType = {
+ * a: number,
+ * b: string
+ * }
+ * type myInputs = ToInput<myType>
+ * ```
+ */
+export type ToOutput<T> = {
+  [P in keyof T]: Output<T[P]>;
+};

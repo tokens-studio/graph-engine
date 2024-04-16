@@ -1,14 +1,10 @@
-import { dockerSelector, graphEditorSelector } from "@/redux/selectors/refs";
-import { Button, Box } from "@tokens-studio/ui";
-import DockLayout from "rc-dock";
-import React, { MutableRefObject, useCallback } from 'react';
+import { dockerSelector } from "@/redux/selectors/refs";
+import { Button } from "@tokens-studio/ui";
+import React, { useCallback } from 'react';
 import { useSelector } from "react-redux";
-import { ReactFlowProvider } from "reactflow";
-import { EditorApp } from "../editor/graph";
-import { store } from "@/redux/store";
 import { useAutoLayout } from "@/editor/hooks/useAutolayout";
-import { graph } from "@/redux/selectors/roots";
 import { EyeOpenIcon } from "@radix-ui/react-icons";
+import { GraphEditor } from "@/editor/graphEditor";
 
 const SubgraphExplorer = ({ node }) => {
 
@@ -29,22 +25,22 @@ const SubgraphExplorer = ({ node }) => {
         //Find the container
         const existing = dockerRef.current.find(graphId);
 
+        const ref = (o)=>{
+            console.log(o)
+        }
+
         if (!existing) {
             const newTab = {
-                //cached: true,
+                cached: true,
                 id: graphId,
                 group: 'graph',
                 title: 'Subgraph',
                 content: (
-                    <ReactFlowProvider>
-                        <EditorApp id={graphId} />
-                    </ReactFlowProvider>
-
+                    <GraphEditor ref={ref} id={graphId}/>
                 ),
             };
 
             dockerRef.current.dockMove(newTab, 'graphs', 'middle');
-
         } else {
             dockerRef.current.updateTab(graphId, null, true);
         }

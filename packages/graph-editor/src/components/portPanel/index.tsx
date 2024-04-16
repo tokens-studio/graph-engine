@@ -44,7 +44,6 @@ export const PortPanel = observer(({ ports, readOnly }: IPortPanel) => {
 });
 
 export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
-  const type = port.type;
   const readOnly = isReadOnly || port.isConnected;
   const controlSelector = useSelector(controls);
   const graph = useGraph();
@@ -52,11 +51,11 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
   const isDynamicInput = Boolean(port.annotations[deletable]);
   const resettable = Boolean(port.annotations[resetable]);
   const inner = useMemo(() => {
-    const field = controlSelector.find((x) => x.matcher(type, readOnly));
+    const field = controlSelector.find((x) => x.matcher(port,{ readOnly}));
     const Component = field?.component!;
 
     return <Component port={port} readOnly={readOnly} />;
-  }, [controlSelector, port, readOnly, type]);
+  }, [controlSelector, port, readOnly]);
 
   const onClick = useCallback(() => {
     port.setVisible(!port.visible);

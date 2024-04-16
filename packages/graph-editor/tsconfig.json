@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "include": ["src", "package.json"],
+  "include": ["src", "package.json", "../nodes-design-tokens/src/ui/icons/token.tsx", "../nodes-design-tokens/src/ui/icons/tokenSet.tsx"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "composite": false,

@@ -4,20 +4,16 @@ import {
   ExternalLoadOptions,
   SerializedGraph,
   Node as GraphNode,
+  CapabilityFactory,
+  Graph,
 } from '@tokens-studio/graph-engine';
 import { Edge, Node, ReactFlowInstance } from 'reactflow';
+import { Control } from '../types/controls.js';
 
 export interface EditorProps {
   id: string;
-  /**
-   * Items to display in the drop panel.
-   * Not populating this will result in the default items being displayed.
-   */
-  panelItems: DropPanelStore;
-  /**
-   * A lookup of the custom node uiS types to display in the editor.
-   */
-  customNodeUI?: Record<string, React.ReactElement>;
+
+
   /**
    * A lookup of the custom node types to display in the editor.
    * Not populating this will result in the default items being displayed.
@@ -26,6 +22,9 @@ export interface EditorProps {
    */
   nodeTypes?: Record<string, typeof GraphNode>;
 
+  /**
+   * Content to display in a graph editor when there are no nodes
+   */
   emptyContent?: React.ReactNode;
   children?: React.ReactNode;
   onOutputChange?: (output: Record<string, unknown>) => void;
@@ -35,7 +34,35 @@ export interface EditorProps {
    */
   showMenu?: boolean;
 
+  /**
+   * A custom menu to display in the editor.
+   */
   menuItems?: Menu;
+
+  /**
+   * Capabilities to load into the graphs. Each factory is loaded into each graph individually
+   */
+  capabilities?: CapabilityFactory[]
+  /**
+ * Items to display in the drop panel.
+  * Not populating this will result in the default items being displayed.
+ */
+  panelItems: DropPanelStore;
+
+  /**
+   * Customize the controls that are displayed in the editor
+   */
+  controls?: Control[];
+
+  /**
+   * A lookup of the custom node ui types to display in the editor.
+   */
+  customNodeUI?: Record<string, React.ReactElement>;
+
+  /**
+   * Additional icons to display in the editor for custom types
+   */
+  icons?: Record<string, React.ReactNode>;
 }
 
 export interface GraphEditorProps {
@@ -44,7 +71,7 @@ export interface GraphEditorProps {
   /**
  * A lookup of the custom node uiS types to display in the editor.
  */
-  customNodeUI?:  Record<string, React.ReactElement>;
+  customNodeUI?: Record<string, React.ReactElement>;
   /**
    * A lookup of the custom node types to display in the editor.
    * Not populating this will result in the default items being displayed.
@@ -64,7 +91,7 @@ export type ImperativeEditorRef = {
    */
   clear: () => void;
   save: () => SerializedGraph;
-  load: (state: SerializedGraph) => void;
+  load: (state: Graph) => void;
   getFlow: () => ReactFlowInstance;
 };
 

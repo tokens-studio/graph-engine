@@ -7,8 +7,6 @@ import join from "./join.js";
 import reverse from "./reverse.js";
 import slice from "./slice.js";
 
-import name from "./name.js";
-
 export const nodes = [
   arrify,
   concat,
@@ -18,6 +16,4 @@ export const nodes = [
   reverse,
   slice,
   join,
-
-  name,
 ];

@@ -6,6 +6,7 @@ export interface UIState {
   currentReactFlow?: ReactFlowInstance;
   showNodesCmdPalette: boolean;
   storeNodeInsertPosition: { x: number; y: number };
+  contextMenus: boolean;
 }
 
 export const uiState = createModel<RootModel>()({
@@ -13,8 +14,15 @@ export const uiState = createModel<RootModel>()({
     currentReactFlow: undefined,
     showNodesCmdPalette: false,
     storeNodeInsertPosition: { x: 0, y: 0 },
+    contextMenus:true
   } as UIState,
   reducers: {
+    setContextMenus(state, contextMenus: boolean) {
+      return {
+        ...state,
+        contextMenus,
+      };
+    },
     setShowNodesCmdPalette(state, showNodesCmdPalette: boolean) {
       return {
         ...state,

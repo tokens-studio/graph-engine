@@ -12,6 +12,23 @@
     border-bottom-color: var(--colors-borderDefault);
 }
 
+.dock-tab-close-btn {
+    position: relative;
+    right: 0;
+    top: 0;
+    border-radius: var(--radii-small);
+    font-family: inherit;
+    text-transform: lowercase;
+}
+
+.dock-tab-close-btn:hover {
+    background: var(--colors-buttonPrimaryBgHover);
+}
+
+.dock-nav{
+    flex-grow: 1;
+}
+
 .dock-nav-wrap {
     cursor: move;
 }
@@ -21,6 +38,11 @@
     background: var(--colors-bgDefault);
 }
 
+.drag-initiator {
+    display: flex;
+    align-items: center;
+    gap: var(--sizes-3);
+}
 
 .dock-panel,
 .dock-top .dock-bar,

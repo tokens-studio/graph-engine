@@ -15,13 +15,10 @@ export interface UIState {
   theme: string;
   showExamplePicker: boolean;
   showNodesPanel: boolean;
+
 }
 
 const starting = [
-  {
-    name: 'Card',
-    id: 'editor-0',
-  },
 ];
 
 export const uiState = createModel<RootModel>()({
@@ -31,7 +28,7 @@ export const uiState = createModel<RootModel>()({
     tabs: starting,
     theme: 'dark',
     showExamplePicker: false,
-    showNodesPanel: true,
+    showNodesPanel: true
   } as UIState,
   reducers: {
     setTheme(state, theme: string) {

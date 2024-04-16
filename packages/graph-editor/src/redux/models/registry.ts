@@ -1,17 +1,14 @@
 import { RootModel } from './root.ts';
 import { createModel } from '@rematch/core';
 import { icons } from '@/registry/icon.tsx';
-import { Node, SchemaObject } from '@tokens-studio/graph-engine';
+import { CapabilityFactory, Node, Port, SchemaObject } from '@tokens-studio/graph-engine';
 import { inputControls } from '@/registry/inputControls.tsx';
 import { controls } from '@/registry/control.tsx';
 import { IField } from '@/components/controls/interface.tsx';
 import { defaultSpecifics } from '@/registry/specifics.tsx';
 import { DropPanelStore, defaultPanelGroupsFactory } from '@/components/panels/dropPanel/index.js';
+import { Control } from '@/types/controls.ts';
 
-type Control = {
-  matcher: (node: SchemaObject, output: boolean) => boolean;
-  component: React.FC<IField>;
-};
 
 export interface RegistryState {
   //Additional specific controls for nodes. Appended to the end of the default controls
@@ -19,7 +16,8 @@ export interface RegistryState {
   icons: Record<string, React.ReactNode>;
   inputControls: Record<string, React.FC<{ node: Node }>>;
   controls: Control[];
-  panelItems: DropPanelStore
+  panelItems: DropPanelStore;
+  capabilities: CapabilityFactory[]
 }
 
 export const registryState = createModel<RootModel>()({
@@ -28,15 +26,22 @@ export const registryState = createModel<RootModel>()({
     icons: { ...icons },
     inputControls: { ...inputControls },
     controls: [...(controls as Control[])],
-    panelItems: defaultPanelGroupsFactory()
+    panelItems: defaultPanelGroupsFactory(),
+    capabilities: [],
   } as RegistryState,
   reducers: {
-    registerIcon(state, payload: { key: string; value: React.ReactNode }) {
+    setCapabilities(state, payload: CapabilityFactory[]) {
+      return {
+        ...state,
+        capabilities: payload,
+      };
+    },
+    registerIcons(state, payload: Record<string, React.ReactNode>) {
       return {
         ...state,
         icons: {
           ...state.icons,
-          [payload.key]: payload.value,
+          ...payload
         },
       };
     },

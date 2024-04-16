@@ -25,6 +25,10 @@ export interface TypeDefinition {
    * Whether the input is visible by default in the UI
    */
   visible?: boolean;
+  /**
+   * Additional annotations to store on the input
+   */
+  annotations?: Record<string, any>;
 }
 
 export class Node {
@@ -34,6 +38,7 @@ export class Node {
   readonly id: string;
   public static readonly description?: string;
   public static readonly title?: string;
+  public static readonly annotations: Record<string, any> = {};
   /**
    * The groups this node belongs to as a string array
    */

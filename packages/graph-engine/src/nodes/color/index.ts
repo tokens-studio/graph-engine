@@ -10,7 +10,7 @@ import poline from "./poline.js";
 import scale from "./scale.js";
 import wheel from "./wheel.js";
 import name from "./name.js";
-import nearest from "./nearest.js";
+
 // import { node as setColorValue } from "./set-color-value.js";
 
 export const nodes = [
@@ -28,6 +28,5 @@ export const nodes = [
   distance,
   // extract,
 
-  nearest,
   // setColorValue,
 ];

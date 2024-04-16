@@ -12,6 +12,7 @@ export enum NodeTypes {
   PANIC = "studio.tokens.generic.panic",
   CONSTANT = "studio.tokens.generic.constant",
   OBJECTIFY = "studio.tokens.generic.objectify",
+  MERGE_OBJECTS = "studio.tokens.generic.mergeObjects",
 
   SPREAD = "studio.tokens.input.extract",
 
@@ -81,9 +82,6 @@ export enum NodeTypes {
   COLOR_NAME = "studio.tokens.color.name",
   NEAREST_TOKENS = "studio.tokens.color.nearestTokens",
   SET_COLOR_LUMINANCE = "studio.tokens.color.setColorLuminance",
-
-  //Design Tokens
-  CREATE_DESIGN_TOKEN = "studio.tokens.designTokens.create",
 
   //Token Sets
   EXTERNAL_TOKEN_SET = "studio.tokens.tokenSets.external",

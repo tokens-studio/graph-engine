@@ -7,7 +7,9 @@ export function useGetEditor() {
   const previewCode = useSelector(previewCodeSelector);
   const dispatch = useDispatch();
 
+  //TODO FIX, we should be opening a new tab with the example
   async function loadExample(file) {
+    
     const editor = store.getState().refs.editor;
 
     if (!editor) {
@@ -27,13 +29,10 @@ export function useGetEditor() {
         dispatch.ui.setPreviewCode(loadedCode);
       }
 
-      await editor.current.load({
-        nodeState: loadedState,
-        nodes,
-        edges,
-      });
+      await editor.current.load(file);
     }, 0);
     return Promise.resolve();
+    
   }
 
   function getJSON() {

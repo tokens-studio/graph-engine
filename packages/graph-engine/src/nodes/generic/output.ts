@@ -31,6 +31,8 @@ export default class NodeDefinition extends Node {
       type: AnySchema,
       visible: false,
     });
+
+    this.annotations["engine.singleton"] = true;
   }
 
   execute(): void | Promise<void> {

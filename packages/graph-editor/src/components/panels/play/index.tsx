@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { PlayIcon, StopIcon, PauseIcon } from '@radix-ui/react-icons';
 import { Box, IconButton, Stack } from '@tokens-studio/ui';
 import { useGraph } from '@/hooks/useGraph';
+import { useDispatch } from '@/hooks';
+import { annotatedPlayState } from '@tokens-studio/graph-engine';
+import { useSelector } from 'react-redux';
+import { playStateSelector } from '@/redux/selectors/graph';
 
 
 enum PlayState {
@@ -12,28 +16,23 @@ enum PlayState {
 }
 
 export function PlayPanel() {
-    const graph = useGraph();
-
-    const [state, setState] = useState(PlayState.STOPPED);
+    const dispatch = useDispatch();
+    const state = useSelector(playStateSelector);
 
     const onPlay = () => {
-        graph.start();
-        setState(PlayState.PLAYING);
+        dispatch.graph.startGraph();
     };
 
     const onPause = () => {
         if (state !== PlayState.PAUSED) {
-            graph.pause();
-            setState(PlayState.PAUSED);
+            dispatch.graph.pauseGraph();
         } else {
-            graph.resume();
-            setState(PlayState.PLAYING);
+            dispatch.graph.resumeGraph();
         }
     }
 
     const onStop = () => {
-        graph.stop();
-        setState(PlayState.STOPPED);
+        dispatch.graph.stopGraph();
     }
 
 

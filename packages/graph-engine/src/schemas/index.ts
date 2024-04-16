@@ -91,47 +91,6 @@ export const BooleanSchema: SchemaObject = {
   default: false,
 };
 
-export const TOKEN = "https://schemas.tokens.studio/token.json";
-export const TokenSchema: SchemaObject = {
-  $id: TOKEN,
-  title: "Token",
-  type: "object",
-  properties: {
-    name: StringSchema,
-    value: StringSchema,
-    type: StringSchema,
-  },
-};
-
-export const TOKEN_ARRAY = "https://schemas.tokens.studio/tokenArray.json";
-export const TokenArraySchema: SchemaObject = {
-  $id: TOKEN_ARRAY,
-  title: "Token[]",
-  type: "array",
-  default: [],
-  items: TokenSchema,
-};
-
-export const TOKEN_ARRAY_ARRAY =
-  "https://schemas.tokens.studio/tokenArrayArray.json";
-export const TokenArrayArraySchema: SchemaObject = {
-  $id: TOKEN_ARRAY_ARRAY,
-  title: "Token[][]",
-  type: "array",
-  default: [],
-  items: TokenArraySchema,
-};
-
-export const TOKEN_SET = "https://schemas.tokens.studio/tokenSet.json";
-export const TokenSetSchema: SchemaObject = {
-  $id: TOKEN_SET,
-  title: "Token Set",
-  type: "object",
-  properties: {
-    name: StringSchema,
-    token: StringSchema,
-  },
-};
 
 export const OBJECT = "https://schemas.tokens.studio/object.json";
 export const ObjectSchema: SchemaObject = {
@@ -361,10 +320,6 @@ export const AllSchemas = [
   AnySchema,
   AnyArraySchema,
   BooleanSchema,
-  TokenSchema,
-  TokenSetSchema,
-  TokenArraySchema,
-  TokenArrayArraySchema,
   ObjectSchema,
   CurveSchema,
   Vec2Schema,

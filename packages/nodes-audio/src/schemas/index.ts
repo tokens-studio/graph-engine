@@ -23,6 +23,23 @@ export const SourceSchema: SchemaObject = {
 };
 
 
+export const BUFFER = "https://schemas.tokens.studio/fs/buffer.json";
+export const BufferSchema: SchemaObject = {
+    $id: BUFFER,
+    title: "Buffer",
+    type: "object",
+    default: null
+};
+
+
+
+export const NODE = "https://schemas.tokens.studio/audio/node.json";
+export const NodeSchema: SchemaObject = {
+    $id: NODE,
+    title: "Node",
+    type: "object",
+    default:null
+};
 
 
 export const DESTINATION = "https://schemas.tokens.studio/audio/destination.json";

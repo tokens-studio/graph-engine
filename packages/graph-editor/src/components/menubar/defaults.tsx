@@ -18,13 +18,9 @@ import { LogsPanel } from '../panels/logs';
 import { AnnotationDotsIcon, CpuIcon, RedoIcon, UndoIcon } from '@iconicicons/react';
 import { GraphPanel } from '../panels/graph';
 
-const windowButton = ({
-  name,
-  id,
-  title,
-  icon,
-  content,
-}: {
+
+
+export interface IWindowButton {
   //Id of the tab
   id: string;
   title: string;
@@ -32,7 +28,19 @@ const windowButton = ({
   name: string;
   icon?: JSX.Element;
   content: JSX.Element;
-}) =>
+}
+/**
+ * A simple button that toggles a window panel
+ * @param param0 
+ * @returns 
+ */
+export const windowButton = ({
+  name,
+  id,
+  title,
+  icon,
+  content,
+}: IWindowButton) =>
   new MenuItem({
     name: name,
     render: function Toggle() {
@@ -113,6 +121,8 @@ export const defaultMenuDataFactory = (): Menu =>
                   reader.onload = (e) => {
                     const text = (e.target as any).result;
                     const data = JSON.parse(text);
+
+                    //TODO open a new tab
                     graphRef.current.load(data);
                   };
                   reader.readAsText(file);
@@ -197,7 +207,6 @@ export const defaultMenuDataFactory = (): Menu =>
             name: 'inputs',
             id: 'inputs',
             title: 'Inputs',
-
             content: <Inputsheet />,
           }),
           windowButton({
@@ -210,7 +219,7 @@ export const defaultMenuDataFactory = (): Menu =>
             name: 'nodeSettings',
             id: 'nodeSettings',
             title: 'Node Settings',
-            icon : <CpuIcon/>,
+            icon: <CpuIcon />,
             content: <NodeSettingsPanel />,
           }),
           windowButton({
@@ -223,7 +232,7 @@ export const defaultMenuDataFactory = (): Menu =>
             name: 'logs',
             id: 'logs',
             title: 'Logs',
-            icon: <AnnotationDotsIcon/>,
+            icon: <AnnotationDotsIcon />,
             content: <LogsPanel />,
           }),
           windowButton({

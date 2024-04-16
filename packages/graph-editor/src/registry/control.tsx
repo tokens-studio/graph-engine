@@ -11,6 +11,7 @@ import {
   ANY,
   TOKEN_ARRAY,
   TEXT,
+  Port,
 } from '@tokens-studio/graph-engine';
 import { CurveField } from '@/components/controls/curve';
 import { BooleanField } from '@/components/controls/boolean';
@@ -24,58 +25,67 @@ import { Vec2field } from '@/components/controls/vec2';
 import { Vec3field } from '@/components/controls/vec3';
 import { TokenArrayField } from '@/components/controls/tokenArray';
 import { TextArea } from '@/components/controls/text';
+import { SliderField } from '@/components/controls/slider';
 
+/**
+ * Default controls for the graph editor
+ */
 export const controls = [
   {
-    matcher: (schema: SchemaObject) => schema.$id === CURVE,
+
+    matcher: (port: Port) => port.annotations['ui.control'] === 'slider',
+    component: SliderField,
+  },
+  {
+    matcher: (port: Port) => port.type.$id === CURVE,
     component: CurveField,
   },
   {
-    matcher: (schema: SchemaObject) => schema.$id === BOOLEAN,
+    matcher: (port: Port) => port.type.$id === BOOLEAN,
     component: BooleanField,
   },
   {
-    matcher: (schema: SchemaObject) => schema.$id === COLOR,
+    matcher: (port: Port) => port.type.$id === COLOR,
     component: ColorField,
   },
   {
-    matcher: (schema: SchemaObject) => schema.$id === NUMBER,
+    matcher: (port: Port) => port.type.$id === NUMBER,
     component: NumericField,
   },
   {
-    matcher: (schema: SchemaObject) => schema.$id === STRING && schema.enum,
+    matcher: (port: Port) => port.type.$id === STRING && port.type.enum,
     component: EnumeratedTextfield,
   },
   {
-    matcher: (schema: SchemaObject) => schema.$id === TEXT,
+    matcher: (port: Port) => port.type.$id === TEXT,
     component: TextArea,
   },
   {
-    matcher: (schema: SchemaObject) => schema.$id === STRING,
+    matcher: (port: Port) => port.type.$id === STRING,
     component: Textfield,
   },
   {
-    matcher: (schema: SchemaObject) => schema.$id === TOKEN_SET,
+    matcher: (port: Port) => port.type.$id === TOKEN_SET,
     component: DefaultField,
   },
   {
-    matcher: (schema: SchemaObject) => schema.$id === TOKEN_SET,
+    matcher: (port: Port) => port.type.$id === TOKEN_SET,
     component: DefaultField,
   },
   {
-    matcher: (schema: SchemaObject) => schema.$id === VEC2,
+    matcher: (port: Port) => port.type.$id === VEC2,
     component: Vec2field,
   },
   {
-    matcher: (schema: SchemaObject) => schema.$id === VEC3,
+    matcher: (port: Port) => port.type.$id === VEC3,
     component: Vec3field,
   },
   {
-    matcher: (schema: SchemaObject) => schema.$id === TOKEN_ARRAY,
+    matcher: (port: Port) => port.type.$id === TOKEN_ARRAY,
     component: TokenArrayField,
   },
   {
-    matcher: (schema: SchemaObject) => schema.$id === ANY,
+    matcher: (port: Port) => port.type.$id === ANY,
     component: AnyField,
   },
   {

@@ -16,6 +16,8 @@ export default class NodeDefinition extends Node {
   constructor(props: INodeDefinition) {
     super(props);
     //By default we don't define any ports, these are all dynamic
+
+    this.annotations["engine.singleton"] = true;
   }
 
   execute(): void | Promise<void> {

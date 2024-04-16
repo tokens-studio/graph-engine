@@ -25,6 +25,7 @@ import { LogsPanel } from '@/components/panels/logs/index.tsx';
 import { PlayPanel } from '@/components/panels/play/index.tsx';
 import { GraphPanel } from '@/components/panels/graph/index.tsx';
 import { FlameGraph } from '@/components/panels/flamegraph/index.tsx';
+import { GraphEditor } from './graphEditor.tsx';
 
 const DockButton = (rest) => {
   return (
@@ -39,7 +40,7 @@ const DockButton = (rest) => {
 
 let groups: Record<string, TabGroup> = {
   popout: {
-    animated: false,
+    animated: true,
     floatable: true,
     panelExtra: (panelData, context) => {
       let buttons: React.ReactElement[] = [];
@@ -80,7 +81,7 @@ let groups: Record<string, TabGroup> = {
    * Note that the graph has a huge issue when ran in a popout window, as such we disable it for now
    */
   graph: {
-    animated: false,
+    animated: true,
     floatable: true,
     panelExtra: (panelData, context) => {
       let buttons: React.ReactElement[] = [];
@@ -157,14 +158,13 @@ const layoutDataFactory = (props, panelItems, ref): LayoutData => {
               panelLock: { panelStyle: 'graph' },
               tabs: [
                 {
+                  closable: true,
                   cached: true,
                   id: 'graph1',
                   group: 'graph',
                   title: 'Graph',
                   content: (
-                    <ReactFlowProvider>
-                      <EditorApp {...props} panelItems={panelItems} ref={ref} />
-                    </ReactFlowProvider>
+                    <GraphEditor {...props} panelItems={panelItems} ref={ref} />
                   ),
                 },
               ],
@@ -177,6 +177,7 @@ const layoutDataFactory = (props, panelItems, ref): LayoutData => {
                   size: 300,
                   tabs: [
                     {
+                      closable: true,
                       cached: true,
                       group: 'popout',
                       id: 'input',
@@ -184,6 +185,7 @@ const layoutDataFactory = (props, panelItems, ref): LayoutData => {
                       content: <Inputsheet />,
                     },
                     {
+                      closable: true,
                       cached: true,
                       group: 'popout',
                       id: 'nodeSettings',
@@ -191,6 +193,7 @@ const layoutDataFactory = (props, panelItems, ref): LayoutData => {
                       content: <NodeSettingsPanel />,
                     },
                     {
+                      closable: true,
                       cached: true,
                       group: 'popout',
                       id: 'logs',
@@ -203,6 +206,7 @@ const layoutDataFactory = (props, panelItems, ref): LayoutData => {
                   size: 300,
                   tabs: [
                     {
+                      closable: true,
                       cached: true,
                       group: 'popout',
                       id: 'outputs',
@@ -210,12 +214,14 @@ const layoutDataFactory = (props, panelItems, ref): LayoutData => {
                       content: <OutputSheet />,
                     },
                     {
+                      closable: true,
                       group: 'popout',
                       id: 'graphSettings',
                       title: 'Graph Settings',
                       content: <GraphPanel />,
                     },
                     {
+                      closable: true,
                       group: 'popout',
                       id: 'flamegraph',
                       title: 'Flamegraph',
@@ -251,19 +257,19 @@ export const LayoutController = React.forwardRef<
   );
 
   return (
-      <ExternalLoaderProvider externalLoader={externalLoader}>
-        <Stack direction="column" css={{ height: '100%' }}>
-          {props.showMenu && <MenuBar menu={menuItems} />}
-          <Tooltip.Provider>
-            <DockLayout
-              ref={registerDocker}
-              defaultLayout={defaultDockLayout}
-              groups={groups}
-              style={{ flex: 1 }}
-            />
-          </Tooltip.Provider>
-        </Stack>
-      </ExternalLoaderProvider>
+    <ExternalLoaderProvider externalLoader={externalLoader}>
+      <Stack direction="column" css={{ height: '100%' }}>
+        {props.showMenu && <MenuBar menu={menuItems} />}
+        <Tooltip.Provider>
+          <DockLayout
+            ref={registerDocker}
+            defaultLayout={defaultDockLayout}
+            groups={groups}
+            style={{ flex: 1 }}
+          />
+        </Tooltip.Provider>
+      </Stack>
+    </ExternalLoaderProvider>
   );
 });
 
@@ -274,9 +280,19 @@ export const LayoutController = React.forwardRef<
  */
 export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
+
+    const {
+      panelItems,
+      capabilities,
+      icons
+    } = props;
+
     // Note that the provider exists around the layout controller so that the layout controller can register itself during mount
     return (
-      <ReduxProvider panelItems={props.panelItems}>
+      <ReduxProvider 
+      icons={icons}
+      panelItems={panelItems} 
+      capabilities={capabilities}>
         <LayoutController {...props} ref={ref} />
       </ReduxProvider>
     );

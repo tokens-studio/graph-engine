@@ -10,8 +10,13 @@ import { Input } from "@/programmatic/input.js";
 import { topologicalSort } from "./topologicSort.js";
 import { makeObservable, observable } from "mobx";
 import { Edge, VariadicEdgeData } from "@/programmatic/edge.js";
-import { annotatedVariadicIndex, annotatedVersion } from "@/annotations/index.js";
+import { annotatedCapabilityPrefix, annotatedPlayState, annotatedVariadicIndex } from "@/annotations/index.js";
 
+export type CapabilityFactory = {
+  name: string;
+  register: (graph: Graph) => any;
+  version?: string;
+};
 
 export type InputDefinition = {
   value: any;
@@ -50,6 +55,12 @@ export type EdgeOpts = {
 const dedup = (arr: string[]) => [...new Set(arr)];
 
 export type SubscriptionType = "nodeAdded" | "nodeRemoved" | "edgeAdded" | "edgeRemoved" | "nodeUpdated" | "edgeUpdated" | "start" | "stop" | "pause" | "resume" | "edgeIndexUpdated";
+
+export type FinalizerType = 'serialize';
+export type SerialFinalizer = (graph: SerializedGraph) => SerializedGraph;
+export type FinalizerExecutor = SerialFinalizer;
+
+export type PlayState = "playing" | "paused" | "stopped";
 
 
 export interface IGraph {
@@ -99,12 +110,15 @@ const defaultGraphOpts: IGraph = {
  * This is our internal graph representation that we use to perform transformations on
  */
 export class Graph {
+  private finalizers = {};
   private listeners = {};
   public annotations: Record<string, any> = {};
+
 
   nodes: Record<string, Node>;
   edges: Record<string, Edge>;
   capabilities: Record<string, any> = {};
+
   messageQueue: {
     eventName: string;
     data: any;
@@ -171,7 +185,7 @@ export class Graph {
     if (targetHandle.variadic) {
       const edges = this.inEdges(target.id, targetHandle.name);
       //The number of edges is the new index
-      annotations = { annotatedVariadicIndex: variadicIndex == -1 ? edges.length : variadicIndex } as VariadicEdgeData;
+      annotations = { [annotatedVariadicIndex]: variadicIndex == -1 ? edges.length : variadicIndex } as VariadicEdgeData;
     }
 
     //TODO validation of type
@@ -206,6 +220,11 @@ export class Graph {
   }
 
   addNode(node: Node) {
+
+    if (node.factory) {
+      this.checkCapabilitites(node.factory.annotations);
+    }
+
     this.nodes[node.id] = node;
     this.emit("nodeAdded", node);
   }
@@ -322,15 +341,19 @@ export class Graph {
 
     await this.propagate(node.id);
   }
-
+  /**
+   * Serialize the graph for transport
+   * @returns 
+   */
   serialize(): SerializedGraph {
     //Ensure we update the version
     this.annotations['engine.version'] = VERSION;
-    return {
+    const serialized = {
       nodes: Object.values(this.nodes).map((x) => x.serialize()),
       edges: Object.values(this.edges).map((x) => x.serialize()),
       annotations: this.annotations,
     };
+    return (this.finalizers['serialize'] || []).reduce((acc, x) => x(acc), serialized);
   }
 
   /**
@@ -341,12 +364,23 @@ export class Graph {
     return Object.values(graph.nodes.map((x) => x.type));
   }
 
+  checkCapabilitites(annotations: Record<string, any>) {
+    Object.entries(annotations).forEach(([key]) => {
+      if (key.startsWith(annotatedCapabilityPrefix)) {
+        const capabilityName = key.replace(annotatedCapabilityPrefix, '');
+        if (!this.capabilities[capabilityName]) {
+          throw new Error(`Capability ${capabilityName} is missing`);
+        }
+      }
+    });
+  }
+
   /**
    * Creates a graph from a serialized graph. Note that the types of the nodes must be present in the lookup.
    * @param input
    * @param lookup
    */
-  static deserialize(
+  deserialize(
     serialized: SerializedGraph,
     lookup: Record<string, NodeFactory>
   ): Graph {
@@ -360,8 +394,12 @@ export class Graph {
       );
     }
 
-    const g = new Graph();
-    g.annotations = serialized.annotations;
+    this.annotations = serialized.annotations;
+    //Check that all capabilities are present
+
+    //Look for annotations that mention capabilities and check that a key is present.
+    //We assume that the capabilities have already been loaded
+    this.checkCapabilitites(this.annotations);
 
     //Life cycle
     // 1 - Create the nodes
@@ -371,22 +409,22 @@ export class Graph {
 
     serialized.nodes.forEach((node) => {
       const factory = lookup[node.type];
-      g.addNode(factory.deserialize({
+      this.addNode(factory.deserialize({
         serialized: node,
-        graph: g,
+        graph: this,
         lookup
       }));
     });
 
-    g.edges = serialized.edges.reduce((acc, edge) => {
+    this.edges = serialized.edges.reduce((acc, edge) => {
       //Don't change the edge
       acc[edge.id] = {
         ...edge,
       };
 
       //Find the source and target nodes and add the edge to them
-      const source = g.nodes[edge.source];
-      const target = g.nodes[edge.target];
+      const source = this.nodes[edge.source];
+      const target = this.nodes[edge.target];
 
       if (!source) {
         throw new Error(`No source node found with id ${edge.source}`);
@@ -415,18 +453,21 @@ export class Graph {
 
       return acc;
     }, {});
-    return g;
+    return this;
   }
 
-  registerCapability(capability: string, factory) {
-
-    this.capabilities[capability] = factory(this);
+  registerCapability(factory: CapabilityFactory) {
+    const value = factory.register(this);
+    this.capabilities[factory.name] = value;
+    //Make it obvious that this capability is present on the serialized graph
+    this.annotations['engine.capabilities.' + factory.name] = factory.version || '0.0.0';
   }
   /**
    * Starts the graph in network mode 
    * TODO Complete
    */
   start = () => {
+    this.annotations[annotatedPlayState] = 'playing';
     this.emit("start", {});
     //Trigger the start of all the nodes
     Object.values(this.nodes).forEach((node) => node.onStart());
@@ -435,17 +476,20 @@ export class Graph {
    * Stops the graph in network mode
    */
   stop = () => {
+    this.annotations[annotatedPlayState] = 'stopped';
     this.emit("stop", {});
     //Trigger the start of all the nodes
     Object.values(this.nodes).forEach((node) => node.onStop());
   }
 
   pause = () => {
+    this.annotations[annotatedPlayState] = 'paused';
     this.emit("pause", {});
     //Trigger the start of all the nodes
     Object.values(this.nodes).forEach((node) => node.onPause());
   }
   resume = () => {
+    this.annotations[annotatedPlayState] = 'playing';
     this.emit("resume", {});
     //Trigger the start of all the nodes
     Object.values(this.nodes).forEach((node) => node.onResume());
@@ -748,6 +792,13 @@ export class Graph {
     (this.listeners[type] || (this.listeners[type] = [])).push(listener);
     return () => {
       this.listeners[type] = this.listeners[type].filter((x) => x !== listener);
+    };
+  }
+
+  onFinalize(type: FinalizerType, listener: FinalizerExecutor) {
+    (this.finalizers[type] || (this.finalizers[type] = [])).push(listener);
+    return () => {
+      this.finalizers[type] = this.finalizers[type].filter((x) => x !== listener);
     };
   }
 }

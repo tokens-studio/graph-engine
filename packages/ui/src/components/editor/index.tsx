@@ -11,9 +11,9 @@ import { useRouter } from 'next/router.js';
 import { useGetEditor } from '@/hooks/useGetEditor.ts';
 import { examples } from '@/examples/examples.tsx';
 import { previewCodeSelector } from '@/redux/selectors/index.ts';
-import { menu, panelItems,nodeTypes } from '../editorMenu/index.tsx';
 import globalState, { GlobalState } from '@/mobx/index.tsx';
 import { observer } from 'mobx-react-lite';
+import { capabilities, menu, panelItems, nodeTypes, icons } from './data.ts';
 
 export const EditorTab = observer(({ ui }: { ui: GlobalState['ui'] }) => {
   const dispatch = useDispatch();
@@ -64,13 +64,15 @@ export const EditorTab = observer(({ ui }: { ui: GlobalState['ui'] }) => {
   return (
     <Box css={{ position: 'relative', width: '100%', height: '100%' }}>
       <Editor
-        id={'editor'}
+
         ref={ref}
         onOutputChange={onEditorOutputChange}
         showMenu
         menuItems={menu}
         panelItems={panelItems}
         nodeTypes = {nodeTypes}
+        capabilities={capabilities}
+        icons={icons}
         emptyContent={<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />}
       ></Editor>
       <ExamplesPicker

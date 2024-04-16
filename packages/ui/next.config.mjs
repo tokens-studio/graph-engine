@@ -1,7 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 /** @type {import('next').NextConfig} */
 
-
 export default {
   swcMinify: true,
   reactStrictMode: true,
@@ -20,7 +19,6 @@ export default {
     unoptimized: true
   },
   webpack: (config, { dev, isServer }) => {
-
 
     config.module.rules.push({
       test: /\.svg$/i,

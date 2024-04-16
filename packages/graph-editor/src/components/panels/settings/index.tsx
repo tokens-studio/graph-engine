@@ -21,6 +21,7 @@ import {
 import { useDispatch } from '@/hooks/useDispatch.ts';
 import { EdgeType, LayoutType } from '@/redux/models/settings.ts';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
+import { contextMenuSelector } from '@/redux/selectors/ui';
 
 const EdgeValues = Object.values(EdgeType);
 const LayoutValues = Object.values(LayoutType);
@@ -31,6 +32,7 @@ export const Settings = () => {
   const obscureDistanceValue = useSelector(obscureDistance);
   const showTimingsValue = useSelector(showTimings);
   const inlineTypesValue = useSelector(inlineTypes);
+  const contextMenus = useSelector(contextMenuSelector);
   const dispatch = useDispatch();
 
   const onObscureDistanceChange = (event) => {
@@ -84,6 +86,22 @@ export const Settings = () => {
               dispatch.settings.setShowTimings(Boolean(checked))
             }
             checked={showTimingsValue}
+          />
+        </Stack>
+        <Stack direction="column" gap={2} justify="between">
+          <Stack direction="row" gap={2} justify="between">
+            <Label>Enable Context Menus</Label>
+            <Tooltip label={'Provides right click context menus'}>
+              <Box>
+                <InfoCircledIcon />
+              </Box>
+            </Tooltip>
+          </Stack>
+          <Checkbox
+            onCheckedChange={(checked) =>
+              dispatch.ui.setContextMenus(Boolean(checked))
+            }
+            checked={contextMenus}
           />
         </Stack>
         <Stack direction="column" gap={2} justify="between">

@@ -6,6 +6,7 @@
     "next-env.d.ts"
   ],
   "exclude": [
+    "src-tauri",
     "node_modules"
   ],
   "ts-node": {

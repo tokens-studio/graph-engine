@@ -8,6 +8,7 @@ import constant from "./constant.js";
 import objectify from "./objectify.js";
 import inline from "./inline.js";
 import note from "./note.js";
+import objectMerge from "./objectMerge.js";
 
 export const nodes = [
   constant,
@@ -19,5 +20,6 @@ export const nodes = [
   arraySubgraph,
   panic,
   inline,
-  note
+  note,
+  objectMerge
 ];

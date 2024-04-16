@@ -95,12 +95,16 @@ const Root = ({ children, open, onOpenChange }: RootProps) => {
   const [isOpen, setOpen] = React.useState(open);
 
   useEffect(() => {
+    console.log('triggering by effect', open)
     if (open === undefined) return;
+
     setOpen(open || false);
   }, [open]);
 
   const onOpenChangeHandler = useCallback(
     (open) => {
+
+      console.log(onOpenChange, open)
       if (onOpenChange) {
         onOpenChange(open);
       } else {

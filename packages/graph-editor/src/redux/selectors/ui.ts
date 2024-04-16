@@ -10,3 +10,8 @@ export const storeNodeInsertPositionSelector = createSelector(
   ui,
   (state) => state.storeNodeInsertPosition,
 );
+
+export const contextMenuSelector = createSelector(
+  ui,
+  (state) => state.contextMenus,
+);

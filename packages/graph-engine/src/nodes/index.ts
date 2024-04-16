@@ -4,12 +4,10 @@ import { nodes as array } from "./array/index.js";
 import { nodes as color } from "./color/index.js";
 import { nodes as curve } from "./curves/index.js";
 import { nodes as css } from "./css/index.js";
-import designTokens from "./designTokens/index.js";
 import { nodes as generic } from "./generic/index.js";
 import { nodes as logic } from "./logic/index.js";
 import { nodes as math } from "./math/index.js";
 import { nodes as series } from "./series/index.js";
-import { nodes as sets } from "./set/index.js";
 import { nodes as string } from "./string/index.js";
 import { nodes as typing } from "./typing/index.js";
 
@@ -18,16 +16,14 @@ import { nodes as typing } from "./typing/index.js";
  */
 export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
   accessibility,
-  array,
+  // array,
   color,
   css,
   curve,
-  designTokens,
   generic,
   logic,
   math,
   series,
-  sets,
   string,
   typing
 );
