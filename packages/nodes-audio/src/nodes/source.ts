@@ -47,7 +47,7 @@ export class AudioSourceNode extends AudioBaseNode {
         const context = this.getAudioCtx();
         const { buffer, loop } = this.getAllInputs<inputs>();
 
-
+        this._values = { buffer, loop };
 
 
         if (!this.audioNode) {
