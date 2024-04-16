@@ -104,7 +104,7 @@ let groups: Record<string, TabGroup> = {
   },
 };
 
-const layoutDataFactory = (props, panelItems, ref): LayoutData => {
+const layoutDataFactory = (props,  ref): LayoutData => {
   return {
     dockbox: {
       mode: 'vertical',
@@ -133,7 +133,7 @@ const layoutDataFactory = (props, panelItems, ref): LayoutData => {
                       group: 'popout',
                       id: 'dropPanel',
                       title: 'Nodes',
-                      content: <DropPanel data={panelItems} />,
+                      content: <DropPanel />,
                     },
                   ],
                 },
@@ -164,7 +164,7 @@ const layoutDataFactory = (props, panelItems, ref): LayoutData => {
                   group: 'graph',
                   title: 'Graph',
                   content: (
-                    <GraphEditor {...props} panelItems={panelItems} ref={ref} />
+                    <GraphEditor {...props} ref={ref} />
                   ),
                 },
               ],

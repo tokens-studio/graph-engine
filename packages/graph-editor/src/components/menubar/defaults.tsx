@@ -17,6 +17,7 @@ import { PlayPanel } from '../panels/play';
 import { LogsPanel } from '../panels/logs';
 import { AnnotationDotsIcon, CpuIcon, RedoIcon, UndoIcon } from '@iconicicons/react';
 import { GraphPanel } from '../panels/graph';
+import { DropPanel } from '../panels/dropPanel';
 
 
 
@@ -260,6 +261,12 @@ export const defaultMenuDataFactory = (): Menu =>
             title: 'Settings',
             icon: <GearIcon />,
             content: <Settings />,
+          }),
+          windowButton({
+            name: 'dropPanel',
+            id: 'dropPanel',
+            title: 'Nodes',
+            content: <DropPanel />,
           }),
 
           new Seperator(),

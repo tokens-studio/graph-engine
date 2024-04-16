@@ -7,6 +7,8 @@ import { NodeEntry } from './NodeEntry.js';
 import { styled } from '@/lib/stitches/stitches.config.js';
 import { observer } from 'mobx-react-lite';
 import { ChevronRightIcon } from '@radix-ui/react-icons';
+import { useSelector } from 'react-redux';
+import { panelItemsSelector } from '@/redux/selectors/registry.js';
 
 const StyledAccordionTrigger = styled(Accordion.Trigger, {
   display: 'flex',
@@ -50,7 +52,13 @@ export interface IDropPanel {
   data: DropPanelStore;
 }
 
-export const DropPanel = observer(({ data }: IDropPanel) => {
+export const DropPanel = () => {
+
+  const data = useSelector(panelItemsSelector);
+  return <DropPanelInner data={data} />;
+}
+
+export const DropPanelInner = observer(({ data }: IDropPanel) => {
   const [search, setSearch] = React.useState('');
   const [defaultValue, setDefaultValue] = React.useState<string[]>([]);
 

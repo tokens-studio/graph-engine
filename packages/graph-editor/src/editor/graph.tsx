@@ -67,7 +67,7 @@ import { deleteNode } from './actions/deleteNode.tsx';
 import { PassthroughNode } from '@/components/flow/nodes/passthroughNode.tsx';
 import { uiNodeType, uiVersion, uiViewport, xpos, ypos } from '@/annotations/index.ts';
 import { connectNodes } from './actions/connect.ts';
-import { capabilitiesSelector, panelItemsState } from '@/redux/selectors/registry.ts';
+import { capabilitiesSelector, panelItemsSelector } from '@/redux/selectors/registry.ts';
 import { contextMenuSelector } from '@/redux/selectors/ui.ts';
 
 const snapGridCoords: SnapGrid = [16, 16];
@@ -93,7 +93,7 @@ const defaultEdgeOptions = {
 export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>(
   (props: GraphEditorProps, ref) => {
 
-    const panelItems = useSelector(panelItemsState);
+    const panelItems = useSelector(panelItemsSelector);
     const { nodeTypes = {}, customNodeUI = {}, children } = props;
 
 
