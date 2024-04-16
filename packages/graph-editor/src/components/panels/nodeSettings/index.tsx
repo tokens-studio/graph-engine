@@ -31,7 +31,7 @@ export function NodeSettingsPanel() {
       css={{ height: '100%', flex: 1, padding: '$3', overflow: 'auto' }}
     >
       <Box css={{ padding: '$3' }}>
-        <NodeSettings selectedNode={selectedNode} />
+        <NodeSettings selectedNode={selectedNode} key={nodeID} />
       </Box>
     </Stack>
   );
