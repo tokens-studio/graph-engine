@@ -1,5 +1,5 @@
 import { Box, Button, Stack, Text } from '@tokens-studio/ui';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { fs } from '../editor/data.ts';
 import { ChevronDownIcon, FileIcon, FolderIcon } from '@iconicicons/react';
 import { styled } from '@/lib/stitches/stitches.config.ts';
@@ -17,46 +17,15 @@ const File = styled(Box, {
     ':hover': {
         backgroundColor: '$bgSubtle'
     }
+});
 
-})
-
-
-export const Directory = ({ files, indent = 0 }: { files: DirectoryProps, indent: number }) => {
-
-    const [isExpanded, setIsExpanded] = React.useState(false);
-
-    //Handle simple file
-    if (files.type === 'file') {
-        return <File>
-            <Stack direction='row' gap={2} css={{ paddingLeft: indent * 10 + 'px' }}>
-                <FileIcon />
-                <Text >{files.name}</Text>
-            </Stack>
-        </File >
+const Dir = styled(Box, {
+    cursor: 'pointer',
+    userSelect: 'none',
+    ':hover': {
+        backgroundColor: '$bgSubtle'
     }
-
-
-
-    return (
-        <Stack direction='column'>
-            <Box onClick={() => setIsExpanded(!isExpanded)} css={{ padding: '$1', cursor: 'pointer' }}>
-                <Stack direction='row' gap={2}>
-                    <ChevronDownIcon style={{ transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)' }} />
-                    <FolderIcon />
-                    <Text>
-                        {files.name}
-                    </Text>
-                </Stack>
-            </Box>
-            <>
-                {isExpanded && files.items.map(x => <Directory files={x} indent={indent + 1} />)}
-            </>
-
-        </Stack>
-    )
-
-}
-
+});
 
 function readFileAsBuffer(file): Promise<Buffer> {
     return new Promise((resolve, reject) => {
@@ -85,22 +54,54 @@ function readFileAsBuffer(file): Promise<Buffer> {
 
 
 
+export const Directory = ({ files, indent = 0 }: { files: DirectoryProps, indent: number }) => {
+
+    const [isExpanded, setIsExpanded] = React.useState(false);
+
+
+    //Handle simple file
+    if (files.type === 'file') {
+        return <File>
+            <Stack direction='row' gap={2} css={{ paddingLeft: indent * 10 + 'px' }}>
+                <FileIcon />
+                <Text >{files.name}</Text>
+            </Stack>
+        </File >
+    }
+
+
+
+    return (
+        <Stack direction='column' css={{ paddingLeft: indent * 10 + 'px' }}>
+            <Dir onClick={() => setIsExpanded(!isExpanded)} css={{ padding: '$1', cursor: 'pointer' }}>
+                <Stack direction='row' gap={2}>
+                    <ChevronDownIcon style={{ transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)' }} />
+                    <Text>
+                        {files.name}
+                    </Text>
+                </Stack>
+            </Dir>
+            <>
+                {isExpanded && files.items.map(x => <Directory files={x} indent={indent + 1} />)}
+            </>
+
+        </Stack>
+    )
+
+}
+
+
 export const FsPanel = () => {
 
     const [_, update] = React.useState<number>(0);
 
     useMemo(() => {
-
         fs.subscribe((action) => {
-
             if (action.method.startsWith('write')) {
                 update(Math.random());
             }
         })
     }, [])
-
-
-
 
     // Read all the items from the files system and convert to directoryProps 
     const items = fs.readdirSync('/', { withFileTypes: true }).map(x => {
@@ -125,28 +126,12 @@ export const FsPanel = () => {
         }
     }) as DirectoryProps[]
 
-    const openFile = () => {
-        const input = document.createElement('input');
-        input.type = 'file';
-        //@ts-ignore
-        input.onchange = async (e: HTMLInputElement) => {
-            //@ts-ignore
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const buffer = await readFileAsBuffer(file);
-            fs.writeFileSync(file.name, buffer);
-        };
-        input.click();
-
-    }
 
 
     return <Box css={{ padding: '$2' }}>
         <Stack direction='column'>
-            {items.map(x => <Directory files={x} indent={0} />)}
+            <Directory files={{ name: '/', type: 'directory', items: items }} indent={0} />
         </Stack>
-        <Button onClick={openFile} >Add file</Button>
     </Box>
 
 };
