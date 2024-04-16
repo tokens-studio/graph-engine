@@ -146,17 +146,21 @@ export const NodeContextMenu = ({
       (acc, node) => {
         const graphNode = graph.getNode(node.id);
 
+
         if (!graphNode) {
           return acc;
         }
         const newID = uuidv4();
         const saved = graphNode.serialize();
-        const newGraphNode = graphNode?.factory.deserialize(
-          {
+
+        const newGraphNode = graphNode?.factory.deserialize({
+          serialized: {
             ...saved,
             id: newID,
           },
-          lookup,
+          graph,
+          lookup
+        }
         );
 
         graph.addNode(newGraphNode);
@@ -181,7 +185,17 @@ export const NodeContextMenu = ({
           })
           .flat();
 
-        const existing = reactFlowInstance.getNodes();
+        //De select the existing node so that we can select the new one
+        const existing = reactFlowInstance.getNodes().map((x) => {
+          if (x.id === node.id) {
+            return {
+              ...x,
+              selected: false,
+            };
+          }
+          return x
+        });
+        node.selected = false;
 
         const newNodes = existing.concat(
           nodes.map((node) => {
@@ -189,6 +203,7 @@ export const NodeContextMenu = ({
             return {
               ...node,
               id: newID,
+              selected: true,
               position: {
                 x: node.position.x + 20,
                 y: node.position.y + 100,
@@ -208,10 +223,9 @@ export const NodeContextMenu = ({
       },
     );
 
-    //We also need to duplicate the existing node in the actual graph
-
-    reactFlowInstance.addNodes(addNodes);
-    reactFlowInstance.addEdges(addEdges);
+    //We need to set the nodes and edges otherwise reactflow will not respect the change to the selected value we used
+    reactFlowInstance.setNodes(addNodes);
+    reactFlowInstance.setEdges(addEdges);
   }, [graph, lookup, nodes, reactFlowInstance]);
 
   return (
