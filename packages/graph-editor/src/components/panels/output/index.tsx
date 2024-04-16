@@ -45,7 +45,7 @@ export function OutputSheet() {
 
         <Box css={{ padding: '$3' }}>
           <Stack width="full" css={{ paddingTop: '$3', paddingBottom: '$3' }}>
-            <PortPanel ports={selectedNode?.outputs} readOnly />
+            <PortPanel ports={selectedNode?.outputs} readOnly key={selectedNode.id} />
           </Stack>
         </Box>
       </Stack>

@@ -55,7 +55,8 @@ export function Inputsheet() {
         <Box css={{ padding: '$3' }}>
           {SpecificInput ? <SpecificInput node={selectedNode} /> : null}
           <Stack width="full" css={{ paddingTop: '$3', paddingBottom: '$3' }}>
-            <PortPanel ports={selectedNode?.inputs} />
+            {/* The purpose of the key is to invalidate the port panel if the selected node changes */}
+            <PortPanel ports={selectedNode?.inputs} key={selectedNode.id} />
           </Stack>
         </Box>
       </Stack>
