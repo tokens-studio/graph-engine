@@ -69,6 +69,7 @@ export const createNode = ({
     const node = new Factory({
       graph: graph,
     });
+    graph.addNode(node);
 
     const finalPos = position || { x: 0, y: 0 }
 
@@ -85,8 +86,6 @@ export const createNode = ({
       node.inputs[name].setValue(value);
     });
 
-    //Add it to the existing graph
-    graph.addNode(node);
     //Update immediately
     graph.update(node.id);
 

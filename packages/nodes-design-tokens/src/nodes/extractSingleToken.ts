@@ -1,47 +1,35 @@
-// import { NodeDefinition, NodeTypes } from "../../types.js";
-// import { SingleToken } from "@tokens-studio/types";
+import { SingleToken } from "@tokens-studio/types";
+import { BooleanSchema, INodeDefinition, Node, StringSchema } from '@tokens-studio/graph-engine'
+import { TokenArraySchema, TokenSchema, TokenSetSchema } from "@/schemas/index.js";
 
-// export const static type = NodeTypes.EXTRACT_SINGLE_TOKEN;
+export default class ExtractTokenNode extends Node {
+    static title = "Extract token ";
+    static type = 'studio.tokens.design.extractToken';
+    static description = "Extracts a token from a token set";
+    constructor(props: INodeDefinition) {
+        super(props);
+        this.addInput("tokens", {
+            type: TokenArraySchema,
+        });
+        this.addInput("name", {
+            type: StringSchema,
+        });
+        this.addOutput('found', {
+            type: BooleanSchema,
+            visible: true,
+        });
+        this.addOutput("token", {
+            type: TokenSchema,
+            visible: true,
+        });
+    }
 
-// /**
-//  * Defines the starting state of the node
-//  */
-// export const defaults = {
-//   name: "",
-//   tokens: [],
-//   enableRegex: false,
-// };
+    async execute() {
+        const { tokens, name } = this.getAllInputs();
 
-// export type MappedInput = {
-//   tokens: SingleToken[];
-//   name: string;
-//   enableRegex: boolean;
-// };
+        const token = tokens.find((token: SingleToken) => token.name === name);
+        this.setOutput("token", token);
+        this.setOutput("found", !!token);
+    }
+}
 
-// export const process = (input, state) => {
-//   const final = {
-//     ...state,
-//     ...input,
-//   };
-
-//   const regex = new RegExp(`${final.name}`);
-//   const index = final.tokens.findIndex((token) =>
-//     final.enableRegex ? token.name.match(regex) : token.name === final.name
-//   );
-//   const token = final.tokens[index];
-//   return {
-//     found: !!token,
-//     token,
-//     index,
-//   };
-// };
-
-// const mapOutput = (input, state, output) => output;
-
-// export const node: NodeDefinition<MappedInput, any> = {
-//   description: "Extracts a single token and returns its values",
-//   type,
-//   defaults,
-//   process,
-//   mapOutput,
-// };

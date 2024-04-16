@@ -8,8 +8,10 @@ import ResolveNode from "./resolve.js";
 import UngroupNode from "./ungroup.js";
 import NameTokensNode from "./name.js";
 import NearestColorNode from "./nearest.js";
+import ExtractTokenNode from "./extractSingleToken.js";
 
 export const nodes = [
+    ExtractTokenNode,
     create,
     InlineTokenNode,
     FlattenNode,

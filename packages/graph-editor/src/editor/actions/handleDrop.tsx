@@ -4,6 +4,8 @@ import JSZip from 'jszip';
 
 import { NodeRequest } from './createNode';
 
+const INLINE_SET = 'studio.tokens.design.inline';
+
 export const handleDrop = async (event): Promise<NodeRequest[]> => {
   let processed: NodeRequest[] = [];
 
@@ -30,8 +32,10 @@ export const handleDrop = async (event): Promise<NodeRequest[]> => {
             const data = await processTokensFile(file);
             return process(
               {
-                type: NodeTypes.INLINE_SET,
-                data,
+                type: INLINE_SET,
+                data: {
+                  value: data.tokens,
+                }
               },
               { x: 30 * i++, y: 30 * i++ },
             );
@@ -61,8 +65,10 @@ export const handleDrop = async (event): Promise<NodeRequest[]> => {
               .map((data) => {
                 return process(
                   {
-                    type: NodeTypes.INLINE_SET,
-                    data,
+                    type: INLINE_SET,
+                    data: {
+                      value: data?.tokens,
+                    }
                   },
                   { x: 10 * i++, y: 10 * i++ },
                 );

@@ -321,6 +321,10 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           graph.annotations[uiVersion] = version;
           return graph.serialize();
         },
+        loadRaw: (serializedGraph) => {
+      
+          graphRef?.current.load(graph.deserialize(serializedGraph, fullNodeLookup));
+        },
         load: (loadedGraph) => {
           //const graph = new Graph();
           //capabilities.forEach(cap => graph.registerCapability(cap));
@@ -374,6 +378,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
             },
           });
           //Execute the graph once to propagate values and update the UI
+
           loadedGraph.execute().catch((e: BatchRunError) => {
             dispatch.graph.appendLog({
               type: 'error',

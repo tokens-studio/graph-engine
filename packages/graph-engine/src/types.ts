@@ -83,18 +83,6 @@ export enum NodeTypes {
   NEAREST_TOKENS = "studio.tokens.color.nearestTokens",
   SET_COLOR_LUMINANCE = "studio.tokens.color.setColorLuminance",
 
-  //Token Sets
-  EXTERNAL_TOKEN_SET = "studio.tokens.tokenSets.external",
-  FLATTEN = "studio.tokens.tokenSets.flatten",
-  ALIAS = "studio.tokens.tokenSets.alias",
-  REMAP = "studio.tokens.tokenSets.remap",
-  INLINE_SET = "studio.tokens.tokenSets.inline",
-  SET = "studio.tokens.tokenSets.external",
-  INVERT_SET = "studio.tokens.tokenSets.invert",
-  GROUP = "studio.tokens.tokenSets.group",
-  UNGROUP = "studio.tokens.tokenSets.ungroup",
-  EXTRACT_SINGLE_TOKEN = "studio.tokens.tokenSets.extractSingleToken",
-  EXTRACT_TOKENS = "studio.tokens.tokenSets.extractTokens",
 
   //Series
   ARITHMETIC_SERIES = "studio.tokens.series.arithmetic",

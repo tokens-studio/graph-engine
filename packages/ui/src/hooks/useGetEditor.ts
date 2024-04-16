@@ -29,7 +29,7 @@ export function useGetEditor() {
         dispatch.ui.setPreviewCode(loadedCode);
       }
 
-      await editor.current.load(file);
+      await editor.current.loadRaw(file);
     }, 0);
     return Promise.resolve();
     

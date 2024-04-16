@@ -123,7 +123,7 @@ export const defaultMenuDataFactory = (): Menu =>
                     const data = JSON.parse(text);
 
                     //TODO open a new tab
-                    graphRef.current.load(data);
+                    graphRef.current.loadRaw(data);
                   };
                   reader.readAsText(file);
                 };

@@ -16,7 +16,7 @@ import { nodes as typing } from "./typing/index.js";
  */
 export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
   accessibility,
-  // array,
+  array,
   color,
   css,
   curve,

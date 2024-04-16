@@ -18,6 +18,8 @@ const tinyCoreLightFlattened = flatten(tinyCoreLight);
 //@ts-ignore
 const tinyCoreDarkFlattened = flatten(tinyCoreDark);
 
+const INLINE_SET = 'studio.tokens.design.inline';
+
 export interface IPanelItem {
   type: string;
   icon: string | JSX.Element;
@@ -166,7 +168,7 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
       key: 'basic',
       items: [
         new PanelItem({
-          type: NodeTypes.INLINE_SET,
+          type: INLINE_SET,
           data: {
             value: tinyCoreFlattened,
             title: 'Tiny Core',
@@ -175,7 +177,7 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
           text: 'Tiny Core',
         }),
         new PanelItem({
-          type: NodeTypes.INLINE_SET,
+          type: INLINE_SET,
           data: {
             value: tinyCoreLightFlattened,
             title: 'Tiny Light',
@@ -184,7 +186,7 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
           text: 'Tiny Light',
         }),
         new PanelItem({
-          type: NodeTypes.INLINE_SET,
+          type: INLINE_SET,
           data: {
             value: tinyCoreDarkFlattened,
             title: 'Tiny Dark',
@@ -193,7 +195,7 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
           text: 'Tiny Dark',
         }),
         new PanelItem({
-          type: NodeTypes.INLINE_SET,
+          type: INLINE_SET,
           data: {
             value: presetFlattened,
             title: 'Preset tokens',

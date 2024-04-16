@@ -92,6 +92,7 @@ export type ImperativeEditorRef = {
   clear: () => void;
   save: () => SerializedGraph;
   load: (state: Graph) => void;
+  loadRaw: (state: SerializedGraph) => void;
   getFlow: () => ReactFlowInstance;
 };
 
