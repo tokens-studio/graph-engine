@@ -1,5 +1,5 @@
 import { INodeDefinition, ToInput, Node, StringSchema, BooleanSchema, NumberSchema } from "@tokens-studio/graph-engine";
-import { BufferSchema, ContextSchema, NodeSchema } from "../schemas/index.js";
+import { AudioBufferSchema, ContextSchema, NodeSchema } from "../schemas/index.js";
 import { AudioBaseNode } from "./base.js";
 
 
@@ -40,7 +40,7 @@ export class AudioWhiteNoiseNode extends AudioBaseNode {
             visible: true
         });
         this.addOutput("buffer", {
-            type: BufferSchema,
+            type: AudioBufferSchema,
             visible: true,
         });
     }

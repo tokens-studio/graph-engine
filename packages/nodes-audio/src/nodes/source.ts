@@ -1,5 +1,5 @@
 import { INodeDefinition, ToInput, BooleanSchema } from "@tokens-studio/graph-engine";
-import { BufferSchema, NodeSchema } from "../schemas/index.js";
+import { AudioBufferSchema, NodeSchema } from "../schemas/index.js";
 import { AudioBaseNode } from "./base.js";
 
 
@@ -27,7 +27,7 @@ export class AudioSourceNode extends AudioBaseNode {
         super(props);
 
         this.addInput("buffer", {
-            type: BufferSchema,
+            type: AudioBufferSchema,
             visible: true
         });
         this.addInput("loop", {
