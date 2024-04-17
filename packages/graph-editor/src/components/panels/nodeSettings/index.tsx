@@ -18,7 +18,7 @@ import { description, title } from '@/annotations';
 export function NodeSettingsPanel() {
   const graph = useGraph();
   const nodeID = useSelector(currentNode);
-  const selectedNode = useMemo(() => graph.getNode(nodeID), [graph, nodeID]);
+  const selectedNode = useMemo(() => graph?.getNode(nodeID), [graph, nodeID]);
 
   if (!selectedNode) {
     return <></>;

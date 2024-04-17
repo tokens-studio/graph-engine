@@ -18,7 +18,7 @@ const padding = 25;
 function GroupNode(props: NodeProps) {
   const { id, data } = props;
   const store = useStoreApi();
-  const { deleteElements, setNodes } = useReactFlow();
+  const { deleteElements } = useReactFlow();
   const detachNodes = useDetachNodes();
   const { minWidth, minHeight, hasChildNodes } = useStore((store) => {
     const childNodes = Array.from(store.nodeInternals.values()).filter(

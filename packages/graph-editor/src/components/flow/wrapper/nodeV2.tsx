@@ -6,12 +6,11 @@ import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Handle, HandleContainer } from '../handles.tsx';
 import { Input, Port } from '@tokens-studio/graph-engine';
 import colors from '@/tokens/colors.ts';
-
-import { useGraph } from '@/hooks/useGraph.ts';
 import { useSelector } from 'react-redux';
 import { inlineTypes, showTimings } from '@/redux/selectors/settings.ts';
 import { icons, nodeSpecifics } from '@/redux/selectors/registry.ts';
 import { title } from '@/annotations/index.ts';
+import { useLocalGraph } from '@/context/graph.tsx';
 
 export type UiNodeDefinition = {
   //Name of the Node
@@ -35,7 +34,7 @@ export type WrappedNodeDefinition = {
  */
 export const NodeV2 = (args) => {
   const { id } = args;
-  const graph = useGraph();
+  const graph = useLocalGraph();
   const node = graph.getNode(id);
 
   if (!node) {

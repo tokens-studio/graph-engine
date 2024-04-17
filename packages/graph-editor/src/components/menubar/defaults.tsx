@@ -3,7 +3,7 @@ import { Menu, MenuItem, Seperator, SubMenu } from './data';
 import React, { MutableRefObject, useCallback } from 'react';
 import { MenuItemElement } from './menuItem';
 import { useSelector } from 'react-redux';
-import { dockerSelector, graphEditorSelector } from '@/redux/selectors/refs';
+import { dockerSelector } from '@/redux/selectors/refs';
 import DockLayout, { TabData } from 'rc-dock';
 import { OutputSheet } from '../panels/output';
 import { Legend } from '../panels/legend';
@@ -18,6 +18,7 @@ import { LogsPanel } from '../panels/logs';
 import { AnnotationDotsIcon, CpuIcon, RedoIcon, UndoIcon } from '@iconicicons/react';
 import { GraphPanel } from '../panels/graph';
 import { DropPanel } from '../panels/dropPanel';
+import { graphEditorSelector } from '@/redux/selectors/graph';
 
 
 
@@ -106,6 +107,9 @@ export const defaultMenuDataFactory = (): Menu =>
           new MenuItem({
             name: 'load',
             render: function FileLoad(rest) {
+
+
+
               const graphRef = useSelector(
                 graphEditorSelector,
               ) as MutableRefObject<ImperativeEditorRef>;

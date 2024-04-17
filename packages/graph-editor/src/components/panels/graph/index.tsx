@@ -1,10 +1,8 @@
 import React, { } from 'react';
 import {
     Box,
-    DropdownMenu,
     Label,
     Stack,
-    Text,
     TextInput,
 } from '@tokens-studio/ui';
 
@@ -14,6 +12,10 @@ import { description, title } from '@/annotations';
 
 export function GraphPanel() {
     const graph = useGraph();
+
+    if (!graph){
+        return <></>
+    }
 
     return (
         <Stack

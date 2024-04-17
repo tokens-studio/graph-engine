@@ -1,7 +1,7 @@
 import React from 'react';
 import { BezierIcon } from '@/components/icons/BezierIcon.tsx';
 import { ColorWheelIcon } from '@radix-ui/react-icons';
-import { COLOR, CURVE, TOKEN, TOKEN_SET } from '@tokens-studio/graph-engine';
+import { COLOR, CURVE} from '@tokens-studio/graph-engine';
 
 /**
  * Default icons for the graph editor

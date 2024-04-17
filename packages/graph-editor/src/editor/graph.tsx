@@ -39,12 +39,13 @@ import React, {
   useImperativeHandle,
   useMemo,
   useRef,
+  useState,
 } from 'react';
 import ReactFlow from 'reactflow';
 import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.js';
 import groupNode from '../components/flow/nodes/groupNode.js';
 import noteNode from '../components/flow/nodes/noteNode.js';
-import { EditorProps, GraphEditorProps, ImperativeEditorRef } from './editorTypes.ts';
+import { GraphEditorProps, ImperativeEditorRef } from './editorTypes.ts';
 import { Box } from '@tokens-studio/ui';
 import { BatchRunError, Graph, NodeFactory, NodeTypes, nodeLookup } from '@tokens-studio/graph-engine';
 import { useContextMenu } from 'react-contexify';
@@ -56,10 +57,7 @@ import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '@/redux/selectors/settings.ts';
 import { NodeV2 } from '@/components/index.ts';
 import { CommandMenu } from '@/components/commandPalette/index.js';
-import { useGraph } from '@/hooks/useGraph.ts';
 import { clear } from './actions/clear.ts';
-import { useRegisterRef } from '@/hooks/useRegisterRef.ts';
-import { graphEditorSelector } from '@/redux/selectors/refs.ts';
 import { copyNodeAction } from './actions/copyNodes.tsx';
 import { selectNode } from './actions/selectNode.tsx';
 import { deleteNode } from './actions/deleteNode.tsx';
@@ -68,6 +66,7 @@ import { uiNodeType, uiVersion, uiViewport, xpos, ypos } from '@/annotations/ind
 import { connectNodes } from './actions/connect.ts';
 import { capabilitiesSelector, panelItemsSelector } from '@/redux/selectors/registry.ts';
 import { contextMenuSelector } from '@/redux/selectors/ui.ts';
+import { GraphContextProvider } from '@/context/graph.tsx';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -93,7 +92,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
   (props: GraphEditorProps, ref) => {
 
     const panelItems = useSelector(panelItemsSelector);
-    const { nodeTypes = {}, customNodeUI = {}, children } = props;
+    const { id, nodeTypes = {}, customNodeUI = {}, children } = props;
 
 
     const fullNodeLookup = useMemo(() => {
@@ -103,10 +102,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
       } as unknown as Record<string, NodeFactory>;
     }, [nodeTypes]);
 
-    const registerRef = useRegisterRef('graphEditor');
-    const graphRef = useSelector(
-      graphEditorSelector,
-    ) as MutableRefObject<ImperativeEditorRef>;
 
     const capabilities = useSelector(capabilitiesSelector);
     const contextMenus = useSelector(contextMenuSelector);
@@ -115,9 +110,22 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     const dispatch = useDispatch();
     const { getIntersectingNodes } = reactFlowInstance;
     const store = useStoreApi();
-    const graph = useGraph();
+
+    const initialGraph = useMemo(() => new Graph(), []);
+
+    const [graph, setTheGraph] = useState(initialGraph);
+
     const showGridValue = useSelector(showGrid);
     const snapGridValue = useSelector(snapGrid);
+    const internalRef = useRef<ImperativeEditorRef>(null);
+
+    const refProxy = useCallback((v) => {
+      //@ts-ignore
+      ref(v);
+      //@ts-ignore
+      internalRef.current = v;
+      dispatch.graph.registerPanel({ id, panel: { graph, ref: v } });
+    }, [dispatch.graph, graph, id, ref])
 
     //Attach sideeffect listeners
     useMemo(() => {
@@ -308,8 +316,9 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
       [reactFlowInstance, graph, fullNodeLookup, customNodeMap, dropPanelPosition, dispatch],
     );
 
+
     useImperativeHandle(
-      graphRef,
+      refProxy,
       () => ({
         clear: () => {
           clear(reactFlowInstance, graph);
@@ -321,11 +330,11 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           return graph.serialize();
         },
         loadRaw: (serializedGraph) => {
-      
-          graphRef?.current.load(graph.deserialize(serializedGraph, fullNodeLookup));
+          if (internalRef.current) {
+            internalRef?.current.load(graph.deserialize(serializedGraph, fullNodeLookup));
+          }
         },
-        load: (loadedGraph) => {
-          //const graph = new Graph();
+        load: (loadedGraph: Graph) => {
           //capabilities.forEach(cap => graph.registerCapability(cap));
           //const loadedGraph = graph.deserialize(serializedGraph, fullNodeLookup);
           //Read the annotaions 
@@ -335,9 +344,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           if (viewport) {
             reactFlowInstance.setViewport(viewport);
           }
-          //Set the graph
-          dispatch.graph.setGraph(loadedGraph);
-
+          let offset = -400;
           const nodes = Object.entries(loadedGraph.nodes).map(([id, node]) => {
             //Generate the react flow nodes
             return {
@@ -345,7 +352,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
               type: node.annotations[uiNodeType] || 'GenericNode',
               data: {},
               position: {
-                x: node.annotations[xpos] || 0,
+                x: node.annotations[xpos] || (offset += 400),
                 y: node.annotations[ypos] || 0,
               },
             } as Node;
@@ -390,12 +397,14 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
             });
           });
 
+          setTheGraph(loadedGraph);
+
         },
         getFlow: () => reactFlowInstance,
       }),
-      [reactFlowInstance, graph, capabilities, fullNodeLookup, dispatch.graph, setNodes, setEdges],
+      [reactFlowInstance, capabilities, fullNodeLookup, dispatch.graph, graph, setNodes, setEdges],
     );
-
+    0
     const onConnect = useMemo(
       () => connectNodes({ graph, setEdges, dispatch }),
       [dispatch, graph, setEdges],
@@ -595,10 +604,9 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     );
     const nodeCount = nodes.length;
     return (
-      <>
+      <GraphContextProvider graph={graph}>
         <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
           <Box
-            ref={registerRef}
             className="editor"
             css={{
               height: '100%',
@@ -677,7 +685,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
         />
         <EdgeContextMenu id={props.id + '_edge'} edge={contextEdge} />
         {children}
-      </>
+      </GraphContextProvider>
     );
   },
 );

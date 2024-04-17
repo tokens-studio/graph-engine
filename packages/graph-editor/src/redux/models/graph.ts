@@ -3,6 +3,7 @@ import { createModel } from '@rematch/core';
 import { Graph, annotatedPlayState } from '@tokens-studio/graph-engine';
 import { ReactFlowInstance } from 'reactflow';
 import type { CapabilityFactory, PlayState } from '@tokens-studio/graph-engine';
+import { ImperativeEditorRef } from '@/editor/editorTypes.ts';
 
 export interface ILog {
   data: Record<string, any>;
@@ -10,26 +11,48 @@ export interface ILog {
   type: 'info' | 'error' | 'warning';
 }
 
+export interface IPanel {
+  graph: Graph;
+  ref: React.RefObject<ImperativeEditorRef>;
+}
+
 export interface GraphState {
   graph: Graph;
   currentNode: string;
-  flow: Record<string, ReactFlowInstance>;
   logs: ILog[];
   graphPlayState: PlayState;
-
+  currentPanelId: string;
+  currentPanel: IPanel | null;
+  panels: Record<string, IPanel>;
 }
 
 export const graphState = createModel<RootModel>()({
   state: {
-    flow: {},
     currentNode: '',
     graph: new Graph(),
     graphPlayState: 'stopped',
-
+    panels: {},
+    currentPanelId: 'graph1',
+    currentPanel: null,
     logs: [],
   } as GraphState,
   reducers: {
-
+    setCurrentPanel(state, id: string) {
+      return {
+        ...state,
+        currentPanel: state.panels[id] || null,
+      }
+    },
+    registerPanel(state, payload: { id: string, panel: IPanel }) {
+      return {
+        ...state,
+        currentPanel: payload.id == state.currentPanelId ? payload.panel : state.currentPanel,
+        panels: {
+          ...state.panels,
+          [payload.id]: payload.panel,
+        },
+      };
+    },
     setCurrentNode(state, payload: string) {
       return {
         ...state,
@@ -45,22 +68,12 @@ export const graphState = createModel<RootModel>()({
       }
       return state;
     },
-    registerFlow(state, payload: { key: string; value: ReactFlowInstance }) {
-      return {
-        ...state,
-        flow: {
-          ...state.flow,
-          [payload.key]: payload.value,
-        },
-      };
-    },
     appendLog(state, payload: ILog) {
       return {
         ...state,
         logs: [...state.logs, payload],
       };
     },
-
     startGraph(state) {
       state.graph.start();
       return {

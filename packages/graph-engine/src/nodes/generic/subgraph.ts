@@ -35,10 +35,49 @@ export default class SubgraphNode extends Node {
     this._innerGraph.addNode(input);
     this._innerGraph.addNode(output);
 
+
     this.addOutput("value", {
       type: AnySchema,
-      visible: false,
+      visible: true,
     });
+
+    autorun(() => {
+
+      console.log('autorun trigggered')
+
+      //Get the existing inputs 
+      const existing = this.inputs;
+
+      //Iterate through the inputs of the input node in the inner graph
+      Object.entries(input.inputs).map(([key, value]) => {
+
+        //If the key doesn't exist in the existing inputs, add it
+        if (!existing[key]) {
+          //Always add it as visible
+          this.addInput(key, {
+            type: value.type,
+            visible: true,
+          });
+          this.inputs[key].setValue(value.value, {
+            noPropagate: true
+          });
+        } else {
+          //Update the value 
+          this.inputs[key].setValue(value.value, {
+            noPropagate: true
+          });
+        }
+        //TODO handle deletions and mutations
+      });
+
+      //Handle updates from the inner graph
+      this.setOutput("value", output.outputs.value.value, output.outputs.value.type);
+    });
+
+
+
+
+
   }
 
   override serialize(): SerializedSubgraphNode {
@@ -58,7 +97,21 @@ export default class SubgraphNode extends Node {
   }
 
   async execute() {
-    const result = await this._innerGraph.execute();
+
+    const inputs = Object.keys(this.inputs).reduce((acc, key) => {
+      this.getRawInput(key);
+      //Todo improve this for typing 
+      acc[key] = this.getRawInput(key);
+      return acc;
+    }, {});
+
+
+    const result = await this._innerGraph.execute({
+      inputs
+    });
+
+    console.log(this._innerGraph.edges )
+    console.log(result)
     this.setOutput("value", result.output?.value, result.output?.type);
   }
 }

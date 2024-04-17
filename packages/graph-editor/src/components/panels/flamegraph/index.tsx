@@ -24,6 +24,10 @@ export const FlameGraph = () => {
   });
 
   const getData = useCallback(async () => {
+    if (!graph) {
+      return
+    }
+
     const res = await graph.execute({ stats: true });
     const calculated = convertToFlameGraph(graph, res);
     setData(calculated);

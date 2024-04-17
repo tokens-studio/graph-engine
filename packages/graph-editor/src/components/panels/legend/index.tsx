@@ -60,7 +60,6 @@ export const Legend = () => {
     >
       <Stack direction="column" gap={4} width="full">
         <Heading size="small">Primitive</Heading>
-
         {colors}
         <Heading size="small">Complex</Heading>
         {iconsElements}

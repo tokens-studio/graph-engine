@@ -4,13 +4,13 @@ import { Box, Stack, Text, Textarea } from '@tokens-studio/ui';
 import { useDispatch } from '@/hooks';
 import { observer } from 'mobx-react-lite';
 import { description, title } from '@/annotations';
-import { useGraph } from '@/hooks/useGraph';
 import { Node } from '@tokens-studio/graph-engine';
+import { useLocalGraph } from '@/context/graph';
 
 const minWidth = 120;
 function NoteNode(props: NodeProps) {
   const { id, } = props;
-  const graph = useGraph();
+  const graph = useLocalGraph();
   const node = graph.getNode(id);
 
   if (!node) {

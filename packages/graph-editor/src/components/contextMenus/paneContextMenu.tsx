@@ -7,22 +7,22 @@ import { showGrid, snapGrid } from '@/redux/selectors/settings';
 import { useDispatch } from '@/hooks';
 import { ContextMenuItem } from './ContextMenuStyles';
 import { clear } from '../../editor/actions/clear';
-import { useGraph } from '@/hooks/useGraph';
 
 import { v4 as uuidv4, v4 } from 'uuid';
 import { NodeTypes } from '@/components/flow/types';
+import { useLocalGraph } from '@/context/graph';
 
 export interface IPaneContextMenu {
   id: string;
   onSelectItem: (item: any) => void;
 }
 
-export const PaneContextMenu = ({ id, onSelectItem }: IPaneContextMenu) => {
+export const PaneContextMenu = ({ id }: IPaneContextMenu) => {
   const reactFlowInstance = useReactFlow();
   const showGridValue = useSelector(showGrid);
   const snapGridValue = useSelector(snapGrid);
   const dispatch = useDispatch();
-  const graph = useGraph();
+  const graph = useLocalGraph();
 
   const handleTriggerAddNode = useCallback(
     (e) => {

@@ -10,7 +10,7 @@ import { InfoCircledIcon } from '@radix-ui/react-icons';
 export function OutputSheet() {
   const graph = useGraph();
   const nodeID = useSelector(currentNode);
-  const selectedNode = useMemo(() => graph.getNode(nodeID), [graph, nodeID]);
+  const selectedNode = useMemo(() => graph?.getNode(nodeID), [graph, nodeID]);
 
   if (!selectedNode) {
     return <></>;
