@@ -1,19 +1,15 @@
 @import url('reactflow/dist/style.css');
 
 .react-flow__node {
-    position: absolute;
-    -webkit-user-select: none;
-    -moz-user-select: none;
+    position: default;
     user-select: none;
     pointer-events: all;
-    transform-origin: 0 0;
     box-sizing: content-box;
     padding: 0;
-    cursor: -webkit-grab;
     cursor: grab;
     background: transparent;
     width: initial;
-    border-radius: var(--radii-medium);
+    border-radius: var(--radii-small, 4px);
     background: var(--colors-bgDefault);
     box-shadow: var(--shadows-small);
     outline: 2px solid transparent;
@@ -54,11 +50,13 @@
 }
 
 .react-flow__handle-right {
-    right: -1.3em;
+    transform: unset;
+    margin-right: 
 }
 
 .react-flow__handle-left {
-    left: -1.3em;
+    transform: unset;
+    margin-left: unset;
 }
 
 .react-flow__edge-path,

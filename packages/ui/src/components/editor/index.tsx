@@ -63,7 +63,7 @@ export const EditorTab = observer(({ ui }: { ui: GlobalState['ui'] }) => {
 
   return (
     <Box css={{ position: 'relative', width: '100%', height: '100%' }}>
-      <Editor
+        <Editor
 
         ref={ref}
         onOutputChange={onEditorOutputChange}

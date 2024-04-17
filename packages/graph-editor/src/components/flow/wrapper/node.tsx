@@ -6,14 +6,7 @@ import {
   Stack,
   Text,
 } from '@tokens-studio/ui';
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  DoubleArrowLeftIcon,
-  DoubleArrowRightIcon,
-  ResetIcon,
-  TrashIcon,
-} from '@radix-ui/react-icons';
+import { MoreVert } from 'iconoir-react';
 import { HandleContainerContext } from '../handles.tsx';
 import {
   NodeToolbar,
@@ -115,8 +108,8 @@ export const Collapser = ({ children, collapsed }) => {
       <Box
         css={{
           position: 'relative',
-          padding: '$3',
-          paddingBottom: '$5',
+          padding: '$2',
+          paddingBottom: '$3',
         }}
       >
         {children}
@@ -148,109 +141,12 @@ export const Node = (props: NodeProps) => {
   const dispatch = useDispatch();
   const node = flow.getNode(id);
 
-  const isCollapsed = node?.data.collapsed || false;
-  const [collapsed, updateCollapsed] = useState(isCollapsed);
-
-  const detachNodes = useDetachNodes();
-  const hasParent = useStore(
-    (store) => !!store.nodeInternals.get(id)?.parentNode,
-  );
-
-  const setCollapsed = useCallback(
-    (collapsed) => {
-      if (!node) {
-        return;
-      }
-      node.data.collapsed = collapsed;
-      updateCollapsed(collapsed);
-    },
-    [node],
-  );
-
-  const onDelete = useCallback(() => {
-    flow.deleteElements({ nodes: [{ id }] });
-  }, [id, flow]);
-
-  const onTraceDown = useCallback(() => {
-    const graph = convertToGraph(flow);
-    const nodes = createNodeLookup(findAllDownstream(id, graph).concat([id]));
-    applyFilters(flow, nodes);
-  }, [id, flow]);
-
-  const onTraceSource = useCallback(() => {
-    const graph = convertToGraph(flow);
-    const nodes = createNodeLookup(findAllUpstream(id, graph).concat([id]));
-    applyFilters(flow, nodes);
-  }, [id, flow]);
-
-  const onResetTrace = useCallback(() => {
-    flow.setNodes((nodes) =>
-      nodes.map((x) => {
-        //Remove filtering
-        return {
-          ...x,
-          className: classNames(x.className, {
-            filtered: false,
-          }),
-        };
-      }),
-    );
-  }, [flow]);
-
-  const onDetach = () => detachNodes([id]);
-
   const onClick = useCallback(() => {
     dispatch.graph.setCurrentNode(id);
   }, [dispatch.graph, id]);
 
   return (
     <NodeWrapper error={Boolean(error)} className={error ? 'error' : ''}>
-      <NodeToolbar className="nodrag">
-        <Stack
-          direction="row"
-          gap={0}
-          css={{
-            padding: '$1',
-            backgroundColor: '$bgDefault',
-            borderRadius: '$medium',
-            border: '1px solid $borderSubtle',
-            boxShadow: '$small',
-          }}
-        >
-          {hasParent && <Button onClick={onDetach}>Detach</Button>}
-          <IconButton
-            tooltip="Trace upstream"
-            tooltipSide="top"
-            icon={<DoubleArrowLeftIcon />}
-            onClick={onTraceSource}
-            variant="invisible"
-          />
-          <IconButton
-            tooltip="Delete"
-            tooltipSide="top"
-            icon={<TrashIcon />}
-            onClick={onDelete}
-            variant="invisible"
-          />
-
-          <IconButton
-            tooltip="Trace upstream"
-            tooltipSide="top"
-            icon={<DoubleArrowRightIcon />}
-            onClick={onTraceDown}
-            variant="invisible"
-          />
-          <IconButton
-            tooltip="Reset trace"
-            tooltipSide="top"
-            icon={<ResetIcon />}
-            onClick={onResetTrace}
-            variant="invisible"
-          />
-        </Stack>
-      </NodeToolbar>
-      <HandleContainerContext.Provider value={{ collapsed }}>
-        <FocusTrap>
           <Stack
             css={{ maxWidth: 500 }}
             direction="column"
@@ -265,15 +161,12 @@ export const Node = (props: NodeProps) => {
                   justify="between"
                   align="center"
                   css={{
-                    padding: '$3 $5',
-                    borderBottom: collapsed
-                      ? 'none'
-                      : '2px solid var(--nodeBorderColor, var(--colors-borderSubtle))',
-                    backgroundColor:
-                      'var(--nodeBgColor, var(--colors-bgSubtle))',
+                    padding: '$3',
+                    borderBottom: '2px solid var(--nodeBorderColor, var(--colors-borderSubtle))',
+                    backgroundColor: 'var(--nodeBgColor, var(--colors-bgSubtle))',
                     borderRadius: '$medium',
-                    borderBottomLeftRadius: collapsed ? '$medium' : 0,
-                    borderBottomRightRadius: collapsed ? '$medium' : 0,
+                    borderBottomLeftRadius: 0,
+                    borderBottomRightRadius: 0,
                   }}
                 >
                   <Stack direction="row" gap={2} align="center">
@@ -302,23 +195,12 @@ export const Node = (props: NodeProps) => {
                   </Stack>
                   <Stack direction="row" gap={2}>
                     {controls}
-                    <IconButton
-                      variant="invisible"
-                      size="small"
-                      title="Collapse"
-                      icon={collapsed ? <ChevronUpIcon /> : <ChevronDownIcon />}
-                      onClick={() => setCollapsed(!collapsed)}
-                    />
                   </Stack>
                 </Stack>
               </>
             )}
-            <Collapser id={id} collapsed={collapsed} icon={icon}>
-              {children}
-            </Collapser>
+            {children}
           </Stack>
-        </FocusTrap>
-      </HandleContainerContext.Provider>
     </NodeWrapper>
   );
 };
