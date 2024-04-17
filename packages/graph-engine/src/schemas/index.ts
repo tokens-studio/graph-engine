@@ -213,6 +213,18 @@ export const Vec3Schema: SchemaObject = {
   default: [0, 0, 0],
 };
 
+export const BUFFER = "https://schemas.tokens.studio/buffer.json";
+export const BufferSchema: SchemaObject = {
+  $id: BUFFER,
+  title: "Buffer",
+  type: "object",
+  default: null,
+  //Listing all the properties of a buffer is not practical
+  properties: {
+  },
+}
+
+
 /**
  * Checks whether a schema can be converted to another schema
  * @param src

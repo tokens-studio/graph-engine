@@ -23,9 +23,9 @@ export const SourceSchema: SchemaObject = {
 };
 
 
-export const BUFFER = "https://schemas.tokens.studio/fs/buffer.json";
-export const BufferSchema: SchemaObject = {
-    $id: BUFFER,
+export const AUDIO_BUFFER = "https://schemas.tokens.studio/fs/buffer.json";
+export const AudioBufferSchema: SchemaObject = {
+    $id: AUDIO_BUFFER,
     title: "Buffer",
     type: "object",
     default: null

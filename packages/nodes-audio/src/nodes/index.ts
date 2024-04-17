@@ -5,6 +5,7 @@ import { AudioConnectNode } from "./connect.js";
 import { AudioDelayNode } from "./delay.js";
 import { AudioSourceNode } from "./source.js";
 import { AudioWhiteNoiseNode } from "./whiteNoise.js";
+import { AudioLoadBufferNode } from "./loadBuffer.js";
 
 
 
@@ -16,6 +17,7 @@ export const nodeLookup = {
     [AudioDelayNode.type]: AudioDelayNode,
     [AudioSourceNode.type]: AudioSourceNode,
     [AudioWhiteNoiseNode.type]: AudioWhiteNoiseNode,
+    [AudioLoadBufferNode.type]: AudioLoadBufferNode
 }
 
 export { AudioGainNode } from "./gain.js";
@@ -25,3 +27,4 @@ export { AudioConnectNode } from "./connect.js";
 export { AudioDelayNode } from "./delay.js";
 export { AudioSourceNode } from "./source.js";
 export { AudioWhiteNoiseNode } from "./whiteNoise.js";
+export { AudioLoadBufferNode } from "./loadBuffer.js";

@@ -36,7 +36,9 @@
   },
   "sideEffects": false,
   "types": "./dist/esm/index.d.ts",
-  "dependencies": {},
+  "dependencies": {
+    "audio-buffer-from": "^1.1.1"
+  },
   "peerDependencies": {
     "@tokens-studio/graph-engine": "*",
     "react": "^18.2.0"
