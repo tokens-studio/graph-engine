@@ -1,6 +1,7 @@
 import { NodeTypes } from "@/types.js";
-import { AnyArraySchema } from "@/schemas/index.js";
+import { AnyArraySchema, NumberSchema } from "@/schemas/index.js";
 import SubgraphNode from "./subgraph";
+import { hideFromParentSubgraph } from "@/annotations";
 
 export default class ArraySubgraph extends SubgraphNode {
   static title = "Array Map";
@@ -10,10 +11,37 @@ export default class ArraySubgraph extends SubgraphNode {
   constructor(props) {
     super(props);
 
+
+    //Create the hardcoded input values in the innergraph
+    const input = Object.values(this._innerGraph.nodes).find((x) => x.factory.type === NodeTypes.INPUT);
+
+    if (!input) throw new Error("No input node found in subgraph");
+
+    input.addInput("value", {
+      type: AnyArraySchema,
+      visible: false,
+      annotations: {
+        "ui.editable": false,
+        [hideFromParentSubgraph]: true
+      }
+    });
+
+    //Do not allow these to be edited 
+    input.addInput("index", {
+      type: NumberSchema,
+      visible: false,
+      annotations: {
+        "ui.editable": false,
+        [hideFromParentSubgraph]: true
+      }
+    });
+
+
     this.addInput("array", {
       type: AnyArraySchema,
       visible: true,
     });
+    this.inputs["array"].annotations["ui.editable"] = false
   }
 
   async execute() {

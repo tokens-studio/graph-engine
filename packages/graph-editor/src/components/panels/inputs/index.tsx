@@ -21,6 +21,9 @@ export function Inputsheet() {
     return inputControlRegistry[selectedNode?.factory?.type];
   }, [inputControlRegistry, selectedNode]);
 
+
+  console.log('input',selectedNode,graph)
+
   if (!selectedNode) {
     return <></>;
   }

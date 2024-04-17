@@ -12,3 +12,8 @@ export const annotatedVariadicIndex = 'engine.index';
 export const annotatedPlayState = 'engine.playState';
 
 export const annotatedCapabilityPrefix = 'engine.capability.';
+
+/**
+ * Hides a property from being exposed to the parent in the subgraph
+ */
+export const hideFromParentSubgraph = 'engine.hideFromParentSubgraph';

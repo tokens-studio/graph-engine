@@ -17,7 +17,7 @@ export interface IPanel {
 }
 
 export interface GraphState {
-  graph: Graph;
+  graph: Graph | undefined;
   currentNode: string;
   logs: ILog[];
   graphPlayState: PlayState;
@@ -29,7 +29,7 @@ export interface GraphState {
 export const graphState = createModel<RootModel>()({
   state: {
     currentNode: '',
-    graph: new Graph(),
+    graph: undefined,
     graphPlayState: 'stopped',
     panels: {},
     currentPanelId: 'graph1',
@@ -38,20 +38,30 @@ export const graphState = createModel<RootModel>()({
   } as GraphState,
   reducers: {
     setCurrentPanel(state, id: string) {
+
+      const currentPanel = state.panels[id] || null;
       return {
         ...state,
-        currentPanel: state.panels[id] || null,
+        currentPanelId: id,
+        currentPanel,
+        graph: currentPanel?.graph
       }
+
     },
     registerPanel(state, payload: { id: string, panel: IPanel }) {
-      return {
+
+      const currentPanel = payload.id == state.currentPanelId ? payload.panel : state.currentPanel;
+
+      const newState=  {
         ...state,
-        currentPanel: payload.id == state.currentPanelId ? payload.panel : state.currentPanel,
+        currentPanel: currentPanel,
+        graph: currentPanel?.graph,
         panels: {
           ...state.panels,
           [payload.id]: payload.panel,
         },
       };
+      return newState
     },
     setCurrentNode(state, payload: string) {
       return {
@@ -75,31 +85,31 @@ export const graphState = createModel<RootModel>()({
       };
     },
     startGraph(state) {
-      state.graph.start();
+      state.graph?.start();
       return {
         ...state,
-        graphPlayState: state.graph.annotations[annotatedPlayState]
+        graphPlayState: state.graph?.annotations[annotatedPlayState]
       };
     },
     pauseGraph(state) {
-      state.graph.pause();
+      state.graph?.pause();
       return {
         ...state,
-        graphPlayState: state.graph.annotations[annotatedPlayState]
+        graphPlayState: state.graph?.annotations[annotatedPlayState]
       };
     },
     resumeGraph(state) {
-      state.graph.resume();
+      state.graph?.resume();
       return {
         ...state,
-        graphPlayState: state.graph.annotations[annotatedPlayState]
+        graphPlayState: state.graph?.annotations[annotatedPlayState]
       };
     },
     stopGraph(state) {
-      state.graph.stop();
+      state.graph?.stop();
       return {
         ...state,
-        graphPlayState: state.graph.annotations[annotatedPlayState]
+        graphPlayState: state.graph?.annotations[annotatedPlayState]
       };
     },
     clearLogs(state) {

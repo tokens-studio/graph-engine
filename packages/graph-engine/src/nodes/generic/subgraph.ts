@@ -6,6 +6,7 @@ import OutputNode from "./output.js";
 import { IDeserializeOpts, SerializedGraph, SerializedNode } from "@/graph/types.js";
 import { Graph } from "@/graph/graph.js";
 import { autorun } from "mobx";
+import { hideFromParentSubgraph } from "@/annotations/index.js";
 
 export interface SerializedSubgraphNode extends SerializedNode {
   innergraph: SerializedGraph;
@@ -43,8 +44,6 @@ export default class SubgraphNode extends Node {
 
     autorun(() => {
 
-      console.log('autorun trigggered')
-
       //Get the existing inputs 
       const existing = this.inputs;
 
@@ -52,7 +51,7 @@ export default class SubgraphNode extends Node {
       Object.entries(input.inputs).map(([key, value]) => {
 
         //If the key doesn't exist in the existing inputs, add it
-        if (!existing[key]) {
+        if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
           //Always add it as visible
           this.addInput(key, {
             type: value.type,
@@ -73,11 +72,6 @@ export default class SubgraphNode extends Node {
       //Handle updates from the inner graph
       this.setOutput("value", output.outputs.value.value, output.outputs.value.type);
     });
-
-
-
-
-
   }
 
   override serialize(): SerializedSubgraphNode {
@@ -110,8 +104,6 @@ export default class SubgraphNode extends Node {
       inputs
     });
 
-    console.log(this._innerGraph.edges )
-    console.log(result)
     this.setOutput("value", result.output?.value, result.output?.type);
   }
 }

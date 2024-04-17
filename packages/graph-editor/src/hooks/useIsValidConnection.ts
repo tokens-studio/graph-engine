@@ -4,6 +4,7 @@ import GraphLib from 'graphlib';
 import { useGraph } from '@/hooks/useGraph';
 import { canConvertSchemaTypes } from '@tokens-studio/graph-engine';
 import { stripVariadic } from '@/utils/stripVariadic';
+import { useLocalGraph } from './useLocalGraph';
 const { Graph: CycleGraph, alg } = GraphLib;
 
 export interface IuseIsValidConnection {
@@ -18,7 +19,7 @@ export const useIsValidConnection = ({
   postProcessor,
 }: IuseIsValidConnection = {}) => {
   const flow = useReactFlow();
-  const graph = useGraph();
+  const graph = useLocalGraph();
 
   return useCallback(
     (params: Edge) => {

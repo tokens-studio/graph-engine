@@ -37,7 +37,7 @@ const SubgraphExplorer = ({ node }) => {
         if (!existing) {
             const newTab = {
                 cached: true,
-                closeable: true,
+                closable: true,
                 id: graphId,
                 group: 'graph',
                 title,
