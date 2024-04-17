@@ -1,6 +1,7 @@
 import abs from "./abs.js";
 import add from "./add.js";
 import addVariadic from "./addVariadic.js";
+import ceil from "./ceil.js";
 import clamp from "./clamp.js";
 import cos from "./cos.js";
 import count from "./count.js";
@@ -13,6 +14,7 @@ import multiply from "./multiply.js";
 import multiplyVariadic from "./multiplyVariadic.js";
 import random from "./random.js";
 import round from "./round.js";
+import floor from "./floor.js";
 import sin from "./sin.js";
 import pow from "./pow.js";
 import subtract from "./subtract.js";
@@ -24,12 +26,14 @@ export const nodes = [
   abs,
   add,
   addVariadic,
+  ceil,
   clamp,
   cos,
   count,
   divide,
   divideVariadic,
   evalNode,
+  floor,
   lerp,
   mod,
   pow,

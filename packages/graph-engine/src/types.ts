@@ -55,6 +55,8 @@ export enum NodeTypes {
   DIV_VARIADIC = "studio.tokens.math.divideVariadic",
   ABS = "studio.tokens.math.abs",
   ROUND = "studio.tokens.math.round",
+  FLOOR = "studio.tokens.math.floor",
+  CEIL = "studio.tokens.math.ceil",
   SIN = "studio.tokens.math.sin",
   COS = "studio.tokens.math.cos",
   TAN = "studio.tokens.math.tan",
