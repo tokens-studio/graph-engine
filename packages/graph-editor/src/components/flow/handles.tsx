@@ -17,6 +17,7 @@ type HolderProps = {
   children: React.ReactNode;
   shouldHide?: boolean;
   full?: boolean;
+  className?: string;
 };
 
 export const HandleContainerContext = createContext<{
@@ -33,6 +34,7 @@ export const HandleContainer = ({
   children,
   shouldHide = false,
   full,
+  className
 }: HolderProps) => {
   if (shouldHide) return null;
   const position = type === 'source' ? Position.Right : Position.Left;
@@ -40,8 +42,9 @@ export const HandleContainer = ({
     <HandleContext.Provider value={{ type, position }}>
       <Stack
         direction="column"
-        gap={1}
+        gap={2}
         css={{ flexBasis: full ? '100%' : '50%', position: 'relative' }}
+        className={className}
       >
         {children}
       </Stack>
@@ -176,7 +179,14 @@ export const Handle = (props) => {
   const shouldHide = !visible;
 
   return (
-    <HandleHolder collapsed={collapsed || shouldHide}>
+    <HandleHolder 
+      collapsed={collapsed || shouldHide} 
+      css={{
+        display: 'flex', 
+        flexDirection: type === 'target' ? 'row' : 'row-reverse', 
+        alignItems: 'center'
+      }}
+      >
       <StyledRawHandle
         css={{
           background: `${color} !important`,
@@ -203,8 +213,8 @@ export const Handle = (props) => {
               background: '$bgDefault',
               borderRadius: !array ? '100%' : '0px !important',
               border: '1px solid $borderDefault',
-              width: '24px',
-              height: '24px',
+              width: '12px',
+              height: '12px',
               position: 'absolute',
               alignItems: 'center',
               justifyContent: 'center',
@@ -218,13 +228,15 @@ export const Handle = (props) => {
 
       <Stack
         direction="row"
-        gap={2}
-        justify={full ? 'between' : type === 'target' ? 'start' : 'end'}
+        gap={1}
         align="center"
         css={{
           flex: 1,
-          paddingLeft: shouldHideHandles ? 0 : '$3',
-          paddingRight: shouldHideHandles ? 0 : '$3',
+          justifyContent: type === 'target' ? 'start' : 'end',
+          paddingLeft: shouldHideHandles ? 0 : '$2',
+          paddingRight: shouldHideHandles ? 0 : '$2',
+          fontFamily: '$mono',
+          fontSize: '$xxsmall',
         }}
       >
         {children}

@@ -63,50 +63,50 @@ export const EditorTab = observer(({ ui }: { ui: GlobalState['ui'] }) => {
 
   return (
     <Box css={{ position: 'relative', width: '100%', height: '100%' }}>
-      <Editor
+        <Editor
 
-        ref={ref}
-        onOutputChange={onEditorOutputChange}
-        showMenu
-        menuItems={menu}
-        panelItems={panelItems}
-        nodeTypes = {nodeTypes}
-        capabilities={capabilities}
-        icons={icons}
-        emptyContent={<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />}
-      ></Editor>
-      <ExamplesPicker
-        open={showExamplePicker.get()}
-        onClose={onCloseExamplePicker}
-        loadExample={loadExample}
-      />
-      <Stack
-        direction="column"
-        align="end"
-        gap={3}
-        css={{ position: 'absolute', top: '$3', right: '$3', zIndex: 100 }}
-      >
-        {/* <Preview codeRef={setCodeRef} /> */}
-      </Stack>
-      {loading && (
-        <Box
-          css={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: '$bgDefault',
-            opacity: 0.5,
-            zIndex: 1000,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
+          ref={ref}
+          onOutputChange={onEditorOutputChange}
+          showMenu
+          menuItems={menu}
+          panelItems={panelItems}
+          nodeTypes = {nodeTypes}
+          capabilities={capabilities}
+          icons={icons}
+          emptyContent={<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />}
+        ></Editor>
+        <ExamplesPicker
+          open={showExamplePicker.get()}
+          onClose={onCloseExamplePicker}
+          loadExample={loadExample}
+        />
+        <Stack
+          direction="column"
+          align="end"
+          gap={3}
+          css={{ position: 'absolute', top: '$3', right: '$3', zIndex: 100 }}
         >
-          Loading
-        </Box>
-      )}
+          {/* <Preview codeRef={setCodeRef} /> */}
+        </Stack>
+        {loading && (
+          <Box
+            css={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              backgroundColor: '$bgDefault',
+              opacity: 0.5,
+              zIndex: 1000,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            Loading
+          </Box>
+        )}
     </Box>
   );
 });

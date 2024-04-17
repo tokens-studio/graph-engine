@@ -68,11 +68,11 @@ const NodeWrap = observer(({ node }: INodeWrap) => {
       controls={''}
     >
       <Stack direction="column" gap={2}>
-        <Stack direction="row" gap={2}>
-          <HandleContainer type="target" full>
+        <Stack direction="row" gap={2} css={{padding: '$2'}}>
+          <HandleContainer type="target" className={'target'} full>
             <PortArray ports={node.inputs} />
           </HandleContainer>
-          <HandleContainer type="source" full>
+          <HandleContainer type="source" className={'source'} full>
             <PortArray ports={node.outputs} />
           </HandleContainer>
         </Stack>
