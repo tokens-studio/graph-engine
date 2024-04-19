@@ -26,6 +26,7 @@
     "@lit-labs/context": "0.3.1",
     "@lit-labs/react": "1.1.1",
     "@monaco-editor/react": "4.6.0",
+    "@octokit/rest": "20.1.0",
     "@open-wc/scoped-elements": "2.1.5",
     "@radix-ui/react-accordion": "1.1.1",
     "@radix-ui/react-context-menu": "2.1.3",

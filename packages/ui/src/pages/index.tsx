@@ -12,7 +12,7 @@ import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 // @ts-ignore
 import { themes } from 'prism-react-renderer';
 
-import { useJourney } from '@/journeys/basic.tsx';
+import { useJourney } from '@/components/journeys/basic.tsx';
 import { JoyrideTooltip } from '@/components/joyride/tooltip.tsx';
 import { EditorTab } from '@/components/editor/index.tsx';
 import globalState, { GlobalState } from '@/mobx/index.tsx';
