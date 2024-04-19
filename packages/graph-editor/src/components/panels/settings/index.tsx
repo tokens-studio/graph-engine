@@ -39,6 +39,7 @@ export const Settings = () => {
     dispatch.settings.setObscureDistance(parseFloat(event.target.value));
   };
 
+
   return (
     <Box
       css={{
@@ -48,6 +49,7 @@ export const Settings = () => {
         flex: 1,
         display: 'flex',
         overflow: 'auto',
+        padding: '$3',
         flexDirection: 'column',
       }}
     >
