@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "include": ["src", "package.json", "../nodes-design-tokens/src/ui/icons/token.tsx", "../nodes-design-tokens/src/ui/icons/tokenSet.tsx"],
+  "include": ["src", "package.json"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "composite": false,
@@ -8,7 +8,6 @@
     "declarationMap": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "allowImportingTsExtensions": true,
     "forceConsistentCasingInFileNames": true,
     "inlineSources": false,
     "isolatedModules": true,

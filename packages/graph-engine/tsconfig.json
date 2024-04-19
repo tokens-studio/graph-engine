@@ -34,8 +34,7 @@
   "include": [
     "stories/**/*",
     "src/**/*",
-    "tests/**/*"
-, "../nodes-ui-tokens/src/nodes/create.ts", "../nodes-ui-tokens/src/nodes/index.ts", "../nodes-design-tokens/src/nodes/externalTokens.ts", "../nodes-design-tokens/src/nodes/extractSingleToken.ts", "../nodes-design-tokens/src/nodes/extractTokens.ts", "../nodes-design-tokens/src/nodes/inlineTokens.ts", "../nodes-design-tokens/src/nodes/flatten.ts", "../nodes-design-tokens/src/nodes/group.ts", "../nodes-design-tokens/src/nodes/invert.ts", "../nodes-design-tokens/src/nodes/remap.ts", "../nodes-design-tokens/src/nodes/resolve.ts", "../nodes-design-tokens/src/nodes/ungroup.ts", "../nodes-design-tokens/src/nodes/name.ts", "../nodes-design-tokens/src/nodes/nearest.ts", "../nodes-design-tokens/src/utils/sortTokens.ts"  ],
+    "tests/**/*" ],
   "exclude": [
     "node_modules",
     "cypress/**"
