@@ -1,4 +1,4 @@
-import { INodeDefinition, Input, Output } from "@/index.js";
+import { INodeDefinition, Input, Output, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { NumberSchema, NumberArraySchema } from "@/schemas/index.js";
@@ -8,12 +8,12 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.SUBTRACT_VARIADIC;
   static description = "Allows you to subtract two or more numbers.";
 
-  declare inputs: {
-    inputs: Input<number[]>;
-  };
-  declare outputs: {
-    value: Output<number>;
-  };
+  declare inputs: ToInput<{
+    inputs: number[];
+  }>;
+  declare outputs: ToOutput<{
+    value: number;
+  }>;
 
   constructor(props: INodeDefinition) {
     super(props);

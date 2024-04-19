@@ -1,4 +1,4 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { NumberSchema } from "@/schemas/index.js";
@@ -8,6 +8,17 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.CLAMP;
   static description =
     "Clamp node allows you to restricts a value within a specified minimum and maximum range.";
+
+
+  declare inputs: ToInput<{
+    value: number;
+    min: number;
+    max: number;
+  }>;
+  declare outputs: ToOutput<{
+    value: number;
+  }>;
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {

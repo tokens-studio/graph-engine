@@ -1,13 +1,27 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { AnySchema, BooleanSchema } from "@/schemas/index.js";
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition<T, V> extends Node {
   static title = "If";
   static type = NodeTypes.IF;
   static description =
     "If node allows you to conditionally choose a value based on a condition.";
+
+
+  declare inputs: ToInput<{
+    condition: boolean;
+    a: T;
+    b: V;
+  }>;
+
+  declare outputs: ToOutput<{
+    value: T | V;
+  }>;
+
+
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("condition", {

@@ -110,3 +110,16 @@ export enum NodeTypes {
 export type BatchRunError = Error & {
   nodeId: string
 };
+
+
+export type Vec2 = [number, number];
+export type Vec3 = [number, number, number];
+//Alias for now, will be replaced with a proper type
+export type Color = string
+
+export type Curve = {
+  curves: {
+    type: string;
+    points: [number, number][];
+  }[];
+};

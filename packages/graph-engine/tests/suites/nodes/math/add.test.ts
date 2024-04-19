@@ -1,19 +1,14 @@
-import Node from "@/nodes/math/addVariadic.js";
+import Node from "@/nodes/math/add";
 import { Graph } from "@/graph/graph.js";
 
 describe("math/add", () => {
   it("adds two numbers", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-    node.inputs.inputs.setValue([1, 2]);
+    graph.addNode(node);
+    node.inputs.a.setValue(1);
+    node.inputs.b.setValue(1);
     await node.execute();
     expect(node.outputs.value.value).toStrictEqual(3);
-  });
-  it("adds multiple numbers", async () => {
-    const graph = new Graph();
-    const node = new Node({ graph });
-    node.inputs.inputs.setValue([1, 2, 5, 10]);
-    await node.execute();
-    expect(node.outputs.value.value).toStrictEqual(18);
   });
 });

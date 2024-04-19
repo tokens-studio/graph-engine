@@ -3,19 +3,19 @@ import valueParser from "postcss-value-parser";
 import { NodeTypes } from "@/types.js";
 import { INodeDefinition, Node } from "@/programmatic/node.js";
 import { StringSchema } from "@/schemas/index.js";
-import { Input } from "@/programmatic/input.js";
-import { Output } from "@/programmatic/output.js";
+import { Input, ToInput } from "@/programmatic/input.js";
+import { Output, ToOutput } from "@/programmatic/output.js";
 
 export default class NodeDefinition extends Node {
   static title = "Pass unit";
   static type = NodeTypes.PASS_UNIT;
-  declare inputs: {
-    value: Input<String>;
-    fallback: Input<String>;
-  };
-  declare outputs: {
-    value: Output<String>;
-  };
+  declare inputs: ToInput<{
+    value: string;
+    fallback: string;
+  }>;
+  declare outputs: ToOutput<{
+    value: string;
+  }>;
   static description = "Adds a unit to a value if it doesn't already have one";
   constructor(props: INodeDefinition) {
     super(props);

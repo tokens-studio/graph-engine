@@ -1,4 +1,4 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { NumberSchema } from "@/schemas/index.js";
@@ -6,6 +6,20 @@ import { NumberSchema } from "@/schemas/index.js";
 export default class NodeDefinition extends Node {
   static title = "Base Font Size";
   static type = NodeTypes.BASE_FONT_SIZE;
+
+  declare inputs: ToInput<{
+    visualAcuity: number;
+    correctionFactor: number;
+    lightingCondition: number;
+    distance: number;
+    xHeightRatio: number;
+    ppi: number;
+    pixelDensity: number;
+  }>;
+
+  declare outputs: ToOutput<{
+    value: number;
+  }>;
 
   static description =
     "Base Font node allows you to calculate the base font size with DIN 1450.";

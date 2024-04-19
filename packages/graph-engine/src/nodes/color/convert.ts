@@ -1,5 +1,5 @@
-import { INodeDefinition } from "@/index.js";
-import { NodeTypes } from "@/types.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
+import { Color, NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { Rgb, Lab, Hsl, converter } from "culori";
 import {
@@ -38,6 +38,22 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.CONVERT_COLOR;
   static description =
     "Converts a color from one color space to another and exposes the channels as outputs";
+
+  declare inputs: ToInput<{
+    color: Color;
+    space: typeof colorSpaces;
+  }>;
+  
+  declare outputs: ToOutput<{
+    a: number;
+    b: number;
+    c: number;
+    d?: number;
+    channels: (number | undefined)[];
+    labels: string[];
+  }>;
+
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("color", {

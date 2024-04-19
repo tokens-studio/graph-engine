@@ -1,19 +1,19 @@
 import { NodeTypes } from "@/types.js";
 import { INodeDefinition, Node } from "@/programmatic/node.js";
 import { StringSchema } from "@/schemas/index.js";
-import { Input } from "@/programmatic/input.js";
-import { Output } from "@/programmatic";
+import { Input, ToInput } from "@/programmatic/input.js";
+import { Output, ToOutput } from "@/programmatic";
 
 export default class NodeDefinition extends Node {
   static title = "Split String";
   static type = NodeTypes.SPLIT_STRING;
-  declare inputs: {
-    value: Input;
-    separator: Input;
-  };
-  declare outputs: {
-    value: Output;
-  };
+  declare inputs: ToInput<{
+    value: string;
+    separator: string;
+  }>;
+  declare outputs: ToOutput<{
+    value: string;
+  }>;
   static description = "Converts a string to lowercase";
   constructor(props: INodeDefinition) {
     super(props);

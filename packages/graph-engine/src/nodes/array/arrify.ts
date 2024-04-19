@@ -1,12 +1,20 @@
-import { INodeDefinition, Input, Output } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
-import { AnySchema, NumberSchema } from "@/schemas/index.js";
+import { AnyArraySchema, AnySchema } from "@/schemas/index.js";
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition<T> extends Node {
   static title = "Arrify";
   static type = NodeTypes.ARRIFY;
   static description = "Dynamically generates an array";
+
+  declare inputs: ToInput<{
+    items: T[];
+  }>;
+  declare outputs: ToOutput<{
+    value: T[];
+  }>;
+
 
   constructor(props: INodeDefinition) {
     super(props);
@@ -16,7 +24,7 @@ export default class NodeDefinition extends Node {
       variadic: true,
     });
     this.addOutput("value", {
-      type: NumberSchema,
+      type: AnyArraySchema,
       visible: true,
     });
   }

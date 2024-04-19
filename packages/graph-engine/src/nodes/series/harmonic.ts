@@ -1,4 +1,4 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { NumberSchema, NumberArraySchema } from "@/schemas/index.js";
@@ -13,6 +13,23 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.HARMONIC_SERIES;
   static description =
     'A "Harmonic Series" is a sequence of numbers whose reciprocals form an arithmetic progression. For example, in the series 1, 1/2, 1/3, 1/4, 1/5, the reciprocals form an arithmetic progression with common difference 1/6.';
+
+
+  declare inputs: ToInput<{
+    base: number;
+    stepsDown: number;
+    steps: number;
+    notes: number;
+    ratio: number;
+    precision: number;
+  }>;
+
+  declare outputs: ToOutput<{
+    array: number[];
+    indexed: HarmonicValue[];
+  }>;
+
+
   constructor(props: INodeDefinition) {
     super(props);
 

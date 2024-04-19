@@ -1,11 +1,20 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
-import { AnyArraySchema, StringSchema } from "@/schemas/index.js";
-export default class NodeDefinition extends Node {
+import { AnyArraySchema } from "@/schemas/index.js";
+export default class NodeDefinition<T> extends Node {
   static title = "Reverse Array";
   static type = NodeTypes.REVERSE;
   static description = "Reverses a given array without mutating the original";
+
+  declare inputs: ToInput<{
+    array: T[];
+  }>;
+  declare outputs: ToOutput<{
+    value: T[];
+  }>;
+
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("array", {
@@ -13,7 +22,7 @@ export default class NodeDefinition extends Node {
       visible: true,
     });
     this.addOutput("value", {
-      type: StringSchema,
+      type: AnyArraySchema,
       visible: true,
     });
   }

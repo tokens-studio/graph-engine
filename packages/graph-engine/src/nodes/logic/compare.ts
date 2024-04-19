@@ -1,4 +1,4 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { AnySchema, BooleanSchema, StringSchema } from "@/schemas/index.js";
@@ -12,11 +12,21 @@ export enum Operator {
   LESS_THAN_OR_EQUAL = "<=",
 }
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition<T> extends Node {
   static title = "Compare";
   static type = NodeTypes.COMPARE;
   static description =
     "Compare node allows you to compare two values using multiple operators.";
+
+  declare inputs: ToInput<{
+    a: T,
+    b: T,
+    operator: Operator
+  }>
+  declare outputs: ToOutput<{
+    value: boolean
+  }>
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("a", {

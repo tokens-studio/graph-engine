@@ -1,4 +1,4 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, annotatedDynamicInputs } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { ObjectSchema } from "@/schemas/index.js";
@@ -13,11 +13,16 @@ import { ObjectSchema } from "@/schemas/index.js";
 export default class NodeDefinition extends Node {
   static title = "CSS Map";
   static type = NodeTypes.CSS_MAP;
+
+
+
   static description =
     "Exposes all the css properties. You can link the input of any other node to the any property that is there in the css map node.";
   constructor(props: INodeDefinition) {
     super(props);
 
+    //Indaicate that is uses dynamic inputs
+    this.annotations[annotatedDynamicInputs] = true;
     this.addOutput("value", {
       type: ObjectSchema,
       visible: true,

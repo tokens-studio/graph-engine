@@ -1,8 +1,8 @@
 import { NodeTypes } from "@/types.js";
 import { INodeDefinition, Node } from "@/programmatic/node.js";
 import { NumberSchema, NumberArraySchema } from "@/schemas/index.js";
-import { Input } from "@/programmatic/input.js";
-
+import { Input, ToInput } from "@/programmatic/input.js";
+import { ToOutput } from "@/programmatic";
 export type ArithemeticValue = {
   index: number;
   value: number;
@@ -11,13 +11,19 @@ export type ArithemeticValue = {
 export default class NodeDefinition extends Node {
   static title = "Arithmetic Series";
 
-  declare inputs: {
-    base: Input<number>;
-    stepsDown: Input<number>;
-    steps: Input<number>;
-    increment: Input<number>;
-    precision: Input<number>;
-  };
+  declare inputs: ToInput<{
+    base: number;
+    stepsDown: number;
+    steps: number;
+    increment: number;
+    precision: number;
+  }>;
+
+  declare outputs: ToOutput<{
+    array: number[];
+    indexed: ArithemeticValue[];
+  }>
+
   static type = NodeTypes.ARITHMETIC_SERIES;
   static description =
     "Generates an arithmetic f(n)= c + (f(n-1)) series of numbers based on the base value, steps down, steps and increment.";

@@ -1,4 +1,4 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { AnyArraySchema, AnySchema, StringSchema } from "@/schemas/index.js";
@@ -30,6 +30,17 @@ export default class NodeDefinition extends Node {
     static title = "Merge objects";
     static type = NodeTypes.MERGE_OBJECTS;
     static description = "Merges an array of objects into a single object, with later objects taking precedence.";
+
+    declare inputs: ToInput<{
+        objects: object[];
+        concatArray: 'concat' | 'merge' | 'combine';
+    }>;
+    declare outputs: ToOutput<{
+        value: object;
+    }>;
+
+
+
     constructor(props: INodeDefinition) {
         super(props);
         this.addInput("objects", {

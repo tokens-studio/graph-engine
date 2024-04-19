@@ -3,7 +3,8 @@ import { INodeDefinition, Node } from "@/programmatic/node.js";
 import orderBy from "lodash.orderby";
 
 import { AnyArraySchema, StringSchema } from "@/schemas/index.js";
-import { Input } from "@/programmatic/input.js";
+
+import { ToInput,ToOutput } from "@/programmatic";
 
 export enum Order {
   ASC = "asc",
@@ -19,15 +20,19 @@ export type NamedInput = {
 export const defaults = {
   order: Order.ASC,
 };
-export default class NodeDefinition extends Node {
+export default class NodeDefinition<T> extends Node {
   static title = "Sort Array";
   static type = NodeTypes.SORT;
 
-  declare inputs: {
-    array: Input<any[]>;
-    order: Input<Order>;
-    sortBy: Input<string>;
-  };
+  declare inputs: ToInput<{
+    array:T[];
+    order:Order;
+    sortBy:string;
+  }>;
+
+  declare outputs: ToOutput<{
+    value:T[];
+  }>
 
   static description = "Sorts an array";
   constructor(props: INodeDefinition) {

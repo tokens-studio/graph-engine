@@ -3,22 +3,22 @@
  *
  * @packageDocumentation
  */
-import { INodeDefinition, Input, Output } from "@/index.js";
+import { INodeDefinition, Input, Output, ToInput, ToOutput, annotatedSingleton } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { AnySchema } from "@/schemas/index.js";
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition<T> extends Node {
   static title = "Output";
   static type = NodeTypes.OUTPUT;
 
   //Override with static typing
-  public declare inputs: {
-    input: Input;
-  };
-  public declare outputs: {
-    value: Output;
-  };
+  public declare inputs: ToInput<{
+    input: T;
+  }>;
+  public declare outputs: ToOutput<{
+    value: T;
+  }>;
 
   static description = "Allows you to expose outputs of the node";
   constructor(props: INodeDefinition) {
@@ -32,7 +32,7 @@ export default class NodeDefinition extends Node {
       visible: false,
     });
 
-    this.annotations["engine.singleton"] = true;
+    this.annotations[annotatedSingleton] = true;;
   }
 
   execute(): void | Promise<void> {

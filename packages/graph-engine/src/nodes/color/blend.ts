@@ -1,5 +1,5 @@
-import { INodeDefinition } from "@/index.js";
-import { NodeTypes } from "@/types.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
+import { NodeTypes, Color as ColorType } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import Color from "colorjs.io";
 import {
@@ -28,6 +28,21 @@ export default class NodeDefinition extends Node {
   static title = "Blend Colors";
   static type = NodeTypes.BLEND;
   static description = "Blends two colors together";
+
+  declare inputs: ToInput<{
+    color: ColorType;
+    mixColor: ColorType;
+    value: number;
+    space: ColorSpaceTypes;
+    modifierType: ColorModifierTypes;
+  }>;
+
+  declare outputs: ToOutput<{
+    value: ColorType
+  }>;
+  
+
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("color", {

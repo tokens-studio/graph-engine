@@ -1,4 +1,4 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { NumberSchema, StringSchema } from "@/schemas/index.js";
@@ -8,6 +8,19 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.CSS_BOX;
   static description =
     "CSS Box node allows you to generate a CSS box from 4 values";
+    
+
+  declare inputs: ToInput<{
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+  }>;
+  declare outputs: ToOutput<{
+    value: string;
+  }>;
+
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("top", {

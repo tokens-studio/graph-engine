@@ -1,18 +1,18 @@
-import { INodeDefinition, Input, Output } from "@/index.js";
+import { INodeDefinition, Input, Output, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { AnySchema } from "@/schemas/index.js";
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition<T> extends Node {
   static title = "Constant";
   static type = NodeTypes.CONSTANT;
 
-  declare inputs: {
-    value: Input;
-  };
-  declare outputs: {
-    value: Output;
-  };
+  declare inputs: ToInput<{
+    value: T;
+  }>;
+  declare outputs: ToOutput<{
+    value: T;
+  }>;
 
   static description =
     "Constant node allows you to provide a constant value. You can use this node to set a constant value for a specific property.";

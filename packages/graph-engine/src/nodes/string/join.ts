@@ -1,16 +1,25 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
-import { AnyArraySchema, StringSchema } from "@/schemas/index.js";
+import { StringArraySchema, StringSchema } from "@/schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Join String";
   static type = NodeTypes.JOIN_STRING;
   static description = "Joins an array of strings into a single string";
+
+  declare inputs: ToInput<{
+    array: string[]
+    seperator: string
+  }>
+
+  declare outputs: ToOutput<{
+    value: string
+  }>
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("array", {
-      type: AnyArraySchema,
+      type: StringArraySchema,
       visible: true,
     });
     this.addInput("separator", {

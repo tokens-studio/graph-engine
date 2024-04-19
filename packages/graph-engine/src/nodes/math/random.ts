@@ -1,4 +1,4 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { NumberSchema } from "@/schemas/index.js";
@@ -8,6 +8,11 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.RANDOM;
   static description =
     "Random node allows you to generate a random number between 0 and 1.";
+
+  declare outputs: ToOutput<{
+    value: number;
+  }>;
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addOutput("value", {

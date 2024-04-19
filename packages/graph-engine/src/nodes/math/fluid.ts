@@ -1,4 +1,4 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { NumberSchema } from "@/schemas/index.js";
@@ -8,6 +8,21 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.FLUID_VALUE;
   static description =
     "Fluid node allows you to dynamically calculates a dimension based on the current viewport width, transitioning smoothly between a minimum and maximum dimension as the viewport width changes within a defined range (from min viewport to max viewport)";
+
+
+
+  declare inputs: ToInput<{
+    minSize: number;
+    maxSize: number;
+    minViewport: number;
+    maxViewport: number;
+    viewport: number;
+  }>;
+  declare outputs: ToOutput<{
+    value: number;
+  }>;
+
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("minSize", {

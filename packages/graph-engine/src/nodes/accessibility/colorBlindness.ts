@@ -6,7 +6,7 @@
 
 import blinder from "color-blind";
 import chroma from "chroma-js";
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { NumberSchema, ColorSchema, StringSchema } from "@/schemas/index.js";
@@ -27,6 +27,17 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.COLOR_BLINDNESS;
   static description =
     "Converts provided colors to the colors as perceived by the specified color blindness type.";
+
+  declare inputs: ToInput<{
+    color: string;
+    type: ColorBlindnessTypes;
+  }>
+
+  declare outputs: ToOutput<{
+    value: string;
+  }>;
+
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("color", {

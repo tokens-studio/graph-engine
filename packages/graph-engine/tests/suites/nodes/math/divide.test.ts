@@ -5,6 +5,7 @@ describe("math/div", () => {
   it("divides two numbers", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
+    graph.addNode(node);
     node.inputs.inputs.setValue([1, 2]);
     await node.execute();
     expect(node.outputs.value.value).toStrictEqual(0.5);
@@ -12,6 +13,7 @@ describe("math/div", () => {
   it("divides multiple numbers", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
+    graph.addNode(node);
     node.inputs.inputs.setValue([8, 2, 2]);
     await node.execute();
     expect(node.outputs.value.value).toStrictEqual(2);
@@ -20,6 +22,7 @@ describe("math/div", () => {
   it("returns infinity when dividing by zero", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
+    graph.addNode(node);
     node.inputs.inputs.setValue([1, 0]);
     await node.execute();
     expect(node.outputs.value.value).toStrictEqual(Infinity);

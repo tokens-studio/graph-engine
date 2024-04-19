@@ -5,6 +5,7 @@ describe("color/blend", () => {
   it("darkens the color correctly", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
+    graph.addNode(node);
 
     node.inputs.color.setValue("red");
     node.inputs.space.setValue("srgb");
@@ -19,6 +20,7 @@ describe("color/blend", () => {
   it("lightens the color correctly", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
+    graph.addNode(node);
 
     node.inputs.color.setValue("red");
     node.inputs.space.setValue("srgb");

@@ -1,11 +1,21 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { AnyArraySchema, AnySchema, NumberSchema } from "@/schemas/index.js";
-export default class NodeDefinition extends Node {
+export default class NodeDefinition<T> extends Node {
   static title = "Index Array";
   static type = NodeTypes.ARRAY_INDEX;
   static description = "Extracts a value from an array at a given index";
+
+  declare inputs: ToInput<{
+    array: T[]
+    index: number
+  }>
+  declare outputs: ToOutput<{
+    value: T
+  }>
+
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("array", {

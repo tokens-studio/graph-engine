@@ -6,7 +6,7 @@ import OutputNode from "./output.js";
 import { IDeserializeOpts, SerializedGraph, SerializedNode } from "@/graph/types.js";
 import { Graph } from "@/graph/graph.js";
 import { autorun } from "mobx";
-import { hideFromParentSubgraph } from "@/annotations/index.js";
+import { annotatedDeleteable, hideFromParentSubgraph } from "@/annotations/index.js";
 
 export interface SerializedSubgraphNode extends SerializedNode {
   innergraph: SerializedGraph;
@@ -28,9 +28,9 @@ export default class SubgraphNode extends Node {
     this._innerGraph.capabilities = this.getGraph().capabilities;
 
     const input = new InputNode({ graph: this._innerGraph });
-    input.annotations['engine.deletable'] = false;
+    input.annotations[annotatedDeleteable] = false;
     const output = new OutputNode({ graph: this._innerGraph });
-    output.annotations['engine.deletable'] = false;
+    output.annotations[annotatedDeleteable] = false;
 
     //Create the initial input and output nodes
     this._innerGraph.addNode(input);

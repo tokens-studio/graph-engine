@@ -6,7 +6,7 @@ describe("array/join", () => {
   it("joins the values as expected", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-
+    graph.addNode(node);
     node.inputs.array.setValue([1, 2, 3]);
     node.inputs.delimiter.setValue(",");
 
@@ -17,7 +17,7 @@ describe("array/join", () => {
   it("uses the default delimiter if not specified", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-
+    graph.addNode(node);
     node.inputs.array.setValue([1, 2, 3]);
 
     await node.execute();

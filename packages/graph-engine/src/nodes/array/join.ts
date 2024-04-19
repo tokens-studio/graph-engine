@@ -1,10 +1,21 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { AnyArraySchema, StringSchema } from "@/schemas/index.js";
-export default class NodeDefinition extends Node {
+export default class NodeDefinition<T> extends Node {
   static title = "Join Array";
   static type = NodeTypes.JOIN;
+
+  declare inputs: ToInput<{
+    array: T[];
+    delimiter: string;
+  }>
+
+  declare outputs: ToOutput<{
+    value: string;
+  }>
+
+
   static description =
     "Join node allows you to join an array into a string using a delimiter.";
   constructor(props: INodeDefinition) {

@@ -1,4 +1,4 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { NumberSchema, NumberArraySchema } from "@/schemas/index.js";
@@ -13,6 +13,20 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.GEOMETRIC_SERIES;
   static description =
     "Generates a geometric series f(n)= c * (f(n-1)) of numbers based on the base value, steps down, steps and increment.";
+
+  declare inputs: ToInput<{
+    base: number;
+    stepsDown: number;
+    steps: number;
+    ratio: number;
+    precision: number;
+  }>;
+
+  declare outputs: ToOutput<{
+    array: number[];
+    indexed: GeometricValue[];
+  }>;
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("base", {

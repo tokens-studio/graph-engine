@@ -1,13 +1,24 @@
-import { INodeDefinition } from "@/index.js";
-import { NodeTypes } from "@/types.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
+import { Color, NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import chroma from "chroma-js";
-import { ColorSchema } from "@/schemas/index.js";
+import { ColorSchema, NumberSchema } from "@/schemas/index.js";
 export default class NodeDefinition extends Node {
   static title = "Color Distance";
   static type = NodeTypes.COLOR_DISTANCE;
   static description =
     "Distance node allows you to calculate the distance between two colors.";
+
+
+  declare inputs: ToInput<{
+    color1: Color;
+    color2: Color;
+  }>;
+  declare outputs: ToOutput<{
+    value:number
+  }>;
+
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("color1", {
@@ -19,7 +30,7 @@ export default class NodeDefinition extends Node {
       visible: true,
     });
     this.addOutput("value", {
-      type: ColorSchema,
+      type: NumberSchema,
       visible: true,
     });
   }

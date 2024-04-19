@@ -1,4 +1,4 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { StringSchema } from "@/schemas/index.js";
@@ -7,6 +7,19 @@ export default class NodeDefinition extends Node {
   static title = "Regex";
   static type = NodeTypes.REGEX;
   static description = "Replaces a string with a regex";
+
+  declare inputs: ToInput<{
+    input: string;
+    match: string;
+    flags: string;
+    replace: string;
+  }>
+  declare outputs: ToOutput<{
+    value: string;
+  }>
+
+
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("input", {

@@ -1,5 +1,5 @@
-import { INodeDefinition } from "@/index.js";
-import { NodeTypes } from "@/types.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
+import { Color, NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { ColorSchema, NumberSchema, StringSchema } from "@/schemas/index.js";
 import chroma from "chroma-js";
@@ -23,6 +23,19 @@ export default class NodeDefinition extends Node {
   static title = "Create Color";
   static type = NodeTypes.CREATE_COLOR;
   static description = "Creates a color";
+
+  declare inputs: ToInput<{
+    space: typeof colorSpaces;
+    a: number;
+    b: number;
+    c: number;
+    d?: number;
+  }>;
+  
+  declare outputs: ToOutput<{
+    value: Color;
+  }>;
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("space", {

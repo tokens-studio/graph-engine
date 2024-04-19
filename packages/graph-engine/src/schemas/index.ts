@@ -184,12 +184,7 @@ export const CurveSchema: SchemaObject = {
   },
   required: ["curves"],
 };
-export type Curve = {
-  curves: {
-    type: string;
-    points: [number, number][];
-  }[];
-};
+
 
 export const VEC2 = "https://schemas.tokens.studio/vec2.json";
 export const Vec2Schema: SchemaObject = {

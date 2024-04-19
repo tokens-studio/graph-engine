@@ -1,16 +1,26 @@
 import { NodeTypes } from "@/types.js";
 import { AnyArraySchema, NumberSchema } from "@/schemas/index.js";
 import SubgraphNode from "./subgraph";
-import { hideFromParentSubgraph } from "@/annotations";
+import { annotatedDynamicInputs, hideFromParentSubgraph } from "@/annotations";
+import { ToInput, ToOutput } from "@/programmatic";
 
-export default class ArraySubgraph extends SubgraphNode {
+export default class ArraySubgraph<T, V> extends SubgraphNode {
   static title = "Array Map";
   static type = NodeTypes.ARRAY;
   static description = "Allows you to map an array of items";
 
+  declare inputs: ToInput<{
+    array: T[];
+  }>
+
+  declare outputs: ToOutput<{
+    value: V
+  }>
+
   constructor(props) {
     super(props);
 
+    this.annotations[annotatedDynamicInputs] = true;
 
     //Create the hardcoded input values in the innergraph
     const input = Object.values(this._innerGraph.nodes).find((x) => x.factory.type === NodeTypes.INPUT);

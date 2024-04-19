@@ -3,7 +3,7 @@
  *
  * @packageDocumentation
  */
-import { INodeDefinition, Input } from "@/index.js";
+import { INodeDefinition, Input, annotatedDynamicInputs, annotatedSingleton } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 
@@ -16,7 +16,8 @@ export default class NodeDefinition extends Node {
   constructor(props: INodeDefinition) {
     super(props);
     //By default we don't define any ports, these are all dynamic
-    this.annotations["engine.singleton"] = true;
+    this.annotations[annotatedSingleton] = true;
+    this.annotations[annotatedDynamicInputs]= true;
   }
 
   execute(): void | Promise<void> {

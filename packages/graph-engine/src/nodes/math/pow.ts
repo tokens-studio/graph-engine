@@ -1,4 +1,4 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { NumberSchema } from "@/schemas/index.js";
@@ -8,6 +8,15 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.POW;
   static description =
     "Power node allows you to Raises a base number to the power of an exponent.";
+
+  declare inputs: ToInput<{
+    base: number;
+    exponent: number;
+  }>;
+  declare outputs: ToOutput<{
+    value: number;
+  }>;
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("base", {

@@ -1,4 +1,4 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { NumberSchema } from "@/schemas/index.js";
@@ -7,6 +7,15 @@ export default class NodeDefinition extends Node {
   static title = "Tan";
   static type = NodeTypes.TAN;
   static description = "Tan node allows you to get the sin of a number.";
+
+
+  declare inputs: ToInput<{
+    value: number;
+
+  }>;
+  declare outputs: ToOutput<{
+    value: number;
+  }>;
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {

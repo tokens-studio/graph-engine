@@ -17,3 +17,18 @@ export const annotatedCapabilityPrefix = 'engine.capability.';
  * Hides a property from being exposed to the parent in the subgraph
  */
 export const hideFromParentSubgraph = 'engine.hideFromParentSubgraph';
+
+/**
+ * Indicates that node will use dynamically created inputs 
+ */
+export const annotatedDynamicInputs = 'engine.dynamicInputs';
+
+/**
+ * Indicates that there should only ever be one instance of this node in the graph
+ */
+export const annotatedSingleton = 'engine.singleton';
+
+/**
+ * Indicates whether the node is deletable. Default is true
+ */
+export const annotatedDeleteable = 'engine.deletable';

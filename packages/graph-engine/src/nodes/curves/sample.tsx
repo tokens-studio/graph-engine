@@ -1,12 +1,12 @@
-import { INodeDefinition } from "@/index.js";
-import { NodeTypes } from "@/types.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
+import { Curve, NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import {
-  Curve,
   CurveSchema,
   NumberSchema,
   Vec2Schema,
 } from "@/schemas/index.js";
+
 
 const scaleVec = (vec, scale) => vec.map((v) => v * scale);
 const addVec = (vec1, vec2) => vec1.map((v, i) => v + vec2[i]);
@@ -27,6 +27,17 @@ export default class NodeDefinition extends Node {
   static title = "Sample Curve";
   static type = NodeTypes.SAMPLE_CURVE;
   static description = "Samples a curve at a specified point";
+
+  declare inputs: ToInput<{
+    curve: Curve;
+    sample: number;
+  }>;
+
+  declare outputs: ToOutput<{
+    value: [number, number];
+  }>;
+
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("curve", {

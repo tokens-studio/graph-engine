@@ -1,5 +1,5 @@
 import valueParser from "postcss-value-parser";
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import {
@@ -13,6 +13,18 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.PARSE_UNIT;
   static description =
     "Parse unit node allows you to seperate units from a number.";
+
+
+  declare inputs: ToInput<{
+    value: string;
+    unit: string;
+  }>;
+
+  declare outputs: ToOutput<{
+    number: number;
+    unit: string;
+  }>;
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {

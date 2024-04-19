@@ -1,4 +1,4 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput, annotatedDynamicInputs } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { AnySchema, StringSchema } from "@/schemas/index.js";
@@ -21,13 +21,25 @@ import { AnySchema, StringSchema } from "@/schemas/index.js";
  *
  * ```
  */
-export default class NodeDefinition extends Node {
+export default class NodeDefinition<T> extends Node {
   static title = "Switch";
   static type = NodeTypes.SWITCH;
   static description =
     "Switch node allows you to conditionally choose a value based on a condition.";
+
+  declare inputs: ToInput<{
+    default: T;
+    condition: string;
+  }>
+  declare output: ToOutput<{
+    value: T;
+  }>
+
   constructor(props: INodeDefinition) {
     super(props);
+
+    this.annotations[annotatedDynamicInputs] = true
+
     this.addInput("default", {
       type: AnySchema,
     });

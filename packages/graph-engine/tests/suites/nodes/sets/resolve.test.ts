@@ -16,6 +16,7 @@ describe("set/resolve", () => {
   it("resolves complex values correctly", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
+    graph.addNode(node);
     node.inputs.inputs.setValue([
       flatten({
         "ref-border": {

@@ -1,19 +1,19 @@
-import { Input } from "@/programmatic/input.js";
+
 import { NodeTypes } from "@/types.js";
 import { INodeDefinition, Node } from "@/programmatic/node.js";
 import { AnyArraySchema } from "@/schemas/index.js";
-import { Output } from "@/programmatic";
-export default class NodeDefinition extends Node {
+import { ToInput, ToOutput } from "@/programmatic";
+export default class NodeDefinition<T> extends Node {
   static title = "Concat Array";
   static type = NodeTypes.CONCAT;
-  declare inputs: {
-    a: Input;
-    b: Input;
-  };
+  declare inputs: ToInput<{
+    a: T[];
+    b: T[];
+  }>;
 
-  declare outputs: {
-    value: Output;
-  };
+  declare outputs: ToOutput<{
+    value: T[];
+  }>;
 
   static description = "Performs an array join using a string delimiter";
   constructor(props: INodeDefinition) {

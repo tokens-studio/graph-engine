@@ -1,11 +1,20 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { AnyArraySchema, NumberSchema } from "@/schemas/index.js";
-export default class NodeDefinition extends Node {
+export default class NodeDefinition<T> extends Node {
   static title = "Slice Array";
   static type = NodeTypes.SLICE;
   static description = "Slices an input array";
+
+  declare inputs: ToInput<{
+    array: T[];
+    start: number;
+    end: number;
+  }>;
+  declare outputs: ToOutput<{
+    value: T[];
+  }>;
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("array", {

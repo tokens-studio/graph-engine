@@ -1,4 +1,4 @@
-import { INodeDefinition } from "@/index.js";
+import { INodeDefinition, ToInput, ToOutput, annotatedDynamicInputs } from "@/index.js";
 import { NodeTypes } from "@/types.js";
 import { Node } from "@/programmatic/node.js";
 import { AnySchema, ObjectSchema } from "@/schemas/index.js";
@@ -8,8 +8,18 @@ export default class NodeDefinition extends Node {
   static type = NodeTypes.OBJECTIFY;
   static description =
     "Objectify node allows you to convert multiple inputs to an object.";
+
+  declare inputs: ToInput<{
+    [key: string]: any;
+  }>;
+  declare outputs: ToOutput<{
+    value: Record<string, any>;
+  }>;
+
   constructor(props: INodeDefinition) {
     super(props);
+
+    this.annotations[annotatedDynamicInputs] = true;
     //Purely runtime inputs
     this.addOutput("value", {
       type: ObjectSchema,
