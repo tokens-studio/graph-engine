@@ -1,14 +1,14 @@
 // https://nextjs.org/docs/advanced-features/custom-app
 import '../scripts/wdyr';
 import '@tokens-studio/graph-editor/index.css';
-import './styles.css';
+import '../styles/styles.css';
 
 import { AppProps } from 'next/app.ts';
 import { Head } from '@/components/next/index.ts';
 import { ThemeProvider } from 'next-themes';
 import { dark, light } from '@/config/themes.ts';
 import NoSSR from 'react-no-ssr';
-import PageLayout from '@/layout/page.tsx';
+import PageLayout from '@/components/next/layout/page.tsx';
 import React from 'react';
 import Store from '../redux/index.tsx';
 import { Tooltip } from '@tokens-studio/ui';
