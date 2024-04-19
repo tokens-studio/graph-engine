@@ -1,13 +1,13 @@
 import { ButtonIcon, PlusIcon } from '@radix-ui/react-icons';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import React from 'react';
-import preset from '@/data/preset.ts';
-import tinyCore from '@/data/tiny/core.ts';
-import tinyCoreDark from '@/data/tiny/dark.ts';
-import tinyCoreLight from '@/data/tiny/light.ts';
+import preset from '@/data/preset.js';
+import tinyCore from '@/data/tiny/core.js';
+import tinyCoreDark from '@/data/tiny/dark.js';
+import tinyCoreLight from '@/data/tiny/light.js';
 import { nodes } from '@tokens-studio/graph-engine';
 import { observable } from 'mobx';
-import { flatten } from '@/utils/index.ts';
+import { flatten } from '@/utils/index.js';
 
 //@ts-ignore
 const presetFlattened = flatten(preset);

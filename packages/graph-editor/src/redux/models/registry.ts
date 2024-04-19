@@ -1,13 +1,12 @@
-import { RootModel } from './root.ts';
+import { RootModel } from './root.js';
 import { createModel } from '@rematch/core';
-import { icons } from '@/registry/icon.tsx';
-import { CapabilityFactory, Node, Port, SchemaObject } from '@tokens-studio/graph-engine';
-import { inputControls } from '@/registry/inputControls.tsx';
-import { controls } from '@/registry/control.tsx';
-import { IField } from '@/components/controls/interface.tsx';
-import { defaultSpecifics } from '@/registry/specifics.tsx';
+import { icons } from '@/registry/icon.js';
+import { CapabilityFactory, Node} from '@tokens-studio/graph-engine';
+import { inputControls } from '@/registry/inputControls.js';
+import { controls } from '@/registry/control.js';
+import { defaultSpecifics } from '@/registry/specifics.js';
 import { DropPanelStore, defaultPanelGroupsFactory } from '@/components/panels/dropPanel/index.js';
-import { Control } from '@/types/controls.ts';
+import { Control } from '@/types/controls.js';
 
 
 export interface RegistryState {

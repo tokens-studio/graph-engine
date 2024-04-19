@@ -24,11 +24,11 @@ import { GlobalHotKeys } from 'react-hotkeys';
 import {
   getNodePositionInsideParent,
   sortNodes,
-} from '../components/flow/utils.ts';
+} from '../components/flow/utils.js';
 import { handleDrop } from './actions/handleDrop.js';
-import { keyMap, useHotkeys } from './hooks/hotkeys.ts';
+import { keyMap, useHotkeys } from './hooks/hotkeys.js';
 
-import { useDispatch } from '../hooks/index.ts';
+import { useDispatch } from '../hooks/index.js';
 import { v4 as uuidv4 } from 'uuid';
 import CustomEdge from '../components/flow/edges/edge.js';
 import React, {
@@ -45,7 +45,7 @@ import ReactFlow from 'reactflow';
 import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.js';
 import groupNode from '../components/flow/nodes/groupNode.js';
 import noteNode from '../components/flow/nodes/noteNode.js';
-import { GraphEditorProps, ImperativeEditorRef } from './editorTypes.ts';
+import { GraphEditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { Box } from '@tokens-studio/ui';
 import { BatchRunError, Graph, NodeFactory, NodeTypes, nodeLookup } from '@tokens-studio/graph-engine';
 import { useContextMenu } from 'react-contexify';
@@ -54,19 +54,19 @@ import { NodeContextMenu } from '../components/contextMenus/nodeContextMenu.js';
 import { EdgeContextMenu } from '../components/contextMenus/edgeContextMenu.js';
 import { PaneContextMenu } from '../components/contextMenus/paneContextMenu.js';
 import { useSelector } from 'react-redux';
-import { showGrid, snapGrid } from '@/redux/selectors/settings.ts';
-import { NodeV2 } from '@/components/index.ts';
+import { showGrid, snapGrid } from '@/redux/selectors/settings.js';
+import { NodeV2 } from '@/components/index.js';
 import { CommandMenu } from '@/components/commandPalette/index.js';
-import { clear } from './actions/clear.ts';
-import { copyNodeAction } from './actions/copyNodes.tsx';
-import { selectNode } from './actions/selectNode.tsx';
-import { deleteNode } from './actions/deleteNode.tsx';
-import { PassthroughNode } from '@/components/flow/nodes/passthroughNode.tsx';
-import { uiNodeType, uiVersion, uiViewport, xpos, ypos } from '@/annotations/index.ts';
-import { connectNodes } from './actions/connect.ts';
-import { capabilitiesSelector, panelItemsSelector } from '@/redux/selectors/registry.ts';
-import { contextMenuSelector } from '@/redux/selectors/ui.ts';
-import { GraphContextProvider } from '@/context/graph.tsx';
+import { clear } from './actions/clear.js';
+import { copyNodeAction } from './actions/copyNodes.js';
+import { selectNode } from './actions/selectNode.js';
+import { deleteNode } from './actions/deleteNode.js';
+import { PassthroughNode } from '@/components/flow/nodes/passthroughNode.js';
+import { uiNodeType, uiVersion, uiViewport, xpos, ypos } from '@/annotations/index.js';
+import { connectNodes } from './actions/connect.js';
+import { capabilitiesSelector, panelItemsSelector } from '@/redux/selectors/registry.js';
+import { contextMenuSelector } from '@/redux/selectors/ui.js';
+import { GraphContextProvider } from '@/context/graph.js';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };

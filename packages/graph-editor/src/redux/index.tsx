@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux';
 import React, { useEffect, useMemo } from 'react';
-import { store } from './store.tsx';
+import { store } from './store.js';
 
 export const ReduxProvider = ({ children, panelItems, capabilities, icons }) => {
 

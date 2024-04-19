@@ -1,4 +1,4 @@
-import { TokenType } from '../utils/index.ts';
+import { TokenType } from '../utils/index.js';
 
 export type Token = {
   name: string;
@@ -7,4 +7,4 @@ export type Token = {
 };
 
 
-export * from './controls.ts';
+export * from './controls.js';

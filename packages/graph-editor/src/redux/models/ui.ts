@@ -1,5 +1,5 @@
 import { ReactFlowInstance } from 'reactflow';
-import { RootModel } from './root.ts';
+import { RootModel } from './root.js';
 import { createModel } from '@rematch/core';
 
 export interface UIState {

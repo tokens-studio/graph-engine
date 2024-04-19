@@ -1,9 +1,8 @@
-import { RootModel } from './root.ts';
+import { RootModel } from './root.js';
 import { createModel } from '@rematch/core';
 import { Graph, annotatedPlayState } from '@tokens-studio/graph-engine';
-import { ReactFlowInstance } from 'reactflow';
-import type { CapabilityFactory, PlayState } from '@tokens-studio/graph-engine';
-import { ImperativeEditorRef } from '@/editor/editorTypes.ts';
+import type { PlayState } from '@tokens-studio/graph-engine';
+import { ImperativeEditorRef } from '@/editor/editorTypes.js';
 
 export interface ILog {
   data: Record<string, any>;
@@ -52,7 +51,7 @@ export const graphState = createModel<RootModel>()({
 
       const currentPanel = payload.id == state.currentPanelId ? payload.panel : state.currentPanel;
 
-      const newState=  {
+      const newState = {
         ...state,
         currentPanel: currentPanel,
         graph: currentPanel?.graph,

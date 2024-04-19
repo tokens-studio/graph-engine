@@ -1,10 +1,10 @@
-import { RootModel } from './root.ts';
+import { RootModel } from './root.js';
 
-import { settingsState } from './settings.ts';
-import { uiState } from './ui.ts';
-import { graphState } from './graph.ts';
-import { refState } from './refs.ts';
-import { registryState } from './registry.ts';
+import { settingsState } from './settings.js';
+import { uiState } from './ui.js';
+import { graphState } from './graph.js';
+import { refState } from './refs.js';
+import { registryState } from './registry.js';
 
 export const models: RootModel = {
   graph: graphState,
@@ -14,4 +14,4 @@ export const models: RootModel = {
   registry: registryState,
 };
 
-export type { RootModel } from './root.ts';
+export type { RootModel } from './root.js';

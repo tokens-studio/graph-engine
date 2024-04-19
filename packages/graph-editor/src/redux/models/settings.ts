@@ -1,4 +1,4 @@
-import { RootModel } from './root.ts';
+import { RootModel } from './root.js';
 import { createModel } from '@rematch/core';
 
 export enum EdgeType {

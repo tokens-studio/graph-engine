@@ -3,8 +3,8 @@
 import '../index.css';
 import React from 'react';
 import { ReduxProvider } from '../redux/index.js';
-import { EditorProps, ImperativeEditorRef } from './editorTypes.ts';
-import { LayoutController } from './layoutController.tsx';
+import { EditorProps, ImperativeEditorRef } from './editorTypes.js';
+import { LayoutController } from './layoutController.js';
 
 /**
  * The main editor component

@@ -1,16 +1,16 @@
-import { Node } from './node.tsx';
+import { Node } from './node.js';
 import type { Node as GraphNode } from '@tokens-studio/graph-engine';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
-import { Handle, HandleContainer } from '../handles.tsx';
+import { Handle, HandleContainer } from '../handles.js';
 import { Input, Port } from '@tokens-studio/graph-engine';
-import colors from '@/tokens/colors.ts';
+import colors from '@/tokens/colors.js';
 import { useSelector } from 'react-redux';
-import { inlineTypes, showTimings } from '@/redux/selectors/settings.ts';
-import { icons, nodeSpecifics } from '@/redux/selectors/registry.ts';
-import { title } from '@/annotations/index.ts';
-import { useLocalGraph } from '@/context/graph.tsx';
+import { inlineTypes, showTimings } from '@/redux/selectors/settings.js';
+import { icons, nodeSpecifics } from '@/redux/selectors/registry.js';
+import { title } from '@/annotations/index.js';
+import { useLocalGraph } from '@/context/graph.js';
 
 export type UiNodeDefinition = {
   //Name of the Node

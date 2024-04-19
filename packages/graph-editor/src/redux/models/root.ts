@@ -1,9 +1,9 @@
 import { Models } from '@rematch/core';
-import { settingsState } from './settings.ts';
-import { graphState } from './graph.ts';
-import { uiState } from './ui.ts';
-import { refState } from './refs.ts';
-import { registryState } from './registry.ts';
+import { settingsState } from './settings.js';
+import { graphState } from './graph.js';
+import { uiState } from './ui.js';
+import { refState } from './refs.js';
+import { registryState } from './registry.js';
 
 export interface RootModel extends Models<RootModel> {
   settings: typeof settingsState;
