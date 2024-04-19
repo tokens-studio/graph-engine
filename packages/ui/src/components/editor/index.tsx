@@ -9,7 +9,7 @@ import { ExamplesPicker } from '../ExamplesPicker.tsx';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router.js';
 import { useGetEditor } from '@/hooks/useGetEditor.ts';
-import { examples } from '@/examples/examples.tsx';
+import { examples } from '@/data/examples/examples.tsx';
 import { previewCodeSelector } from '@/redux/selectors/index.ts';
 import globalState, { GlobalState } from '@/mobx/index.tsx';
 import { observer } from 'mobx-react-lite';
@@ -70,7 +70,7 @@ export const EditorTab = observer(({ ui }: { ui: GlobalState['ui'] }) => {
         showMenu
         menuItems={menu}
         panelItems={panelItems}
-        nodeTypes = {nodeTypes}
+        nodeTypes={nodeTypes}
         capabilities={capabilities}
         icons={icons}
         emptyContent={<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />}

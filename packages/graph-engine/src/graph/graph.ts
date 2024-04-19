@@ -348,6 +348,9 @@ export class Graph {
   serialize(): SerializedGraph {
     //Ensure we update the version
     this.annotations['engine.version'] = VERSION;
+
+    console.log(this.nodes, this.edges)
+
     const serialized = {
       nodes: Object.values(this.nodes).map((x) => x.serialize()),
       edges: Object.values(this.edges).map((x) => x.serialize()),
@@ -418,38 +421,40 @@ export class Graph {
 
     this.edges = serialized.edges.reduce((acc, edge) => {
       //Don't change the edge
-      acc[edge.id] = {
-        ...edge,
-      };
+
+      const theEdge = Edge.deserialize(edge);
+      acc[edge.id] = theEdge;
+
+
 
       //Find the source and target nodes and add the edge to them
-      const source = this.nodes[edge.source];
-      const target = this.nodes[edge.target];
+      const source = this.nodes[theEdge.source];
+      const target = this.nodes[theEdge.target];
 
       if (!source) {
-        throw new Error(`No source node found with id ${edge.source}`);
+        throw new Error(`No source node found with id ${theEdge.source}`);
       }
       if (!target) {
-        throw new Error(`No target node found with id ${edge.target}`);
+        throw new Error(`No target node found with id ${theEdge.target}`);
       }
 
-      if (!source.outputs[edge.sourceHandle]) {
+      if (!source.outputs[theEdge.sourceHandle]) {
         console.warn(
-          `No output found on source node ${source.id} with handle ${edge.sourceHandle}`
+          `No output found on source node ${source.id} with handle ${theEdge.sourceHandle}`
         );
         //This must be a dynamic output. We create a new one with any type as its likely dependent on runtime anyway
-        source.addOutput(edge.sourceHandle, {
+        source.addOutput(theEdge.sourceHandle, {
           type: AnySchema,
         });
       }
-      if (!target.inputs[edge.targetHandle]) {
+      if (!target.inputs[theEdge.targetHandle]) {
         throw new Error(
-          `No input found on target node ${target.id} with handle ${edge.targetHandle}`
+          `No input found on target node ${target.id} with handle ${theEdge.targetHandle}`
         );
       }
 
-      source.outputs[edge.sourceHandle]._edges.push(edge as Edge);
-      target.inputs[edge.targetHandle]._edges.push(edge as Edge);
+      source.outputs[theEdge.sourceHandle]._edges.push(theEdge);
+      target.inputs[theEdge.targetHandle]._edges.push(theEdge);
 
       return acc;
     }, {});

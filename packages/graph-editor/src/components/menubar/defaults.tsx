@@ -19,6 +19,7 @@ import { AnnotationDotsIcon, CpuIcon, RedoIcon, UndoIcon } from '@iconicicons/re
 import { GraphPanel } from '../panels/graph';
 import { DropPanel } from '../panels/dropPanel';
 import { graphEditorSelector } from '@/redux/selectors/graph';
+import { title } from '@/annotations';
 
 
 
@@ -147,24 +148,25 @@ export const defaultMenuDataFactory = (): Menu =>
             render: function FileSave(rest) {
               const graphRef = useSelector(
                 graphEditorSelector,
-              ) as MutableRefObject<ImperativeEditorRef>;
+              ) as (ImperativeEditorRef | undefined);
+
 
               const onSave = () => {
-                const saved = graphRef.current.save();
+                const saved = graphRef!.save();
                 const blob = new Blob([JSON.stringify(saved)], {
                   type: 'application/json',
                 });
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
-                link.download = `graph.json`;
+                link.download = (saved.annotations[title] || 'graph') + `.json`;
                 document.body.appendChild(link);
                 link.click();
               };
 
               return (
                 <MenuItemElement
-                  disabled={!graphRef?.current}
+                  disabled={!graphRef}
                   icon={<DownloadIcon />}
                   onClick={onSave}
                   {...rest}
