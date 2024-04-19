@@ -1,5 +1,7 @@
 # Resolution
 
+## Batch execution
+
 The execution of the graph engine starts with a topological sort. This orders the nodes in terms of their dependencies and guarantees that we execute the nodes in the correct order.
 
 Once the correct order has been ascertained, we start from the input node and then sequentially execute nodes as they are needed.

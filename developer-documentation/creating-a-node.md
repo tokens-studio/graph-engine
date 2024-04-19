@@ -4,70 +4,86 @@
 
 You should use [reverse-domain-notation](https://en.wikipedia.org/wiki/Reverse_domain_name_notation) to create a custom node to ensure that you won't get a namespace collision.
 
-2. Create the index.ts file
+2. Create your node definition file
 
-This would be located at `./packages/graph-engine/src/nodes/[TYPE]/[NODE_NAME].ts`. Populate the values with your custom logic and expose a `node` property which is a `NodeDefinition` type.
+Use the following as a template
 
-3. Add your node to the index exports located at `./packages/graph-engine/src/nodes/[TYPE]/index.ts`
+```ts 
+import { INodeDefinition, ToInput, ToOutput,NumberSchema,Node } from "@tokens-studio/graph-engine";
 
-This ensures that your node is exported as part of the bundled `nodes` import available from the graph engine package via
+export default class MyCustomNode extends Node {
 
-```ts
-import { nodes } from "@tokens-studio/graph-engine";
+  //This is the title associated with your node
+  static title = "Add";
+  //This is your reverse domain notation node name
+  static type = "studio.tokens.math.add";
+  //The description for your node. This is optional
+  static description = "Add node allows you to add two numbers.";
+  //The following declaration for inputs and outputs helps improve the experience for developers using typescript, but this can be considered optional
+  declare inputs: ToInput<{
+    a: number;
+    b: number;
+  }>;
+  declare outputs: ToOutput<{
+    value: number;
+  }>;
+
+  //Add your custom logic to node creation.
+  //You will likely want to expose input and output ports for the node
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("a", {
+      type: NumberSchema,
+      visible: true,
+    });
+    this.addInput("b", {
+      type: NumberSchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
+  }
+
+  //This is the main logic of your node. The execute can be async or not.
+  execute(){
+    const { a, b } = this.getAllInputs();
+    this.setOutput("value", a + b);
+  }
+}
 ```
 
-This includes all nodes, however an advanced user can ignore this and import specific nodes if they wish to perform manual tree-shaking
+3. Expose your node
+
+You will likely want to provide an ESM compatible exports to the file to help with treeshaking.
 
 4. Add testing
 
-Create `./packages/graph-engine/tests/suites/nodes/[TYPE]/[NODE_NAME].test.ts` and add testing relevant to your node.
+Add a testing file. The following is a basic test of the logic of the above math node
 
-5. Expose your node in the UI Drop panel
+```ts
+//This will depend on where you created your node file in step 2
+import Node from "@/nodes/math/add";
+import { Graph } from "@tokens-studio/graph-engine";
+import {describe, it, expect} from '@jest/globals';
 
-Goto `./packages/ui/src/components/flow/dropPanel.tsx`, and add your node under its type using your unique node id type. You can optionally also create an icon for the node or configure additional state that must be passed in during creation
+describe("math/add", () => {
+  it("adds two numbers", async () => {
+    const graph = new Graph();
+    const node = new Node({ graph });
+    graph.addNode(node);
+    node.inputs.a.setValue(1);
+    node.inputs.b.setValue(1);
 
-6. Create the Node UI
-
-Create `./packages/ui/src/components/flow/nodes/[TYPE]/[NODE_NAME].tsx` which will be your UI for your node. The following is the minimum possible UI for a node. You will need to replace `TYPE`,`NODE_NAME` with the expected values. See the documentation inside the `WrapNode` for more insight on how it handles state management behind the scenes
-
-```tsx
-import { Stack, Text } from "@tokens-studio/ui";
-import { Handle, HandleContainer } from "@/components/flow/handles.tsx";
-import { WrapNode, useNode } from "../../wrapper/nodeV2.tsx";
-import { node } from "@tokens-studio/graph-engine/nodes/TYPE/NODE_NAME.js";
-import PreviewAny from "../../preview/any.tsx";
-import React from "react";
-
-const MyNode = (props) => {
-  const { input, output, state, setState } = useNode();
-
-  return (
-    <Stack direction="row" gap={4}>
-      <HandleContainer type="target">
-        <Handle id="input">
-          <Text>Input</Text>
-        </Handle>
-      </HandleContainer>
-
-      <HandleContainer type="source">
-        <Handle id="output">
-          <Text>Output</Text>
-          <PreviewAny value={output?.output} />
-        </Handle>
-      </HandleContainer>
-    </Stack>
-  );
-};
-
-export default WrapNode(MyNode, {
-  ...node,
-  title: "NODE_NAME",
+    //For more complicated nodes you will likely want to interact with the graph object instead of executing the node directly
+    await node.execute();
+    expect(node.outputs.value.value).toStrictEqual(3);
+  });
 });
 ```
 
-7. Register the node
 
-In `./packages/ui/src/components/flow/nodes/index.ts`, import your created node and add it to the array of nodes inside the `processTypes` function
 
 Congratulations, you have created your first node! Verify everything works by dropping your node inside the the editor interface from the drop panel on the left handside.
 
