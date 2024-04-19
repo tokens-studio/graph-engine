@@ -1,5 +1,6 @@
-import { INodeDefinition, Node, NumberSchema, ToInput } from "@tokens-studio/graph-engine";
-import { ContextSchema, NodeSchema } from "../schemas/index.js";
+import { INodeDefinition, NumberSchema } from "@tokens-studio/graph-engine";
+import type { ToInput } from "@tokens-studio/graph-engine";
+import { NodeSchema } from "../schemas/index.js";
 import { AudioBaseNode } from "./base.js";
 
 

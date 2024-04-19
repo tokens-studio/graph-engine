@@ -3,9 +3,12 @@
  *
  * @packageDocumentation
  */
-import { INodeDefinition, Input, StringSchema, TextSchema, ToInput, annotatedDynamicInputs } from "@/index.js";
+import { ToInput } from "@/programmatic/input.js";
+import { annotatedDynamicInputs } from '@/annotations/index.js';
 import { NodeTypes } from "@/types.js";
-import { Node } from "@/programmatic/node.js";
+import { Node, INodeDefinition } from "@/programmatic/node.js";
+import { TextSchema } from "@/schemas/index.js";
+
 
 export default class NodeDefinition extends Node {
     static title = "Inline";

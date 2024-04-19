@@ -9,7 +9,8 @@ You should use [reverse-domain-notation](https://en.wikipedia.org/wiki/Reverse_d
 Use the following as a template
 
 ```ts 
-import { INodeDefinition, ToInput, ToOutput,NumberSchema,Node } from "@tokens-studio/graph-engine";
+import { INodeDefinition,NumberSchema,Node } from "@tokens-studio/graph-engine";
+import type {  ToInput, ToOutput } from "@tokens-studio/graph-engine";
 
 export default class MyCustomNode extends Node {
 

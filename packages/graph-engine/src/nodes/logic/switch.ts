@@ -1,6 +1,8 @@
-import { INodeDefinition, ToInput, ToOutput, annotatedDynamicInputs } from "@/index.js";
+import { ToInput } from "@/programmatic/input.js";
+import { ToOutput } from "@/programmatic/output.js";
+import { annotatedDynamicInputs } from '@/annotations/index.js';
 import { NodeTypes } from "@/types.js";
-import { Node } from "@/programmatic/node.js";
+import { Node, INodeDefinition } from "@/programmatic/node.js";
 import { AnySchema, StringSchema } from "@/schemas/index.js";
 
 /**
