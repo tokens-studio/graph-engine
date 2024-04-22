@@ -1,6 +1,6 @@
 // https://stitches.dev/docs/server-side-rendering
 import { Head, Html, Main, NextScript } from 'next/document.js';
-import { applyGlobalCSS, getCssText } from '@/lib/stitches/index.ts';
+import { getCssText } from '@/lib/stitches/index.ts';
 const sanitizeCSS = [
   'npm/sanitize.css@latest/sanitize.min.css',
   'npm/sanitize.css@latest/system-ui.min.css',
@@ -11,7 +11,6 @@ const sanitizeCSS = [
 ].join(',');
 
 export default function Document() {
-  applyGlobalCSS();
   return (
     <Html lang="en">
       <Head>
