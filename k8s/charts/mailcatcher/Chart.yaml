@@ -1,0 +1,15 @@
+description: Mailcatcher for kubernetes
+name: mailcatcher
+version: 0.1.1
+appVersion: 0.7.0
+keywords:
+  - mailcatcher
+  - ruby
+  - mail
+sources:
+  - https://github.com/sj26/mailcatcher
+  - https://github.com/dragonsmith/mailcatcher-docker
+maintainers:
+  - name: Kirill Kuznetsov
+    email: agon.smith@gmail.com
+icon: https://mailcatcher.me/logo.png

@@ -1,0 +1,11 @@
+apiVersion: skaffold/v4beta9
+kind: Config
+metadata:
+  name: graph-engine
+deploy:
+  helm:
+    releases:
+      - name: mailcatcher
+        chartPath: k8s/charts/mailcatcher
+        namespace: graph-engine
+        createNamespace: true
