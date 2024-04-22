@@ -1,13 +1,12 @@
 import { RootModel } from './root.ts';
 import { uiState } from './ui.ts';
 import { journeyState } from './journey.ts';
-import { outputState } from './output.tsx';
 import { refState } from './refs.ts';
+
 
 export const models: RootModel = {
   ui: uiState,
   journey: journeyState,
-  editorOutput: outputState,
   refs: refState,
 };
 

@@ -11,8 +11,6 @@ export const showNodesPanelSelector = createSelector(
   (state) => state.showNodesPanel,
 );
 
-export const outputSelector = (state: RootState) => state.editorOutput;
-
 export const showJourneySelector = (state: RootState) =>
   state.journey.showJourney;
 
