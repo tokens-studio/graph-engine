@@ -1,6 +1,24 @@
 version: "2"
 services:
 
+  mailcatcher:
+    image: dockage/mailcatcher:0.9.0
+    ports:
+      - "1080:80"
+      - "1025:25"
+    restart: always
+
+  postgresql:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
   # Jaeger
   jaeger-all-in-one:
     image: jaegertracing/all-in-one:latest
