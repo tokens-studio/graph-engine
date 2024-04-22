@@ -1,0 +1,7 @@
+global:
+  postgresql:
+    auth:
+      postgresPassword: "SuperSecretPGAdminPa55word!"
+      username: "test"
+      password: "insecurePassword"
+      database: "graphengine"

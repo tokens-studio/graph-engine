@@ -9,3 +9,10 @@ deploy:
         chartPath: k8s/charts/mailcatcher
         namespace: graph-engine
         createNamespace: true
+      - name: database
+        remoteChart: postgresql 
+        version:  "15.2.5"
+        repo: https://charts.bitnami.com/bitnami
+        namespace: graph-engine
+        valuesFiles:
+          - "k8s/values/postgresql/values.yaml"
