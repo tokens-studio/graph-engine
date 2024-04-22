@@ -5,11 +5,9 @@ import {
   NUMBER,
   STRING,
   SchemaObject,
-  TOKEN_SET,
   VEC2,
   VEC3,
   ANY,
-  TOKEN_ARRAY,
   TEXT,
   Port,
 } from '@tokens-studio/graph-engine';
@@ -65,24 +63,12 @@ export const controls = [
     component: Textfield,
   },
   {
-    matcher: (port: Port) => port.type.$id === TOKEN_SET,
-    component: DefaultField,
-  },
-  {
-    matcher: (port: Port) => port.type.$id === TOKEN_SET,
-    component: DefaultField,
-  },
-  {
     matcher: (port: Port) => port.type.$id === VEC2,
     component: Vec2field,
   },
   {
     matcher: (port: Port) => port.type.$id === VEC3,
     component: Vec3field,
-  },
-  {
-    matcher: (port: Port) => port.type.$id === TOKEN_ARRAY,
-    component: TokenArrayField,
   },
   {
     matcher: (port: Port) => port.type.$id === ANY,

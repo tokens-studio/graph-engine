@@ -8,3 +8,5 @@ export const icons = {
     [TOKEN]: <TokenIcon />,
     [TOKEN_SET]: <TokenSetIcon />,
 }
+
+export { controls } from './controls/index.js';
