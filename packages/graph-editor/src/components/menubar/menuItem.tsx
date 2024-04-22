@@ -21,7 +21,7 @@ export const MenuItemElement = ({
 }: IMenuItemElement) => {
   return (
     // @ts-expect-error This is the correct attribute
-    <Item selectable={false} {...rest}>
+    <Item selectable={"false"} {...rest}>
       {inner(<Stack gap={2} align="center">
         <Box>{icon}</Box>
         <Text>{children}</Text>
