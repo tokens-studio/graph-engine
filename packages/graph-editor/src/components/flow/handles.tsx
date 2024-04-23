@@ -3,6 +3,7 @@ import { Position, Handle as RawHandle } from 'reactflow';
 import { styled } from '@/lib/stitches/index.js';
 import { useIsValidConnection } from '../../hooks/useIsValidConnection.js';
 import React, { createContext, useContext } from 'react';
+import { IconoirProvider } from 'iconoir-react';
 
 export const HandleContext = createContext<{
   position: Position;
@@ -17,6 +18,7 @@ type HolderProps = {
   children: React.ReactNode;
   shouldHide?: boolean;
   full?: boolean;
+  className?: string;
 };
 
 export const HandleContainerContext = createContext<{
@@ -33,6 +35,7 @@ export const HandleContainer = ({
   children,
   shouldHide = false,
   full,
+  className
 }: HolderProps) => {
   if (shouldHide) return null;
   const position = type === 'source' ? Position.Right : Position.Left;
@@ -40,8 +43,9 @@ export const HandleContainer = ({
     <HandleContext.Provider value={{ type, position }}>
       <Stack
         direction="column"
-        gap={1}
+        gap={2}
         css={{ flexBasis: full ? '100%' : '50%', position: 'relative' }}
+        className={className}
       >
         {children}
       </Stack>
@@ -54,23 +58,6 @@ const useHandle = () => {
 };
 
 const StyledRawHandle = styled(RawHandle, {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '12px !important',
-  height: '12px !important',
-  background: 'transparent !important',
-  border: 'none !important',
-  '&::after': {
-    // content: "''",
-    // border: '1px solid var(--colors-accentBorder)',
-    // background: 'var(--colors-accentEmphasis)',
-    // borderRadius: '2px',
-    // flexShrink: 0,
-    // opacity: 1,
-    // width: '12px',
-    // height: '12px',
-  },
   variants: {
     error: {
       true: {
@@ -127,21 +114,10 @@ export const HandleText = styled(Text, {
   },
 });
 
-export const DynamicValueText = styled(Text, {
-  padding: '$1 $2',
-  fontFamily: 'monospace',
-  fontSize: '$xxsmall',
-  borderRadius: '$small',
-  backgroundColor: '$accentBg',
-  color: '$accentDefault',
-  lineHeight: 1,
-  whiteSpace: 'nowrap',
-});
 const HandleHolder = styled(Box, {
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
-
   variants: {
     collapsed: {
       true: {
@@ -176,13 +152,13 @@ export const Handle = (props) => {
   const shouldHide = !visible;
 
   return (
-    <HandleHolder collapsed={collapsed || shouldHide}>
+    <HandleHolder 
+      collapsed={collapsed || shouldHide} 
+      css={{ 
+        flexDirection: type === 'target' ? 'row' : 'row-reverse',
+      }}
+      >
       <StyledRawHandle
-        css={{
-          background: `${color} !important`,
-          color: `${color} !important`,
-          borderRadius: !array ? '100%' : '0px !important',
-        }}
         shouldHideHandles={shouldHideHandles}
         error={error}
         left={type === 'target'}
@@ -193,38 +169,26 @@ export const Handle = (props) => {
         isValidConnection={isValidConnection}
         {...rest}
       >
-        {icon && (
-          <Stack
-            justify="center"
-            align="center"
-            css={{
-              color: 'white',
-              pointerEvents: 'none',
-              background: '$bgDefault',
-              borderRadius: !array ? '100%' : '0px !important',
-              border: '1px solid $borderDefault',
-              width: '24px',
-              height: '24px',
-              position: 'absolute',
-              alignItems: 'center',
-              justifyContent: 'center',
-              display: 'flex',
-            }}
-          >
-            {icon}
-          </Stack>
-        )}
+        <IconoirProvider
+        iconProps={{
+          strokeWidth: 3,
+          width: '0.75em',
+          height: '0.75em',
+        }}
+        >{icon}</IconoirProvider>
       </StyledRawHandle>
 
       <Stack
         direction="row"
-        gap={2}
-        justify={full ? 'between' : type === 'target' ? 'start' : 'end'}
+        gap={1}
         align="center"
         css={{
           flex: 1,
-          paddingLeft: shouldHideHandles ? 0 : '$3',
-          paddingRight: shouldHideHandles ? 0 : '$3',
+          justifyContent: type === 'target' ? 'start' : 'end',
+          paddingLeft: shouldHideHandles ? 0 : '$2',
+          paddingRight: shouldHideHandles ? 0 : '$2',
+          fontFamily: '$mono',
+          fontSize: '$xxsmall',
         }}
       >
         {children}

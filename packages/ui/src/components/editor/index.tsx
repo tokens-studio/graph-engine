@@ -49,7 +49,7 @@ export const EditorTab = observer(({ ui }: { ui: GlobalState['ui'] }) => {
         showMenu
         menuItems={menu}
         panelItems={panelItems}
-        nodeTypes={nodeTypes}
+        nodeTypes = {nodeTypes}
         capabilities={capabilities}
         icons={icons}
         emptyContent={<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />}
