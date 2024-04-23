@@ -23,7 +23,6 @@ export function ColorPickerPopover({ value, onChange }) {
             all: 'unset',
             cursor: 'pointer',
             borderRadius: '$small',
-            // backgroundColor: value,
             width: 16,
             height: 16,
             outline: '1px solid $borderMuted',
