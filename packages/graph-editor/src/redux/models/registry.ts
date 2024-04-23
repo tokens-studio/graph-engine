@@ -1,7 +1,7 @@
 import { RootModel } from './root.js';
 import { createModel } from '@rematch/core';
 import { icons } from '@/registry/icon.js';
-import { CapabilityFactory, Node} from '@tokens-studio/graph-engine';
+import { CapabilityFactory, Node } from '@tokens-studio/graph-engine';
 import { inputControls } from '@/registry/inputControls.js';
 import { controls } from '@/registry/control.js';
 import { defaultSpecifics } from '@/registry/specifics.js';
@@ -22,7 +22,7 @@ export interface RegistryState {
 export const registryState = createModel<RootModel>()({
   state: {
     nodeSpecifics: defaultSpecifics,
-    icons: { ...icons },
+    icons: icons(),
     inputControls: { ...inputControls },
     controls: [...(controls as Control[])],
     panelItems: defaultPanelGroupsFactory(),

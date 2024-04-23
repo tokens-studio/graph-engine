@@ -19,8 +19,11 @@ module.exports = {
     check: false,
     reactDocgenTypescriptOptions: {
       shouldExtractLiteralValuesFromEnum: true,
-      propFilter: (prop) =>
-        prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
+      propFilter: (prop) => {
+        //We use the declarations so that docgen does not annotate object literals 
+        return prop.parent ? !/node_modules/.test(prop.parent.fileName) : !!prop.declarations
+      }
+      ,
     },
   },
 };

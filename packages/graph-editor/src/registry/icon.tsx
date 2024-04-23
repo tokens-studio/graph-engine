@@ -6,7 +6,7 @@ import { Cube, Droplet, EaseCurveControlPoints, Gift, Hashtag, InputOutput, Text
  * Default icons for the graph editor
  * These icons are used to represent the different types of custom types in the graph editor
  */
-export const icons = {
+export const icons = ()=> ({
   [COLOR]: <Droplet />,
   [CURVE]: <EaseCurveControlPoints />,
   [STRING]: <Text />,
@@ -14,6 +14,4 @@ export const icons = {
   [NUMBER]: <Hashtag />,
   [OBJECT]: <Cube />,
   [ANY]: <Gift />
-  
-
-} as Record<string, React.ReactNode>;
+} as Record<string, React.ReactNode>);
