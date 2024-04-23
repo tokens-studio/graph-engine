@@ -122,7 +122,7 @@ const NodeWrapper = styled('div', {
   minWidth: '300px',
   position: 'relative',
   borderRadius: '$medium',
-  background: '$bgDefault',
+  background: '$bgEmphasis',
   variants: {
     error: {
       true: {
