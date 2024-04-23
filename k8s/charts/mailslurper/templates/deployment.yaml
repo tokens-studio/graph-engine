@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mailcatcher
+  name: {{ .Release.Name }}
   labels:
     app: {{ template "name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
@@ -19,21 +19,21 @@ spec:
         release: {{ .Release.Name }}
     spec:
       containers:
-        - name: mailcatcher
+        - name: {{ .Release.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: smtp
               containerPort: 1025
             - name: http
-              containerPort: 1080
+              containerPort: 4436
           livenessProbe:
             httpGet:
               path: /
-              port: 1080
+              port: 4436
           readinessProbe:
             httpGet:
               path: /
-              port: 1080
+              port: 4436
           resources:
 {{ toYaml .Values.resources | indent 12 }}

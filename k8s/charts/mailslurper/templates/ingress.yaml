@@ -9,7 +9,7 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: mailcatcher
+  name: {{ .Release.Name }}
   labels:
     app: {{ template "name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
@@ -18,11 +18,6 @@ metadata:
   annotations:
     {{- range $key, $value := .Values.ingress.annotations }}
     {{ $key }}: {{ $value | quote }}
-    {{- end }}
-    {{- if .Values.ingress.auth.enabled }}
-    nginx.ingress.kubernetes.io/auth-type: "basic"
-    nginx.ingress.kubernetes.io/auth-secret: "basic-auth-mailcatcher"
-    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required"
     {{- end }}
 spec:
   rules:
@@ -34,7 +29,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: mailcatcher
+                name: {{ .Release.Name }}
                 port:  
                   number: {{ $servicePort }}
     {{- end -}}

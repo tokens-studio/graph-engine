@@ -1,13 +1,71 @@
-version: "2"
+version: '3.7'
+
+volumes:
+  kratos-sqlite:
 services:
 
-  mailcatcher:
-    image: dockage/mailcatcher:0.9.0
-    ports:
-      - "1080:80"
-      - "1025:25"
-    restart: always
+  kratos-migrate:
+    image: oryd/kratos:v1.1.0
+    environment:
+      - DSN=sqlite:///var/lib/sqlite/db.sqlite?_fk=true&mode=rwc
+    volumes:
+      - type: volume
+        source: kratos-sqlite
+        target: /var/lib/sqlite
+        read_only: false
+      - type: bind
+        source: ./data/kratos
+        target: /etc/config/kratos
+    command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
+    restart: on-failure
 
+  kratos-admin:
+    image: ghcr.io/dfoxg/kratos-admin-ui:2.3.1
+    ports:
+      - '4444:8080'
+    restart: unless-stopped
+    environment:
+      - KRATOS_ADMIN_URL=http://kratos:4434
+      - KRATOS_PUBLIC_URL=http://kratos:4433
+
+  kratos-selfservice-ui-node:
+    image: oryd/kratos-selfservice-ui-node:v1.1.0
+    ports:
+      - "4455:4455"
+    environment:
+      - KRATOS_PUBLIC_URL=http://kratos:4433/
+      - KRATOS_BROWSER_URL=http://127.0.0.1:4433/
+      - COOKIE_SECRET=changeme
+      - CSRF_COOKIE_NAME=ory_csrf_ui
+      - CSRF_COOKIE_SECRET=changeme
+      - PORT=4455
+      - SECURITY_MODE=
+  kratos:
+    depends_on:
+      - kratos-migrate
+    image: oryd/kratos:v1.1.0
+    command: serve -c /etc/config/kratos/kratos.yml --dev --watch-courier
+    restart: unless-stopped
+    ports:
+      - '4433:4433' # public
+      - '4434:4434' # admin
+    environment:
+      - KRATOS_SELF_URL=http://127.0.0.1:4433
+      - DSN=sqlite:///var/lib/sqlite/db.sqlite?_fk=true
+      # Must be >= 16 characters
+      - SECRETS_DEFAULT=secretsecretsecretsecret
+    volumes:
+      -  type: volume
+         source: kratos-sqlite
+         target: /var/lib/sqlite
+         read_only: false
+      - ./data/kratos:/etc/config/kratos
+
+  mailslurper:
+    image: oryd/mailslurper:latest-smtps
+    ports:
+      - '4436:4436'
+      - '4437:4437'
   postgresql:
     image: postgres:13
     environment:
@@ -17,7 +75,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data
 
   # Jaeger
   jaeger-all-in-one:
