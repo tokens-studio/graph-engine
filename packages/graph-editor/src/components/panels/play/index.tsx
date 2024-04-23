@@ -41,7 +41,6 @@ export function PlayPanel() {
             css={{
                 height: '100%',
                 width: '100%',
-                background: '$bgDefault',
                 flex: 1,
                 display: 'flex',
                 overflow: 'auto',

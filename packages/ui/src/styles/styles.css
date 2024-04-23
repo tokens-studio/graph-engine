@@ -48,35 +48,38 @@ td,
     user-select: none;
     touch-action: none;
   }
-  
+
 
   .resizer.isResizing {
     background: var(--colors-fgDefault);
     opacity: 1;
   }
-  
+
   @media (hover: hover) {
     .resizer {
       opacity: 0;
     }
-  
+
     *:hover > .resizer {
       opacity: 1;
     }
   }
-  
-  .dock-panel{
-    border-color: var(--colors-borderSubtle);
-  }
+
+.dock-panel{
+  border-color: transparent;
+}
 
 .dock-top .dock-bar{
-  border-bottom-color: var(--colors-borderSubtle);
+  border-bottom: none;
 }
 
 .dock-tab{
-  color:var(--colors-fgDefault);
-
-  border-bottom-color: var(--colors-borderDefault);
+  color: var(--colors-fgDefault);
+  border-bottom: none;
+  z-index: 10;
+}
+.dock-tab > div {
+  padding: var(--space-2) var(--space-3);
 }
 
 .dock-nav-wrap{
@@ -84,7 +87,7 @@ td,
 }
 
 .dock-panel.dock-style-main .dock-tab,.dock-tab{
-  background: var(--colors-bgDefault);
+  background: transparent;
 }
 
 #__next{
@@ -92,12 +95,40 @@ td,
 }
 
 .dock-panel,.dock-top .dock-bar, .dock-tab{
-  background: var(--colors-bgDefault)
-  }
+  background: transparent;
+}
 
-  .dock-panel.dock-style-main .dock-bar{
-    border-bottom-color: var(--colors-borderDefault);
-  }
+.dock-top .dock-bar{
+  padding-bottom: var(--space-2);
+}
+
+.dock-panel.dock-style-main .dock-bar{
+  border-bottom-color: var(--colors-borderDefault);
+}
+
+.dock-content-holder {
+  scrollbar-color: var(--colors-borderSubtle) transparent;
+  scrollbar-width: thin;
+  border-bottom: 1px solid var(--colors-borderSubtle);
+}
+
+.dock-top .dock-ink-bar{
+  background: var(--colors-borderSubtle);
+  z-index: 0;
+  height: 100%;
+  border-radius: var(--radii-small);
+}
+
+.drag-initiator {
+  transition: width 0.2s;
+}
+
+.drag-initiator .dock-tab-close-btn {
+  display: none;
+}
+.drag-initiator:hover > .dock-tab-close-btn {
+  display: block;
+}
 
 /* Reset any browser-based margins for the preview */
 #preview {

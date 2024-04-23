@@ -19,8 +19,8 @@ export const LegendInner = ({ iconsRegistry }: ILegendInner) => {
         const parts = key.split('/');
         const name = parts[parts.length - 1].split('.')[0];
         return (
-          <Stack gap={2} align="center">
-            <Box>{value}</Box>
+          <Stack gap={3} align="center">
+            <Box css={{color: '$fgDefault'}}>{value}</Box>
             <Text>{name}</Text>
           </Stack>
         );
@@ -33,7 +33,6 @@ export const LegendInner = ({ iconsRegistry }: ILegendInner) => {
       css={{
         height: '100%',
         width: '100%',
-        backgroundColor: '$bgDefault',
         padding: '$4',
         paddingTop: '$5',
         flex: 1,

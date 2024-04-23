@@ -30,7 +30,7 @@ const RailItem = ({ icon, label, link }: RailItem) => {
 
 export const Rail = () => {
   return (
-    <Stack justify='between' direction='column' css={{background: '$bgEmphasis', color: '$fgOnEmphasis', height: '100%', padding: '$5 $3 $3'}}>
+    <Stack justify='between' direction='column' css={{background: '$bgEmphasis', borderRight: '1px solid $borderSubtle', color: '$fgOnEmphasis', height: '100%', padding: '$5 $3 $3'}}>
       <Stack gap={3} direction='column' align='center'>
         <TokensStudio style={{width: 'var(--sizes-6)', height: 'auto', aspectRatio: '1/1'}} />
         {railItemsStart.map((item) => (

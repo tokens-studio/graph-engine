@@ -1,5 +1,7 @@
 @import url('reactflow/dist/style.css');
-
+.react-flow {
+    background: var(--colors-bgDefault);
+}
 .react-flow__handle {
     position: unset;
     user-select: none;

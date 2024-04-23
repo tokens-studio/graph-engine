@@ -9,10 +9,10 @@
 
 .rc-menu-horizontal {
     margin: 0;
-    background-color: var(--colors-bgDefault);
+    background-color: var(--colors-bgCanvas);
     color: var(--colors-fgDefault);
     border-radius: 0;
-    border:none;
+    border-bottom: 1px solid var(--colors-borderSubtle);
     box-shadow: none;
 
 }
