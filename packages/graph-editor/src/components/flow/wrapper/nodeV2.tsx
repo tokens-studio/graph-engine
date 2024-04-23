@@ -114,9 +114,7 @@ const extractTypeIcon = (
     return { icon, array: isArray };
   }
 
-  const primitive = colors[port.type.type];
-
-  const color = primitive ? primitive.value : colors.any.value;
+  const color = colors.any.value;
 
   return { icon, color, isArray };
 };

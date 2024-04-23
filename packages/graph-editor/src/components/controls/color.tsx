@@ -27,7 +27,7 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
             all: 'unset',
             cursor: 'pointer',
             borderRadius: '$small',
-            backgroundColor: port.value,
+            // backgroundColor: port.value,
             width: 16,
             height: 16,
             outline: '1px solid $borderMuted',

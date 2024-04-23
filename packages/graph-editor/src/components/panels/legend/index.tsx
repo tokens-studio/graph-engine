@@ -1,30 +1,9 @@
 import React, { useMemo } from 'react';
-import { Box, Heading, Stack, Text } from '@tokens-studio/ui';
-import colorTokens from '../../../tokens/colors.js';
+import { Box, Stack, Text } from '@tokens-studio/ui';
 import { useSelector } from 'react-redux';
 import { icons } from '@/redux/selectors/registry.js';
 
 export const Legend = () => {
-  const colors = useMemo(
-    () =>
-      Object.entries(colorTokens).map(([key, value]) => {
-        return (
-          <Stack gap={2} align="center" key={key}>
-            <Box
-
-              css={{
-                background: value.value,
-                height: '12px',
-                width: '12px',
-                borderRadius: '100%',
-              }}
-            />
-            <Text>{key}</Text>
-          </Stack>
-        );
-      }),
-    [],
-  );
 
   const iconsRegistry = useSelector(icons);
   const iconsElements = useMemo(
@@ -34,9 +13,7 @@ export const Legend = () => {
         const name = parts[parts.length - 1].split('.')[0];
         return (
           <Stack gap={2} align="center">
-            <Box key={key}>
-              <Text>{value}</Text>
-            </Box>
+            <Box>{value}</Box>
             <Text>{name}</Text>
           </Stack>
         );
@@ -59,9 +36,6 @@ export const Legend = () => {
       }}
     >
       <Stack direction="column" gap={4} width="full">
-        <Heading size="small">Primitive</Heading>
-        {colors}
-        <Heading size="small">Complex</Heading>
         {iconsElements}
       </Stack>
     </Box>

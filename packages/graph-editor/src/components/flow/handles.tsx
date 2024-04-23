@@ -3,6 +3,7 @@ import { Position, Handle as RawHandle } from 'reactflow';
 import { styled } from '@/lib/stitches/index.js';
 import { useIsValidConnection } from '../../hooks/useIsValidConnection.js';
 import React, { createContext, useContext } from 'react';
+import { IconoirProvider } from 'iconoir-react';
 
 export const HandleContext = createContext<{
   position: Position;
@@ -57,23 +58,6 @@ const useHandle = () => {
 };
 
 const StyledRawHandle = styled(RawHandle, {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '12px !important',
-  height: '12px !important',
-  background: 'transparent !important',
-  border: 'none !important',
-  '&::after': {
-    // content: "''",
-    // border: '1px solid var(--colors-accentBorder)',
-    // background: 'var(--colors-accentEmphasis)',
-    // borderRadius: '2px',
-    // flexShrink: 0,
-    // opacity: 1,
-    // width: '12px',
-    // height: '12px',
-  },
   variants: {
     error: {
       true: {
@@ -130,21 +114,10 @@ export const HandleText = styled(Text, {
   },
 });
 
-export const DynamicValueText = styled(Text, {
-  padding: '$1 $2',
-  fontFamily: 'monospace',
-  fontSize: '$xxsmall',
-  borderRadius: '$small',
-  backgroundColor: '$accentBg',
-  color: '$accentDefault',
-  lineHeight: 1,
-  whiteSpace: 'nowrap',
-});
 const HandleHolder = styled(Box, {
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
-
   variants: {
     collapsed: {
       true: {
@@ -181,18 +154,11 @@ export const Handle = (props) => {
   return (
     <HandleHolder 
       collapsed={collapsed || shouldHide} 
-      css={{
-        display: 'flex', 
-        flexDirection: type === 'target' ? 'row' : 'row-reverse', 
-        alignItems: 'center'
+      css={{ 
+        flexDirection: type === 'target' ? 'row' : 'row-reverse',
       }}
       >
       <StyledRawHandle
-        css={{
-          background: `${color} !important`,
-          color: `${color} !important`,
-          borderRadius: !array ? '100%' : '0px !important',
-        }}
         shouldHideHandles={shouldHideHandles}
         error={error}
         left={type === 'target'}
@@ -203,27 +169,13 @@ export const Handle = (props) => {
         isValidConnection={isValidConnection}
         {...rest}
       >
-        {icon && (
-          <Stack
-            justify="center"
-            align="center"
-            css={{
-              color: 'white',
-              pointerEvents: 'none',
-              background: '$bgDefault',
-              borderRadius: !array ? '100%' : '0px !important',
-              border: '1px solid $borderDefault',
-              width: '12px',
-              height: '12px',
-              position: 'absolute',
-              alignItems: 'center',
-              justifyContent: 'center',
-              display: 'flex',
-            }}
-          >
-            {icon}
-          </Stack>
-        )}
+        <IconoirProvider
+        iconProps={{
+          strokeWidth: 3,
+          width: '0.75em',
+          height: '0.75em',
+        }}
+        >{icon}</IconoirProvider>
       </StyledRawHandle>
 
       <Stack
