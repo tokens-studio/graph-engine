@@ -18,6 +18,9 @@
     display: grid;
     place-items: center;
 }
+.react-flow__handle svg {
+    pointer-events: none;
+}
 
 .react-flow__node.filtered {
     opacity: 0.25;
