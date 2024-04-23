@@ -43,6 +43,7 @@ services:
   kratos:
     depends_on:
       - kratos-migrate
+      - jaeger
     image: oryd/kratos:v1.1.0
     command: serve -c /etc/config/kratos/kratos.yml --dev --watch-courier
     restart: unless-stopped
@@ -50,6 +51,9 @@ services:
       - '4433:4433' # public
       - '4434:4434' # admin
     environment:
+      - TRACING_PROVIDER=jaeger
+      - TRACING_PROVIDERS_JAEGER_SAMPLING_SERVER_URL=http://jaeger:5778/sampling
+      - TRACING_PROVIDERS_JAEGER_LOCAL_AGENT_ADDRESS=jaeger:6831
       - KRATOS_SELF_URL=http://127.0.0.1:4433
       - DSN=sqlite:///var/lib/sqlite/db.sqlite?_fk=true
       # Must be >= 16 characters
@@ -78,11 +82,11 @@ services:
       - ./data/postgres:/var/lib/postgresql/data
 
   # Jaeger
-  jaeger-all-in-one:
+  jaeger:
     image: jaegertracing/all-in-one:latest
     restart: always
     ports:
-      - "16686:16686"
+      - "16686:16686" # The UI port
       - "14268"
       - "14250"
 
@@ -109,7 +113,7 @@ services:
       - "4318:4318"   # OTLP HTTP receiver
       - "55679:55679" # zpages extension
     depends_on:
-      - jaeger-all-in-one
+      - jaeger
       - zipkin-all-in-one
 
   prometheus:
