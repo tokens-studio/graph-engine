@@ -4,8 +4,15 @@ import { useSelector } from 'react-redux';
 import { icons } from '@/redux/selectors/registry.js';
 
 export const Legend = () => {
-
   const iconsRegistry = useSelector(icons);
+  return <LegendInner iconsRegistry={iconsRegistry} />;
+};
+
+export interface ILegendInner {
+  iconsRegistry: Record<string, React.ReactNode>;
+}
+export const LegendInner = ({ iconsRegistry }: ILegendInner) => {
+
   const iconsElements = useMemo(
     () =>
       Object.entries(iconsRegistry).map(([key, value]) => {
@@ -40,4 +47,4 @@ export const Legend = () => {
       </Stack>
     </Box>
   );
-};
+}
