@@ -1,5 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 /** @type {import('next').NextConfig} */
+const OTEL_ENABLED = process.env.OTEL_ENABLED === 'true';
 
 export default {
   swcMinify: true,
@@ -8,16 +9,14 @@ export default {
 
   experimental: {
     // esmExternals: 'loose',
-    optimizeCss: process.env.NODE_ENV === 'production'
+    optimizeCss: process.env.NODE_ENV === 'production',
+    //Add Open telemetry support https://nextjs.org/docs/app/building-your-application/optimizing/open-telemetry
+    instrumentationHook: OTEL_ENABLED
   },
   compiler: {
     //  removeConsole: process.env.NODE_ENV === 'production'
   },
   output: "export",
-  images: {
-    //Needed for electron
-    unoptimized: true
-  },
   webpack: (config, { dev, isServer }) => {
 
     config.module.rules.push({
