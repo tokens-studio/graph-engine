@@ -1,4 +1,4 @@
-import { CapabilityFactory, STRING } from '@tokens-studio/graph-engine';
+import { CapabilityFactory } from '@tokens-studio/graph-engine';
 import { Volume } from 'memfs';
 import { WebAudioCapability, icons as audioIcons } from '@tokens-studio/graph-engine-nodes-audio';
 import { icons as designIcons } from '@tokens-studio/graph-engine-nodes-design-tokens';
