@@ -38,10 +38,13 @@
   "types": "./dist/esm/index.d.ts",
   "dependencies": {
     "@tokens-studio/types": "^0.4.0",
+    "@tokens-studio/ui": "^0.5.5",
     "dot-prop": "^8.0.2",
+    "mobx-react-lite": "^4.0.7",
     "token-transformer": "^0.0.33"
   },
   "peerDependencies": {
+    "@tokens-studio/graph-editor": "*",
     "@tokens-studio/graph-engine": "*",
     "react": "^18.2.0"
   },

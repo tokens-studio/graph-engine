@@ -1,3 +1,4 @@
+'use client';
 import { Box } from '@tokens-studio/ui';
 import { LiveProvider } from 'react-live';
 import { scope } from '@/components/preview/scope.tsx';
@@ -68,7 +69,6 @@ const Wrapper = observer(({ theme }: { theme: GlobalState['ui']['theme'] }) => {
         <LiveProvider
           code={previewCode}
           scope={scope}
-          theme={theme.get() === 'light' ? themes.vsLight : themes.vsDark}
           noInline={true}
           enableTypeScript={true}
           language="jsx"

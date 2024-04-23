@@ -7,3 +7,5 @@ export const icons = {
     [TOKEN]: <CubeHole />,
     [TOKEN_SET]: <DatabaseScript />,
 }
+
+export { controls } from './controls/index.js';

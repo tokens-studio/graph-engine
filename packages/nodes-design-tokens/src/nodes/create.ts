@@ -1,7 +1,7 @@
 
 import { INodeDefinition, Node, StringSchema } from "@tokens-studio/graph-engine";
 import { TokenTypes } from "@tokens-studio/types";
-import { TokenSchema } from "..";
+import { TokenSchema } from "../schemas/index.js";
 
 const types = Object.values(TokenTypes).sort();
 

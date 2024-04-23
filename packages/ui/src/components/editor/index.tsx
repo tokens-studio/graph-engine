@@ -7,7 +7,7 @@ import { EmptyStateEditor } from '../EmptyStateEditor.tsx';
 import { ExamplesPicker } from '../ExamplesPicker.tsx';
 
 import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router.js';
+
 import { useGetEditor } from '@/hooks/useGetEditor.ts';
 import { examples } from '@/data/examples/examples.tsx';
 import { previewCodeSelector } from '@/redux/selectors/index.ts';
@@ -23,27 +23,6 @@ export const EditorTab = observer(({ ui }: { ui: GlobalState['ui'] }) => {
   const showExamplePicker = ui.showExamplePicker;
   const [loading, setLoading] = React.useState(false);
   const { loadExample } = useGetEditor();
-
-  const router = useRouter();
-  const loadParam = router.query.load;
-
-  React.useEffect(() => {
-    async function tryLoadExample(file: string) {
-      if (loadParam) {
-        setLoading(true);
-        const example = examples.find((e) => e.key === loadParam);
-        console.log('example', example);
-        if (example) {
-          await loadExample(example.file);
-        }
-        setLoading(false);
-      }
-    }
-
-    if (loadParam) {
-      tryLoadExample(loadParam as string);
-    }
-  }, [loadParam, loadExample]);
 
   const onCloseExamplePicker = useCallback(() => {
     globalState.ui.showExamplePicker.set(false);
@@ -64,9 +43,9 @@ export const EditorTab = observer(({ ui }: { ui: GlobalState['ui'] }) => {
   return (
     <Box css={{ position: 'relative', width: '100%', height: '100%' }}>
       <Editor
-        id="editor"
+        id={""}
         ref={ref}
-        onOutputChange={onEditorOutputChange}
+        // onOutputChange={onEditorOutputChange}
         showMenu
         menuItems={menu}
         panelItems={panelItems}
@@ -80,14 +59,6 @@ export const EditorTab = observer(({ ui }: { ui: GlobalState['ui'] }) => {
         onClose={onCloseExamplePicker}
         loadExample={loadExample}
       />
-      <Stack
-        direction="column"
-        align="end"
-        gap={3}
-        css={{ position: 'absolute', top: '$3', right: '$3', zIndex: 100 }}
-      >
-        {/* <Preview codeRef={setCodeRef} /> */}
-      </Stack>
       {loading && (
         <Box
           css={{

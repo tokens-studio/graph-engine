@@ -87,6 +87,9 @@ td,
   background: var(--colors-bgDefault);
 }
 
+#__next{
+  height: 100%;
+}
 
 .dock-panel,.dock-top .dock-bar, .dock-tab{
   background: var(--colors-bgDefault)
@@ -102,5 +105,29 @@ td,
 
   h1, h2, h3, h4, h5, h6, p {
     margin: unset;
+  }
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+a{
+  text-decoration: none;
+  color:inherit;
+}
+
+body {
+  height: 100vh;
+  color: var(--fg-default);
+  background: var(--bg-default);
+}
+
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
   }
 }

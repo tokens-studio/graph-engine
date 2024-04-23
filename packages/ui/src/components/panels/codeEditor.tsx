@@ -1,7 +1,9 @@
-import Editor, { DiffEditor, useMonaco, loader } from '@monaco-editor/react';
+import Editor, { EditorProps } from '@monaco-editor/react';
 import React from 'react';
+
+const MonacoEditor = Editor as unknown as React.FC<EditorProps>;
 
 export const CodePanel = () => {
 
-    return <Editor height="90vh" defaultLanguage="javascript" defaultValue="// some comment" />;
+    return <MonacoEditor height="90vh" defaultLanguage="javascript" defaultValue="// some comment" />;
 };

@@ -184,18 +184,18 @@ export const defaultMenuDataFactory = (): Menu =>
         items: [
           new MenuItem({
             name: 'undo',
-            render: (rest) => <MenuItemElement icon={<UndoIcon />} {...rest} >Undo</MenuItemElement>,
+            render: ({key,...rest}) => <MenuItemElement key={key} icon={<UndoIcon />} {...rest} >Undo</MenuItemElement>,
           }),
           new MenuItem({
             name: 'redo',
-            render: (rest) => <MenuItemElement icon={<RedoIcon />} {...rest}>Redo</MenuItemElement>,
+            render: ({ key, ...rest }) => <MenuItemElement key={key} icon={<RedoIcon />} {...rest}>Redo</MenuItemElement>,
           }),
 
           new Seperator(),
           new MenuItem({
             name: 'find',
-            render: (rest) => (
-              <MenuItemElement {...rest} inner={(children) => (
+            render: ({ key, ...rest }) => (
+              <MenuItemElement key={key} {...rest} inner={(children) => (
                 <FindDialog>
                   {children}
                 </FindDialog>

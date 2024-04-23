@@ -3,7 +3,9 @@
   "include": [
     "src",
     "src/scripts",
-    "next-env.d.ts"
+    "next-env.d.ts",
+    "prisma",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
@@ -67,6 +69,11 @@
       "#selectors/*": [
         "src/redux/selectors/*"
       ]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   }
 }
