@@ -63,14 +63,14 @@ export const EditorTab = observer(({ ui }: { ui: GlobalState['ui'] }) => {
 
   return (
     <Box css={{ position: 'relative', width: '100%', height: '100%' }}>
-        <Editor
-
+      <Editor
+        id="editor"
         ref={ref}
         onOutputChange={onEditorOutputChange}
         showMenu
         menuItems={menu}
         panelItems={panelItems}
-        nodeTypes={nodeTypes}
+        nodeTypes = {nodeTypes}
         capabilities={capabilities}
         icons={icons}
         emptyContent={<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />}
