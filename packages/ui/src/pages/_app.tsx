@@ -1,7 +1,7 @@
 // https://nextjs.org/docs/advanced-features/custom-app
 import '../scripts/wdyr';
 import '@tokens-studio/graph-editor/index.css';
-import '../styles/styles.css';
+import '../styles/styles.scss';
 
 import { AppProps } from 'next/app.ts';
 import { Head } from '@/components/next/index.ts';
