@@ -7,7 +7,7 @@ import {
   Text,
 } from '@tokens-studio/ui';
 import { MoreVert } from 'iconoir-react';
-import { HandleContainerContext } from '../handles.tsx';
+import { HandleContainerContext } from '../handles.js';
 import {
   NodeToolbar,
   ReactFlowInstance,
@@ -18,10 +18,12 @@ import { styled } from '@stitches/react';
 import FocusTrap from 'focus-trap-react';
 import React, { useCallback, useMemo, useState } from 'react';
 import classNames from 'classnames/dedupe.js';
-import useDetachNodes from '../../../hooks/useDetachNodes.ts';
+import useDetachNodes from '../../../hooks/useDetachNodes.js';
 import GraphLib from 'graphlib';
-import { useDispatch } from '@/hooks/useDispatch.ts';
+import { useDispatch } from '@/hooks/useDispatch.js';
 const { Graph, alg } = GraphLib;
+
+
 const CollapserContainer = styled('div', {});
 
 interface Stats {
@@ -49,17 +51,6 @@ const convertToGraph = (flow: ReactFlowInstance) => {
   return graph;
 };
 
-const findAllUpstream = (id: string, graph: Graph) => {
-  return (graph.predecessors(id) || []).flatMap((x) =>
-    [x].concat(findAllUpstream(x, graph)),
-  );
-};
-
-const findAllDownstream = (id: string, graph: Graph) => {
-  return (graph.successors(id) || []).flatMap((x) =>
-    [x].concat(findAllDownstream(x, graph)),
-  );
-};
 
 const createNodeLookup = (nodes: string[]) => {
   return nodes.reduce((acc, node) => {

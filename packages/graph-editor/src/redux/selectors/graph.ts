@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
-import { graph } from './roots.ts';
-import { ImperativeEditorRef } from '@/editor/editorTypes.js';
+import { graph } from './roots.js';
 
 export const currentNode = createSelector(graph, (state) => state.currentNode);
 

@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 // import 'reactflow/dist/style.css';
-import '../index.css';
+import '../index.scss';
 import React from 'react';
 import { ReduxProvider } from '../redux/index.js';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.js';

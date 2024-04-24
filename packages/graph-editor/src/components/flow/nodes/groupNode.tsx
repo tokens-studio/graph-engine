@@ -9,7 +9,7 @@ import {
 } from 'reactflow';
 import { NodeResizer } from '@reactflow/node-resizer';
 import { useCallback } from 'react';
-import useDetachNodes from '../../../hooks/useDetachNodes.ts';
+import useDetachNodes from '../../../hooks/useDetachNodes.js';
 import { Button, Stack } from '@tokens-studio/ui';
 
 const lineStyle = { borderColor: 'white' };

@@ -1,5 +1,5 @@
 import { NodeTypes } from '@tokens-studio/graph-engine';
-import { processJson, processTokensFile } from '@/utils/tokenFiles.ts';
+import { processJson, processTokensFile } from '@/utils/tokenFiles.js';
 import JSZip from 'jszip';
 
 import { NodeRequest } from './createNode';

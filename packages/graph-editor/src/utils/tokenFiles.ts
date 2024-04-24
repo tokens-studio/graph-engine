@@ -1,4 +1,4 @@
-import { IResolvedToken, convertW3CToStudio, flatten } from './index.ts';
+import { IResolvedToken, convertW3CToStudio, flatten } from './index.js';
 import json5 from 'json5';
 
 const getFileExtension = (filename) => {

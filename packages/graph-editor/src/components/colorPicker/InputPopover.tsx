@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Popover from '@radix-ui/react-popover';
-import { styled, keyframes } from '@/lib/stitches/index.ts';
+import { styled, keyframes } from '@/lib/stitches/index.js';
 import { Cross2Icon } from '@radix-ui/react-icons';
 
 interface IInputPopover {

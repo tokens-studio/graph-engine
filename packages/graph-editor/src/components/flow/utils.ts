@@ -1,5 +1,5 @@
 import { Edge, Node } from 'reactflow';
-import { NodeTypes } from './types.tsx';
+import { NodeTypes } from './types.js';
 import React from 'react';
 
 // we have to make sure that parent nodes are rendered before their children

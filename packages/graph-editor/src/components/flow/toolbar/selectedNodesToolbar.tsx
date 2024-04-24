@@ -7,10 +7,10 @@ import {
   useReactFlow,
   useStoreApi,
 } from 'reactflow';
-import { NodeTypes } from '../types.tsx';
+import { NodeTypes } from '../types.js';
 import React from 'react';
 
-import { getId } from '../utils.ts';
+import { getId } from '../utils.js';
 
 const padding = 25;
 

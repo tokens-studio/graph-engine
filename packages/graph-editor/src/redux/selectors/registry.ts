@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { registry } from './roots.ts';
+import { registry } from './roots.js';
 
 export const icons = createSelector(registry, (state) => state.icons);
 export const inputControls = createSelector(

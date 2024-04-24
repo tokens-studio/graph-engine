@@ -3,7 +3,7 @@ import * as SliderPrimitive from "@radix-ui/react-slider"
 import cn from 'classnames';
 
 
-import { styled } from '@/lib/stitches/index.ts';
+import { styled } from '@/lib/stitches/index.js';
 
 
 const Track = styled(SliderPrimitive.Track, {

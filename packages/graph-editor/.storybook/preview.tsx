@@ -4,7 +4,7 @@ import { Decorator } from '@storybook/react';
 import { createTheme, styled } from '../src/lib/stitches/index';
 import { darkTheme } from '@tokens-studio/tokens';
 import { Tooltip } from '@tokens-studio/ui';
-import { ReduxProvider } from '../src/redux/index.tsx';
+import { ReduxProvider } from '../src/redux/index.js';
 import {
   Title,
   DocsContainer,
@@ -15,7 +15,7 @@ import {
   Stories,
 } from '@storybook/blocks';
 
-import '../src/index.css';
+import '../src/index.scss';
 
 const darkThemeMode = createTheme('dark-theme', {
   colors: darkTheme.colors,

@@ -1,6 +1,6 @@
 import { Edge, Node, useReactFlow } from 'reactflow';
 import { NodeTypes } from '@tokens-studio/graph-engine';
-import { useDispatch } from '@/hooks/useDispatch.ts';
+import { useDispatch } from '@/hooks/useDispatch.js';
 import { useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import copy from 'copy-to-clipboard';

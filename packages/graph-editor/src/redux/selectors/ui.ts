@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { ui } from './roots.ts';
+import { ui } from './roots.js';
 
 export const showNodesCmdPaletteSelector = createSelector(
   ui,

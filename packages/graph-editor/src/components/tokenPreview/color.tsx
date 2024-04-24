@@ -1,5 +1,5 @@
 import { Text } from '@tokens-studio/ui';
-import { styled } from '@/lib/stitches/index.ts';
+import { styled } from '@/lib/stitches/index.js';
 import React from 'react';
 
 const StyledInputWrapper = styled('div', {

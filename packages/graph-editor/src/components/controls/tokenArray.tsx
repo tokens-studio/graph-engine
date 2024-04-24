@@ -4,7 +4,7 @@ import React from 'react';
 import { Input } from '@tokens-studio/graph-engine';
 import { Stack, Box, Accordion, Separator, Button } from '@tokens-studio/ui';
 import { PreviewColor } from '../tokenPreview/color.js';
-import { TokenType } from '@/utils/index.ts';
+import { TokenType } from '@/utils/index.js';
 
 const getPreview = (tokenData) => {
   switch (tokenData.type) {

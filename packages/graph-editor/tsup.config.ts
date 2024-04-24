@@ -1,4 +1,6 @@
 import { defineConfig } from 'tsup';
+import { sassPlugin } from 'esbuild-sass-plugin';
+
 
 export default defineConfig({
   entry: ['src/index.tsx'],
@@ -9,4 +11,5 @@ export default defineConfig({
   format: ['esm', 'cjs'],
   skipNodeModulesBundle: true,
   clean: true,
+  esbuildPlugins: [sassPlugin()]
 });

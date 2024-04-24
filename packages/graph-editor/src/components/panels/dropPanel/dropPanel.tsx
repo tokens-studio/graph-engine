@@ -4,7 +4,7 @@ import React from 'react';
 import { DropPanelStore } from './data.js';
 import { DragItem } from './DragItem.js';
 import { NodeEntry } from './NodeEntry.js';
-import { styled } from '@/lib/stitches/stitches.config.js';
+import { styled } from '@/lib/stitches/index.js';
 import { observer } from 'mobx-react-lite';
 import { ChevronRightIcon } from '@radix-ui/react-icons';
 import { useSelector } from 'react-redux';

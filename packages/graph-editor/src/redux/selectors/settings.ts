@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { settings } from './roots.ts';
+import { settings } from './roots.js';
 
 export const edgeType = createSelector(settings, (state) => state.edgeType);
 

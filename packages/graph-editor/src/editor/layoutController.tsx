@@ -15,11 +15,11 @@ import { ExternalLoaderProvider } from '@/context/ExternalLoaderContext.js';
 import { defaultPanelGroupsFactory } from '@/components/panels/dropPanel/index.js';
 import { MenuBar } from '@/components/menubar/index.js';
 import { EditorApp } from './graph.js';
-import { useRegisterRef } from '@/hooks/useRegisterRef.ts';
-import { defaultMenuDataFactory } from '@/components/menubar/defaults.tsx';
+import { useRegisterRef } from '@/hooks/useRegisterRef.js';
+import { defaultMenuDataFactory } from '@/components/menubar/defaults.js';
 import { useSelector } from 'react-redux';
-import { dockerSelector } from '@/redux/selectors/refs.ts';
-import { useDispatch } from '@/hooks/useDispatch.ts';
+import { dockerSelector } from '@/redux/selectors/refs.js';
+import { useDispatch } from '@/hooks/useDispatch.js';
 import { BoxBase, DockLayout, LayoutBase, LayoutData, PanelBase, TabData, TabGroup } from 'rc-dock';
 
 

@@ -18,8 +18,8 @@ import {
   obscureDistance,
   showTimings,
 } from '@/redux/selectors/settings';
-import { useDispatch } from '@/hooks/useDispatch.ts';
-import { EdgeType, LayoutType } from '@/redux/models/settings.ts';
+import { useDispatch } from '@/hooks/useDispatch.js';
+import { EdgeType, LayoutType } from '@/redux/models/settings.js';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
 import { contextMenuSelector } from '@/redux/selectors/ui';
 
