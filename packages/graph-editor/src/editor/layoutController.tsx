@@ -23,7 +23,7 @@ import { useDispatch } from '@/hooks/useDispatch.js';
 import { BoxBase, DockLayout, LayoutBase, LayoutData, PanelBase, TabData, TabGroup } from 'rc-dock';
 
 
-import React, { MutableRefObject, useMemo } from 'react';
+import React, { MutableRefObject, useEffect, useMemo } from 'react';
 import { EditorProps, ImperativeEditorRef } from "./editorTypes.js";
 
 const DockButton = (rest) => {
@@ -41,7 +41,10 @@ let groups: Record<string, TabGroup> = {
     popout: {
         animated: true,
         floatable: true,
+
         panelExtra: (panelData, context) => {
+
+
             let buttons: React.ReactElement[] = [];
             if (panelData?.parent?.mode !== 'window') {
                 const maxxed = panelData?.parent?.mode === 'maximize';
@@ -75,7 +78,7 @@ let groups: Record<string, TabGroup> = {
             );
             return <Stack gap={2}>{buttons}</Stack>;
         },
-    },
+    }, 
     /**
      * Note that the graph has a huge issue when ran in a popout window, as such we disable it for now
      */
@@ -168,6 +171,7 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                             id: 'playControls',
                                             title: 'Play Controls',
                                             content: <PlayPanel />,
+                                            closable: true,
                                         },
                                     ],
                                 },
@@ -179,6 +183,7 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                             id: 'dropPanel',
                                             title: 'Nodes',
                                             content: <DropPanel />,
+                                            closable: true,
                                         },
                                     ],
                                 },
@@ -190,6 +195,7 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                             id: 'legend',
                                             title: 'Legend',
                                             content: <Legend />,
+                                            closable: true,
                                         },
                                     ],
                                 },
@@ -289,17 +295,33 @@ export const LayoutController = React.forwardRef<
 >((props: EditorProps, ref) => {
     const {
         externalLoader,
+        initialLayout,
         menuItems = defaultMenuDataFactory(),
     } = props;
 
     const registerDocker = useRegisterRef<DockLayout>('docker');
     const dispatch = useDispatch();
 
+    const dockerRef = useSelector(
+        dockerSelector,
+    ) as MutableRefObject<DockLayout>;
+
     //Generate once
     const defaultDockLayout: LayoutData = useMemo(
         () => layoutDataFactory(props, ref),
         [],
     );
+
+    useEffect(()=>{
+        console.log('effect',dockerRef)
+        if (dockerRef?.current && initialLayout){
+            dockerRef.current?.loadLayout(initialLayout);
+        }
+    
+    },[dockerRef])
+
+
+
 
     const onLayoutChange = (newLayout: LayoutBase, currentTabId: string) => {
 

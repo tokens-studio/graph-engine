@@ -9,6 +9,7 @@ import {
 } from '@tokens-studio/graph-engine';
 import { Edge, Node, ReactFlowInstance } from 'reactflow';
 import { Control } from '../types/controls.js';
+import { LayoutBase } from 'rc-dock';
 
 export interface EditorProps {
   id: string;
@@ -58,6 +59,11 @@ export interface EditorProps {
    * A lookup of the custom node ui types to display in the editor.
    */
   customNodeUI?: Record<string, React.ReactElement>;
+
+  /**
+   * An initial layout to use
+   */
+  initialLayout?: LayoutBase
 
   /**
    * Additional icons to display in the editor for custom types

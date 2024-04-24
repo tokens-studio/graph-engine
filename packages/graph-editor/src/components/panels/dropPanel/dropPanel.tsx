@@ -29,6 +29,7 @@ const StyledAccordion = styled(Accordion, {
   display: 'flex',
   flexDirection: 'column',
   padding: '$2',
+  boxSizing: 'border-box',
 });
 
 const StyledChevron = styled(ChevronRightIcon, {
@@ -60,15 +61,9 @@ export const DropPanel = () => {
 
 export const DropPanelInner = observer(({ data }: IDropPanel) => {
   const [search, setSearch] = React.useState('');
-  const [defaultValue, setDefaultValue] = React.useState<string[]>([]);
 
   const onSearch = (e) => {
     setSearch(e.target.value);
-    if (e.target.value === '') {
-      setDefaultValue([]);
-    } else {
-      setDefaultValue(data.groups.map((value) => value.key));
-    }
   };
 
   return (
@@ -86,7 +81,7 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
       <Stack
         direction="column"
         gap={3}
-        css={{ paddingTop: '$1', width: '100%', flex: 1, overflow: 'auto' }}
+        css={{ paddingTop: '$1', width: '100%', flex: 1, overflow: 'auto',boxSizing:'border-box' }}
       >
         <Stack
           direction="column"

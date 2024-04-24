@@ -53,3 +53,15 @@
 .dock-panel.dock-style-main .dock-bar {
     border-bottom-color: var(--colors-borderDefault);
 }
+
+.drag-initiator {
+    transition: width 0.2s;
+}
+
+.drag-initiator .dock-tab-close-btn {
+    display: none;
+}
+
+.drag-initiator:hover>.dock-tab-close-btn {
+    display: block;
+}
