@@ -349,8 +349,6 @@ export class Graph {
     //Ensure we update the version
     this.annotations['engine.version'] = VERSION;
 
-    console.log(this.nodes, this.edges)
-
     const serialized = {
       nodes: Object.values(this.nodes).map((x) => x.serialize()),
       edges: Object.values(this.edges).map((x) => x.serialize()),
