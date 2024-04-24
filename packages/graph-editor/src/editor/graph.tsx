@@ -121,7 +121,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
     const refProxy = useCallback((v) => {
       //@ts-ignore
-       ref && ref(v);
+      ref && ref(v);
       //@ts-ignore
       internalRef.current = v;
       dispatch.graph.registerPanel({ id, panel: { graph, ref: v } });
@@ -370,7 +370,10 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
                 type: 'custom',
               } as Edge;
             }
-            return edge;
+            return {
+              ...edge,
+              type: 'custom',
+            };
           });
 
           setNodes(nodes);

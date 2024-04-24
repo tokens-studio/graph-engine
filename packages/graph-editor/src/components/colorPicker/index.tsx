@@ -19,7 +19,9 @@ export function ColorPickerPopover({ value, onChange }) {
       trigger={
         <Box
           as="button"
+          style={{ background: value, }}
           css={{
+
             all: 'unset',
             cursor: 'pointer',
             borderRadius: '$small',

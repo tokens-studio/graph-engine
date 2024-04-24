@@ -25,6 +25,7 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
           as="button"
           css={{
             all: 'unset',
+            backgroundColor: port.value,
             cursor: 'pointer',
             borderRadius: '$small',
             width: 16,
