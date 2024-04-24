@@ -66,6 +66,8 @@ export enum NodeTypes {
   RANDOM = "studio.tokens.math.random",
   COUNT = "studio.tokens.math.count",
   POW = "studio.tokens.math.pow",
+  SQRT = "studio.tokens.math.sqrt",
+  EXPONENT = "studio.tokens.math.exponent",
   FLUID_VALUE = "studio.tokens.math.fluid",
 
   // Color

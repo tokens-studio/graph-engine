@@ -17,6 +17,8 @@ import round from "./round.js";
 import floor from "./floor.js";
 import sin from "./sin.js";
 import pow from "./pow.js";
+import sqrt from "./sqrt.js";
+import exp from "./exp.js";
 import subtract from "./subtract.js";
 import subtractVariadic from "./subtractVariadic.js";
 import tan from "./tan.js";
@@ -33,10 +35,12 @@ export const nodes = [
   divide,
   divideVariadic,
   evalNode,
+  exp,
   floor,
   lerp,
   mod,
   pow,
+  sqrt,
   multiply,
   multiplyVariadic,
   random,
