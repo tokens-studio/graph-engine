@@ -13,8 +13,8 @@
     height: var(--sizes-5);
     border: 0;
     border-radius: var(--radii-small, 4px);
-    background: var(--colors-accentDefault);
-    color: var(--colors-accentOnDefault);
+    background: var(--colors-accentMuted);
+    color: var(--colors-accentOnAccent);
     box-shadow: var(--shadows-small);
     outline: 2px solid transparent;
     display: grid;
