@@ -1,12 +1,19 @@
 
 import express from "express";
+import cors from 'cors';
 import promMid from 'express-prometheus-middleware';
 import bodyParser from "body-parser";
-import { RegisterRoutes } from "./routes/routes";
+import { RegisterRoutes } from "./generated/routes";
+import swaggerUi from 'swagger-ui-express';
+// import swaggerDoc from './generated/swagger.json';
+import { errorHandler } from "./middleware/error";
 
 export const app = express();
 
+const swaggerDoc = await import('./generated/swagger.json');
 
+
+app.use(cors());
 app.use(promMid({
     metricsPath: '/metrics',
     collectDefaultMetrics: true,
@@ -21,10 +28,10 @@ app.use(
     })
 );
 app.use(bodyParser.json());
+// app.use(CookieParser());
 
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
-
-app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 RegisterRoutes(app);
+
+app.use(errorHandler);
+

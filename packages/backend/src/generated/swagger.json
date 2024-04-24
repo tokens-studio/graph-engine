@@ -1,0 +1,158 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"CreatedGraph": {
+				"properties": {
+					"id": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"GraphCreationParams": {
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "A human readable name for the graph"
+					},
+					"graph": {
+						"type": "string",
+						"description": "The json serialized graph"
+					}
+				},
+				"required": [
+					"name",
+					"graph"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"cookieAuth": {
+				"type": "apiKey",
+				"name": "ory_kratos_session",
+				"in": "cookie"
+			}
+		}
+	},
+	"info": {
+		"title": "@tokens-studio/graph-engine-backed",
+		"version": "0.0.1",
+		"description": "Execution graph backend for apis",
+		"license": {
+			"name": "MIT with CC"
+		},
+		"contact": {
+			"name": "andrew@hyma.io"
+		}
+	},
+	"paths": {
+		"/graph": {
+			"post": {
+				"operationId": "CreateGraph",
+				"responses": {
+					"201": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreatedGraph"
+								}
+							}
+						}
+					}
+				},
+				"description": "Creates a new graph for the user",
+				"tags": [
+					"Graph"
+				],
+				"security": [
+					{
+						"cookieAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/GraphCreationParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/graph/{graphId}": {
+			"get": {
+				"operationId": "GetGraph",
+				"responses": {
+					"200": {
+						"description": ""
+					}
+				},
+				"tags": [
+					"Graph"
+				],
+				"security": [
+					{
+						"cookieAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "graphId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteGraph",
+				"responses": {
+					"200": {
+						"description": ""
+					}
+				},
+				"tags": [
+					"Graph"
+				],
+				"security": [
+					{
+						"cookieAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "graphId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

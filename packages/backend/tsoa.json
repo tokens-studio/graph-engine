@@ -1,14 +1,24 @@
 {
+    "$schema": "https://json.schemastore.org/tsoa.json",
     "entryFile": "src/index.ts",
     "noImplicitAdditionalProperties": "throw-on-extras",
     "controllerPathGlobs": [
         "src/**/*Controller.ts"
     ],
     "spec": {
-        "outputDirectory": "build",
+        "securityDefinitions": {
+            "cookieAuth": {
+                "type": "apiKey",
+                "name": "ory_kratos_session",
+                "in": "cookie"
+            }
+        },
+        "outputDirectory": "src/generated",
         "specVersion": 3
     },
     "routes": {
-        "routesDir": "build"
+        "authenticationModule": "src/middleware/authentication.ts",
+        "routesDir": "src/generated",
+        "iocModule": "src/ioc.ts"
     }
 }
