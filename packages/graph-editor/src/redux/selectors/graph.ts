@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { graph } from './roots.ts';
+import { ImperativeEditorRef } from '@/editor/editorTypes.js';
 
 export const currentNode = createSelector(graph, (state) => state.currentNode);
 
@@ -11,5 +12,5 @@ export const playStateSelector = createSelector(graph, (state) => state.graphPla
 
 export const graphEditorSelector = createSelector(
     graph,
-    (state) => state.currentPanel?.ref // as MutableRefObject<ImperativeEditorRef>,
+    (state) => state.currentPanel?.ref
 );

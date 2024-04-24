@@ -12,7 +12,7 @@ export interface ILog {
 
 export interface IPanel {
   graph: Graph;
-  ref: React.RefObject<ImperativeEditorRef>;
+  ref: ImperativeEditorRef;
 }
 
 export interface GraphState {

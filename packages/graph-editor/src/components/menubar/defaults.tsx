@@ -109,12 +109,13 @@ export const defaultMenuDataFactory = (): Menu =>
             name: 'load',
             render: function FileLoad(rest) {
 
-
-
               const graphRef = useSelector(
                 graphEditorSelector,
-              ) as MutableRefObject<ImperativeEditorRef>;
+              );
+
               const onClick = () => {
+                if (!graphRef) return;
+
                 const input = document.createElement('input');
                 input.type = 'file';
                 input.accept = '.json';
@@ -129,7 +130,7 @@ export const defaultMenuDataFactory = (): Menu =>
                     const data = JSON.parse(text);
 
                     //TODO open a new tab
-                    graphRef.current.loadRaw(data);
+                    graphRef.loadRaw(data);
                   };
                   reader.readAsText(file);
                 };
