@@ -94,7 +94,15 @@ td,
   height: 100%;
 }
 
-.dock-panel,.dock-top .dock-bar, .dock-tab{
+.dock-panel {
+  background: var(--colors-bgCanvas);
+}
+
+.dock-fbox > .dock-panel {
+  box-shadow: 0 0 0.25rem rgba(0,0,0,0.3);
+}
+
+.dock-top .dock-bar, .dock-tab{
   background: transparent;
 }
 
