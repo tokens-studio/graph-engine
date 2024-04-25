@@ -1,0 +1,45 @@
+{
+  "name": "@tokens-studio/graph-engine-sdk",
+  "version": "0.0.0",
+  "description": "The SDK to interact with the graph engine backend",
+  "license": "MIT",
+  "author": "andrew@hyma.io",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch ",
+    "docs": "typedoc",
+    "generate": "tsx ./scripts/generate.ts"
+  },
+  "sideEffects": false,
+  "types": "./dist/esm/index.d.ts",
+  "dependencies": {
+    "axios": "^1.6.8"
+  },
+  "peerDependencies": {},
+  "devDependencies": {
+    "@hey-api/openapi-ts": "^0.42.1",
+    "tsup": "^8.0.2",
+    "tsx": "^4.7.2",
+    "typedoc": "^0.25.13",
+    "typescript": "^5.4.5"
+  },
+  "keywords": [
+    "studio",
+    "tokens",
+    "ui"
+  ],
+  "jsnext:main": "./dist/index.js"
+}
