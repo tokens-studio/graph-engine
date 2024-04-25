@@ -63,17 +63,7 @@
   border-radius: var(--radii-small);
 }
 
-.drag-initiator {
-  transition: width 0.2s;
-}
 
-.drag-initiator .dock-tab-close-btn {
-  display: none;
-}
-
-.drag-initiator:hover>.dock-tab-close-btn {
-  display: block;
-}
 
 /* Reset any browser-based margins for the preview */
 #preview {
