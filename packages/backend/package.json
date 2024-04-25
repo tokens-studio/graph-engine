@@ -1,16 +1,11 @@
 {
-  "name": "@tokens-studio/graph-engine-backed",
+  "name": "@tokens-studio/graph-engine-backend",
   "version": "0.0.1",
   "description": "Execution graph backend for apis",
   "license": "MIT with CC",
   "author": "andrew@hyma.io",
   "type": "module",
   "exports": {
-    "./nodes/*": {
-      "import": "./dist/esm/nodes/*",
-      "require": "./dist/cjs/nodes/*",
-      "types": "./dist/esm/nodes/*"
-    },
     ".": {
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js",
@@ -26,7 +21,6 @@
     "routes": "tsoa spec-and-routes",
     "alias": "tsc-alias -p tsconfig.prod.json --dir dist/esm",
     "build": "tsc",
-    "proxy": "ory proxy --no-jwt --port 4000 http://localhost:5000/",
     "live": "nodemon",
     "dev": "concurrently \"nodemon\" \"nodemon -x tsoa spec-and-routes\"",
     "docs": "typedoc",
@@ -42,6 +36,8 @@
   "sideEffects": false,
   "types": "./dist/esm/index.d.ts",
   "dependencies": {
+    "@opentelemetry/api": "^1.8.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.44.0",
     "@ory/kratos-client": "^1.1.0",
     "@prisma/client": "^5.13.0",
     "body-parser": "^1.20.2",

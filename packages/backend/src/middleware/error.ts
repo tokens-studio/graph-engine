@@ -14,8 +14,6 @@ const ENV = process.env.NODE_ENV;
 
 const getErrorBody = (err: unknown) => {
 
-    console.log('wtf',err)
-
     if (err instanceof ValidateError) {
         return {
             message: err.message,

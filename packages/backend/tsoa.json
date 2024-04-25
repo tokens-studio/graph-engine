@@ -6,11 +6,16 @@
         "src/**/*Controller.ts"
     ],
     "spec": {
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
         "securityDefinitions": {
-            "cookieAuth": {
-                "type": "apiKey",
-                "name": "ory_kratos_session",
-                "in": "cookie"
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
             }
         },
         "outputDirectory": "src/generated",

@@ -18,34 +18,23 @@ export async function expressAuthentication(
     securityName: string,
     scopes?: string[]
 ): Promise<any> {
-    if (securityName === "cookieAuth") {
+    if (securityName === "bearerAuth") {
 
-        try {
-            const cookie = request.header('cookie');
-            const session = await frontend.toSession(undefined, {
-                headers: {
-                    cookie,
-                },
-            });
+        //Note we are purposefully not verifying the token at this time.
+        const authHeader = request.header('authorization');
 
-            // Session has expired
-            if (session.data.active === false) {
-                return Promise.reject(new AuthError("Unauthorized"));
-            }
 
-            const identity: Identity = session.data.identity;
-            return Promise.resolve(identity);
+        if (!authHeader) {
+            return Promise.reject(new AuthError("Unauthorized"));
         }
-        catch (err) {
+        const token = authHeader.split(' ')[1];
+        const jwtPayload = token.split('.')[1];
+        const payload = Buffer.from(jwtPayload, 'base64').toString('utf-8');
+        const identity: Identity = JSON.parse(payload).session.identity;
 
-            if (err.response?.status === 401) {
-                return Promise.reject(new AuthError("Unauthorized"));
-            }
-            //Otherwise an unknown error has occurred. Treat as a 500
-            return Promise.reject(err);
-        }
+        //We will inject a jwks verification at a later point 
 
+        return Promise.resolve(identity);
     }
-
     return Promise.reject({});
 }

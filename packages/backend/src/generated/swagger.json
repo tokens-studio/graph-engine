@@ -8,6 +8,7 @@
 		"responses": {},
 		"schemas": {
 			"CreatedGraph": {
+				"description": "The created graph",
 				"properties": {
 					"id": {
 						"type": "string"
@@ -21,28 +22,27 @@
 			},
 			"GraphCreationParams": {
 				"properties": {
-					"name": {
-						"type": "string",
-						"description": "A human readable name for the graph"
-					},
 					"graph": {
 						"type": "string",
 						"description": "The json serialized graph"
+					},
+					"name": {
+						"type": "string",
+						"description": "A human readable name for the graph"
 					}
 				},
 				"required": [
-					"name",
-					"graph"
+					"graph",
+					"name"
 				],
-				"type": "object",
-				"additionalProperties": false
+				"type": "object"
 			}
 		},
 		"securitySchemes": {
-			"cookieAuth": {
-				"type": "apiKey",
-				"name": "ory_kratos_session",
-				"in": "cookie"
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
 			}
 		}
 	},
@@ -79,7 +79,7 @@
 				],
 				"security": [
 					{
-						"cookieAuth": []
+						"bearerAuth": []
 					}
 				],
 				"parameters": [],
@@ -100,7 +100,55 @@
 				"operationId": "GetGraph",
 				"responses": {
 					"200": {
-						"description": ""
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"owner": {
+											"type": "string"
+										},
+										"graph": {
+											"type": "string"
+										},
+										"name": {
+											"type": "string"
+										},
+										"id": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"updatedAt",
+										"createdAt",
+										"owner",
+										"graph",
+										"name",
+										"id"
+									],
+									"type": "object"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Graph not found",
+						"content": {
+							"application/json": {
+								"schema": {},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
 					}
 				},
 				"tags": [
@@ -108,7 +156,7 @@
 				],
 				"security": [
 					{
-						"cookieAuth": []
+						"bearerAuth": []
 					}
 				],
 				"parameters": [
@@ -127,6 +175,17 @@
 				"responses": {
 					"200": {
 						"description": ""
+					},
+					"404": {
+						"description": "Graph not found",
+						"content": {
+							"application/json": {
+								"schema": {},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
 					}
 				},
 				"tags": [
@@ -134,7 +193,7 @@
 				],
 				"security": [
 					{
-						"cookieAuth": []
+						"bearerAuth": []
 					}
 				],
 				"parameters": [

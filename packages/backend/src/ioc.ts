@@ -6,7 +6,6 @@ import winston from 'winston';
 import { PrismaClient } from '@prisma/client';
 import { prisma } from '@/db';
 
-
 // Create a new container tsoa can use
 const iocContainer = new Container();
 

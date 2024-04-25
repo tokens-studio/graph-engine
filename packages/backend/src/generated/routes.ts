@@ -25,12 +25,8 @@ const models: TsoaRoute.Models = {
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "GraphCreationParams": {
-        "dataType": "refObject",
-        "properties": {
-            "name": {"dataType":"string","required":true},
-            "graph": {"dataType":"string","required":true},
-        },
-        "additionalProperties": false,
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"graph":{"dataType":"string","required":true},"name":{"dataType":"string","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
@@ -44,7 +40,7 @@ export function RegisterRoutes(app: Router) {
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
         app.post('/graph',
-            authenticateMiddleware([{"cookieAuth":[]}]),
+            authenticateMiddleware([{"bearerAuth":[]}]),
             ...(fetchMiddlewares<RequestHandler>(UsersController)),
             ...(fetchMiddlewares<RequestHandler>(UsersController.prototype.createGraph)),
 
@@ -81,7 +77,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/graph/:graphId',
-            authenticateMiddleware([{"cookieAuth":[]}]),
+            authenticateMiddleware([{"bearerAuth":[]}]),
             ...(fetchMiddlewares<RequestHandler>(UsersController)),
             ...(fetchMiddlewares<RequestHandler>(UsersController.prototype.getGraph)),
 
@@ -118,7 +114,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/graph/:graphId',
-            authenticateMiddleware([{"cookieAuth":[]}]),
+            authenticateMiddleware([{"bearerAuth":[]}]),
             ...(fetchMiddlewares<RequestHandler>(UsersController)),
             ...(fetchMiddlewares<RequestHandler>(UsersController.prototype.deleteGraph)),
 

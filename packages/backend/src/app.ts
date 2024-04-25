@@ -5,14 +5,13 @@ import promMid from 'express-prometheus-middleware';
 import bodyParser from "body-parser";
 import { RegisterRoutes } from "./generated/routes";
 import swaggerUi from 'swagger-ui-express';
-// import swaggerDoc from './generated/swagger.json';
 import { errorHandler } from "./middleware/error";
 
 export const app = express();
 
 const swaggerDoc = await import('./generated/swagger.json');
 
-
+app.disable('x-powered-by');
 app.use(cors());
 app.use(promMid({
     metricsPath: '/metrics',
