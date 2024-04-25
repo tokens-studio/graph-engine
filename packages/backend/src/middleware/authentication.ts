@@ -1,17 +1,7 @@
 import { Request } from 'express';
-import { Configuration, FrontendApi, Identity } from '@ory/kratos-client';
+import type { Identity } from '@ory/kratos-client';
 import { AuthError } from "@/errors/auth";
 
-const ORY_KRATOS_PUBLIC_URL = process.env.ORY_KRATOS_PUBLIC_URL
-
-const frontend = new FrontendApi(
-    new Configuration({
-        basePath: ORY_KRATOS_PUBLIC_URL, // Use your local Ory Tunnel URL
-        baseOptions: {
-            withCredentials: true,
-        },
-    }),
-)
 
 export async function expressAuthentication(
     request: Request,

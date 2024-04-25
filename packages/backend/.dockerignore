@@ -1,4 +1,6 @@
 dist
 docs
 jest-coverage
-node_modules
+*.log
+tests
+.env.local

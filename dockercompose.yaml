@@ -1,6 +1,16 @@
 version: "3"
 
 services:
+  backend:
+    image: graph-engine-backend
+    container_name: backend
+    build:
+      context: .
+      dockerfile: ./packages/backend/Dockerfile
+    restart: always
+    ports:
+      - 5000:5000
+
   web:
     container_name: web
     build:
@@ -9,11 +19,3 @@ services:
     restart: always
     ports:
       - 3000:3000
-    networks:
-      - app_network
-
-# Define a network, which allows containers to communicate
-# with each other, by using their container name as a hostname
-networks:
-  app_network:
-    external: true

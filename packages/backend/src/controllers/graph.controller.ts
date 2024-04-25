@@ -16,7 +16,7 @@ import {
 import { PrismaClient, Prisma } from '@prisma/client';
 import { provideSingleton } from '@/utils/singleton';
 import winston from 'winston';
-import { AuthenticatedRequest } from '@/interfaces/authenticatedRequest';
+import type { AuthenticatedRequest } from '@/interfaces/authenticatedRequest';
 
 
 type GraphCreationParams = {

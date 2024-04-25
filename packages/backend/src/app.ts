@@ -6,10 +6,10 @@ import bodyParser from "body-parser";
 import { RegisterRoutes } from "./generated/routes";
 import swaggerUi from 'swagger-ui-express';
 import { errorHandler } from "./middleware/error";
-
+import swaggerDoc from './generated/swagger.json';
 export const app = express();
 
-const swaggerDoc = await import('./generated/swagger.json');
+
 
 app.disable('x-powered-by');
 app.use(cors());

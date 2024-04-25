@@ -5,6 +5,7 @@
   "scripts": {
     "build": "turbo run build",
     "build:ci": "turbo run build --filter=[origin/master...origin/$GITHUB_HEAD_REF]",
+    "build:backend": "turbo run build --filter=...@tokens-studio/graph-engine-backend",
     "build:docs": "turbo run build --filter=...@tokens-studio/graph-engine-docs",
     "build:engine": "turbo run build --filter=...@tokens-studio/graph-engine",
     "build:graph": "turbo run build --dry-run --graph=graphs/all.pdf",
