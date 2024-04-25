@@ -45,10 +45,10 @@
   id: "ory:kratos-selfservice-ui-node:anonymous"
   upstream:
     preserve_host: true
-    url: "http://kratos-selfservice-ui-node:4435"
+    url: "http://kratos-selfservice-ui-node:4455"
     strip_path: auth
   match:
-    url: "http://127.0.0.1:7979/auth/<{registration,welcome,recovery,verification,login,error,health/{alive,ready},**.css,**.js,**.png,**.svg,**.woff*}>"
+    url: "http://127.0.0.1:7979/auth/<**>"
     methods:
       - GET
   authenticators:
@@ -59,25 +59,3 @@
   mutators:
     -
       handler: noop
-
--
-  id: "ory:kratos-selfservice-ui-node:protected"
-  upstream:
-    preserve_host: true
-    url: "http://kratos-selfservice-ui-node:4435"
-    strip_path: auth
-  match:
-    url: "http://127.0.0.1:7979/auth/<{sessions,settings}>"
-    methods:
-      - GET
-  authenticators:
-    -
-      handler: cookie_session
-  authorizer:
-    handler: allow
-  mutators:
-    - handler: id_token
-  errors:
-    - handler: redirect
-      config:
-        to: http://127.0.0.1:7979/login

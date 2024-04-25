@@ -16,6 +16,7 @@
     "dev:docs": "turbo run dev --filter=...@tokens-studio/graph-engine-docs",
     "dev:engine": "turbo run dev --filter=...@tokens-studio/graph-engine",
     "dev:graph-editor:live": "turbo run dev --filter=@tokens-studio/graph-editor...",
+    "dev:api": "turbo run dev --filter=...@tokens-studio/graph-engine-backend",
     "dev:ui": "turbo run dev --filter=...@tokens-studio/graph-engine-ui",
     "dev:ui:live": "turbo run dev --filter=@tokens-studio/graph-engine-ui...",
     "docs": "turbo run docs",

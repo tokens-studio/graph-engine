@@ -34,7 +34,7 @@ services:
       - "4455:4455"
     environment:
       - KRATOS_PUBLIC_URL=http://kratos:4433/
-      - KRATOS_BROWSER_URL=http://127.0.0.1:4433/
+      - KRATOS_BROWSER_URL=http://127.0.0.1:7979/.ory/kratos/public/
       - COOKIE_SECRET=changeme
       - CSRF_COOKIE_NAME=ory_csrf_ui
       - CSRF_COOKIE_SECRET=changeme
@@ -43,7 +43,7 @@ services:
   kratos:
     depends_on:
       - kratos-migrate
-      - jaeger
+      # - jaeger
     image: oryd/kratos:v1.1.0
     command: serve -c /etc/config/kratos/kratos.yml --dev --watch-courier
     restart: unless-stopped
@@ -51,9 +51,9 @@ services:
       - '4433:4433' # public
       - '4434:4434' # admin
     environment:
-      - TRACING_PROVIDER=jaeger
-      - TRACING_PROVIDERS_JAEGER_SAMPLING_SERVER_URL=http://jaeger:5778/sampling
-      - TRACING_PROVIDERS_JAEGER_LOCAL_AGENT_ADDRESS=jaeger:6831
+      # - TRACING_PROVIDER=jaeger
+      # - TRACING_PROVIDERS_JAEGER_SAMPLING_SERVER_URL=http://jaeger:5778/sampling
+      # - TRACING_PROVIDERS_JAEGER_LOCAL_AGENT_ADDRESS=jaeger:6831
       - KRATOS_SELF_URL=http://127.0.0.1:4433
       - DSN=sqlite:///var/lib/sqlite/db.sqlite?_fk=true
       # Must be >= 16 characters
@@ -64,7 +64,6 @@ services:
          target: /var/lib/sqlite
          read_only: false
       - ./data/kratos:/etc/config/kratos
-
   oathkeeper:
     image: oryd/oathkeeper:v0.40
     depends_on:
@@ -79,64 +78,8 @@ services:
     restart: on-failure
     volumes:
       - ./data/oathkeeper:/etc/config/oathkeeper
-
-
   mailslurper:
     image: oryd/mailslurper:latest-smtps
     ports:
       - '4436:4436'
       - '4437:4437'
-  postgresql:
-    image: postgres:13
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./data/postgres:/var/lib/postgresql/data
-
-  # Jaeger
-  jaeger:
-    image: jaegertracing/all-in-one:latest
-    restart: always
-    ports:
-      - "16686:16686" # The UI port
-      - "14268"
-      - "14250"
-
-  # Zipkin
-  zipkin-all-in-one:
-    image: openzipkin/zipkin:latest
-    restart: always
-    ports:
-      - "9411:9411"
-
-  # Collector
-  otel-collector:
-    image: ${OTELCOL_IMG}
-    restart: always
-    command: ["--config=/etc/otel-collector-config.yaml"]
-    volumes:
-      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
-    ports:
-      - "1888:1888"   # pprof extension
-      - "8888:8888"   # Prometheus metrics exposed by the collector
-      - "8889:8889"   # Prometheus exporter metrics
-      - "13133:13133" # health_check extension
-      - "4317:4317"   # OTLP gRPC receiver
-      - "4318:4318"   # OTLP HTTP receiver
-      - "55679:55679" # zpages extension
-    depends_on:
-      - jaeger
-      - zipkin-all-in-one
-
-  prometheus:
-    container_name: prometheus
-    image: prom/prometheus:latest
-    restart: always
-    volumes:
-      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
-    ports:
-      - "9090:9090"

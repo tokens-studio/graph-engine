@@ -47,7 +47,7 @@
 		}
 	},
 	"info": {
-		"title": "@tokens-studio/graph-engine-backed",
+		"title": "@tokens-studio/graph-engine-backend",
 		"version": "0.0.1",
 		"description": "Execution graph backend for apis",
 		"license": {
