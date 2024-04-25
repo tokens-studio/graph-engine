@@ -65,6 +65,22 @@ services:
          read_only: false
       - ./data/kratos:/etc/config/kratos
 
+  oathkeeper:
+    image: oryd/oathkeeper:v0.40
+    depends_on:
+      - kratos
+    ports:
+      - 7979:4455 # Reverse proxy
+      - 7878:4456 # Decision API
+    command:
+      serve proxy -c "/etc/config/oathkeeper/oathkeeper.yml"
+    environment:
+      - LOG_LEVEL=debug
+    restart: on-failure
+    volumes:
+      - ./data/oathkeeper:/etc/config/oathkeeper
+
+
   mailslurper:
     image: oryd/mailslurper:latest-smtps
     ports:
