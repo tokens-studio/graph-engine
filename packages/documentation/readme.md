@@ -1,20 +1,41 @@
-# Graph-engine-docs
+# Website
 
-This is the source code for the documentation of the open source tool [Generators and Resolvers by Tokens Studio](https://resolver.dev.tokens.studio/)
+This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
 
-## Quickstart
+### Installation
 
-1. `yarn  --frozen-lockfile`
-2. `yarn run dev`  
+```
+$ yarn
+```
 
-## Dependendencies
+### Local Development
 
-Dev dependencies should only be used for developmental processes like linting, etc while prod dependencies should be all thats required to build the site.
+```
+$ yarn start
+```
 
-## LFS
+This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
-This repo is using git LFS to track large binary files like images and videos. Please see the installation instructions [here](https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage)
+### Build
 
-## Notes
+```
+$ yarn build
+```
 
-This site is intended to be used as a static site with cloudfront and S3, as such a number of Next properties and behaviours, notably i8n have been turned off to support this.
+This command generates static content into the `build` directory and can be served using any static contents hosting service.
+
+### Deployment
+
+Using SSH:
+
+```
+$ USE_SSH=true yarn deploy
+```
+
+Not using SSH:
+
+```
+$ GIT_USER=<Your GitHub username> yarn deploy
+```
+
+If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.

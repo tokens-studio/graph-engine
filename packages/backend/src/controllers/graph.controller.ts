@@ -5,6 +5,7 @@ import {
     Get,
     Delete,
     Post,
+    Queries,
     Query,
     Route,
     SuccessResponse,
@@ -17,6 +18,7 @@ import { PrismaClient, Prisma } from '@prisma/client';
 import { provideSingleton } from '@/utils/singleton';
 import winston from 'winston';
 import type { AuthenticatedRequest } from '@/interfaces/authenticatedRequest';
+import { skip } from 'node:test';
 
 
 type GraphCreationParams = {
@@ -45,7 +47,24 @@ type Graph = {
 export interface CreatedGraph extends Pick<Graph, 'id'> { }
 
 
+export interface ListGraphParams{
+    /**
+     * @minimum 1
+     * @maximum 20
+     * @default 10
+     * @isInt 
+     * The number of items to return
+     */
+    perPage: number;
+    /**
+     * @minimum 0
+     * @default 0
+     * @isInt
+     * The page number to return
+     */
+    page: number;
 
+}
 
 @Route("graph")
 @Tags("Graph")
@@ -93,12 +112,31 @@ export class UsersController extends Controller {
 
 
     @SuccessResponse("200")
+    @Get()
+    public async listGraphs(
+        @Request() request: AuthenticatedRequest,
+        @Queries() queryParams: ListGraphParams
+
+    ): Promise<Graph[]> {
+        const graphs = await this.dataSource.graph.findMany({
+            take: queryParams.perPage,
+            skip: queryParams.page * queryParams.perPage,
+            where: {
+                owner: request.user.id
+            }
+        });
+        this.setStatus(200);
+        return graphs;
+    }
+
+
+    @SuccessResponse("200")
     @Response<any>("404", "Graph not found")
     @Get('{graphId}')
     public async getGraph(
         @Request() request: AuthenticatedRequest,
         graphId: string
-    ) {
+    ):Promise<Graph> {
         const graph = await this.dataSource.graph.findFirst({
             where: {
                 id: graphId,

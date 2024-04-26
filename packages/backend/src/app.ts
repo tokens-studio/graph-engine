@@ -3,10 +3,10 @@ import express from "express";
 import cors from 'cors';
 import promMid from 'express-prometheus-middleware';
 import bodyParser from "body-parser";
-import { RegisterRoutes } from "./generated/routes";
+import { RegisterRoutes } from "../generated/routes";
 import swaggerUi from 'swagger-ui-express';
 import { errorHandler } from "./middleware/error";
-import swaggerDoc from './generated/swagger.json';
+import swaggerDoc from '../generated/swagger.json';
 export const app = express();
 
 

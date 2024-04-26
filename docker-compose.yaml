@@ -3,7 +3,16 @@ version: '3.7'
 volumes:
   kratos-sqlite:
 services:
-
+  keto:
+    image: oryd/keto:v0.11.1
+    ports:
+      - "4466:4466"
+      - "4467:4467"
+    command: serve -c /home/ory/keto.yml
+    restart: on-failure
+    volumes:
+      - ./data/keto:/home/ory
+      
   kratos-migrate:
     image: oryd/kratos:v1.1.0
     environment:

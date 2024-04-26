@@ -1,0 +1,288 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"CreatedGraph": {
+				"description": "The created graph",
+				"properties": {
+					"id": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"GraphCreationParams": {
+				"properties": {
+					"graph": {
+						"type": "string",
+						"description": "The json serialized graph"
+					},
+					"name": {
+						"type": "string",
+						"description": "A human readable name for the graph"
+					}
+				},
+				"required": [
+					"graph",
+					"name"
+				],
+				"type": "object"
+			},
+			"Graph": {
+				"properties": {
+					"updatedAt": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"owner": {
+						"type": "string"
+					},
+					"graph": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"owner",
+					"graph",
+					"name",
+					"id"
+				],
+				"type": "object"
+			},
+			"ListGraphParams": {
+				"properties": {
+					"perPage": {
+						"type": "integer",
+						"format": "int32",
+						"default": 10,
+						"minimum": 1,
+						"maximum": 20
+					},
+					"page": {
+						"type": "integer",
+						"format": "int32",
+						"default": 0,
+						"minimum": 0
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			}
+		}
+	},
+	"info": {
+		"title": "@tokens-studio/graph-engine-backend",
+		"version": "0.0.1",
+		"description": "Execution graph backend for apis",
+		"license": {
+			"name": "MIT with CC"
+		},
+		"contact": {
+			"name": "andrew@hyma.io"
+		}
+	},
+	"paths": {
+		"/graph": {
+			"post": {
+				"operationId": "CreateGraph",
+				"responses": {
+					"201": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreatedGraph"
+								}
+							}
+						}
+					}
+				},
+				"description": "Creates a new graph for the user",
+				"tags": [
+					"Graph"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/GraphCreationParams"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "ListGraphs",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Graph"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Graph"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "perPage",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "int32",
+							"type": "integer",
+							"minimum": 1,
+							"maximum": 20
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 0,
+							"format": "int32",
+							"type": "integer",
+							"minimum": 0
+						}
+					}
+				]
+			}
+		},
+		"/graph/{graphId}": {
+			"get": {
+				"operationId": "GetGraph",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Graph"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Graph not found",
+						"content": {
+							"application/json": {
+								"schema": {},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Graph"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "graphId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteGraph",
+				"responses": {
+					"200": {
+						"description": ""
+					},
+					"404": {
+						"description": "Graph not found",
+						"content": {
+							"application/json": {
+								"schema": {},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Graph"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "graphId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/api"
+		}
+	]
+}
