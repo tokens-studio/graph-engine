@@ -19,7 +19,7 @@ import FocusTrap from 'focus-trap-react';
 import React, { useCallback, useMemo, useState } from 'react';
 import classNames from 'classnames/dedupe.js';
 import useDetachNodes from '../../../hooks/useDetachNodes.js';
-import GraphLib from 'graphlib';
+import GraphLib from '@dagrejs/graphlib';
 import { useDispatch } from '@/hooks/useDispatch.js';
 const { Graph, alg } = GraphLib;
 

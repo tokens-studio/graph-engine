@@ -5,7 +5,6 @@ import initialLayout from './initialLayout.json'
 import '@tokens-studio/graph-editor/index.css';
 import './index.css';
 import { LayoutBase } from 'rc-dock';
-import {  PlusIcon } from '@radix-ui/react-icons';
 
 const panelGroups = [new PanelGroup({
   title: 'Basic Tokens',
@@ -13,7 +12,6 @@ const panelGroups = [new PanelGroup({
   items:[
     new PanelItem({
       type: 'tokens.studio.generic.constant',
-      icon: <PlusIcon />,
       text: 'Tiny Core',
     }),
   ]

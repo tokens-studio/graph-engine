@@ -1,6 +1,6 @@
 import { Edge, useReactFlow } from 'reactflow';
 import { useCallback } from 'react';
-import GraphLib from 'graphlib';
+import GraphLib from '@dagrejs/graphlib';
 import { useGraph } from '@/hooks/useGraph';
 import { canConvertSchemaTypes } from '@tokens-studio/graph-engine';
 import { stripVariadic } from '@/utils/stripVariadic';
