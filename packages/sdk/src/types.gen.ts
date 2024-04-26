@@ -18,6 +18,59 @@ export type GraphCreationParams = {
     name: string;
 };
 
+export type Graph = {
+    updatedAt: string;
+    createdAt: string;
+    owner: string;
+    graph: string;
+    name: string;
+    id: string;
+};
+
+export type ListGraphParams = {
+    perPage?: number;
+    page?: number;
+};
+
+export type SchemaObject = {
+    id?: string;
+    $id?: string;
+    $schema?: string;
+    $async?: boolean;
+    [key: string]: (unknown) | undefined;
+};
+
+export type GraphSchema = SchemaObject;
+
+export type InvokeableInputDefinition = {
+    type?: SchemaObject;
+    value: unknown;
+};
+
+/**
+ * Construct a type with a set of properties K of type T
+ */
+export type Record_string_InvokeableInputDefinition_ = {
+    [key: string]: InvokeableInputDefinition;
+};
+
+export type InvokeParams = {
+    graphId: string;
+    payload: Record_string_InvokeableInputDefinition_;
+};
+
+export type PaginatedParams = {
+    perPage?: number;
+    page?: number;
+};
+
+export type CredentialCreationParams = unknown;
+
+export type PaginatedListCredsParams = {
+    perPage?: number;
+    page?: number;
+};
+
 export type $OpenApiTs = {
     '/graph': {
         post: {
@@ -28,6 +81,15 @@ export type $OpenApiTs = {
                 201: CreatedGraph;
             };
         };
+        get: {
+            req: {
+                page?: number;
+                perPage?: number;
+            };
+            res: {
+                200: Array<Graph>;
+            };
+        };
     };
     '/graph/{graphId}': {
         get: {
@@ -35,14 +97,7 @@ export type $OpenApiTs = {
                 graphId: string;
             };
             res: {
-                200: {
-                    updatedAt: string;
-                    createdAt: string;
-                    owner: string;
-                    graph: string;
-                    name: string;
-                    id: string;
-                };
+                200: Graph;
                 /**
                  * Graph not found
                  */
@@ -57,6 +112,110 @@ export type $OpenApiTs = {
                 200: unknown;
                 /**
                  * Graph not found
+                 */
+                404: unknown;
+            };
+        };
+    };
+    '/executions': {
+        post: {
+            req: {
+                requestBody: InvokeParams;
+            };
+            res: {
+                /**
+                 * No content
+                 */
+                204: void;
+            };
+        };
+        get: {
+            req: {
+                page?: number;
+                perPage?: number;
+            };
+            res: {
+                200: unknown;
+            };
+        };
+    };
+    '/executions/{id}': {
+        get: {
+            req: {
+                id: string;
+            };
+            res: {
+                200: unknown;
+            };
+        };
+    };
+    '/executions/{id}/artifacts/{artifactId}': {
+        get: {
+            req: {
+                artifactId: string;
+                id: string;
+            };
+            res: {
+                /**
+                 * No content
+                 */
+                204: void;
+            };
+        };
+    };
+    '/executions/{id}/logs/{artifactId}': {
+        get: {
+            req: {
+                artifactId: string;
+                id: string;
+            };
+            res: {
+                /**
+                 * No content
+                 */
+                204: void;
+            };
+        };
+    };
+    '/credentials': {
+        post: {
+            req: {
+                requestBody: CredentialCreationParams;
+            };
+            res: {
+                /**
+                 * No content
+                 */
+                204: void;
+            };
+        };
+        get: {
+            req: {
+                page?: number;
+                perPage?: number;
+            };
+            res: {
+                200: unknown;
+            };
+        };
+    };
+    '/credentials/{id}': {
+        get: {
+            req: {
+                id: string;
+            };
+            res: {
+                200: unknown;
+            };
+        };
+        delete: {
+            req: {
+                id: string;
+            };
+            res: {
+                200: unknown;
+                /**
+                 * Credential not found
                  */
                 404: unknown;
             };

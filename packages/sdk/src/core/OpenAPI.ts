@@ -1,3 +1,4 @@
+import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { ApiRequestOptions } from './ApiRequestOptions';
 
 type Headers = Record<string, string>;
@@ -34,20 +35,20 @@ export type OpenAPIConfig = {
 	VERSION: string;
 	WITH_CREDENTIALS: boolean;
 	interceptors: {
-		request: Interceptors<RequestInit>;
-		response: Interceptors<Response>;
+		request: Interceptors<AxiosRequestConfig>;
+		response: Interceptors<AxiosResponse>;
 	};
 };
 
 export const OpenAPI: OpenAPIConfig = {
-	BASE: '',
+	BASE: '/api',
 	CREDENTIALS: 'include',
 	ENCODE_PATH: undefined,
 	HEADERS: undefined,
 	PASSWORD: undefined,
 	TOKEN: undefined,
 	USERNAME: undefined,
-	VERSION: '0.0.1',
+	VERSION: '1',
 	WITH_CREDENTIALS: false,
 	interceptors: {
 		request: new Interceptors(),
