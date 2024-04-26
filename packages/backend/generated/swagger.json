@@ -86,6 +86,111 @@
 				},
 				"type": "object",
 				"additionalProperties": false
+			},
+			"SchemaObject": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"$id": {
+						"type": "string"
+					},
+					"$schema": {
+						"type": "string"
+					},
+					"$async": {
+						"type": "boolean",
+						"enum": [
+							false
+						],
+						"nullable": false
+					}
+				},
+				"type": "object",
+				"additionalProperties": {}
+			},
+			"GraphSchema": {
+				"$ref": "#/components/schemas/SchemaObject"
+			},
+			"InvokeableInputDefinition": {
+				"properties": {
+					"type": {
+						"$ref": "#/components/schemas/GraphSchema"
+					},
+					"value": {}
+				},
+				"required": [
+					"value"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Record_string.InvokeableInputDefinition_": {
+				"properties": {},
+				"additionalProperties": {
+					"$ref": "#/components/schemas/InvokeableInputDefinition"
+				},
+				"type": "object",
+				"description": "Construct a type with a set of properties K of type T"
+			},
+			"InvokeParams": {
+				"properties": {
+					"graphId": {
+						"type": "string"
+					},
+					"payload": {
+						"$ref": "#/components/schemas/Record_string.InvokeableInputDefinition_"
+					}
+				},
+				"required": [
+					"graphId",
+					"payload"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PaginatedParams": {
+				"properties": {
+					"perPage": {
+						"type": "integer",
+						"format": "int32",
+						"default": 10,
+						"minimum": 1,
+						"maximum": 20
+					},
+					"page": {
+						"type": "integer",
+						"format": "int32",
+						"default": 0,
+						"minimum": 0
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CredentialCreationParams": {
+				"properties": {},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PaginatedListCredsParams": {
+				"properties": {
+					"perPage": {
+						"type": "integer",
+						"format": "int32",
+						"default": 10,
+						"minimum": 1,
+						"maximum": 20
+					},
+					"page": {
+						"type": "integer",
+						"format": "int32",
+						"default": 0,
+						"minimum": 0
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
@@ -98,13 +203,16 @@
 	},
 	"info": {
 		"title": "@tokens-studio/graph-engine-backend",
-		"version": "0.0.1",
-		"description": "Execution graph backend for apis",
+		"version": "1",
+		"description": "This is the backend API for the Tokens Studio Graph Engine API.\n# Cross-Origin Resource Sharing\n    This API features Cross-Origin Resource Sharing (CORS) implemented in compliance with  [W3C spec](https: //www.w3.org/TR/cors/).\n    And that allows cross-domain communication from the browser.\n    All responses have a wildcard same-origin which makes them completely public and accessible to everyone, including any code on any site.",
+		"termsOfService": "https://tokens.studio/terms",
 		"license": {
 			"name": "MIT with CC"
 		},
 		"contact": {
-			"name": "andrew@hyma.io"
+			"name": "API Support",
+			"url": "https://tokens.studio",
+			"email": "apiteam@tokens.studio"
 		}
 	},
 	"paths": {
@@ -269,8 +377,313 @@
 				],
 				"parameters": [
 					{
-						"in": "query",
+						"in": "path",
 						"name": "graphId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/executions": {
+			"post": {
+				"operationId": "Invoke",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Execution"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/InvokeParams"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "GetResources",
+				"responses": {
+					"200": {
+						"description": ""
+					}
+				},
+				"tags": [
+					"Execution"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "perPage",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "int32",
+							"type": "integer",
+							"minimum": 1,
+							"maximum": 20
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 0,
+							"format": "int32",
+							"type": "integer",
+							"minimum": 0
+						}
+					}
+				]
+			}
+		},
+		"/executions/{id}": {
+			"get": {
+				"operationId": "GetResource",
+				"responses": {
+					"200": {
+						"description": ""
+					}
+				},
+				"tags": [
+					"Execution"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/executions/{id}/artifacts/{artifactId}": {
+			"get": {
+				"operationId": "GetArtifact",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Execution"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "artifactId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/executions/{id}/logs/{artifactId}": {
+			"get": {
+				"operationId": "GetLog",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Execution"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "artifactId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/credentials": {
+			"post": {
+				"operationId": "CreateCreds",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Credentials"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CredentialCreationParams"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "ListCreds",
+				"responses": {
+					"200": {
+						"description": ""
+					}
+				},
+				"tags": [
+					"Credentials"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "perPage",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "int32",
+							"type": "integer",
+							"minimum": 1,
+							"maximum": 20
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 0,
+							"format": "int32",
+							"type": "integer",
+							"minimum": 0
+						}
+					}
+				]
+			}
+		},
+		"/credentials/{id}": {
+			"get": {
+				"operationId": "GetCreds",
+				"responses": {
+					"200": {
+						"description": ""
+					}
+				},
+				"tags": [
+					"Credentials"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteCred",
+				"responses": {
+					"200": {
+						"description": ""
+					},
+					"404": {
+						"description": "Credential not found",
+						"content": {
+							"application/json": {
+								"schema": {},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Credentials"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
 						"required": true,
 						"schema": {
 							"type": "string"

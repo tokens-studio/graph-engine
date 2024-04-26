@@ -12,7 +12,12 @@ export const app = express();
 
 
 app.disable('x-powered-by');
-app.use(cors());
+app.use(cors({
+    credentials:true,
+    origin: (origin, callback) => {
+        callback(null, true);
+    }
+}));
 app.use(promMid({
     metricsPath: '/metrics',
     collectDefaultMetrics: true,
@@ -30,6 +35,7 @@ app.use(bodyParser.json());
 // app.use(CookieParser());
 
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+
 RegisterRoutes(app);
 
 app.use(errorHandler);

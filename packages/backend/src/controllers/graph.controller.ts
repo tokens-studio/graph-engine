@@ -8,6 +8,7 @@ import {
     Queries,
     Query,
     Route,
+    Path,
     SuccessResponse,
     Response,
     Request,
@@ -18,7 +19,6 @@ import { PrismaClient, Prisma } from '@prisma/client';
 import { provideSingleton } from '@/utils/singleton';
 import winston from 'winston';
 import type { AuthenticatedRequest } from '@/interfaces/authenticatedRequest';
-import { skip } from 'node:test';
 
 
 type GraphCreationParams = {
@@ -69,8 +69,8 @@ export interface ListGraphParams{
 @Route("graph")
 @Tags("Graph")
 @Security("bearerAuth")
-@provideSingleton(UsersController)
-export class UsersController extends Controller {
+    @provideSingleton(GraphController)
+export class GraphController extends Controller {
 
     dataSource: PrismaClient;
     logger: winston.Logger;
@@ -135,7 +135,7 @@ export class UsersController extends Controller {
     @Get('{graphId}')
     public async getGraph(
         @Request() request: AuthenticatedRequest,
-        graphId: string
+        @Path() graphId: string
     ):Promise<Graph> {
         const graph = await this.dataSource.graph.findFirst({
             where: {
@@ -157,7 +157,7 @@ export class UsersController extends Controller {
     @Delete('{graphId}')
     public async deleteGraph(
         @Request() request: AuthenticatedRequest,
-        @Query() graphId: string
+        @Path() graphId: string
     ) {
 
         try {
