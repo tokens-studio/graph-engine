@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import { styled, keyframes } from '@/lib/stitches/index.js';
-import { Cross2Icon } from '@radix-ui/react-icons';
+import {Xmark} from 'iconoir-react';
 
 interface IInputPopover {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ const InputPopover = ({ children, trigger }: IInputPopover) => (
       <PopoverContent sideOffset={5}>
         {children}
         <PopoverClose aria-label="Close">
-          <Cross2Icon />
+          <Xmark />
         </PopoverClose>
         <PopoverArrow />
       </PopoverContent>

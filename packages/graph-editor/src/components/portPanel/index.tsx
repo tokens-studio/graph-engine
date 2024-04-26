@@ -6,19 +6,12 @@ import {
   Tooltip,
   DropdownMenu,
 } from '@tokens-studio/ui';
-
-import { EyeIcon, UndoIcon } from '@iconicicons/react';
 import { useSelector } from 'react-redux';
 import { observer } from 'mobx-react-lite';
 import { Input, NodeTypes } from '@tokens-studio/graph-engine';
 import { Port as GraphPort } from '@tokens-studio/graph-engine';
-import {
-  Cross1Icon,
-  DotsVerticalIcon,
-  EyeClosedIcon,
-  GearIcon,
-  IdCardIcon,
-} from '@radix-ui/react-icons';
+
+import {Xmark, MoreVert, EyeClosed, Settings, Puzzle, Undo, EyeSolid} from 'iconoir-react';
 import { InlineTypeLabel } from '@/components/flow';
 import { useGraph } from '@/hooks/useGraph';
 import { controls } from '@/redux/selectors/registry';
@@ -96,7 +89,7 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
               size="small"
               onClick={onClick}
               variant={'invisible'}
-              icon={port.visible ? <EyeIcon /> : <EyeClosedIcon />}
+              icon={port.visible ? <EyeSolid /> : <EyeClosed />}
             />
           )}
           <Tooltip label={port.type.description || ''}>
@@ -112,7 +105,7 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
                 tooltip="Settings"
                 // onClick={onReset}
                 variant={'invisible'}
-                icon={<DotsVerticalIcon />}
+                icon={<MoreVert />}
               />
             </DropdownMenu.Trigger>
             <DropdownMenu.Portal>
@@ -121,7 +114,7 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
                   {resettable && (
                     <DropdownMenu.Item onClick={onReset}>
                       <DropdownMenu.LeadingVisual>
-                        <UndoIcon />
+                        <Undo />
                       </DropdownMenu.LeadingVisual>
                       Reset
                     </DropdownMenu.Item>
@@ -129,7 +122,7 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
                   {isDynamicInput && (
                     <DropdownMenu.Item onClick={onDelete}>
                       <DropdownMenu.LeadingVisual>
-                        <Cross1Icon />
+                        <Xmark />
                       </DropdownMenu.LeadingVisual>
                       Delete
                     </DropdownMenu.Item>
@@ -137,7 +130,7 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
 
                   <DropdownMenu.Item onClick={onCopySchema}>
                     <DropdownMenu.LeadingVisual>
-                      <IdCardIcon />
+                      <Puzzle />
                     </DropdownMenu.LeadingVisual>
                     Copy Schema
                   </DropdownMenu.Item>

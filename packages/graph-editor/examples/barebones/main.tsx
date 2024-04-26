@@ -7,8 +7,6 @@ import './index.css';
 import { LayoutBase } from 'rc-dock';
 import {  PlusIcon } from '@radix-ui/react-icons';
 
-// export const panelItems = defaultPanelGroupsFactory();
-
 const panelGroups = [new PanelGroup({
   title: 'Basic Tokens',
   key: 'basic',
@@ -21,9 +19,7 @@ const panelGroups = [new PanelGroup({
   ]
 })]
 
-
 const panelItems = new DropPanelStore(panelGroups);
-
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

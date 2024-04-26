@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { useGraph } from '@/hooks/useGraph';
 import { inputControls } from '@/redux/selectors/registry';
 import { PortPanel } from '@/components/portPanel';
-import { InfoCircledIcon } from '@radix-ui/react-icons';
+import { InfoCircle } from 'iconoir-react';
 
 export function Inputsheet() {
   const graph = useGraph();
@@ -46,7 +46,7 @@ export function Inputsheet() {
             <Heading size="large"> {selectedNode.factory.title}</Heading>
             <IconButton
               tooltip={selectedNode.factory.description}
-              icon={<InfoCircledIcon />}
+              icon={<InfoCircle />}
             />
           </Stack>
         </Stack>

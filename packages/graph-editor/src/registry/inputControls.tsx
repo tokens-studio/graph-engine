@@ -21,7 +21,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useMemo } from 'react';
 import { Node } from '@tokens-studio/graph-engine';
 
-import properties from 'mdn-data/css/properties.json' assert { type: 'json' };
+import properties from 'mdn-data/css/properties.json';
 import { deletable } from '@/annotations';
 
 const CSSProperties = Object.keys(properties);

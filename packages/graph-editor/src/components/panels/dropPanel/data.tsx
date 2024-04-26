@@ -1,4 +1,4 @@
-import { ButtonIcon, PlusIcon } from '@radix-ui/react-icons';
+import { Plus, Star } from 'iconoir-react';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import React from 'react';
 import preset from '@/data/preset.js';
@@ -116,8 +116,8 @@ const knownDocs = {
 };
 
 const knownIcons = {
-  [NodeTypes.INPUT]: <ButtonIcon />,
-  [NodeTypes.OUTPUT]: <ButtonIcon />,
+  [NodeTypes.INPUT]: <Star />,
+  [NodeTypes.OUTPUT]: <Star />,
   [NodeTypes.CSS_FUNCTIONS]: 'x()',
 };
 
@@ -173,7 +173,7 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
             value: tinyCoreFlattened,
             title: 'Tiny Core',
           },
-          icon: <PlusIcon />,
+          icon: <Plus />,
           text: 'Tiny Core',
         }),
         new PanelItem({
@@ -182,7 +182,7 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
             value: tinyCoreLightFlattened,
             title: 'Tiny Light',
           },
-          icon: <PlusIcon />,
+          icon: <Plus />,
           text: 'Tiny Light',
         }),
         new PanelItem({
@@ -191,7 +191,7 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
             value: tinyCoreDarkFlattened,
             title: 'Tiny Dark',
           },
-          icon: <PlusIcon />,
+          icon: <Plus />,
           text: 'Tiny Dark',
         }),
         new PanelItem({
@@ -200,7 +200,7 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
             value: presetFlattened,
             title: 'Preset tokens',
           },
-          icon: <PlusIcon />,
+          icon: <Plus />,
           text: 'Preset Tokens',
         }),
       ],

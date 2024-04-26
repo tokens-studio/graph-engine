@@ -6,7 +6,7 @@ import { DragItem } from './DragItem.js';
 import { NodeEntry } from './NodeEntry.js';
 import { styled } from '@/lib/stitches/index.js';
 import { observer } from 'mobx-react-lite';
-import { ChevronRightIcon } from '@radix-ui/react-icons';
+import { NavArrowRight } from 'iconoir-react';
 import { useSelector } from 'react-redux';
 import { panelItemsSelector } from '@/redux/selectors/registry.js';
 
@@ -32,7 +32,7 @@ const StyledAccordion = styled(Accordion, {
   boxSizing: 'border-box',
 });
 
-const StyledChevron = styled(ChevronRightIcon, {
+const StyledChevron = styled(NavArrowRight, {
   transition: 'all ease 0.3s',
   '[data-state="open"] &': {
     transform: 'rotate(90deg)',

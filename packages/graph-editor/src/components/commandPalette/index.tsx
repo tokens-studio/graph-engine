@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { showNodesCmdPaletteSelector } from '@/redux/selectors/ui';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import { styled } from '@/lib/stitches';
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
+import { Search } from 'iconoir-react';
 import { observer } from 'mobx-react-lite';
 
 export interface ICommandMenu {
@@ -142,7 +142,7 @@ const CommandMenu = ({
           borderBottom: '1px solid $borderSubtle',
         }}
       >
-        <MagnifyingGlassIcon />
+        <Search />
         <Command.Input placeholder="Find nodes to add…" />
       </Box>
       <Command.List>

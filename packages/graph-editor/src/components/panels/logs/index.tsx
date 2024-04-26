@@ -10,7 +10,7 @@ import {
 import { currentNode, logSelector } from '@/redux/selectors/graph';
 import { useSelector } from 'react-redux';
 import { JSONTree } from 'react-json-tree';
-import { TrashIcon } from '@radix-ui/react-icons';
+import {Trash} from 'iconoir-react';
 import { useDispatch } from '@/hooks';
 
 export function LogsPanel() {
@@ -46,7 +46,7 @@ export function LogsPanel() {
     >
       <Stack direction="row" gap={2} justify="end">
         <TextInput value={searchText} placeholder="Search logs. <TODO>" onChange={onSearchChange} />
-        <IconButton onClick={clearLogs} icon={<TrashIcon />} tooltip='Clear logs' />
+        <IconButton onClick={clearLogs} icon={<Trash />} tooltip='Clear logs' />
       </Stack>
 
       <Box css={{ padding: '$1', overflow: 'auto', fontSize: 'smaller' }}>

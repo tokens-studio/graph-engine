@@ -20,7 +20,7 @@ import {
 } from '@/redux/selectors/settings';
 import { useDispatch } from '@/hooks/useDispatch.js';
 import { EdgeType, LayoutType } from '@/redux/models/settings.js';
-import { InfoCircledIcon } from '@radix-ui/react-icons';
+import { InfoCircleSolid } from 'iconoir-react';
 import { contextMenuSelector } from '@/redux/selectors/ui';
 
 const EdgeValues = Object.values(EdgeType);
@@ -62,7 +62,7 @@ export const Settings = () => {
               }
             >
               <Box>
-                <InfoCircledIcon />
+                <InfoCircleSolid />
               </Box>
             </Tooltip>
           </Stack>
@@ -78,7 +78,7 @@ export const Settings = () => {
             <Label>Show execution time</Label>
             <Tooltip label={'Shows how long it takes for a node to process'}>
               <Box>
-                <InfoCircledIcon />
+                <InfoCircleSolid />
               </Box>
             </Tooltip>
           </Stack>
@@ -94,7 +94,7 @@ export const Settings = () => {
             <Label>Enable Context Menus</Label>
             <Tooltip label={'Provides right click context menus'}>
               <Box>
-                <InfoCircledIcon />
+                <InfoCircleSolid />
               </Box>
             </Tooltip>
           </Stack>
@@ -114,7 +114,7 @@ export const Settings = () => {
               }
             >
               <Box>
-                <InfoCircledIcon />
+                <InfoCircleSolid />
               </Box>
             </Tooltip>
           </Stack>

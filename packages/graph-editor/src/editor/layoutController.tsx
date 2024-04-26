@@ -7,8 +7,7 @@ import { LogsPanel } from "@/components/panels/logs";
 import { OutputSheet } from "@/components/panels/output";
 import { GraphPanel } from "@/components/panels/graph";
 import { FlameGraph } from "@/components/panels/flamegraph";
-import { MaximizeIcon, MinimizeIcon } from "@iconicicons/react";
-import { Cross1Icon } from "@radix-ui/react-icons";
+import { Maximize, Reduce, Xmark } from 'iconoir-react';
 import { IconButton, Stack, Tooltip } from '@tokens-studio/ui';
 import { DropPanel } from '@/components/panels/dropPanel/index.js';
 import { ExternalLoaderProvider } from '@/context/ExternalLoaderContext.js';
@@ -52,7 +51,7 @@ let groups: Record<string, TabGroup> = {
                         title={
                             panelData?.parent?.mode === 'maximize' ? 'Restore' : 'Maximize'
                         }
-                        icon={maxxed ? <MinimizeIcon /> : <MaximizeIcon />}
+                        icon={maxxed ? <Reduce /> : <Maximize />}
                         onClick={() => context.dockMove(panelData, null, 'maximize')}
                     ></DockButton>,
                 );
@@ -70,13 +69,13 @@ let groups: Record<string, TabGroup> = {
                 <DockButton
                     key="close"
                     title="Close"
-                    icon={<Cross1Icon />}
+                    icon={<Xmark />}
                     onClick={() => context.dockMove(panelData, null, 'remove')}
                 ></DockButton>,
             );
             return <Stack gap={2}>{buttons}</Stack>;
         },
-    }, 
+    },
     /**
      * Note that the graph has a huge issue when ran in a popout window, as such we disable it for now
      */
@@ -93,7 +92,7 @@ let groups: Record<string, TabGroup> = {
                         title={
                             panelData?.parent?.mode === 'maximize' ? 'Restore' : 'Maximize'
                         }
-                        icon={maxxed ? <MinimizeIcon /> : <MaximizeIcon />}
+                        icon={maxxed ? <Reduce /> : <Maximize />}
                         onClick={() => context.dockMove(panelData, null, 'maximize')}
                     ></DockButton>,
                 );
@@ -310,13 +309,13 @@ export const LayoutController = React.forwardRef<
         [],
     );
 
-    useEffect(()=>{
-        console.log('effect',dockerRef)
-        if (dockerRef?.current && initialLayout){
+    useEffect(() => {
+        console.log('effect', dockerRef)
+        if (dockerRef?.current && initialLayout) {
             dockerRef.current?.loadLayout(initialLayout);
         }
-    
-    },[dockerRef])
+
+    }, [dockerRef])
 
 
 

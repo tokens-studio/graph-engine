@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PlayIcon, StopIcon, PauseIcon } from '@radix-ui/react-icons';
+import { Play, Pause, Square } from 'iconoir-react';
 import { Box, IconButton, Stack } from '@tokens-studio/ui';
 import { useGraph } from '@/hooks/useGraph';
 import { useDispatch } from '@/hooks';
@@ -52,9 +52,9 @@ export function PlayPanel() {
                 gap={4}
                 css={{ height: '100%', flex: 1, padding: '$3' }}
             >
-                <IconButton disabled={!(state === PlayState.STOPPED)} title="Play" onClick={onPlay} icon={<PlayIcon />} />
-                <IconButton disabled={state === PlayState.STOPPED} title="Pause" onClick={onPause} icon={<PauseIcon />} variant={state === PlayState.PAUSED ? 'primary' : 'secondary'} />
-                <IconButton disabled={state === PlayState.STOPPED} title="Stop" onClick={onStop} icon={<StopIcon />} />
+                <IconButton disabled={!(state === PlayState.STOPPED)} title="Play" onClick={onPlay} icon={<Play />} />
+                <IconButton disabled={state === PlayState.STOPPED} title="Pause" onClick={onPause} icon={<Pause />} variant={state === PlayState.PAUSED ? 'primary' : 'secondary'} />
+                <IconButton disabled={state === PlayState.STOPPED} title="Stop" onClick={onStop} icon={<Square />} />
             </Stack>
         </Box>
     );

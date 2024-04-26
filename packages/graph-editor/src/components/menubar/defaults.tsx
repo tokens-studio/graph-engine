@@ -1,4 +1,4 @@
-import { DownloadIcon, FilePlusIcon, GearIcon, InputIcon, PlayIcon, UploadIcon } from '@radix-ui/react-icons';
+import { Download, PagePlusIn, Settings as SettingsIcon, Play, Upload, Undo, Redo, Cpu,Archive }  from 'iconoir-react';
 import { Menu, MenuItem, Seperator, SubMenu } from './data';
 import React, { MutableRefObject, useCallback } from 'react';
 import { MenuItemElement } from './menuItem';
@@ -15,13 +15,10 @@ import { NodeSettingsPanel } from '../panels/nodeSettings';
 import { FindDialog } from '../dialogs/findDialog';
 import { PlayPanel } from '../panels/play';
 import { LogsPanel } from '../panels/logs';
-import { AnnotationDotsIcon, CpuIcon, RedoIcon, UndoIcon } from '@iconicicons/react';
 import { GraphPanel } from '../panels/graph';
 import { DropPanel } from '../panels/dropPanel';
 import { graphEditorSelector } from '@/redux/selectors/graph';
 import { title } from '@/annotations';
-
-
 
 export interface IWindowButton {
   //Id of the tab
@@ -98,7 +95,7 @@ export const defaultMenuDataFactory = (): Menu =>
             name: 'newGraph',
             render: (rest) => {
               return (
-                <MenuItemElement key="neww" icon={<FilePlusIcon />} {...rest}>
+                <MenuItemElement key="neww" icon={<PagePlusIn />} {...rest}>
                   New Graph
                 </MenuItemElement>
               );
@@ -138,7 +135,7 @@ export const defaultMenuDataFactory = (): Menu =>
               };
 
               return (
-                <MenuItemElement onClick={onClick} icon={<UploadIcon />} {...rest}>
+                <MenuItemElement onClick={onClick} icon={<Upload />} {...rest}>
                   <u>L</u>oad
                 </MenuItemElement>
               );
@@ -168,7 +165,7 @@ export const defaultMenuDataFactory = (): Menu =>
               return (
                 <MenuItemElement
                   disabled={!graphRef}
-                  icon={<DownloadIcon />}
+                  icon={<Download />}
                   onClick={onSave}
                   {...rest}
                 >
@@ -185,11 +182,11 @@ export const defaultMenuDataFactory = (): Menu =>
         items: [
           new MenuItem({
             name: 'undo',
-            render: ({key,...rest}) => <MenuItemElement key={key} icon={<UndoIcon />} {...rest} >Undo</MenuItemElement>,
+            render: ({key,...rest}) => <MenuItemElement key={key} icon={<Undo />} {...rest} >Undo</MenuItemElement>,
           }),
           new MenuItem({
             name: 'redo',
-            render: ({ key, ...rest }) => <MenuItemElement key={key} icon={<RedoIcon />} {...rest}>Redo</MenuItemElement>,
+            render: ({ key, ...rest }) => <MenuItemElement key={key} icon={<Redo />} {...rest}>Redo</MenuItemElement>,
           }),
 
           new Seperator(),
@@ -227,7 +224,7 @@ export const defaultMenuDataFactory = (): Menu =>
             name: 'nodeSettings',
             id: 'nodeSettings',
             title: 'Node Settings',
-            icon: <CpuIcon />,
+            icon: <Cpu />,
             content: <NodeSettingsPanel />,
           }),
           windowButton({
@@ -240,14 +237,14 @@ export const defaultMenuDataFactory = (): Menu =>
             name: 'logs',
             id: 'logs',
             title: 'Logs',
-            icon: <AnnotationDotsIcon />,
+            icon: <Archive />,
             content: <LogsPanel />,
           }),
           windowButton({
             name: 'playControls',
             id: 'playControls',
             title: 'Play Controls',
-            icon: <PlayIcon />,
+            icon: <Play />,
             content: <PlayPanel />,
           }),
           windowButton({
@@ -266,7 +263,7 @@ export const defaultMenuDataFactory = (): Menu =>
             name: 'settings',
             id: 'settings',
             title: 'Settings',
-            icon: <GearIcon />,
+            icon: <SettingsIcon />,
             content: <Settings />,
           }),
           windowButton({
@@ -298,7 +295,7 @@ export const defaultMenuDataFactory = (): Menu =>
                 link.click();
               }, [dockerRef]);
               return (
-                <MenuItemElement icon={<DownloadIcon />} onClick={saveLayout} {...rest}>
+                <MenuItemElement icon={<Download />} onClick={saveLayout} {...rest}>
                   Save Layout
                 </MenuItemElement>
               );
@@ -332,7 +329,7 @@ export const defaultMenuDataFactory = (): Menu =>
               }, [dockerRef]);
 
               return (
-                <MenuItemElement icon={<UploadIcon />} onClick={loadLayout} {...rest}>
+                <MenuItemElement icon={<Upload />} onClick={loadLayout} {...rest}>
                   Load Layout
                 </MenuItemElement>
               );
