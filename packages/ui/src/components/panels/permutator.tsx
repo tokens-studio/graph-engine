@@ -35,16 +35,9 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import {
-  ChevronDownIcon,
-  ChevronRightIcon,
-  ChevronUpIcon,
-  FolderMinusIcon,
-  FolderPlusIcon,
-  InformationIcon,
-  PauseIcon,
-} from '@iconicicons/react';
+import { Pause, NavArrowUp, NavArrowDown, NavArrowRight, FolderPlus, FolderMinus, InfoCircleSolid } from 'iconoir-react';
 import { Graph, GraphSchema, NodeTypes } from '@tokens-studio/graph-engine';
+import { set } from 'mobx';
 
 function getCombinations<T>(arrays: T[][]): T[][] {
   if (arrays.length === 0) return [[]];
@@ -64,12 +57,14 @@ type GraphInputs = Record<string, {
   value: any;
 }>;
 
+
+
 function getGraphInput(graph: Graph): GraphInputs | null {
 
   const nodes = Object.values(graph.nodes);
 
-  const input = nodes.find((node: any) => node.type === NodeTypes.INPUT);
-  const output = nodes.find((node: any) => node.type === NodeTypes.OUTPUT);
+  const input = nodes.find((node: any) => node.nodeType() === NodeTypes.INPUT);
+  const output = nodes.find((node: any) => node.nodeType() === NodeTypes.OUTPUT);
 
 
   if (!input) {
@@ -82,7 +77,6 @@ function getGraphInput(graph: Graph): GraphInputs | null {
   }
 
   return Object.entries(input.inputs).reduce((acc, [key, value]) => {
-
     acc[key] = {
       type: value.type,
       value: value.value
@@ -210,9 +204,9 @@ const DraggableColumnHeader: React.FC<{
                   onClick={header.column.getToggleGroupingHandler()}
                   icon={
                     header.column.getIsGrouped() ? (
-                      <FolderMinusIcon />
+                      <FolderMinus />
                     ) : (
-                      <FolderPlusIcon />
+                      <FolderPlus />
                     )
                   }
                 />
@@ -234,13 +228,13 @@ const DraggableColumnHeader: React.FC<{
                   )}
                 </Label>
                 {{
-                  asc: <ChevronUpIcon />,
-                  desc: <ChevronDownIcon />,
+                  asc: <NavArrowUp />,
+                  desc: <NavArrowDown />,
                 }[header.column.getIsSorted() as string] ?? null}
               </Stack>
             </Stack>
           )}
-          <IconButton ref={dragRef} variant="invisible" icon={<PauseIcon />} />
+          <IconButton ref={dragRef} variant="invisible" icon={<Pause />} />
         </Stack>
       </div>
       <div
@@ -255,11 +249,11 @@ const DraggableColumnHeader: React.FC<{
   );
 };
 
-export const Permutator = () => {
+export const PermutatorPanel = () => {
 
-  const graph: Graph = useGraph();
+  const graph = useGraph();
 
-  const [graphInfo, setGraphInfo] = useState<DefinitionMap | null>(null);
+  const [graphInfo, setGraphInfo] = useState<GraphInputs | null>(null);
   const [permutations, setPermutations] = useState(0);
   const [results, setResults] = useState<PermutationType[]>([]);
   const [selectedOptions, setSelectedOptions] = useState<
@@ -305,7 +299,23 @@ export const Permutator = () => {
 
 
   const extractInputs = () => {
-    setGraphInfo(getGraphInput(graph));
+    if (graph) {
+      const inputs = getGraphInput(graph)
+      setGraphInfo(inputs);
+      if (inputs) {
+        //Create the initial selected options
+        const initialSelectedOptions = Object.entries(inputs).reduce(
+          (acc, [key, value]) => {
+            acc[key] = []
+            return acc;
+          },
+          {},
+        );
+        setSelectedOptions(initialSelectedOptions);
+      }
+
+    }
+
   }
   const onReset = useCallback(() => {
     setResults([]);
@@ -346,7 +356,7 @@ export const Permutator = () => {
 
   const onPermutate = useCallback(async () => {
     //dont do anything if we are already loading
-    if (loading) {
+    if (loading || !graph) {
       return;
     }
 
@@ -411,6 +421,7 @@ export const Permutator = () => {
     getGroupedRowModel: getGroupedRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
+
 
   return (
     <Stack
@@ -510,9 +521,9 @@ export const Permutator = () => {
                                     }}
                                   >
                                     {row.getIsExpanded() ? (
-                                      <ChevronDownIcon />
+                                      <NavArrowDown />
                                     ) : (
-                                      <ChevronRightIcon />
+                                      <NavArrowRight />
                                     )}{' '}
                                     {flexRender(
                                       cell.column.columnDef.cell,

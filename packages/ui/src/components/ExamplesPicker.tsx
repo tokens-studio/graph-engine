@@ -1,4 +1,4 @@
-import { SearchIcon } from '@iconicicons/react';
+import {Search} from 'iconoir-react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Command } from 'cmdk';
 import React from 'react';
@@ -27,7 +27,7 @@ const ExamplesPicker = ({ open, onClose, loadExample }) => {
           padding: '0 $4',
         }}
       >
-        <SearchIcon />
+        <Search />
         <Command.Input placeholder="Find an example to load…" />
       </Box>
       <Command.List>

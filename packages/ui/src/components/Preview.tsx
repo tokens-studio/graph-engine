@@ -2,7 +2,8 @@ import { Box, Stack, ToggleGroup } from '@tokens-studio/ui';
 import { Preview as ComponentPreview } from '@/components/preview/index.tsx';
 
 import { LiveEditor, LiveError } from 'react-live';
-import { MinusIcon, PictureInPictureIcon, VideoIcon } from '@iconicicons/react';
+import { Minus, OpenInWindow, MediaVideo } from 'iconoir-react'
+
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Code3Icon from '@/assets/svgs/code-3.svg';
@@ -99,7 +100,7 @@ export const Preview = ({ codeRef }) => {
                 color: '$fgSubtle',
               }}
             >
-              {isVisible ? <MinusIcon /> : <PictureInPictureIcon />}
+              {isVisible ? <MediaVideo /> : <OpenInWindow />}
               <Box css={{ color: '$fgDefault' }}>Preview</Box>
             </Box>
             {isVisible && (
@@ -110,7 +111,7 @@ export const Preview = ({ codeRef }) => {
                   onValueChange={handleSetVisibleTab}
                 >
                   <ToggleGroup.Item value="preview">
-                    <VideoIcon id="preview" />
+                    <MediaVideo id="preview" />
                   </ToggleGroup.Item>
                   <ToggleGroup.Item value="editor">
                     <Code3Icon id="code-editor" />

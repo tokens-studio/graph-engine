@@ -1,7 +1,7 @@
 import { Box, Button, Stack, Text } from '@tokens-studio/ui';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { fs } from '../editor/data.ts';
-import { ChevronDownIcon, FileIcon, FolderIcon } from '@iconicicons/react';
+import { NavArrowDown, Folder, EmptyPage} from 'iconoir-react';
 import { styled } from '@/lib/stitches/stitches.config.ts';
 import { join } from 'path';
 
@@ -90,7 +90,7 @@ export const Directory = ({ files, indent = 0 }: { files: DirectoryProps, indent
     if (files.type === 'file') {
         return <File>
             <Stack direction='row' gap={2} css={{ paddingLeft: indent * 10 + 'px' }}>
-                <FileIcon />
+                <EmptyPage />
                 <Text >{files.name}</Text>
             </Stack>
         </File >
@@ -104,7 +104,7 @@ export const Directory = ({ files, indent = 0 }: { files: DirectoryProps, indent
                 onDragLeave={() => setHovering(false)}
                 onDrop={handleDrop} data-hovering={hovering}>
                 <Stack direction='row' gap={2}>
-                    <ChevronDownIcon style={{ transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)' }} />
+                    <NavArrowDown style={{ transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)' }} />
                     <Text>
                         {files.name}
                     </Text>
@@ -118,7 +118,6 @@ export const Directory = ({ files, indent = 0 }: { files: DirectoryProps, indent
     )
 
 }
-
 const readItemsRecursively = (path: string, parent: string = '') => {
     const items = fs.readdirSync(path
         , { withFileTypes: true }).map(x => {
@@ -152,11 +151,17 @@ export const FsPanel = () => {
             setTrigger(Math.random());
         })
         return () => watcher.close();
-    }, [])
+    }, []);
+
+
+    const synchronize = useCallback(() => {
+        setTrigger(Math.random());
+    }, []);
 
     return <Box css={{ padding: '$2' }}>
         <Stack direction='column'>
             <Directory files={{ name: '/', type: 'directory', items: tree, parentPath: '' }} indent={0} />
+            <Button onClick={synchronize}>Synchronize</Button>
         </Stack>
     </Box>
 

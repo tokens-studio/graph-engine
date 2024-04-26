@@ -9,6 +9,7 @@
     "type": "git",
     "url": "https://github.com/tokens-studio/graph-engine"
   },
+  "sideEffects": false,
   "scripts": {
     "build": "cross-env NODE_ENV=development next build",
     "dev": "next",
@@ -19,7 +20,6 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@iconicicons/react": "1.5.1",
     "@lion/button": "0.18.1",
     "@lion/ui": "0.2.1",
     "@lit-labs/context": "0.3.1",
@@ -30,7 +30,6 @@
     "@opentelemetry/api-logs": "0.50.0",
     "@radix-ui/react-accordion": "1.1.1",
     "@radix-ui/react-context-menu": "2.1.3",
-    "@radix-ui/react-icons": "1.3.0",
     "@rematch/core": "2.2.0",
     "@rematch/persist": "2.1.2",
     "@stitches/react": "1.2.8",
@@ -76,10 +75,10 @@
     "reselect": "4.1.8",
     "sass": "1.62.1",
     "sentence-case": "3.0.4",
-    "spyfs": "1.0.2",
     "uuid": "9.0.0"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "14.2.3",
     "@svgr/webpack": "8.1.0",
     "@tokens-studio/eslint-config-custom": "*",
     "@types/graphlib": "2.1.8",

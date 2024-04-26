@@ -1,4 +1,5 @@
-import { BookIcon } from '@iconicicons/react';
+
+import { Book } from 'iconoir-react';
 import {
     MenuItemElement,
     defaultMenuDataFactory,
@@ -12,6 +13,8 @@ import YoutubeIcon from '@/assets/svgs/youtube.svg';
 import SlackIcon from '@/assets/svgs/slack.svg';
 import { FsPanel } from '../panels/fs.tsx';
 import { CodePanel } from '../panels/codeEditor.tsx';
+import { RemoteStoragePanel } from '../panels/remoteStorage.tsx';
+import { PermutatorPanel } from '../panels/permutator.tsx';
 
 export const menu = defaultMenuDataFactory();
 
@@ -37,6 +40,25 @@ windows.items.push(
         content: <CodePanel />,
     })
 );
+windows.items.push(
+    windowButton({
+        name: 'remoteStorage',
+        id: 'remoteStorage',
+        title: 'Remote Storage',
+        content: <RemoteStoragePanel />,
+    })
+);
+
+windows.items.push(
+    windowButton({
+        name: 'permutator',
+        id: 'permutator',
+        title: 'Permutations',
+        content: <PermutatorPanel />,
+    })
+);
+
+
 
 menu.items.push(
     new SubMenu({
@@ -46,7 +68,7 @@ menu.items.push(
             new MenuItem({
                 name: 'docs',
                 render: (rest) => (
-                    <MenuItemElement icon={< BookIcon />} {...rest} >
+                    <MenuItemElement icon={< Book />} {...rest} >
                         <a
                             href="https://docs.graph.tokens.studio/"
                             target="_blank"
