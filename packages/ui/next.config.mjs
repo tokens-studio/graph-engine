@@ -15,6 +15,9 @@ export default withBundleAnalyzer({
   reactStrictMode: true,
   // basePath: '/beta',
   transpilePackages:['@tokens-studio/graph-editor','@tokens-studio/graph-engine'],
+  env:{
+    API_PATH: process.env.API_PATH,
+  },
   experimental: {
     forceSwcTransforms:true,
     //Terrible hack to fix

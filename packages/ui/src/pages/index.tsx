@@ -1,88 +1,121 @@
 'use client';
-import { Box } from '@tokens-studio/ui';
-import { LiveProvider } from 'react-live';
-import { scope } from '@/components/preview/scope.tsx';
-import { useDispatch } from '@/hooks/index.ts';
-import { useSelector } from 'react-redux';
-import React, { useState } from 'react';
-import {
-  previewCodeSelector,
-  showJourneySelector,
-} from '@/redux/selectors/index.ts';
-import Joyride, { CallBackProps, STATUS } from 'react-joyride';
-// @ts-ignore
-import { themes } from 'prism-react-renderer';
+import { Box, Button, EmptyState, Heading, Spinner, Stack, Text, TextInput, Toast } from '@tokens-studio/ui';
+import React, { useEffect } from 'react';
 
-import { useJourney } from '@/components/journeys/basic.tsx';
-import { JoyrideTooltip } from '@/components/joyride/tooltip.tsx';
-import { EditorTab } from '@/components/editor/index.tsx';
-import globalState, { GlobalState } from '@/mobx/index.tsx';
-import { observer } from 'mobx-react-lite';
-
-const Wrapper = observer(({ theme }: { theme: GlobalState['ui']['theme'] }) => {
-  const dispatch = useDispatch();
-  const showJourney = useSelector(showJourneySelector);
-  const previewCode = useSelector(previewCodeSelector);
-
-  const [{ steps }] = useJourney();
-  const handleJoyrideCallback = (data: CallBackProps) => {
-    const { status } = data;
-    const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
-
-    if (finishedStatuses.includes(status)) {
-      dispatch.journey.setShowJourney(false);
-    }
-  };
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import { GraphService } from '@/api/index.ts';
 
 
-  return (
-    <>
-      {/* @ts-ignore */}
-      <Joyride
-        callback={handleJoyrideCallback}
-        continuous
-        hideCloseButton
-        run={showJourney}
-        tooltipComponent={JoyrideTooltip}
-        scrollToFirstStep
-        showProgress
-        showSkipButton
-        steps={steps}
-        styles={{
-          options: {
-            zIndex: 10000,
-          },
-        }}
-      />
-      <Box
-        css={{
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'row',
-          width: '100%',
-          height: '100%',
-          overflow: 'hidden',
-          background: '$bgCanvas',
-          isolation: 'isolate',
-        }}
-      >
-        <LiveProvider
-          code={previewCode}
-          scope={scope}
-          noInline={true}
-          enableTypeScript={true}
-          language="jsx"
-        >
-          <EditorTab ui={globalState.ui} />
-        </LiveProvider>
-      </Box>
-    </>
-  );
-});
+import Link from 'next/link.js';
+import { useErrorToast } from '@/hooks/useToast.tsx';
+import { GraphUp, Plus, Search, Upload } from 'iconoir-react';
+import ago from 's-ago';
+import { Graph } from '@tokens-studio/graph-engine';
 
-const Index = () => {
-  return <Wrapper theme={globalState.ui.theme} />;
+const fetchGraphs = async (page: number) => {
+    return await GraphService.listGraphs({ page });
 }
 
+const Page = () => {
 
-export default Index;
+    const [page, setPage] = React.useState(0);
+    const [search, setSearch] = React.useState('');
+    const { isPending, isError, error, data, isFetching, isPlaceholderData } = useQuery({
+        queryKey: ['graphs', page],
+        placeholderData: keepPreviousData,
+        queryFn: () => fetchGraphs(page)
+    });
+
+    const createGraph = async () => {
+
+        const serialized = new Graph().serialize();
+
+    
+
+        const newGraph = await GraphService.createGraph({
+            requestBody: {
+                name: 'New graph',
+                graph: serialized
+            }
+        });
+
+        console.log(newGraph);
+
+    };
+
+
+    useErrorToast(error);
+
+
+    return (
+
+        <Stack
+            css={{
+                position: 'relative',
+                width: '100%',
+                height: '100%',
+                overflow: 'auto',
+                background: '$bgDefault',
+                paddingTop:'$6'
+
+            }} justify='center'
+        >
+
+            <Box css={{ padding: '$5', width: '80%' }}>
+
+                <Stack direction='column' gap={4}>
+                    <Stack justify='between'>
+                        <Heading size='large'>Graphs</Heading>
+                        <Stack gap={3}>
+                            <Button variant='secondary' icon={<Upload />}>Import a graph</Button>
+                            <Button variant='primary' onClick={createGraph} icon={<Plus />}>Create graph</Button>
+                        </Stack>
+                    </Stack>
+                    <TextInput
+                        value={search}
+                        placeholder='Filter…'
+                        type='search'
+                        leadingVisual={<Search />}
+                        onChange={e => setSearch(e.target.value)}
+                    />
+                    {isPending && <Spinner />}
+
+                
+                    <Stack direction='column' gap={2}>
+                        {data && data.length > 0 && data.filter(x=>x.name.includes(search)).map((graph) => {
+
+                            return <Link href={`/editor?id=${graph.id}`}><Stack width='full' css={{
+                                '&:hover': {
+                                    background: '$bgEmphasis',
+                                },
+                                borderRadius: '$medium',
+                                borderColor: '$border',
+                                padding: '$4'
+                            }} direction='row' gap={3} align='center'>
+                                <Box css={{
+                                    color: '$fgDefault',
+                                    padding: '$3',
+                                    borderRadius: '$medium',
+                                    background: '$bgCanvas',
+                                }}>
+                                    <GraphUp />
+                                </Box>
+
+                                <Stack direction='column'>
+                                    <Heading>{graph.name}</Heading>
+                                    <Text>{graph.owner}</Text>
+                                    <Text size='xsmall' muted>Last updated {ago(new Date(graph.updatedAt))}</Text>
+                                </Stack>
+                            </Stack>
+                            </Link>
+                        })
+                        }
+                    </Stack>
+                </Stack>
+            </Box >
+        </Stack >
+    );
+};
+
+
+export default Page;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Home, GitMerge, ShoppingBag, Settings, HeadsetHelp } from 'iconoir-react';
-import { Avatar,Box, Separator, Stack, Tooltip } from '@tokens-studio/ui';
-import Link from 'next/link'
+import { Avatar, Box, Separator, Stack, Tooltip } from '@tokens-studio/ui';
+import Link from 'next/link.js'
 import TokensStudio from '@/assets/svgs/tokensstudio-logo.svg';
 
 interface RailItem {
@@ -26,10 +26,10 @@ const RailItem = ({ icon, label, link }: RailItem) => {
     <Tooltip label={label}>
       <Link aria-label={label} href={link}>
         <Box css={{ color: '$fgOnEmphasis', padding: '$2' }}>
-        {icon}
-      </Box>
-    </Link>
-     </Tooltip >
+          {icon}
+        </Box>
+      </Link>
+    </Tooltip >
   );
 }
 
@@ -37,7 +37,11 @@ export const Rail = () => {
   return (
     <Stack justify='between' direction='column' css={{ background: '$bgEmphasis', borderRight: '1px solid $borderSubtle', color: '$fgOnEmphasis', height: '100%', padding: '$5 $3 $3' }}>
       <Stack gap={3} direction='column' align='center'>
-        <TokensStudio style={{ width: 'var(--sizes-6)', height: 'auto', aspectRatio: '1/1' }} />
+        <Tooltip label={'Tokens Studio'}>
+          <Link href='https://tokens.studio'>
+            <TokensStudio style={{ width: 'var(--sizes-6)', height: 'auto', aspectRatio: '1/1' }} />
+          </Link>
+        </Tooltip>
         {railItemsStart.map((item) => (
           <RailItem key={item.label} icon={item.icon} label={item.label} link={item.link} />
         ))}

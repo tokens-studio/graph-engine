@@ -14,8 +14,12 @@ import Store from '../redux/index.tsx';
 import { Tooltip } from '@tokens-studio/ui';
 import { globalState } from '@/mobx/index.tsx';
 
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { ToastProvider } from '@/hooks/useToast.tsx';
+
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
+  const queryClient = new QueryClient()
   return (
     <Head
       as={ThemeProvider}
@@ -24,13 +28,17 @@ export default function App(props: AppProps) {
       value={{ 'light-theme': light, 'dark-theme': dark }}
       body={
         <NoSSR>
-          <Tooltip.Provider>
-            <Store>
-              <PageLayout theme={globalState.ui.theme}>
-                <Component {...pageProps} />
-              </PageLayout>
-            </Store>
-          </Tooltip.Provider>
+          <ToastProvider>
+          <QueryClientProvider client={queryClient}>
+            <Tooltip.Provider>
+              <Store>
+                <PageLayout theme={globalState.ui.theme}>
+                  <Component {...pageProps} />
+                </PageLayout>
+              </Store>
+            </Tooltip.Provider>
+          </QueryClientProvider>
+          </ToastProvider>
         </NoSSR>
       }
     />
