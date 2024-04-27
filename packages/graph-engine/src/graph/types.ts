@@ -1,5 +1,6 @@
 import { Graph, TypeDefinition } from "..";
 import { Node } from "../programmatic/node";
+import { GraphSchema } from "@/schemas/index.js";
 
 export interface SerializedInput {
   name: string;
@@ -7,6 +8,7 @@ export interface SerializedInput {
   visible: boolean;
   variadic?: boolean;
   type: TypeDefinition;
+  dynamicType?: GraphSchema;
   annotations?: Record<string, any>;
 }
 

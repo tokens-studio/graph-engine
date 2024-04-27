@@ -76,6 +76,11 @@ export class Input<T = any> extends Port<T> {
       type: type.type,
     } as SerializedInput;
 
+    if (this._dynamicType) {
+      serialized.dynamicType = this._dynamicType;
+    }
+
+
     //Try compact the serialization by omitting the value if its the default
     if (type.variadic) {
       serialized.variadic = true;
@@ -93,7 +98,7 @@ export class Input<T = any> extends Port<T> {
 
   deserialize(serialized: SerializedInput) {
     this.visible = serialized.visible || false;
-    this._dynamicType = serialized.type;
+    this._dynamicType = serialized.dynamicType || undefined;
     this.annotations = serialized.annotations || {};
     this._value = serialized.value;
   }
