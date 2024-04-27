@@ -1,6 +1,5 @@
 
 import express from "express";
-import cors from 'cors';
 import promMid from 'express-prometheus-middleware';
 import bodyParser from "body-parser";
 import { RegisterRoutes } from "../generated/routes";
@@ -9,15 +8,9 @@ import { errorHandler } from "./middleware/error";
 import swaggerDoc from '../generated/swagger.json';
 export const app = express();
 
-
-
 app.disable('x-powered-by');
-app.use(cors({
-    credentials:true,
-    origin: (origin, callback) => {
-        callback(null, true);
-    }
-}));
+
+
 app.use(promMid({
     metricsPath: '/metrics',
     collectDefaultMetrics: true,
@@ -29,12 +22,18 @@ app.use(promMid({
 app.use(
     bodyParser.urlencoded({
         extended: true,
+        //Anything larger than this is ridiculous
+        limit: '8mb',
     })
 );
-app.use(bodyParser.json());
-// app.use(CookieParser());
+app.use(bodyParser.json({
+    //Anything larger than this is ridiculous
+    limit: '8mb',
+}));
 
-app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+if (process.env.NODE_ENV !== 'production') {
+    app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+}
 
 RegisterRoutes(app);
 
