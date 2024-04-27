@@ -5,5 +5,5 @@ createClient({
     client: 'axios',
     lint: 'eslint',
     input: '../backend/generated/swagger.json',
-    output: 'src',
+    output: 'src/generated',
 });
