@@ -6,7 +6,7 @@ import {
     Delete,
     Post,
     Queries,
-    Query,
+    Put,
     Route,
     Path,
     SuccessResponse,
@@ -19,7 +19,20 @@ import { PrismaClient, Prisma } from '@prisma/client';
 import { provideSingleton } from '@/utils/singleton';
 import winston from 'winston';
 import type { AuthenticatedRequest } from '@/interfaces/authenticatedRequest';
+import { SerializedGraph } from '@tokens-studio/graph-engine';
 
+type SerializedGraphVal = SerializedGraph
+
+type Graph = {
+    id: string;
+    name: string;
+    graph: SerializedGraphVal;
+    owner: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+type ListedGraph = Omit<Graph, 'graph'> 
 
 type GraphCreationParams = {
     /**
@@ -29,17 +42,13 @@ type GraphCreationParams = {
     /**
      * The json serialized graph
      */
-    graph: string;
+    graph: SerializedGraphVal;
+    /**
+     * A human readable description of the graph
+     */
+    description?:string
 }
 
-type Graph = {
-    id: string;
-    name: string;
-    graph: string;
-    owner: string;
-    createdAt: string;
-    updatedAt: string;
-}
 
 /**
  * The created graph
@@ -47,7 +56,7 @@ type Graph = {
 export interface CreatedGraph extends Pick<Graph, 'id'> { }
 
 
-export interface ListGraphParams{
+export interface ListGraphParams {
     /**
      * @minimum 1
      * @maximum 20
@@ -69,7 +78,7 @@ export interface ListGraphParams{
 @Route("graph")
 @Tags("Graph")
 @Security("bearerAuth")
-    @provideSingleton(GraphController)
+@provideSingleton(GraphController)
 export class GraphController extends Controller {
 
     dataSource: PrismaClient;
@@ -98,7 +107,7 @@ export class GraphController extends Controller {
         const newGraph = await this.dataSource.graph.create({
             data: {
                 name: requestBody.name,
-                graph: requestBody.graph,
+                graph: JSON.stringify(requestBody.graph),
                 owner: request.user.id
             }
         });
@@ -111,22 +120,67 @@ export class GraphController extends Controller {
     }
 
 
+    @Put('{graphId}')
+    @Response<any>("404", "Graph not found")
+    @SuccessResponse("200")
+    public async updateGraph(
+        @Request() request: AuthenticatedRequest,
+        @Path() graphId: string,
+        @Body() requestBody: GraphCreationParams
+    ) {
+        const graph = await this.dataSource.graph.findFirst({
+            where: {
+                id: graphId,
+                owner: request.user.id
+            },
+            select: {
+                id: true,
+                name: true,
+                owner:true,
+                updatedAt:true,
+                createdAt:true,
+            }
+        });
+
+        if (!graph) {
+            this.setStatus(404);
+            return;
+        }
+
+        await this.dataSource.graph.update({
+            where: {
+                id: graphId
+            },
+            data: {
+                name: requestBody.name,
+                graph: JSON.stringify(requestBody.graph)
+            }
+        });
+    } 
+
     @SuccessResponse("200")
     @Get()
     public async listGraphs(
         @Request() request: AuthenticatedRequest,
         @Queries() queryParams: ListGraphParams
 
-    ): Promise<Graph[]> {
+    ): Promise<ListedGraph[]> {
         const graphs = await this.dataSource.graph.findMany({
             take: queryParams.perPage,
             skip: queryParams.page * queryParams.perPage,
             where: {
                 owner: request.user.id
+            },
+            select: {
+                id: true,
+                name: true,
+                owner:true,
+                updatedAt:true,
+                createdAt:true,
             }
         });
         this.setStatus(200);
-        return graphs;
+        return graphs as ListedGraph[];
     }
 
 
@@ -136,7 +190,7 @@ export class GraphController extends Controller {
     public async getGraph(
         @Request() request: AuthenticatedRequest,
         @Path() graphId: string
-    ):Promise<Graph> {
+    ): Promise<Graph> {
         const graph = await this.dataSource.graph.findFirst({
             where: {
                 id: graphId,
@@ -149,7 +203,10 @@ export class GraphController extends Controller {
         }
 
         this.setStatus(200);
-        return graph;
+        return {
+            ...graph,
+            graph: JSON.parse(graph.graph.toString())
+        };
     }
 
     @SuccessResponse("200")
