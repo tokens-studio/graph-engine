@@ -1,3 +1,4 @@
 *.log
 # Using a temporary sqlite db
 prisma/*.db
+generated
