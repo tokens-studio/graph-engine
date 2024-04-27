@@ -11,6 +11,8 @@ serve:
   admin:
     base_url: http://127.0.0.1:4434/
 
+
+
 selfservice:
   default_browser_return_url: http://127.0.0.1:4455/
   allowed_return_urls:

@@ -38,10 +38,16 @@
                             "type": "string"
                         }
                     }
+                },
+                "avatar_url": {
+                    "type": "string",
+                    "description": "User's avatar pic",
+                    "title": "Avatar"
                 }
             },
             "required": [
-                "email"
+                "email",
+                "name"
             ],
             "additionalProperties": false
         }
