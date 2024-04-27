@@ -310,7 +310,6 @@ export const LayoutController = React.forwardRef<
     );
 
     useEffect(() => {
-        console.log('effect', dockerRef)
         if (dockerRef?.current && initialLayout) {
             dockerRef.current?.loadLayout(initialLayout);
         }
