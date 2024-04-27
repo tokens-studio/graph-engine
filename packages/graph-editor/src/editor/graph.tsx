@@ -121,7 +121,14 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
     const refProxy = useCallback((v) => {
       //@ts-ignore
-      ref && ref(v);
+      if (ref) {
+        if (typeof ref === 'function') {
+          ref(v);
+        }
+        else {
+          ref.current = v;
+        }
+      }
       //@ts-ignore
       internalRef.current = v;
       dispatch.graph.registerPanel({ id, panel: { graph, ref: v } });
