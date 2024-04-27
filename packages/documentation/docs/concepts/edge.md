@@ -1,9 +1,9 @@
 ---
-title: Node
-sidebar_position: 2
+title: Edge
+sidebar_position: 3
 ---
 
-# Node
+# Edge
 
 ## What is a node?
 
