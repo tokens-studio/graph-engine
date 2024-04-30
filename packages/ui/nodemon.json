@@ -1,0 +1,8 @@
+{
+    "$schema": "https://json.schemastore.org/nodemon.json",
+    "exec": "tsoa spec-and-routes",
+    "watch": [
+        "src/controllers"
+    ],
+    "ext": "ts"
+}

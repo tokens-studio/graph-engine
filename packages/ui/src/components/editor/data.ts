@@ -1,6 +1,5 @@
 import { CapabilityFactory } from '@tokens-studio/graph-engine';
 import { Volume } from 'memfs';
-import { WebAudioCapability, icons as audioIcons } from '@tokens-studio/graph-engine-nodes-audio';
 import { icons as designIcons } from '@tokens-studio/graph-engine-nodes-design-tokens';
 
 
@@ -12,7 +11,7 @@ export const fs = Volume.fromJSON({
 /**
  * In this case the fs capability is common to all graphs
  */
-export const capabilities: CapabilityFactory[] = [WebAudioCapability, {
+export const capabilities: CapabilityFactory[] = [ {
     name: 'fs',
     register: () => {
         return fs
@@ -20,7 +19,6 @@ export const capabilities: CapabilityFactory[] = [WebAudioCapability, {
 }];
 
 export const icons = {
-    ...audioIcons,
     ...designIcons
 }
 

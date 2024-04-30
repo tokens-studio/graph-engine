@@ -13,12 +13,10 @@ interface RailItem {
 const railItemsStart: RailItem[] = [
   { icon: <Home />, label: 'Home', link: '/' },
   { icon: <GitMerge />, label: 'Editor', link: '/editor' },
-  { icon: <ShoppingBag />, label: 'Marketplace', link: '/marketplace' }
 ];
 
 const railItemsEnd: RailItem[] = [
   { icon: <Settings />, label: 'Settings', link: '/settings' },
-  { icon: <HeadsetHelp />, label: 'Help', link: '/help' },
 ];
 
 const RailItem = ({ icon, label, link }: RailItem) => {

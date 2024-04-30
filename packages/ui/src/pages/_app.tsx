@@ -13,12 +13,14 @@ import React from 'react';
 import Store from '../redux/index.tsx';
 import { Tooltip } from '@tokens-studio/ui';
 import { globalState } from '@/mobx/index.tsx';
+import { SessionProvider } from "next-auth/react"
 
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ToastProvider } from '@/hooks/useToast.tsx';
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
+  const { session } = pageProps;
   const queryClient = new QueryClient()
   return (
     <Head
@@ -28,17 +30,20 @@ export default function App(props: AppProps) {
       value={{ 'light-theme': light, 'dark-theme': dark }}
       body={
         <NoSSR>
-          <ToastProvider>
-          <QueryClientProvider client={queryClient}>
-            <Tooltip.Provider>
-              <Store>
-                <PageLayout theme={globalState.ui.theme}>
-                  <Component {...pageProps} />
-                </PageLayout>
-              </Store>
-            </Tooltip.Provider>
-          </QueryClientProvider>
-          </ToastProvider>
+          <SessionProvider session={session}>
+            <ToastProvider>
+              <QueryClientProvider client={queryClient}>
+                <Tooltip.Provider>
+                  <Store>
+                    <PageLayout theme={globalState.ui.theme}>
+                      <Component {...pageProps} />
+                    </PageLayout>
+                  </Store>
+                </Tooltip.Provider>
+              </QueryClientProvider>
+            </ToastProvider>
+          </SessionProvider>
+
         </NoSSR>
       }
     />

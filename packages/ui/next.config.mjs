@@ -30,7 +30,7 @@ export default withBundleAnalyzer({
   compiler: {
     //  removeConsole: process.env.NODE_ENV === 'production'
   },
-  output: "export",
+  output: "standalone",
   webpack: (config, { dev, isServer }) => {
 
     config.module.rules.push({
