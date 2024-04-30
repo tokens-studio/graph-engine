@@ -1,6 +1,5 @@
 
 import express from "express";
-import promMid from 'express-prometheus-middleware';
 import bodyParser from "body-parser";
 import { RegisterRoutes } from "../generated/routes";
 import swaggerUi from 'swagger-ui-express';
@@ -10,14 +9,6 @@ export const app = express();
 
 app.disable('x-powered-by');
 
-
-app.use(promMid({
-    metricsPath: '/metrics',
-    collectDefaultMetrics: true,
-    requestDurationBuckets: [0.1, 0.5, 1, 1.5],
-    requestLengthBuckets: [512, 1024, 5120, 10240, 51200, 102400],
-    responseLengthBuckets: [512, 1024, 5120, 10240, 51200, 102400],
-}));
 // Use body parser to read sent json payloads
 app.use(
     bodyParser.urlencoded({
