@@ -40,6 +40,9 @@ export default class NodeDefinition extends Node {
       type: NumberSchema,
       visible: true,
     });
+    this.addOutput("expression", {
+      type: StringSchema
+    });
   }
 
   execute(): void | Promise<void> {
@@ -48,6 +51,7 @@ export default class NodeDefinition extends Node {
 
     const output = parser.evaluate(expression, inputs);
 
+    this.setOutput("expression", expression);
     this.setOutput("value", output);
   }
 }

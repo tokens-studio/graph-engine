@@ -18,7 +18,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "npm run generate && tsup",
     "dev": "tsup --watch ",
     "docs": "typedoc",
     "generate": "tsx ./scripts/generate.ts"
