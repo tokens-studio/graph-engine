@@ -7,6 +7,8 @@ import { useGraph } from '@/hooks/useGraph';
 import { inputControls } from '@/redux/selectors/registry';
 import { PortPanel } from '@/components/portPanel';
 import { InfoCircle } from 'iconoir-react';
+import { DynamicInputs } from './dynamicInputs';
+import { annotatedDynamicInputs } from '@tokens-studio/graph-engine';
 
 export function Inputsheet() {
   const graph = useGraph();
@@ -14,6 +16,8 @@ export function Inputsheet() {
   const selectedNode = useMemo(() => graph?.getNode(nodeID), [graph, nodeID]);
 
   const inputControlRegistry = useSelector(inputControls);
+
+
   const SpecificInput = useMemo(() => {
     if (!selectedNode) {
       return null;
@@ -24,6 +28,9 @@ export function Inputsheet() {
   if (!selectedNode) {
     return <></>;
   }
+
+  const dynamicInputs = selectedNode.annotations[annotatedDynamicInputs];
+
 
   return (
     <Box
@@ -52,6 +59,9 @@ export function Inputsheet() {
         </Stack>
 
         <Box css={{ padding: '$3' }}>
+
+          {dynamicInputs && <DynamicInputs node={selectedNode} />}
+
           {SpecificInput ? <SpecificInput node={selectedNode} /> : null}
           <Stack width="full" css={{ paddingTop: '$3', paddingBottom: '$3' }}>
             {/* The purpose of the key is to invalidate the port panel if the selected node changes */}

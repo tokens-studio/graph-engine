@@ -5,6 +5,9 @@ import { useSelector } from "react-redux";
 import { EyeSolid } from "iconoir-react";
 import { GraphEditor } from "@/editor/graphEditor";
 import { ImperativeEditorRef } from "..";
+import { Node } from "@tokens-studio/graph-engine";
+import { observer } from "mobx-react-lite";
+import { CurveField } from "@/components/controls/curve";
 
 const SubgraphExplorer = ({ node }) => {
 
@@ -29,7 +32,7 @@ const SubgraphExplorer = ({ node }) => {
         const ref = (o: ImperativeEditorRef) => {
             if (o && !oneShot) {
                 o.load(innerGraph);
-                oneShot =true
+                oneShot = true
             }
 
         }
@@ -58,8 +61,15 @@ const SubgraphExplorer = ({ node }) => {
 
 }
 
+const CurvePreview = observer(({ node }: { node: Node }) => {
+
+    return <CurveField port={node.inputs.value} readOnly />
+});
+
 
 export const defaultSpecifics = {
     'studio.tokens.generic.subgraph': SubgraphExplorer,
-    'studio.tokens.generic.array': SubgraphExplorer
+    'studio.tokens.generic.array': SubgraphExplorer,
+
+    'studio.tokens.preview.curve': CurvePreview,
 };

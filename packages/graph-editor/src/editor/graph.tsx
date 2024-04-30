@@ -45,6 +45,7 @@ import ReactFlow from 'reactflow';
 import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.js';
 import groupNode from '../components/flow/nodes/groupNode.js';
 import noteNode from '../components/flow/nodes/noteNode.js';
+
 import { GraphEditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { Box } from '@tokens-studio/ui';
 import { BatchRunError, Graph, NodeFactory, NodeTypes, nodeLookup } from '@tokens-studio/graph-engine';
@@ -289,7 +290,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
       GenericNode: NodeV2,
       [NodeTypes.PASS_THROUGH]: PassthroughNode,
       [EditorNodeTypes.GROUP]: groupNode,
-      [NodeTypes.NOTE]: noteNode,
+      [NodeTypes.NOTE]: noteNode
     });
 
     const customNodeMap = useMemo(() => {
@@ -297,7 +298,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
       return Object.fromEntries(Object.entries(
         {
           ...customNodeUI,
-          [NodeTypes.NOTE]: NodeTypes.NOTE
+          [NodeTypes.NOTE]: NodeTypes.NOTE,
+          [NodeTypes.PREVIEW]: NodeTypes.PREVIEW,
         }).map(([k, _]) => [k, k]))
     }, [customNodeUI]);
 

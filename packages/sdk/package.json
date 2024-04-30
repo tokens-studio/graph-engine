@@ -34,7 +34,8 @@
     "tsup": "^8.0.2",
     "tsx": "^4.7.2",
     "typedoc": "^0.25.13",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "@tokens-studio/graph-engine-backend":"*"
   },
   "keywords": [
     "studio",

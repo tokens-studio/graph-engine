@@ -4,6 +4,7 @@ import { nodes as array } from "./array/index.js";
 import { nodes as color } from "./color/index.js";
 import { nodes as curve } from "./curves/index.js";
 import { nodes as css } from "./css/index.js";
+import { nodes as preview } from "./preview/index.js";
 import { nodes as generic } from "./generic/index.js";
 import { nodes as logic } from "./logic/index.js";
 import { nodes as math } from "./math/index.js";
@@ -23,6 +24,7 @@ export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
   generic,
   logic,
   math,
+  preview,
   series,
   string,
   typing

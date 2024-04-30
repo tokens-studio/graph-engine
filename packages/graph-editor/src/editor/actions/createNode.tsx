@@ -93,6 +93,7 @@ export const createNode = ({
     //Add the node to the react flow instance
     const reactFlowNode = {
       id: node.id,
+      dragHandle:'.reactflow-draggable-handle',
       type: customUI[nodeRequest.type] || 'GenericNode',
       data: {},
       position: finalPos,

@@ -19,9 +19,9 @@
   ],
   "scripts": {
     "routes": "tsoa spec-and-routes",
-    "build": "tsup",
-    "live": "nodemon",
-    "dev": "concurrently \"nodemon\" \"nodemon -x tsoa spec-and-routes\"",
+    "build": "npm run routes &&  tsup",
+    "live": "concurrently \"nodemon -x tsoa spec-and-routes\" \"nodemon\"",
+    "dev": "npm run routes && nodemon",
     "docs": "typedoc",
     "start": "node ./dist/index.js",
     "format": "npm run format:eslint && npm run format:prettier",

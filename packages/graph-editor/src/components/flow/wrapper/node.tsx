@@ -128,9 +128,8 @@ const NodeWrapper = styled('div', {
 export const Node = (props: NodeProps) => {
   const { id, icon, title, error, isAsync, children, controls, ...rest } =
     props;
-  const flow = useReactFlow();
   const dispatch = useDispatch();
-  const node = flow.getNode(id);
+
 
   const onClick = useCallback(() => {
     dispatch.graph.setCurrentNode(id);
@@ -148,6 +147,7 @@ export const Node = (props: NodeProps) => {
             {title && (
               <>
                 <Stack
+                  className='reactflow-draggable-handle'
                   direction="row"
                   justify="between"
                   align="center"

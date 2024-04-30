@@ -13,6 +13,7 @@ export enum NodeTypes {
   CONSTANT = "studio.tokens.generic.constant",
   OBJECTIFY = "studio.tokens.generic.objectify",
   MERGE_OBJECTS = "studio.tokens.generic.mergeObjects",
+  PREVIEW = "studio.tokens.generic.preview",
 
   SPREAD = "studio.tokens.input.extract",
 
