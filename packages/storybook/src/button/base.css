@@ -1,0 +1,13 @@
+@import url('./styles/index.css');
+
+
+.button{
+    color: var(--colorsText);
+    background-color: var(--colorsBg);
+    border: 3px solid var(--colorsPrimary);
+    border-radius: var(--borderRadiusRounded);
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}

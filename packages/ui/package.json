@@ -78,7 +78,8 @@
     "s-ago": "2.2.0",
     "sass": "1.62.1",
     "sentence-case": "3.0.4",
-    "uuid": "9.0.0"
+    "uuid": "9.0.0",
+    "ws": "8.17.0"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "14.2.3",

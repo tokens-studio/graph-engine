@@ -11,16 +11,8 @@ module.exports = {
   },
   typescript: {
     // Overrides the default Typescript configuration to allow multi-package components to be documented via AutoDocs.
-    reactDocgen: 'react-docgen-typescript',
+    reactDocgen: 'react-docgen',
     checkOptions: {},
-    check: false,
-    reactDocgenTypescriptOptions: {
-      shouldExtractLiteralValuesFromEnum: true,
-      propFilter: (prop) => {
-        //We use the declarations so that docgen does not annotate object literals 
-        return prop.parent ? !/node_modules/.test(prop.parent.fileName) : !!prop.declarations
-      }
-      ,
-    },
+    check: false
   },
 };

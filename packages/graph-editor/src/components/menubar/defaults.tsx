@@ -95,7 +95,7 @@ export const defaultMenuDataFactory = (): Menu =>
             name: 'newGraph',
             render: (rest) => {
               return (
-                <MenuItemElement key="neww" icon={<PagePlusIn />} {...rest}>
+                <MenuItemElement key="new" icon={<PagePlusIn />} {...rest}>
                   New Graph
                 </MenuItemElement>
               );
@@ -103,7 +103,7 @@ export const defaultMenuDataFactory = (): Menu =>
           }),
           new Seperator(),
           new MenuItem({
-            name: 'load',
+            name: 'upload',
             render: function FileLoad(rest) {
 
               const graphRef = useSelector(
@@ -136,13 +136,13 @@ export const defaultMenuDataFactory = (): Menu =>
 
               return (
                 <MenuItemElement onClick={onClick} icon={<Upload />} {...rest}>
-                  <u>L</u>oad
+                  <u>U</u>pload
                 </MenuItemElement>
               );
             },
           }),
           new MenuItem({
-            name: 'save',
+            name: 'download',
             render: function FileSave(rest) {
               const graphRef = useSelector(
                 graphEditorSelector,
@@ -169,7 +169,7 @@ export const defaultMenuDataFactory = (): Menu =>
                   onClick={onSave}
                   {...rest}
                 >
-                  <u>S</u>ave
+                  <u>D</u>ownload
                 </MenuItemElement>
               );
             },

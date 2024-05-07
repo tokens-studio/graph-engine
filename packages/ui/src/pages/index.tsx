@@ -3,7 +3,7 @@ import { Box, Button, EmptyState, Heading, Spinner, Stack, Text, TextInput, Toas
 import React, { useEffect } from 'react';
 
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { GraphService } from '@/api/index.ts';
+import { GraphService, configure } from '@/api/index.ts';
 
 
 import Link from 'next/link.js';
@@ -12,6 +12,10 @@ import { GraphUp, Plus, Search, Upload } from 'iconoir-react';
 import ago from 's-ago';
 import { Graph } from '@tokens-studio/graph-engine';
 
+/**
+ * Needed for the side effect of setting the api
+ */
+configure();
 const fetchGraphs = async (page: number) => {
     return await GraphService.listGraphs({ page });
 }
