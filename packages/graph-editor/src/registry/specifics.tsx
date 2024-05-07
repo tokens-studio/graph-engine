@@ -11,6 +11,7 @@ import { CurveField } from "@/components/controls/curve";
 import { ColorSwatch } from "@/components/preview/swatch";
 import { ColorScale } from "@/components/preview/colorScale";
 import { ColorCompare } from "@/components/preview/colorCompare";
+import { MathExpression } from "@/components/preview/mathExpression";
 
 const SubgraphExplorer = ({ node }) => {
 
@@ -79,6 +80,11 @@ const CurvePreview = observer(({ node }: { node: Node }) => {
     return <CurveField port={node.inputs.value} readOnly />;
 });
 
+const MathExpressionPreview = observer(({ node }: { node: Node }) => {
+
+    return <MathExpression value={node.inputs.value.value} />;
+});
+
 const SwatchPreview = observer(({ node }: { node: Node }) => {
 
     return <ColorSwatch value={node.inputs.value.value} />;
@@ -100,6 +106,7 @@ export const defaultSpecifics = {
     'studio.tokens.preview.colorScale': ColorScalePreview,
     'studio.tokens.preview.colorCompare': ColorComparePreview,
     'studio.tokens.preview.curve': CurvePreview,
+    'studio.tokens.preview.mathExpression': MathExpressionPreview,
     'studio.tokens.preview.number': NumberPreview,
     'studio.tokens.preview.swatch': SwatchPreview,
 };

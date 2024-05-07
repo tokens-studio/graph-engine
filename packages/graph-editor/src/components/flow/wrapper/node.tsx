@@ -138,7 +138,6 @@ export const Node = (props: NodeProps) => {
   return (
     <NodeWrapper error={Boolean(error)} className={error ? 'error' : ''}>
           <Stack
-            css={{ maxWidth: 500 }}
             direction="column"
             gap={0}
             onClick={onClick}

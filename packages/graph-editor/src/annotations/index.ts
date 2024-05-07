@@ -17,5 +17,6 @@ export const description = 'ui.description';
 
 //Used exclusively on graph
 export const uiViewport = 'ui.viewport';
+export const savedViewports = 'ui.viewports';
 export const uiVersion = 'ui.version';
 export const uiNodeType = 'ui.nodeType';

@@ -1,4 +1,4 @@
-import { Edge, Node, useReactFlow } from 'reactflow';
+import { Edge, Node, useReactFlow, useViewport } from 'reactflow';
 import { NodeTypes } from '@tokens-studio/graph-engine';
 import { useDispatch } from '@/hooks/useDispatch.js';
 import { useMemo, useState } from 'react';
@@ -9,6 +9,9 @@ import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '@/redux/selectors/settings';
 import { Graph } from '@tokens-studio/graph-engine';
 import { SerializedNode } from '@/types/serializedNode';
+import { useToast } from '@/hooks/useToast';
+import { useLocalGraph } from '@/hooks';
+import { savedViewports } from '@/annotations';
 
 export const keyMap = {
   AUTO_LAYOUT: 'ctrl+alt+f',
@@ -37,6 +40,13 @@ export const keyMap = {
   TOGGLE_THEME: 'ctrl+shift+t',
   TOGGLE_SNAP_GRID: ['command+shift+s', 'ctrl+shift+s'],
   TOGGLE_NODES_PANEL: ['n'],
+  SAVE_VIEWPORT: ['command+1', 'command+2', 'command+3', 'command+4', 'command+5', 'command+6', 'command+7', 'command+8', 'command+9', 'ctrl+1', 'ctrl+2', 'ctrl+3', 'ctrl+4', 'ctrl+5', 'ctrl+6', 'ctrl+7', 'ctrl+8', 'ctrl+9'],
+  RECALL_VIEWPORT: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+};
+
+export const getViewports = (graph) => {
+  const viewports = graph.annotations[savedViewports] || new Array(9).fill(null);
+  return graph.annotations[savedViewports] = viewports;
 };
 
 export interface IUseHotkeys {
@@ -54,6 +64,7 @@ export const useHotkeys = ({
 }: IUseHotkeys) => {
   const [showMinimap, setShowMinimap] = useState(true);
   const [hideZoom, setHideZoom] = useState(true);
+  
 
   const showGridValue = useSelector(showGrid);
   const snapGridValue = useSelector(snapGrid);
@@ -61,10 +72,41 @@ export const useHotkeys = ({
   const layout = useAutoLayout();
 
   const dispatch = useDispatch();
+  const trigger = useToast();
 
   const reactFlowInstance = useReactFlow();
   const handlers = useMemo(
     () => ({
+      SAVE_VIEWPORT: (event) => {
+        event.preventDefault();
+        if (reactFlowInstance) {
+          const currentViewport = reactFlowInstance.getViewport();
+          const key = event.key; // Get pressed key (e.g., '1', '2', etc.)
+          const viewportIndex = parseInt(key) - 1; // Calculate 0-based index
+
+          if (viewportIndex >= 0 && viewportIndex < 9) {
+            const viewports = getViewports(graph);
+            viewports[viewportIndex] = currentViewport;
+            graph.annotations[savedViewports] = viewports;
+            trigger({ title: 'Viewport saved', description: `Viewport ${viewportIndex + 1} saved` });
+          }
+        }
+      },
+      RECALL_VIEWPORT: (event) => {
+        event.preventDefault();
+        const key = event.key;
+        const viewportIndex = parseInt(key) - 1;
+
+        if (viewportIndex >= 0 && viewportIndex < 9 && reactFlowInstance) {
+          const viewports = getViewports(graph);
+          const viewport = viewports[viewportIndex];
+          if (!viewport) {
+            trigger({ title: 'Viewport not saved', description: `Viewport ${viewportIndex + 1} not saved` });
+            return;
+          }
+          reactFlowInstance.setViewport(viewport);
+        }
+      },
       AUTO_LAYOUT: layout,
       TOGGLE_HIDE: () => {
         setHideZoom((x) => !x);
@@ -233,16 +275,8 @@ export const useHotkeys = ({
         dispatch.settings.setSnapGrid(!snapGridValue);
       },
     }),
-    [
-      dispatch.input,
-      dispatch.node,
-      dispatch.settings,
-      layout,
-      onEdgesDeleted,
-      reactFlowInstance,
-      showGridValue,
-      snapGridValue,
-    ],
+    
+    [copyNodes, dispatch.input, dispatch.node, dispatch.settings, graph, handleDeleteNode, layout, onEdgesDeleted, reactFlowInstance, showGridValue, snapGridValue, trigger],
   );
 
   return {

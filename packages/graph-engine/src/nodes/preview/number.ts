@@ -11,12 +11,12 @@ export default class NodeDefinition extends Node {
         super(props);
 
         this.addInput("value", {
-            type: NumberSchema,
+            type: {...NumberSchema, default: 0},
             visible: true
         });
 
         this.addInput("precision", {
-            type: NumberSchema
+            type: {...NumberSchema, default: 2}
         });
     }
 }
