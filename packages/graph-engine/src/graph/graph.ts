@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { ExternalLoader } from "./externalLoader.js";
 import { AnySchema, GraphSchema } from "@/schemas/index.js";
 import { Output } from "@/programmatic/output.js";
-import { Input } from "@/programmatic/input.js";
+import { ISetValue, Input } from "@/programmatic/input.js";
 import { topologicalSort } from "./topologicSort.js";
 import { makeObservable, observable } from "mobx";
 import { Edge, VariadicEdgeData } from "@/programmatic/edge.js";
@@ -537,11 +537,17 @@ export class Graph {
 
       //Set the inputs for execution
       Object.entries(inputs).forEach(([key, value]) => {
-        input.inputs[key].setValue(value.value, {
-          type: value.type,
+
+        const opts: ISetValue ={
           //We are controlling propagation
           noPropagate: true,
-        });
+        };
+        //Only necessary if there is dynamic typing involved
+        if (value.type) {
+          opts.type = value.type;
+        }
+
+        input.inputs[key].setValue(value.value, opts);
       });
     }
 
