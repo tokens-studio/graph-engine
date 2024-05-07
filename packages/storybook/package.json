@@ -1,0 +1,32 @@
+{
+  "name": "@tokens-studio/react-storybook-graph-engine",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:storybook": "storybook build",
+    "storybook": "storybook dev -p 6006",
+    "bridge": "tsx ./scripts/bridge.ts"
+  },
+  "resolutions": {
+    "jackspeak": "2.1.1"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^8.0.10",
+    "@tokens-studio/graph-engine": "*",
+    "@storybook/react": "^8.0.10",
+    "@storybook/react-vite": "^8.0.10",
+    "@types/ws": "^8.5.10",
+    "tsx": "^4.9.3",
+    "typescript": "5.0.4",
+    "@tokens-studio/graph-engine-nodes-design-tokens": "*"
+  },
+  "dependencies": {
+    "@stitches/react": "^1.2.8",
+    "fbp-client": "^0.4.3",
+    "storybook": "^8.0.10",
+    "ws": "^8.17.0"
+  }
+}
