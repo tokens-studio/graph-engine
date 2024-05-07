@@ -208,6 +208,65 @@ export const Vec3Schema: SchemaObject = {
   default: [0, 0, 0],
 };
 
+export const GRADIENT_STOP = "https://schemas.tokens.studio/gradientStop.json";
+export const GradientStopSchema: SchemaObject = {
+  $id: GRADIENT_STOP,
+  title: "Gradient Stop",
+  type: "object",
+  default: null,
+  properties: {
+    position: {
+      type: "number",
+    },
+    color: {
+      type: "string",
+    }
+  },
+};
+
+export const GRADIENT_HANDLE_POSITION = "https://schemas.tokens.studio/gradientHandlePosition.json";
+export const GradientHandlePositionSchema: SchemaObject = {
+  $id: GRADIENT_HANDLE_POSITION,
+  title: "Gradient Handle Position",
+  type: "object",
+  default: null,
+  properties: {
+    positions: {
+      type: "array",
+      items: [
+        {
+          type: "object",
+          properties: {
+             x: {
+              type: "number",
+            },
+             y: {
+              type: "number",
+            },
+          },
+        },
+      ],
+    },
+  },
+};
+
+export const GRADIENT = "https://schemas.tokens.studio/gradient.json";
+export const GradientSchema: SchemaObject = {
+  $id: GRADIENT,
+  title: "Gradient",
+  type: "object",
+  default: null,
+  properties: {
+    stops: {
+      type: "array",
+      items: GradientStopSchema,
+    },
+    color: {
+      type: "string",
+    }
+  },
+};
+
 export const BUFFER = "https://schemas.tokens.studio/buffer.json";
 export const BufferSchema: SchemaObject = {
   $id: BUFFER,
@@ -331,4 +390,5 @@ export const AllSchemas = [
   CurveSchema,
   Vec2Schema,
   Vec3Schema,
+  GradientStopSchema,
 ];

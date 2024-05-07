@@ -108,6 +108,10 @@ export enum NodeTypes {
   CONTRAST = "studio.tokens.accessibility.contrast",
   COLOR_BLINDNESS = "studio.tokens.accessibility.colorBlindness",
   BASE_FONT_SIZE = "studio.tokens.accessibility.baseFontSize",
+
+  // Gradient
+  GRADIENT_STOP = "studio.tokens.gradient.stop",
+  GRADIENT_HANDLE_POSITION = "studio.tokens.gradient.handlePosition",
 }
 
 export type BatchRunError = Error & {

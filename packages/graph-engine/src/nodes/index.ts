@@ -11,6 +11,7 @@ import { nodes as math } from "./math/index.js";
 import { nodes as series } from "./series/index.js";
 import { nodes as string } from "./string/index.js";
 import { nodes as typing } from "./typing/index.js";
+import { nodes as gradient } from "./gradient/index.js";
 
 /**
  * All nodes in the system available as an array
@@ -22,6 +23,7 @@ export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
   css,
   curve,
   generic,
+  gradient,
   logic,
   math,
   preview,
