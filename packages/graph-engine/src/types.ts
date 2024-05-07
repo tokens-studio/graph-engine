@@ -111,7 +111,7 @@ export enum NodeTypes {
 
   // Gradient
   GRADIENT_STOP = "studio.tokens.gradient.stop",
-  GRADIENT_HANDLE_POSITION = "studio.tokens.gradient.handlePosition",
+  GRADIENT = "studio.tokens.gradient.gradient",
 }
 
 export type BatchRunError = Error & {

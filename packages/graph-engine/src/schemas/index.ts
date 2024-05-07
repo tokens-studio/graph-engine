@@ -224,32 +224,6 @@ export const GradientStopSchema: SchemaObject = {
   },
 };
 
-export const GRADIENT_HANDLE_POSITION = "https://schemas.tokens.studio/gradientHandlePosition.json";
-export const GradientHandlePositionSchema: SchemaObject = {
-  $id: GRADIENT_HANDLE_POSITION,
-  title: "Gradient Handle Position",
-  type: "object",
-  default: null,
-  properties: {
-    positions: {
-      type: "array",
-      items: [
-        {
-          type: "object",
-          properties: {
-             x: {
-              type: "number",
-            },
-             y: {
-              type: "number",
-            },
-          },
-        },
-      ],
-    },
-  },
-};
-
 export const GRADIENT = "https://schemas.tokens.studio/gradient.json";
 export const GradientSchema: SchemaObject = {
   $id: GRADIENT,
@@ -257,12 +231,40 @@ export const GradientSchema: SchemaObject = {
   type: "object",
   default: null,
   properties: {
+    type: {
+      type: "string",
+      enum: ["linear", "radial", "angular", "diamond"],
+    },
+    positions: {
+      type: "array",
+      items: [
+        {
+          type: "array",
+          items: [
+            {
+              type: "number",
+            },
+            {
+              type: "number",
+            },
+          ],
+        },
+      ]
+    },
     stops: {
       type: "array",
-      items: GradientStopSchema,
-    },
-    color: {
-      type: "string",
+      items: {
+        type: "object",
+        properties: {
+          position: {
+            type: "number",
+          },
+          color: {
+            type: ColorSchema,
+          }
+        },
+        required: ["position", "color"],
+      }
     }
   },
 };
