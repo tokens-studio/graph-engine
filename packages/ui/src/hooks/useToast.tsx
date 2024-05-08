@@ -1,3 +1,5 @@
+"use-client"
+
 import { Toast } from '@tokens-studio/ui';
 import React, { createContext, useCallback, useEffect, useRef } from 'react';
 
