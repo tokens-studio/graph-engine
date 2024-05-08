@@ -10,5 +10,5 @@ export const DefaultField = observer(({ port }: IField) => {
     value = { items: value };
   }
 
-  return <JSONTree data={value} />;
+  return <JSONTree data={value} shouldExpandNodeInitially={() => true} />;
 });

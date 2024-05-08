@@ -195,7 +195,7 @@ ${Object.entries(meta).map(([key, value]) => {
 
     //Lastly generate an index.css to load all of the files
     const indexCss = tokenFiles.map(x => `@import './${x.name}.css';`).join('\n');
-    await fs.writeFile(pathLib.join(dirName, 'styles', 'index.css'), indexCss);
+    await fs.writeFile(pathLib.join(dirName,'generated', 'styles', 'index.css'), indexCss);
 
 }
 

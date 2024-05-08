@@ -5,6 +5,8 @@ import React, { useCallback } from 'react';
 import { Input } from '@tokens-studio/graph-engine';
 
 export const BooleanField = observer(({ port, readOnly }: IField) => {
+
+
   const onChange = useCallback(
     (checked) => {
       if (!readOnly) {

@@ -23,3 +23,6 @@ export const showTimings = createSelector(
   settings,
   (state) => state.showTimings,
 );
+
+
+export const delayedUpdateSelector = createSelector(settings, (state) => state.delayedUpdate);

@@ -1,9 +1,12 @@
 import { observer } from 'mobx-react-lite';
 import React, { useCallback } from 'react';
 import { IField } from './interface';
-import { Stack, Text, TextInput } from '@tokens-studio/ui';
+import { IconButton, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { Input } from '@tokens-studio/graph-engine';
 import { Slider } from '../slider';
+import { FloppyDisk } from 'iconoir-react';
+import { useSelector } from 'react-redux';
+import { delayedUpdateSelector } from '@/redux/selectors';
 
 export const SliderField = observer(({ port, readOnly }: IField) => {
 
@@ -11,26 +14,39 @@ export const SliderField = observer(({ port, readOnly }: IField) => {
     const max = port.type.maximum || 1;
     const step = port.type.multipleOf || (max - min) / 100;
 
+    const useDelayed = useSelector(delayedUpdateSelector);
+    const [val, setVal] = React.useState(port.value);
+
+    React.useEffect(() => {
+        setVal(port.value);
+    }, [port.value]);
+
 
     const onChange = useCallback(
         (value: number[]) => {
             if (!readOnly) {
-                (port as Input).setValue(value[0]);
+
+                if (!useDelayed) {
+                    (port as Input).setValue(value[0]);
+                } else {
+                    setVal(value[0]);
+                }
             }
         },
-        [port, readOnly],
+        [port, readOnly, useDelayed],
     );
 
     return (
         <Stack direction='row' gap={2}>
             <Slider
-                value={[port.value]}
+                value={[val]}
                 min={min}
                 max={max}
                 step={step}
                 onValueChange={onChange}
             />
-            <Text>{port.value}</Text>
+            <Text>{val}</Text>
+            {useDelayed && <IconButton icon={<FloppyDisk />} onClick={() => (port as Input).setValue(val)} />}
         </Stack>
 
     );

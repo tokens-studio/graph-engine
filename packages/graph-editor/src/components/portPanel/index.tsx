@@ -11,7 +11,7 @@ import { observer } from 'mobx-react-lite';
 import { Input, NodeTypes } from '@tokens-studio/graph-engine';
 import { Port as GraphPort } from '@tokens-studio/graph-engine';
 
-import {Xmark, MoreVert, EyeClosed, Settings, Puzzle, Undo, EyeSolid} from 'iconoir-react';
+import { Xmark, MoreVert, EyeClosed, Settings, Puzzle, Undo, EyeSolid } from 'iconoir-react';
 import { InlineTypeLabel } from '@/components/flow';
 import { useGraph } from '@/hooks/useGraph';
 import { controls } from '@/redux/selectors/registry';
@@ -37,6 +37,7 @@ export const PortPanel = observer(({ ports, readOnly }: IPortPanel) => {
 });
 
 export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
+
   const readOnly = isReadOnly || port.isConnected;
   const controlSelector = useSelector(controls);
   const graph = useGraph();
@@ -44,11 +45,13 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
   const isDynamicInput = Boolean(port.annotations[deletable]);
   const resettable = Boolean(port.annotations[resetable]);
   const inner = useMemo(() => {
-    const field = controlSelector.find((x) => x.matcher(port,{ readOnly}));
+    const field = controlSelector.find((x) => x.matcher(port, { readOnly }));
     const Component = field?.component!;
 
     return <Component port={port} readOnly={readOnly} />;
-  }, [controlSelector, port, readOnly]);
+    //We use an explicit dependency on the type
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [controlSelector, port, readOnly, port.type]);
 
   const onClick = useCallback(() => {
     port.setVisible(!port.visible);
@@ -56,11 +59,13 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
 
   const onDelete = useCallback(() => {
     //We need to remove the outgoing edges first
+    if (graph) {
+      graph
+        .outEdges(port.node.id)
+        .filter((x) => x.sourceHandle === port.name)
+        .map((x) => graph.removeEdge(x.id));
+    }
 
-    graph
-      .outEdges(port.node.id)
-      .filter((x) => x.sourceHandle === port.name)
-      .map((x) => graph.removeEdge(x.id));
 
     port.node.removeInput(port.name);
 

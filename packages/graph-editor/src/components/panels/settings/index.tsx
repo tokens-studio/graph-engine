@@ -7,11 +7,12 @@ import {
   Stack,
   TextInput,
   Tooltip,
+  Text,
   Checkbox,
 } from '@tokens-studio/ui';
 import { useSelector } from 'react-redux';
 import {
-  debugMode,
+  delayedUpdateSelector,
   edgeType,
   inlineTypes,
   layoutType,
@@ -32,6 +33,7 @@ export const Settings = () => {
   const obscureDistanceValue = useSelector(obscureDistance);
   const showTimingsValue = useSelector(showTimings);
   const inlineTypesValue = useSelector(inlineTypes);
+  const delayedUpdateValue = useSelector(delayedUpdateSelector);
   const contextMenus = useSelector(contextMenuSelector);
   const dispatch = useDispatch();
 
@@ -62,7 +64,9 @@ export const Settings = () => {
               }
             >
               <Box>
-                <InfoCircleSolid />
+                <Text>
+                  <InfoCircleSolid />
+                </Text>
               </Box>
             </Tooltip>
           </Stack>
@@ -75,10 +79,34 @@ export const Settings = () => {
         </Stack>
         <Stack direction="column" gap={2} justify="between">
           <Stack direction="row" gap={2} justify="between">
+            <Label>Use delayed interaction</Label>
+            <Tooltip
+              label={
+                'Forces a user to click save to update port '
+              }
+            >
+              <Box>
+                <Text>
+                  <InfoCircleSolid />
+                </Text>
+              </Box>
+            </Tooltip>
+          </Stack>
+          <Checkbox
+            onCheckedChange={(checked) =>
+              dispatch.settings.setDelayedUpdate(Boolean(checked))
+            }
+            checked={delayedUpdateValue}
+          />
+        </Stack>
+        <Stack direction="column" gap={2} justify="between">
+          <Stack direction="row" gap={2} justify="between">
             <Label>Show execution time</Label>
             <Tooltip label={'Shows how long it takes for a node to process'}>
               <Box>
-                <InfoCircleSolid />
+                <Text>
+                  <InfoCircleSolid />
+                </Text>
               </Box>
             </Tooltip>
           </Stack>
@@ -94,7 +122,9 @@ export const Settings = () => {
             <Label>Enable Context Menus</Label>
             <Tooltip label={'Provides right click context menus'}>
               <Box>
-                <InfoCircleSolid />
+                <Text>
+                  <InfoCircleSolid />
+                </Text>
               </Box>
             </Tooltip>
           </Stack>
@@ -114,7 +144,9 @@ export const Settings = () => {
               }
             >
               <Box>
-                <InfoCircleSolid />
+                <Text>
+                  <InfoCircleSolid />
+                </Text>
               </Box>
             </Tooltip>
           </Stack>

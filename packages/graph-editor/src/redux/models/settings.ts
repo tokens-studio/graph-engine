@@ -26,6 +26,10 @@ export interface SettingsState {
   showTimings: boolean;
   showGrid: boolean;
   /**
+   * Whether to delay the update of a node when a value is changed
+   */
+  delayedUpdate: boolean
+  /**
    * Whether to show the types inline with the nodes
    */
   inlineTypes: boolean;
@@ -42,8 +46,17 @@ export const settingsState = createModel<RootModel>()({
     inlineTypes: false,
     snapGrid: false,
     debugMode: false,
+    delayedUpdate: false
   } as SettingsState,
   reducers: {
+
+    setDelayedUpdate(state, delayedUpdate: boolean) {
+      return {
+        ...state,
+        delayedUpdate,
+      };
+    },
+
     setSnapGrid(state, snapGrid: boolean) {
       return {
         ...state,
