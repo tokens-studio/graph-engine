@@ -8,7 +8,7 @@ import { ExamplesPicker } from '../ExamplesPicker.tsx';
 
 import { useGetEditor } from '@/hooks/useGetEditor.ts';
 import globalState, { GlobalState } from '@/mobx/index.tsx';
-import { capabilities, menu, panelItems, nodeTypes, icons } from './data.ts';
+import { capabilities, menu, panelItems, nodeTypes, icons, controls } from './data.ts';
 
 export const EditorTab = forwardRef(({ loading }: { loading?: boolean }, ref) => {
   const dispatch = useDispatch();
@@ -35,6 +35,7 @@ export const EditorTab = forwardRef(({ loading }: { loading?: boolean }, ref) =>
         panelItems={panelItems}
         nodeTypes={nodeTypes}
         capabilities={capabilities}
+        controls={controls}
         icons={icons}
         // emptyContent={<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />}
       ></Editor>

@@ -17,6 +17,7 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const {
       panelItems,
       capabilities,
+      controls,
       icons
     } = props;
 
@@ -25,6 +26,7 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
       <ToastProvider>
         <ReduxProvider
           icons={icons}
+          controls={controls}
           panelItems={panelItems}
           capabilities={capabilities}>
           <LayoutController {...props} ref={ref} />

@@ -3,7 +3,7 @@ import { createModel } from '@rematch/core';
 import { icons } from '@/registry/icon.js';
 import { CapabilityFactory, Node } from '@tokens-studio/graph-engine';
 import { inputControls } from '@/registry/inputControls.js';
-import { controls } from '@/registry/control.js';
+import { defaultControls } from '@/registry/control.js';
 import { defaultSpecifics } from '@/registry/specifics.js';
 import { DropPanelStore, defaultPanelGroupsFactory } from '@/components/panels/dropPanel/index.js';
 import { Control } from '@/types/controls.js';
@@ -24,7 +24,7 @@ export const registryState = createModel<RootModel>()({
     nodeSpecifics: defaultSpecifics,
     icons: icons(),
     inputControls: { ...inputControls },
-    controls: [...(controls as Control[])],
+    controls: [...(defaultControls as Control[])],
     panelItems: defaultPanelGroupsFactory(),
     capabilities: [],
   } as RegistryState,
@@ -33,6 +33,12 @@ export const registryState = createModel<RootModel>()({
       return {
         ...state,
         capabilities: payload,
+      };
+    },
+    setControls(state, payload: Control[]) {
+      return {
+        ...state,
+        controls: payload,
       };
     },
     registerIcons(state, payload: Record<string, React.ReactNode>) {

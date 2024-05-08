@@ -1,13 +1,18 @@
 import { Provider } from 'react-redux';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { store } from './store.js';
 
-export const ReduxProvider = ({ children, panelItems, capabilities, icons }) => {
+export const ReduxProvider = ({ children, panelItems, capabilities, icons, controls }) => {
 
 
   useEffect(() => {
     store.dispatch.registry.registerIcons(icons || {});
   }, [icons]);
+
+  useEffect(() => {
+    store.dispatch.registry.setControls(controls);
+  }, [controls]);
+
 
   useEffect(() => {
     store.dispatch.registry.setPanelItems(panelItems);

@@ -4,7 +4,6 @@ import {
   CURVE,
   NUMBER,
   STRING,
-  SchemaObject,
   VEC2,
   VEC3,
   ANY,
@@ -21,16 +20,14 @@ import { DefaultField } from '@/components/controls/default';
 import { AnyField } from '@/components/controls/any';
 import { Vec2field } from '@/components/controls/vec2';
 import { Vec3field } from '@/components/controls/vec3';
-import { TokenArrayField } from '@/components/controls/tokenArray';
 import { TextArea } from '@/components/controls/text';
 import { SliderField } from '@/components/controls/slider';
 
 /**
  * Default controls for the graph editor
  */
-export const controls = [
+export const defaultControls = [
   {
-
     matcher: (port: Port) => port.annotations['ui.control'] === 'slider',
     component: SliderField,
   },
