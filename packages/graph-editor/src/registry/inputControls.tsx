@@ -27,37 +27,6 @@ import { deletable } from '@/annotations';
 const CSSProperties = Object.keys(properties);
 
 
-const SwitchNodeSpecifics = observer(({ node }: { node: Node }) => {
-  const [inputName, setInputName] = React.useState('');
-
-  const onClick = () => {
-    const input = node.addInput(inputName, {
-      type: AnySchema,
-    });
-    input.annotations[deletable] = true;
-    setInputName('');
-    node.run();
-  };
-
-  return (
-    <Stack direction="column" gap={4}>
-      <Heading size="small">Expose option</Heading>
-      <Stack direction="row" gap={3}>
-        <TextInput
-          onChange={(e) => setInputName(e.target.value)}
-          placeholder={'Option name'}
-          value={inputName}
-        />
-      </Stack>
-
-      <Stack justify="end">
-        <Button variant="primary" disabled={!inputName} onClick={onClick}>
-          Add Option
-        </Button>
-      </Stack>
-    </Stack>
-  );
-});
 
 const CSSMapSpecifics = observer(({ node }: { node: Node }) => {
   const [inputName, setInputName] = React.useState('-');
@@ -102,6 +71,5 @@ const CSSMapSpecifics = observer(({ node }: { node: Node }) => {
 });
 
 export const inputControls = {
-  [NodeTypes.SWITCH]: SwitchNodeSpecifics,
   [NodeTypes.CSS_MAP]: CSSMapSpecifics,
 } as Record<string, React.FC<{ node: Node }>>;

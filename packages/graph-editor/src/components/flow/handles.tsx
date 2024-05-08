@@ -61,7 +61,7 @@ const StyledRawHandle = styled(RawHandle, {
   variants: {
     error: {
       true: {
-        '&::after': {
+        '&': {
           background: 'var(--colors-dangerFg)',
           borderColor: 'var(--colors-dangerBorder)',
         },
@@ -133,13 +133,23 @@ const HandleHolder = styled(Box, {
   },
 });
 
-export const Handle = (props) => {
+export type HandleProps = {
+  children: React.ReactNode;
+  visible: boolean;
+  shouldHideHandles?: boolean;
+  error?: boolean;
+  isArray?: boolean;
+  full?: boolean;
+  color?: string;
+  icon: React.ReactNode;
+};
+
+export const Handle = (props: HandleProps) => {
   const {
     children,
     visible,
     shouldHideHandles = false,
     error,
-    array,
     full,
     color,
     icon,
@@ -152,12 +162,12 @@ export const Handle = (props) => {
   const shouldHide = !visible;
 
   return (
-    <HandleHolder 
-      collapsed={collapsed || shouldHide} 
-      css={{ 
+    <HandleHolder
+      collapsed={collapsed || shouldHide}
+      css={{
         flexDirection: type === 'target' ? 'row' : 'row-reverse',
       }}
-      >
+    >
       <StyledRawHandle
         shouldHideHandles={shouldHideHandles}
         error={error}
@@ -166,15 +176,18 @@ export const Handle = (props) => {
         type={type}
         position={position}
         hide={shouldHide}
+        style={{
+          background: color,
+        }}
         isValidConnection={isValidConnection}
         {...rest}
       >
         <IconoirProvider
-        iconProps={{
-          strokeWidth: 3,
-          width: '0.75em',
-          height: '0.75em',
-        }}
+          iconProps={{
+            strokeWidth: 3,
+            width: '0.75em',
+            height: '0.75em',
+          }}
         >{icon}</IconoirProvider>
       </StyledRawHandle>
 

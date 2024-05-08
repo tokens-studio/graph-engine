@@ -1,7 +1,7 @@
 import { Input } from "./input.js";
 import { Output } from "./output.js";
 import { v4 as uuid } from 'uuid';
-import { Graph, IDeserializeOpts, SerializedNode } from "@/index.js";
+import { Graph, IDeserializeOpts, SerializedNode, annotatedNodeRunning } from "@/index.js";
 import { GraphSchema } from "@/schemas/index.js";
 import getDefaults from "json-schema-defaults";
 import { action, computed, makeObservable, observable } from "mobx";
@@ -55,7 +55,6 @@ export class Node {
   public lastExecutedDuration = 0;
 
   private _graph: Graph;
-  private _isRunning: boolean = false;
 
   public error?: Error;
 
@@ -136,7 +135,7 @@ export class Node {
    * Runs the node. Internally this calls the execute method, but the run entrypoint allows for additional tracking and lifecycle management
    */
   async run() {
-    this._isRunning = true;
+    this.annotations[annotatedNodeRunning] = true;
     const start = performance.now();
     try {
       await this.execute();
@@ -145,7 +144,7 @@ export class Node {
       this.error = err as Error;
     }
     const end = performance.now();
-    this._isRunning = false;
+    this.annotations[annotatedNodeRunning] = false;
     this.lastExecutedDuration = end - start;
 
     return {
@@ -166,7 +165,7 @@ export class Node {
   }
 
   get isRunning() {
-    return this._isRunning;
+    return !!this.annotations[annotatedNodeRunning];
   }
 
   /**
@@ -259,7 +258,7 @@ export class Node {
     return this.type;
   };
 
-  protected getAllInputs = <T = Record<string, any>>(): T => {
+  getAllInputs = <T = Record<string, any>>(): T => {
     return Object.fromEntries(
       Object.entries(this.inputs).map(([key, value]) => [key, value.value])
     ) as T;

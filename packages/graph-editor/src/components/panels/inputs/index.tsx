@@ -9,6 +9,7 @@ import { PortPanel } from '@/components/portPanel';
 import { InfoCircle } from 'iconoir-react';
 import { DynamicInputs } from './dynamicInputs';
 import { annotatedDynamicInputs } from '@tokens-studio/graph-engine';
+import { editable } from '@/annotations/index.js';
 
 export function Inputsheet() {
   const graph = useGraph();
@@ -29,7 +30,7 @@ export function Inputsheet() {
     return <></>;
   }
 
-  const dynamicInputs = selectedNode.annotations[annotatedDynamicInputs];
+  const dynamicInputs = selectedNode.annotations[annotatedDynamicInputs] && selectedNode.annotations[editable] !=false;
 
 
   return (

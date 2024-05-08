@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Handle, HandleContainer } from '../handles.js';
-import { Input, Port } from '@tokens-studio/graph-engine';
+import { Input, Port, annotatedNodeRunning } from '@tokens-studio/graph-engine';
 import colors from '@/tokens/colors.js';
 import { useSelector } from 'react-redux';
 import { inlineTypes, showTimings } from '@/redux/selectors/settings.js';
@@ -60,14 +60,14 @@ const NodeWrap = observer(({ node }: INodeWrap) => {
   return (
     <Node
       id={node.id}
-      isAsync={node.isRunning}
+      isAsync={node.annotations[annotatedNodeRunning]}
       // icon={nodeDef.icon}
       title={node.annotations[title] || node.factory.title || 'Node'}
       error={node.error || null}
       controls={''}
     >
       <Stack direction="column" gap={2}>
-        <Stack direction="row" gap={3} css={{padding: '$3'}}>
+        <Stack direction="row" gap={3} css={{ padding: '$3' }}>
           <HandleContainer type="target" className={'target'} full>
             <PortArray ports={node.inputs} />
           </HandleContainer>
@@ -108,15 +108,15 @@ const extractTypeIcon = (
   iconLookup: Record<string, React.ReactNode>,
 ) => {
   const icon = iconLookup[port.type.$id || ''];
-  const isArray = Boolean(port.type.items);
+  const isArray = Boolean(port.type.type == 'array');
 
   if (icon) {
-    return { icon, array: isArray };
+    return { icon };
   }
 
-  const color = colors.any.value;
+  const color = isArray ? colors.array.value : colors.any.value;
 
-  return { icon, color, isArray };
+  return { icon, color };
 };
 
 export const InlineTypeLabel = ({ port }: { port: Port }) => {

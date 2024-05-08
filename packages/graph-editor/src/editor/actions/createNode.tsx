@@ -3,7 +3,7 @@ import { Dispatch } from '@/redux/store';
 import { NodeTypes, Node, Graph, NodeFactory } from '@tokens-studio/graph-engine';
 import { ReactFlowInstance } from 'reactflow';
 
-export interface NodeRequest {
+export type NodeRequest = {
   type: NodeTypes;
   position?: { x: number; y: number };
   data?: any;
@@ -31,10 +31,9 @@ export const createNode = ({
   customUI,
   dropPanelPosition,
   dispatch
-
 }: ICreateNode) => {
   return (nodeRequest: NodeRequest) => {
-    const dropPosition = nodeRequest.position || {
+    const position = nodeRequest.position || {
       x: dropPanelPosition.x,
       y: dropPanelPosition.y,
     };
@@ -59,9 +58,6 @@ export const createNode = ({
       alert('Only one output node allowed');
       return;
     }
-    // set x y coordinates in instance
-    const position = reactFlowInstance.screenToFlowPosition(dropPosition);
-
     //Lookup the node type
     const Factory = nodeLookup[nodeRequest.type];
 

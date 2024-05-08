@@ -8,6 +8,7 @@ export enum NodeTypes {
   OUTPUT = "studio.tokens.generic.output",
   SUBGRAPH = "studio.tokens.generic.subgraph",
   ARRAY = "studio.tokens.generic.array",
+  REDUCE = "studio.tokens.generic.reduce",
   PASS_THROUGH = "studio.tokens.generic.passthrough",
   PANIC = "studio.tokens.generic.panic",
   CONSTANT = "studio.tokens.generic.constant",

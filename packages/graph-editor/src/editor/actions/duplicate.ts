@@ -1,18 +1,32 @@
-import { useLocalGraph } from "@/hooks";
-import { Port } from "@tokens-studio/graph-engine";
-import {  Node,Edge, useReactFlow } from "reactflow";
+import { Graph, NodeFactory, Port, annotatedSingleton } from "@tokens-studio/graph-engine";
+import { Node, Edge, ReactFlowInstance } from "reactflow";
 import { v4 as uuidv4 } from 'uuid';
 
-export const onDuplicate = (lookup)=> () => {
+export interface IDuplicate {
+    reactFlowInstance: ReactFlowInstance,
+    graph: Graph,
+    nodeLookup: Record<string, NodeFactory>,
+}
 
-    const graph = useLocalGraph();
-    const reactFlowInstance = useReactFlow();
-    const nodes = reactFlowInstance.getNodes().filter((x) => x.selected);
-    const { addNodes, addEdges } = nodes.reduce(
-        (acc, node) => {
-            const graphNode = graph.getNode(node.id);
+/**
+ * Note that we currently do not support duplicating nodes that don't exist in the graph, like groups
+ * @returns 
+ */
+export const duplicateNodes = ({ graph, reactFlowInstance, nodeLookup }: IDuplicate) => (nodeIds: string[]) => {
 
-            if (!graphNode) {
+    const { addNodes, addEdges } = nodeIds.reduce(
+        (acc, nodeId) => {
+
+            const node = reactFlowInstance.getNode(nodeId);
+            //Ignore missing lookups
+            if (!node) {
+                return acc;
+            }
+
+            const graphNode = graph.getNode(nodeId);
+
+            //Ignore missing nodes or attempts to duplicate singletons
+            if (!graphNode || graphNode?.annotations[annotatedSingleton]) {
                 return acc;
             }
             const newID = uuidv4();
@@ -24,7 +38,7 @@ export const onDuplicate = (lookup)=> () => {
                     id: newID,
                 },
                 graph,
-                lookup
+                lookup: nodeLookup
             }
             );
 
@@ -51,31 +65,18 @@ export const onDuplicate = (lookup)=> () => {
                 .flat();
 
             //De select the existing node so that we can select the new one
-            const existing = reactFlowInstance.getNodes().map((x) => {
-                if (x.id === node.id) {
-                    return {
-                        ...x,
-                        selected: false,
-                    };
-                }
-                return x
-            });
             node.selected = false;
 
-            const newNodes = existing.concat(
-                nodes.map((node) => {
-                    node.id;
-                    return {
-                        ...node,
-                        id: newID,
-                        selected: true,
-                        position: {
-                            x: node.position.x + 20,
-                            y: node.position.y + 100,
-                        },
-                    };
-                }),
-            );
+            const newNodes = [{
+                ...node,
+                id: newID,
+                selected: true,
+                position: {
+                    x: node.position.x + 20,
+                    y: node.position.y + 100,
+                },
+            }];
+
 
             return {
                 addNodes: acc.addNodes.concat(newNodes),
@@ -89,6 +90,10 @@ export const onDuplicate = (lookup)=> () => {
     );
 
     //We need to set the nodes and edges otherwise reactflow will not respect the change to the selected value we used
-    reactFlowInstance.setNodes(addNodes);
-    reactFlowInstance.setEdges(addEdges);
+    reactFlowInstance.setNodes((existingNodes) => {
+        return existingNodes.concat(addNodes);
+    });
+    reactFlowInstance.setEdges((existingEdges) => {
+        return existingEdges.concat(addEdges);
+    });
 };

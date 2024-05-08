@@ -17,7 +17,7 @@ import { useGraph } from '@/hooks/useGraph';
 import { controls } from '@/redux/selectors/registry';
 import { IField } from '@/components/controls/interface';
 import copy from 'copy-to-clipboard';
-import { deletable, resetable } from '@/annotations';
+import { deletable, resetable,hidden } from '@/annotations';
 
 export interface IPortPanel {
   ports: Record<string, GraphPort>;
@@ -29,7 +29,7 @@ export const PortPanel = observer(({ ports, readOnly }: IPortPanel) => {
 
   return (
     <Stack direction="column" gap={3} width="full">
-      {entries.map((x) => (
+      {entries.filter(x=>!x.annotations[hidden]).map((x) => (
         <Port port={x} key={x.name} readOnly={readOnly} />
       ))}
     </Stack>

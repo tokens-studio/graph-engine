@@ -1,5 +1,4 @@
 /* eslint-disable react/display-name */
-// import 'reactflow/dist/style.css';
 import { createNode } from './actions/createNode.js';
 import {
   Background,
@@ -10,7 +9,6 @@ import {
   MiniMap,
   Node,
   NodeChange,
-  NodePositionChange,
   SelectionMode,
   SnapGrid,
   useEdgesState,
@@ -20,20 +18,16 @@ import {
   XYPosition,
 } from 'reactflow';
 import { NodeTypes as EditorNodeTypes } from '../components/flow/types.js';
-import { GlobalHotKeys } from 'react-hotkeys';
 import {
   getNodePositionInsideParent,
   sortNodes,
 } from '../components/flow/utils.js';
 import { handleDrop } from './actions/handleDrop.js';
-import { keyMap, useHotkeys } from './hooks/hotkeys.js';
-
 import { useDispatch } from '../hooks/index.js';
 import { v4 as uuidv4 } from 'uuid';
 import CustomEdge from '../components/flow/edges/edge.js';
 import React, {
   MouseEvent,
-  MutableRefObject,
   useCallback,
   useEffect,
   useImperativeHandle,
@@ -42,7 +36,7 @@ import React, {
   useState,
 } from 'react';
 import ReactFlow from 'reactflow';
-import SelectedNodesToolbar from '../components/flow/toolbar/selectedNodesToolbar.js';
+
 import groupNode from '../components/flow/nodes/groupNode.js';
 import noteNode from '../components/flow/nodes/noteNode.js';
 
@@ -62,12 +56,16 @@ import { clear } from './actions/clear.js';
 import { copyNodeAction } from './actions/copyNodes.js';
 import { selectNode } from './actions/selectNode.js';
 import { deleteNode } from './actions/deleteNode.js';
+import { duplicateNodes } from './actions/duplicate.js';
 import { PassthroughNode } from '@/components/flow/nodes/passthroughNode.js';
 import { uiNodeType, uiVersion, uiViewport, xpos, ypos } from '@/annotations/index.js';
 import { connectNodes } from './actions/connect.js';
 import { capabilitiesSelector, panelItemsSelector } from '@/redux/selectors/registry.js';
 import { contextMenuSelector } from '@/redux/selectors/ui.js';
 import { GraphContextProvider } from '@/context/graph.js';
+import { SelectionContextMenu } from '@/components/contextMenus/selectionContextMenu.js';
+import { ActionProvider } from './actions/provider.js';
+import { HotKeys } from '@/components/hotKeys/index.js';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -87,6 +85,7 @@ const defaultEdgeOptions = {
     strokeWidth: 2,
   },
 };
+
 
 
 export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>(
@@ -159,12 +158,16 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     const [contextEdge, setContextEdge] = React.useState<Edge | null>(null);
     const [dropPanelPosition, setDropPanelPosition] =
       React.useState<XYPosition>({ x: 0, y: 0 });
+    const [contextSelection, setContextSelection] = React.useState<Node[]>([]);
 
     const { show: showPane } = useContextMenu({
       id: props.id + '_pane',
     });
     const { show: showEdge } = useContextMenu({
       id: props.id + '_edge',
+    });
+    const { show: showSelection } = useContextMenu({
+      id: props.id + '_selection',
     });
     const { show: showNode } = useContextMenu({
       id: props.id + '_node',
@@ -225,6 +228,14 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
         showEdge({ event });
       },
       [showEdge],
+    );
+
+    const handleSelectionContextMenu = useCallback(
+      (event, nodes: Node[]) => {
+        setContextSelection(nodes);
+        showSelection({ event });
+      },
+      [showSelection],
     );
 
     const handleNodeContextMenu = useCallback(
@@ -301,8 +312,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     }, [dispatch])
 
     const handleDeleteNode = useMemo(() => {
-      return deleteNode(graph, dispatch);
-    }, [graph, dispatch])
+      return deleteNode(graph, dispatch,reactFlowInstance);
+    }, [graph, dispatch, reactFlowInstance])
 
     const handleSelectNewNodeType = useMemo(
       () => createNode({
@@ -325,10 +336,24 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           clear(reactFlowInstance, graph);
         },
         save: () => {
-          //Lazily update the graph annotations
-          graph.annotations[uiViewport] = reactFlowInstance.getViewport();
-          graph.annotations[uiVersion] = version;
-          return graph.serialize();
+
+          const serialized = graph.serialize();
+          //Lazily handle the additional metadata injection
+          serialized.annotations[uiViewport] = reactFlowInstance.getViewport();
+          serialized.annotations[uiVersion] = version;
+          const nodes = reactFlowInstance.getNodes();
+
+          nodes.forEach((node) => {
+            const nodeData = serialized.nodes[node.id];
+            if (!nodeData) {
+              return;
+            }
+            const position = node.position;
+            nodeData.annotations[xpos] = position.x;
+            nodeData.annotations[ypos] = position.y;
+          });
+
+          return serialized
         },
         loadRaw: (serializedGraph) => {
           if (internalRef.current) {
@@ -583,13 +608,14 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
       [getIntersectingNodes, setNodes],
     );
 
-    const copyNodes = copyNodeAction(reactFlowInstance, graph, fullNodeLookup);
-    const { handlers } = useHotkeys({
-      onEdgesDeleted,
-      copyNodes,
-      handleDeleteNode,
+    const duplicateNodesAction = duplicateNodes({
       graph,
+      reactFlowInstance,
+      nodeLookup: fullNodeLookup,
     });
+
+
+    const copyNodes = copyNodeAction(reactFlowInstance, graph, fullNodeLookup);
 
 
 
@@ -597,8 +623,21 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
       async (event) => {
         event.preventDefault();
         const processed = await handleDrop(event);
+        //Update the position of the node
+        const positionUpdated = processed.map((nodeRequest) => {
+
+          const updatedPosition = nodeRequest.position ? reactFlowInstance.screenToFlowPosition(nodeRequest.position) : undefined;
+
+          return {
+            ...nodeRequest,
+            position: updatedPosition,
+          };
+        })
+
+
+
         //Some of the nodes might be invalid, so remember to filter them out
-        const newNodes = processed.map((nodeRequest) => handleSelectNewNodeType(nodeRequest)).filter(x => !!x);
+        const newNodes = positionUpdated.map((nodeRequest) => handleSelectNewNodeType(nodeRequest)).filter(x => !!x);
 
         if (newNodes.length == 1) {
           handleSelectNode(newNodes[0]!.id);
@@ -609,86 +648,93 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     const nodeCount = nodes.length;
     return (
       <GraphContextProvider graph={graph}>
-        <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges>
-          <Box
-            className="editor"
-            css={{
-              height: '100%',
-              backgroundColor: '$bgCanvas',
-              display: 'flex',
-              flexDirection: 'row',
-              flexGrow: 1,
-            }}
-          >
-            <ReactFlow
-              ref={reactFlowWrapper}
-              nodes={nodes}
-              onNodesChange={managedNodesChange}
-              onNodesDelete={onNodesDelete}
-              onEdgesChange={managedEdgeChange}
-              onEdgeDoubleClick={onEdgeDblClick}
-              onEdgesDelete={onEdgesDeleted}
-              edges={edges}
-              elevateNodesOnSelect={false}
-              onNodeDragStop={onNodeDragStop}
-              snapToGrid={snapGridValue}
-              edgeTypes={edgeTypes}
-              nodeTypes={fullNodeTypesRef.current}
-              snapGrid={snapGridCoords}
-              onNodeDrag={onNodeDrag}
-              onConnect={onConnect}
-              onDrop={onDrop}
-              onConnectEnd={onConnectEnd}
-              selectNodesOnDrag={true}
-              defaultEdgeOptions={defaultEdgeOptions}
-              panOnScroll={true}
-              //Note that we cannot use pan on drag or it will affect the context menu
-              onPaneContextMenu={contextMenus ? handleContextMenu : undefined}
-              onEdgeContextMenu={contextMenus ? handleEdgeContextMenu : undefined}
-              onNodeContextMenu={contextMenus ? handleNodeContextMenu : undefined}
-              selectionMode={SelectionMode.Partial}
-              onDragOver={onDragOver}
-              selectionOnDrag={true}
-              panOnDrag={panOnDrag}
-              minZoom={-Infinity}
-              zoomOnDoubleClick={false}
-              defaultViewport={defaultViewport}
-              onlyRenderVisibleElements={true}
-              maxZoom={Infinity}
-              proOptions={proOptions}
+        <ActionProvider actions={{
+          deleteNode: handleDeleteNode,
+          createNode: handleSelectNewNodeType,
+          duplicateNodes: duplicateNodesAction,
+          copyNodes
+        }}>
+          <HotKeys>
+            <Box
+              className="editor"
+              css={{
+                height: '100%',
+                backgroundColor: '$bgCanvas',
+                display: 'flex',
+                flexDirection: 'row',
+                flexGrow: 1,
+              }}
             >
-              {showGridValue && (
-                <Background
-                  color="var(--colors-borderMuted)"
-                  gap={16}
-                  size={2}
-                  variant={BackgroundVariant.Dots}
+              <ReactFlow
+                ref={reactFlowWrapper}
+                nodes={nodes}
+                onNodesChange={managedNodesChange}
+                onNodesDelete={onNodesDelete}
+                onEdgesChange={managedEdgeChange}
+                onEdgeDoubleClick={onEdgeDblClick}
+                onEdgesDelete={onEdgesDeleted}
+                edges={edges}
+                elevateNodesOnSelect={false}
+                onNodeDragStop={onNodeDragStop}
+                snapToGrid={snapGridValue}
+                edgeTypes={edgeTypes}
+                nodeTypes={fullNodeTypesRef.current}
+                snapGrid={snapGridCoords}
+                onNodeDrag={onNodeDrag}
+                onConnect={onConnect}
+                onDrop={onDrop}
+                onConnectEnd={onConnectEnd}
+                selectNodesOnDrag={true}
+                defaultEdgeOptions={defaultEdgeOptions}
+                panOnScroll={true}
+                //Note that we cannot use pan on drag or it will affect the context menu
+                onPaneContextMenu={contextMenus ? handleContextMenu : undefined}
+                onEdgeContextMenu={contextMenus ? handleEdgeContextMenu : undefined}
+                onNodeContextMenu={contextMenus ? handleNodeContextMenu : undefined}
+                onSelectionContextMenu={contextMenus ? handleSelectionContextMenu : undefined}
+                selectionMode={SelectionMode.Partial}
+                onDragOver={onDragOver}
+                selectionOnDrag={true}
+                panOnDrag={panOnDrag}
+                minZoom={-Infinity}
+                zoomOnDoubleClick={false}
+                defaultViewport={defaultViewport}
+                onlyRenderVisibleElements={true}
+                maxZoom={Infinity}
+                proOptions={proOptions}
+              >
+                {showGridValue && (
+                  <Background
+                    color="var(--colors-borderMuted)"
+                    gap={16}
+                    size={2}
+                    variant={BackgroundVariant.Dots}
+                  />
+                )}
+                {nodeCount === 0 && props.emptyContent}
+
+                <CommandMenu
+                  reactFlowWrapper={reactFlowWrapper}
+                  items={panelItems}
+                  handleSelectNewNodeType={handleSelectNewNodeType}
                 />
-              )}
-              {nodeCount === 0 && props.emptyContent}
-              <SelectedNodesToolbar />
-              <CommandMenu
-                reactFlowWrapper={reactFlowWrapper}
-                items={panelItems}
-                handleSelectNewNodeType={handleSelectNewNodeType}
-              />
-              {props.children}
-            </ReactFlow>
-          </Box>
-          <MiniMap />
-        </GlobalHotKeys>
-        <PaneContextMenu
-          id={props.id + '_pane'}
-          onSelectItem={handleSelectNewNodeType}
-        />
-        <NodeContextMenu
-          id={props.id + '_node'}
-          nodes={contextNode}
-          graph={graph}
-          lookup={fullNodeLookup}
-        />
-        <EdgeContextMenu id={props.id + '_edge'} edge={contextEdge} />
-        {children}
+                {props.children}
+              </ReactFlow>
+            </Box>
+            <MiniMap />
+          </HotKeys>
+          <PaneContextMenu
+            id={props.id + '_pane'}
+            onSelectItem={handleSelectNewNodeType}
+          />
+          <NodeContextMenu
+            id={props.id + '_node'}
+            nodes={contextNode}
+          />
+          <EdgeContextMenu id={props.id + '_edge'} edge={contextEdge} />
+          <SelectionContextMenu id={props.id + '_selection'} nodes={contextSelection} />
+          {children}
+        </ActionProvider>
       </GraphContextProvider>
     );
   },

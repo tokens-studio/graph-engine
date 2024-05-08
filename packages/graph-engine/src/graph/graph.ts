@@ -57,8 +57,14 @@ const dedup = (arr: string[]) => [...new Set(arr)];
 export type SubscriptionType = "nodeAdded" | "nodeRemoved" | "edgeAdded" | "edgeRemoved" | "nodeUpdated" | "edgeUpdated" | "start" | "stop" | "pause" | "resume" | "edgeIndexUpdated";
 
 export type FinalizerType = 'serialize';
-export type SerialFinalizer = (graph: SerializedGraph) => SerializedGraph;
-export type FinalizerExecutor = SerialFinalizer;
+
+//Add a typescript type for the finalizer to dynamically lookup the type
+export type FinalizerLookup = {
+  serialize: SerializedGraph;
+};
+export type SerializerType<T extends keyof FinalizerLookup> = FinalizerLookup[T]
+
+export type FinalizerExecutor<Type extends keyof FinalizerLookup> = (value: SerializerType<Type>) => SerializerType<Type>
 
 export type PlayState = "playing" | "paused" | "stopped";
 
@@ -804,7 +810,7 @@ export class Graph {
     };
   }
 
-  onFinalize(type: FinalizerType, listener: FinalizerExecutor) {
+  onFinalize(type: FinalizerType, listener: FinalizerExecutor<FinalizerType>) {
     (this.finalizers[type] || (this.finalizers[type] = [])).push(listener);
     return () => {
       this.finalizers[type] = this.finalizers[type].filter((x) => x !== listener);

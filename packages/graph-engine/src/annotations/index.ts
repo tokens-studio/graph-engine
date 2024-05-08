@@ -32,3 +32,8 @@ export const annotatedSingleton = 'engine.singleton';
  * Indicates whether the node is deletable. Default is true
  */
 export const annotatedDeleteable = 'engine.deletable';
+
+/**
+ * Indicates that a node is currently running
+ */
+export const annotatedNodeRunning = 'engine.nodeRunning';

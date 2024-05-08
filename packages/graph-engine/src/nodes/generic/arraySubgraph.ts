@@ -1,8 +1,9 @@
 import { NodeTypes } from "@/types.js";
-import { AnyArraySchema, NumberSchema } from "@/schemas/index.js";
+import { AnyArraySchema, AnySchema, NumberSchema, SchemaObject } from "@/schemas/index.js";
 import SubgraphNode from "./subgraph";
 import { annotatedDynamicInputs, hideFromParentSubgraph } from "@/annotations";
-import { ToInput, ToOutput } from "@/programmatic";
+import { Input, ToInput, ToOutput } from "@/programmatic";
+import { extractArray } from "@/schemas/utils";
 
 export default class ArraySubgraph<T, V> extends SubgraphNode {
   static title = "Array Map";
@@ -27,11 +28,15 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
 
     if (!input) throw new Error("No input node found in subgraph");
 
+
+    input.annotations['ui.editable'] = false;
+
     input.addInput("value", {
-      type: AnyArraySchema,
+      type: AnySchema,
       visible: false,
       annotations: {
         "ui.editable": false,
+        "ui.hidden": true,
         [hideFromParentSubgraph]: true
       }
     });
@@ -42,6 +47,7 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
       visible: false,
       annotations: {
         "ui.editable": false,
+        "ui.hidden": true,
         [hideFromParentSubgraph]: true
       }
     });
@@ -52,18 +58,57 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
       visible: true,
     });
     this.inputs["array"].annotations["ui.editable"] = false
+
+    this.addOutput("value", {
+      type: AnyArraySchema,
+      visible: true,
+    });
   }
 
   async execute() {
     const input = this.getRawInput("array");
-    const output = await Promise.all(
-      (input.value as any[]).map(async (item) => {
-        const result = await this._innerGraph.execute();
-        if (!result.output) throw new Error("No output from subgraph");
-        return result.output.value;
-      })
-    );
 
-    this.setOutput("value", output, input.type);
+    const otherInputs: [string, Input<any>][] = Object.keys(this.inputs).filter(x => x !== "array").map(x => [x, this.getRawInput(x)]);
+
+    //Todo optimize this to run in parallel. We have to run this in series because the inner graph is not designed to run in parallel
+
+    const output = await (input.value as any[]).reduce(async (acc, item, i) => {
+
+      const output = await acc;
+
+      const other = Object.fromEntries(otherInputs.map(([name, x]) => [name, {
+        value: x.value,
+        type: x.type
+      }]));
+
+      const result = await this._innerGraph.execute({
+        //By default this is any so we need to overwrite it with its runtime type
+        inputs: {
+          value: {
+            value: item,
+            type: extractArray(input.type)
+          },
+          index: {
+            value: i
+          },
+          ...other
+        }
+      });
+
+      if (!result.output) throw new Error("No output from subgraph");
+      return output.concat([result.output]);
+    }, Promise.resolve([]));
+
+    const flattened = output.map(x => x.value);
+
+    const type = output.length > 0 ? output[0].type : input.type;
+    const dynamicTypeSchema: SchemaObject = {
+      ...type,
+      //Override the type
+      type: 'array',
+      items: type
+    }
+
+    this.setOutput("value", flattened, dynamicTypeSchema);
   }
 }
