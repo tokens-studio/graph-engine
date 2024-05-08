@@ -259,16 +259,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           return;
         }
         switch (change.type) {
-
           case 'remove':
             graph.removeNode(id);
-            break;
-
-          case 'position':
-            if ((change as NodePositionChange).position) {
-              node.annotations['ui.position.x'] = (change as NodePositionChange).position?.x;
-              node.annotations['ui.position.y'] = (change as NodePositionChange).position?.y;
-            }
             break;
         }
       });
