@@ -6,12 +6,14 @@ import { Stack, Box, Accordion, Separator, Button } from '@tokens-studio/ui';
 import { PreviewColor } from './preview/color.js';
 import { TokenTypes } from '@tokens-studio/types';
 import { Token } from './token.js';
+import { flatTokensRestoreToMap } from '@/utils/index.js';
 
 export const TokenArrayField = observer(({ port, readOnly }: IField) => {
 
     const downloadTokens = () => {
         const element = document.createElement('a');
-        const file = new Blob([JSON.stringify(port.value)], {
+        const asObj = flatTokensRestoreToMap(port.value);
+        const file = new Blob([JSON.stringify(asObj)], {
             type: 'application/json',
         });
         element.href = URL.createObjectURL(file);
