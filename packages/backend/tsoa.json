@@ -3,7 +3,7 @@
     "entryFile": "src/index.ts",
     "noImplicitAdditionalProperties": "throw-on-extras",
     "controllerPathGlobs": [
-        "src/**/*Controller.ts"
+        "src/**/*controller.ts"
     ],
     "spec": {
         "description": "This is the backend API for the Tokens Studio Graph Engine API.\n# Cross-Origin Resource Sharing\n    This API features Cross-Origin Resource Sharing (CORS) implemented in compliance with  [W3C spec](https: //www.w3.org/TR/cors/).\n    And that allows cross-domain communication from the browser.\n    All responses have a wildcard same-origin which makes them completely public and accessible to everyone, including any code on any site.",
