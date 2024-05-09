@@ -1,18 +1,17 @@
-import { Edge, useReactFlow } from 'reactflow';
+import { Connection, Edge, useReactFlow } from 'reactflow';
 import { useCallback } from 'react';
 import GraphLib from '@dagrejs/graphlib';
-import { useGraph } from '@/hooks/useGraph';
 import { canConvertSchemaTypes } from '@tokens-studio/graph-engine';
 import { stripVariadic } from '@/utils/stripVariadic';
 import { useLocalGraph } from './useLocalGraph';
 const { Graph: CycleGraph, alg } = GraphLib;
 
 export interface IuseIsValidConnection {
-  postProcessor?: (params: Edge) => boolean;
+  postProcessor?: (connection: Connection) => boolean;
 }
 
 export interface IuseIsValidConnection {
-  postProcessor?: (params: Edge) => boolean;
+  postProcessor?: (connection: Connection) => boolean;
 }
 
 export const useIsValidConnection = ({
@@ -22,9 +21,10 @@ export const useIsValidConnection = ({
   const graph = useLocalGraph();
 
   return useCallback(
-    (params: Edge) => {
-      const target = graph.getNode(params.target);
-      const source = graph.getNode(params.source);
+    (connection: Connection):boolean => {
+  
+      const target = graph.getNode(connection.target!);
+      const source = graph.getNode(connection.source!);
 
       if (!target || !source) {
         return false;
@@ -35,7 +35,7 @@ export const useIsValidConnection = ({
         return false;
       }
 
-      const strippedVariadic = stripVariadic(params.targetHandle!);
+      const strippedVariadic = stripVariadic(connection.targetHandle!);
 
       //Check if the target is variadic
       if (target.inputs[strippedVariadic].variadic) {
@@ -43,7 +43,7 @@ export const useIsValidConnection = ({
       }
 
       const targetType = target?.inputs[strippedVariadic].type!;
-      const sourceType = source?.outputs[params.sourceHandle!].type!;
+      const sourceType = source?.outputs[connection.sourceHandle!].type!;
 
       const canConvert = canConvertSchemaTypes(sourceType, targetType);
 
@@ -66,14 +66,14 @@ export const useIsValidConnection = ({
       });
 
       //Now add the new edge
-      g.setEdge(params.source, params.target);
+      g.setEdge(connection.source!, connection.target!);
 
       if (!alg.isAcyclic(g)) {
         console.warn('You cannot introduce cycles into the graph');
         return false;
       }
-      return postProcessor ? postProcessor(params) : true;
+      return postProcessor ? postProcessor(connection) : true;
     },
-    [postProcessor],
+    [flow, graph, postProcessor],
   );
 };

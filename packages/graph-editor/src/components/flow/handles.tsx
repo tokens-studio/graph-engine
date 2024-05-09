@@ -133,7 +133,8 @@ const HandleHolder = styled(Box, {
   },
 });
 
-export type HandleProps = {
+export interface HandleProps {
+  id: string;
   children: React.ReactNode;
   visible: boolean;
   shouldHideHandles?: boolean;
@@ -146,6 +147,7 @@ export type HandleProps = {
 
 export const Handle = (props: HandleProps) => {
   const {
+    id,
     children,
     visible,
     shouldHideHandles = false,
@@ -169,10 +171,10 @@ export const Handle = (props: HandleProps) => {
       }}
     >
       <StyledRawHandle
+        id={id}
         shouldHideHandles={shouldHideHandles}
         error={error}
         left={type === 'target'}
-        isConnected={isValidConnection}
         type={type}
         position={position}
         hide={shouldHide}
@@ -180,7 +182,6 @@ export const Handle = (props: HandleProps) => {
           background: color,
         }}
         isValidConnection={isValidConnection}
-        {...rest}
       >
         <IconoirProvider
           iconProps={{

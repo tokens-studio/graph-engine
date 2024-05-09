@@ -7,16 +7,11 @@ import classNames from 'classnames/dedupe.js';
 import React, { useCallback } from 'react';
 import { ReactFlowInstance, useReactFlow, Node, Edge } from 'reactflow';
 import { Graph } from 'graphlib';
-import {
-  Graph as EngineGraph,
-  NodeFactory,
-} from '@tokens-studio/graph-engine';
 import { useAction } from '@/editor/actions/provider';
 
 export interface INodeContextMenuProps {
   id: string;
   nodes: Node[];
-  lookup: Record<string, NodeFactory>;
 }
 
 const convertToGraph = (flow: ReactFlowInstance) => {
