@@ -15,6 +15,6 @@ export const tsup: Options = {
     entryPoints: ['src/index.ts'],
     target: 'es2020',
     outDir: 'dist',
-    entry: ['src/**/*.ts'],
+    entry: ['src/**/*.ts','src/**/*.tsx'],
     esbuildPlugins: []
 };
