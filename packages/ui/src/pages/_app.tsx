@@ -1,7 +1,6 @@
 // https://nextjs.org/docs/advanced-features/custom-app
 import '../scripts/wdyr';
 
-import '../styles/styles.scss';
 
 import { AppProps } from 'next/app.ts';
 import { Head } from '@/components/next/index.ts';

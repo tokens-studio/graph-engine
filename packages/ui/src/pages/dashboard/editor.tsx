@@ -1,6 +1,8 @@
 'use client';
 
 import '@tokens-studio/graph-editor/index.css';
+import '../../styles/styles.scss';
+
 import { Box } from '@tokens-studio/ui';
 import { useDispatch } from '@/hooks/index.ts';
 import { useSelector } from 'react-redux';
