@@ -28,6 +28,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@tokens-studio/graph-engine-backend": "*",
     "@docusaurus/module-type-aliases": "3.2.1",
     "@docusaurus/tsconfig": "3.2.1",
     "@docusaurus/types": "3.2.1",
