@@ -9,8 +9,8 @@
     box-sizing: content-box;
     padding: 0;
     cursor: grab;
-    width: var(--sizes-5);
-    height: var(--sizes-5);
+    width: var(--sizes-7);
+    height: var(--sizes-7);
     border: 0;
     border-radius: var(--radii-small, 4px);
     background: var(--colors-accentMuted);
@@ -33,7 +33,8 @@
     --nodeBorderColor: var(--colors-accentMuted);
     --nodeBgColor: var(--colors-accentBg);
     --nodeTextColor: var(--colors-fgDefault);
-    outline: 2px solid var(--colors-accentMuted);
+    outline: 1px solid var(--colors-accentMuted);
+    outline-offset: 5px;
     border-radius: var(--radii-small, 4px);
 }
 
