@@ -9,7 +9,6 @@ export const tsup: Options = {
     clean: true, // rimraf disr
     dts: true, // generate dts file for main module
     format: env === 'production' ? ['cjs', 'esm'] : ['esm'],
-    minify: env === 'production',
     bundle: false,
     skipNodeModulesBundle: true,
     entryPoints: ['src/index.ts'],
