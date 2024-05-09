@@ -1,6 +1,6 @@
 
 import { INodeDefinition, Node } from "@tokens-studio/graph-engine";
-import { TokenArraySchema, TokenSetSchema } from "@/schemas/index.js";
+import { TokenArraySchema, TokenSetSchema } from "../schemas/index.js";
 
 
 export default class NameTokensNode extends Node {

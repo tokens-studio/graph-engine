@@ -1,8 +1,8 @@
 
 import { INodeDefinition, Node } from "@tokens-studio/graph-engine";
-import { TokenArrayArraySchema, TokenArraySchema, TokenSetSchema } from "@/schemas/index.js";
+import { TokenArrayArraySchema, TokenArraySchema } from "../schemas/index.js";
 import { transformTokens } from "token-transformer";
-import { IResolvedToken, flatTokensRestoreToMap, flatten } from "@/utils";
+import { IResolvedToken, flatTokensRestoreToMap, flatten } from "../utils/index.js";
 
 const resolveValues = (tokens: IResolvedToken[], context: IResolvedToken[]) => {
   const setsToUse = ["root", "excludes"];

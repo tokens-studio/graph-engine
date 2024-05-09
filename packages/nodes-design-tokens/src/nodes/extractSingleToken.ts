@@ -1,6 +1,6 @@
 import { SingleToken } from "@tokens-studio/types";
 import { BooleanSchema, INodeDefinition, Node, StringSchema } from '@tokens-studio/graph-engine'
-import { TokenArraySchema, TokenSchema, TokenSetSchema } from "@/schemas/index.js";
+import { TokenArraySchema, TokenSchema, TokenSetSchema } from "../schemas/index.js";
 
 export default class ExtractTokenNode extends Node {
     static title = "Extract token ";

@@ -1,6 +1,6 @@
 
 import { INodeDefinition, Node } from "@tokens-studio/graph-engine";
-import { TokenArraySchema, TokenSetSchema } from "@/schemas/index.js";
+import { TokenArraySchema, TokenSetSchema } from "../schemas/index.js";
 
 export default class InlineTokenNode extends Node {
   static title = "Inline Token Set";

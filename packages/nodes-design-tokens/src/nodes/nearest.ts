@@ -1,7 +1,7 @@
 
 import { INodeDefinition, Node, ColorSchema, StringSchema, BooleanSchema } from "@tokens-studio/graph-engine";
-import { TokenArraySchema } from "@/schemas/index.js";
-import { WcagVersion, sortTokens } from "@/utils/sortTokens";
+import { TokenArraySchema } from "../schemas/index.js";
+import { WcagVersion, sortTokens } from "../utils/sortTokens";
 
 
 export default class NearestColorNode extends Node {

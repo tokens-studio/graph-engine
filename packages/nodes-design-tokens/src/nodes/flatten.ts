@@ -1,4 +1,4 @@
-import { TokenArraySchema } from "@/schemas/index.js";
+import { TokenArraySchema } from "../schemas/index.js";
 import { SingleToken } from "@tokens-studio/types";
 import { INodeDefinition, Node } from '@tokens-studio/graph-engine'
 

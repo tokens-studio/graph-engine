@@ -1,6 +1,6 @@
 
 import { INodeDefinition, Node, StringSchema } from '@tokens-studio/graph-engine'
-import { TokenSetSchema } from "@/schemas/index.js";
+import { TokenSetSchema } from "../schemas/index.js";
 
 
 export default class GroupNode extends Node {

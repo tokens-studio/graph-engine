@@ -6,25 +6,25 @@
   "author": "andrew@hyma.io",
   "type": "module",
   "exports": {
-    "./nodes/*": {
-      "import": "./dist/esm/nodes/*",
-      "require": "./dist/cjs/nodes/*",
-      "types": "./dist/esm/nodes/*"
+    "./*": {
+      "import": "./dist/*",
+      "require": "./dist/*",
+      "types": "./dist/*"
     },
     ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/esm/index.d.ts"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
     }
   },
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "rollup --bundleConfigAsCjs --config rollup.config.mjs",
-    "dev": "rollup -w --bundleConfigAsCjs --config rollup.config.mjs",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "docs": "typedoc",
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint --ext .tsx,.ts,.js,.html . --fix",
@@ -35,11 +35,13 @@
     "test": "jest --passWithNoTests"
   },
   "sideEffects": false,
-  "types": "./dist/esm/index.d.ts",
+  "types": "./dist/index.d.ts",
   "dependencies": {
     "@tokens-studio/types": "^0.4.0",
     "@tokens-studio/ui": "^0.5.5",
+    "colorjs.io": "^0.5.0",
     "dot-prop": "^8.0.2",
+    "lodash.orderby": "^4.6.0",
     "mobx-react-lite": "^4.0.7",
     "token-transformer": "^0.0.33"
   },
@@ -64,6 +66,7 @@
     "ts-jest": "28.0.3",
     "ts-jest-resolver": "^2.0.1",
     "ts-node": "^10.9.1",
+    "tsup": "^8.0.2",
     "typedoc": "^0.24.7",
     "typescript": "4.8.4"
   },
@@ -72,5 +75,5 @@
     "tokens",
     "ui"
   ],
-  "jsnext:main": "./dist/esm/index.js"
+  "jsnext:main": "./dist/index.js"
 }

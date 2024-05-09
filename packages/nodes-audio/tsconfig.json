@@ -24,12 +24,8 @@
       "jest",
       "node"
     ],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
+    "baseUrl": "."
+    
   },
   "include": [
     "stories/**/*",

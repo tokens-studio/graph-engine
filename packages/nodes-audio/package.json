@@ -1,30 +1,30 @@
 {
   "name": "@tokens-studio/graph-engine-nodes-audio",
   "version": "0.0.1",
-  "description": "Audio nodes for the grpah engine",
+  "description": "Audio nodes for the graph engine",
   "license": "MIT",
   "author": "andrew@hyma.io",
   "type": "module",
   "exports": {
-    "./nodes/*": {
-      "import": "./dist/esm/nodes/*",
-      "require": "./dist/cjs/nodes/*",
-      "types": "./dist/esm/nodes/*"
+    "./*": {
+      "import": "./dist/*",
+      "require": "./dist/*",
+      "types": "./dist/*"
     },
     ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/esm/index.d.ts"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
     }
   },
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "rollup --bundleConfigAsCjs --config rollup.config.mjs",
-    "dev": "rollup -w --bundleConfigAsCjs --config rollup.config.mjs",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "docs": "typedoc",
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint --ext .tsx,.ts,.js,.html . --fix",
@@ -35,7 +35,7 @@
     "test": "jest --passWithNoTests"
   },
   "sideEffects": false,
-  "types": "./dist/esm/index.d.ts",
+  "types": "./dist/index.d.ts",
   "dependencies": {
     "audio-buffer-from": "^1.1.1"
   },
@@ -53,12 +53,10 @@
     "@types/node": "^18.15.11",
     "jest": "28.1.0",
     "jest-junit": "^15.0.0",
-    "rollup": "^3.10.1",
-    "rollup-plugin-swc": "^0.2.1",
-    "rollup-plugin-typescript2": "^0.36.0",
     "ts-jest": "28.0.3",
     "ts-jest-resolver": "^2.0.1",
     "ts-node": "^10.9.1",
+    "tsup": "^8.0.2",
     "typedoc": "^0.24.7",
     "typescript": "4.8.4"
   },
@@ -67,5 +65,5 @@
     "tokens",
     "ui"
   ],
-  "jsnext:main": "./dist/esm/index.js"
+  "jsnext:main": "./dist/index.js"
 }
