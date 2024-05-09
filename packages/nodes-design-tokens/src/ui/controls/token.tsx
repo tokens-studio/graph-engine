@@ -8,7 +8,7 @@ import { TokenTypes } from '@tokens-studio/types';
 
 
 const getPreview = (tokenData) => {
-    switch (tokenData.type) {
+    switch (tokenData?.type) {
         case TokenTypes.COLOR:
             return <PreviewColor value={tokenData.value} />;
         default:
@@ -23,23 +23,25 @@ type PreviewProps = {
 
 export const PreviewToken = ({ token, hideName }: PreviewProps) => (
     <Stack direction="row" gap={3}>
-        {getPreview(token)}
-        {!hideName && (
-            <Box
-                css={{
-                    fontWeight: '$sansRegular',
-                    fontFamily: 'monospace',
-                    fontSize: '$xsmall',
-                    color: '$fgMuted',
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap',
-                    textOverflow: 'ellipsis',
-                }}
-                title={token.name}
-            >
-                {token.name || 'No name'}
-            </Box>
-        )}
+        {token && <>
+            {getPreview(token)}
+            {!hideName && (
+                <Box
+                    css={{
+                        fontWeight: '$sansRegular',
+                        fontFamily: 'monospace',
+                        fontSize: '$xsmall',
+                        color: '$fgMuted',
+                        overflow: 'hidden',
+                        whiteSpace: 'nowrap',
+                        textOverflow: 'ellipsis',
+                    }}
+                    title={token.name}
+                >
+                    {token.name || 'No name'}
+                </Box>
+            )}</>}
+
     </Stack>
 );
 
@@ -50,18 +52,18 @@ const getToolTipData = (data) => {
         return JSON.stringify(data, null, 4);
     }
 
-    return data.value;
+    return data?.value;
 };
 
 const getTypographyValue = (data) => {
-    if (typeof data.value == 'string') {
+    if (typeof data?.value == 'string') {
         return data.value;
     }
     return `<Complex Typography>`;
 };
 
 const getNodeValue = (data) => {
-    switch (data.type) {
+    switch (data?.type) {
         case 'typography':
             return getTypographyValue(data);
         case 'composition':
@@ -71,7 +73,7 @@ const getNodeValue = (data) => {
         case 'boxShadow':
             return 'Shadow';
         default:
-            return data.value;
+            return data?.value;
     }
 };
 
@@ -81,7 +83,7 @@ export const Token = ({ token }) => {
         <Stack
             direction="row"
             css={{ width: '100%' }}
-            key={token.name}
+            key={token?.name}
             align="center"
         >
             <Box
