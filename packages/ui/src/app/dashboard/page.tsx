@@ -1,6 +1,7 @@
 'use client';
+
 import { Box, Button, EmptyState, Heading, Spinner, Stack, Text, TextInput, Toast } from '@tokens-studio/ui';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { GraphService, configure } from '@/api/index.ts';
@@ -11,6 +12,7 @@ import { useErrorToast } from '@/hooks/useToast.tsx';
 import { GraphUp, Plus, Search, Upload } from 'iconoir-react';
 import ago from 's-ago';
 import { Graph } from '@tokens-studio/graph-engine';
+
 
 /**
  * Needed for the side effect of setting the api
@@ -33,9 +35,6 @@ const Page = () => {
     const createGraph = async () => {
 
         const serialized = new Graph().serialize();
-
-    
-
         const newGraph = await GraphService.createGraph({
             requestBody: {
                 name: 'New graph',
@@ -50,9 +49,7 @@ const Page = () => {
 
     useErrorToast(error);
 
-
     return (
-
         <Stack
             css={{
                 position: 'relative',
@@ -60,7 +57,7 @@ const Page = () => {
                 height: '100%',
                 overflow: 'auto',
                 background: '$bgDefault',
-                paddingTop:'$6'
+                paddingTop: '$6'
 
             }} justify='center'
         >
@@ -84,9 +81,9 @@ const Page = () => {
                     />
                     {isPending && <Spinner />}
 
-                
+
                     <Stack direction='column' gap={2}>
-                        {data && data.length > 0 && data.filter(x=>x.name.includes(search)).map((graph) => {
+                        {data && data.length > 0 && data.filter(x => x.name.includes(search)).map((graph) => {
 
                             return <Link href={`/editor?id=${graph.id}`}><Stack width='full' css={{
                                 '&:hover': {

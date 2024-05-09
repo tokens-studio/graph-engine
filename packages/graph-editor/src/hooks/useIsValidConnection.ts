@@ -1,4 +1,4 @@
-import { Connection, Edge, useReactFlow } from 'reactflow';
+import { Connection, useReactFlow } from 'reactflow';
 import { useCallback } from 'react';
 import GraphLib from '@dagrejs/graphlib';
 import { canConvertSchemaTypes } from '@tokens-studio/graph-engine';
@@ -21,8 +21,8 @@ export const useIsValidConnection = ({
   const graph = useLocalGraph();
 
   return useCallback(
-    (connection: Connection):boolean => {
-  
+    (connection: Connection): boolean => {
+
       const target = graph.getNode(connection.target!);
       const source = graph.getNode(connection.source!);
 

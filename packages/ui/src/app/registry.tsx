@@ -11,7 +11,7 @@ export default function StitchesProvider({
 }) {
 
     useServerInsertedHTML(() => {
-        return <style>{getCssText()}</style>
+        return <style id="stitches">{getCssText()}</style>
     })
 
     return <>{children}</>

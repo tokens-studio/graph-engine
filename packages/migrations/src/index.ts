@@ -1,4 +1,4 @@
-import { FlowGraph } from "@tokens-studio/graph-engine";
+import { Graph } from "@tokens-studio/graph-engine";
 import { sortedUpgrades } from "./migrations/index.js";
 import cmp from "semver-compare";
 
@@ -10,7 +10,7 @@ export interface IUpdateGraph {
 }
 
 export const updateGraph = async (
-  graph: FlowGraph,
+  graph: Graph,
   opts: IUpdateGraph = { verbose: true }
 ) => {
   const { verbose } = opts;

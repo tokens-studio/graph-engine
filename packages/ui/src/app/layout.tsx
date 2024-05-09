@@ -1,8 +1,14 @@
 
 import { Metadata } from 'next'
 import type { Viewport } from 'next'
-import StitchesProvider from './registry.tsx'
-import { Providers } from './contexts.tsx'
+import StitchesProvider from './registry.tsx';
+import 'sanitize.css';
+import '@/styles/styles.scss';
+import 'sanitize.css/forms.css';
+import 'sanitize.css/system-ui.css'
+import 'sanitize.css/ui-monospace.css';
+import 'sanitize.css/typography.css';
+import 'sanitize.css/assets.css';
 
 
 export const viewport: Viewport = {
@@ -63,9 +69,7 @@ export default function RootLayout({
         <html lang="en">
             <body>
                 <StitchesProvider>
-                    <Providers>
-                        {children}
-                    </Providers>
+                    {children}
                 </StitchesProvider>
             </body>
         </html>

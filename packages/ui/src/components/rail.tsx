@@ -3,6 +3,7 @@ import { Home, GitMerge, ShoppingBag, Settings, HeadsetHelp } from 'iconoir-reac
 import { Avatar, Box, Separator, Stack, Tooltip } from '@tokens-studio/ui';
 import Link from 'next/link.js'
 import TokensStudio from '@/assets/svgs/tokensstudio-logo.svg';
+import Image from 'next/image.js';
 
 interface RailItem {
   icon: React.ReactNode;
@@ -11,14 +12,14 @@ interface RailItem {
 }
 
 const railItemsStart: RailItem[] = [
-  { icon: <Home />, label: 'Home', link: '/' },
-  { icon: <GitMerge />, label: 'Editor', link: '/editor' },
-  { icon: <ShoppingBag />, label: 'Marketplace', link: '/marketplace' }
+  { icon: <Home />, label: 'Home', link: '/dashboard' },
+  { icon: <GitMerge />, label: 'Editor', link: '/dashboard/editor' },
+  { icon: <ShoppingBag />, label: 'Marketplace', link: '/dashboard/marketplace' }
 ];
 
 const railItemsEnd: RailItem[] = [
-  { icon: <Settings />, label: 'Settings', link: '/settings' },
-  { icon: <HeadsetHelp />, label: 'Help', link: '/help' },
+  { icon: <Settings />, label: 'Settings', link: '/dashboard/settings' },
+  { icon: <HeadsetHelp />, label: 'Help', link: '/dashboard/help' },
 ];
 
 const RailItem = ({ icon, label, link }: RailItem) => {
@@ -34,29 +35,33 @@ const RailItem = ({ icon, label, link }: RailItem) => {
 }
 
 export const Rail = () => {
+
+
   return (
-    <Stack justify='between' direction='column' css={{ background: '$bgEmphasis', borderRight: '1px solid $borderSubtle', color: '$fgOnEmphasis', height: '100%', padding: '$5 $3 $3' }}>
-      <Stack gap={3} direction='column' align='center'>
-        <Tooltip label={'Tokens Studio'}>
-          <Link href='https://tokens.studio'>
-            <TokensStudio style={{ width: 'var(--sizes-6)', height: 'auto', aspectRatio: '1/1' }} />
-          </Link>
-        </Tooltip>
-        {railItemsStart.map((item) => (
-          <RailItem key={item.label} icon={item.icon} label={item.label} link={item.link} />
-        ))}
+    <Tooltip.Provider>
+      <Stack justify='between' direction='column' css={{ background: '$bgEmphasis', borderRight: '1px solid $borderSubtle', color: '$fgOnEmphasis', height: '100%', padding: '$5 $3 $3' }}>
+        <Stack gap={3} direction='column' align='center'>
+          <Tooltip label={'Tokens Studio'}>
+            <Link href='https://tokens.studio'>
+              <Image src={TokensStudio} alt='logo' />
+            </Link>
+          </Tooltip>
+          {railItemsStart.map((item) => (
+            <RailItem key={item.label} icon={item.icon} label={item.label} link={item.link} />
+          ))}
+        </Stack>
+
+        <Stack gap={3} direction='column' align='center' >
+          {railItemsEnd.map((item) => (
+
+            <RailItem key={item.label} icon={item.icon} label={item.label} link={item.link} />
+
+          ))}
+          <Separator orientation='horizontal' />
+          <Avatar src='https://xsgames.co/randomusers/assets/avatars/female/20.jpg' />
+        </Stack>
       </Stack>
-
-      <Stack gap={3} direction='column' align='center' >
-        {railItemsEnd.map((item) => (
-
-          <RailItem key={item.label} icon={item.icon} label={item.label} link={item.link} />
-
-        ))}
-        <Separator orientation='horizontal' />
-        <Avatar src='https://xsgames.co/randomusers/assets/avatars/female/20.jpg' />
-      </Stack>
-    </Stack>
+    </Tooltip.Provider>
   );
 };
 

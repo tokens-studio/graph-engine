@@ -1,4 +1,4 @@
-import { initialPreviewCode } from '@/components/preview/scope.tsx';
+
 import { RootModel } from './root.ts';
 import { createModel } from '@rematch/core';
 
@@ -14,7 +14,7 @@ export interface UIState {
 
 export const uiState = createModel<RootModel>()({
   state: {
-    previewCode: initialPreviewCode,
+    previewCode: '',
     theme: 'dark',
     showExamplePicker: false,
     showNodesPanel: true

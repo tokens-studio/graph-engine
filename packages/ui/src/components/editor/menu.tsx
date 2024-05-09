@@ -16,7 +16,6 @@ import SlackIcon from '@/assets/svgs/slack.svg';
 import { FsPanel } from '../panels/fs.tsx';
 import { CodePanel } from '../panels/codeEditor.tsx';
 import { RemoteStoragePanel } from '../panels/remoteStorage.tsx';
-import { PermutatorPanel } from '../panels/permutator.tsx';
 import { GraphService } from '@/api/index.ts';
 import { WebsocketPanel } from '../panels/websocket.tsx';
 import { useSelector } from 'react-redux';
@@ -95,15 +94,6 @@ windows.items.push(
 
 windows.items.push(
     windowButton({
-        name: 'permutator',
-        id: 'permutator',
-        title: 'Permutations',
-        content: <PermutatorPanel />,
-    })
-);
-
-windows.items.push(
-    windowButton({
         name: 'websocket',
         id: 'websocket',
         title: 'Websocket',
@@ -122,8 +112,8 @@ menu.items.push(
         items: [
             new MenuItem({
                 name: 'docs',
-                render: (rest) => (
-                    <MenuItemElement icon={< Book />} {...rest} >
+                render: ({ key, ...rest }) => (
+                    <MenuItemElement key={key} icon={< Book />} {...rest} >
                         <a
                             href="https://docs.graph.tokens.studio/"
                             target="_blank"
@@ -137,8 +127,8 @@ menu.items.push(
             new Seperator(),
             new MenuItem({
                 name: 'youtube',
-                render: (rest) => (
-                    <MenuItemElement icon={< YoutubeIcon />} {...rest} >
+                render: ({key,...rest}) => (
+                    <MenuItemElement key={key} icon={< YoutubeIcon />} {...rest} >
                         <a
                             href="https://www.youtube.com/@TokensStudio"
                             target="_blank"
@@ -151,8 +141,8 @@ menu.items.push(
             }),
             new MenuItem({
                 name: 'slack',
-                render: (rest) => (
-                    <MenuItemElement icon={< SlackIcon />} {...rest} >
+                render: ({ key, ...rest }) => (
+                    <MenuItemElement key={key} icon={< SlackIcon />} {...rest} >
                         <a
                             href="https://tokens.studio//slack"
                             target="_blank"
