@@ -1,6 +1,6 @@
 import { useReactFlow } from 'reactflow';
 import { useDispatch } from '@/hooks/useDispatch.js';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import copy from 'copy-to-clipboard';
 import { useSelector } from 'react-redux';
 import { showGrid, snapGrid } from '@/redux/selectors/settings';
@@ -8,7 +8,7 @@ import { SerializedNode } from '@/types/serializedNode';
 import { useToast } from '@/hooks/useToast';
 import { useLocalGraph } from '@/hooks';
 import { savedViewports } from '@/annotations';
-import { GlobalHotKeys } from 'react-hotkeys';
+import { HotKeys as HotKeysComp } from 'react-hotkeys';
 import { useAction } from '@/editor/actions/provider';
 import { useAutoLayout } from '@/editor/hooks/useAutolayout';
 import React from 'react';
@@ -50,8 +50,6 @@ export const getViewports = (graph) => {
 };
 
 export const useHotkeys = () => {
-    const [showMinimap, setShowMinimap] = useState(true);
-    const [hideZoom, setHideZoom] = useState(true);
 
 
     const showGridValue = useSelector(showGrid);
@@ -101,11 +99,12 @@ export const useHotkeys = () => {
                 }
             },
             AUTO_LAYOUT: layout,
-            TOGGLE_HIDE: () => {
-                setHideZoom((x) => !x);
-            },
             DELETE: (event) => {
                 event.preventDefault();
+
+                const edges = reactFlowInstance.getEdges().filter((x) => x.selected);
+
+                reactFlowInstance.deleteElements({ edges });
 
                 const selectedNodes = reactFlowInstance.getNodes().filter((x) => x.selected).map((x) => x.id);
 
@@ -191,9 +190,6 @@ export const useHotkeys = () => {
                 event.preventDefault();
                 dispatch.settings.setShowGrid(!showGridValue);
             },
-            TOGGLE_MINIMAP: () => {
-                setShowMinimap((x) => !x);
-            },
             TOGGLE_SNAP_GRID: () => {
                 dispatch.settings.setSnapGrid(!snapGridValue);
             },
@@ -205,10 +201,9 @@ export const useHotkeys = () => {
     return handlers;
 };
 
-
 export const HotKeys = ({ children }) => {
     const handlers = useHotkeys();
-    return <GlobalHotKeys keyMap={keyMap} handlers={handlers} allowChanges >
+    return <HotKeysComp keyMap={keyMap} handlers={handlers} allowChanges style={{ height: '100%', width: '100%' }}>
         {children}
-    </GlobalHotKeys>
+    </HotKeysComp>
 }

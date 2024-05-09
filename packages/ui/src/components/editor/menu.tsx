@@ -62,7 +62,6 @@ file.items.push(
     }),
 );
 
-console.log(YoutubeIcon)
 
 const windows = menu.items.find((x) => x.name === 'window');
 

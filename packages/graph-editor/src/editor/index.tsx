@@ -5,6 +5,7 @@ import React from 'react';
 import { ReduxProvider } from '../redux/index.js';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { LayoutController } from './layoutController.js';
+import { nodeLookup as defaultNodeLookup } from '@tokens-studio/graph-engine';
 import { ToastProvider } from '@/hooks/useToast';
 
 /**
@@ -17,6 +18,7 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const {
       panelItems,
       capabilities,
+      nodeTypes = defaultNodeLookup,
       controls,
       icons
     } = props;
@@ -28,6 +30,7 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
           icons={icons}
           controls={controls}
           panelItems={panelItems}
+          nodeTypes={nodeTypes}
           capabilities={capabilities}>
           <LayoutController {...props} ref={ref} />
         </ReduxProvider>

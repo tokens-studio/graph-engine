@@ -10,9 +10,7 @@ export const tsup: Options = {
     dts: true, // generate dts file for main module
     format: env === 'production' ? ['cjs', 'esm'] : ['esm'],
     bundle: true,
-    // skipNodeModulesBundle: true,
-    // entryPoints: ['src/index.ts'],
     target: 'es2020',
     outDir: 'dist',
-    entry: ['src/**/*.ts']
+    entry: ['src/index.ts']
 };

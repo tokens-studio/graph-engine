@@ -42,7 +42,7 @@ import noteNode from '../components/flow/nodes/noteNode.js';
 
 import { GraphEditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { Box } from '@tokens-studio/ui';
-import { BatchRunError, Graph, NodeFactory, NodeTypes, nodeLookup } from '@tokens-studio/graph-engine';
+import { BatchRunError, Graph, NodeTypes } from '@tokens-studio/graph-engine';
 import { useContextMenu } from 'react-contexify';
 import { version } from '../../package.json';
 import { NodeContextMenu } from '../components/contextMenus/nodeContextMenu.js';
@@ -60,7 +60,7 @@ import { duplicateNodes } from './actions/duplicate.js';
 import { PassthroughNode } from '@/components/flow/nodes/passthroughNode.js';
 import { uiNodeType, uiVersion, uiViewport, xpos, ypos } from '@/annotations/index.js';
 import { connectNodes } from './actions/connect.js';
-import { capabilitiesSelector, panelItemsSelector } from '@/redux/selectors/registry.js';
+import { capabilitiesSelector, nodeTypesSelector, panelItemsSelector } from '@/redux/selectors/registry.js';
 import { contextMenuSelector } from '@/redux/selectors/ui.js';
 import { GraphContextProvider } from '@/context/graph.js';
 import { SelectionContextMenu } from '@/components/contextMenus/selectionContextMenu.js';
@@ -92,15 +92,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
   (props: GraphEditorProps, ref) => {
 
     const panelItems = useSelector(panelItemsSelector);
-    const { id, nodeTypes = {}, customNodeUI = {}, children } = props;
-
-
-    const fullNodeLookup = useMemo(() => {
-      return {
-        ...nodeLookup,
-        ...nodeTypes,
-      } as unknown as Record<string, NodeFactory>;
-    }, [nodeTypes]);
+    const fullNodeLookup = useSelector(nodeTypesSelector);
+    const { id, customNodeUI = {}, children } = props;
 
 
     const capabilities = useSelector(capabilitiesSelector);
@@ -312,7 +305,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     }, [dispatch])
 
     const handleDeleteNode = useMemo(() => {
-      return deleteNode(graph, dispatch,reactFlowInstance);
+      return deleteNode(graph, dispatch, reactFlowInstance);
     }, [graph, dispatch, reactFlowInstance])
 
     const handleSelectNewNodeType = useMemo(
@@ -654,17 +647,18 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           duplicateNodes: duplicateNodesAction,
           copyNodes
         }}>
-          <HotKeys>
-            <Box
-              className="editor"
-              css={{
-                height: '100%',
-                backgroundColor: '$bgCanvas',
-                display: 'flex',
-                flexDirection: 'row',
-                flexGrow: 1,
-              }}
-            >
+
+          <Box
+            className="editor"
+            css={{
+              height: '100%',
+              backgroundColor: '$bgCanvas',
+              display: 'flex',
+              flexDirection: 'row',
+              flexGrow: 1,
+            }}
+          >
+            <HotKeys>
               <ReactFlow
                 ref={reactFlowWrapper}
                 nodes={nodes}
@@ -720,9 +714,10 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
                 />
                 {props.children}
               </ReactFlow>
-            </Box>
-            <MiniMap />
-          </HotKeys>
+            </HotKeys>
+          </Box>
+          <MiniMap />
+
           <PaneContextMenu
             id={props.id + '_pane'}
             onSelectItem={handleSelectNewNodeType}

@@ -113,7 +113,7 @@ const extractTypeIcon = (
 
 
 
-  const color = colors[port.type.$id!].color;
+  const color = colors[port.type.$id!]?.color || 'white';
 
   return { icon, color };
 };

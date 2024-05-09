@@ -15,6 +15,7 @@ export interface RegistryState {
   icons: Record<string, React.ReactNode>;
   inputControls: Record<string, React.FC<{ node: Node }>>;
   controls: Control[];
+  nodeTypes: Record<string, typeof Node>
   panelItems: DropPanelStore;
   capabilities: CapabilityFactory[]
 }
@@ -26,6 +27,7 @@ export const registryState = createModel<RootModel>()({
     inputControls: { ...inputControls },
     controls: [...(defaultControls as Control[])],
     panelItems: defaultPanelGroupsFactory(),
+    nodeTypes: {},
     capabilities: [],
   } as RegistryState,
   reducers: {
@@ -33,6 +35,12 @@ export const registryState = createModel<RootModel>()({
       return {
         ...state,
         capabilities: payload,
+      };
+    },
+    setNodeTypes: (state, payload: Record<string, typeof Node>) => {
+      return {
+        ...state,
+        nodeTypes: payload,
       };
     },
     setControls(state, payload: Control[]) {
