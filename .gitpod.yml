@@ -6,5 +6,22 @@
 
 tasks:
   - init: yarn install
+  - name: Docker compose setup
+    init: docker-compose up
 
 
+ports:
+    - name: Website
+      port: 3000
+      onOpen: open-preview
+    - name: Backend
+      description: The raw backend api
+      port: 5001
+      onOpen: open-browser
+    - name: Mail slurper
+      port: 4436
+      onOpen: open-browser
+
+vscode:
+  extensions:
+    - "dbaeumer.vscode-eslint"
