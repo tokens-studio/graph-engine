@@ -1,8 +1,8 @@
-import { NodeTypes } from "@/types.js";
-import { INodeDefinition, Node } from "@/programmatic/node.js";
-import { NumberSchema, NumberArraySchema } from "@/schemas/index.js";
-import { Input, ToInput } from "@/programmatic/input.js";
-import { ToOutput } from "@/programmatic";
+import { NodeTypes } from "../../types.js";
+import { INodeDefinition, Node } from "../../programmatic/node.js";
+import { NumberSchema, NumberArraySchema } from "../../schemas/index.js";
+import { Input, ToInput } from "../../programmatic/input.js";
+import { ToOutput } from "../../programmatic";
 export type ArithemeticValue = {
   index: number;
   value: number;

@@ -1,12 +1,12 @@
-import Node from "@/nodes/array/reverse";
-import { Graph } from "@/graph/graph.js";
+import Node from "../../../../src/nodes/array/reverse";
+import { Graph } from "../../../../src/graph/graph.js";
 
 
 describe("array/reverse", () => {
     it("does a non mutative reverse", async () => {
         const graph = new Graph();
         const node = new Node({ graph });
-        graph.addNode(node);
+        
         const array = [1, 2, 3];
 
         node.inputs.array.setValue(array);

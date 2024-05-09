@@ -1,16 +1,16 @@
 import type { NodeFactory, SerializedGraph } from "./types.js";
-import { VERSION } from "@/constants.js";
+import { VERSION } from "../constants.js";
 import cmp from "semver-compare";
-import { Node } from "@/programmatic/node.js";
+import { Node } from "../programmatic/node.js";
 import { v4 as uuid } from 'uuid';
 import { ExternalLoader } from "./externalLoader.js";
-import { AnySchema, GraphSchema } from "@/schemas/index.js";
-import { Output } from "@/programmatic/output.js";
-import { ISetValue, Input } from "@/programmatic/input.js";
+import { AnySchema, GraphSchema } from "../schemas/index.js";
+import { Output } from "../programmatic/output.js";
+import { ISetValue, Input } from "../programmatic/input.js";
 import { topologicalSort } from "./topologicSort.js";
 import { makeObservable, observable } from "mobx";
-import { Edge, VariadicEdgeData } from "@/programmatic/edge.js";
-import { annotatedCapabilityPrefix, annotatedPlayState, annotatedVariadicIndex } from "@/annotations/index.js";
+import { Edge, VariadicEdgeData } from "../programmatic/edge.js";
+import { annotatedCapabilityPrefix, annotatedPlayState, annotatedVariadicIndex } from "../annotations/index.js";
 
 export type CapabilityFactory = {
   name: string;
@@ -330,6 +330,8 @@ export class Graph {
   async update(nodeID: string, opts?: IUpdateOpts) {
     const { noRecursive = false } = opts || {};
 
+
+
     const node = this.nodes[nodeID];
     if (!node) {
       throw new Error(`No node found with id ${nodeID}`);
@@ -416,11 +418,11 @@ export class Graph {
 
     serialized.nodes.forEach((node) => {
       const factory = lookup[node.type];
-      this.addNode(factory.deserialize({
+      factory.deserialize({
         serialized: node,
         graph: this,
         lookup
-      }));
+      });
     });
 
     this.edges = serialized.edges.reduce((acc, edge) => {
@@ -443,9 +445,6 @@ export class Graph {
       }
 
       if (!source.outputs[theEdge.sourceHandle]) {
-        console.warn(
-          `No output found on source node ${source.id} with handle ${theEdge.sourceHandle}`
-        );
         //This must be a dynamic output. We create a new one with any type as its likely dependent on runtime anyway
         source.addOutput(theEdge.sourceHandle, {
           type: AnySchema,
@@ -544,7 +543,7 @@ export class Graph {
       //Set the inputs for execution
       Object.entries(inputs).forEach(([key, value]) => {
 
-        const opts: ISetValue ={
+        const opts: ISetValue = {
           //We are controlling propagation
           noPropagate: true,
         };

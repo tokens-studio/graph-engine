@@ -1,4 +1,4 @@
-import { Node } from "@/programmatic/node.js";
+import { Node } from "../../../src/programmatic/node.js";
 
 export const getAllOutputs = (node: Node) => {
   const outputs = {};

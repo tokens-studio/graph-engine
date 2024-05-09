@@ -1,11 +1,11 @@
-import Node from "@/nodes/array/indexArray.js";
-import { Graph } from "@/graph/graph.js";
+import Node from "../../../../src/nodes/array/indexArray.js";
+import { Graph } from "../../../../src/graph/graph.js";
 
 describe("array/indexArray", () => {
   it("returns the expected value", async () => {
     const graph = new Graph();
     const node = new Node({graph});
-    graph.addNode(node);
+    
     node.inputs.array.setValue([0, 1, 2]);
     node.inputs.index.setValue(1);
 
@@ -17,7 +17,7 @@ describe("array/indexArray", () => {
   it("returns undefined when out of bounds", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-    graph.addNode(node);
+    
     node.inputs.array.setValue([0, 1, 2]);
     node.inputs.index.setValue(-5);
 

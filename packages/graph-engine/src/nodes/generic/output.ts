@@ -3,12 +3,12 @@
  *
  * @packageDocumentation
  */
-import { ToInput } from "@/programmatic/input.js";
-import { ToOutput } from "@/programmatic/output.js";
-import { annotatedSingleton } from '@/annotations/index.js';
-import { NodeTypes } from "@/types.js";
-import { Node, INodeDefinition } from "@/programmatic/node.js";
-import { AnySchema } from "@/schemas/index.js";
+import { ToInput } from "../../programmatic/input.js";
+import { ToOutput } from "../../programmatic/output.js";
+import { annotatedSingleton } from '../../annotations/index.js';
+import { NodeTypes } from "../../types.js";
+import { Node, INodeDefinition } from "../../programmatic/node.js";
+import { AnySchema } from "../../schemas/index.js";
 
 
 export default class NodeDefinition<T> extends Node {

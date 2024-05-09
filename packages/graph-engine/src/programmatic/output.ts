@@ -1,8 +1,8 @@
 import { Input } from "./input.js";
 import { Node } from "./node.js";
 import { Port } from "./port.js";
-import { GraphSchema } from "@/schemas/index.js";
-import { action, makeObservable, observable } from "mobx";
+import { GraphSchema } from "../schemas/index.js";
+import { action, makeObservable } from "mobx";
 
 export interface IOutputProps<T = any> {
   name: string;
@@ -37,7 +37,7 @@ export class Output<T = any> extends Port<T> {
    * @param target
    * @param key
    */
-  connect(target: Input, key: string = "") {
+  connect(target: Input) {
     const graph = this.node.getGraph();
     if (!graph) {
       return {
@@ -45,7 +45,7 @@ export class Output<T = any> extends Port<T> {
       };
     }
 
-    graph.connect(this.node, this, target.node, target);
+    return graph.connect(this.node, this, target.node, target);
   }
 }
 

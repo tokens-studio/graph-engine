@@ -1,11 +1,6 @@
-import { SerializedNode } from "@/graph";
-import { StringSchema } from "@/schemas";
+import { SerializedNode } from "../../../src/graph";
 
 export default {
-  version: "100.0.0",
-  graph: {
-    description: "Basic",
-  },
   nodes: [
     {
       id: "33952fc4-eced-4c10-a56d-7bdb65182b34",

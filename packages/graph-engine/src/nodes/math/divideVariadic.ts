@@ -1,7 +1,7 @@
-import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
-import { NodeTypes } from "@/types.js";
-import { Node } from "@/programmatic/node.js";
-import { NumberSchema, NumberArraySchema } from "@/schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { NodeTypes } from "../../types.js";
+import { Node } from "../../programmatic/node.js";
+import { NumberSchema, NumberArraySchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Divide (Variadic)";

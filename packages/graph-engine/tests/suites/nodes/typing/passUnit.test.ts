@@ -1,5 +1,5 @@
-import Node from "@/nodes/typing/passUnit.js";
-import { Graph } from "@/graph/graph.js";
+import Node from "../../../../src/nodes/typing/passUnit.js";
+import { Graph } from "../../../../src/graph/graph.js";
 
 describe("typing/passUnit", () => {
   it("adds unit if falsey value", async () => {

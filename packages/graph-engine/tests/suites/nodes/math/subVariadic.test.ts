@@ -1,5 +1,5 @@
-import Node from "@/nodes/math/subtractVariadic";
-import { Graph } from "@/graph/graph.js";
+import Node from "../../../../src/nodes/math/subtractVariadic";
+import { Graph } from "../../../../src/graph/graph.js";
 
 describe("math/subVariadic", () => {
   it("subtracts two numbers", async () => {

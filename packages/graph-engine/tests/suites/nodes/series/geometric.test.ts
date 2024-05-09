@@ -1,11 +1,11 @@
-import Node from "@/nodes/series/geometric";
-import { Graph } from "@/graph/graph.js";
+import Node from "../../../../src/nodes/series/geometric";
+import { Graph } from "../../../../src/graph/graph.js";
 
 describe("series/geometric", () => {
   it("generates the expected series", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-    graph.addNode(node);
+    
     node.inputs.base.setValue(16);
     node.inputs.stepsDown.setValue(1);
     node.inputs.steps.setValue(1);

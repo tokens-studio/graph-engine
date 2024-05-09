@@ -1,8 +1,8 @@
-import { INodeDefinition } from "@/programmatic/node.js";
-import { annotatedDynamicInputs } from '@/annotations/index.js';
-import { NodeTypes } from "@/types.js";
-import { Node } from "@/programmatic/node.js";
-import { ObjectSchema } from "@/schemas/index.js";
+import { INodeDefinition } from "../../programmatic/node.js";
+import { annotatedDynamicInputs } from '../../annotations/index.js';
+import { NodeTypes } from "../../types.js";
+import { Node } from "../../programmatic/node.js";
+import { ObjectSchema } from "../../schemas/index.js";
 
 /**
  * Similar to the Objectify node, this expects that inputs will be added to it dynamically.

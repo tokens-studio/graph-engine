@@ -1,4 +1,4 @@
-import { Node } from "@/programmatic/node.js";
+import { Node } from "../programmatic/node.js";
 import { NodeTypes } from "../types.js";
 import { Graph } from "./graph.js";
 

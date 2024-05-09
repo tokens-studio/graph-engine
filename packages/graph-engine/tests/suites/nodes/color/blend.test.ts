@@ -1,14 +1,15 @@
-import Node, { ColorModifierTypes } from "@/nodes/color/blend.js";
-import { Graph } from "@/graph/graph.js";
+import Node, { ColorModifierTypes } from "../../../../src/nodes/color/blend.js";
+import { Graph } from "../../../../src/graph/graph.js";
+import { ColorSpaceTypes } from "@tokens-studio/types";
 
 describe("color/blend", () => {
   it("darkens the color correctly", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-    graph.addNode(node);
+    
 
     node.inputs.color.setValue("red");
-    node.inputs.space.setValue("srgb");
+    node.inputs.space.setValue(ColorSpaceTypes.SRGB);
     node.inputs.modifierType.setValue(ColorModifierTypes.DARKEN);
     node.inputs.value.setValue(0.5);
 
@@ -20,10 +21,10 @@ describe("color/blend", () => {
   it("lightens the color correctly", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-    graph.addNode(node);
+    
 
     node.inputs.color.setValue("red");
-    node.inputs.space.setValue("srgb");
+    node.inputs.space.setValue(ColorSpaceTypes.SRGB);
     node.inputs.modifierType.setValue(ColorModifierTypes.LIGHTEN);
     node.inputs.value.setValue(0.5);
     await node.execute();

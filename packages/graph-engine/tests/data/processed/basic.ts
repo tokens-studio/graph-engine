@@ -1,8 +1,10 @@
-import { SerializedNode } from "@/graph";
-import { StringSchema } from "@/schemas";
+import { SerializedNode } from "../../../src/graph";
+import { StringSchema } from "../../../src/schemas";
 
 export default {
-  version: "100.0.0",
+  annotations: {
+    'engine.version': '100.0.0',
+  },
   nodes: [
     {
       id: "c15d874f-f7e7-42a6-a6b3-8f238da52007",
@@ -11,9 +13,7 @@ export default {
         {
           name: "xxx",
           value: "black",
-          type: {
-            type: StringSchema,
-          },
+          type: StringSchema,
         },
       ],
     },

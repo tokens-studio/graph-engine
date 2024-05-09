@@ -1,18 +1,18 @@
-// /**
-//  * Performs a contrast calculation between two colors using APCA-W3 calcs
-//  *
-//  * @packageDocumentation
-//  */
+/**
+ * Performs a contrast calculation between two colors using APCA-W3 calcs
+ *
+ * @packageDocumentation
+ */
 import {
   ColorSchema,
   StringSchema,
   NumberSchema,
   BooleanSchema,
-} from "@/schemas/index.js";
-import { NodeTypes } from "@/types.js";
-import { INodeDefinition, Node } from "@/programmatic/node.js";
+} from "../../schemas/index.js";
+import { NodeTypes } from "../../types.js";
+import { INodeDefinition, Node } from "../../programmatic/node.js";
 import Color from "colorjs.io";
-import { Input, Output } from "@/programmatic";
+import { Input, Output } from "../../programmatic";
 
 export enum WcagVersion {
   V2 = "2.1",

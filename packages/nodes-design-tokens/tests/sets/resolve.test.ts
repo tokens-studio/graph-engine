@@ -1,4 +1,4 @@
-import Node from "@/nodes/set/resolve.js";
+import Node from "@/nodes/resolve.js";
 import { IResolvedToken, flatten } from "@/utils/index.js";
 import {
   DeepKeyTokenMap,
@@ -9,7 +9,7 @@ import {
   TokenTypes,
   TypographyValues,
 } from "@tokens-studio/types";
-import { Graph } from "@/graph/graph.js";
+import { Graph } from "@tokens-studio/graph-engine";
 
 
 describe("set/resolve", () => {

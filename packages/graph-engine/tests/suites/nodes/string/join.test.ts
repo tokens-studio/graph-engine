@@ -1,5 +1,5 @@
-import Node from "@/nodes/string/join.js";
-import { Graph } from "@/graph/graph.js";
+import Node from "../../../../src/nodes/string/join.js";
+import { Graph } from "../../../../src/graph/graph.js";
 
 describe("string/join", () => {
   it("should join the string array correctly", async () => {

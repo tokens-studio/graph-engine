@@ -1,5 +1,5 @@
-import { Node } from "@/programmatic/node.js";
-import { NumberSchema } from "@/schemas";
+import { Node } from "../../programmatic/node.js";
+import { NumberSchema } from "../../schemas";
 
 export default class NodeDefinition extends Node {
     static title = "Number";

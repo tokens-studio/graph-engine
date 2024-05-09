@@ -1,7 +1,7 @@
-import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
-import { NodeTypes } from "@/types.js";
-import { Node } from "@/programmatic/node.js";
-import { AnyArraySchema, StringSchema } from "@/schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { NodeTypes } from "../../types.js";
+import { Node } from "../../programmatic/node.js";
+import { AnyArraySchema, StringSchema } from "../../schemas/index.js";
 export default class NodeDefinition<T> extends Node {
   static title = "Join Array";
   static type = NodeTypes.JOIN;

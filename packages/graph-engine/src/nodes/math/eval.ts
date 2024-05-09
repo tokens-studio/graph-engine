@@ -1,13 +1,13 @@
 import { Parser } from "expr-eval";
-import { ToInput } from "@/programmatic/input.js";
-import { ToOutput } from "@/programmatic/output.js";
-import { annotatedDynamicInputs } from '@/annotations/index.js';
-import { NodeTypes } from "@/types.js";
-import { Node, INodeDefinition } from "@/programmatic/node.js";
+import { ToInput } from "../../programmatic/input.js";
+import { ToOutput } from "../../programmatic/output.js";
+import { annotatedDynamicInputs } from '../../annotations/index.js';
+import { NodeTypes } from "../../types.js";
+import { Node, INodeDefinition } from "../../programmatic/node.js";
 import {
   NumberSchema,
   StringSchema,
-} from "@/schemas/index.js";
+} from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Evaluate math";

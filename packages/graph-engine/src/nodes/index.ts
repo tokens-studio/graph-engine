@@ -1,4 +1,4 @@
-import { Node } from "@/programmatic/node.js";
+import { Node } from "../programmatic/node.js";
 import { nodes as accessibility } from "./accessibility/index.js";
 import { nodes as array } from "./array/index.js";
 import { nodes as color } from "./color/index.js";

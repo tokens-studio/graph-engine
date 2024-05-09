@@ -46,14 +46,17 @@ export class Edge {
     }
 
     serialize(): SerializedEdge {
-        return {
+        const serialized = {
             id: this.id,
             source: this.source,
             sourceHandle: this.sourceHandle,
             target: this.target,
-            targetHandle: this.targetHandle,
-            annotations: this.annotations,
+            targetHandle: this.targetHandle
+        } as SerializedEdge;
+        if (Object.keys(this.annotations).length > 0) {
+            serialized.annotations = this.annotations;
         }
+        return serialized
     }
     static deserialize(props: SerializedEdge): Edge {
         return new Edge({

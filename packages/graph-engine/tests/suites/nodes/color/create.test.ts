@@ -1,11 +1,11 @@
-import Node from "@/nodes/color/create.js";
-import { Graph } from "@/graph/graph.js";
+import Node from "../../../../src/nodes/color/create.js";
+import { Graph } from "../../../../src/graph/graph.js";
 
 describe("color/create", () => {
   it("creates the expected color with rgb", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-    graph.addNode(node);
+    
     node.inputs.space.setValue("rgb");
     node.inputs.a.setValue(255);
     node.inputs.b.setValue(255);
@@ -14,12 +14,12 @@ describe("color/create", () => {
     await node.execute();
     const output = node.outputs.value.value;
 
-    expect(output).toStrictEqual("#ffffff");
+    expect(output).toStrictEqual("#ffffffff");
   });
   it("creates the expected color with rgba", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-    graph.addNode(node);
+    
     node.inputs.space.setValue("rgb");
     node.inputs.a.setValue(255);
     node.inputs.b.setValue(255);
@@ -34,7 +34,7 @@ describe("color/create", () => {
   it("creates the expected color with hsl", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-    graph.addNode(node);
+    
     node.inputs.space.setValue("hsl");
     node.inputs.a.setValue(0);
     node.inputs.b.setValue(1);
@@ -43,13 +43,13 @@ describe("color/create", () => {
     await node.execute();
     const output = node.outputs.value.value;
 
-    expect(output).toStrictEqual("#ff0000");
+    expect(output).toStrictEqual("#ff0000ff");
   });
 
   it("creates the expected color with hsv", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-    graph.addNode(node);
+    
     node.inputs.space.setValue("hsv");
     node.inputs.a.setValue(88);
     node.inputs.b.setValue(100);

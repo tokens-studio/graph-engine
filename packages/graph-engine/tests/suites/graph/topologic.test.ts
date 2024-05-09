@@ -1,6 +1,6 @@
-import { topologicalSort } from "@/graph";
-import { Graph } from "@/graph/graph.js";
-import Passthrough from "@/nodes/generic/passthrough";
+import { topologicalSort } from "../../../src/graph";
+import { Graph } from "../../../src/graph/graph.js";
+import Passthrough from "../../../src/nodes/generic/passthrough";
 
 describe("Graph/topologic", () => {
   it("Creates the expected topologic output ", async () => {

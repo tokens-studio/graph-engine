@@ -1,12 +1,11 @@
 import valueParser from "postcss-value-parser";
-import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
-import { NodeTypes } from "@/types.js";
-import { Node } from "@/programmatic/node.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { NodeTypes } from "../../types.js";
+import { Node } from "../../programmatic/node.js";
 import {
   NumberSchema,
   StringSchema,
-  NumberArraySchema,
-} from "@/schemas/index.js";
+} from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Parse unit";

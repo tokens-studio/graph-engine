@@ -1,8 +1,8 @@
-import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
-import { Color, NodeTypes } from "@/types.js";
-import { Node } from "@/programmatic/node.js";
-import { ColorSchema, NumberSchema, StringSchema } from "@/schemas/index.js";
-import { getMode, formatHex8,  Color as CuloriColor } from "culori";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Color, NodeTypes } from "../../types.js";
+import { Node } from "../../programmatic/node.js";
+import { ColorSchema, NumberSchema, StringSchema } from "../../schemas/index.js";
+import { getMode, formatHex8, Color as CuloriColor } from "culori";
 export { ColorModifierTypes } from "@tokens-studio/types";
 
 export const colorSpaces = [
@@ -49,7 +49,9 @@ export const colorSpaces = [
 
   //Cubehelix
   "cubehelix"
-];
+] as const;
+
+export type ColorSpace = typeof colorSpaces[number];
 
 export default class NodeDefinition extends Node {
   static title = "Create Color";
@@ -57,7 +59,7 @@ export default class NodeDefinition extends Node {
   static description = "Creates a color";
 
   declare inputs: ToInput<{
-    space: typeof colorSpaces;
+    space: ColorSpace;
     a: number;
     b: number;
     c: number;

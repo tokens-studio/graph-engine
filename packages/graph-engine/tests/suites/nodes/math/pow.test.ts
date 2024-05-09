@@ -1,5 +1,5 @@
-import Node from "@/nodes/math/pow";
-import { Graph } from "@/graph/graph.js";
+import Node from "../../../../src/nodes/math/pow";
+import { Graph } from "../../../../src/graph/graph.js";
 
 describe("math/pow", () => {
   it("powers two numbers", async () => {

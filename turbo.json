@@ -41,6 +41,7 @@
       "dependsOn": [
         "^build"
       ],
+      "persistent": true,
       "cache": false
     },
     "clean": {

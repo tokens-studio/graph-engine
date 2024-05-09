@@ -1,8 +1,10 @@
 import { Input } from "./input.js";
 import { Output } from "./output.js";
 import { v4 as uuid } from 'uuid';
-import { Graph, IDeserializeOpts, SerializedNode, annotatedNodeRunning } from "@/index.js";
-import { GraphSchema } from "@/schemas/index.js";
+import { Graph } from '../graph/index.js';
+import { SerializedNode, IDeserializeOpts } from "../graph/types.js";
+import { annotatedNodeRunning } from "../annotations/index.js";
+import { GraphSchema } from "../schemas/index.js";
 import getDefaults from "json-schema-defaults";
 import { action, computed, makeObservable, observable } from "mobx";
 
@@ -61,6 +63,9 @@ export class Node {
   constructor(props: INodeDefinition) {
     this.id = props.id || uuid();
     this._graph = props.graph;
+    if (this._graph) {
+      this._graph.addNode(this);
+    }
 
     makeObservable(this, {
       inputs: observable,
@@ -144,7 +149,7 @@ export class Node {
       this.error = err as Error;
     }
     const end = performance.now();
-    this.annotations[annotatedNodeRunning] = false;
+    delete this.annotations[annotatedNodeRunning];
     this.lastExecutedDuration = end - start;
 
     return {
@@ -208,7 +213,8 @@ export class Node {
     const serialized = {
       id: this.id,
       type: this.nodeType(),
-      inputs: Object.values(this.inputs).map((x) => x.serialize()),
+      //Filter out any inputs that are connected as they will be serialized as part of the edge
+      inputs: Object.values(this.inputs).filter(x=>!x.isConnected).map((x) => x.serialize()),
     } as SerializedNode;
     if (Object.keys(this.annotations).length > 0) {
       serialized.annotations = this.annotations;

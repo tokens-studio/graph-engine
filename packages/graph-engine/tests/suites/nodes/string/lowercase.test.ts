@@ -1,5 +1,5 @@
-import Node from "@/nodes/string/lowercase.js";
-import { Graph } from "@/graph/graph.js";
+import Node from "../../../../src/nodes/string/lowercase.js";
+import { Graph } from "../../../../src/graph/graph.js";
 
 describe("string/lowercase", () => {
   it("lowercases all characters", async () => {

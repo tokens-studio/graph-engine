@@ -1,7 +1,7 @@
-import { INodeDefinition } from "@/index.js";
-import { NodeTypes } from "@/types.js";
-import { Node } from "@/programmatic/node.js";
-import { ColorArraySchema, NumberSchema } from "@/schemas/index.js";
+import { INodeDefinition } from "../../index.js";
+import { NodeTypes } from "../../types.js";
+import { Node } from "../../programmatic/node.js";
+import { ColorArraySchema, NumberSchema } from "../../schemas/index.js";
 import chroma from "chroma-js";
 
 export default class NodeDefinition extends Node {

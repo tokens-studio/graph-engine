@@ -1,11 +1,11 @@
-import Node from "@/nodes/array/concat.js";
-import { Graph } from "@/graph/graph.js";
+import Node from "../../../../src/nodes/array/concat.js";
+import { Graph } from "../../../../src/graph/graph.js";
 
 describe("array/concat", () => {
   it("concats the expected nodes", async () => {
     const graph = new Graph();
     const node = new Node({graph});
-    graph.addNode(node);
+    
 
     const a = [1, 2, 3];
     const b = [4, 5, 6];

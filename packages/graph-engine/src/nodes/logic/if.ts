@@ -1,7 +1,7 @@
-import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
-import { NodeTypes } from "@/types.js";
-import { Node } from "@/programmatic/node.js";
-import { AnySchema, BooleanSchema } from "@/schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { NodeTypes } from "../../types.js";
+import { Node } from "../../programmatic/node.js";
+import { AnySchema, BooleanSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition<T, V> extends Node {
   static title = "If";

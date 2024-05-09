@@ -1,8 +1,8 @@
-import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
-import { Color, NodeTypes } from "@/types.js";
-import { Node } from "@/programmatic/node.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Color, NodeTypes } from "../../types.js";
+import { Node } from "../../programmatic/node.js";
 import chroma from "chroma-js";
-import { ColorSchema, NumberSchema } from "@/schemas/index.js";
+import { ColorSchema, NumberSchema } from "../../schemas/index.js";
 export default class NodeDefinition extends Node {
   static title = "Color Distance";
   static type = NodeTypes.COLOR_DISTANCE;

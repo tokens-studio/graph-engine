@@ -1,11 +1,11 @@
-import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
-import { Curve, NodeTypes } from "@/types.js";
-import { Node } from "@/programmatic/node.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Curve, NodeTypes } from "../../types.js";
+import { Node } from "../../programmatic/node.js";
 import {
   CurveSchema,
   NumberSchema,
   Vec2Schema,
-} from "@/schemas/index.js";
+} from "../../schemas/index.js";
 
 
 const scaleVec = (vec, scale) => vec.map((v) => v * scale);

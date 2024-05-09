@@ -1,5 +1,5 @@
-import { NodeTypes } from "@/types.js";
-import { Node } from "@/programmatic/node.js";
+import { NodeTypes } from "../../types.js";
+import { Node } from "../../programmatic/node.js";
 
 export default class NodeDefinition extends Node {
     static title = "Note";

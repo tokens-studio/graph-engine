@@ -6,10 +6,10 @@
 
 import blinder from "color-blind";
 import chroma from "chroma-js";
-import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
-import { NodeTypes } from "@/types.js";
-import { Node } from "@/programmatic/node.js";
-import { NumberSchema, ColorSchema, StringSchema } from "@/schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { NodeTypes } from "../../types.js";
+import { Node } from "../../programmatic/node.js";
+import { NumberSchema, ColorSchema, StringSchema } from "../../schemas/index.js";
 
 export enum ColorBlindnessTypes {
   TRITANOPIA = "tritanopia",

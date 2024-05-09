@@ -1,4 +1,4 @@
-import { AnySchema, GraphSchema } from "@/schemas/index.js";
+import { AnySchema, GraphSchema } from "../schemas/index.js";
 import { Node } from "./node.js";
 import { action, computed, makeObservable, observable } from "mobx";
 import { Edge } from "./edge.js";

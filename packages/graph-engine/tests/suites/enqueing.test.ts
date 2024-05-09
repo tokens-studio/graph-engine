@@ -1,41 +1,42 @@
-import { NumberSchema, StringSchema } from "@/schemas/index.js";
-import { Graph, nodeLookup } from "../../src/index.js";
-import ConstantNode from "@/nodes/generic/constant.js";
-import SubtractNode from "@/nodes/math/subtract.js";
+import { NumberSchema } from "../../src/schemas/index.js";
+import { Graph } from "../../src/index.js";
+import ConstantNode from "../../src/nodes/generic/constant.js";
+import SubtractNode from "../../src/nodes/math/subtractVariadic.js";
+import OutputNode from "../../src/nodes/generic/output.js";
 
 describe("enqueing", () => {
   it("automatically enqueues when using variadic types", async () => {
     const graph = new Graph();
 
-    const input1 = new ConstantNode({graph});
-    const input2 = new ConstantNode({ graph });
+    const input1 = new ConstantNode({ id: "1", graph });
+    const input2 = new ConstantNode({ id: "2", graph });
+    const sub = new SubtractNode({ id: "sub", graph });
+    const output = new OutputNode({ id: "output", graph });
 
+
+    //We should only be setting values here after we are sure that the nodes exists in a graph
     input1.inputs.value.setValue(2, {
       type: NumberSchema,
     });
 
-    input1.inputs.value.setValue(3, {
+    input2.inputs.value.setValue(3, {
       type: NumberSchema,
     });
 
-    const output = new SubtractNode({ graph });
-    graph.addNode(input1);
-    graph.addNode(input2);
-    graph.addNode(output);
-
     //These should be enqueued automatically
-    input1.outputs.value.connect(output.inputs.inputs);
-    input2.outputs.value.connect(output.inputs.inputs);
+    input1.outputs.value.connect(sub.inputs.inputs);
+    input2.outputs.value.connect(sub.inputs.inputs);
+    sub.outputs.value.connect(output.inputs.input);
 
     const final = await graph.execute();
 
     const expected = {
-      output: {
-        type: NumberSchema,
-        value: -1,
-      },
+
+      type: NumberSchema,
+      value: -1,
+
     };
 
-    expect(final).toEqual(expected);
+    expect(final.output).toEqual(expected);
   });
 });

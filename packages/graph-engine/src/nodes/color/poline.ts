@@ -1,13 +1,13 @@
-import { INodeDefinition } from "@/index.js";
-import { NodeTypes } from "@/types.js";
-import { Node } from "@/programmatic/node.js";
+import { INodeDefinition } from "../../index.js";
+import { NodeTypes } from "../../types.js";
+import { Node } from "../../programmatic/node.js";
 import {
   BooleanSchema,
   ColorArraySchema,
   NumberSchema,
   StringArraySchema,
   StringSchema,
-} from "@/schemas/index.js";
+} from "../../schemas/index.js";
 import { Hsl, converter, formatHex } from "culori";
 import { Poline, PositionFunction, Vector3, positionFunctions } from "poline";
 

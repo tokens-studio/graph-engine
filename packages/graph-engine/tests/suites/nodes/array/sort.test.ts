@@ -1,11 +1,11 @@
-import Node, { Order } from "@/nodes/array/sort.js";
-import { Graph } from "@/graph/graph.js";
+import Node, { Order } from "../../../../src/nodes/array/sort.js";
+import { Graph } from "../../../../src/graph/graph.js";
 
 describe("array/sort", () => {
   it("sorts the values as expected", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-    graph.addNode(node);
+    
     node.inputs.array.setValue([1, 2, 3, 4]);
     node.inputs.order.setValue(Order.DESC);
 
@@ -19,7 +19,7 @@ describe("array/sort", () => {
   it("sorts the values as expected", async () => {
     const graph = new Graph();
     const node = new Node({graph});
-    graph.addNode(node);
+    
     node.inputs.array.setValue([{ a: 3 }, { a: 2 }, { a: 4 }]);
     node.inputs.order.setValue(Order.ASC);
     node.inputs.sortBy.setValue("a");

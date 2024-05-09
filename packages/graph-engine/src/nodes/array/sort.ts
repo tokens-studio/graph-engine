@@ -1,10 +1,10 @@
-import { NodeTypes } from "@/types.js";
-import { INodeDefinition, Node } from "@/programmatic/node.js";
+import { NodeTypes } from "../../types.js";
+import { INodeDefinition, Node } from "../../programmatic/node.js";
 import orderBy from "lodash.orderby";
 
-import { AnyArraySchema, StringSchema } from "@/schemas/index.js";
+import { AnyArraySchema, StringSchema } from "../../schemas/index.js";
 
-import { ToInput,ToOutput } from "@/programmatic";
+import { ToInput,ToOutput } from "../../programmatic";
 
 export enum Order {
   ASC = "asc",

@@ -1,6 +1,6 @@
-import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
-import { Color, NodeTypes } from "@/types.js";
-import { Node } from "@/programmatic/node.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Color, NodeTypes } from "../../types.js";
+import { Node } from "../../programmatic/node.js";
 import { Rgb, Lab, Hsl, converter } from "culori";
 import {
   ColorSchema,
@@ -8,7 +8,7 @@ import {
   NumberSchema,
   StringArraySchema,
   StringSchema,
-} from "@/schemas/index.js";
+} from "../../schemas/index.js";
 
 export const colorSpaces = [
   "rgb",
@@ -31,7 +31,8 @@ export const colorSpaces = [
   //HSL like
   "okhsl",
   "cubehelix",
-];
+] as const;
+export type ColorSpace = typeof colorSpaces[number];
 
 export default class NodeDefinition extends Node {
   static title = "Convert Color";
@@ -41,9 +42,9 @@ export default class NodeDefinition extends Node {
 
   declare inputs: ToInput<{
     color: Color;
-    space: typeof colorSpaces;
+    space: ColorSpace;
   }>;
-  
+
   declare outputs: ToOutput<{
     a: number;
     b: number;
@@ -96,7 +97,7 @@ export default class NodeDefinition extends Node {
     let { color, space } = this.getAllInputs();
 
     if (!colorSpaces.includes(space)) {
-      throw new Error("Invalid color space");
+      throw new Error("Invalid color space " + space);
     }
 
     if (space === "gl") {

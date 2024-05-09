@@ -1,12 +1,12 @@
-import { NodeTypes } from "@/types.js";
-import { INodeDefinition, Node } from "@/programmatic/node.js";
-import { AnySchema, StringSchema } from "@/schemas/index.js";
+import { NodeTypes } from "../../types.js";
+import { INodeDefinition, Node } from "../../programmatic/node.js";
+import { AnySchema } from "../../schemas/index.js";
 import InputNode from "./input.js";
 import OutputNode from "./output.js";
-import { IDeserializeOpts, SerializedGraph, SerializedNode } from "@/graph/types.js";
-import { Graph } from "@/graph/graph.js";
+import { IDeserializeOpts, SerializedGraph, SerializedNode } from "../../graph/types.js";
+import { Graph } from "../../graph/graph.js";
 import { autorun } from "mobx";
-import { annotatedDeleteable, hideFromParentSubgraph } from "@/annotations/index.js";
+import { annotatedDeleteable, hideFromParentSubgraph } from "../../annotations/index.js";
 
 export interface SerializedSubgraphNode extends SerializedNode {
   innergraph: SerializedGraph;

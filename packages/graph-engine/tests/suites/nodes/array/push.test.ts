@@ -1,12 +1,12 @@
-import Node from "@/nodes/array/push";
-import { Graph } from "@/graph/graph.js";
+import Node from "../../../../src/nodes/array/push";
+import { Graph } from "../../../../src/graph/graph.js";
 
 
 describe("array/push", () => {
     it("does a non mutative push", async () => {
         const graph = new Graph();
         const node = new Node({ graph });
-        graph.addNode(node);
+        
         const array = [1, 2, 3];
 
         node.inputs.array.setValue(array);

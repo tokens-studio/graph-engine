@@ -1,5 +1,6 @@
 declare module "json-schema-defaults" {
-  export default (schema: any) => any;
+  const jsonSchemaDefaults: (schema: any) => any;
+  export default jsonSchemaDefaults;
 }
 
 declare module "*.json" {

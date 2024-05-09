@@ -1,5 +1,5 @@
 import Ajv from "ajv";
-import { NumberSchema, AnySchema, AnyArraySchema } from "@/schemas/index.js";
+import { NumberSchema, AnySchema, AnyArraySchema } from "../../../src/schemas/index.js";
 // @ts-ignore
 const ajv = new Ajv({ useDefaults: true });
 

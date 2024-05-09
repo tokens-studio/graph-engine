@@ -1,19 +1,18 @@
-import { Graph, nodeLookup } from "../../src/index.js";
+import { Graph, NodeFactory, SerializedGraph, nodeLookup } from "../../src/index.js";
 import basic from "../data/processed/basic";
 
 describe("basic", () => {
   it("performs basic passthrough calculations", async () => {
-    const graph = Graph.deserialize(basic, nodeLookup);
+    const graph = new Graph().deserialize(basic as unknown as SerializedGraph, nodeLookup as Record<string, NodeFactory>);
+
     const result = await graph.execute();
-    expect(result).toEqual({
-      output: {
+    expect(result.output).toEqual({
         type: {
           $id: "https://schemas.tokens.studio/string.json",
           title: "String",
           type: "string",
         },
         value: "black",
-      },
     });
   });
 });

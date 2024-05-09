@@ -1,5 +1,5 @@
-import { Node } from "@/programmatic/node.js";
-import { StringSchema } from "@/schemas";
+import { Node } from "../../programmatic/node.js";
+import { StringSchema } from "../../schemas";
 
 export default class NodeDefinition extends Node {
     static title = "Math Expression";

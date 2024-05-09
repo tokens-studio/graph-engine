@@ -1,6 +1,6 @@
-import { INodeDefinition, ToInput, ToOutput } from "@/index.js";
-import { NodeTypes, Color as ColorType } from "@/types.js";
-import { Node } from "@/programmatic/node.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { NodeTypes, Color as ColorType } from "../../types.js";
+import { Node } from "../../programmatic/node.js";
 import Color from "colorjs.io";
 import {
   ColorModifier,
@@ -8,11 +8,10 @@ import {
   ColorSpaceTypes,
 } from "@tokens-studio/types";
 import {
-  AnySchema,
   ColorSchema,
   NumberSchema,
   StringSchema,
-} from "@/schemas/index.js";
+} from "../../schemas/index.js";
 import { modifyColor } from "./lib/modifyColor.js";
 
 export { ColorModifierTypes } from "@tokens-studio/types";

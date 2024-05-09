@@ -1,9 +1,9 @@
-import { ToInput } from "@/programmatic/input.js";
-import { ToOutput } from "@/programmatic/output.js";
-import { annotatedDynamicInputs } from '@/annotations/index.js';
-import { NodeTypes } from "@/types.js";
-import { Node, INodeDefinition } from "@/programmatic/node.js";
-import {  ObjectSchema } from "@/schemas/index.js";
+import { ToInput } from "../../programmatic/input.js";
+import { ToOutput } from "../../programmatic/output.js";
+import { annotatedDynamicInputs } from '../../annotations/index.js';
+import { NodeTypes } from "../../types.js";
+import { Node, INodeDefinition } from "../../programmatic/node.js";
+import {  ObjectSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Objectify";
