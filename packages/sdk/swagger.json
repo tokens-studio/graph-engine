@@ -1,0 +1,937 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"CreatedGraph": {
+				"description": "The created graph",
+				"properties": {
+					"id": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Record_string.any_": {
+				"properties": {},
+				"additionalProperties": {},
+				"type": "object",
+				"description": "Construct a type with a set of properties K of type T"
+			},
+			"SchemaObject": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"$id": {
+						"type": "string"
+					},
+					"$schema": {
+						"type": "string"
+					},
+					"$async": {
+						"type": "boolean",
+						"enum": [
+							false
+						],
+						"nullable": false
+					}
+				},
+				"type": "object",
+				"additionalProperties": {}
+			},
+			"GraphSchema": {
+				"$ref": "#/components/schemas/SchemaObject"
+			},
+			"TypeDefinition": {
+				"properties": {
+					"type": {
+						"$ref": "#/components/schemas/GraphSchema"
+					},
+					"variadic": {
+						"type": "boolean",
+						"description": "When exposing an array of inputs or outputs, allow specific control for connecting each item"
+					},
+					"visible": {
+						"type": "boolean",
+						"description": "Whether the input is visible by default in the UI"
+					},
+					"annotations": {
+						"$ref": "#/components/schemas/Record_string.any_",
+						"description": "Additional annotations to store on the input"
+					}
+				},
+				"required": [
+					"type"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SerializedInput": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"value": {},
+					"visible": {
+						"type": "boolean"
+					},
+					"variadic": {
+						"type": "boolean"
+					},
+					"type": {
+						"$ref": "#/components/schemas/TypeDefinition"
+					},
+					"dynamicType": {
+						"$ref": "#/components/schemas/GraphSchema"
+					},
+					"annotations": {
+						"$ref": "#/components/schemas/Record_string.any_"
+					}
+				},
+				"required": [
+					"name",
+					"visible",
+					"type"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SerializedNode": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"annotations": {
+						"$ref": "#/components/schemas/Record_string.any_"
+					},
+					"type": {
+						"type": "string"
+					},
+					"inputs": {
+						"items": {
+							"$ref": "#/components/schemas/SerializedInput"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"type",
+					"inputs"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SerializedEdge": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"source": {
+						"type": "string"
+					},
+					"target": {
+						"type": "string"
+					},
+					"sourceHandle": {
+						"type": "string"
+					},
+					"targetHandle": {
+						"type": "string"
+					},
+					"annotations": {
+						"$ref": "#/components/schemas/Record_string.any_"
+					}
+				},
+				"required": [
+					"id",
+					"source",
+					"target",
+					"sourceHandle",
+					"targetHandle"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SerializedGraph": {
+				"properties": {
+					"annotations": {
+						"$ref": "#/components/schemas/Record_string.any_"
+					},
+					"nodes": {
+						"items": {
+							"$ref": "#/components/schemas/SerializedNode"
+						},
+						"type": "array"
+					},
+					"edges": {
+						"items": {
+							"$ref": "#/components/schemas/SerializedEdge"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"annotations",
+					"nodes",
+					"edges"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SerializedGraphVal": {
+				"$ref": "#/components/schemas/SerializedGraph"
+			},
+			"GraphCreationParams": {
+				"properties": {
+					"description": {
+						"type": "string",
+						"description": "A human readable description of the graph"
+					},
+					"graph": {
+						"$ref": "#/components/schemas/SerializedGraphVal",
+						"description": "The json serialized graph"
+					},
+					"name": {
+						"type": "string",
+						"description": "A human readable name for the graph"
+					}
+				},
+				"required": [
+					"graph",
+					"name"
+				],
+				"type": "object"
+			},
+			"Pick_Graph.Exclude_keyofGraph.graph__": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"owner": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"owner",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_Graph.graph_": {
+				"$ref": "#/components/schemas/Pick_Graph.Exclude_keyofGraph.graph__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"ListedGraph": {
+				"$ref": "#/components/schemas/Omit_Graph.graph_"
+			},
+			"ListGraphParams": {
+				"properties": {
+					"perPage": {
+						"type": "integer",
+						"format": "int32",
+						"default": 10,
+						"minimum": 1,
+						"maximum": 20
+					},
+					"page": {
+						"type": "integer",
+						"format": "int32",
+						"default": 0,
+						"minimum": 0
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Graph": {
+				"properties": {
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"owner": {
+						"type": "string"
+					},
+					"graph": {
+						"$ref": "#/components/schemas/SerializedGraphVal"
+					},
+					"name": {
+						"type": "string"
+					},
+					"id": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"updatedAt",
+					"createdAt",
+					"owner",
+					"graph",
+					"name",
+					"id"
+				],
+				"type": "object"
+			},
+			"InvokeableInputDefinition": {
+				"properties": {
+					"type": {
+						"$ref": "#/components/schemas/GraphSchema"
+					},
+					"value": {}
+				},
+				"required": [
+					"value"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Record_string.InvokeableInputDefinition_": {
+				"properties": {},
+				"additionalProperties": {
+					"$ref": "#/components/schemas/InvokeableInputDefinition"
+				},
+				"type": "object",
+				"description": "Construct a type with a set of properties K of type T"
+			},
+			"InvokeParams": {
+				"properties": {
+					"graphId": {
+						"type": "string"
+					},
+					"payload": {
+						"$ref": "#/components/schemas/Record_string.InvokeableInputDefinition_"
+					}
+				},
+				"required": [
+					"graphId",
+					"payload"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PaginatedParams": {
+				"properties": {
+					"perPage": {
+						"type": "integer",
+						"format": "int32",
+						"default": 10,
+						"minimum": 1,
+						"maximum": 20
+					},
+					"page": {
+						"type": "integer",
+						"format": "int32",
+						"default": 0,
+						"minimum": 0
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CredentialCreationParams": {
+				"properties": {},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PaginatedListCredsParams": {
+				"properties": {
+					"perPage": {
+						"type": "integer",
+						"format": "int32",
+						"default": 10,
+						"minimum": 1,
+						"maximum": 20
+					},
+					"page": {
+						"type": "integer",
+						"format": "int32",
+						"default": 0,
+						"minimum": 0
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			}
+		}
+	},
+	"info": {
+		"title": "@tokens-studio/graph-engine-backend",
+		"version": "1",
+		"description": "This is the backend API for the Tokens Studio Graph Engine API.\n# Cross-Origin Resource Sharing\n    This API features Cross-Origin Resource Sharing (CORS) implemented in compliance with  [W3C spec](https: //www.w3.org/TR/cors/).\n    And that allows cross-domain communication from the browser.\n    All responses have a wildcard same-origin which makes them completely public and accessible to everyone, including any code on any site.",
+		"termsOfService": "https://tokens.studio/terms",
+		"license": {
+			"name": "MIT with CC"
+		},
+		"contact": {
+			"name": "API Support",
+			"url": "https://tokens.studio",
+			"email": "apiteam@tokens.studio"
+		}
+	},
+	"paths": {
+		"/graph": {
+			"post": {
+				"operationId": "CreateGraph",
+				"responses": {
+					"201": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreatedGraph"
+								}
+							}
+						}
+					}
+				},
+				"description": "Creates a new graph for the user",
+				"tags": [
+					"Graph"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/GraphCreationParams"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "ListGraphs",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ListedGraph"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Graph"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "perPage",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "int32",
+							"type": "integer",
+							"minimum": 1,
+							"maximum": 20
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 0,
+							"format": "int32",
+							"type": "integer",
+							"minimum": 0
+						}
+					}
+				]
+			}
+		},
+		"/graph/{graphId}": {
+			"put": {
+				"operationId": "UpdateGraph",
+				"responses": {
+					"200": {
+						"description": ""
+					},
+					"404": {
+						"description": "Graph not found",
+						"content": {
+							"application/json": {
+								"schema": {},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Graph"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "graphId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/GraphCreationParams"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "GetGraph",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Graph"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Graph not found",
+						"content": {
+							"application/json": {
+								"schema": {},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Graph"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "graphId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteGraph",
+				"responses": {
+					"200": {
+						"description": ""
+					},
+					"404": {
+						"description": "Graph not found",
+						"content": {
+							"application/json": {
+								"schema": {},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Graph"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "graphId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/executions": {
+			"post": {
+				"operationId": "Invoke",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Execution"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/InvokeParams"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "GetResources",
+				"responses": {
+					"200": {
+						"description": ""
+					}
+				},
+				"tags": [
+					"Execution"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "perPage",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "int32",
+							"type": "integer",
+							"minimum": 1,
+							"maximum": 20
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 0,
+							"format": "int32",
+							"type": "integer",
+							"minimum": 0
+						}
+					}
+				]
+			}
+		},
+		"/executions/{id}": {
+			"get": {
+				"operationId": "GetResource",
+				"responses": {
+					"200": {
+						"description": ""
+					}
+				},
+				"tags": [
+					"Execution"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/executions/{id}/artifacts/{artifactId}": {
+			"get": {
+				"operationId": "GetArtifact",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Execution"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "artifactId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/executions/{id}/logs/{artifactId}": {
+			"get": {
+				"operationId": "GetLog",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Execution"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "artifactId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/credentials": {
+			"post": {
+				"operationId": "CreateCreds",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Credentials"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CredentialCreationParams"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "ListCreds",
+				"responses": {
+					"200": {
+						"description": ""
+					}
+				},
+				"tags": [
+					"Credentials"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "perPage",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "int32",
+							"type": "integer",
+							"minimum": 1,
+							"maximum": 20
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 0,
+							"format": "int32",
+							"type": "integer",
+							"minimum": 0
+						}
+					}
+				]
+			}
+		},
+		"/credentials/{id}": {
+			"get": {
+				"operationId": "GetCreds",
+				"responses": {
+					"200": {
+						"description": ""
+					}
+				},
+				"tags": [
+					"Credentials"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteCred",
+				"responses": {
+					"200": {
+						"description": ""
+					},
+					"404": {
+						"description": "Credential not found",
+						"content": {
+							"application/json": {
+								"schema": {},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Credentials"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/api"
+		}
+	]
+}

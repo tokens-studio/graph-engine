@@ -5,7 +5,9 @@
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
 tasks:
-  - init: yarn install
+  - init: | 
+      yarn install
+      yarn global add turbo
   - name: Docker compose setup
     init: docker-compose up
 
