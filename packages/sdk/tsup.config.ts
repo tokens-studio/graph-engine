@@ -1,5 +1,7 @@
 import { defineConfig } from 'tsup';
 
+const env: string = process.env.NODE_ENV || 'development';
+
 
 export default defineConfig({
   entry: ['src/index.ts'],
@@ -7,7 +9,7 @@ export default defineConfig({
   bundle: true,
   splitting: true,
   sourcemap: true,
-  format: ['esm', 'cjs'],
+  format: env === 'production' ? ['cjs', 'esm'] : ['esm'],
   skipNodeModulesBundle: true,
   clean: true
 });
