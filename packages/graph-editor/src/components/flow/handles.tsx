@@ -142,6 +142,7 @@ export interface HandleProps {
   isArray?: boolean;
   full?: boolean;
   color?: string;
+  backgroundColor?: string;
   icon: React.ReactNode;
 };
 
@@ -154,6 +155,7 @@ export const Handle = (props: HandleProps) => {
     error,
     full,
     color,
+    backgroundColor,
     icon,
     ...rest
   } = props;
@@ -171,6 +173,7 @@ export const Handle = (props: HandleProps) => {
       }}
     >
       <StyledRawHandle
+        style={{color: color, backgroundColor: backgroundColor}}
         id={id}
         shouldHideHandles={shouldHideHandles}
         error={error}
@@ -178,9 +181,6 @@ export const Handle = (props: HandleProps) => {
         type={type}
         position={position}
         hide={shouldHide}
-        style={{
-          background: color,
-        }}
         isValidConnection={isValidConnection}
       >
         <IconoirProvider
