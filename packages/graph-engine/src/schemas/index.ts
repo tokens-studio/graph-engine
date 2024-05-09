@@ -50,7 +50,7 @@ export const ColorSchema: SchemaObject = {
   type: "string",
 };
 
-export const COLOR_ARRAY = "https://schemas.tokens.studio/color.json";
+export const COLOR_ARRAY = "https://schemas.tokens.studio/color[].json";
 export const ColorArraySchema: SchemaObject = {
   $id: COLOR,
   title: "Color[]",

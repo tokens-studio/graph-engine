@@ -1,10 +1,11 @@
 import { Node } from './node.js';
-import type { Node as GraphNode } from '@tokens-studio/graph-engine';
+
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Handle, HandleContainer } from '../handles.js';
-import { Input, Port, annotatedNodeRunning } from '@tokens-studio/graph-engine';
+import { Input, annotatedNodeRunning } from '@tokens-studio/graph-engine';
+import type { Port, Node as GraphNode } from '@tokens-studio/graph-engine'
 import colors from '@/tokens/colors.js';
 import { useSelector } from 'react-redux';
 import { inlineTypes, showTimings } from '@/redux/selectors/settings.js';
@@ -110,11 +111,8 @@ const extractTypeIcon = (
   const icon = iconLookup[port.type.$id || ''];
   const isArray = Boolean(port.type.type == 'array');
 
-  if (icon) {
-    return { icon };
-  }
 
-  const color = isArray ? colors.array.value : colors.any.value;
+  const color = colors[port.type.$id!].color;
 
   return { icon, color };
 };

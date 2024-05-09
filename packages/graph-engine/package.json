@@ -6,11 +6,6 @@
   "author": "andrew@hyma.io",
   "type": "module",
   "exports": {
-    "./*": {
-      "import": "./dist/*",
-      "require": "./dist/*",
-      "types": "./dist/*"
-    },
     ".": {
       "import": "./dist/index.js",
       "require": "./dist/index.cjs",
