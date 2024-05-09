@@ -3,6 +3,10 @@
 
 This is the backend for the Tokens Studio Graph project
 
+## Setup
+
+You will need to run `npx prisma migrate dev` to initially setup the database and apply migrations
+
 
 ### Gotchas
 
