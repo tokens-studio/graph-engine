@@ -19,6 +19,7 @@ import { RemoteStoragePanel } from '../panels/remoteStorage.tsx';
 import { GraphService } from '@/api/index.ts';
 import { WebsocketPanel } from '../panels/websocket.tsx';
 import { useSelector } from 'react-redux';
+import Image from 'next/image.js';
 
 export const menu = defaultMenuDataFactory();
 
@@ -61,6 +62,7 @@ file.items.push(
     }),
 );
 
+console.log(YoutubeIcon)
 
 const windows = menu.items.find((x) => x.name === 'window');
 
@@ -128,7 +130,7 @@ menu.items.push(
             new MenuItem({
                 name: 'youtube',
                 render: ({key,...rest}) => (
-                    <MenuItemElement key={key} icon={< YoutubeIcon />} {...rest} >
+                    <MenuItemElement key={key} icon={<Image src={YoutubeIcon} />} {...rest} >
                         <a
                             href="https://www.youtube.com/@TokensStudio"
                             target="_blank"
@@ -142,7 +144,7 @@ menu.items.push(
             new MenuItem({
                 name: 'slack',
                 render: ({ key, ...rest }) => (
-                    <MenuItemElement key={key} icon={< SlackIcon />} {...rest} >
+                    <MenuItemElement key={key} icon={<Image src={SlackIcon} />} {...rest} >
                         <a
                             href="https://tokens.studio//slack"
                             target="_blank"

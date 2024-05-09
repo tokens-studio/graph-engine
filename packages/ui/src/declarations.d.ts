@@ -1,5 +1,11 @@
 declare module '*.svg' {
-  export = React.PureComponent;
+  export = {
+    blurHeight:number,
+    blurWidth:number,
+    height:number,
+    src:string,
+    width:number
+  };
 }
 
 
