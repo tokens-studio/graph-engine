@@ -21,6 +21,7 @@ import { GraphService } from '@/api/index.ts';
 import { useQuery } from '@tanstack/react-query';
 import { useErrorToast } from '@/hooks/useToast.tsx';
 import { ImperativeEditorRef } from '@tokens-studio/graph-editor';
+import { SerializedGraph } from '@tokens-studio/graph-engine';
 
 const Wrapper = observer(({ theme }: { theme: GlobalState['ui']['theme'] }) => {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const Wrapper = observer(({ theme }: { theme: GlobalState['ui']['theme'] }) => {
 
   useEffect(() => {
     if (editor && data?.graph) {
-      editor.loadRaw(data?.graph)
+      editor.loadRaw(data?.graph as SerializedGraph)
     }
   }, [data, editor])
 

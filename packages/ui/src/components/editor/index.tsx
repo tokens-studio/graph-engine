@@ -29,6 +29,7 @@ export const EditorTab = forwardRef(({ loading }: { loading?: boolean }, ref) =>
     <Box css={{ position: 'relative', width: '100%', height: '100%' }}>
       <Editor
         id={""}
+        // @ts-ignore
         ref={ref}
         showMenu
         menuItems={menu}

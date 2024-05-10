@@ -12,7 +12,7 @@ WORKDIR /app
 RUN yarn global add turbo
 COPY . .
 RUN turbo telemetry disable
-RUN turbo prune --scope @tokens-studio/graph-engine-ui --docker
+RUN turbo prune --scope @tokens-studio/graph-engine-documentation --docker
 
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
@@ -37,22 +37,17 @@ RUN yarn install
 
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
-RUN yarn run build:ui 
+RUN yarn run build:docs 
 
 FROM base AS runner
 
-RUN apk update && apk upgrade && apk add dumb-init && adduser -D nextuser 
-
 WORKDIR /app
-
+RUN adduser -D nextuser 
+RUN yarn global add serve@14.2.3
 # set non root user
 USER nextuser
 
-
-# Weird that it keeps the total directory structure
-COPY --from=installer --chown=nextuser:nextuser  /app/packages/ui/.next/standalone ./
-COPY --from=installer --chown=nextuser:nextuser  /app/packages/ui/public/ ./packages/ui/public
-COPY --from=installer --chown=nextuser:nextuser  /app/packages/ui/.next/static ./packages/ui/.next/static
+COPY --from=installer --chown=nextuser:nextuser  /app/packages/documentation/build/ .
 
 EXPOSE 3000
-ENTRYPOINT ["dumb-init","node","./packages/ui/server.js"]
+ENTRYPOINT ["serve"]

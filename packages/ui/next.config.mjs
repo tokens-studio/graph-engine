@@ -10,7 +10,7 @@ const withBundleAnalyzer = analyzer({
   enabled: ANALYZE,
 })
 
-export default {
+export default withBundleAnalyzer({
   reactStrictMode: true,
   transpilePackages: ['@tokens-studio/graph-editor', '@tokens-studio/graph-engine'],
   env: {
@@ -25,7 +25,7 @@ export default {
     instrumentationHook: OTEL_ENABLED
   },
   compiler: {
-    //  removeConsole: process.env.NODE_ENV === 'production'
+    removeConsole: process.env.NODE_ENV === 'production'
   },
   output: "standalone"
-};
+});

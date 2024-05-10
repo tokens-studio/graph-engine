@@ -19,3 +19,11 @@ services:
     restart: always
     ports:
       - 3000:3000
+  docs:
+    container_name: docs
+    build:
+      context: .
+      dockerfile: ./packages/documentation/Dockerfile
+    restart: always
+    ports:
+      - 4000:3000

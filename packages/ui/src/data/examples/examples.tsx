@@ -10,14 +10,14 @@ export const examples: IExample[] = [
         title: 'Basic',
         description:
             'The simplest possible example. An input and output.',
-        file: basic as SerializedGraph,
+        file: basic as unknown as SerializedGraph,
         key: 'basic',
     },
     {
         title: 'Audio - Oscillator',
         description:
             'A basic audio oscillator setup',
-        file: audio as SerializedGraph,
+        file: audio as unknown as SerializedGraph,
         key: 'audio',
     },
 ];

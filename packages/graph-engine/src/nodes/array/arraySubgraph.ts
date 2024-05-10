@@ -1,13 +1,13 @@
 import { NodeTypes } from "../../types.js";
 import { AnyArraySchema, AnySchema, NumberSchema, SchemaObject } from "../../schemas/index.js";
-import SubgraphNode from "./subgraph";
-import { annotatedDynamicInputs, hideFromParentSubgraph } from "../../annotations";
-import { Input, ToInput, ToOutput } from "../../programmatic";
-import { extractArray } from "../../schemas/utils";
+import SubgraphNode from "../generic/subgraph.js";
+import { annotatedDynamicInputs, hideFromParentSubgraph } from "../../annotations/index.js";
+import { Input, ToInput, ToOutput } from "../../programmatic/index.js";
+import { extractArray } from "../../schemas/utils.js";
 
 export default class ArraySubgraph<T, V> extends SubgraphNode {
   static title = "Array Map";
-  static type = NodeTypes.ARRAY;
+  static type = 'tokens.studio.array.map';
   static description = "Allows you to map an array of items";
 
   declare inputs: ToInput<{
@@ -20,8 +20,6 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
 
   constructor(props) {
     super(props);
-
-    this.annotations[annotatedDynamicInputs] = true;
 
     //Create the hardcoded input values in the innergraph
     const input = Object.values(this._innerGraph.nodes).find((x) => x.factory.type === NodeTypes.INPUT);

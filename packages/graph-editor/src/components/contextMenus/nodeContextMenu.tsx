@@ -8,6 +8,8 @@ import React, { useCallback } from 'react';
 import { ReactFlowInstance, useReactFlow, Node, Edge } from 'reactflow';
 import { Graph } from 'graphlib';
 import { useAction } from '@/editor/actions/provider';
+import { graph } from '@/redux/selectors';
+import { useLocalGraph } from '@/hooks';
 
 export interface INodeContextMenuProps {
   id: string;
@@ -17,6 +19,7 @@ export interface INodeContextMenuProps {
 const convertToGraph = (flow: ReactFlowInstance) => {
   const nodes = flow.getNodes();
   const edges = flow.getEdges();
+
 
   const graph = new Graph({ multigraph: true });
   nodes.forEach((node) => graph.setNode(node.id));
@@ -71,6 +74,7 @@ export const NodeContextMenu = ({
 }: INodeContextMenuProps) => {
   const reactFlowInstance = useReactFlow();
   const duplicateNodes = useAction('duplicateNodes');
+  const graph = useLocalGraph();
 
   const deleteEl = useCallback(() => {
     if (nodes) {
@@ -137,11 +141,24 @@ export const NodeContextMenu = ({
     duplicateNodes(nodes.map((x) => x.id));
   }, [duplicateNodes, nodes]);
 
+  const forceExecution = useCallback(() => {
+    if (nodes) {
+ 
+      nodes.forEach((node) => {
+        const graphNode = graph.getNode(node.id);
+        if (graphNode) {
+          graphNode.run();
+        }
+      });
+    }
+  },[graph, nodes]);
+
   return (
     <Menu id={id}>
       <Item onClick={onDuplicate}>Duplicate</Item>
       <Item onClick={focus}>Focus</Item>
       <Item onClick={deleteEl}>Delete</Item>
+      <Item onClick={forceExecution}>Force Execution</Item>
       <Separator />
       {nodes?.length == 1 && (
         <>

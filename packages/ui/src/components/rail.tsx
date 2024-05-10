@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Home, GitMerge, ShoppingBag, Settings, HeadsetHelp } from 'iconoir-react';
 import { Avatar, Box, Separator, Stack, Tooltip } from '@tokens-studio/ui';

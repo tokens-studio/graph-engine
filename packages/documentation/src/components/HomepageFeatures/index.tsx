@@ -30,12 +30,11 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Simple to extend',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Bring your own custom nodes and add extra functionality. You can also customize the editor experience to add custom controls.
       </>
     ),
   },

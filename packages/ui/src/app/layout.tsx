@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     keywords: ['Graph', 'resolvers', 'generator', 'design', 'tokens', 'studio', 'figma'],
 
     icons: {
-        icon: '/favicon-96x96.png',
+        icon: '/favicon.ico',
         apple: '/apple-icon-180x180.png'
     },
     manifest: '/manifest.json',
@@ -55,8 +55,6 @@ export const metadata: Metadata = {
 
     },
 }
-
-
 
 export default function RootLayout({
     // Layouts must accept a children prop.

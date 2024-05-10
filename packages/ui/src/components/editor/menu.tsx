@@ -49,7 +49,10 @@ file.items.push(
                 const id = saved.annotations['engine.id'];
                 GraphService.updateGraph({
                     graphId: id,
-                    requestBody: saved
+                    requestBody: {
+                        graph: saved,
+                        name: saved.annotations['engine.title'],
+                    }
                 });
             };
 
@@ -128,7 +131,7 @@ menu.items.push(
             new Seperator(),
             new MenuItem({
                 name: 'youtube',
-                render: ({key,...rest}) => (
+                render: ({ key, ...rest }) => (
                     <MenuItemElement key={key} icon={<Image src={YoutubeIcon} />} {...rest} >
                         <a
                             href="https://www.youtube.com/@TokensStudio"

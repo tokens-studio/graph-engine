@@ -5,9 +5,11 @@ import indexArray from "./indexArray.js";
 import concat from "./concat.js";
 import join from "./join.js";
 import reverse from "./reverse.js";
+import arraySubgraph from "./arraySubgraph.js";
 import slice from "./slice.js";
 
 export const nodes = [
+  arraySubgraph,
   arrify,
   concat,
   sort,

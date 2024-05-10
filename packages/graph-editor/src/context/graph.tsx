@@ -28,7 +28,7 @@ function GraphContextProvider({
     );
 }
 
-function useLocalGraph() {
+function useLocalGraph():Graph {
     return useContext(GraphContext).graph;
 }
 

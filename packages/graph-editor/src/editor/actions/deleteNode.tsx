@@ -12,7 +12,6 @@ export const deleteNode = (graph: Graph, dispatch: Dispatch, reactFlowInstance: 
 
         const node = graph.removeNode(id);
 
-
         //Delete from the node as well
 
         dispatch.graph.checkClearSelectedNode(id);

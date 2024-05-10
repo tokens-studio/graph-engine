@@ -1,6 +1,14 @@
-node_modules
+**/node_modules/**
+.turbo
+dist
 jest-coverage
 docs
 out
+k8s
+data
+assets
+adrs
+.yarn
+
 developer-documentation
 **/.next

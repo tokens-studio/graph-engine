@@ -101,7 +101,7 @@ const NumberPreview = observer(({ node }: { node: Node }) => {
 
 export const defaultSpecifics = {
     'studio.tokens.generic.subgraph': SubgraphExplorer,
-    'studio.tokens.generic.array': SubgraphExplorer,
+    'tokens.studio.array.map': SubgraphExplorer,
 
     'studio.tokens.preview.colorScale': ColorScalePreview,
     'studio.tokens.preview.colorCompare': ColorComparePreview,
