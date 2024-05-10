@@ -1,6 +1,12 @@
 // https://nextjs.org/docs/advanced-features/custom-app
 import '../scripts/wdyr';
 
+import 'sanitize.css';
+import 'sanitize.css/forms.css';
+import 'sanitize.css/system-ui.css'
+import 'sanitize.css/ui-monospace.css';
+import 'sanitize.css/typography.css';
+import 'sanitize.css/assets.css';
 
 import { AppProps } from 'next/app.ts';
 import { Head } from '@/components/next/index.ts';
