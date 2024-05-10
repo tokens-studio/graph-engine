@@ -29,3 +29,4 @@ values:
     ignoreLimits: true
   vars:
     TS_DEMO_MODE: true
+    HOSTNAME: 0.0.0.0
