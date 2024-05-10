@@ -56,6 +56,7 @@
     "@jest/globals": "^29.5.0",
     "@tokens-studio/eslint-config-custom": "*",
     "@tokens-studio/graph-engine": "*",
+    "@tokens-studio/graph-editor": "*",
     "@types/jest": "28.1.0",
     "@types/node": "^18.15.11",
     "jest": "28.1.0",
