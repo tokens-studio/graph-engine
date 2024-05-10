@@ -39,7 +39,7 @@ export const Rail = () => {
 
   return (
     <Tooltip.Provider>
-      <Stack justify='between' direction='column' css={{ background: '$bgEmphasis', borderRight: '1px solid $borderSubtle', color: '$fgOnEmphasis', height: '100%', padding: '$5 $3 $3' }}>
+      <Stack justify='between' direction='column' css={{ background: '$gray2', borderRight: '1px solid $gray6', color: '$gray11', height: '100%', padding: '$5 $3 $3' }}>
         <Stack gap={3} direction='column' align='center'>
           <Tooltip label={'Tokens Studio'}>
             <Link href='https://tokens.studio'>

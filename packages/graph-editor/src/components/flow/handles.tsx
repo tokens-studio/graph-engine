@@ -185,9 +185,9 @@ export const Handle = (props: HandleProps) => {
       >
         <IconoirProvider
           iconProps={{
-            strokeWidth: 3,
-            width: '0.75em',
-            height: '0.75em',
+            strokeWidth: 1.5,
+            width: '1.5em',
+            height: '1.5em',
           }}
         >{icon}</IconoirProvider>
       </StyledRawHandle>

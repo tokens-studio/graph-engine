@@ -1,6 +1,7 @@
 @import url('reactflow/dist/style.css');
+
 .react-flow {
-    background: var(--colors-bgDefault);
+    background: var(--gray-1);
 }
 .react-flow__handle {
     position: unset;
@@ -13,8 +14,8 @@
     height: var(--sizes-7);
     border: 0;
     border-radius: var(--radii-small, 4px);
-    background: var(--colors-accentMuted);
-    color: var(--colors-accentOnAccent);
+    background: var(--gray-6);
+    color: var(--gray-12);
     box-shadow: var(--shadows-small);
     outline: 2px solid transparent;
     display: grid;
@@ -30,10 +31,10 @@
 
 .react-flow__node.selectable.selected,
 .react-flow__node.selectable:focus {
-    --nodeBorderColor: var(--colors-accentMuted);
-    --nodeBgColor: var(--colors-accentBg);
-    --nodeTextColor: var(--colors-fgDefault);
-    outline: 1px solid var(--colors-accentMuted);
+    --nodeBorderColor: var(--gray-6);
+    --nodeBgColor: var(--gray-3);
+    --nodeTextColor: var(--gray-12);
+    outline: 1px solid var(--gray-6);
     outline-offset: 5px;
     border-radius: var(--radii-small, 4px);
 }
@@ -41,7 +42,7 @@
 .react-flow__edge.selected .react-flow__edge-path,
 .react-flow__edge:focus .react-flow__edge-path,
 .react-flow__edge:focus-visible .react-flow__edge-path {
-    stroke: var(--colors-bgSubtle);
+    stroke: var(--gray-5);
 }
 
 .react-flow__node.selectable.selected .group-color-picker {
@@ -53,11 +54,11 @@
 }
 
 .react-flow__minimap {
-    background: var(--colors-bgCanvas);
+    background: var(--gray-3);
 }
 
 .react-flow__minimap-mask {
-    fill: var(--colors-borderDefault) !important;
+    fill: var(--gray-6) !important;
 }
 
 .react-flow__handle-right {
@@ -72,15 +73,14 @@
 
 .react-flow__edge-path,
 .react-flow__connection-path {
-    stroke: var(--colors-borderMuted);
+    stroke: var(--gray-6);
 }
 
 .react-flow__edge.selected .react-flow__edge-path,
 .react-flow__edge:focus .react-flow__edge-path,
 .react-flow__edge:focus-visible .react-flow__edge-path {
     stroke-width: 2 !important;
-    stroke: #b6cdf6;
-    filter: drop-shadow(0px 0 5px rgb(196, 213, 245, 0.7));
+    stroke: var(--gray-8);
 }
 
 .react-flow__handle-connecting:not(.react-flow__handle-valid) {
