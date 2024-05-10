@@ -21,7 +21,7 @@ values:
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
       networking.gke.io/v1beta1.FrontendConfig: default-frontend-config
-    host: graph.beta.tokens.studio
+    host: graphengine.tokens.studio
     path: /
     tlsEnabled: true
   replicas: 1
