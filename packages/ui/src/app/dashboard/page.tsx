@@ -56,7 +56,7 @@ const Page = () => {
                 width: '100%',
                 height: '100%',
                 overflow: 'auto',
-                background: '$bgDefault',
+                background: '$gray1',
                 paddingTop: '$6'
 
             }} justify='center'
@@ -87,7 +87,7 @@ const Page = () => {
 
                             return <Link href={`/editor?id=${graph.id}`}><Stack width='full' css={{
                                 '&:hover': {
-                                    background: '$bgEmphasis',
+                                    background: '$gray3',
                                 },
                                 borderRadius: '$medium',
                                 borderColor: '$border',
@@ -97,7 +97,7 @@ const Page = () => {
                                     color: '$fgDefault',
                                     padding: '$3',
                                     borderRadius: '$medium',
-                                    background: '$bgCanvas',
+                                    background: '$gray2',
                                 }}>
                                     <GraphUp />
                                 </Box>

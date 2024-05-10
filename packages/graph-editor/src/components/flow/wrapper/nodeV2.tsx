@@ -112,10 +112,10 @@ const extractTypeIcon = (
   const isArray = Boolean(port.type.type == 'array');
 
 
+  const color = colors[port.type.$id!]?.color || 'black';
+  const backgroundColor = colors[port.type.$id!]?.backgroundColor || 'white';
 
-  const color = colors[port.type.$id!]?.color || 'white';
-
-  return { icon, color };
+  return { icon, color, backgroundColor };
 };
 
 export const InlineTypeLabel = ({ port }: { port: Port }) => {
@@ -123,7 +123,7 @@ export const InlineTypeLabel = ({ port }: { port: Port }) => {
   return (
     <Box
       css={{
-        background: '$accentMuted',
+        background: '$gray1',
         color: '$fgOnEmphasis',
         padding: '$1 $2',
         fontSize: '$xxsmall',
@@ -183,7 +183,7 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
       id={port.name}
       full
     >
-      {!hideName && <Text>{port.name}</Text>}
+      <Text css={{ fontSize: 'medium', color: '$gray11' }}>{port.name}</Text>
       {inlineTypesValue && <InlineTypeLabel port={port} />}
     </Handle>
   );

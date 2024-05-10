@@ -1,3 +1,19 @@
+import {
+    grayDark,
+    sandDark,
+    amberDark,
+    crimsonDark,
+    pinkDark,
+    purpleDark,
+    violetDark,
+    indigoDark,
+    tealDark,
+    limeDark,
+    mintDark,
+    blueDark,
+    redDark,
+    greenDark,
+  } from '@radix-ui/colors';
 import { CSS as StitchesCSS, createStitches } from '@stitches/react';
 import { core, darkTheme } from '@tokens-studio/tokens';
 
@@ -14,7 +30,24 @@ export const {
     createTheme,
 } = createStitches({
     theme: {
-        colors: darkTheme.colors,
+        colors: {
+            ...darkTheme.colors,
+            ...grayDark,
+            ...sandDark,
+            ...amberDark,
+            ...crimsonDark,
+            ...pinkDark,
+            ...purpleDark,
+            ...violetDark,
+            ...indigoDark,
+            ...tealDark,
+            ...limeDark,
+            ...mintDark,
+            ...blueDark,
+            ...redDark,
+            ...greenDark,
+
+        },
         shadows: darkTheme.shadows,
         ...core,
     },

@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { useSelector } from 'react-redux';
 import { icons } from '@/redux/selectors/registry.js';
+import colors from '@/tokens/colors.js';
 
 export const Legend = () => {
   const iconsRegistry = useSelector(icons);

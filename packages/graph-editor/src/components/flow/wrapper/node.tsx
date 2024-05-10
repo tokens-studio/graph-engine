@@ -1,28 +1,18 @@
 import {
   Box,
-  Button,
-  IconButton,
   Spinner,
   Stack,
   Text,
 } from '@tokens-studio/ui';
-import { MoreVert } from 'iconoir-react';
-import { HandleContainerContext } from '../handles.js';
 import {
-  NodeToolbar,
   ReactFlowInstance,
-  useReactFlow,
-  useStore,
 } from 'reactflow';
 import { styled } from '@stitches/react';
-import FocusTrap from 'focus-trap-react';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import classNames from 'classnames/dedupe.js';
-import useDetachNodes from '../../../hooks/useDetachNodes.js';
 import GraphLib from '@dagrejs/graphlib';
 import { useDispatch } from '@/hooks/useDispatch.js';
 const { Graph, alg } = GraphLib;
-
 
 const CollapserContainer = styled('div', {});
 
@@ -40,46 +30,6 @@ interface NodeProps {
   controls?: React.ReactNode;
   style?: React.CSSProperties;
 }
-
-const convertToGraph = (flow: ReactFlowInstance) => {
-  const nodes = flow.getNodes();
-  const edges = flow.getEdges();
-
-  const graph = new Graph({ multigraph: true });
-  nodes.forEach((node) => graph.setNode(node.id));
-  edges.forEach((edge) => graph.setEdge(edge.source, edge.target));
-  return graph;
-};
-
-
-const createNodeLookup = (nodes: string[]) => {
-  return nodes.reduce((acc, node) => {
-    acc[node] = true;
-    return acc;
-  }, {} as Record<string, boolean>);
-};
-
-const applyFilters = (
-  flow: ReactFlowInstance,
-  lookup: Record<string, boolean>,
-) => {
-  flow.setNodes((nodes) =>
-    nodes.map((x) => {
-      if (!lookup[x.id]) {
-        return {
-          ...x,
-          className: classNames(x.className, 'filtered'),
-        };
-      }
-      return {
-        ...x,
-        className: classNames(x.className, {
-          filtered: false,
-        }),
-      };
-    }),
-  );
-};
 
 export const Collapser = ({ children, collapsed }) => {
   const styling = useMemo(() => {
@@ -110,10 +60,10 @@ export const Collapser = ({ children, collapsed }) => {
 };
 
 const NodeWrapper = styled('div', {
-  minWidth: '300px',
+  minWidth: '500px',
   position: 'relative',
   borderRadius: '$medium',
-  background: '$bgEmphasis',
+  background: '$gray2',
   variants: {
     error: {
       true: {
@@ -153,7 +103,7 @@ export const Node = (props: NodeProps) => {
                   css={{
                     padding: '$3',
                     borderBottom: '2px solid var(--nodeBorderColor, var(--colors-borderSubtle))',
-                    backgroundColor: 'var(--nodeBgColor, var(--colors-bgSubtle))',
+                    backgroundColor: '$gray3',
                     borderRadius: '$medium',
                     borderBottomLeftRadius: 0,
                     borderBottomRightRadius: 0,

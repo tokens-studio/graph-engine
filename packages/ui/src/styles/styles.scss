@@ -7,7 +7,7 @@
 }
 
 .dock-tab {
-  color: var(--colors-fgDefault);
+  color: var(--gray-12);
   border-bottom: none;
   z-index: 10;
 }
@@ -30,11 +30,11 @@
 }
 
 .dock-panel {
-  background: var(--colors-bgCanvas);
+  background: var(--gray-1);
 }
 
 .dock-fbox>.dock-panel {
-  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0.25rem var(--gray-3);
 }
 
 .dock-top .dock-bar,
@@ -47,17 +47,17 @@
 }
 
 .dock-panel.dock-style-main .dock-bar {
-  border-bottom-color: var(--colors-borderDefault);
+  border-bottom-color: var(--gray-6);
 }
 
 .dock-content-holder {
-  scrollbar-color: var(--colors-borderSubtle) transparent;
+  scrollbar-color: var(--gray-3) transparent;
   scrollbar-width: thin;
-  border-bottom: 1px solid var(--colors-borderSubtle);
+  border-bottom: 1px solid var(--gray-6);
 }
 
 .dock-top .dock-ink-bar {
-  background: var(--colors-borderSubtle);
+  background: var(--gray-3);
   z-index: 0;
   height: 100%;
   border-radius: var(--radii-small);
@@ -95,8 +95,8 @@ a {
 
 body {
   height: 100vh;
-  color: var(--fg-default);
-  background: var(--bg-default);
+  color: var(--gray-12);
+  background: var(--gray-1);
 }
 
 
