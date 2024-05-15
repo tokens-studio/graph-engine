@@ -22,7 +22,7 @@
     "@tokens-studio/graph-engine-nodes-design-tokens": "*",
     "@types/ws": "^8.5.10",
     "tsx": "^4.9.3",
-    "typescript": "5.0.4"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@stitches/react": "^1.2.8",

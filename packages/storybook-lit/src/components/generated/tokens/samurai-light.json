@@ -1,0 +1,22 @@
+{
+  "colors": {
+    "primary": {
+      "value": "#17D617",
+      "type": "color"
+    },
+    "text": {
+      "value": "#000000",
+      "type": "color"
+    },
+    "bg": {
+      "value": "#ffffff",
+      "type": "color"
+    }
+  },
+  "borderRadius": {
+    "rounded": {
+      "value": "0",
+      "type": "dimension"
+    }
+  }
+}
