@@ -1,4 +1,4 @@
-import { Box, Text, Stack } from '@tokens-studio/ui';
+import { Separator, Text, Stack } from '@tokens-studio/ui';
 import React from 'react';
 import { observer } from "mobx-react-lite";
 import type PreviewNode from '../../nodes/previewTypography.js';
@@ -6,67 +6,76 @@ import type PreviewNode from '../../nodes/previewTypography.js';
 export const Typography = ({ value, text }) => {
 
     return (
-        <Stack direction='column' gap={2} css={{ padding: '$3' }}>
-            {value.map((token, index) => {
-                const value = token.value;
-                let css = {};
+        <>
+            <Separator orientation='horizontal' />
+            <Stack direction='column' gap={2} css={{ padding: '$3' }}>
+                {value.map((token, index) => {
+                    const value = token.value;
+                    let css = {};
+                    let fontSize = undefined;
 
-                console.log(value)
-                switch (token.type) {
-                    case 'typography':
-                        css = {
-                            fontFamily: value.fontFamily,
-                            fontSize: value.fontSize,
-                            fontWeight: value.fontWeight,
-                            lineHeight: value.lineHeight,
-                            letterSpacing: value.letterSpacing,
-                        }
-                    case 'fontSizes':
-                        css = {
-                            fontSize: value,
-                        }
-                        break;
-                    case 'fontWeights':
-                        css = {
-                            fontWeight: value,
-                        }
-                        break;
-                    case 'lineHeights':
-                        css = {
-                            lineHeight: value,
-                        }
-                        break;
-                    case 'letterSpacings':
-                        css = {
-                            letterSpacing: value,
-                        }
-                        break;
-                    case 'fontFamilies':
-                        css = {
-                            fontFamily: value,
-                        }
-                        break;
-                    default:
-                        return null;
-                }
+                    switch (token.type) {
+                        case 'typography':
+                            css = {
+                                fontFamily: value.fontFamily,
+                                fontSize: value.fontSize,
+                                fontWeight: value.fontWeight,
+                                lineHeight: value.lineHeight,
+                                letterSpacing: value.letterSpacing,
+                            }
+                            fontSize = value.fontSize;
+                            break
+                        case 'fontSizes':
+                            css = {
+                                fontSize: value,
+                            }
+                            fontSize = value;
+                            break;
+                        case 'fontWeights':
+                            css = {
+                                fontWeight: value,
+                            }
+                            break;
+                        case 'lineHeights':
+                            css = {
+                                lineHeight: value,
+                            }
+                            break;
+                        case 'letterSpacings':
+                            css = {
+                                letterSpacing: value,
+                            }
+                            break;
+                        case 'fontFamilies':
+                            css = {
+                                fontFamily: value,
+                            }
+                            break;
+                        default:
+                            return null;
+                    }
 
 
+                    return (
 
-
-                return (
-
-                    <Stack direction='row' gap={3} key={index} align='center'>
-                        <Text css={{ fontStyle: 'italic' }}>{token.name}</Text>
-                        <span title={JSON.stringify(token,null,4) }>
-                            <Text css={css}>
-                                {text}
+                        <Stack direction='row' gap={3} key={index} align='center'>
+                            <Text css={{ fontStyle: 'italic' }}>{token.name}</Text>
+                            <span title={JSON.stringify(token, null, 4)}>
+                                <div style={{ display: 'inline' }}>
+                                    <span style={css}>
+                                        {text}
+                                    </span>
+                                </div>
+                            </span>
+                            <Text>
+                                {fontSize}
                             </Text>
-                        </span>
+                        </Stack >
 
-                    </Stack >
-                );
-            })}
-        </Stack>
+                    );
+                })}
+            </Stack>
+        </>
     );
 };
 

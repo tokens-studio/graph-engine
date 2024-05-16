@@ -1,5 +1,5 @@
 
-import { INodeDefinition, Node, ColorSchema, StringSchema, BooleanSchema } from "@tokens-studio/graph-engine";
+import {  Node,  StringSchema } from "@tokens-studio/graph-engine";
 import { TokenArraySchema } from "../schemas/index.js";
 
 export default class NearestColorNode extends Node {
@@ -17,6 +17,6 @@ export default class NearestColorNode extends Node {
         this.addInput('text', {
             type: { ...StringSchema, default: 'The quick brown fox jumps over the lazy dog' },
             visible: false
-        })
+        });
     }
 }
