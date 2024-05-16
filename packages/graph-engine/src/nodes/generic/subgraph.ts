@@ -46,7 +46,6 @@ export default class SubgraphNode extends Node {
 
       //Get the existing inputs 
       const existing = this.inputs;
-
       //Iterate through the inputs of the input node in the inner graph
       Object.entries(input.inputs).map(([key, value]) => {
 
@@ -61,16 +60,16 @@ export default class SubgraphNode extends Node {
             noPropagate: true
           });
         } else {
+          //Note its possible that the input key still does not exist due to an annotation ,etc 
           //Update the value 
-          this.inputs[key].setValue(value.value, {
+          this.inputs[key]?.setValue(value.value, {
             noPropagate: true
           });
         }
         //TODO handle deletions and mutations
       });
-
+      console.log('updating value')
       //Handle updates from the inner graph
-      this.setOutput("value", output.outputs.value.value, output.outputs.value.type);
     });
   }
 

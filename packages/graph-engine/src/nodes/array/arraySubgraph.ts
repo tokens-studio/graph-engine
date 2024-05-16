@@ -26,8 +26,7 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
 
     if (!input) throw new Error("No input node found in subgraph");
 
-
-    input.annotations['ui.editable'] = false;
+    input.annotations[annotatedDynamicInputs] = true;
 
     input.addInput("value", {
       type: AnySchema,
@@ -45,7 +44,6 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
       visible: false,
       annotations: {
         "ui.editable": false,
-        "ui.hidden": true,
         [hideFromParentSubgraph]: true
       }
     });

@@ -298,6 +298,9 @@ export const canConvertSchemaTypes = (
   if (src.type == "array" && target.$id == ANY_ARRAY) {
     return true;
   }
+  if (src.type == "array" && target.type == 'array') {
+    if (target.items?.$id === ANY) return true;
+  }
 
   switch (src.$id) {
     case COLOR:
