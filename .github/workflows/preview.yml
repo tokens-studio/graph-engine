@@ -13,6 +13,10 @@ jobs:
         include:
           - dockerfile: ./packages/ui/Dockerfile
             type: frontend
+          - dockerfile: ./packages/backend/Dockerfile
+            type: backend
+          - dockerfile: ./packages/documentation/Dockerfile
+            type: docs
     permissions:
       contents: read
       packages: write
