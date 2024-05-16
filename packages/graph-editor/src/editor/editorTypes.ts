@@ -61,6 +61,11 @@ export interface EditorProps {
   customNodeUI?: Record<string, React.ReactElement>;
 
   /**
+   * Additional specifics to display in the editor for custom types
+   */
+  specifics?: Record<string, React.FC<{ node: Node }>>;
+
+  /**
    * An initial layout to use
    */
   initialLayout?: LayoutBase

@@ -13,6 +13,6 @@ export default defineConfig({
   sourcemap: env === 'production', // source map is only available in prod
   format: env === 'production' ? ['cjs', 'esm'] : ['esm'],
   skipNodeModulesBundle: true,
-  clean: true,
+  clean: false,
   esbuildPlugins: [sassPlugin()]
 });

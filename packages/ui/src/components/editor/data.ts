@@ -1,8 +1,8 @@
-import { CapabilityFactory } from '@tokens-studio/graph-engine';
+import { CapabilityFactory, Node } from '@tokens-studio/graph-engine';
 import { Volume } from 'memfs';
 import { WebAudioCapability, icons as audioIcons } from '@tokens-studio/graph-engine-nodes-audio';
-import { icons as designIcons, controls as designControls } from '@tokens-studio/graph-engine-nodes-design-tokens';
-import {defaultControls} from '@tokens-studio/graph-editor';
+import { icons as designIcons, controls as designControls, specifics as designSpecifics } from '@tokens-studio/graph-engine-nodes-design-tokens';
+import {defaultControls, defaultSpecifics} from '@tokens-studio/graph-editor';
 
 
 
@@ -30,6 +30,11 @@ export const controls = [
     ...designControls,
     ...defaultControls
 ]
+
+export const specifics = {
+    ...defaultSpecifics,
+    ...designSpecifics
+} as Record<string, React.FC<{ node: Node }>>
 
 
 export { menu } from './menu.tsx';

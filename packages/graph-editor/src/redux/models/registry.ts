@@ -43,6 +43,12 @@ export const registryState = createModel<RootModel>()({
         nodeTypes: payload,
       };
     },
+    setSpecifics: (state, payload: Record<string, React.FC<{ node: Node }>>) => {
+      return {
+        ...state,
+        nodeSpecifics: payload,
+      };
+    },
     setControls(state, payload: Control[]) {
       return {
         ...state,

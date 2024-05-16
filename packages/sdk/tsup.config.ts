@@ -11,5 +11,5 @@ export default defineConfig({
   sourcemap: true,
   format: env === 'production' ? ['cjs', 'esm'] : ['esm'],
   skipNodeModulesBundle: true,
-  clean: true
+  clean: false,
 });

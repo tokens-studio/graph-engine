@@ -7,6 +7,7 @@ import { EditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { LayoutController } from './layoutController.js';
 import { nodeLookup as defaultNodeLookup } from '@tokens-studio/graph-engine';
 import { ToastProvider } from '@/hooks/useToast';
+import { defaultSpecifics } from '..';
 
 /**
  * The main editor component
@@ -20,6 +21,7 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
       capabilities,
       nodeTypes = defaultNodeLookup,
       controls,
+      specifics = defaultSpecifics,
       icons
     } = props;
 
@@ -31,6 +33,7 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
           controls={controls}
           panelItems={panelItems}
           nodeTypes={nodeTypes}
+          specifics={specifics}
           capabilities={capabilities}>
           <LayoutController {...props} ref={ref} />
         </ReduxProvider>

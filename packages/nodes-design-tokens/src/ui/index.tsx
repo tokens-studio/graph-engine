@@ -10,3 +10,4 @@ export const icons = {
 }
 
 export { controls } from './controls/index.js';
+export { specifics } from './nodes/index.js'

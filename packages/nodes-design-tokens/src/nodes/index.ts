@@ -9,6 +9,7 @@ import UngroupNode from "./ungroup.js";
 import NameTokensNode from "./name.js";
 import NearestColorNode from "./nearest.js";
 import ExtractTokenNode from "./extractSingleToken.js";
+import PreviewTypography from "./previewTypography.js";
 
 export const nodes = [
     ExtractTokenNode,
@@ -21,5 +22,6 @@ export const nodes = [
     ResolveNode,
     UngroupNode,
     NearestColorNode,
-    NameTokensNode
+    NameTokensNode,
+    PreviewTypography
 ];

@@ -19,6 +19,8 @@ export * from './components/menubar/index.js';
 export * from './components/controls/interface.js'
 //Default controls 
 export * from './registry/control.js';
+//Default specifics
+export * from './registry/specifics.js';
 
 
 export * from './types/index.js';

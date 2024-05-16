@@ -2,7 +2,7 @@ import { Provider } from 'react-redux';
 import React, { useEffect } from 'react';
 import { store } from './store.js';
 
-export const ReduxProvider = ({ children, nodeTypes, panelItems, capabilities, icons, controls }) => {
+export const ReduxProvider = ({ children, nodeTypes, panelItems, capabilities, icons, controls, specifics }) => {
 
 
   useEffect(() => {
@@ -17,6 +17,9 @@ export const ReduxProvider = ({ children, nodeTypes, panelItems, capabilities, i
     store.dispatch.registry.setNodeTypes(nodeTypes);
   }, [nodeTypes]);
 
+  useEffect(() => {
+    store.dispatch.registry.setSpecifics(specifics);
+  }, [specifics]);
 
   useEffect(() => {
     store.dispatch.registry.setPanelItems(panelItems);
