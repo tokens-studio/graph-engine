@@ -35,7 +35,7 @@ export function useDagreLayout(
 ) {
   const { direction } = options;
   const nodesInitialized = useStore(nodesInitializedSelector);
-  const { getNodes, getEdges, setNodes, setEdges, fitView } = useReactFlow();
+  const { getNodes, getEdges, setNodes } = useReactFlow();
 
   return () => {
     // only run the layout if there are nodes and they have been initialized with their dimensions

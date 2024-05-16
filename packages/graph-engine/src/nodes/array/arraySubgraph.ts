@@ -98,13 +98,17 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
     const flattened = output.map(x => x.value);
 
     const type = output.length > 0 ? output[0].type : input.type;
+
+    const {title} = type;
+
     const dynamicTypeSchema: SchemaObject = {
-      ...type,
+      title,
       //Override the type
       type: 'array',
       items: type
     }
 
+    console.log(flattened);
     this.setOutput("value", flattened, dynamicTypeSchema);
   }
 }

@@ -7,22 +7,59 @@ export const Typography = ({ value, text }) => {
 
     return (
         <Stack direction='column' gap={2} css={{ padding: '$3' }}>
-            {value.filter(token => token?.type == 'typography').map((token, index) => {
+            {value.map((token, index) => {
                 const value = token.value;
-                console.log(value);
+                let css = {};
+
+                console.log(value)
+                switch (token.type) {
+                    case 'typography':
+                        css = {
+                            fontFamily: value.fontFamily,
+                            fontSize: value.fontSize,
+                            fontWeight: value.fontWeight,
+                            lineHeight: value.lineHeight,
+                            letterSpacing: value.letterSpacing,
+                        }
+                    case 'fontSizes':
+                        css = {
+                            fontSize: value,
+                        }
+                        break;
+                    case 'fontWeights':
+                        css = {
+                            fontWeight: value,
+                        }
+                        break;
+                    case 'lineHeights':
+                        css = {
+                            lineHeight: value,
+                        }
+                        break;
+                    case 'letterSpacings':
+                        css = {
+                            letterSpacing: value,
+                        }
+                        break;
+                    case 'fontFamilies':
+                        css = {
+                            fontFamily: value,
+                        }
+                        break;
+                    default:
+                        return null;
+                }
+
+
+
+
                 return (
 
                     <Stack direction='row' gap={3} key={index} align='center'>
-                        <Text css={{ fontStyle: 'italic' }}>{value.fontSize}</Text>
-                        <span title={token.name}>
-                            <Text css={{
-                                fontFamily: value.fontFamily,
-                                fontSize: value.fontSize,
-                                fontWeight: value.fontWeight,
-                                lineHeight: value.lineHeight,
-                                letterSpacing: value.letterSpacing,
-                            }}>
-                               {text}
+                        <Text css={{ fontStyle: 'italic' }}>{token.name}</Text>
+                        <span title={JSON.stringify(token,null,4) }>
+                            <Text css={css}>
+                                {text}
                             </Text>
                         </span>
 

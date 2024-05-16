@@ -14,7 +14,6 @@ export const TokenSchema: SchemaObject = {
 
 export const TOKEN_ARRAY = "https://schemas.tokens.studio/tokenArray.json";
 export const TokenArraySchema: SchemaObject = {
-    $id: TOKEN_ARRAY,
     title: "Token[]",
     type: "array",
     default: [],
