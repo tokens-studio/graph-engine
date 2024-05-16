@@ -54,6 +54,7 @@ export const DragItem = ({
   icon,
   docs,
   children,
+  ...rest
 }: DragItemProps) => {
   const [isDragging, setIsDragging] = React.useState(false);
   const onDragStart = useCallback(
@@ -80,6 +81,7 @@ export const DragItem = ({
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       draggable="true"
+      {...rest}
     >
       <NodeHoverCard
         isDragging={isDragging}

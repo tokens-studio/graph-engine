@@ -19,12 +19,15 @@
   ],
   "sideEffects": false,
   "scripts": {
+    "start": "vite",
     "build": "tsup",
     "build:storybook": "storybook build",
     "dev": "tsup --watch",
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint --ext .tsx,.ts,.js,.html . --fix",
     "format:prettier": "prettier \"**/*.{ts,tsx,js,md,json}\" --write",
+    "test:e2e": "cypress run",
+    "test:e2e:manual": "cypress open",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "release": "npm run build && changeset publish",
@@ -84,9 +87,11 @@
     "react-dom": "18.2.0"
   },
   "resolutions": {
-    "jackspeak": "2.1.1"
+    "jackspeak": "2.1.1",
+    "resq": "1.11.0"
   },
   "devDependencies": {
+    "@4tw/cypress-drag-drop": "^2.2.5",
     "@storybook/addon-actions": "^8.0.9",
     "@storybook/addon-docs": "^8.0.9",
     "@storybook/addon-essentials": "^8.0.9",
@@ -99,8 +104,11 @@
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",
     "@vitejs/plugin-react-swc": "^3.6.0",
+    "cypress": "^13.9.0",
+    "cypress-react-selector": "^3.0.0",
     "esbuild-sass-plugin": "^3.2.0",
     "prettier": "2.8.7",
+    "resp": "^0.1.1",
     "storybook": "^8.0.9",
     "tsup": "^7.2.0",
     "typescript": "^5.4.5",
