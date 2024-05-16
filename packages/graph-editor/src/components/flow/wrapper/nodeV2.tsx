@@ -5,7 +5,7 @@ import React from 'react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Handle, HandleContainer } from '../handles.js';
 import { Input, Port, annotatedNodeRunning } from '@tokens-studio/graph-engine';
-import  {  Node as GraphNode } from '@tokens-studio/graph-engine'
+import { Node as GraphNode } from '@tokens-studio/graph-engine'
 import colors from '@/tokens/colors.js';
 import { useSelector } from 'react-redux';
 import { inlineTypes, showTimings } from '@/redux/selectors/settings.js';
@@ -108,14 +108,19 @@ const extractTypeIcon = (
   port: Port,
   iconLookup: Record<string, React.ReactNode>,
 ) => {
-  const icon = iconLookup[port.type.$id || ''];
+  let id = port.type.$id || '';
   const isArray = Boolean(port.type.type == 'array');
 
+  if (!id && isArray) {
+    id = port.type.items.$id || '';
+  }
 
-  const color = colors[port.type.$id!]?.color || 'black';
-  const backgroundColor = colors[port.type.$id!]?.backgroundColor || 'white';
+  let icon = iconLookup[id];
 
-  return { icon, color, backgroundColor };
+  const color = colors[id]?.color || 'black';
+  const backgroundColor = colors[id]?.backgroundColor || 'white';
+
+  return { isArray, icon, color, backgroundColor };
 };
 
 export const InlineTypeLabel = ({ port }: { port: Port }) => {
@@ -141,6 +146,7 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
   const iconTypeRegistry = useSelector(icons);
   const typeCol = extractTypeIcon(port, iconTypeRegistry);
   const input = port as unknown as Input;
+
 
   if (input.variadic) {
     return (

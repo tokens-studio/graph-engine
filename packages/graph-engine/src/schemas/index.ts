@@ -76,9 +76,9 @@ export const AnySchema: SchemaObject = {
 
 export const ANY_ARRAY = "https://schemas.tokens.studio/anyArray.json";
 export const AnyArraySchema: SchemaObject = {
-  $id: ANY_ARRAY,
   title: "Any[]",
   type: "array",
+  items:AnySchema,
   default: [],
   //We don't specify a type here because we want to allow any type
 };

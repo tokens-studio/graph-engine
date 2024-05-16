@@ -1,5 +1,6 @@
 @import url('reactflow/dist/style.css');
 
+
 .react-flow {
     background: var(--gray-1);
 }
@@ -14,8 +15,6 @@
     height: var(--sizes-7);
     border: 0;
     border-radius: var(--radii-small, 4px);
-    background: var(--gray-6);
-    color: var(--gray-12);
     box-shadow: var(--shadows-small);
     outline: 2px solid transparent;
     display: grid;

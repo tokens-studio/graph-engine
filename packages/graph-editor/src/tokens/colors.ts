@@ -8,7 +8,7 @@ export default {
   },
   [COLOR]: {
     color: 'oklch(20% 0.1 90)',
-    backgroundColor: '$purple2',
+    backgroundColor: 'var(--purple-9)',
   },
   [BOOLEAN]: {
     color: 'oklch(20% 0.1 120)',

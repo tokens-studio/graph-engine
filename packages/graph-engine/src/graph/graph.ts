@@ -680,7 +680,11 @@ export class Graph {
           newVal[edge.annotations[annotatedVariadicIndex]!] = output.value;
           //Extend the variadic array
           input.setValue(newVal, {
-            //TODO this might be fully dynamic, but for now we just preserve the underlying type
+            //Create a new type assuming that the items will be of the same type 
+            type: {
+              type: "array",
+              items: node.outputs[edge.sourceHandle].type
+            },
             //We are controlling propagation
             noPropagate: true,
           });

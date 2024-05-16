@@ -12,6 +12,17 @@ export const Legend = () => {
 export interface ILegendInner {
   iconsRegistry: Record<string, React.ReactNode>;
 }
+
+
+const extractType = (
+  id:string
+) => {
+  const color = colors[id]?.color || 'black';
+  const backgroundColor = colors[id]?.backgroundColor || 'white';
+
+  return { color, backgroundColor };
+};
+
 export const LegendInner = ({ iconsRegistry }: ILegendInner) => {
 
   const iconsElements = useMemo(
@@ -19,9 +30,12 @@ export const LegendInner = ({ iconsRegistry }: ILegendInner) => {
       Object.entries(iconsRegistry).map(([key, value]) => {
         const parts = key.split('/');
         const name = parts[parts.length - 1].split('.')[0];
+        const cols = extractType(key)
+
+        
         return (
           <Stack gap={3} align="center" key={key}>
-            <Box css={{color: '$fgDefault'}}>{value}</Box>
+            <Box css={{...cols, borderRadius:'$small', padding:'$2'}}>{value}</Box>
             <Text>{name}</Text>
           </Stack>
         );

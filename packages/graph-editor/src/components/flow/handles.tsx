@@ -155,6 +155,7 @@ export const Handle = (props: HandleProps) => {
     error,
     full,
     color,
+    isArray,
     backgroundColor,
     icon,
     ...rest
@@ -172,41 +173,42 @@ export const Handle = (props: HandleProps) => {
         flexDirection: type === 'target' ? 'row' : 'row-reverse',
       }}
     >
-      <StyledRawHandle
-        style={{color: color, backgroundColor: backgroundColor}}
-        id={id}
-        shouldHideHandles={shouldHideHandles}
-        error={error}
-        left={type === 'target'}
-        type={type}
-        position={position}
-        hide={shouldHide}
-        isValidConnection={isValidConnection}
-      >
-        <IconoirProvider
-          iconProps={{
-            strokeWidth: 1.5,
-            width: '1.5em',
-            height: '1.5em',
-          }}
-        >{icon}</IconoirProvider>
-      </StyledRawHandle>
+        <StyledRawHandle
+          style={{ color: color, backgroundColor: backgroundColor }}
+          id={id}
+          shouldHideHandles={shouldHideHandles}
+          error={error}
+          left={type === 'target'}
+          type={type}
+          position={position}
+          hide={shouldHide}
+          isValidConnection={isValidConnection}
+        >
 
-      <Stack
-        direction="row"
-        gap={1}
-        align="center"
-        css={{
-          flex: 1,
-          justifyContent: type === 'target' ? 'start' : 'end',
-          paddingLeft: shouldHideHandles ? 0 : '$2',
-          paddingRight: shouldHideHandles ? 0 : '$2',
-          fontFamily: '$mono',
-          fontSize: '$xxsmall',
-        }}
-      >
-        {children}
-      </Stack>
+          <IconoirProvider
+            iconProps={{
+              strokeWidth: 1.5,
+              width: '1.5em',
+              height: '1.5em',
+            }}
+          >{icon}</IconoirProvider>
+        </StyledRawHandle>
+
+        <Stack
+          direction="row"
+          gap={1}
+          align="center"
+          css={{
+            flex: 1,
+            justifyContent: type === 'target' ? 'start' : 'end',
+            paddingLeft: shouldHideHandles ? 0 : '$2',
+            paddingRight: shouldHideHandles ? 0 : '$2',
+            fontFamily: '$mono',
+            fontSize: '$xxsmall',
+          }}
+        >
+          {children}
+        </Stack>
     </HandleHolder>
   );
 };
