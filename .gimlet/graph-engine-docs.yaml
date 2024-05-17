@@ -1,4 +1,4 @@
-app: graph-engine
+app: graph-engine-docs
 env: prod
 namespace: default
 deploy:
@@ -14,19 +14,16 @@ values:
   gitSha: '{{ .SHA }}'
   image:
     repository: ghcr.io/tokens-studio/graph-engine
-    tag: frontend-{{ .SHA }}
+    tag: docs-{{ .SHA }}
   imagePullSecrets:
     - ghcr-login-secret
   ingress:
     ingressClassName: traefik
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
-    host: graph.beta.tokens.studio
+    host: docs.graph.beta.tokens.studio
     path: /
     tlsEnabled: true
   replicas: 1
   resources:
     ignoreLimits: true
-  vars:
-    TS_DEMO_MODE: true
-    HOSTNAME: 0.0.0.0

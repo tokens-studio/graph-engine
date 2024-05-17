@@ -69,3 +69,11 @@ jobs:
         with:
           ENV: "prod"
           APP: "graph-engine"
+      - name: 🍍 Deploy with Gimlet
+        uses: gimlet-io/gimlet-artifact-shipper-action@v0.8.3
+        env:
+              GIMLET_SERVER: ${{ secrets.GIMLET_SERVER }}
+              GIMLET_TOKEN: ${{ secrets.GIMLET_TOKEN }}
+        with:
+          ENV: "prod"
+          APP: "graph-engine-docs"
