@@ -1,6 +1,7 @@
 
-import {  Node,  StringSchema } from "@tokens-studio/graph-engine";
-import { TokenArraySchema } from "../schemas/index.js";
+import { Node, StringSchema } from "@tokens-studio/graph-engine";
+import { TokenSchema } from "../schemas/index.js";
+import { arrayOf } from "../schemas/utils.js";
 
 export default class NearestColorNode extends Node {
     static title = "Preview Typography";
@@ -11,7 +12,7 @@ export default class NearestColorNode extends Node {
         super(props);
 
         this.addInput("value", {
-            type: TokenArraySchema,
+            type: arrayOf(TokenSchema),
             visible: true
         });
         this.addInput('text', {

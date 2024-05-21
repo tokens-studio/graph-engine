@@ -1,8 +1,9 @@
 
 import { INodeDefinition, Node } from "@tokens-studio/graph-engine";
-import { TokenArrayArraySchema, TokenArraySchema } from "../schemas/index.js";
+import {   TokenSchema } from "../schemas/index.js";
 import { transformTokens } from "token-transformer";
 import { IResolvedToken, flatTokensRestoreToMap, flatten } from "../utils/index.js";
+import { arrayOf } from "../schemas/utils.js";
 
 const resolveValues = (tokens: IResolvedToken[], context: IResolvedToken[]) => {
   const setsToUse = ["root", "excludes"];
@@ -34,15 +35,15 @@ export default class ResolveNode extends Node {
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("inputs", {
-      type: TokenArrayArraySchema,
+      type: arrayOf(arrayOf(TokenSchema)),
       visible: true,
     });
     this.addInput("context", {
-      type: TokenArrayArraySchema,
+      type: arrayOf(arrayOf(TokenSchema)),
       visible: true,
     });
     this.addOutput("value", {
-      type: TokenArraySchema,
+      type: arrayOf(TokenSchema),
       visible: true,
     });
   }

@@ -1,6 +1,7 @@
 import { SingleToken } from "@tokens-studio/types";
 import { BooleanSchema, INodeDefinition, Node, StringSchema } from '@tokens-studio/graph-engine'
-import { TokenArraySchema, TokenSchema, TokenSetSchema } from "../schemas/index.js";
+import { TokenSchema } from "../schemas/index.js";
+import { arrayOf } from "../schemas/utils.js";
 
 export default class ExtractTokenNode extends Node {
     static title = "Extract token ";
@@ -9,7 +10,7 @@ export default class ExtractTokenNode extends Node {
     constructor(props: INodeDefinition) {
         super(props);
         this.addInput("tokens", {
-            type: TokenArraySchema,
+            type: arrayOf(TokenSchema),
         });
         this.addInput("name", {
             type: StringSchema,

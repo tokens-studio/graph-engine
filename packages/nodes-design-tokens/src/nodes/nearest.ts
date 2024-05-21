@@ -1,7 +1,8 @@
 
 import { INodeDefinition, Node, ColorSchema, StringSchema, BooleanSchema } from "@tokens-studio/graph-engine";
-import { TokenArraySchema } from "../schemas/index.js";
+import { TokenSchema } from "../schemas/index.js";
 import { WcagVersion, sortTokens } from "../utils/sortTokens";
+import { arrayOf } from "../schemas/utils.js";
 
 
 export default class NearestColorNode extends Node {
@@ -12,7 +13,7 @@ export default class NearestColorNode extends Node {
     super(props);
 
     this.addInput("tokens", {
-      type: TokenArraySchema,
+      type: arrayOf(TokenSchema),
       visible: true,
     });
     this.addInput("sourceColor", {
@@ -47,7 +48,7 @@ export default class NearestColorNode extends Node {
     });
 
     this.addOutput("value", {
-      type: TokenArraySchema,
+      type: arrayOf(TokenSchema),
       visible: true,
     });
   }

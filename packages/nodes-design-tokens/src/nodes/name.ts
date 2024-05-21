@@ -1,6 +1,7 @@
 
 import { INodeDefinition, Node } from "@tokens-studio/graph-engine";
-import { TokenArraySchema, TokenSetSchema } from "../schemas/index.js";
+import {  TokenSetSchema } from "../schemas/index.js";
+import { arrayOf } from "../schemas/utils.js";
 
 
 export default class NameTokensNode extends Node {
@@ -10,11 +11,11 @@ export default class NameTokensNode extends Node {
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("array", {
-      type: TokenArraySchema,
+      type: arrayOf(TokenSetSchema),
       visible: true,
     });
     this.addOutput("value", {
-      type: TokenArraySchema,
+      type: arrayOf(TokenSetSchema),
       visible: true,
     });
   }

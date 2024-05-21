@@ -1,6 +1,6 @@
 
 import { INodeDefinition, Node } from "@tokens-studio/graph-engine";
-import { TokenArraySchema, TokenSetSchema } from "../schemas/index.js";
+import {  TokenSetSchema } from "../schemas/index.js";
 
 export default class InvertNode extends Node {
   static title = "Invert Token Set";
