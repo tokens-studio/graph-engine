@@ -35,18 +35,21 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 16,
       },
+      visible: true,
     });
     this.addInput("stepsDown", {
       type: {
         ...NumberSchema,
         default: 0,
       },
+      visible: true,
     });
-    this.addInput("steps", {
+    this.addInput("stepsUp", {
       type: {
         ...NumberSchema,
         default: 1,
       },
+      visible: true,
     });
 
     this.addInput("ratio", {
@@ -84,12 +87,12 @@ export default class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
-    const { base, precision, ratio, stepsDown, steps } = this.getAllInputs();
+    const { base, precision, ratio, stepsDown, stepsUp } = this.getAllInputs();
 
     const values: GeometricValue[] = [];
     const shift = 10 ** precision;
 
-    for (let i = 0 - stepsDown; i <= steps; i++) {
+    for (let i = 0 - stepsDown; i <= stepsUp; i++) {
       const value = Math.round(base * Math.pow(ratio, i) * shift) / shift;
       values.push({
         index: i,

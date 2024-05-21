@@ -39,14 +39,16 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 16,
       },
+      visible: true,
     });
     this.addInput("stepsDown", {
       type: {
         ...NumberSchema,
         default: 0,
       },
+      visible: true,
     });
-    this.addInput("steps", {
+    this.addInput("stepsUp", {
       type: {
         ...NumberSchema,
         default: 5,
@@ -94,12 +96,12 @@ export default class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
-    const { base, precision, ratio, stepsDown, steps, notes } =
+    const { base, precision, ratio, stepsDown, stepsUp, notes } =
       this.getAllInputs();
 
     const values: HarmonicValue[] = [];
 
-    for (let i = 0 - stepsDown; i <= steps; i++) {
+    for (let i = 0 - stepsDown; i <= stepsUp; i++) {
       const shift = 10 ** precision;
       const size = base * Math.pow(ratio, i / notes);
       const rounded = Math.round(size * shift) / shift;

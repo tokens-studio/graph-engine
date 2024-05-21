@@ -15,7 +15,7 @@ export default class NodeDefinition extends Node {
   declare inputs: ToInput<{
     base: number;
     stepsDown: number;
-    steps: number;
+    stepsUp: number;
     increment: number;
     precision: number;
   }>;
@@ -35,18 +35,21 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 16,
       },
+      visible: true,
     });
     this.addInput("stepsDown", {
       type: {
         ...NumberSchema,
         default: 0,
       },
+      visible: true,
     });
-    this.addInput("steps", {
+    this.addInput("stepsUp", {
       type: {
         ...NumberSchema,
         default: 1,
       },
+      visible: true,
     });
 
     this.addInput("increment", {
@@ -84,7 +87,7 @@ export default class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
-    const { base, precision, increment, stepsDown, steps } =
+    const { base, precision, increment, stepsDown, stepsUp } =
       this.getAllInputs();
 
     const values: ArithemeticValue[] = [];
@@ -102,7 +105,7 @@ export default class NodeDefinition extends Node {
       value: Math.round(base * shift) / shift,
     });
 
-    for (let i = 0; i < Math.abs(steps); i++) {
+    for (let i = 0; i < Math.abs(stepsUp); i++) {
       const value = Math.round((base + increment * (i + 1)) * shift) / shift;
       values.push({
         index: i + 1,
