@@ -9,6 +9,7 @@ import {
   MiniMap,
   Node,
   NodeChange,
+  NodePositionChange,
   SelectionMode,
   SnapGrid,
   useEdgesState,
@@ -266,11 +267,17 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           case 'remove':
             graph.removeNode(id);
             break;
+          case 'position':
+            if ((change as NodePositionChange).position) {
+              node.annotations['ui.position.x'] = (change as NodePositionChange).position?.x;
+              node.annotations['ui.position.y'] = (change as NodePositionChange).position?.y;
+            }
+            break;
         }
       });
 
-
     }, [graph, onNodesChange]);
+
 
 
     const managedEdgeChange = useCallback((changes: EdgeChange[]) => {
