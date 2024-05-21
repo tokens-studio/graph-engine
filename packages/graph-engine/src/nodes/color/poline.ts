@@ -3,13 +3,13 @@ import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import {
   BooleanSchema,
-  ColorArraySchema,
+  ColorSchema,
   NumberSchema,
-  StringArraySchema,
   StringSchema,
 } from "../../schemas/index.js";
 import { Hsl, converter, formatHex } from "culori";
 import { Poline, PositionFunction, Vector3, positionFunctions } from "poline";
+import { arrayOf } from "../../schemas/utils.js";
 
 export type PolineNodeOptions = {
   anchorColors: Vector3[];
@@ -37,7 +37,7 @@ export default class NodeDefinition extends Node {
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("anchorColors", {
-      type: StringArraySchema,
+      type: arrayOf(StringSchema),
     });
     this.addInput("numPoints", {
       type: {
@@ -71,7 +71,7 @@ export default class NodeDefinition extends Node {
       type: NumberSchema,
     });
     this.addOutput("value", {
-      type: ColorArraySchema,
+      type: arrayOf(ColorSchema),
       visible: true,
     });
   }

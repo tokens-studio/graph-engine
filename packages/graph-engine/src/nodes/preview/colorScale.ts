@@ -1,5 +1,6 @@
+import { arrayOf } from "../../schemas/utils.js";
 import { Node } from "../../programmatic/node.js";
-import { ColorArraySchema } from "../../schemas";
+import { ColorSchema } from "../../schemas";
 
 export default class NodeDefinition extends Node {
     static title = "Color Scale";
@@ -11,7 +12,7 @@ export default class NodeDefinition extends Node {
         super(props);
 
         this.addInput("value", {
-            type: ColorArraySchema,
+            type: arrayOf(ColorSchema),
             visible: true
         });
     }

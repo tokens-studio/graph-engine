@@ -1,12 +1,12 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import {
-  ColorArraySchema,
   ColorSchema,
   NumberSchema,
 } from "../../schemas/index.js";
 import { Color, NodeTypes } from "../../types.js";
 import chroma from "chroma-js";
 import { Node } from "../../programmatic/node.js";
+import { arrayOf } from "../../schemas/utils.js";
 
 export default class NodeDefinition extends Node {
   static title = "Scale colors";
@@ -38,7 +38,7 @@ export default class NodeDefinition extends Node {
       type: NumberSchema,
     });
     this.addOutput("value", {
-      type: ColorArraySchema,
+      type: arrayOf(ColorSchema),
       visible: true,
     });
   }

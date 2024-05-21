@@ -1,8 +1,9 @@
 import { INodeDefinition } from "../../index.js";
 import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
-import { ColorArraySchema, NumberSchema } from "../../schemas/index.js";
+import {  ColorSchema, NumberSchema } from "../../schemas/index.js";
 import chroma from "chroma-js";
+import { arrayOf } from "../../schemas/utils.js";
 
 export default class NodeDefinition extends Node {
   static title = "Color Wheel";
@@ -48,7 +49,7 @@ export default class NodeDefinition extends Node {
     });
 
     this.addOutput("value", {
-      type: ColorArraySchema,
+      type: arrayOf(ColorSchema),
       visible: true,
     });
   }

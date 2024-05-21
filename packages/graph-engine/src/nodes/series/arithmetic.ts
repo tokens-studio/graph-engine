@@ -1,8 +1,9 @@
 import { NodeTypes } from "../../types.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
-import { NumberSchema, NumberArraySchema } from "../../schemas/index.js";
+import { NumberSchema } from "../../schemas/index.js";
 import { Input, ToInput } from "../../programmatic/input.js";
 import { ToOutput } from "../../programmatic";
+import { arrayOf } from "../../schemas/utils.js";
 export type ArithemeticValue = {
   index: number;
   value: number;
@@ -62,7 +63,7 @@ export default class NodeDefinition extends Node {
       },
     });
     this.addOutput("array", {
-      type: NumberArraySchema,
+      type: arrayOf(NumberSchema),
       visible: true,
     });
     this.addOutput("indexed", {

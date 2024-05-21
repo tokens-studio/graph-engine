@@ -21,24 +21,11 @@ export const NumberSchema: SchemaObject = {
   type: "number",
 };
 
-export const NUMBER_ARRAY = "https://schemas.tokens.studio/number-array.json";
-export const NumberArraySchema: SchemaObject = {
-  $id: NUMBER_ARRAY,
-  title: "Number[]",
-  type: "array",
-  items: NumberSchema,
-};
+
 
 export const STRING = "https://schemas.tokens.studio/string.json";
 export const StringSchema: SchemaObject = {
   $id: STRING,
-  title: "String",
-  type: "string",
-};
-
-export const TEXT = "https://schemas.tokens.studio/text.json";
-export const TextSchema: SchemaObject = {
-  $id: TEXT,
   title: "String",
   type: "string",
 };
@@ -50,22 +37,6 @@ export const ColorSchema: SchemaObject = {
   type: "string",
 };
 
-export const COLOR_ARRAY = "https://schemas.tokens.studio/color[].json";
-export const ColorArraySchema: SchemaObject = {
-  $id: COLOR,
-  title: "Color[]",
-  type: "array",
-  items: ColorSchema,
-};
-
-export const STRING_ARRAY = "https://schemas.tokens.studio/string-array.json";
-export const StringArraySchema: SchemaObject = {
-  $id: STRING_ARRAY,
-  title: "String[]",
-  type: "array",
-  items: StringSchema,
-  default: [],
-};
 
 export const ANY = "https://schemas.tokens.studio/any.json";
 export const AnySchema: SchemaObject = {
@@ -78,7 +49,7 @@ export const ANY_ARRAY = "https://schemas.tokens.studio/anyArray.json";
 export const AnyArraySchema: SchemaObject = {
   title: "Any[]",
   type: "array",
-  items:AnySchema,
+  items: AnySchema,
   default: [],
   //We don't specify a type here because we want to allow any type
 };
@@ -99,6 +70,13 @@ export const ObjectSchema: SchemaObject = {
   type: "object",
 };
 
+export type Curve = {
+  curves: {
+    type: "bezier" | "quadratic" | "cubic";
+    points: [number, number][];
+  }[];
+
+}
 export const CURVE = "https://schemas.tokens.studio/curve.json";
 export const CurveSchema: SchemaObject = {
   $id: CURVE,
@@ -209,6 +187,10 @@ export const Vec3Schema: SchemaObject = {
   default: [0, 0, 0],
 };
 
+export type GradientStop = {
+  position: number;
+  color: string;
+};
 export const GRADIENT_STOP = "https://schemas.tokens.studio/gradientStop.json";
 export const GradientStopSchema: SchemaObject = {
   $id: GRADIENT_STOP,
@@ -223,6 +205,12 @@ export const GradientStopSchema: SchemaObject = {
       type: "string",
     }
   },
+};
+
+export type Gradient = {
+  type: "linear" | "radial" | "angular" | "diamond";
+  positions: [number, number][];
+  stops: GradientStop[];
 };
 
 export const GRADIENT = "https://schemas.tokens.studio/gradient.json";
@@ -311,16 +299,8 @@ export const canConvertSchemaTypes = (
       }
       break;
 
-    case NUMBER_ARRAY:
-      switch (target.$id) {
-        case STRING_ARRAY:
-          return true;
-      }
-      break;
     case NUMBER:
       switch (target.$id) {
-        case NUMBER_ARRAY:
-          return true;
         case STRING:
           return true;
         case BOOLEAN:
@@ -329,8 +309,6 @@ export const canConvertSchemaTypes = (
       break;
     case STRING: {
       switch (target.$id) {
-        case STRING_ARRAY:
-          return true;
         case NUMBER:
           return true;
         case BOOLEAN:
@@ -356,12 +334,7 @@ export const convertSchemaType = (
   target: any
 ) => {
   switch (srcSchema.$id) {
-    case NUMBER_ARRAY:
-      switch (targetSchema.$id) {
-        case STRING_ARRAY:
-          return src.map((v: number) => String(v));
-      }
-      break;
+
     case NUMBER:
       switch (targetSchema.$id) {
         case STRING:
@@ -387,8 +360,6 @@ export const AllSchemas = [
   StringSchema,
   ColorSchema,
   NumberArraySchema,
-  StringArraySchema,
-  ColorArraySchema,
   AnySchema,
   AnyArraySchema,
   BooleanSchema,

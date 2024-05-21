@@ -1,7 +1,8 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
-import { NumberSchema, NumberArraySchema } from "../../schemas/index.js";
+import { NumberSchema } from "../../schemas/index.js";
+import { arrayOf } from "../../schemas/utils.js";
 
 type HarmonicValue = {
   index: number;
@@ -72,7 +73,7 @@ export default class NodeDefinition extends Node {
       },
     });
     this.addOutput("array", {
-      type: NumberArraySchema,
+      type: arrayOf(NumberSchema),
       visible: true,
     });
     this.addOutput("indexed", {

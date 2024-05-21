@@ -8,3 +8,9 @@ export const extractArray = (schema: SchemaObject) => {
     return schema;
 }
 
+export const arrayOf = (schema: SchemaObject) => {
+    return {
+        type: "array",
+        items: schema
+    }
+}

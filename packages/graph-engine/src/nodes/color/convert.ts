@@ -4,11 +4,10 @@ import { Node } from "../../programmatic/node.js";
 import { Rgb, Lab, Hsl, converter } from "culori";
 import {
   ColorSchema,
-  NumberArraySchema,
   NumberSchema,
-  StringArraySchema,
   StringSchema,
 } from "../../schemas/index.js";
+import { arrayOf } from "../../schemas/utils.js";
 
 export const colorSpaces = [
   "rgb",
@@ -85,11 +84,11 @@ export default class NodeDefinition extends Node {
       visible: true,
     });
     this.addOutput("channels", {
-      type: NumberArraySchema,
+      type: arrayOf(NumberSchema),
       visible: true,
     });
     this.addOutput("labels", {
-      type: StringArraySchema,
+      type: arrayOf(StringSchema),
     });
   }
 

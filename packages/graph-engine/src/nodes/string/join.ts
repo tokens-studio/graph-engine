@@ -1,7 +1,8 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
-import { StringArraySchema, StringSchema } from "../../schemas/index.js";
+import { StringSchema } from "../../schemas/index.js";
+import { arrayOf } from "../../schemas/utils.js";
 
 export default class NodeDefinition extends Node {
   static title = "Join String";
@@ -19,7 +20,7 @@ export default class NodeDefinition extends Node {
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("array", {
-      type: StringArraySchema,
+      type: arrayOf(StringSchema),
       visible: true,
     });
     this.addInput("separator", {
