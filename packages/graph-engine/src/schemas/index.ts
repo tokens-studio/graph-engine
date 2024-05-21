@@ -185,7 +185,7 @@ export const CurveSchema: SchemaObject = {
   required: ["curves"],
 };
 
-
+export type Vector2 = [number, number];
 export const VEC2 = "https://schemas.tokens.studio/vec2.json";
 export const Vec2Schema: SchemaObject = {
   $id: VEC2,
@@ -197,6 +197,7 @@ export const Vec2Schema: SchemaObject = {
   default: [0, 0],
 };
 
+export type Vector3 = [number, number, number];
 export const VEC3 = "https://schemas.tokens.studio/vec3.json";
 export const Vec3Schema: SchemaObject = {
   $id: VEC3,
