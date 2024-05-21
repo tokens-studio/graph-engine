@@ -80,12 +80,10 @@ export default class NodeDefinition extends Node {
       visible: true,
     });
     this.addOutput("d", {
-      type: NumberSchema,
-      visible: true,
+      type: NumberSchema
     });
     this.addOutput("channels", {
-      type: arrayOf(NumberSchema),
-      visible: true,
+      type: arrayOf(NumberSchema)
     });
     this.addOutput("labels", {
       type: arrayOf(StringSchema),
