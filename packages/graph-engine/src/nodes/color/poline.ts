@@ -37,13 +37,15 @@ export default class NodeDefinition extends Node {
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("anchorColors", {
-      type: arrayOf(StringSchema),
+      type: arrayOf(ColorSchema),
+      visible: true,
     });
     this.addInput("numPoints", {
       type: {
         ...NumberSchema,
         default: 4,
       },
+      visible: true,
     });
     this.addInput("invertedLightness", {
       type: BooleanSchema,
