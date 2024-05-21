@@ -11,7 +11,7 @@ import { observer } from 'mobx-react-lite';
 import { Input, NodeTypes } from '@tokens-studio/graph-engine';
 import { Port as GraphPort } from '@tokens-studio/graph-engine';
 
-import { Xmark, MoreVert, EyeClosed, Settings, Puzzle, Undo, EyeSolid } from 'iconoir-react';
+import { Xmark, MoreVert, EyeClosed, Settings, Puzzle, Undo, EyeSolid, Download } from 'iconoir-react';
 import { InlineTypeLabel } from '@/components/flow';
 import { useGraph } from '@/hooks/useGraph';
 import { controls } from '@/redux/selectors/registry';
@@ -85,6 +85,14 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
     });
   }, [port]);
 
+  const onCopyValue = useCallback(() => {
+    const value = port.value;
+
+    copy(JSON.stringify(value, null, 4), {
+      debug: true,
+    });
+  }, [port]);
+
   return (
     <Stack direction="column" gap={3}>
       <Stack direction="row" gap={2} align="center" justify="between">
@@ -138,6 +146,12 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
                       <Puzzle />
                     </DropdownMenu.LeadingVisual>
                     Copy Schema
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item onClick={onCopyValue}>
+                    <DropdownMenu.LeadingVisual>
+                      <Download />
+                    </DropdownMenu.LeadingVisual>
+                    Copy Value
                   </DropdownMenu.Item>
                 </DropdownMenu.RadioGroup>
               </DropdownMenu.Content>
