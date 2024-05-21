@@ -65,6 +65,10 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
     const input = this.getRawInput("array");
 
     const otherInputs: [string, Input<any>][] = Object.keys(this.inputs).filter(x => x !== "array").map(x => [x, this.getRawInput(x)]);
+    const other = Object.fromEntries(otherInputs.map(([name, x]) => [name, {
+      value: x.value,
+      type: x.type
+    }]));
 
     //Todo optimize this to run in parallel. We have to run this in series because the inner graph is not designed to run in parallel
 
@@ -72,10 +76,7 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
 
       const output = await acc;
 
-      const other = Object.fromEntries(otherInputs.map(([name, x]) => [name, {
-        value: x.value,
-        type: x.type
-      }]));
+
 
       const result = await this._innerGraph.execute({
         //By default this is any so we need to overwrite it with its runtime type
@@ -99,7 +100,7 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
 
     const type = output.length > 0 ? output[0].type : input.type;
 
-    const {title} = type;
+    const { title } = type;
 
     const dynamicTypeSchema: SchemaObject = {
       title,
@@ -108,7 +109,6 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
       items: type
     }
 
-    console.log(flattened);
     this.setOutput("value", flattened, dynamicTypeSchema);
   }
 }
