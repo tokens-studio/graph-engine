@@ -70,13 +70,7 @@ export const ObjectSchema: SchemaObject = {
   type: "object",
 };
 
-export type Curve = {
-  curves: {
-    type: "bezier" | "quadratic" | "cubic";
-    points: [number, number][];
-  }[];
 
-}
 export const CURVE = "https://schemas.tokens.studio/curve.json";
 export const CurveSchema: SchemaObject = {
   $id: CURVE,
@@ -163,7 +157,6 @@ export const CurveSchema: SchemaObject = {
   required: ["curves"],
 };
 
-export type Vector2 = [number, number];
 export const VEC2 = "https://schemas.tokens.studio/vec2.json";
 export const Vec2Schema: SchemaObject = {
   $id: VEC2,
@@ -175,7 +168,6 @@ export const Vec2Schema: SchemaObject = {
   default: [0, 0],
 };
 
-export type Vector3 = [number, number, number];
 export const VEC3 = "https://schemas.tokens.studio/vec3.json";
 export const Vec3Schema: SchemaObject = {
   $id: VEC3,
@@ -187,10 +179,7 @@ export const Vec3Schema: SchemaObject = {
   default: [0, 0, 0],
 };
 
-export type GradientStop = {
-  position: number;
-  color: string;
-};
+
 export const GRADIENT_STOP = "https://schemas.tokens.studio/gradientStop.json";
 export const GradientStopSchema: SchemaObject = {
   $id: GRADIENT_STOP,
@@ -207,11 +196,7 @@ export const GradientStopSchema: SchemaObject = {
   },
 };
 
-export type Gradient = {
-  type: "linear" | "radial" | "angular" | "diamond";
-  positions: [number, number][];
-  stops: GradientStop[];
-};
+
 
 export const GRADIENT = "https://schemas.tokens.studio/gradient.json";
 export const GradientSchema: SchemaObject = {
@@ -359,7 +344,6 @@ export const AllSchemas = [
   NumberSchema,
   StringSchema,
   ColorSchema,
-  NumberArraySchema,
   AnySchema,
   AnyArraySchema,
   BooleanSchema,

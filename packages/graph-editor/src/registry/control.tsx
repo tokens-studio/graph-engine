@@ -7,7 +7,6 @@ import {
   VEC2,
   VEC3,
   ANY,
-  TEXT,
   Port,
 } from '@tokens-studio/graph-engine';
 import { CurveField } from '@/components/controls/curve';
@@ -52,7 +51,7 @@ export const defaultControls = [
     component: EnumeratedTextfield,
   },
   {
-    matcher: (port: Port) => port.type.$id === TEXT,
+    matcher: (port: Port) => port.type.$id === STRING && port.annotations['ui.control'] === 'textarea',
     component: TextArea,
   },
   {

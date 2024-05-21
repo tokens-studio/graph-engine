@@ -127,7 +127,18 @@ export type Color = string
 
 export type Curve = {
   curves: {
-    type: string;
+    type: "bezier" | "quadratic" | "cubic";
     points: [number, number][];
   }[];
+
+}
+export type Gradient = {
+  type: "linear" | "radial" | "angular" | "diamond";
+  positions: [number, number][];
+  stops: GradientStop[];
+};
+
+export type GradientStop = {
+  position: number;
+  color: string;
 };
