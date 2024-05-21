@@ -193,11 +193,7 @@ export const defaultMenuDataFactory = (): Menu =>
           new MenuItem({
             name: 'find',
             render: ({ key, ...rest }) => (
-              <MenuItemElement key={key} {...rest} inner={(children) => (
-                <FindDialog>
-                  {children}
-                </FindDialog>
-              )}>
+              <MenuItemElement key={key} {...rest}>
                 Find
               </MenuItemElement>
             ),

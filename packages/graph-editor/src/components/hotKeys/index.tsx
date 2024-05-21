@@ -26,6 +26,7 @@ export const keyMap = {
     UNGROUP: 'ctrl+shift+g',
     SAVE: 'ctrl+s',
     LOAD: 'ctrl+o',
+    FIND: 'ctrl+f',
     RESET: 'ctrl+r',
     ZOOM_IN: ['ctrl+plus', 'command+plus'],
     ZOOM_OUT: ['command+-', 'ctrl+-'],
@@ -189,6 +190,10 @@ export const useHotkeys = () => {
             TOGGLE_GRID: (event) => {
                 event.preventDefault();
                 dispatch.settings.setShowGrid(!showGridValue);
+            },
+            FIND: (event) => {
+                event.preventDefault();
+                dispatch.settings.setShowSearch(true);
             },
             TOGGLE_SNAP_GRID: () => {
                 dispatch.settings.setSnapGrid(!snapGridValue);

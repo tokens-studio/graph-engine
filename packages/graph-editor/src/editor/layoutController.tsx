@@ -22,6 +22,7 @@ import { BoxBase, DockLayout, LayoutBase, LayoutData, PanelBase, TabGroup } from
 
 import React, { MutableRefObject, useEffect, useMemo } from 'react';
 import { EditorProps, ImperativeEditorRef } from "./editorTypes.js";
+import { FindDialog } from "@/components/dialogs/findDialog";
 
 const DockButton = (rest) => {
     return (
@@ -343,6 +344,7 @@ export const LayoutController = React.forwardRef<
                         style={{ flex: 1 }}
                         onLayoutChange={onLayoutChange}
                     />
+                    <FindDialog/>
                 </Tooltip.Provider>
             </Stack>
         </ExternalLoaderProvider>

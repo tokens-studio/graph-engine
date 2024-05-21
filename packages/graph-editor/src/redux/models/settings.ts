@@ -26,6 +26,7 @@ export interface SettingsState {
   showTimings: boolean;
   showMinimap: boolean;
   showGrid: boolean;
+  showSearch: boolean;
   /**
    * Whether to delay the update of a node when a value is changed
    */
@@ -44,6 +45,7 @@ export const settingsState = createModel<RootModel>()({
     layoutType: LayoutType.dagre,
     showGrid: true,
     showTimings: false,
+    showSearch: false,
     inlineTypes: false,
     snapGrid: false,
     debugMode: false,
@@ -52,6 +54,12 @@ export const settingsState = createModel<RootModel>()({
   } as SettingsState,
   reducers: {
 
+    setShowSearch(state, showSearch: boolean) {
+      return {
+        ...state,
+        showSearch,
+      };
+    },
     setShowMinimap(state, showMinimap: boolean) {
       return {
         ...state,

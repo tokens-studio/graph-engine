@@ -1,25 +1,30 @@
 import React from 'react';
 import { Button, Dialog, TextInput, Text, IconButton } from '@tokens-studio/ui';
 import { useSelector } from 'react-redux';
-import { graphEditorSelector } from '@/redux/selectors';
+import { graphEditorSelector, showSearchSelector } from '@/redux/selectors';
 import { Xmark } from 'iconoir-react';
-import { useGraph } from '@/hooks';
+import { useDispatch, useGraph } from '@/hooks';
 import { title as annotatedTitle } from '@/annotations';
 
-export const FindDialog = ({ children }) => {
+export const FindDialog = () => {
   const [id, setId] = React.useState('');
   const [title, setTitle] = React.useState('');
   const localGraph = useGraph();
+  const dispatch = useDispatch();
   const graph = useSelector(graphEditorSelector);
-  const [open, setOpen] = React.useState(false);
+  const open = useSelector(showSearchSelector);
+
+
+  const setOpen = (value: boolean) => {
+    dispatch.settings.setShowSearch(value);
+  }
+
 
   const onClick = () => {
     const reactflow = graph?.getFlow();
     if (!localGraph || !reactflow) {
       return
     }
-
-
 
 
     const node = reactflow.getNodes().find((n) => n.id === id);
@@ -55,7 +60,6 @@ export const FindDialog = ({ children }) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger asChild>{children}</Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay />
         <Dialog.Content>
