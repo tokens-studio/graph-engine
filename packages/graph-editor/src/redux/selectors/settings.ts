@@ -24,5 +24,6 @@ export const showTimings = createSelector(
   (state) => state.showTimings,
 );
 
+export const showMinimapSelector = createSelector(settings, (state) => state.showMinimap);
 
 export const delayedUpdateSelector = createSelector(settings, (state) => state.delayedUpdate);

@@ -17,6 +17,7 @@ import {
   inlineTypes,
   layoutType,
   obscureDistance,
+  showMinimapSelector,
   showTimings,
 } from '@/redux/selectors/settings';
 import { useDispatch } from '@/hooks/useDispatch.js';
@@ -35,6 +36,7 @@ export const Settings = () => {
   const inlineTypesValue = useSelector(inlineTypes);
   const delayedUpdateValue = useSelector(delayedUpdateSelector);
   const contextMenus = useSelector(contextMenuSelector);
+  const showMinimap = useSelector(showMinimapSelector);
   const dispatch = useDispatch();
 
   const onObscureDistanceChange = (event) => {
@@ -115,6 +117,24 @@ export const Settings = () => {
               dispatch.settings.setShowTimings(Boolean(checked))
             }
             checked={showTimingsValue}
+          />
+        </Stack>
+        <Stack direction="column" gap={2} justify="between">
+          <Stack direction="row" gap={2} justify="between">
+            <Label>Show Minimap</Label>
+            <Tooltip label={'Shows the minimap in the graph editing area'}>
+              <Box>
+                <Text>
+                  <InfoCircleSolid />
+                </Text>
+              </Box>
+            </Tooltip>
+          </Stack>
+          <Checkbox
+            onCheckedChange={(checked) =>
+              dispatch.settings.setShowMinimap(Boolean(checked))
+            }
+            checked={showMinimap}
           />
         </Stack>
         <Stack direction="column" gap={2} justify="between">

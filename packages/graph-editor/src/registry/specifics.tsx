@@ -12,6 +12,7 @@ import { ColorSwatch } from "@/components/preview/swatch";
 import { ColorScale } from "@/components/preview/colorScale";
 import { ColorCompare } from "@/components/preview/colorCompare";
 import { MathExpression } from "@/components/preview/mathExpression";
+import { title as annotatedTitle } from "@/annotations";
 
 const SubgraphExplorer = ({ node }) => {
 
@@ -27,7 +28,7 @@ const SubgraphExplorer = ({ node }) => {
         let oneShot = false;
         const innerGraph = node._innerGraph;
         const graphId = innerGraph.annotations['engine.id'];
-        const title = 'Subgraph ' + (innerGraph.annotations['engine.title'] || '');
+        const title = node.annotations[annotatedTitle] || innerGraph.annotations['engine.title'] || 'Subgraph' ;
         //Find the container
         const existing = dockerRef.current.find(graphId);
 

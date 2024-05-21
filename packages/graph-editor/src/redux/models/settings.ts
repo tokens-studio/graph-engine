@@ -24,6 +24,7 @@ export interface SettingsState {
   layoutType: LayoutType;
   debugMode: boolean;
   showTimings: boolean;
+  showMinimap: boolean;
   showGrid: boolean;
   /**
    * Whether to delay the update of a node when a value is changed
@@ -46,9 +47,17 @@ export const settingsState = createModel<RootModel>()({
     inlineTypes: false,
     snapGrid: false,
     debugMode: false,
+    showMinimap:true,
     delayedUpdate: false
   } as SettingsState,
   reducers: {
+
+    setShowMinimap(state, showMinimap: boolean) {
+      return {
+        ...state,
+        showMinimap,
+      };
+    },
 
     setDelayedUpdate(state, delayedUpdate: boolean) {
       return {
