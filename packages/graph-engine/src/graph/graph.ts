@@ -552,7 +552,8 @@ export class Graph {
           opts.type = value.type;
         }
 
-        input.inputs[key].setValue(value.value, opts);
+        //Its possible that there is no input with the name
+        input.inputs[key]?.setValue(value.value, opts);
       });
     }
 
