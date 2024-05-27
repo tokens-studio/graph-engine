@@ -5933,7 +5933,7 @@ classcat@^5.0.3, classcat@^5.0.4:
   resolved "https://registry.yarnpkg.com/classcat/-/classcat-5.0.4.tgz#e12d1dfe6df6427f260f03b80dc63571a5107ba6"
   integrity sha512-sbpkOw6z413p+HDGcBENe498WM9woqWHiJxCq7nvmxe9WmrUmqfAcxpIwAiMtM5Q3AhYkzXcNQHqsWq0mND51g==
 
-classnames@2.3.2, classnames@^2.3.2:
+classnames@2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.2.tgz#351d813bf0137fcc6a76a16b88208d2560a0d924"
   integrity sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==
@@ -6081,10 +6081,10 @@ colorette@^2.0.19, colorette@^2.0.20:
   resolved "https://registry.yarnpkg.com/colorette/-/colorette-2.0.20.tgz#9eb793e6833067f7235902fcd3b09917a000a95a"
   integrity sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==
 
-colorjs.io@^0.4.3:
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/colorjs.io/-/colorjs.io-0.4.5.tgz#7775f787ff90aca7a38f6edb7b7c0f8cce1e6418"
-  integrity sha512-yCtUNCmge7llyfd/Wou19PMAcf5yC3XXhgFoAh6zsO2pGswhUPBaaUh8jzgHnXtXuZyFKzXZNAnyF5i+apICow==
+colorjs.io@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/colorjs.io/-/colorjs.io-0.5.0.tgz#b1034184b4812b54e28c5082029fbd8ca53aa532"
+  integrity sha512-qekjTiBLM3F/sXKks/ih5aWaHIGu+Ftel0yKEvmpbKvmxpNOhojKgha5uiWEUOqEpRjC1Tq3nJRT7WgdBOxIGg==
 
 combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
   version "1.0.8"
@@ -6913,11 +6913,6 @@ dnd-core@^16.0.1:
     "@react-dnd/asap" "^5.0.1"
     "@react-dnd/invariant" "^4.0.1"
     redux "^4.2.0"
-
-dnd-multi-backend@^8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/dnd-multi-backend/-/dnd-multi-backend-8.0.1.tgz#118311b998c0e142013de3aea8fc9ed8e9e7108d"
-  integrity sha512-2HLUzxU32ol+COX8klzwy41mA3wOPuSH+08vGmN9WfyrlM3cMcRWFYRStUJkR3obGVUUuQxEtg0m50VxMCHafA==
 
 doctrine@^2.1.0:
   version "2.1.0"
@@ -8815,11 +8810,6 @@ immediate@~3.0.5:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
   integrity sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==
-
-immutability-helper@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-3.1.1.tgz#2b86b2286ed3b1241c9e23b7b21e0444f52f77b7"
-  integrity sha512-Q0QaXjPjwIju/28TsugCHNEASwoCcJSyJV3uO1sOIQGI0jKgm9f41Lvz0DZj3n46cNCyAZTsEYoY4C2bVRUzyQ==
 
 immutable@^4.0.0:
   version "4.3.4"
@@ -12476,15 +12466,6 @@ quick-lru@^4.0.1:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-4.0.1.tgz#5b8878f113a58217848c6482026c73e1ba57727f"
   integrity sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==
 
-rdndmb-html5-to-touch@^8.0.0:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/rdndmb-html5-to-touch/-/rdndmb-html5-to-touch-8.0.1.tgz#fbb08d92238e15710e302bfe3eb6ad956d3eb5a3"
-  integrity sha512-p2va3HLxCMbSeuD4o8z+iJAetxmbzWgrI1x1PDvt2A0QMWRUt7JZ9jGCi+6a/00NVDAxfxuc58euKR91UMo4Lg==
-  dependencies:
-    dnd-multi-backend "^8.0.1"
-    react-dnd-html5-backend "^16.0.1"
-    react-dnd-touch-backend "^16.0.1"
-
 react-color@2.19.3:
   version "2.19.3"
   resolved "https://registry.yarnpkg.com/react-color/-/react-color-2.19.3.tgz#ec6c6b4568312a3c6a18420ab0472e146aa5683d"
@@ -12510,35 +12491,14 @@ react-contexify@^6.0.0:
   dependencies:
     clsx "^1.2.1"
 
-react-dnd-html5-backend@16.0.1, react-dnd-html5-backend@^16.0.1:
+react-dnd-html5-backend@16.0.1:
   version "16.0.1"
   resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-16.0.1.tgz#87faef15845d512a23b3c08d29ecfd34871688b6"
   integrity sha512-Wu3dw5aDJmOGw8WjH1I1/yTH+vlXEL4vmjk5p+MHxP8HuHJS1lAGeIdG/hze1AvNeXWo/JgULV87LyQOr+r5jw==
   dependencies:
     dnd-core "^16.0.1"
 
-react-dnd-multi-backend@^8.0.0:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/react-dnd-multi-backend/-/react-dnd-multi-backend-8.0.1.tgz#99f29926faf7115baf4a493bc63dd124a0203b74"
-  integrity sha512-+/7mFkWk4HIpQsd4d8lKB8aStafv9wgpvbkQrPWF4JeTA1j2IPAdPTOiHI5bvpyoLA5BGD02u8cgxtY/gZQpjg==
-  dependencies:
-    dnd-multi-backend "^8.0.1"
-    react-dnd-preview "^8.0.1"
-
-react-dnd-preview@^8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/react-dnd-preview/-/react-dnd-preview-8.0.1.tgz#11ce1f769a1a7dac821f7fa286789bc3bf213ed6"
-  integrity sha512-CsQwvWXLXGN9DoRzHC79DbCF42AXJdoUDMxnIF7TvA/xE6Hm+cVl6kPQIYz1UL755/JNSD2/WHuILuU40k29rw==
-
-react-dnd-touch-backend@^16.0.1:
-  version "16.0.1"
-  resolved "https://registry.yarnpkg.com/react-dnd-touch-backend/-/react-dnd-touch-backend-16.0.1.tgz#e73f8169e2b9fac0f687970f875cac0a4d02d6e2"
-  integrity sha512-NonoCABzzjyWGZuDxSG77dbgMZ2Wad7eQiCd/ECtsR2/NBLTjGksPUx9UPezZ1nQ/L7iD130Tz3RUshL/ClKLA==
-  dependencies:
-    "@react-dnd/invariant" "^4.0.1"
-    dnd-core "^16.0.1"
-
-react-dnd@16.0.1, react-dnd@^16.0.1:
+react-dnd@16.0.1:
   version "16.0.1"
   resolved "https://registry.yarnpkg.com/react-dnd/-/react-dnd-16.0.1.tgz#2442a3ec67892c60d40a1559eef45498ba26fa37"
   integrity sha512-QeoM/i73HHu2XF9aKksIUuamHPDvRglEwdHL4jsp784BgUuWcg6mzfxT0QDdQz8Wj0qyRKx2eMg8iZtWvU4E2Q==
@@ -12646,22 +12606,6 @@ react-live@4.0.1:
     prism-react-renderer "^1.3.1"
     sucrase "^3.31.0"
     use-editable "^2.3.3"
-
-react-mosaic-component@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/react-mosaic-component/-/react-mosaic-component-6.0.1.tgz#0b1ef6381141129e69788216d49747c307aca112"
-  integrity sha512-jzlttpxW2TSIaZyJeF60X0nP441udDugMfYrgOftehdolP3EMukUW7GOnRDDRIBuP4RdfL9YICqgDs0PG7dsrw==
-  dependencies:
-    classnames "^2.3.2"
-    immutability-helper "^3.1.1"
-    lodash "^4.17.21"
-    prop-types "^15.8.1"
-    rdndmb-html5-to-touch "^8.0.0"
-    react-dnd "^16.0.1"
-    react-dnd-html5-backend "^16.0.1"
-    react-dnd-multi-backend "^8.0.0"
-    react-dnd-touch-backend "^16.0.1"
-    uuid "^9.0.0"
 
 react-native-get-random-values@^1.4.0:
   version "1.9.0"

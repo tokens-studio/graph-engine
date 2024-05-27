@@ -1,7 +1,6 @@
 import { sortTokens } from "#/utils/sortTokens.js";
 import { NodeDefinition, NodeTypes } from "../../types.js";
 import { SingleToken } from "@tokens-studio/types";
-import Color from "colorjs.io";
 
 export const type = NodeTypes.CONTRASTING_FROM_SET;
 
