@@ -1,6 +1,6 @@
 app: graph-engine
 env: prod
-namespace: default
+namespace: graph-engine
 deploy:
   branch: major/strong-typing
   event: push
