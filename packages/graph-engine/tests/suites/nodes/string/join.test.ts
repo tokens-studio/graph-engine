@@ -5,7 +5,7 @@ describe("string/join", () => {
   it("should join the string array correctly", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-    graph.addNode(node);
+
 
     node.inputs.array.setValue(["a", "b", "c"]);
     node.inputs.separator.setValue(",");

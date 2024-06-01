@@ -5,7 +5,7 @@ describe("string/split", () => {
   it("splits a string as expected", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-    graph.addNode(node);
+
     node.inputs.value.setValue("HHH");
     node.inputs.value.setValue("H,H,H");
     await node.execute();

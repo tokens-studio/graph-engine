@@ -193,6 +193,10 @@ export class Graph {
       //The number of edges is the new index
       annotations = { [annotatedVariadicIndex]: variadicIndex == -1 ? edges.length : variadicIndex } as VariadicEdgeData;
     }
+    //Check to see if there is already a connection on the target
+    if (targetHandle._edges.length > 0) {
+      throw new Error(`Input ${targetHandle.name} on node ${target.id} is already connected`);
+    }
 
     //TODO validation of type
     return this.createEdge({
@@ -206,7 +210,7 @@ export class Graph {
   }
 
   /**
-   * Checks to see if there exists any connection for an inpurt
+   * Checks to see if there exists any connection for an input
    * @param source
    * @param port
    * @returns
@@ -685,6 +689,7 @@ export class Graph {
     });
     //Cheaper to emit once 
     this.emit("valueSent", edges);
+
 
 
     //Now we need to execute the targets. An output might be connected multiple times to the same target so we will need to dedup

@@ -5,7 +5,7 @@ describe("math/add", () => {
   it("adds two numbers", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-    graph.addNode(node);
+
     node.inputs.a.setValue(2);
     node.inputs.b.setValue(1);
     await node.execute();

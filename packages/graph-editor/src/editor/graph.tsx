@@ -171,7 +171,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
               return ed;
             });
           });
-        },800)
+        },400)
 
       });
       graph.on('edgeIndexUpdated', (edge) => {
