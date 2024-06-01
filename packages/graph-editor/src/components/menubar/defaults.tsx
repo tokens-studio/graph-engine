@@ -12,7 +12,7 @@ import { ImperativeEditorRef } from '@/editor/editorTypes';
 import { Settings } from '../panels/settings';
 import { Inputsheet } from '../panels/inputs';
 import { NodeSettingsPanel } from '../panels/nodeSettings';
-import { FindDialog } from '../dialogs/findDialog';
+import { AlignmentPanel } from '../panels/alignment';
 import { PlayPanel } from '../panels/play';
 import { LogsPanel } from '../panels/logs';
 import { GraphPanel } from '../panels/graph';
@@ -248,6 +248,12 @@ export const defaultMenuDataFactory = (): Menu =>
             id: 'legend',
             title: 'Legend',
             content: <Legend />,
+          }),
+          windowButton({
+            name: 'alignment',
+            id: 'alignment',
+            title: 'Alignment + Distribution',
+            content: <AlignmentPanel />,
           }),
           windowButton({
             name: 'flamegraph',

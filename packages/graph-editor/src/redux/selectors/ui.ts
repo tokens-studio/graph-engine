@@ -15,3 +15,8 @@ export const contextMenuSelector = createSelector(
   ui,
   (state) => state.contextMenus,
 );
+
+export const currentFlowSelector = createSelector(
+  ui,
+  (state) => state.currentReactFlow,
+);
