@@ -132,6 +132,48 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     //Attach sideeffect listeners
     useMemo(() => {
       capabilities.forEach((factory) => graph.registerCapability(factory));
+      graph.on('valueSent', (edges) => {
+
+        const edgeLookup = edges.reduce((acc, edge) => {
+          acc[edge.id] = edge;
+          return acc;
+        },{});
+        const index = Date.now();
+        reactFlowInstance.setEdges((edges) => {
+          return edges.map((ed) => {
+            if (edgeLookup[ ed.id]) {
+              return {
+                ...ed,
+                animated: true,
+                data:{
+                  ...ed.data,
+                  animationIndex: index
+                }
+              };
+            }
+            return ed;
+          });
+        });
+        setTimeout(() => {
+          reactFlowInstance.setEdges((edges) => {
+            return edges.map((ed) => {
+              //We use the index to ensure that we are only removing the edges that we added
+              if (edgeLookup[ed.id] && ed.data.animationIndex == index) {
+                return {
+                  ...ed,
+                  animated: false,
+                  data:{
+                    ...ed.data,
+                    animationIndex: undefined
+                  }
+                };
+              }
+              return ed;
+            });
+          });
+        },800)
+
+      });
       graph.on('edgeIndexUpdated', (edge) => {
         setEdges((eds) => {
           return eds.map((ed) => {
@@ -497,15 +539,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
       [reactFlowInstance],
     );
 
-    const onNodesDelete = useCallback(
-      (nodes: Node[]) => {
-        nodes.forEach((node) => {
-          // handleDeleteNode(node.id);
-        });
-      },
-      [dispatch.graph, graph],
-    );
-
     const onEdgeDblClick = useCallback(
       (event, clickedEdge) => {
         event.stopPropagation();
@@ -618,8 +651,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
     const copyNodes = copyNodeAction(reactFlowInstance, graph, fullNodeLookup);
 
-
-
     const onDrop = useCallback(
       async (event) => {
         event.preventDefault();
@@ -671,7 +702,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
                 ref={reactFlowWrapper}
                 nodes={nodes}
                 onNodesChange={managedNodesChange}
-                onNodesDelete={onNodesDelete}
                 onEdgesChange={managedEdgeChange}
                 onEdgeDoubleClick={onEdgeDblClick}
                 onEdgesDelete={onEdgesDeleted}

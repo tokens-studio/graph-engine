@@ -7,6 +7,7 @@ import constant from "./constant.js";
 import objectify from "./objectify.js";
 import note from "./note.js";
 import objectMerge from "./objectMerge.js";
+import time from "./time.js";
 
 export const nodes = [
   constant,
@@ -17,5 +18,6 @@ export const nodes = [
   subgraph,
   panic,
   note,
-  objectMerge
+  objectMerge,
+  time
 ];

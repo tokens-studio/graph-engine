@@ -87,60 +87,59 @@ export const Node = (props: NodeProps) => {
 
   return (
     <NodeWrapper error={Boolean(error)} className={error ? 'error' : ''}>
-          <Stack
-            direction="column"
-            gap={0}
-            onClick={onClick}
-            {...rest}
-          >
-            {title && (
-              <>
-                <Stack
-                  className='reactflow-draggable-handle'
-                  direction="row"
-                  justify="between"
-                  align="center"
+      <Stack
+        direction="column"
+        gap={0}
+        onClick={onClick}
+        {...rest}
+      >
+        {title && (
+          <>
+            <Stack
+              className='reactflow-draggable-handle'
+              direction="row"
+              justify="between"
+              align="center"
+              css={{
+                padding: '$3',
+                borderBottom: '2px solid var(--nodeBorderColor, var(--colors-borderSubtle))',
+                backgroundColor: '$gray3',
+                borderRadius: '$medium',
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+              }}
+            >
+              <Stack direction="row" gap={2} align="center">
+                {icon && (
+                  <Box
+                    css={{
+                      color: 'var(--nodeTextColor, var(--colors-fgSubtle))',
+                    }}
+                  >
+                    {icon}
+                  </Box>
+                )}
+                <Text
                   css={{
-                    padding: '$3',
-                    borderBottom: '2px solid var(--nodeBorderColor, var(--colors-borderSubtle))',
-                    backgroundColor: '$gray3',
-                    borderRadius: '$medium',
-                    borderBottomLeftRadius: 0,
-                    borderBottomRightRadius: 0,
+                    fontSize: '$xxsmall',
+                    fontWeight: '$sansMedium',
+                    textTransform: 'uppercase',
+                    color: 'var(--nodeTextColor, var(--colors-fgSubtle))',
+                    letterSpacing: '0.15px',
                   }}
                 >
-                  <Stack direction="row" gap={2} align="center">
-                    {icon && (
-                      <Box
-                        css={{
-                          color: 'var(--nodeTextColor, var(--colors-fgSubtle))',
-                        }}
-                      >
-                        {icon}
-                      </Box>
-                    )}
-                    <Text
-                      css={{
-                        fontSize: '$xxsmall',
-                        fontWeight: '$sansMedium',
-                        textTransform: 'uppercase',
-                        color: 'var(--nodeTextColor, var(--colors-fgSubtle))',
-                        letterSpacing: '0.15px',
-                      }}
-                    >
-                      {title}
-                    </Text>
-
-                    {isAsync && <Spinner />}
-                  </Stack>
-                  <Stack direction="row" gap={2}>
-                    {controls}
-                  </Stack>
-                </Stack>
-              </>
-            )}
-            {children}
-          </Stack>
+                  {title}
+                </Text>
+                {isAsync && <Spinner />}
+              </Stack>
+              <Stack direction="row" gap={2}>
+                {controls}
+              </Stack>
+            </Stack>
+          </>
+        )}
+        {children}
+      </Stack>
     </NodeWrapper>
   );
 };

@@ -214,7 +214,7 @@ export class Node {
       id: this.id,
       type: this.nodeType(),
       //Filter out any inputs that are connected as they will be serialized as part of the edge
-      inputs: Object.values(this.inputs).filter(x=>!x.isConnected).map((x) => x.serialize()),
+      inputs: Object.values(this.inputs).filter(x => !x.isConnected).map((x) => x.serialize()),
     } as SerializedNode;
     if (Object.keys(this.annotations).length > 0) {
       serialized.annotations = this.annotations;
@@ -287,11 +287,7 @@ export class Node {
    */
 
   protected setOutput = (name: string, value: any, type?: GraphSchema) => {
-    //Check for existence if the outputs are dynamic
-    if (!this.outputs[name]) {
-      return;
-    }
-    this.outputs[name].set(value, type);
+    this.outputs[name]?.set(value, type);
   };
 
   protected getInput = (name: string) => {
@@ -316,8 +312,18 @@ export class Node {
    */
   public onStart = () => { };
   public onStop = () => { };
-  public onPause = () => { };
-  public onResume = () => { };
+  /**
+   * By default, the node will stop when the graph is paused
+   */
+  public onPause = () => {
+    this.onStop();
+  };
+  /**
+   * By default, the node will start when the graph is resumed
+   */
+  public onResume = () => {
+    this.onStart();
+  };
   /**
    * Triggered when a message is received from the graph.
    * @param action 

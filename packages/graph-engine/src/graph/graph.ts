@@ -10,7 +10,7 @@ import { ISetValue, Input } from "../programmatic/input.js";
 import { topologicalSort } from "./topologicSort.js";
 import { makeObservable, observable } from "mobx";
 import { Edge, VariadicEdgeData } from "../programmatic/edge.js";
-import { annotatedCapabilityPrefix, annotatedPlayState, annotatedVariadicIndex } from "../annotations/index.js";
+import { annotatedCapabilityPrefix, annotatedPlayState, annotatedVariadicIndex, annotatedVersion } from "../annotations/index.js";
 
 export type CapabilityFactory = {
   name: string;
@@ -54,7 +54,7 @@ export type EdgeOpts = {
 
 const dedup = (arr: string[]) => [...new Set(arr)];
 
-export type SubscriptionType = "nodeAdded" | "nodeRemoved" | "edgeAdded" | "edgeRemoved" | "nodeUpdated" | "edgeUpdated" | "start" | "stop" | "pause" | "resume" | "edgeIndexUpdated";
+export type SubscriptionType = "nodeAdded" | "nodeRemoved" | "edgeAdded" | "edgeRemoved" | "nodeUpdated" | "edgeUpdated" | "start" | "stop" | "pause" | "resume" | "edgeIndexUpdated" | "valueSent";
 
 export type FinalizerType = 'serialize';
 
@@ -233,6 +233,11 @@ export class Graph {
 
     this.nodes[node.id] = node;
     this.emit("nodeAdded", node);
+
+    //Trigger the onStart event if the graph is in play mode
+    if (this.annotations[annotatedPlayState] === 'playing') {
+      node.onStart();
+    }
   }
   /**
    * Removes a node from the graph and disconnects all the edges.
@@ -354,13 +359,20 @@ export class Graph {
    * @returns 
    */
   serialize(): SerializedGraph {
-    //Ensure we update the version
-    this.annotations['engine.version'] = VERSION;
+
+
+    const annotations = {
+      ...this.annotations,
+      //Ensure we update the version
+      [annotatedVersion]: VERSION
+    };
+    //Make sure the playing state is not serialized. This would likely cause issues
+    delete annotations[annotatedPlayState];
 
     const serialized = {
       nodes: Object.values(this.nodes).map((x) => x.serialize()),
       edges: Object.values(this.edges).map((x) => x.serialize()),
-      annotations: this.annotations,
+      annotations,
     };
     return (this.finalizers['serialize'] || []).reduce((acc, x) => x(acc), serialized);
   }
@@ -430,8 +442,6 @@ export class Graph {
 
       const theEdge = Edge.deserialize(edge);
       acc[edge.id] = theEdge;
-
-
 
       //Find the source and target nodes and add the edge to them
       const source = this.nodes[theEdge.source];
@@ -645,7 +655,48 @@ export class Graph {
 
     return dedup(out).map((x) => this.nodes[x]);
   }
+  /**
+   * Triggers a ripple effect on the graph starting from the given edge
+   * @returns 
+   */
+  ripple(output: Output) {
 
+    //Get the edges 
+    const edges = output._edges;
+
+    const targets = edges.map((edge) => {
+      const target = this.getNode(edge.target);
+      if (!target) {
+        return;
+      }
+      //Get the input
+      const input = target.inputs[edge.targetHandle];
+      if (!input) {
+        return;
+      }
+      //Set the value
+      input.setValue(output.value, {
+        type: output.type,
+        //We are controlling propagation
+        noPropagate: true,
+      });
+
+      return target;
+    });
+    //Cheaper to emit once 
+    this.emit("valueSent", edges);
+
+
+    //Now we need to execute the targets. An output might be connected multiple times to the same target so we will need to dedup
+    dedup(targets.map((x) => x.id)).forEach((x) => this.update(x));
+  }
+
+  /**
+   * Triggers the execution of the node and updates the successor nodes
+   * @param nodeId 
+   * @param oneShot 
+   * @returns 
+   */
   async propagate(nodeId: string, oneShot: boolean = false) {
     const node = this.getNode(nodeId);
     if (!node) {

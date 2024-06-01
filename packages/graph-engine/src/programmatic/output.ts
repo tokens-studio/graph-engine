@@ -30,13 +30,10 @@ export class Output<T = any> extends Port<T> {
   set(value: T, type?: GraphSchema) {
     this._value = value;
     this._dynamicType = type;
+
+    this.node.getGraph()?.ripple(this);
   }
 
-  /**
-   * Use a key to access dynamic values off the port
-   * @param target
-   * @param key
-   */
   connect(target: Input) {
     const graph = this.node.getGraph();
     if (!graph) {
