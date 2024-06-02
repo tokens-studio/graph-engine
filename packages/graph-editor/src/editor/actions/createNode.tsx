@@ -106,6 +106,9 @@ export const createNode = ({
     })
 
     reactFlowInstance.addNodes(reactFlowNode);
-    return reactFlowNode;
+    return {
+      graphNode: node,
+      flowNode: reactFlowNode
+    };
   };
 };

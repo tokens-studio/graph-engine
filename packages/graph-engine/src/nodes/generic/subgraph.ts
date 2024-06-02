@@ -36,12 +36,6 @@ export default class SubgraphNode extends Node {
     this._innerGraph.addNode(input);
     this._innerGraph.addNode(output);
 
-
-    this.addOutput("value", {
-      type: AnySchema,
-      visible: true,
-    });
-
     autorun(() => {
 
       //Get the existing inputs 
@@ -68,7 +62,6 @@ export default class SubgraphNode extends Node {
         }
         //TODO handle deletions and mutations
       });
-      console.log('updating value')
       //Handle updates from the inner graph
     });
   }

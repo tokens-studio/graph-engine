@@ -668,7 +668,7 @@ export class Graph {
     //Get the edges 
     const edges = output._edges;
 
-    const targets = edges.map((edge) => {
+    const targets = edges.reduce((acc, edge) => {
       const target = this.getNode(edge.target);
       if (!target) {
         return;
@@ -676,8 +676,17 @@ export class Graph {
       //Get the input
       const input = target.inputs[edge.targetHandle];
       if (!input) {
-        return;
+        return acc;
       }
+
+      //Check if setting the value would result in an execution
+      //If pure and the value is the same ignore
+      if (!input.impure) {
+        if (input.value === output.value) {
+          return acc;
+        }
+      }
+
       //Set the value
       input.setValue(output.value, {
         type: output.type,
@@ -685,12 +694,10 @@ export class Graph {
         noPropagate: true,
       });
 
-      return target;
-    });
+      return acc.concat(target);
+    }, []);
     //Cheaper to emit once 
     this.emit("valueSent", edges);
-
-
 
     //Now we need to execute the targets. An output might be connected multiple times to the same target so we will need to dedup
     dedup(targets.map((x) => x.id)).forEach((x) => this.update(x));

@@ -10,7 +10,7 @@ import colors from '@/tokens/colors.js';
 import { useSelector } from 'react-redux';
 import { inlineTypes, showTimings } from '@/redux/selectors/settings.js';
 import { icons, nodeSpecifics } from '@/redux/selectors/registry.js';
-import { title } from '@/annotations/index.js';
+import { title, xpos } from '@/annotations/index.js';
 import { useLocalGraph } from '@/context/graph.js';
 
 export type UiNodeDefinition = {
@@ -97,7 +97,7 @@ export const PortArray = observer(({ ports, hideNames }: IPortArray) => {
   const entries = Object.values(ports).sort();
   return (
     <>
-      {entries.map((input) => (
+      {entries.filter(x => x.visible || x.isConnected).map((input) => (
         <InputHandle port={input} hideName={hideNames} />
       ))}
     </>

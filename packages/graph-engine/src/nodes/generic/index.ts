@@ -8,6 +8,8 @@ import objectify from "./objectify.js";
 import note from "./note.js";
 import objectMerge from "./objectMerge.js";
 import time from "./time.js";
+import delay from "./delay.js";
+
 
 export const nodes = [
   constant,
@@ -19,5 +21,6 @@ export const nodes = [
   panic,
   note,
   objectMerge,
-  time
+  time,
+  delay
 ];

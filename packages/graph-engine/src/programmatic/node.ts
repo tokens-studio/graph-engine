@@ -214,7 +214,7 @@ export class Node {
       id: this.id,
       type: this.nodeType(),
       //Filter out any inputs that are connected as they will be serialized as part of the edge
-      inputs: Object.values(this.inputs).filter(x => !x.isConnected).map((x) => x.serialize()),
+      inputs: Object.values(this.inputs).map((x) => x.serialize()),
     } as SerializedNode;
     if (Object.keys(this.annotations).length > 0) {
       serialized.annotations = this.annotations;

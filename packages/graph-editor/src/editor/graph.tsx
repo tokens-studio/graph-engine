@@ -36,7 +36,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import ReactFlow from 'reactflow';
+import ReactFlow, {updateEdge} from 'reactflow';
 
 import groupNode from '../components/flow/nodes/groupNode.js';
 import noteNode from '../components/flow/nodes/noteNode.js';
@@ -133,13 +133,12 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     useMemo(() => {
       capabilities.forEach((factory) => graph.registerCapability(factory));
       graph.on('valueSent', (edges) => {
-
         const edgeLookup = edges.reduce((acc, edge) => {
           acc[edge.id] = edge;
           return acc;
         },{});
         const index = Date.now();
-        reactFlowInstance.setEdges((edges) => {
+        setEdges((edges) => {
           return edges.map((ed) => {
             if (edgeLookup[ ed.id]) {
               return {
@@ -155,15 +154,15 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           });
         });
         setTimeout(() => {
-          reactFlowInstance.setEdges((edges) => {
+          setEdges((edges) => {
             return edges.map((ed) => {
               //We use the index to ensure that we are only removing the edges that we added
-              if (edgeLookup[ed.id] && ed.data.animationIndex == index) {
+              if (edgeLookup[ed.id] && ed.data?.animationIndex == index) {
                 return {
                   ...ed,
                   animated: false,
                   data:{
-                    ...ed.data,
+                    ...(ed.data || {}),
                     animationIndex: undefined
                   }
                 };
@@ -551,6 +550,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
         const newNode = new fullNodeLookup[NodeTypes.PASS_THROUGH]({
           graph
         });
+
         newNode.annotations[uiNodeType] = NodeTypes.PASS_THROUGH;
         graph.addNode(newNode);
 
@@ -560,6 +560,9 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           data: {},
           position: position || { x: 0, y: 0 },
         } as Node;
+
+        //We need to remove the existing edge 
+        graph.removeEdge(clickedEdge.id);
 
         const aEdge = {
           id: uuidv4(),
@@ -575,7 +578,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           target: clickedEdge.target,
           targetHandle: clickedEdge.targetHandle,
         };
-        //Create the edges
+        //Create the new edges
         graph.createEdge(aEdge);
         graph.createEdge(bEdge);
 
@@ -669,7 +672,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
 
         //Some of the nodes might be invalid, so remember to filter them out
-        const newNodes = positionUpdated.map((nodeRequest) => handleSelectNewNodeType(nodeRequest)).filter(x => !!x);
+        const newNodes = positionUpdated.map((nodeRequest) => handleSelectNewNodeType(nodeRequest)).filter(x => !!x).map(x=>x?.graphNode);
 
         if (newNodes.length == 1) {
           handleSelectNode(newNodes[0]!.id);

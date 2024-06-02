@@ -1,10 +1,14 @@
 import React from 'react';
 import type { NodeRequest } from './createNode';
 import { SerializedNode } from '@/types/serializedNode';
-
+import { Node } from '@tokens-studio/graph-engine';
+import { Node as FlowNode } from 'reactflow';
 
 export type Actions = {
-    createNode: (nodeRequest: NodeRequest) => void
+    createNode: (nodeRequest: NodeRequest) => undefined | {
+        graphNode: Node,
+        flowNode: FlowNode
+    }
     deleteNode: (nodeId: string) => void
     copyNodes: (nodes: SerializedNode[]) => void
     duplicateNodes: (nodeIds: string[]) => void

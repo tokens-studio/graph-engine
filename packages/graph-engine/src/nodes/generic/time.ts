@@ -13,18 +13,15 @@ export default class NodeDefinition<T> extends Node {
     static type = 'studio.tokens.generic.time';
     static description = "Provides the current time each tick";
 
-    declare inputs: ToInput<{
-        value: T;
-    }>;
+    declare inputs: ToInput<{}>;
     declare outputs: ToOutput<{
-        value: T;
+        value: number;
     }>;
 
     _interval: NodeJS.Timer | null = null;
     constructor(props: INodeDefinition) {
         super(props);
 
-        this
         this.addOutput("value", {
             type: NumberSchema,
             visible: true,
