@@ -105,6 +105,7 @@ export type ImperativeEditorRef = {
   load: (state: Graph) => void;
   loadRaw: (state: SerializedGraph) => void;
   getFlow: () => ReactFlowInstance;
+  getGraph: () => Graph;
 };
 
 export type EditorNode = Node;

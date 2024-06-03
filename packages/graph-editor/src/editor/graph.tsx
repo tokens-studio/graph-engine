@@ -36,7 +36,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import ReactFlow, {updateEdge} from 'reactflow';
+import ReactFlow, { updateEdge } from 'reactflow';
 
 import groupNode from '../components/flow/nodes/groupNode.js';
 import noteNode from '../components/flow/nodes/noteNode.js';
@@ -132,19 +132,45 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     //Attach sideeffect listeners
     useMemo(() => {
       capabilities.forEach((factory) => graph.registerCapability(factory));
+
+      graph.onFinalize('serialize', (serialized) => {
+
+        const nodes = reactFlowInstance.getNodes();
+
+        const lookup = nodes.reduce((acc, node) => {
+          acc[node.id] = node;
+          return acc;
+        }, {} as Record<string, Node>);
+
+        serialized.nodes.forEach((node) => {
+
+          const flowNode = lookup[node.id];
+          if (!flowNode) {
+            return;
+          }
+          node.annotations || (node.annotations = {});
+          node.annotations[xpos] = flowNode.position.x;
+          node.annotations[ypos] = flowNode.position.y;
+        });
+
+        return serialized;
+
+      })
+
       graph.on('valueSent', (edges) => {
+        edges
         const edgeLookup = edges.reduce((acc, edge) => {
           acc[edge.id] = edge;
           return acc;
-        },{});
+        }, {});
         const index = Date.now();
         setEdges((edges) => {
           return edges.map((ed) => {
-            if (edgeLookup[ ed.id]) {
+            if (edgeLookup[ed.id]) {
               return {
                 ...ed,
                 animated: true,
-                data:{
+                data: {
                   ...ed.data,
                   animationIndex: index
                 }
@@ -161,7 +187,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
                 return {
                   ...ed,
                   animated: false,
-                  data:{
+                  data: {
                     ...(ed.data || {}),
                     animationIndex: undefined
                   }
@@ -170,7 +196,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
               return ed;
             });
           });
-        },400)
+        }, 400)
 
       });
       graph.on('edgeIndexUpdated', (edge) => {
@@ -383,18 +409,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           //Lazily handle the additional metadata injection
           serialized.annotations[uiViewport] = reactFlowInstance.getViewport();
           serialized.annotations[uiVersion] = version;
-          const nodes = reactFlowInstance.getNodes();
-
-          nodes.forEach((node) => {
-            const nodeData = serialized.nodes[node.id];
-            if (!nodeData) {
-              return;
-            }
-            const position = node.position;
-            nodeData.annotations[xpos] = position.x;
-            nodeData.annotations[ypos] = position.y;
-          });
-
           return serialized
         },
         loadRaw: (serializedGraph) => {
@@ -447,6 +461,9 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           setNodes(nodes);
           setEdges(edges);
 
+          //Create a finalizer to make sure the positions are updated correctly when saved 
+
+
           dispatch.graph.appendLog({
             type: 'info',
             time: new Date,
@@ -471,9 +488,10 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           setTheGraph(loadedGraph);
 
         },
+        getGraph: () => graph,
         getFlow: () => reactFlowInstance,
       }),
-      [reactFlowInstance, capabilities, fullNodeLookup, dispatch.graph, graph, setNodes, setEdges],
+      [reactFlowInstance, fullNodeLookup, dispatch.graph, graph, setNodes, setEdges],
     );
     0
     const onConnect = useMemo(
@@ -672,7 +690,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
 
         //Some of the nodes might be invalid, so remember to filter them out
-        const newNodes = positionUpdated.map((nodeRequest) => handleSelectNewNodeType(nodeRequest)).filter(x => !!x).map(x=>x?.graphNode);
+        const newNodes = positionUpdated.map((nodeRequest) => handleSelectNewNodeType(nodeRequest)).filter(x => !!x).map(x => x?.graphNode);
 
         if (newNodes.length == 1) {
           handleSelectNode(newNodes[0]!.id);
@@ -758,7 +776,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
             </HotKeys>
           </Box>
           {showMinimap && <MiniMap />}
-          
+
 
           <PaneContextMenu
             id={props.id + '_pane'}

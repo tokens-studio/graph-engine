@@ -1,0 +1,48 @@
+  .toolbar {
+      background-color: #383838;
+      padding-left: 44px;
+      max-height: 36px;
+      height: 36px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      height: 36px;
+      background-color: #3c3c3c;
+  }
+.outline {
+    width: 250px;
+    min-width: 150px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: stretch;
+    align-content: stretch;
+}
+  .outline-header {
+      height: 30px;
+  }
+
+  .outline-scroll-container {
+      overflow: hidden;
+  }
+
+  .outline-node {
+      padding-left: 20px;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      color: white;
+      -webkit-user-select: none;
+      user-select: none;
+      height: 24px;
+  }
+
+  .outline-node:hover {
+      background-color: #3399ff;
+  }
+
+  .links {
+      display: flex;
+      align-items: center;
+  }

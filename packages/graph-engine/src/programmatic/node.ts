@@ -33,6 +33,13 @@ export interface TypeDefinition {
   annotations?: Record<string, any>;
 }
 
+export type NodeRun = {
+  node: Node;
+  error?: Error;
+  start: number;
+  end: number;
+};
+
 export class Node {
   /**
    * Unique instance specific identifier
@@ -139,7 +146,7 @@ export class Node {
   /**
    * Runs the node. Internally this calls the execute method, but the run entrypoint allows for additional tracking and lifecycle management
    */
-  async run() {
+  async run(): Promise<NodeRun> {
     this.annotations[annotatedNodeRunning] = true;
     const start = performance.now();
     try {
@@ -152,11 +159,16 @@ export class Node {
     delete this.annotations[annotatedNodeRunning];
     this.lastExecutedDuration = end - start;
 
-    return {
+    const result = {
+      node: this,
       error: this.error,
       start,
       end,
     };
+
+    this.getGraph()?.emit("nodeExecuted", result);
+
+    return result
   }
 
   /**

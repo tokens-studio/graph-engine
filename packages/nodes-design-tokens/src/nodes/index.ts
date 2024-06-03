@@ -11,6 +11,8 @@ import NearestColorNode from "./nearest.js";
 import ExtractTokenNode from "./extractSingleToken.js";
 import PreviewTypography from "./previewTypography.js";
 import advancedBlend from "./advancedBlend.js";
+import LeonardoColorNode from "./leonardoColor.js";
+import LeonardoThemeNode from './leonardoTheme.js';
 
 export const nodes = [
     advancedBlend,
@@ -25,5 +27,7 @@ export const nodes = [
     UngroupNode,
     NearestColorNode,
     NameTokensNode,
-    PreviewTypography
+    PreviewTypography,
+    LeonardoColorNode,
+    LeonardoThemeNode
 ];

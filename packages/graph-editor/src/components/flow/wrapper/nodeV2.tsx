@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Handle, HandleContainer } from '../handles.js';
-import { Input, Port, annotatedNodeRunning } from '@tokens-studio/graph-engine';
+import { Input, OBJECT, Port, annotatedNodeRunning } from '@tokens-studio/graph-engine';
 import { Node as GraphNode } from '@tokens-studio/graph-engine'
 import colors from '@/tokens/colors.js';
 import { useSelector } from 'react-redux';
@@ -115,7 +115,7 @@ const extractTypeIcon = (
     id = port.type.items.$id || '';
   }
 
-  let icon = iconLookup[id];
+  let icon = iconLookup[id] || iconLookup[OBJECT];
 
   const color = colors[id]?.color || 'black';
   const backgroundColor = colors[id]?.backgroundColor || 'white';

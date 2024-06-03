@@ -1,4 +1,5 @@
-import { SchemaObject, StringSchema } from "@tokens-studio/graph-engine";
+import { BooleanSchema, ColorSchema, NumberSchema, SchemaObject, StringSchema } from "@tokens-studio/graph-engine";
+import { arrayOf } from "./utils";
 
 export const TOKEN = "https://schemas.tokens.studio/token.json";
 export const TokenSchema: SchemaObject = {
@@ -20,5 +21,17 @@ export const TokenSetSchema: SchemaObject = {
     properties: {
         name: StringSchema,
         token: StringSchema,
+    },
+};
+
+export const LEONARDO_COLOR = "https://schemas.tokens.studio/design/leonardo/color.json";
+export const LeonardoColorSchema: SchemaObject = {
+    $id: LEONARDO_COLOR,
+    type: "object",
+    properties: {
+        smooth: BooleanSchema,
+        name: StringSchema,
+        colorKeys: arrayOf(ColorSchema),
+        ratios: arrayOf(NumberSchema),
     },
 };

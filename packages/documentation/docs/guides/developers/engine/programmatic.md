@@ -1,3 +1,8 @@
+---
+title: Programmatic Usage
+---
+
+
 # Programmatic usage
 
 The [@tokens-studio/graph-engine](https://www.npmjs.com/package/@tokens-studio/graph-engine) is intended to be useable both in a UI as well as in code. While verbose it is powerful and supports intellisense by using typescript

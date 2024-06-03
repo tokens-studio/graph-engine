@@ -39,14 +39,14 @@ export const connectNodes = ({
                 return;
             }
         }
-
-
         //Check to see if there is already a connection
-        if (targetPort.isConnected){
+        else if (targetPort.isConnected){
             //We need to disconnect the existing connection
             graph.removeEdge(targetPort._edges[0].id);
         }
        
+    
+
         const newGraphEdge = graph.connect(
             sourceNode,
             sourcePort,
