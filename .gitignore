@@ -3,6 +3,5 @@ jest-coverage/
 .turbo
 node_modules
 dist
-docs
 yarn-error.log
 out

@@ -1,4 +1,4 @@
-import type { NodeFactory, SerializedGraph } from "./types.js";
+import type { NodeFactory, SerializedGraph,  } from "./types.js";
 import { VERSION } from "../constants.js";
 import cmp from "semver-compare";
 import { Node } from "../programmatic/node.js";
@@ -11,6 +11,7 @@ import { topologicalSort } from "./topologicSort.js";
 import { makeObservable, observable } from "mobx";
 import { Edge, VariadicEdgeData } from "../programmatic/edge.js";
 import { annotatedCapabilityPrefix, annotatedPlayState, annotatedVariadicIndex, annotatedVersion } from "../annotations/index.js";
+import type {  } from "../types.js";
 
 export type CapabilityFactory = {
   name: string;
@@ -75,7 +76,7 @@ export type SubscriptionLookup = {
   resume: {};
   edgeIndexUpdated: Edge;
   valueSent: Edge[];
-  nodeExecuted: Node;
+  nodeExecuted: NodeRun;
 };
 
 export type ListenerType<T> = [T] extends [(...args: infer U) => any]

@@ -1,3 +1,5 @@
+import type {Node} from './programmatic/node';
+
 export type ExternalLoadOptions = { type: string; id: string; data: any };
 export type ExternalLoader = (opts: ExternalLoadOptions) => Promise<any> | any;
 
@@ -117,6 +119,13 @@ export enum NodeTypes {
 
 export type BatchRunError = Error & {
   nodeId: string
+};
+
+export type NodeRun = {
+  node: Node;
+  error?: Error;
+  start: number;
+  end: number;
 };
 
 

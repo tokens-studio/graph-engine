@@ -7,6 +7,7 @@ import { annotatedNodeRunning } from "../annotations/index.js";
 import { GraphSchema } from "../schemas/index.js";
 import getDefaults from "json-schema-defaults";
 import { action, computed, makeObservable, observable } from "mobx";
+import type { NodeRun } from "../types.js";
 
 
 
@@ -33,12 +34,6 @@ export interface TypeDefinition {
   annotations?: Record<string, any>;
 }
 
-export type NodeRun = {
-  node: Node;
-  error?: Error;
-  start: number;
-  end: number;
-};
 
 export class Node {
   /**
