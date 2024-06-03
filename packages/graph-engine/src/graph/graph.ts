@@ -54,14 +54,36 @@ export type EdgeOpts = {
 
 const dedup = (arr: string[]) => [...new Set(arr)];
 
-export type SubscriptionType = "nodeAdded" | "nodeRemoved" | "edgeAdded" | "edgeRemoved" | "nodeUpdated" | "edgeUpdated" | "start" | "stop" | "pause" | "resume" | "edgeIndexUpdated" | "valueSent";
-
-export type FinalizerType = 'serialize';
+export type FinalizerType = 'serialize' | 'output';
 
 //Add a typescript type for the finalizer to dynamically lookup the type
 export type FinalizerLookup = {
   serialize: SerializedGraph;
+  output: any
 };
+
+export type SubscriptionLookup = {
+  nodeAdded: Node;
+  nodeRemoved: string;
+  edgeAdded: Edge;
+  edgeRemoved: string;
+  nodeUpdated: Node;
+  edgeUpdated: Edge;
+  start: {};
+  stop: {};
+  pause: {};
+  resume: {};
+  edgeIndexUpdated: Edge;
+  valueSent: Edge[];
+  nodeExecuted: Node;
+};
+
+export type ListenerType<T> = [T] extends [(...args: infer U) => any]
+  ? U
+  : [T] extends [void] ? [] : [T];
+
+export type SubscriptionExecutor<T extends keyof SubscriptionLookup> = (data: SubscriptionLookup[T]) => void;
+
 export type SerializerType<T extends keyof FinalizerLookup> = FinalizerLookup[T]
 
 export type FinalizerExecutor<Type extends keyof FinalizerLookup> = (value: SerializerType<Type>) => SerializerType<Type>
@@ -116,8 +138,8 @@ const defaultGraphOpts: IGraph = {
  * This is our internal graph representation that we use to perform transformations on
  */
 export class Graph {
-  private finalizers = {};
-  private listeners = {};
+  private finalizers: Record<string, any[]> = {};
+  private listeners: Record<string, any[]> = {};
   public annotations: Record<string, any> = {};
 
 
@@ -194,7 +216,7 @@ export class Graph {
       annotations = { [annotatedVariadicIndex]: variadicIndex == -1 ? edges.length : variadicIndex } as VariadicEdgeData;
     }
     //Check to see if there is already a connection on the target
-    if (targetHandle._edges.length > 0) {
+    if (targetHandle._edges.length > 0 && !targetHandle.variadic) {
       throw new Error(`Input ${targetHandle.name} on node ${target.id} is already connected`);
     }
 
@@ -681,18 +703,33 @@ export class Graph {
 
       //Check if setting the value would result in an execution
       //If pure and the value is the same ignore
-      if (!input.impure) {
-        if (input.value === output.value) {
-          return acc;
-        }
+      if (!input.impure && input.value === output.value) {
+        return acc;
       }
 
-      //Set the value
-      input.setValue(output.value, {
-        type: output.type,
-        //We are controlling propagation
-        noPropagate: true,
-      });
+
+      if (input.variadic) {
+        //Don't attempt mutation of the original array
+        const newVal = [...(input.value || [])];
+        newVal[edge.annotations[annotatedVariadicIndex]!] = output.value;
+        //Extend the variadic array
+        input.setValue(newVal, {
+          //Create a new type assuming that the items will be of the same type 
+          type: {
+            type: "array",
+            items: output.type
+          },
+          //We are controlling propagation
+          noPropagate: true,
+        });
+      } else {
+        input.setValue(output.value, {
+          type: output.type,
+          //We are controlling propagation
+          noPropagate: true,
+        });
+      }
+
 
       return acc.concat(target);
     }, []);
@@ -866,18 +903,18 @@ export class Graph {
     return this.edges[edgeId];
   }
 
-  private emit(type: SubscriptionType, data: any) {
+  emit<P extends keyof SubscriptionLookup = keyof SubscriptionLookup>(type: P, data: SubscriptionLookup[P]) {
     (this.listeners[type] || []).forEach((x) => x(data));
   }
 
-  on(type: SubscriptionType, listener: (data: any) => void) {
+  on<P extends keyof SubscriptionLookup = keyof SubscriptionLookup>(type: P, listener: (...args: ListenerType<SubscriptionLookup[P]>) => void) {
     (this.listeners[type] || (this.listeners[type] = [])).push(listener);
     return () => {
       this.listeners[type] = this.listeners[type].filter((x) => x !== listener);
     };
   }
 
-  onFinalize(type: FinalizerType, listener: FinalizerExecutor<FinalizerType>) {
+  onFinalize<T extends keyof FinalizerLookup = keyof FinalizerLookup>(type: T, listener: (...args: ListenerType<FinalizerLookup[T]>) => FinalizerLookup[T]) {
     (this.finalizers[type] || (this.finalizers[type] = [])).push(listener);
     return () => {
       this.finalizers[type] = this.finalizers[type].filter((x) => x !== listener);
