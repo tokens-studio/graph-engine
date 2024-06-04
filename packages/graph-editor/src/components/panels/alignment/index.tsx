@@ -33,7 +33,8 @@ const handleChange = (graphEditor) => (updater) => {
     const { selectedNodes, unselectedNodes } = partitionSelectedNodes(currentFlow.getNodes());
     //Assume it changes it directly
     updater(selectedNodes);
-    currentFlow.setNodes([...selectedNodes, ...unselectedNodes]);
+    //Make sure unselected nodes are processed first for cases like groups
+    currentFlow.setNodes([...unselectedNodes, ...selectedNodes]);
 }
 
 export enum ALIGNMENT {

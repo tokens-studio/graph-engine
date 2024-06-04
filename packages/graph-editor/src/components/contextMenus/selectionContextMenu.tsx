@@ -61,27 +61,32 @@ export const SelectionContextMenu = ({
                 expandable: true,
                 expanded: true,
             },
-        };
+        } as Node;
 
-        const nextNodes: Node[] = nodes.map((node) => {
-            if (selectedNodeIds.includes(node.id)) {
-                return {
-                    ...node,
-                    position: {
-                        x: node.position.x - parentPosition.x + padding,
-                        y: node.position.y - parentPosition.y + padding,
-                    },
-                    extent: 'parent',
-                    parentNode: groupId,
-                };
-            }
-
-            return node;
-        });
 
         store.getState().resetSelectedElements();
         store.setState({ nodesSelectionActive: false });
-        reactFlowInstance.setNodes([groupNode, ...nextNodes]);
+        reactFlowInstance.setNodes((nodes) => {
+
+            //Note that group nodes should always occur before their parents
+            return [groupNode].concat(nodes.map(node => {
+                if (selectedNodeIds.includes(node.id)) {
+                    return {
+                        ...node,
+                        position: {
+                            x: node.position.x - parentPosition.x + padding,
+                            y: node.position.y - parentPosition.y + padding,
+                        },
+                        extent: 'parent' as 'parent',
+                        parentNode: groupId,
+                    };
+                }
+
+                return node;
+            }))
+
+        }
+        );
     }, [nodes, reactFlowInstance, selectedNodeIds, store]);
 
     const onCreateSubgraph = useCallback(() => {
@@ -152,7 +157,7 @@ export const SelectionContextMenu = ({
             exitEdges: [] as Edge[],
             internalEdges: [] as Edge[]
         });
-      
+
         const entryEdges = selectedNodeIds.reduce((acc, x) => {
             const edges = graph.inEdges(x);
 
@@ -281,7 +286,7 @@ export const SelectionContextMenu = ({
             //Do not trigger any updates
             internalGraph.createEdge({
                 ...edge,
-                noPropagate:true
+                noPropagate: true
             });
         });
 
