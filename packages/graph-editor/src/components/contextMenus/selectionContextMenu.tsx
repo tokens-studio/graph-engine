@@ -134,20 +134,25 @@ export const SelectionContextMenu = ({
         //The entry nodes are the nodes that have incoming edges that are not in the selection
         //The exit nodes are the nodes that have outgoing edges that are not in the selection
 
-        const exitEdges = selectedNodeIds.reduce((acc, x) => {
+        const { exitEdges, internalEdges } = selectedNodeIds.reduce((acc, x) => {
             const edges = graph.outEdges(x);
-
             //If there is an edge that is not in the selection then it is an entry node
-            const outgoingEdges = edges.filter(edge => {
-                return !lookup.has(edge.target);
+            edges.forEach(edge => {
+                const isOutgoing = !lookup.has(edge.target);
+
+                if (isOutgoing) {
+                    acc.exitEdges.push(edge);
+                } else {
+                    acc.internalEdges.push(edge);
+                }
+
             });
-
-            if (outgoingEdges.length != 0) {
-                acc = acc.concat(outgoingEdges);
-            }
             return acc;
-        }, [] as Edge[]);
-
+        }, {
+            exitEdges: [] as Edge[],
+            internalEdges: [] as Edge[]
+        });
+      
         const entryEdges = selectedNodeIds.reduce((acc, x) => {
             const edges = graph.inEdges(x);
 
@@ -160,7 +165,8 @@ export const SelectionContextMenu = ({
                 acc = acc.concat(incomingEdges);
             }
             return acc;
-        }, [] as Edge[])
+        }, [] as Edge[]);
+
 
         //Add the nodes to the subgraph
         internalNodes.forEach(node => {
@@ -192,7 +198,7 @@ export const SelectionContextMenu = ({
             });
 
             //Then we need to restore the old edge and connect it to the new input
-            const newEdge =graph.createEdge({
+            const newEdge = graph.createEdge({
                 id: uuid(),
                 source: edge.source,
                 sourceHandle: edge.sourceHandle,
@@ -200,7 +206,7 @@ export const SelectionContextMenu = ({
                 targetHandle: name
             });
 
-        
+
             //Create an edge in the internal graph from the input to the target
             internalGraph.createEdge({
                 id: uuid(),
@@ -242,7 +248,7 @@ export const SelectionContextMenu = ({
             graphNode.addOutput(name, {
                 type: sourceOutput!.type
             });
-            
+
 
             //Create an edge in the outer graph from the subgraph to the target
             const newEdge = graph.createEdge({
@@ -268,7 +274,18 @@ export const SelectionContextMenu = ({
 
 
         });
-   
+
+        //Reconnect the edges that are internal to the subgraph
+        internalEdges.forEach(edge => {
+            //Create an edge in the internal graph
+            //Do not trigger any updates
+            internalGraph.createEdge({
+                ...edge,
+                noPropagate:true
+            });
+        });
+
+
         // //Remove the selected nodes from the graph
         selectedNodeIds.forEach(id => {
             graph.removeNode(id);
