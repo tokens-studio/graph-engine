@@ -11,7 +11,7 @@ import { topologicalSort } from "./topologicSort.js";
 import { makeObservable, observable } from "mobx";
 import { Edge, VariadicEdgeData } from "../programmatic/edge.js";
 import { annotatedCapabilityPrefix, annotatedPlayState, annotatedVariadicIndex, annotatedVersion } from "../annotations/index.js";
-import type {  } from "../types.js";
+import type { NodeRun } from "../types.js";
 
 export type CapabilityFactory = {
   name: string;
