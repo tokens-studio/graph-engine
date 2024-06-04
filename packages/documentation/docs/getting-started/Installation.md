@@ -13,10 +13,10 @@ You can run just the UI by pulling the docker image
 
 Run 
 ```
-docker run ghcr.io/tokens-studio/graph-engine:frontend-latest
+docker run -p 3000:3000 tokensstudio/graph-engine-frontend:latest 
 ```
 
-The editor should now be available at `http://localhost:3000`
+The editor should now be available at `http://localhost:3000/dashboard/editor`
 
 ## Locally
 

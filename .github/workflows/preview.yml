@@ -2,7 +2,7 @@ name: Publish docker image
 
 on:
   push:
-    branches: [ major/strong-typing]
+    branches: [ major/strong-typing ]
 
 jobs:
   build:
@@ -42,6 +42,7 @@ jobs:
       with:
         tags: |
           type=sha,format=long,prefix=${{matrix.type}}-
+          type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'major/strong-typing') }}
         images: |
           ghcr.io/tokens-studio/graph-engine
 
@@ -66,14 +67,3 @@ jobs:
         env:
               GIMLET_SERVER: ${{ secrets.GIMLET_SERVER }}
               GIMLET_TOKEN: ${{ secrets.GIMLET_TOKEN }}
-        with:
-          ENV: "prod"
-          APP: "graph-engine"
-      - name: 🍍 Deploy with Gimlet
-        uses: gimlet-io/gimlet-artifact-shipper-action@v0.8.3
-        env:
-              GIMLET_SERVER: ${{ secrets.GIMLET_SERVER }}
-              GIMLET_TOKEN: ${{ secrets.GIMLET_TOKEN }}
-        with:
-          ENV: "prod"
-          APP: "graph-engine-docs"

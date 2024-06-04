@@ -1,5 +1,5 @@
 
-app: graph-engine
+app: graph-engine-docs
 env: prod
 namespace: graph-engine
 deploy:

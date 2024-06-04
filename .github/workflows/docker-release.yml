@@ -1,4 +1,4 @@
-name: Publish docker image
+name: Publish to Dockerhub
 
 on:
   push:
@@ -38,7 +38,7 @@ jobs:
       uses: docker/metadata-action@v5
       with:
         tags: |
-          type=sha,format=long,prefix=${{matrix.type}}-
+          type=sha,format=long
           type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'major/strong-typing') }}
         images: |
           tokensstudio/graph-engine-${{matrix.type}}

@@ -1,5 +1,5 @@
 
-app: graph-engine
+app: graph-engine-backend
 env: prod
 namespace: graph-engine
 deploy:
@@ -15,7 +15,7 @@ values:
   gitSha: '{{ .SHA }}'
   image:
     repository: ghcr.io/tokens-studio/graph-engine
-    tag: frontend-{{ .SHA }}
+    tag: backend-{{ .SHA }}
   imagePullSecrets:
     - ghcr-login-secret
   replicas: 1
