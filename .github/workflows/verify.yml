@@ -24,7 +24,7 @@ jobs:
           node-version: 18
           cache: "yarn"
       - name: Install turbo
-        run: yarn global add turbo
+        run: yarn global add turbo@1.9.8
       - name: Turbo Cache
         id: turbo-cache
         uses: actions/cache@v3
