@@ -15,7 +15,7 @@ describe("color/contrasting", () => {
     node.inputs.wcag.setValue(WcagVersion.V3);
     node.inputs.threshold.setValue(60);
 
-    await node.execute();
+    await node.run();
 
     const output = getAllOutputs(node);
 
@@ -37,7 +37,7 @@ describe("color/contrasting", () => {
     node.inputs.wcag.setValue(WcagVersion.V2);
     node.inputs.threshold.setValue(4.5);
 
-    await node.execute();
+    await node.run();
 
     const output = getAllOutputs(node);
 
@@ -59,7 +59,7 @@ describe("color/contrasting", () => {
     node.inputs.wcag.setValue(WcagVersion.V3);
     node.inputs.threshold.setValue(60);
 
-    await node.execute();
+    await node.run();
 
     const output = getAllOutputs(node);
 

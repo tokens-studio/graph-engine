@@ -2,6 +2,9 @@ name: Verify changes
 
 on: pull_request
 
+env:
+  NODE_ENV: production
+
 jobs:
   verify:
     name: Verify changes

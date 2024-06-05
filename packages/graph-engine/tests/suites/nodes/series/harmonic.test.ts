@@ -8,7 +8,7 @@ describe("series/harmonic", () => {
     
     node.inputs.base.setValue(16);
     node.inputs.stepsDown.setValue(2);
-    node.inputs.steps.setValue(2);
+    node.inputs.stepsUp.setValue(2);
     node.inputs.notes.setValue(3);
     node.inputs.ratio.setValue(1.2);
     node.inputs.precision.setValue(1);

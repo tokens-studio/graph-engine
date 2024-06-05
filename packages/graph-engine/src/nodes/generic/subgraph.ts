@@ -1,6 +1,4 @@
-import { NodeTypes } from "../../types.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
-import { AnySchema } from "../../schemas/index.js";
 import InputNode from "./input.js";
 import OutputNode from "./output.js";
 import { IDeserializeOpts, SerializedGraph, SerializedNode } from "../../graph/types.js";
@@ -15,7 +13,7 @@ export interface SerializedSubgraphNode extends SerializedNode {
 
 export default class SubgraphNode extends Node {
   static title = "Subgraph";
-  static type = NodeTypes.SUBGRAPH;
+  static type = "studio.tokens.generic.subgraph";
   static description = "Allows you to run another subgraph internally";
 
   _innerGraph: Graph;

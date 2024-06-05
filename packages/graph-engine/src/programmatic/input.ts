@@ -51,7 +51,11 @@ export class Input<T = any> extends Port<T> {
   setValue(value: T, opts?: ISetValue) {
     this._value = value;
     if (opts?.type !== undefined) {
-      this._dynamicType = opts?.type;
+
+      //Only if the type differs do we set it
+      if (this._type?.$id !== opts.type.$id) {
+        this._dynamicType = opts?.type;
+      }
     }
     if (!opts?.noPropagate) {
       this.node.getGraph()?.update(this.node.id);

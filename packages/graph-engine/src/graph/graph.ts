@@ -1,4 +1,4 @@
-import type { NodeFactory, SerializedGraph,  } from "./types.js";
+import type { NodeFactory, SerializedGraph, } from "./types.js";
 import { VERSION } from "../constants.js";
 import cmp from "semver-compare";
 import { Node } from "../programmatic/node.js";
@@ -127,8 +127,10 @@ export interface BatchExecution {
   stats?: Record<string, StatRecord>;
   order: string[];
   output?: {
-    value: any;
-    type: GraphSchema;
+    [key: string]: {
+      value: any;
+      type: GraphSchema;
+    }
   };
 }
 
@@ -370,8 +372,8 @@ export class Graph {
     }
 
     const res = await node.run();
+    //Don't propagate if there is an error
     if (res.error) {
-      console.error(res.error);
       return;
     }
 
@@ -631,11 +633,14 @@ export class Graph {
     );
 
     if (outputNode) {
-      const outputPort = outputNode.outputs.value;
-      output = {
-        value: outputPort.value,
-        type: outputPort.type,
-      };
+
+      //Output has a dynamic amount of ports, so emit a single object with each of them
+      output = Object.fromEntries(Object.entries(outputNode.inputs).map(([key, value]) => {
+        return [key, {
+          value: value.value,
+          type: value.type
+        }];
+      }))
     }
 
     const end = performance.now();
