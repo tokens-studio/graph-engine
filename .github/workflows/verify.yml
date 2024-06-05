@@ -41,7 +41,7 @@ jobs:
             turbo-${{ github.job }}-${{ github.head_ref }}-
 
       - name: Install dependencies
-        run: yarn  --frozen-lockfile --prefer-offline
+        run: yarn --frozen-lockfile --immutable
 
       # - name: Lint
       #   run: yarn run lint
