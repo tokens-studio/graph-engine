@@ -77,9 +77,10 @@
     "ws": "8.17.0"
   },
   "devDependencies": {
+    "eslint": "8.57.0",
     "@next/bundle-analyzer": "14.2.3",
     "@svgr/webpack": "8.1.0",
-    "eslint-config-custom": "*",
+    "@tokens-studio/eslint-custom-config": "*",
     "@types/graphlib": "2.1.8",
     "@types/node": "18.15.11",
     "@types/react": "18.0.37",

@@ -110,6 +110,7 @@
     "esbuild-sass-plugin": "^3.2.0",
     "prettier": "2.8.7",
     "resp": "^0.1.1",
+    "eslint": "8.57.0",
     "storybook": "^8.0.9",
     "tsup": "^7.2.0",
     "typescript": "^5.4.5",

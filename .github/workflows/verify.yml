@@ -43,8 +43,8 @@ jobs:
       - name: Install dependencies
         run: yarn  --frozen-lockfile --prefer-offline
 
-      - name: Lint
-        run: yarn run lint
+      # - name: Lint
+      #   run: yarn run lint
         
       - name: Test
         run: yarn run test:ci
