@@ -60,7 +60,7 @@
     "@babel/preset-env": "^7.21.5",
     "@changesets/cli": "2.26.0",
     "@jest/globals": "^29.5.0",
-    "@tokens-studio/eslint-config-custom": "*",
+    "eslint-config-custom": "*",
     "@types/chroma-js": "^2.4.0",
     "@types/culori": "^2.0.0",
     "@types/jest": "28.1.0",

@@ -1,4 +1,4 @@
-name: Verify changes
+name: CI
 
 on: pull_request
 
@@ -7,6 +7,12 @@ env:
   HUSKY: 0
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+  TURBO_TELEMETRY_DISABLED: 1
+  DO_NOT_TRACK: 1
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   verify:
@@ -38,7 +44,7 @@ jobs:
         run: yarn  --frozen-lockfile --prefer-offline
 
       - name: Lint
-        run: npm run lint
+        run: yarn run lint
         
       - name: Test
-        run: npm run test:ci
+        run: yarn run test:ci
