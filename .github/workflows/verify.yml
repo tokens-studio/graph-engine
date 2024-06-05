@@ -4,6 +4,7 @@ on: pull_request
 
 env:
   NODE_ENV: production
+  HUSKY: 0
 
 jobs:
   verify:
