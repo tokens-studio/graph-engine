@@ -5,6 +5,8 @@ on: pull_request
 env:
   NODE_ENV: production
   HUSKY: 0
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
 
 jobs:
   verify:
@@ -21,6 +23,16 @@ jobs:
         with:
           node-version: 18
           cache: "yarn"
+      - name: Install turbo
+        run: yarn global add turbo
+    - name: Turbo Cache
+        id: turbo-cache
+        uses: actions/cache@v3
+        with:
+          path: .turbo
+          key: turbo-${{ github.job }}-${{ github.head_ref }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ github.job }}-${{ github.head_ref }}-
 
       - name: Install dependencies
         run: yarn  --frozen-lockfile --prefer-offline
