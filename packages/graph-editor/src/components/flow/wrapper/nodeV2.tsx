@@ -1,19 +1,19 @@
 import { Node } from './node.js';
-
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Handle, HandleContainer } from '../handles.js';
-import { Edge, Input, OBJECT, Port, annotatedNodeRunning } from '@tokens-studio/graph-engine';
+import { Input, OBJECT, Port, annotatedNodeRunning } from '@tokens-studio/graph-engine';
 import { Node as GraphNode } from '@tokens-studio/graph-engine'
 import colors from '@/tokens/colors.js';
 import { useSelector } from 'react-redux';
 import { inlineTypes, showTimings } from '@/redux/selectors/settings.js';
 import { icons, nodeSpecifics } from '@/redux/selectors/registry.js';
-import { title, xpos } from '@/annotations/index.js';
+import { title } from '@/annotations/index.js';
 import { useLocalGraph } from '@/context/graph.js';
-import { SortableList } from '@/components/sortableList/index.js';
-import { useGraph } from '@/hooks/useGraph.js';
+import { arrayMoveImmutable } from 'array-move';
+import { DndItem, DndList, DndTrigger } from '@/components/DndList.js';
+import { GrabberIcon } from '@/components/icons/GrabberIcon.js';
 
 export type UiNodeDefinition = {
   //Name of the Node
@@ -99,39 +99,6 @@ export interface IPortArray {
 
 export const PortArray = observer(({ ports, hideNames, sortable = false }: IPortArray) => {
   const entries = Object.values(ports).sort();
-  const graph = useGraph()
-
-  if (sortable) {
-    const items = entries.map((port) => {
-      return {
-        id: `${port.node.id}-${port.name}`,
-        nodeId: port.node.id,
-        input: port.name,
-        visible: port.visible,
-      }
-    });
-
-    const onChange = (newItems) => {
-
-      console.log(newItems);
-
-    }
-
-    return (
-      <Stack direction='column'>
-        <SortableList
-          items={items.filter((item) => item.visible)}
-          onChange={onChange}
-          renderItem={(item) => (
-            <SortableList.Item id={item.id}>
-              <InputHandle port={ports[item.input]} hideName={hideNames} />
-              <SortableList.DragHandle />
-            </SortableList.Item>
-          )}
-        />
-      </Stack>
-    );
-  }
 
   return (
     <>
@@ -186,19 +153,21 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
   const iconTypeRegistry = useSelector(icons);
   const typeCol = extractTypeIcon(port, iconTypeRegistry);
   const input = port as unknown as Input;
+  const graph = useLocalGraph()
 
   console.log({ input })
 
   if (input.variadic) {
-
-    const onChange = (newItems) => {
-      console.log(newItems);
-    }
-
-    const items = port._edges;
+    const onSortEnd = ({ oldIndex, newIndex }) => {
+      console.log(port._edges);
+      const newValue = arrayMoveImmutable(input.value, oldIndex, newIndex);
+      const newPorts = arrayMoveImmutable(port._edges, oldIndex, newIndex);
+      input.setValue(newValue);
+      port._edges = newPorts;
+    };
 
     return (
-      <Stack>
+      <Stack direction='column' gap={3}>
         <Handle
           {...typeCol}
           visible={port.visible || port.isConnected}
@@ -208,17 +177,10 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
           {!hideName && <Text>{port.name} + </Text>}
           {inlineTypesValue && <InlineTypeLabel port={port} />}
         </Handle>
-
-        <Stack direction='column'>
-          <SortableList
-            items={items}
-            onChange={onChange}
-            renderItem={(edge) => {
-              //   <SortableList.Item id={item.id}>
-              //   <InputHandle port={ports[item.input]} hideName={hideNames} />
-              //   <SortableList.DragHandle />
-              // </SortableList.Item>
-              return (<SortableList.Item id={edge.id}>
+        <DndList lockAxis='y' onSortEnd={onSortEnd} css={{ display: 'flex', flexDirection: 'column', gap: '$3' }}>
+          {port._edges.map((edge, i) => {
+            return (
+              <DndItem key={`input-${i}`} index={i} css={{ display: 'flex', gap: '$3', alignItems: 'center' }}>
                 <Handle
                   {...typeCol}
                   visible={port.visible || port.isConnected}
@@ -232,13 +194,14 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
 
                   {inlineTypesValue && <InlineTypeLabel port={port} />}
                 </Handle>
-                <SortableList.DragHandle />
-              </SortableList.Item>)
-            }}
-          />
+                <DndTrigger >
+                  <GrabberIcon />
+                </DndTrigger>
+              </DndItem>
+            )
 
-        </Stack>
-
+          })}
+        </DndList>
       </Stack>
     );
     //We need to render additional handles
