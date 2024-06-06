@@ -155,9 +155,6 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
     }, {} as Record<string, PanelGroup>),
   );
 
-  console.log({ auto });
-
-
   const added = auto.concat([
     new PanelGroup({
       title: 'Basic Tokens',
