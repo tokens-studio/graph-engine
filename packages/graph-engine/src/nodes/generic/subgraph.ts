@@ -31,7 +31,11 @@ export default class SubgraphNode extends Node {
     input.annotations[annotatedDeleteable] = false;
     const output = new OutputNode({ graph: this._innerGraph });
     output.annotations[annotatedDeleteable] = false;
-
+    output.addInput("value", {
+      type: AnySchema,
+      visible: true,
+    });
+  
     //Create the initial input and output nodes
     this._innerGraph.addNode(input);
     this._innerGraph.addNode(output);

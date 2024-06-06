@@ -34,6 +34,7 @@ const CSSMapSpecifics = observer(({ node }: { node: Node }) => {
   const onClick = () => {
     const input = node.addInput(inputName, {
       type: StringSchema,
+      visible: true,
     });
     input.annotations[deletable] = true;
     setInputName('');
