@@ -38,6 +38,7 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
         }
         const input = node.addInput(inputName, {
             type,
+            visible: true,
         });
         input.annotations[deletable] = true;
         //We trigger running the node to either propagate the new input or to update the node

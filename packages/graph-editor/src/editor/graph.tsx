@@ -426,7 +426,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           if (viewport) {
             reactFlowInstance.setViewport(viewport);
           }
-          let offset = -400;
+          let offset = -550;
           const nodes = Object.entries(loadedGraph.nodes).map(([id, node]) => {
             //Generate the react flow nodes
             return {
@@ -434,7 +434,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
               type: node.annotations[uiNodeType] || 'GenericNode',
               data: {},
               position: {
-                x: node.annotations[xpos] || (offset += 400),
+                x: node.annotations[xpos] || (offset += 550),
                 y: node.annotations[ypos] || 0,
               },
             } as Node;

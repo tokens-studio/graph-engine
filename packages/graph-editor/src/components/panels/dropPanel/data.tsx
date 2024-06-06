@@ -120,15 +120,8 @@ const knownIcons = {
   [NodeTypes.OUTPUT]: <Star />,
   [NodeTypes.CSS_FUNCTIONS]: 'x()',
 };
-
 function CapitalCase(string) {
-  return (
-    string.charAt(0).toUpperCase() +
-    string
-      .slice(1)
-      .split(/(?=[A-Z])/)
-      .join(' ')
-  );
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 export const defaultPanelGroupsFactory = (): DropPanelStore => {
