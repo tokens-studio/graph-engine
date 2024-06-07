@@ -155,15 +155,22 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
   const input = port as unknown as Input;
   const graph = useLocalGraph()
 
-  console.log({ input })
-
   if (input.variadic) {
     const onSortEnd = ({ oldIndex, newIndex }) => {
-      console.log(port._edges);
       const newValue = arrayMoveImmutable(input.value, oldIndex, newIndex);
-      const newPorts = arrayMoveImmutable(port._edges, oldIndex, newIndex);
+      const newEdges = arrayMoveImmutable(port._edges, oldIndex, newIndex).map((edge, i) => {
+        edge.annotations['engine.index'] = i;
+        return edge;
+      }
+      );
+      // update edges property
+      port._edges = newEdges;
+      // update the value array
       input.setValue(newValue);
-      port._edges = newPorts;
+      // update the edges
+      newEdges.forEach((edge) => {
+        graph.emit('edgeIndexUpdated', edge)
+      })
     };
 
     return (
