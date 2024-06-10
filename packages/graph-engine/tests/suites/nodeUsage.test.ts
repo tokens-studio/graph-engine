@@ -1,5 +1,5 @@
-import { AnySchema, StringSchema } from "../../src/schemas/index.js";
 import { Edge, Graph, nodeLookup } from "../../src/index.js";
+import {  StringSchema } from "../../src/schemas/index.js";
 import InputNode from "../../src/nodes/generic/input.js";
 import OutputNode from "../../src/nodes/generic/output.js";
 

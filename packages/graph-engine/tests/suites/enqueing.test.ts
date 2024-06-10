@@ -1,8 +1,8 @@
-import { NumberSchema } from "../../src/schemas/index.js";
 import { Graph } from "../../src/index.js";
+import { NumberSchema } from "../../src/schemas/index.js";
 import ConstantNode from "../../src/nodes/generic/constant.js";
-import SubtractNode from "../../src/nodes/math/subtractVariadic.js";
 import OutputNode from "../../src/nodes/generic/output.js";
+import SubtractNode from "../../src/nodes/math/subtractVariadic.js";
 
 describe("enqueing", () => {
   it("automatically enqueues when using variadic types", async () => {
