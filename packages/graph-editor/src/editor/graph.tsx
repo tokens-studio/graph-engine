@@ -202,21 +202,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
       });
       graph.on('edgeIndexUpdated', (edge) => {
-        console.log(JSON.parse(JSON.stringify(edge)));
         setEdges((eds) => {
-          console.log({
-            finalEdges: JSON.parse(JSON.stringify(eds.map((ed) => {
-              if (ed.id == edge.id) {
-                const newEdge = {
-                  ...ed,
-                  targetHandle: edge.targetHandle + `[${edge.annotations['engine.index']}]`,
-                };
-
-                return newEdge
-              }
-              return ed;
-            })))
-          })
           return eds.map((ed) => {
             if (ed.id == edge.id) {
               const newEdge = {
@@ -231,9 +217,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
         });
       });
     }, [graph])
-
-
-
 
     const [contextNode, setContextNode] = React.useState<Node[]>([]);
     const [contextEdge, setContextEdge] = React.useState<Edge | null>(null);
@@ -335,10 +318,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-
-
-    console.log(edges);
-
 
     const managedNodesChange = useCallback((changes: NodeChange[]) => {
       //Note this needs to happen first to clean up ui resources

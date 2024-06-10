@@ -344,7 +344,7 @@ export const LayoutController = React.forwardRef<
                         style={{ flex: 1 }}
                         onLayoutChange={onLayoutChange}
                     />
-                    <FindDialog />
+                    <FindDialog/>
                 </Tooltip.Provider>
             </Stack>
         </ExternalLoaderProvider>

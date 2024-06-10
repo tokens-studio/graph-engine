@@ -29,7 +29,7 @@ export const PortPanel = observer(({ ports, readOnly }: IPortPanel) => {
 
   return (
     <Stack direction="column" gap={3} width="full">
-      {entries.filter(x => !x.annotations[hidden]).map((x) => (
+      {entries.filter(x=>!x.annotations[hidden]).map((x) => (
         <Port port={x} key={x.name} readOnly={readOnly} />
       ))}
     </Stack>
@@ -44,9 +44,6 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
   const isInput = NodeTypes.INPUT === port.node.factory.type;
   const isDynamicInput = Boolean(port.annotations[deletable]);
   const resettable = Boolean(port.annotations[resetable]);
-
-  console.log({ port })
-  console.log({ portType: port.type.$id })
 
   const inner = useMemo(() => {
     const field = controlSelector.find((x) => x.matcher(port, { readOnly }));

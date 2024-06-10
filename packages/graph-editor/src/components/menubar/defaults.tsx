@@ -182,7 +182,7 @@ export const defaultMenuDataFactory = (): Menu =>
         items: [
           new MenuItem({
             name: 'undo',
-            render: ({ key, ...rest }) => <MenuItemElement key={key} icon={<Undo />} {...rest} >Undo</MenuItemElement>,
+            render: ({key,...rest}) => <MenuItemElement key={key} icon={<Undo />} {...rest} >Undo</MenuItemElement>,
           }),
           new MenuItem({
             name: 'redo',
@@ -214,7 +214,7 @@ export const defaultMenuDataFactory = (): Menu =>
             name: 'outputs',
             id: 'outputs',
             title: 'Outputs',
-            content: <></>,
+            content: <OutputSheet />,
           }),
           windowButton({
             name: 'nodeSettings',

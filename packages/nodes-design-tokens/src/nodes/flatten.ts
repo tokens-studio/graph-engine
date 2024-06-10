@@ -25,8 +25,7 @@ export default class FlattenNode extends Node {
 
   execute(): void | Promise<void> {
     const { tokens } = this.getAllInputs();
-
-    console.log({tokens});
+    
     const { vals } = (tokens as SingleToken[][])
       .flat()
       .flat()

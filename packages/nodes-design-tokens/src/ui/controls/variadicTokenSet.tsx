@@ -9,7 +9,6 @@ const VariadicTokensUI = ({ port, edge }: { port: Port, edge: Edge }) => {
   if (!Array.isArray(value))
     return null;
 
-  console.log({ setValue: value })
   return (
     <Stack
       gap={2}
