@@ -3,7 +3,6 @@ name: CI
 on: pull_request
 
 env:
-  NODE_ENV: production
   HUSKY: 0
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
