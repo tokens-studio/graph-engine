@@ -26,7 +26,7 @@ interface ISortableContainer extends SortableContainerProps {
 
 export const DndTrigger: React.ComponentClass<ISortableHandleElement, any> = SortableHandle(
   ({ children, css }: { children: React.ReactNode; css: Stitches.CSS }) => (
-    <Box css={css}>{children}</Box>
+    <Box css={{ cursor: 'pointer', ...css }}>{children}</Box>
   )
 )
 
