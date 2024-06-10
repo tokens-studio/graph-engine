@@ -40,7 +40,7 @@ jobs:
             turbo-${{ github.job }}-${{ github.head_ref }}-
 
       - name: Install dependencies
-        run: Run yarn --frozen-lockfile --immutable
+        run: yarn --frozen-lockfile --immutable
 
       # Try running yarn again to make sure it links the .bin correctly
       - name: Install dependencies
