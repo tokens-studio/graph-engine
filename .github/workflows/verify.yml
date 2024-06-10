@@ -43,9 +43,6 @@ jobs:
 
       - name: Install dependencies
         run: yarn --frozen-lockfile --immutable
-      # This is awful. Seems like this is occurring due to the size of the node_modules potentially ?
-      - name: Install again to force .bin links 
-        run : yarn --frozen-lockfile --immutable
 
       - name: Test
         run: yarn run test:ci
