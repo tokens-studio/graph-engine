@@ -40,10 +40,14 @@ jobs:
             turbo-${{ github.job }}-${{ github.head_ref }}-
 
       - name: Install dependencies
-        run: yarn
+        run: Run yarn --frozen-lockfile --immutable
+
+      # Try running yarn again to make sure it links the .bin correctly
+      - name: Install dependencies
+        run: yarn --frozen-lockfile --immutable
 
       - name: show bin path 
-        run: yarn bin
+        run: ls -la ./node_modules/.bin
 
       # - name: Lint
       #   run: yarn run lint
