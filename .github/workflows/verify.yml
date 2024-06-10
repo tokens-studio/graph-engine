@@ -28,8 +28,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
-          
+
       - name: Turbo Cache
         id: turbo-cache
         uses: actions/cache@v3
