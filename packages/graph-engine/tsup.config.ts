@@ -8,7 +8,7 @@ export const tsup: Options = {
     sourcemap: env === 'production', // source map is only available in prod
     clean: false, // rimraf disr
     dts: true, // generate dts file for main module
-    format: env === 'production' ? ['cjs', 'esm'] : ['esm'],
+    format: ['cjs', 'esm'] ,
     bundle: true,
     target: 'es2020',
     outDir: 'dist',
