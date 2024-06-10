@@ -19,8 +19,6 @@ export const NumericField = observer(({ port, readOnly }: IField) => {
     setVal(port.value);
   }, [port.value]);
 
-
-
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       if (!readOnly) {

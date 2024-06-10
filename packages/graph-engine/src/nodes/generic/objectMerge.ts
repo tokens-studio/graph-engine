@@ -1,7 +1,7 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
-import { AnyArraySchema, AnySchema, StringSchema } from "../../schemas/index.js";
+import { createVariadicSchema, AnySchema, StringSchema } from "../../schemas/index.js";
 import deepMerge from 'deepmerge';
 
 
@@ -44,7 +44,10 @@ export default class NodeDefinition extends Node {
     constructor(props: INodeDefinition) {
         super(props);
         this.addInput("objects", {
-            type: AnyArraySchema,
+            type: {
+                ...createVariadicSchema(AnySchema),
+                default: [],
+            },
             variadic: true,
             visible: true,
         });

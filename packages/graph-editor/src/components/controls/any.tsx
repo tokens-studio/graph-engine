@@ -25,7 +25,7 @@ export const AnyField = observer(({ port, readOnly }: IField) => {
   };
 
   if (readOnly) {
-    return <JSONTree shouldExpandNodeInitially={()=>true} data={port.value} />;
+    return <JSONTree shouldExpandNodeInitially={() => true} data={port.value} />;
   }
 
   return (

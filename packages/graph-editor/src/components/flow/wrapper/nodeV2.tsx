@@ -1,4 +1,5 @@
 import { Node } from './node.js';
+
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
@@ -9,11 +10,8 @@ import colors from '@/tokens/colors.js';
 import { useSelector } from 'react-redux';
 import { inlineTypes, showTimings } from '@/redux/selectors/settings.js';
 import { icons, nodeSpecifics } from '@/redux/selectors/registry.js';
-import { title } from '@/annotations/index.js';
+import { title, xpos } from '@/annotations/index.js';
 import { useLocalGraph } from '@/context/graph.js';
-import { arrayMoveImmutable } from 'array-move';
-import { DndItem, DndList, DndTrigger } from '@/components/DndList.js';
-import { GrabberIcon } from '@/components/icons/GrabberIcon.js';
 
 export type UiNodeDefinition = {
   //Name of the Node
@@ -72,7 +70,7 @@ const NodeWrap = observer(({ node }: INodeWrap) => {
       <Stack direction="column" gap={2}>
         <Stack direction="row" gap={3} css={{ padding: '$3' }}>
           <HandleContainer type="target" className={'target'} full>
-            <PortArray ports={node.inputs} sortable />
+            <PortArray ports={node.inputs} />
           </HandleContainer>
           <HandleContainer type="source" className={'source'} full>
             <PortArray ports={node.outputs} />
@@ -92,23 +90,18 @@ const NodeWrap = observer(({ node }: INodeWrap) => {
 });
 
 export interface IPortArray {
-  ports: Record<string, Port<Node>>;
-  hideNames?: boolean,
-  sortable?: boolean
+  ports: Record<string, Port>;
+  hideNames?: boolean
 }
-
-export const PortArray = observer(({ ports, hideNames, sortable = false }: IPortArray) => {
+export const PortArray = observer(({ ports, hideNames }: IPortArray) => {
   const entries = Object.values(ports).sort();
-
   return (
     <>
-      {entries.map((port) => (
-        <InputHandle port={port} hideName={hideNames} key={port.name} />
+      {entries.filter(x => x.visible || x.isConnected).map((input) => (
+        <InputHandle port={input} hideName={hideNames} />
       ))}
     </>
   );
-
-
 });
 
 const extractTypeIcon = (
@@ -153,28 +146,11 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
   const iconTypeRegistry = useSelector(icons);
   const typeCol = extractTypeIcon(port, iconTypeRegistry);
   const input = port as unknown as Input;
-  const graph = useLocalGraph()
+
 
   if (input.variadic) {
-    const onSortEnd = ({ oldIndex, newIndex }) => {
-      const newValue = arrayMoveImmutable(input.value, oldIndex, newIndex);
-      const newEdges = arrayMoveImmutable(port._edges, oldIndex, newIndex).map((edge, i) => {
-        edge.annotations['engine.index'] = i;
-        return edge;
-      }
-      );
-      // update edges property
-      port._edges = newEdges;
-      // update the value array
-      input.setValue(newValue);
-      // update the edges
-      newEdges.forEach((edge) => {
-        graph.emit('edgeIndexUpdated', edge)
-      })
-    };
-
     return (
-      <Stack direction='column' gap={3}>
+      <>
         <Handle
           {...typeCol}
           visible={port.visible || port.isConnected}
@@ -184,32 +160,24 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
           {!hideName && <Text>{port.name} + </Text>}
           {inlineTypesValue && <InlineTypeLabel port={port} />}
         </Handle>
-        <DndList lockAxis='y' onSortEnd={onSortEnd} css={{ display: 'flex', flexDirection: 'column', gap: '$3' }}>
-          {port._edges.map((edge, i) => {
-            return (
-              <DndItem key={`input-${i}`} index={i} css={{ display: 'flex', gap: '$3', alignItems: 'center' }}>
-                <Handle
-                  {...typeCol}
-                  visible={port.visible || port.isConnected}
-                  id={port.name + `[${edge.annotations['engine.index']}]`}
-                  key={edge.id}
-                  full
-                >
-                  {!hideName && <Text>
-                    {port.name} - [{edge.annotations['engine.index']}]
-                  </Text>}
+        {port._edges.map((edge, i) => {
+          return (
+            <Handle
+              {...typeCol}
+              visible={port.visible || port.isConnected}
+              id={port.name + `[${edge.annotations['engine.index']}]`}
+              key={i}
+              full
+            >
+              {!hideName && <Text>
+                {port.name} - [{i}]
+              </Text>}
 
-                  {inlineTypesValue && <InlineTypeLabel port={port} />}
-                </Handle>
-                <DndTrigger >
-                  <GrabberIcon />
-                </DndTrigger>
-              </DndItem>
-            )
-
-          })}
-        </DndList>
-      </Stack>
+              {inlineTypesValue && <InlineTypeLabel port={port} />}
+            </Handle>
+          );
+        })}
+      </>
     );
     //We need to render additional handles
   }

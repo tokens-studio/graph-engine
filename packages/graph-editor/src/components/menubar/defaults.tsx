@@ -1,4 +1,4 @@
-import { Download, PagePlusIn, Settings as SettingsIcon, Play, Upload, Undo, Redo, Cpu,Archive }  from 'iconoir-react';
+import { Download, PagePlusIn, Settings as SettingsIcon, Play, Upload, Undo, Redo, Cpu, Archive } from 'iconoir-react';
 import { Menu, MenuItem, Seperator, SubMenu } from './data';
 import React, { MutableRefObject, useCallback } from 'react';
 import { MenuItemElement } from './menuItem';
@@ -182,7 +182,7 @@ export const defaultMenuDataFactory = (): Menu =>
         items: [
           new MenuItem({
             name: 'undo',
-            render: ({key,...rest}) => <MenuItemElement key={key} icon={<Undo />} {...rest} >Undo</MenuItemElement>,
+            render: ({ key, ...rest }) => <MenuItemElement key={key} icon={<Undo />} {...rest} >Undo</MenuItemElement>,
           }),
           new MenuItem({
             name: 'redo',
@@ -214,7 +214,7 @@ export const defaultMenuDataFactory = (): Menu =>
             name: 'outputs',
             id: 'outputs',
             title: 'Outputs',
-            content: <OutputSheet />,
+            content: <></>,
           }),
           windowButton({
             name: 'nodeSettings',

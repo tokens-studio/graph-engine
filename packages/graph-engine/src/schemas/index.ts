@@ -21,8 +21,6 @@ export const NumberSchema: SchemaObject = {
   type: "number",
 };
 
-
-
 export const STRING = "https://schemas.tokens.studio/string.json";
 export const StringSchema: SchemaObject = {
   $id: STRING,
@@ -69,7 +67,6 @@ export const ObjectSchema: SchemaObject = {
   title: "Object",
   type: "object",
 };
-
 
 export const CURVE = "https://schemas.tokens.studio/curve.json";
 export const CurveSchema: SchemaObject = {
@@ -254,6 +251,9 @@ export const BufferSchema: SchemaObject = {
   },
 }
 
+export const VARIADIC_ANY = variadicId(ANY);
+export const VARIADIC_NUMBER = variadicId(NUMBER);
+export const VARIADIC_COLOR = variadicId(COLOR);
 
 /**
  * Checks whether a schema can be converted to another schema
