@@ -29,7 +29,10 @@ jobs:
         with:
           node-version: 18
           cache: "yarn"
-          
+
+      - name: Install turbo
+        run: yarn global add turbo@1.9.8
+
       - name: Turbo Cache
         id: turbo-cache
         uses: actions/cache@v3
@@ -41,16 +44,9 @@ jobs:
 
       - name: Install dependencies
         run: yarn --frozen-lockfile --immutable
+      # This is awful. Seems like this is occurring due to the size of the node_modules potentially ?
+      - name: Install again to force .bin links 
+        run : yarn --frozen-lockfile --immutable
 
-      # Try running yarn again to make sure it links the .bin correctly
-      - name: Install dependencies
-        run: yarn --frozen-lockfile --immutable
-
-      - name: show bin path 
-        run: ls -la ./node_modules/.bin
-
-      # - name: Lint
-      #   run: yarn run lint
-        
       - name: Test
         run: yarn run test:ci
