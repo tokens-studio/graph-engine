@@ -6,8 +6,6 @@ import { Edge, Port } from '@tokens-studio/graph-engine';
 const VariadicAnyUI = ({ port, edge }: { port: Port, edge: Edge }) => {
   const value = port.value[edge.annotations['engine.index']];
 
-  console.log({ type: typeof value });
-
   switch (typeof value) {
     case 'string':
       return (
