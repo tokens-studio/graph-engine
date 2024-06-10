@@ -3,7 +3,7 @@ import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { StringSchema } from "../../schemas/index.js";
 //@ts-ignore
-import cssFunctionsData from "mdn-data/css/functions.json" ;
+import cssFunctionsData from "mdn-data/css/functions.json" assert { type: "json" } ;
 
 const FUNCTION_NAMES = Object.keys(cssFunctionsData);
 

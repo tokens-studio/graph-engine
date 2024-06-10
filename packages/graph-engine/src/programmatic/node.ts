@@ -142,8 +142,13 @@ export class Node {
    * Runs the node. Internally this calls the execute method, but the run entrypoint allows for additional tracking and lifecycle management
    */
   async run(): Promise<NodeRun> {
+
     this.annotations[annotatedNodeRunning] = true;
     const start = performance.now();
+    this.getGraph()?.emit("nodeStarted", {
+      node: this,
+      start,
+    });
     try {
       await this.execute();
       this.error = undefined;
@@ -280,8 +285,21 @@ export class Node {
   /**
    * Handles cleanup for nodes with state.
    * Use the super method to clear the graph reference
+   * 
+   * @example
+   * ```typescript
+   * class MyNode extends Node {
+   *  dispose() {
+   * 
+   *   Node.prototype.dispose.call(this);
+   *   // or if you have full ES6 support
+   *   super.dispose();
+   * 
+   *  //Some additional manual cleanup 
+   *  // ...
+   * }
    */
-  clear = () => {
+  dispose = () => {
     //@ts-ignore This is forcing manual cleanup
     this._graph = undefined;
   };

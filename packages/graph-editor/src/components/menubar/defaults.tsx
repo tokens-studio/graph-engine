@@ -7,7 +7,7 @@ import { dockerSelector } from '@/redux/selectors/refs';
 import DockLayout, { TabData } from 'rc-dock';
 import { OutputSheet } from '../panels/output';
 import { Legend } from '../panels/legend';
-import { FlameGraph } from '../panels/flamegraph';
+import { DebugPanel } from '../panels/debugger';
 import { ImperativeEditorRef } from '@/editor/editorTypes';
 import { Settings } from '../panels/settings';
 import { Inputsheet } from '../panels/inputs';
@@ -256,10 +256,10 @@ export const defaultMenuDataFactory = (): Menu =>
             content: <AlignmentPanel />,
           }),
           windowButton({
-            name: 'flamegraph',
-            id: 'flamegraph',
-            title: 'FlameGraph',
-            content: <FlameGraph />,
+            name: 'debugger',
+            id: 'debugger',
+            title: 'Debugger',
+            content: <DebugPanel />,
           }),
           windowButton({
             name: 'settings',

@@ -6,7 +6,7 @@ import { Legend } from "@/components/panels/legend";
 import { LogsPanel } from "@/components/panels/logs";
 import { OutputSheet } from "@/components/panels/output";
 import { GraphPanel } from "@/components/panels/graph";
-import { FlameGraph } from "@/components/panels/flamegraph";
+import { DebugPanel } from "@/components/panels/debugger";
 import { Maximize, Reduce, Xmark } from 'iconoir-react';
 import { IconButton, Stack, Tooltip } from '@tokens-studio/ui';
 import { DropPanel } from '@/components/panels/dropPanel/index.js';
@@ -272,9 +272,9 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                         {
                                             closable: true,
                                             group: 'popout',
-                                            id: 'flamegraph',
-                                            title: 'Flamegraph',
-                                            content: <FlameGraph />,
+                                            id: 'debugger',
+                                            title: 'Debugger',
+                                            content: <DebugPanel />,
                                         },
                                     ],
                                 },

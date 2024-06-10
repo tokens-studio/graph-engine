@@ -67,6 +67,7 @@ import { GraphContextProvider } from '@/context/graph.js';
 import { SelectionContextMenu } from '@/components/contextMenus/selectionContextMenu.js';
 import { ActionProvider } from './actions/provider.js';
 import { HotKeys } from '@/components/hotKeys/index.js';
+import { debugInfo } from '@/components/debugger/data.js';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -130,7 +131,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     }, [dispatch.graph, graph, id, ref])
 
     //Attach sideeffect listeners
-    useMemo(() => {
+    useEffect(() => {
       capabilities.forEach((factory) => graph.registerCapability(factory));
 
       graph.onFinalize('serialize', (serialized) => {
@@ -157,7 +158,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
       })
 
-      graph.on('valueSent', (edges) => {
+      const valueDetecterDisposer =graph.on('valueSent', (edges) => {
         edges
         const edgeLookup = edges.reduce((acc, edge) => {
           acc[edge.id] = edge;
@@ -199,7 +200,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
         }, 400)
 
       });
-      graph.on('edgeIndexUpdated', (edge) => {
+
+      const EdgeUpdaterDisposer = graph.on('edgeIndexUpdated', (edge) => {
         setEdges((eds) => {
           return eds.map((ed) => {
             if (ed.id == edge.id) {
@@ -214,6 +216,34 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           });
         });
       });
+
+      const NodeStartListener = graph.on('nodeExecuted', (run) => {
+
+        const existing = debugInfo.rows.find(x => x.id == run.node.id);
+
+        if (!existing) {
+          debugInfo.addRow({
+            id: run.node.id,
+            name: run.node.factory.type,
+            actions: []
+          });
+        }
+
+        //Now we need to add the actions
+        debugInfo.addAction(run.node.id, {
+          id: `${run.node.id}-${Date.now()}`,
+          start: run.start,
+          end: run.end,
+          effectId: 'effect0'
+        });
+
+      });
+
+      return ()=>{
+        valueDetecterDisposer();
+        EdgeUpdaterDisposer();
+      }
+
     }, [graph])
 
     const [contextNode, setContextNode] = React.useState<Node[]>([]);

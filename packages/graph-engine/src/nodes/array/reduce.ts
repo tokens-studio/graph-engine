@@ -98,7 +98,6 @@ export default class ReduceSubgraph<T, V> extends SubgraphNode {
         const output = await (input.value as any[]).reduce(async (acc, item, i) => {
 
             const previousAcc = await acc;
-            console.log(previousAcc)
             const result = await this._innerGraph.execute({
                 //By default this is any so we need to overwrite it with its runtime type
                 inputs: {
