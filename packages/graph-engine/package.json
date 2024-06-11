@@ -28,7 +28,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "release": "npm run build && changeset publish",
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "sideEffects": false,
   "types": "./dist/index.d.ts",
