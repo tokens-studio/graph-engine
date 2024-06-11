@@ -121,6 +121,11 @@ export type BatchRunError = Error & {
   nodeId: string
 };
 
+export type NodeStart ={
+  node: Node ,
+  start: number
+}
+
 export type NodeRun = {
   node: Node;
   error?: Error;

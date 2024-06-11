@@ -1,27 +1,19 @@
 import {
-  AllSchemas,
-  AnySchema,
-  NumberSchema,
   NodeTypes,
-  STRING,
   StringSchema,
 } from '@tokens-studio/graph-engine';
 import {
-  Box,
   Button,
-  Checkbox,
   Heading,
-  Label,
   Scroll,
   Select,
   Stack,
-  TextInput,
 } from '@tokens-studio/ui';
 import { observer } from 'mobx-react-lite';
 import React, { useMemo } from 'react';
 import { Node } from '@tokens-studio/graph-engine';
 
-import properties from 'mdn-data/css/properties.json';
+import properties from 'mdn-data/css/properties.json' assert { type: "json" }; ;
 import { deletable } from '@/annotations';
 
 const CSSProperties = Object.keys(properties);

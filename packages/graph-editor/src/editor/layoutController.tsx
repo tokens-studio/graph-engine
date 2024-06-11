@@ -6,7 +6,7 @@ import { Legend } from "@/components/panels/legend";
 import { LogsPanel } from "@/components/panels/logs";
 import { OutputSheet } from "@/components/panels/output";
 import { GraphPanel } from "@/components/panels/graph";
-import { FlameGraph } from "@/components/panels/flamegraph";
+import { DebugPanel } from "@/components/panels/debugger";
 import { Maximize, Reduce, Xmark } from 'iconoir-react';
 import { IconButton, Stack, Tooltip } from '@tokens-studio/ui';
 import { DropPanel } from '@/components/panels/dropPanel/index.js';
@@ -199,25 +199,48 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                 },
                             ],
                         },
-
                         {
-                            id: 'graphs',
+
                             size: 700,
-                            group: 'graph',
-                            panelLock: { panelStyle: 'graph' },
-                            tabs: [
+                            mode: 'vertical',
+                            children:[
                                 {
-                                    closable: true,
-                                    cached: true,
-                                    id: 'graph1',
+                                    id: 'graphs',
+                                    size: 700,
                                     group: 'graph',
-                                    title: 'Graph',
-                                    content: (
-                                        <GraphEditor {...props} id='graph1' ref={ref} />
-                                    ),
+                                    panelLock: { panelStyle: 'graph' },
+                                    tabs: [
+                                        {
+                                            closable: true,
+                                            cached: true,
+                                            id: 'graph1',
+                                            group: 'graph',
+                                            title: 'Graph',
+                                            content: (
+                                                <GraphEditor {...props} id='graph1' ref={ref} />
+                                            ),
+                                        },
+                                    ],
                                 },
-                            ],
+                            
+                                {
+                                    size:300,
+                                    tabs:[
+                                        {
+                                            closable: true,
+                                            group: 'popout',
+                                            id: 'debugger',
+                                            title: 'Debugger',
+                                            content: <DebugPanel />,
+                                        },
+                                    ]
+                                }
+                            
+                             
+                            ]
+
                         },
+                        
                         {
                             size: 300,
                             mode: 'vertical',
@@ -269,13 +292,7 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                             title: 'Graph Settings',
                                             content: <GraphPanel />,
                                         },
-                                        {
-                                            closable: true,
-                                            group: 'popout',
-                                            id: 'flamegraph',
-                                            title: 'Flamegraph',
-                                            content: <FlameGraph />,
-                                        },
+                                     
                                     ],
                                 },
                             ],

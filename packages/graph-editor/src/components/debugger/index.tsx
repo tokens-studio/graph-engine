@@ -1,144 +1,117 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Timeline, TimelineInteractionMode, TimelineModel } from "animation-timeline-js";
-import { Box, Text, Stack, IconButton } from "@tokens-studio/ui";
-import './debugger.css';
-import { DragHandGesture, ZoomIn, ZoomOut } from "iconoir-react";
-type Props = {
-    time?: number;
-    model: TimelineModel;
-};
-
-function TimelineComponent(props: Props) {
-    const { model, time } = props;
-    const timelineElRef = useRef<HTMLDivElement>(null);
-    const [timeline, setTimeline] = useState<Timeline>();
+import { Timeline, TimelineAction, TimelineEffect, TimelineRow, TimelineState } from '@xzdarcy/react-timeline-editor';
+import React, { useRef, useState } from 'react';
+import { Box, Stack, Text } from "@tokens-studio/ui";
+import TimelinePlayer from './player';
+import './debugger.scss';
+import { DebugInfo } from './data';
+import { observer } from "mobx-react-lite"
 
 
-    // Example to subscribe and pass model or time update:
-    useEffect(() => {
-        timeline?.setModel(model);
-    }, [model, timeline]);
+export interface CustomTimelineRow extends TimelineRow {
+    name: string
+    actions: CustomTimeLineAction[]
+}
 
-    // Example to subscribe and pass model or time update:
-    useEffect(() => {
-        if (time || time === 0) {
-            timeline?.setTime(time);
-        }
-    }, [time, timeline]);
-
-    useEffect(() => {
-        let newTimeline: Timeline | null = null;
-        // On component init
-        if (timelineElRef.current) {
-            newTimeline = new Timeline({ id: timelineElRef.current });
-            newTimeline.setInteractionMode(TimelineInteractionMode.Selection);
-            newTimeline.onSelected(function (obj) {
-                console.log('Selected Event: (' + obj.selected.length + '). changed selection :' + obj.changed.length, 2);
-            });
-
-
-            // Here you can subscribe on timeline component events
-            setTimeline(newTimeline);
-        }
-
-        // cleanup on component unmounted.
-        return () => newTimeline?.dispose();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [timelineElRef.current]);
-
-    useEffect(() => {
-        if (!timeline) return;
-        const start = Date.now();
-        const interval = setInterval(() => {
-            if (!timeline) return;
-            const model = timeline?.getModel();
-            const groupKey = '' + Date.now();
-
-            model?.rows[0].keyframes!.push(
-                {
-                    val: Date.now() - start,
-                    group: groupKey,
-                },
-
-            )
-            model?.rows[0].keyframes!.push(
-                {
-                    val: Date.now() + 1000 - start,
-                    group: groupKey,
-                },
-
-            )
-            timeline?.setModel(model!);
-        }
-            , 1500);
-        return () => clearInterval(interval);
-    }
-        , [timeline]);
-
-
-    const setZoomMode = useCallback(() => {
-        timeline?.setInteractionMode(TimelineInteractionMode.Zoom);
-    }, [timeline]);
-
-    const setDrag = useCallback(() => {
-        timeline?.setInteractionMode(TimelineInteractionMode.Pan);
-    }, [timeline]);
-
-    return <Box css={{ width: '100%' }}>
-        <Stack className="toolbar" gap={1}>
-            <IconButton onClick={setDrag} icon={<DragHandGesture />}></IconButton>
-            <IconButton onClick={setZoomMode} icon={<ZoomIn />}></IconButton>
-        </Stack>
-        <Stack direction="row" gap={1} css={{ width: '100%' }}>
-            <Box className="outline">
-                <div className="outline-header"></div>
-                <div className="outline-scroll-container" >
-
-                    {model.rows.map((row, index) => {
-                        return <div className="outline-items" key={index} ><Text size="xsmall" className='outline-node'>{row.title}</Text> </div>
-                    })}
-                </div>
-            </Box>
-            <div style={{ width: "100%", minHeight: 300 }} ref={timelineElRef} />
-        </Stack>
-    </Box>;
+export interface CustomTimeLineAction extends TimelineAction {
+    /**
+     * The color to render the action
+     */
+    color?: string;
 }
 
 
-export function Debugger() {
-    return (
-        <TimelineComponent
-            time={0}
-            model={{
-                rows: [
-                    {
-                        title: 'Row 1',
-                        keyframesDraggable: false,
-                        groupsDraggable: false,
-                        keyframes: [
-                            {
-                                val: 1,
-                            },
-                            {
-                                val: 20,
-                            },
-                        ],
-                    },
-                    {
-                        title: 'Row 2',
-                        keyframesDraggable: false,
-                        groupsDraggable: false,
-                        keyframes: [
-                            {
-                                val: 1,
-                            },
-                            {
-                                val: 20,
-                            },
-                        ],
-                    }
-                ],
+
+export interface DebuggerProps {
+    data: DebugInfo;
+    effects: Record<string, TimelineEffect>;
+}
+
+
+const DebuggerInner = observer(({ data, domRef, timeline, scale }) => {
+
+    return <Stack css={{ flex: 1 }}>
+        <div
+            ref={domRef}
+            style={{ overflow: 'auto' }}
+            onScroll={(e) => {
+                const target = e.target as HTMLDivElement;
+                timeline.current?.setScrollTop(target.scrollTop);
+            }}
+            className={'timeline-list'}
+        >
+            {data.rows.map((item) => {
+                return (
+                    <Box className="timeline-list-item" key={item.id} css={{ padding: '$1' }}>
+                        <Text>{item.name}</Text>
+                    </Box>
+                );
+            })}
+        </div>
+
+
+
+        <Timeline
+            editorData={[...data.rows]}
+            onChange={() => { }}
+            disableDrag
+            onScroll={({ scrollTop }) => {
+                if (domRef.current) {
+                    domRef.current.scrollTop = scrollTop;
+                }
+            }}
+            autoScroll={true}
+            scaleSplitCount={~~(scale / 10)}
+            // scale={scale}
+            scaleWidth={scale}
+            ref={timeline}
+            effects={{}}
+            getActionRender={(action, row) => {
+                return <CustomRender0 action={action} row={row} index={Number.parseInt(row.id)} />;
             }}
         />
+    </Stack>
+});
+
+
+export const Debugger = ({ data, effects }: DebuggerProps) => {
+
+    const timelineState = useRef<TimelineState>();
+    const autoScrollWhenPlay = useRef<boolean>(true);
+    const domRef = useRef<HTMLDivElement>();
+
+    const [scale, setScale] = useState(100);
+
+    return (
+        <Stack direction='column' width='full' css={{ height: '100%' }}>
+            <TimelinePlayer data={data} timelineState={timelineState} autoScrollWhenPlay={autoScrollWhenPlay} setScale={setScale} />
+            <DebuggerInner data={data} domRef={domRef} scale={scale} timeline={timelineState} />
+        </Stack>
+
     );
-}
+};
+
+
+const colors = [
+    '#F94144',
+    "#F3722C",
+    "#F8961E",
+    "#F9844A",
+    "#F9C74F",
+    "#90BE6D",
+    "#43AA8B",
+    "#577590",
+    "#277DA1",
+    "#2A9D8F",
+    "#2B9348",
+
+]
+
+export const CustomRender0: React.FC<{ action: CustomTimeLineAction; row: TimelineRow, index: number }> = ({ action, row, index }) => {
+    return (
+        <Stack css={{
+            backgroundColor: action?.color || colors[index % colors.length], height: '100%', borderRadius: '4px', cursor: 'pointer', userSelect: 'none'
+        }} align='center' justify='center'>
+            <Text>{Math.round(action.end - action.start)}ms</Text>
+        </Stack>
+    );
+};

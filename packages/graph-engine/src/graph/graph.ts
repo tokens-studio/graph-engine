@@ -11,7 +11,7 @@ import { topologicalSort } from "./topologicSort.js";
 import { v4 as uuid } from 'uuid';
 import cmp from "semver-compare";
 import type { NodeFactory, SerializedGraph, } from "./types.js";
-import type { NodeRun } from "../types.js";
+import type { NodeRun, NodeStart } from "../types.js";
 
 export type CapabilityFactory = {
   name: string;
@@ -77,6 +77,7 @@ export type SubscriptionLookup = {
   edgeIndexUpdated: Edge;
   valueSent: Edge[];
   nodeExecuted: NodeRun;
+  nodeStarted: NodeStart
 };
 
 export type ListenerType<T> = [T] extends [(...args: infer U) => any]
@@ -287,7 +288,7 @@ export class Graph {
     outEdges.forEach((edge) => this.removeEdge(edge.id));
 
     //Cleanup the node
-    node.clear();
+    node.dispose();
     //Remove from the lookup
     delete this.nodes[nodeId];
 
@@ -381,7 +382,7 @@ export class Graph {
       return;
     }
 
-    await this.propagate(node.id);
+    // await this.propagate(node.id);
   }
   /**
    * Serialize the graph for transport

@@ -74,7 +74,7 @@ describe("math/add", () => {
     node.inputs.b.setValue(1);
 
     //For more complicated nodes you will likely want to interact with the graph object instead of executing the node directly
-    await node.execute();
+    await node.run();
     expect(node.outputs.value.value).toStrictEqual(3);
   });
 });
