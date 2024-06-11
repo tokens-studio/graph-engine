@@ -1,12 +1,12 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Color, NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
-import { Rgb, Lab, Hsl, converter } from "culori";
 import {
   ColorSchema,
   NumberSchema,
   StringSchema,
 } from "../../schemas/index.js";
+import { Hsl, Lab, Rgb, Xyz65, converter } from "culori";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
 import { arrayOf } from "../../schemas/utils.js";
 
 export const colorSpaces = [
@@ -23,9 +23,11 @@ export const colorSpaces = [
   "rec2020",
 
   //LAB like
-
   "dlab",
   "lab65",
+
+  //XYZ
+  "xyz65",
 
   //HSL like
   "okhsl",
@@ -169,6 +171,19 @@ export default class NodeDefinition extends Node {
             d: col.alpha,
             channels: [col.l, col.a, col.b, col.alpha],
             labels: ["l", "a", "b", "alpha"],
+          };
+        }
+        break;
+      case "xyz65":
+        {
+          const col: Xyz65 = output as unknown as Xyz65;
+          final = {
+            a: col.x,
+            b: col.y,
+            c: col.z,
+            d: col.alpha,
+            channels: [col.x, col.y, col.z, col.alpha],
+            labels: ["x", "y", "z", "alpha"],
           };
         }
         break;
