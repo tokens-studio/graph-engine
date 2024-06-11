@@ -8,7 +8,7 @@ import { COLOR, Input, OBJECT, Port, annotatedNodeRunning } from '@tokens-studio
 import { Node as GraphNode } from '@tokens-studio/graph-engine'
 import colors from '@/tokens/colors.js';
 import { useSelector } from 'react-redux';
-import { inlineTypes, showTimings } from '@/redux/selectors/settings.js';
+import { inlineTypes, inlineValues, showTimings } from '@/redux/selectors/settings.js';
 import { icons, nodeSpecifics } from '@/redux/selectors/registry.js';
 import { title, xpos } from '@/annotations/index.js';
 import { useLocalGraph } from '@/context/graph.js';
@@ -150,47 +150,50 @@ const getColorPreview = (color: string) => {
   return <Box css={{ display: 'inline-block', width: '16px', height: '16px', borderRadius: '$medium', backgroundColor: color, marginRight: '$2' }} />;
 }
 
+
+const getValuePreview = (value, type) => {
+  if (!value) {
+    return null;
+  }
+
+  let valuePreview = '';
+  switch (type.type) {
+    case 'array':
+      const allColors = value.every(isHexColor);
+      if (allColors) {
+        return value.length > 5 ? (
+          <Box css={{ display: 'flex', height: '16px' }}>
+            {value.slice(0, 5).map(getColorPreview)}
+            <Text>+{value.length - 5}</Text>
+          </Box>
+        ) : value.map(getColorPreview);
+      }
+      valuePreview = JSON.stringify(value);
+      break;
+    case 'object':
+      valuePreview = JSON.stringify(value);
+      break;
+    case 'number':
+      valuePreview = value.toString();
+      break;
+    default:
+      if (isHexColor(value)) {
+        return getColorPreview(value);
+      }
+      valuePreview = JSON.stringify(value);
+  }
+
+  return valuePreview.length > 20 ? `${valuePreview.substring(0, 20)}...` : valuePreview;
+}
+
 const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boolean }) => {
   const inlineTypesValue = useSelector(inlineTypes);
   const iconTypeRegistry = useSelector(icons);
+  const inlineValuesValue = useSelector(inlineValues);
   const typeCol = extractTypeIcon(port, iconTypeRegistry);
   const input = port as unknown as Input;
 
-  const getValuePreview = () => {
-    if (!input.value) {
-      return null;
-    }
 
-    let valuePreview = '';
-
-    switch(input.type.type) {
-      case 'array':
-        const allColors = input.value.every(isHexColor);
-        if (allColors) {
-          return input.value.length > 5 ? (
-            <Box css={{ display: 'flex', height: '16px' }}>
-              {input.value.slice(0, 5).map(getColorPreview)}
-              <Text>+{input.value.length - 5}</Text>
-            </Box>
-          ) : input.value.map(getColorPreview);
-        }
-        valuePreview = JSON.stringify(input.value);
-        break;
-      case 'object':
-        valuePreview = JSON.stringify(input.value);
-        break;
-      case 'number':
-        valuePreview = input.value.toString();
-        break;
-      default:
-        if (isHexColor(input.value)) {
-          return getColorPreview(input.value);
-        }
-        valuePreview =  input.value;
-    }
-
-    return valuePreview.length > 20 ? `${valuePreview.substring(0, 20)}...` : valuePreview;
-  }
 
   if (input.variadic) {
     return (
@@ -215,9 +218,10 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
             >
               {!hideName && (
                 <Box css={{ display: 'grid', justifyContent: 'center', direction: 'row' }}>
-                  <Text css={{ fontSize: 'medium', color: '$gray11' }}>{input.value[i]}</Text>
+                  {inlineValuesValue && <Text css={{ fontSize: 'medium', color: '$gray11' }}>{getValuePreview(input.value[i], input.type.items)}</Text>}
+
                   <Text css={{ fontSize: 'small', color: '$gray12' }}>{input.name} - [{i}]</Text>
-              </Box>
+                </Box>
               )}
 
               {inlineTypesValue && <InlineTypeLabel port={port} />}
@@ -236,9 +240,10 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
       id={port.name}
       full
     >
-      {!hideName &&  (
+      {!hideName && (
         <Box css={{ display: 'grid', justifyContent: 'center', direction: 'row' }}>
-          <Text css={{ fontSize: '$small', color: '$gray12' }}>{getValuePreview() || port.name}</Text>
+          {inlineValuesValue && <Text css={{ fontSize: '$small', color: '$gray12' }}>{getValuePreview(input.value, input.type) || port.name}</Text>}
+
           {port.value && <Text css={{ fontSize: '$medium', color: '$gray11' }}>{port.name}</Text>}
         </Box>
       )}
