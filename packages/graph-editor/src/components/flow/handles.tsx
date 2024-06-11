@@ -91,6 +91,23 @@ const StyledRawHandle = styled(RawHandle, {
         display: 'none',
       },
     },
+    variadic: {
+      true: {
+        'svg': {
+          marginTop: 'auto',
+        },
+        '&::after': {
+          content: "",
+          marginRight: "-24px",
+          marginTop: "-52px",
+          height: "8px",
+          width: "8px",
+          background: "var(--colors-accentOnAccent)",
+          borderRadius: "50%",
+          opacity: 0.7,
+        },
+      },
+    }
   },
 });
 
@@ -144,6 +161,7 @@ export interface HandleProps {
   color?: string;
   backgroundColor?: string;
   icon: React.ReactNode;
+  variadic?: boolean;
 };
 
 export const Handle = (props: HandleProps) => {
@@ -158,6 +176,7 @@ export const Handle = (props: HandleProps) => {
     isArray,
     backgroundColor,
     icon,
+    variadic,
     ...rest
   } = props;
   const { position, type } = useHandle();
@@ -182,6 +201,7 @@ export const Handle = (props: HandleProps) => {
           type={type}
           position={position}
           hide={shouldHide}
+          variadic={variadic}
           isValidConnection={isValidConnection}
         >
 

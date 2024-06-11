@@ -15,7 +15,7 @@ import { useLocalGraph } from '@/context/graph.js';
 
 const isHexColor = (str) => {
   if (typeof str !== 'string') return false;
-  return str.match(/^#[a-f0-9]{6}$/i) !== null;
+  return /^#(?:[0-9a-fA-F]{3}){1,2}$/.test(str);;
 };
 
 export type UiNodeDefinition = {
@@ -146,8 +146,19 @@ export const InlineTypeLabel = ({ port }: { port: Port }) => {
   );
 };
 
-const getColorPreview = (color: string) => {
-  return <Box css={{ display: 'inline-block', width: '16px', height: '16px', borderRadius: '$medium', backgroundColor: color, marginRight: '$2' }} />;
+const getColorPreview = (color: string, showValue = false) => {
+  const colorSwatch = <Box css={{ width: '16px', height: '16px', borderRadius: '$medium', backgroundColor: color }} />;
+
+  if (!showValue) {
+    return colorSwatch;
+  }
+
+  return (
+    <Stack direction="row" gap={2}>
+      {colorSwatch}    
+      {showValue ? <Text css={{ fontSize: '$small', color: '$gray12' }}>{color}</Text> : null}
+    </Stack>
+  );
 }
 
 
@@ -203,11 +214,15 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
           visible={port.visible || port.isConnected}
           id={port.name}
           full
+          variadic
         >
           {!hideName && <Text>{port.name} + </Text>}
           {inlineTypesValue && <InlineTypeLabel port={port} />}
         </Handle>
         {port._edges.map((edge, i) => {
+          const valuePreview = isHexColor(input.value[i])
+            ? getColorPreview(input.value[i], true)
+            : <Text css={{ fontSize: 'medium', color: '$gray12' }}>{input.value[i]}</Text>;
           return (
             <Handle
               {...typeCol}
