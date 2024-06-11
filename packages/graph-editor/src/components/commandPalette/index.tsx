@@ -12,6 +12,7 @@ import { NodeTypes } from '@tokens-studio/graph-engine';
 import { styled } from '@/lib/stitches';
 import { Search } from 'iconoir-react';
 import { observer } from 'mobx-react-lite';
+import { isActiveElementTextEditable } from '@/utils/isActiveElementTextEditable.js';
 
 export interface ICommandMenu {
   reactFlowWrapper: React.MutableRefObject<HTMLDivElement | null>;
@@ -107,10 +108,10 @@ const CommandMenu = ({
     return () => document.removeEventListener('mousemove', move);
   }, [wrapperBounds]);
 
-  // Toggle the menu when ⌘K is pressed
+  // Toggle the menu when shift + K is pressed
   React.useEffect(() => {
-    const down = (e) => {
-      if (e.key === 'K' && e.shiftKey) {
+    const down = (e) => {  
+      if (e.key === 'K' && e.shiftKey && !isActiveElementTextEditable()) {
         e.preventDefault();
 
         dispatch.ui.setNodeInsertPosition(cursorPositionRef.current);
@@ -121,6 +122,15 @@ const CommandMenu = ({
     document.addEventListener('keydown', down);
     return () => document.removeEventListener('keydown', down);
   }, [dispatch.ui, showNodesCmdPalette]);
+
+  // Close the menu when Escape key is pressed inside the input
+  const handleKeyDown = (e) => {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+
+      dispatch.ui.setShowNodesCmdPalette(false);
+    }
+  }
 
   return (
     <Command.Dialog
@@ -143,7 +153,7 @@ const CommandMenu = ({
         }}
       >
         <Search />
-        <Command.Input placeholder="Find nodes to add…" />
+        <Command.Input placeholder="Find nodes to add…" onKeyDown={handleKeyDown} />
       </Box>
       <Command.List>
         <Command.Empty>

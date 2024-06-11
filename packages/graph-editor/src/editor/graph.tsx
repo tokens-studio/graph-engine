@@ -67,6 +67,7 @@ import { GraphContextProvider } from '@/context/graph.js';
 import { SelectionContextMenu } from '@/components/contextMenus/selectionContextMenu.js';
 import { ActionProvider } from './actions/provider.js';
 import { HotKeys } from '@/components/hotKeys/index.js';
+import { currentPanelIdSelector } from '@/redux/selectors/graph.js';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -113,6 +114,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     const showGridValue = useSelector(showGrid);
     const snapGridValue = useSelector(snapGrid);
     const internalRef = useRef<ImperativeEditorRef>(null);
+    const activeGraphId = useSelector(currentPanelIdSelector);
 
     const refProxy = useCallback((v) => {
       //@ts-ignore
@@ -765,12 +767,13 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
                   />
                 )}
                 {nodeCount === 0 && props.emptyContent}
-
-                <CommandMenu
-                  reactFlowWrapper={reactFlowWrapper}
-                  items={panelItems}
-                  handleSelectNewNodeType={handleSelectNewNodeType}
-                />
+                {activeGraphId === id && (
+                  <CommandMenu
+                    reactFlowWrapper={reactFlowWrapper}
+                    items={panelItems}
+                    handleSelectNewNodeType={handleSelectNewNodeType}
+                  />
+                )}
                 {props.children}
               </ReactFlow>
             </HotKeys>

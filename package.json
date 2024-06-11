@@ -21,7 +21,6 @@
     "dev:ui:live": "turbo run dev --filter=@tokens-studio/graph-engine-ui...",
     "docs": "turbo run docs",
     "format": "turbo run format --parallel --continue",
-    "postinstall": "husky install",
     "lint": "turbo run lint",
     "lint-staged": "npx lint-staged",
     "prepare": "husky install",
@@ -44,8 +43,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "eslint": "^8.30.0",
-    "eslint-config-custom": "*",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.1",
     "listr2": "5.0.8",

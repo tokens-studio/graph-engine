@@ -19,7 +19,7 @@ export default class NodeDefinition extends Node {
   declare inputs: ToInput<{
     base: number;
     stepsDown: number;
-    steps: number;
+    stepsUp: number;
     notes: number;
     ratio: number;
     precision: number;

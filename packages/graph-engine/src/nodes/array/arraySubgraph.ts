@@ -1,9 +1,9 @@
-import { NodeTypes } from "../../types.js";
 import { AnyArraySchema, AnySchema, NumberSchema, SchemaObject } from "../../schemas/index.js";
-import SubgraphNode from "../generic/subgraph.js";
-import { annotatedDynamicInputs, hideFromParentSubgraph } from "../../annotations/index.js";
 import { Input, ToInput, ToOutput } from "../../programmatic/index.js";
+import { NodeTypes } from "../../types.js";
+import { annotatedDynamicInputs, hideFromParentSubgraph } from "../../annotations/index.js";
 import { extractArray } from "../../schemas/utils.js";
+import SubgraphNode from "../generic/subgraph.js";
 
 export default class ArraySubgraph<T, V> extends SubgraphNode {
   static title = "Array Map";

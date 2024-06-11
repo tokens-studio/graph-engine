@@ -7,10 +7,10 @@ This project exposes controls for updating old graphs to the latest version that
 Use as follows
 
 ```ts
-import type { FlowGraph } from "@tokens-studio/graph-engine";
+import type { SerializedGraph } from "@tokens-studio/graph-engine";
 import { updateGraph } from "@tokens-studio/graph-engine-migration";
 
-const myGraph: FlowGraph = {
+const myGraph: SerializedGraph = {
   /**... */
 };
 

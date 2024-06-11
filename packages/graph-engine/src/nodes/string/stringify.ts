@@ -1,7 +1,7 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
 import { AnySchema, StringSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
+import { NodeTypes } from "../../types.js";
 
 export default class NodeDefinition extends Node {
   static title = "Stringify";

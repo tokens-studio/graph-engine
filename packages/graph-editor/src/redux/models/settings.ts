@@ -49,7 +49,7 @@ export const settingsState = createModel<RootModel>()({
     inlineTypes: false,
     snapGrid: false,
     debugMode: false,
-    showMinimap:true,
+    showMinimap: false,
     delayedUpdate: false
   } as SettingsState,
   reducers: {

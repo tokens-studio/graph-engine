@@ -42,6 +42,7 @@ export class Output<T = any> extends Port<T> {
       };
     }
 
+
     return graph.connect(this.node, this, target.node, target);
   }
 }

@@ -8,7 +8,7 @@ describe("series/arithmetic", () => {
     
     node.inputs.base.setValue(16);
     node.inputs.stepsDown.setValue(1);
-    node.inputs.steps.setValue(1);
+    node.inputs.stepsUp.setValue(1);
     node.inputs.increment.setValue(1);
     node.inputs.precision.setValue(0);
 

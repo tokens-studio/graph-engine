@@ -9,7 +9,7 @@ export default defineConfig({
   bundle: true,
   splitting: true,
   sourcemap: true,
-  format: env === 'production' ? ['cjs', 'esm'] : ['esm'],
+  format: ['cjs', 'esm'] ,
   skipNodeModulesBundle: true,
   clean: false,
 });

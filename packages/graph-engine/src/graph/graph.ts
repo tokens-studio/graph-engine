@@ -1,16 +1,16 @@
-import type { NodeFactory, SerializedGraph,  } from "./types.js";
-import { VERSION } from "../constants.js";
-import cmp from "semver-compare";
-import { Node } from "../programmatic/node.js";
-import { v4 as uuid } from 'uuid';
-import { ExternalLoader } from "./externalLoader.js";
 import { AnySchema, GraphSchema } from "../schemas/index.js";
-import { Output } from "../programmatic/output.js";
-import { ISetValue, Input } from "../programmatic/input.js";
-import { topologicalSort } from "./topologicSort.js";
-import { makeObservable, observable } from "mobx";
 import { Edge, VariadicEdgeData } from "../programmatic/edge.js";
+import { ExternalLoader } from "./externalLoader.js";
+import { ISetValue, Input } from "../programmatic/input.js";
+import { Node } from "../programmatic/node.js";
+import { Output } from "../programmatic/output.js";
+import { VERSION } from "../constants.js";
 import { annotatedCapabilityPrefix, annotatedPlayState, annotatedVariadicIndex, annotatedVersion } from "../annotations/index.js";
+import { makeObservable, observable } from "mobx";
+import { topologicalSort } from "./topologicSort.js";
+import { v4 as uuid } from 'uuid';
+import cmp from "semver-compare";
+import type { NodeFactory, SerializedGraph, } from "./types.js";
 import type { NodeRun } from "../types.js";
 
 export type CapabilityFactory = {
@@ -127,8 +127,10 @@ export interface BatchExecution {
   stats?: Record<string, StatRecord>;
   order: string[];
   output?: {
-    value: any;
-    type: GraphSchema;
+    [key: string]: {
+      value: any;
+      type: GraphSchema;
+    }
   };
 }
 
@@ -370,8 +372,8 @@ export class Graph {
     }
 
     const res = await node.run();
+    //Don't propagate if there is an error
     if (res.error) {
-      console.error(res.error);
       return;
     }
 
@@ -631,11 +633,14 @@ export class Graph {
     );
 
     if (outputNode) {
-      const outputPort = outputNode.outputs.value;
-      output = {
-        value: outputPort.value,
-        type: outputPort.type,
-      };
+
+      //Output has a dynamic amount of ports, so emit a single object with each of them
+      output = Object.fromEntries(Object.entries(outputNode.inputs).map(([key, value]) => {
+        return [key, {
+          value: value.value,
+          type: value.type
+        }];
+      }))
     }
 
     const end = performance.now();
