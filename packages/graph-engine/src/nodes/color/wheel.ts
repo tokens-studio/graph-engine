@@ -2,7 +2,7 @@ import { INodeDefinition } from "../../index.js";
 import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import {  ColorSchema, NumberSchema } from "../../schemas/index.js";
-import chroma from "chroma-js";
+import Color from "colorjs.io";
 import { arrayOf } from "../../schemas/utils.js";
 
 export default class NodeDefinition extends Node {
@@ -36,7 +36,7 @@ export default class NodeDefinition extends Node {
     this.addInput("lightness", {
       type: {
         ...NumberSchema,
-        default: 50,
+        default: 80,
       },
       visible: true,
     });
@@ -55,17 +55,20 @@ export default class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
-    const { colors, hueAngle, hueAmount, saturation, lightness } =
-      this.getAllInputs();
+    const { colors, hueAngle, hueAmount, saturation, lightness } = this.getAllInputs();
 
     const colorList: string[] = [];
 
-    let step;
-    for (step = 0; step < colors; step++) {
-      const hue = hueAngle + (((step * hueAmount) / colors) % 360);
-      const color = chroma.hsl(hue, saturation, lightness);
-      colorList.push(color.hex());
+    for (let step = 0; step < colors; step++) {
+      const hue = (hueAngle + ((step * hueAmount) / colors)) % 360;
+      
+      // Color Generation with colorjs.io
+      const color = new Color("hsl", [hue, saturation, lightness]);
+      const srgbColor = color.to("srgb");
+
+      colorList.push(srgbColor.toString({ format: "hex" })); 
     }
+
     this.setOutput("value", colorList);
   }
 }
