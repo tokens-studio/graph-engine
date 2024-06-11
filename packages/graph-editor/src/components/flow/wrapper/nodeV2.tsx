@@ -172,12 +172,14 @@ const getValuePreview = (value, type) => {
     case 'array':
       const allColors = value.every(isHexColor);
       if (allColors) {
-        return value.length > 5 ? (
-          <Box css={{ display: 'flex', height: '16px' }}>
-            {value.slice(0, 5).map(getColorPreview)}
-            <Text>+{value.length - 5}</Text>
-          </Box>
-        ) : value.map(getColorPreview);
+        return (<Stack direction="row" gap={1}>
+          {value.length > 5 ? (
+            <>
+              {value.slice(0, 5).map((val) => getColorPreview(val))}
+              <Text>+{value.length - 5}</Text>
+            </>
+          ) : value.map((val) => getColorPreview(val))}
+        </Stack>)
       }
       valuePreview = JSON.stringify(value);
       break;
@@ -189,7 +191,7 @@ const getValuePreview = (value, type) => {
       break;
     default:
       if (isHexColor(value)) {
-        return getColorPreview(value);
+        return getColorPreview(value,true);
       }
       valuePreview = JSON.stringify(value);
   }
