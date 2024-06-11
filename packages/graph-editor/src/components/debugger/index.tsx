@@ -68,7 +68,6 @@ const DebuggerInner = observer(({ data, domRef, timeline, scale }) => {
             getActionRender={(action, row) => {
                 return <CustomRender0 action={action} row={row} index={Number.parseInt(row.id)} />;
             }}
-            {...rest}
         />
     </Stack>
 });
