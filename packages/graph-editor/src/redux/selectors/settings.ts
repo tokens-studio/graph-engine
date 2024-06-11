@@ -15,6 +15,10 @@ export const inlineTypes = createSelector(
   settings,
   (state) => state.inlineTypes,
 );
+export const inlineValues = createSelector(
+  settings,
+  (state) => state.inlineValues,
+);
 
 export const showGrid = createSelector(settings, (state) => state.showGrid);
 

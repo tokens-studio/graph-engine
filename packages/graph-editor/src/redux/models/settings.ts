@@ -35,6 +35,10 @@ export interface SettingsState {
    * Whether to show the types inline with the nodes
    */
   inlineTypes: boolean;
+  /**
+   * Whether to show the values inline with the nodes
+   */
+  inlineValues: boolean;
   snapGrid: boolean;
 }
 
@@ -47,6 +51,7 @@ export const settingsState = createModel<RootModel>()({
     showTimings: false,
     showSearch: false,
     inlineTypes: false,
+    inlineValues: true,
     snapGrid: false,
     debugMode: false,
     showMinimap: false,
@@ -102,6 +107,12 @@ export const settingsState = createModel<RootModel>()({
       return {
         ...state,
         inlineTypes,
+      };
+    },
+    setInlineValues(state, inlineValues: boolean) {
+      return {
+        ...state,
+        inlineValues,
       };
     },
     setEdgeType(state, edgeType: EdgeType) {

@@ -4,14 +4,19 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Handle, HandleContainer } from '../handles.js';
-import { Input, OBJECT, Port, annotatedNodeRunning } from '@tokens-studio/graph-engine';
+import { COLOR, Input, OBJECT, Port, annotatedNodeRunning } from '@tokens-studio/graph-engine';
 import { Node as GraphNode } from '@tokens-studio/graph-engine'
 import colors from '@/tokens/colors.js';
 import { useSelector } from 'react-redux';
-import { inlineTypes, showTimings } from '@/redux/selectors/settings.js';
+import { inlineTypes, inlineValues, showTimings } from '@/redux/selectors/settings.js';
 import { icons, nodeSpecifics } from '@/redux/selectors/registry.js';
 import { title, xpos } from '@/annotations/index.js';
 import { useLocalGraph } from '@/context/graph.js';
+
+const isHexColor = (str) => {
+  if (typeof str !== 'string') return false;
+  return /^#(?:[0-9a-fA-F]{3}){1,2}$/.test(str);;
+};
 
 export type UiNodeDefinition = {
   //Name of the Node
@@ -141,11 +146,66 @@ export const InlineTypeLabel = ({ port }: { port: Port }) => {
   );
 };
 
+const getColorPreview = (color: string, showValue = false) => {
+  const colorSwatch = <Box css={{ width: '16px', height: '16px', borderRadius: '$medium', backgroundColor: color }} />;
+
+  if (!showValue) {
+    return colorSwatch;
+  }
+
+  return (
+    <Stack direction="row" gap={2}>
+      {colorSwatch}    
+      {showValue ? <Text css={{ fontSize: '$small', color: '$gray12' }}>{color}</Text> : null}
+    </Stack>
+  );
+}
+
+
+const getValuePreview = (value, type) => {
+  if (!value) {
+    return null;
+  }
+
+  let valuePreview = '';
+  switch (type.type) {
+    case 'array':
+      const allColors = value.every(isHexColor);
+      if (allColors) {
+        return (<Stack direction="row" gap={1}>
+          {value.length > 5 ? (
+            <>
+              {value.slice(0, 5).map((val) => getColorPreview(val))}
+              <Text>+{value.length - 5}</Text>
+            </>
+          ) : value.map((val) => getColorPreview(val))}
+        </Stack>)
+      }
+      valuePreview = JSON.stringify(value);
+      break;
+    case 'object':
+      valuePreview = JSON.stringify(value);
+      break;
+    case 'number':
+      valuePreview = value.toString();
+      break;
+    default:
+      if (isHexColor(value)) {
+        return getColorPreview(value,true);
+      }
+      valuePreview = JSON.stringify(value);
+  }
+
+  return valuePreview.length > 20 ? `${valuePreview.substring(0, 20)}...` : valuePreview;
+}
+
 const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boolean }) => {
   const inlineTypesValue = useSelector(inlineTypes);
   const iconTypeRegistry = useSelector(icons);
+  const inlineValuesValue = useSelector(inlineValues);
   const typeCol = extractTypeIcon(port, iconTypeRegistry);
   const input = port as unknown as Input;
+
 
 
   if (input.variadic) {
@@ -156,11 +216,15 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
           visible={port.visible || port.isConnected}
           id={port.name}
           full
+          variadic
         >
           {!hideName && <Text>{port.name} + </Text>}
           {inlineTypesValue && <InlineTypeLabel port={port} />}
         </Handle>
         {port._edges.map((edge, i) => {
+          const valuePreview = isHexColor(input.value[i])
+            ? getColorPreview(input.value[i], true)
+            : <Text css={{ fontSize: 'medium', color: '$gray12' }}>{input.value[i]}</Text>;
           return (
             <Handle
               {...typeCol}
@@ -169,9 +233,13 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
               key={i}
               full
             >
-              {!hideName && <Text>
-                {port.name} - [{i}]
-              </Text>}
+              {!hideName && (
+                <Box css={{ display: 'grid', justifyContent: 'center', direction: 'row' }}>
+                  {inlineValuesValue && <Text css={{ fontSize: 'medium', color: '$gray11' }}>{getValuePreview(input.value[i], input.type.items)}</Text>}
+
+                  <Text css={{ fontSize: 'small', color: '$gray12' }}>{input.name} - [{i}]</Text>
+                </Box>
+              )}
 
               {inlineTypesValue && <InlineTypeLabel port={port} />}
             </Handle>
@@ -189,7 +257,13 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
       id={port.name}
       full
     >
-      <Text css={{ fontSize: 'medium', color: '$gray11' }}>{port.name}</Text>
+      {!hideName && (
+        <Box css={{ display: 'grid', justifyContent: 'center', direction: 'row' }}>
+          {inlineValuesValue && <Text css={{ fontSize: '$small', color: '$gray12' }}>{getValuePreview(input.value, input.type) || port.name}</Text>}
+
+          {port.value && <Text css={{ fontSize: '$medium', color: '$gray11' }}>{port.name}</Text>}
+        </Box>
+      )}
       {inlineTypesValue && <InlineTypeLabel port={port} />}
     </Handle>
   );
