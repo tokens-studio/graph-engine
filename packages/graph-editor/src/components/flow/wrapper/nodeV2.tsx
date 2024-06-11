@@ -15,7 +15,7 @@ import { useLocalGraph } from '@/context/graph.js';
 
 const isHexColor = (str) => {
   if (typeof str !== 'string') return false;
-  return str.match(/^#[a-f0-9]{6}$/i) !== null;
+  return /^#(?:[0-9a-fA-F]{3}){1,2}$/.test(str);;
 };
 
 export type UiNodeDefinition = {
@@ -146,8 +146,19 @@ export const InlineTypeLabel = ({ port }: { port: Port }) => {
   );
 };
 
-const getColorPreview = (color: string) => {
-  return <Box css={{ display: 'inline-block', width: '16px', height: '16px', borderRadius: '$medium', backgroundColor: color, marginRight: '$2' }} />;
+const getColorPreview = (color: string, showValue = false) => {
+  const colorSwatch = <Box css={{ width: '16px', height: '16px', borderRadius: '$medium', backgroundColor: color }} />;
+
+  if (!showValue) {
+    return colorSwatch;
+  }
+
+  return (
+    <Stack direction="row" gap={2}>
+      {colorSwatch}    
+      {showValue ? <Text css={{ fontSize: '$small', color: '$gray12' }}>{color}</Text> : null}
+    </Stack>
+  );
 }
 
 const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boolean }) => {
@@ -167,12 +178,16 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
       case 'array':
         const allColors = input.value.every(isHexColor);
         if (allColors) {
-          return input.value.length > 5 ? (
-            <Box css={{ display: 'flex', height: '16px' }}>
-              {input.value.slice(0, 5).map(getColorPreview)}
-              <Text>+{input.value.length - 5}</Text>
-            </Box>
-          ) : input.value.map(getColorPreview);
+          return (
+            <Stack direction="row" gap={1}>
+              {input.value.length > 5 ? (
+                <>
+                {input.value.slice(0, 5).map((val) => getColorPreview(val))}
+                <Text>+{input.value.length - 5}</Text>
+                </>
+              ) : input.value.map((val) => getColorPreview(val))}
+            </Stack>
+          );
         }
         valuePreview = JSON.stringify(input.value);
         break;
@@ -184,7 +199,7 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
         break;
       default:
         if (isHexColor(input.value)) {
-          return getColorPreview(input.value);
+          return getColorPreview(input.value, true);
         }
         valuePreview =  input.value;
     }
@@ -200,11 +215,15 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
           visible={port.visible || port.isConnected}
           id={port.name}
           full
+          variadic
         >
           {!hideName && <Text>{port.name} + </Text>}
           {inlineTypesValue && <InlineTypeLabel port={port} />}
         </Handle>
         {port._edges.map((edge, i) => {
+          const valuePreview = isHexColor(input.value[i])
+            ? getColorPreview(input.value[i], true)
+            : <Text css={{ fontSize: 'medium', color: '$gray12' }}>{input.value[i]}</Text>;
           return (
             <Handle
               {...typeCol}
@@ -215,8 +234,8 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
             >
               {!hideName && (
                 <Box css={{ display: 'grid', justifyContent: 'center', direction: 'row' }}>
-                  <Text css={{ fontSize: 'medium', color: '$gray11' }}>{input.value[i]}</Text>
-                  <Text css={{ fontSize: 'small', color: '$gray12' }}>{input.name} - [{i}]</Text>
+                  {valuePreview}
+                  <Text css={{ fontSize: '$medium', color: '$gray11' }}>{input.name} - [{i}]</Text>
               </Box>
               )}
 
