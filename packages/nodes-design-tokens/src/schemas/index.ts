@@ -35,5 +35,3 @@ export const LeonardoColorSchema: SchemaObject = {
         ratios: arrayOf(NumberSchema),
     },
 };
-
-export const VARIADIC_TOKEN_SET = variadicId(TOKEN_SET)

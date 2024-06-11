@@ -5,7 +5,7 @@ export const variadicId = (id: string) => id.replace(".json", "-variadic.json")
 
 export const createVariadicSchema = (baseSchema) => {
   return {
-    $id: variadicId(baseSchema.$id),
+    //Currently we don't set the id here because we don't want to register this schema. Its likely that its structural and that anything that introspects it attempts to read the id from the baseschema
     title: baseSchema.title + "[]",
     type: "array",
     items: baseSchema
@@ -250,10 +250,6 @@ export const BufferSchema: SchemaObject = {
   properties: {
   },
 }
-
-export const VARIADIC_ANY = variadicId(ANY);
-export const VARIADIC_NUMBER = variadicId(NUMBER);
-export const VARIADIC_COLOR = variadicId(COLOR);
 
 /**
  * Checks whether a schema can be converted to another schema

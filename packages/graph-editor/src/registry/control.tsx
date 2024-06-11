@@ -8,9 +8,7 @@ import {
   VEC3,
   ANY,
   Port,
-  VARIADIC_ANY,
-  VARIADIC_NUMBER,
-  VARIADIC_COLOR,
+  Input,
 } from '@tokens-studio/graph-engine';
 import { CurveField } from '@/components/controls/curve';
 import { BooleanField } from '@/components/controls/boolean';
@@ -27,6 +25,10 @@ import { SliderField } from '@/components/controls/slider';
 import { VariadicAny } from '@/components/controls/variadicAny';
 import { VariadicNumber } from '@/components/controls/variadicNumber';
 import { VariadicColor } from '@/components/controls/variadicColor';
+
+
+export const variadicMatcher = (id) => (port: Port) => port.type.type === 'array' && port.type.items.$id === id && (port as Input).variadic;
+
 
 /**
  * Default controls for the graph editor
@@ -76,20 +78,24 @@ export const defaultControls = [
     matcher: (port: Port) => port.type.$id === ANY,
     component: AnyField,
   },
+
   {
-    matcher: (port: Port) => port.type.$id === VARIADIC_ANY,
-    component: VariadicAny,
-  },
-  {
-    matcher: (port: Port) => port.type.$id === VARIADIC_NUMBER,
+    matcher: variadicMatcher(NUMBER),
     component: VariadicNumber,
   },
   {
-    matcher: (port: Port) => port.type.$id === VARIADIC_COLOR,
+    matcher: variadicMatcher(COLOR),
     component: VariadicColor,
+  },
+  {
+    matcher: variadicMatcher(ANY),
+    component: VariadicAny,
   },
   {
     matcher: () => true,
     component: DefaultField,
   },
 ];
+
+
+

@@ -1,6 +1,6 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
+import { NodeTypes } from "../../types.js";
 import { NumberSchema, createVariadicSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
