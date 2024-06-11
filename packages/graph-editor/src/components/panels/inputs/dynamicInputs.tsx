@@ -1,5 +1,6 @@
 import {
     AllSchemas,
+    NodeTypes,
     STRING,
 } from '@tokens-studio/graph-engine';
 import {
@@ -36,8 +37,10 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
             type.enum = enumeratedValues.split(',').map((x) => x.trim());
             type.default = type.enum[0];
         }
+
         const input = node.addInput(inputName, {
             type,
+            visible: node.nodeType() !== NodeTypes.INPUT,
         });
         input.annotations[deletable] = true;
         //We trigger running the node to either propagate the new input or to update the node

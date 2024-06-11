@@ -7,12 +7,14 @@ describe("basic", () => {
 
     const result = await graph.execute();
     expect(result.output).toEqual({
+      input: {
         type: {
           $id: "https://schemas.tokens.studio/string.json",
           title: "String",
           type: "string",
         },
         value: "black",
+      }
     });
   });
 });

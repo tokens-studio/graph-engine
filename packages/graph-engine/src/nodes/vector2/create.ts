@@ -2,9 +2,9 @@ import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import {
     NumberSchema,
-    Vec2Schema,
-    Vector2,
+    Vec2Schema
 } from "../../schemas/index.js";
+import { Vec2 } from "../../index.js";
 
 export default class NodeDefinition extends Node {
     static title = "Create vector2";
@@ -20,7 +20,7 @@ export default class NodeDefinition extends Node {
     }>;
 
     declare outputs: ToOutput<{
-        value: Vector2;
+        value: Vec2;
     }>;
 
     constructor(props: INodeDefinition) {

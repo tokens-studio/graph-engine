@@ -67,6 +67,7 @@ import { GraphContextProvider } from '@/context/graph.js';
 import { SelectionContextMenu } from '@/components/contextMenus/selectionContextMenu.js';
 import { ActionProvider } from './actions/provider.js';
 import { HotKeys } from '@/components/hotKeys/index.js';
+import { currentPanelIdSelector } from '@/redux/selectors/graph.js';
 import { debugInfo } from '@/components/debugger/data.js';
 
 const snapGridCoords: SnapGrid = [16, 16];
@@ -114,6 +115,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     const showGridValue = useSelector(showGrid);
     const snapGridValue = useSelector(snapGrid);
     const internalRef = useRef<ImperativeEditorRef>(null);
+    const activeGraphId = useSelector(currentPanelIdSelector);
 
     const refProxy = useCallback((v) => {
       //@ts-ignore
@@ -347,7 +349,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
-
     const managedNodesChange = useCallback((changes: NodeChange[]) => {
       //Note this needs to happen first to clean up ui resources
       onNodesChange(changes);
@@ -456,7 +457,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           if (viewport) {
             reactFlowInstance.setViewport(viewport);
           }
-          let offset = -400;
+          let offset = -550;
           const nodes = Object.entries(loadedGraph.nodes).map(([id, node]) => {
             //Generate the react flow nodes
             return {
@@ -464,7 +465,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
               type: node.annotations[uiNodeType] || 'GenericNode',
               data: {},
               position: {
-                x: node.annotations[xpos] || (offset += 400),
+                x: node.annotations[xpos] || (offset += 550),
                 y: node.annotations[ypos] || 0,
               },
             } as Node;
@@ -795,12 +796,13 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
                   />
                 )}
                 {nodeCount === 0 && props.emptyContent}
-
-                <CommandMenu
-                  reactFlowWrapper={reactFlowWrapper}
-                  items={panelItems}
-                  handleSelectNewNodeType={handleSelectNewNodeType}
-                />
+                {activeGraphId === id && (
+                  <CommandMenu
+                    reactFlowWrapper={reactFlowWrapper}
+                    items={panelItems}
+                    handleSelectNewNodeType={handleSelectNewNodeType}
+                  />
+                )}
                 {props.children}
               </ReactFlow>
             </HotKeys>

@@ -1,15 +1,13 @@
-import Node from "@/nodes/resolve.js";
-import { IResolvedToken, flatten } from "@/utils/index.js";
 import {
   DeepKeyTokenMap,
   SingleBorderToken,
   SingleBoxShadowToken,
-  SingleToken,
   SingleTypographyToken,
   TokenTypes,
-  TypographyValues,
 } from "@tokens-studio/types";
 import { Graph } from "@tokens-studio/graph-engine";
+import { IResolvedToken, flatten } from "../../src/utils/index.js";
+import Node from "../../src/nodes/resolve.js";
 
 
 describe("set/resolve", () => {
@@ -17,7 +15,7 @@ describe("set/resolve", () => {
     const graph = new Graph();
     const node = new Node({ graph });
 
-    node.inputs.inputs.setValue([
+    node.inputs.inputs.setValue(
       flatten({
         "ref-border": {
           value: "{border}",
@@ -35,8 +33,8 @@ describe("set/resolve", () => {
           description: "",
         },
       } as unknown as DeepKeyTokenMap),
-    ]);
-    node.inputs.context.setValue([
+    );
+    node.inputs.context.setValue(
       flatten({
         border: {
           value: {
@@ -69,7 +67,7 @@ describe("set/resolve", () => {
           description: "",
         } as SingleTypographyToken,
       }),
-    ]);
+    );
 
     await node.execute();
 

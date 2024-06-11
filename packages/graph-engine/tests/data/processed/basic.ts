@@ -20,7 +20,10 @@ export default {
     {
       id: "33952fc4-eced-4c10-a56d-7bdb65182b34",
       type: "studio.tokens.generic.output",
-      inputs: [],
+      inputs: [{
+        name: "input",
+        type: StringSchema
+      }],
     },
   ] as SerializedNode[],
   edges: [

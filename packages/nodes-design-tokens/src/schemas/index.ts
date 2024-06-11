@@ -1,4 +1,4 @@
-import { BooleanSchema, ColorSchema, NumberSchema, SchemaObject, StringSchema } from "@tokens-studio/graph-engine";
+import { BooleanSchema, ColorSchema, NumberSchema, SchemaObject, StringSchema, createVariadicSchema, variadicId } from "@tokens-studio/graph-engine";
 import { arrayOf } from "./utils";
 
 export const TOKEN = "https://schemas.tokens.studio/token.json";

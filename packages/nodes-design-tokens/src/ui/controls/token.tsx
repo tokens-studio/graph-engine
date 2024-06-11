@@ -7,7 +7,7 @@ import { TokenTypes } from '@tokens-studio/types';
 
 
 
-const getPreview = (tokenData) => {
+export const getPreview = (tokenData) => {
     switch (tokenData?.type) {
         case TokenTypes.COLOR:
             return <PreviewColor value={tokenData.value} />;

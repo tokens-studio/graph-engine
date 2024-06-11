@@ -1,12 +1,11 @@
-import { NodeTypes } from "../../types.js";
+import {  AnySchema } from "../../schemas/index.js";
+import { Graph } from "../../graph/graph.js";
+import { IDeserializeOpts, SerializedGraph, SerializedNode } from "../../graph/types.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
-import { AnySchema } from "../../schemas/index.js";
+import { annotatedDeleteable, hideFromParentSubgraph } from "../../annotations/index.js";
+import { autorun } from "mobx";
 import InputNode from "./input.js";
 import OutputNode from "./output.js";
-import { IDeserializeOpts, SerializedGraph, SerializedNode } from "../../graph/types.js";
-import { Graph } from "../../graph/graph.js";
-import { autorun } from "mobx";
-import { annotatedDeleteable, hideFromParentSubgraph } from "../../annotations/index.js";
 
 export interface SerializedSubgraphNode extends SerializedNode {
   innergraph: SerializedGraph;
@@ -15,7 +14,7 @@ export interface SerializedSubgraphNode extends SerializedNode {
 
 export default class SubgraphNode extends Node {
   static title = "Subgraph";
-  static type = NodeTypes.SUBGRAPH;
+  static type = "studio.tokens.generic.subgraph";
   static description = "Allows you to run another subgraph internally";
 
   _innerGraph: Graph;
@@ -31,7 +30,11 @@ export default class SubgraphNode extends Node {
     input.annotations[annotatedDeleteable] = false;
     const output = new OutputNode({ graph: this._innerGraph });
     output.annotations[annotatedDeleteable] = false;
-
+    output.addInput("value", {
+      type: AnySchema,
+      visible: true,
+    });
+  
     //Create the initial input and output nodes
     this._innerGraph.addNode(input);
     this._innerGraph.addNode(output);

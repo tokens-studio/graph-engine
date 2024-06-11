@@ -11,7 +11,7 @@ export default defineConfig({
   bundle: true,
   splitting: true,
   sourcemap: env === 'production', // source map is only available in prod
-  format: env === 'production' ? ['cjs', 'esm'] : ['esm'],
+  format: ['cjs', 'esm'] ,
   skipNodeModulesBundle: true,
   clean: false,
   esbuildPlugins: [sassPlugin()]

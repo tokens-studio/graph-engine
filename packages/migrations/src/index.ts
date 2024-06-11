@@ -1,4 +1,4 @@
-import { Graph } from "@tokens-studio/graph-engine";
+import { Graph, annotatedVersion } from "@tokens-studio/graph-engine";
 import { sortedUpgrades } from "./migrations/index.js";
 import cmp from "semver-compare";
 
@@ -16,7 +16,7 @@ export const updateGraph = async (
   const { verbose } = opts;
 
   //Check the version
-  const version = graph.version || "0.0.0";
+  const version = graph.annotations[annotatedVersion] || "0.0.0";
   //Copy the graph to prevent mutation
   const copiedGraph = JSON.parse(JSON.stringify(graph));
 

@@ -26,6 +26,7 @@ export const Typography = ({ value, text }) => {
                             fontSize = value.fontSize;
                             break
                         case 'fontSizes':
+                        case 'dimension':
                             css = {
                                 fontSize: value,
                             }

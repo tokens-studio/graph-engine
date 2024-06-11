@@ -15,6 +15,7 @@ import {
   delayedUpdateSelector,
   edgeType,
   inlineTypes,
+  inlineValues,
   layoutType,
   obscureDistance,
   showMinimapSelector,
@@ -34,6 +35,7 @@ export const Settings = () => {
   const obscureDistanceValue = useSelector(obscureDistance);
   const showTimingsValue = useSelector(showTimings);
   const inlineTypesValue = useSelector(inlineTypes);
+  const inlineValuesValue = useSelector(inlineValues);
   const delayedUpdateValue = useSelector(delayedUpdateSelector);
   const contextMenus = useSelector(contextMenuSelector);
   const showMinimap = useSelector(showMinimapSelector);
@@ -77,6 +79,28 @@ export const Settings = () => {
               dispatch.settings.setInlineTypes(Boolean(checked))
             }
             checked={inlineTypesValue}
+          />
+        </Stack>
+        <Stack direction="column" gap={2} justify="between">
+          <Stack direction="row" gap={2} justify="between">
+            <Label>Show inline values</Label>
+            <Tooltip
+              label={
+                'Shows values directly on the node. Useful for debugging but can be cluttered'
+              }
+            >
+              <Box>
+                <Text>
+                  <InfoCircleSolid />
+                </Text>
+              </Box>
+            </Tooltip>
+          </Stack>
+          <Checkbox
+            onCheckedChange={(checked) =>
+              dispatch.settings.setInlineValues(Boolean(checked))
+            }
+            checked={inlineValuesValue}
           />
         </Stack>
         <Stack direction="column" gap={2} justify="between">

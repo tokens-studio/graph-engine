@@ -1,5 +1,5 @@
-import { StringSchema } from "../../src/schemas/index.js";
 import { Edge, Graph, nodeLookup } from "../../src/index.js";
+import {  StringSchema } from "../../src/schemas/index.js";
 import InputNode from "../../src/nodes/generic/input.js";
 import OutputNode from "../../src/nodes/generic/output.js";
 
@@ -23,8 +23,15 @@ describe("nodeUsage", () => {
       type: StringSchema,
     });
 
+    output.addInput("input", {
+      type: StringSchema,
+    });
+
     //Input is a special case with dynamic values so it needs to be executed and computed to generate the output values
-    await input.execute();
+    const res = await input.run();
+
+    expect(res.error).toBeUndefined();
+
 
     const edge = input.outputs.foo.connect(output.inputs.input);
 
@@ -37,12 +44,14 @@ describe("nodeUsage", () => {
     });
 
     const expected = {
-      type: {
-        $id: "https://schemas.tokens.studio/string.json",
-        title: "String",
-        type: "string",
-      },
-      value: "black",
+      input: {
+        type: {
+          $id: "https://schemas.tokens.studio/string.json",
+          title: "String",
+          type: "string",
+        },
+        value: "black",
+      }
     };
 
     expect(final.output).toEqual(expected);
@@ -90,10 +99,23 @@ describe("nodeUsage", () => {
         },
         {
           "annotations": {
+            "engine.dynamicInputs": true,
             "engine.singleton": true,
           },
           id: "442854d8-b1a2-4261-a310-8cf7cfaa25fd",
-          inputs: [],
+          inputs: [
+
+            {
+              "name": "input",
+              "type": {
+                "$id": "https://schemas.tokens.studio/string.json",
+                "title": "String",
+                "type": "string",
+              },
+              "value": "black",
+
+
+            }],
           type: "studio.tokens.generic.output",
         },
       ],

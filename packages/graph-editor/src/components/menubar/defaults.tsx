@@ -1,4 +1,4 @@
-import { Download, PagePlusIn, Settings as SettingsIcon, Play, Upload, Undo, Redo, Cpu,Archive }  from 'iconoir-react';
+import { Download, PagePlusIn, Settings as SettingsIcon, Play, Upload, Undo, Redo, Cpu, Archive } from 'iconoir-react';
 import { Menu, MenuItem, Seperator, SubMenu } from './data';
 import React, { MutableRefObject, useCallback } from 'react';
 import { MenuItemElement } from './menuItem';

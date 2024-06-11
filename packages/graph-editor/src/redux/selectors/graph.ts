@@ -13,3 +13,8 @@ export const graphEditorSelector = createSelector(
     graph,
     (state) => state.currentPanel?.ref
 );
+
+export const currentPanelIdSelector = createSelector(
+    graph,
+    (state) => state.currentPanelId
+);
