@@ -37,13 +37,13 @@ export const useIsValidConnection = ({
 
       const strippedVariadic = stripVariadic(connection.targetHandle!);
 
+      let targetType = target?.inputs[strippedVariadic].type!;
+      const sourceType = source?.outputs[connection.sourceHandle!].type!;
+
       //Check if the target is variadic
       if (target.inputs[strippedVariadic].variadic) {
-        return true;
+        targetType = target.inputs[strippedVariadic].type.items;
       }
-
-      const targetType = target?.inputs[strippedVariadic].type!;
-      const sourceType = source?.outputs[connection.sourceHandle!].type!;
 
       const canConvert = canConvertSchemaTypes(sourceType, targetType);
 
