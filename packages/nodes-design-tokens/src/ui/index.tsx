@@ -1,6 +1,6 @@
-import React from 'react';
-import { TOKEN, TOKEN_SET } from '../schemas/index.js';
 import { CubeHole, DatabaseScript } from 'iconoir-react';
+import { TOKEN, TOKEN_SET } from '../schemas/index.js';
+import React from 'react';
 
 
 export const icons = {

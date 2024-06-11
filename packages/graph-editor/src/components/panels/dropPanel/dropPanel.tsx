@@ -73,8 +73,6 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
     }
   };
 
-  console.log(data);
-
 
   return (
     <Box

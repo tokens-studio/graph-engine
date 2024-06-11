@@ -1,7 +1,7 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
-import { AnyArraySchema, BooleanSchema } from "../../schemas/index.js";
+import { createVariadicSchema, AnySchema, BooleanSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition<T> extends Node {
   static title = "Logical and";
@@ -21,7 +21,7 @@ export default class NodeDefinition<T> extends Node {
     super(props);
     this.addInput("inputs", {
       type: {
-        ...AnyArraySchema,
+        ...createVariadicSchema(AnySchema),
         default: [],
       },
       variadic: true,

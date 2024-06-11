@@ -5,7 +5,7 @@ export const variadicId = (id: string) => id.replace(".json", "-variadic.json")
 
 export const createVariadicSchema = (baseSchema) => {
   return {
-    $id: variadicId(baseSchema.$id),
+    //Currently we don't set the id here because we don't want to register this schema. Its likely that its structural and that anything that introspects it attempts to read the id from the baseschema
     title: baseSchema.title + "[]",
     type: "array",
     items: baseSchema
@@ -20,8 +20,6 @@ export const NumberSchema: SchemaObject = {
   title: "Number",
   type: "number",
 };
-
-
 
 export const STRING = "https://schemas.tokens.studio/string.json";
 export const StringSchema: SchemaObject = {
@@ -69,7 +67,6 @@ export const ObjectSchema: SchemaObject = {
   title: "Object",
   type: "object",
 };
-
 
 export const CURVE = "https://schemas.tokens.studio/curve.json";
 export const CurveSchema: SchemaObject = {
@@ -253,7 +250,6 @@ export const BufferSchema: SchemaObject = {
   properties: {
   },
 }
-
 
 /**
  * Checks whether a schema can be converted to another schema

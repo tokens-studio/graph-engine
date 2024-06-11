@@ -21,5 +21,5 @@ export default {
   [ANY]: {
     color: 'oklch(20% 0.1 180)',
     backgroundColor: 'oklch(80% 0.25 180)',
-  },
+  }
 };

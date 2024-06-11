@@ -1,4 +1,4 @@
-import { StringSchema, Node,  ColorSchema, INodeDefinition } from "@tokens-studio/graph-engine";
+import { StringSchema, Node, createVariadicSchema, ColorSchema, INodeDefinition } from "@tokens-studio/graph-engine";
 import type { Color as ColorType, ToInput, ToOutput } from "@tokens-studio/graph-engine";
 import { Color, blend, converter, formatHex } from "culori";
 import { NonEmptyArray } from "culori/src/common.js";
@@ -44,8 +44,7 @@ export default class NodeDefinition extends Node {
     });
     this.addInput("colors", {
       type: {
-        type: "array",
-        items: ColorSchema,
+        ...createVariadicSchema(ColorSchema),
         default: [],
       },
       variadic: true,

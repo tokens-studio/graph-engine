@@ -1,8 +1,7 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
-import { NumberSchema, } from "../../schemas/index.js";
-import { arrayOf } from "../../schemas/utils.js";
+import { NodeTypes } from "../../types.js";
+import { NumberSchema, createVariadicSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Add Node (Variadic)";
@@ -20,7 +19,7 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("inputs", {
       type: {
-        ...arrayOf(NumberSchema),
+        ...createVariadicSchema(NumberSchema),
         default: [],
       },
       variadic: true,

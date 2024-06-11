@@ -21,7 +21,7 @@ export const TokenArrayField = observer(({ port, readOnly }: IField) => {
 
     return (
         <Stack gap={4} direction="column" align="center">
-            <Accordion type="multiple" defaultValue={[]}>
+            <Accordion type="multiple" defaultValue={['tokens']} >
                 <Accordion.Item value="tokens">
                     <Accordion.Trigger>Tokens</Accordion.Trigger>
                     <Separator orientation="horizontal" />

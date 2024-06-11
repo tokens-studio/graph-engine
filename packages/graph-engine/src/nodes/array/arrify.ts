@@ -1,7 +1,7 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
-import { AnyArraySchema, AnySchema } from "../../schemas/index.js";
+import { AnyArraySchema, AnySchema, createVariadicSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition<T> extends Node {
   static title = "Arrify";
@@ -19,7 +19,10 @@ export default class NodeDefinition<T> extends Node {
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("items", {
-      type: AnySchema,
+      type: {
+        ...createVariadicSchema(AnySchema),
+        default: [],
+      },
       visible: true,
       variadic: true,
     });

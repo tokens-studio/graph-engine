@@ -319,7 +319,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
-
     const managedNodesChange = useCallback((changes: NodeChange[]) => {
       //Note this needs to happen first to clean up ui resources
       onNodesChange(changes);
