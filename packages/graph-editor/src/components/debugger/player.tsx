@@ -1,7 +1,7 @@
 import { Pause, Play, UndoAction, ZoomIn, ZoomOut, Trash } from 'iconoir-react';
 import { TimelineState } from '@xzdarcy/react-timeline-editor';
-import { IconButton, Text, Stack } from '@tokens-studio/ui';
-import React, {  useEffect, useState } from 'react';
+import { IconButton, Text, Stack, Select } from '@tokens-studio/ui';
+import React, { useEffect, useState } from 'react';
 import { DebugInfo } from './data';
 
 
@@ -20,9 +20,11 @@ export interface TimelinePlayerProps {
 
 }
 
-const TimelinePlayer = ({ timelineState, autoScrollWhenPlay, setScale, data }: TimelinePlayerProps) => {
+const TimelinePlayer = (props: TimelinePlayerProps) => {
+    const { timelineState, autoScrollWhenPlay, setScale, data } = props;
     const [isPlaying, setIsPlaying] = useState(false);
     const [time, setTime] = useState(0);
+    const [rate,setRate ] = useState(1);
 
     useEffect(() => {
         if (!timelineState?.current) return;
@@ -57,7 +59,9 @@ const TimelinePlayer = ({ timelineState, autoScrollWhenPlay, setScale, data }: T
     };
 
     const handleRateChange = (rate: number) => {
+
         if (!timelineState?.current) return;
+        setRate(rate);
         timelineState.current.setPlayRate(rate);
     };
 
@@ -79,7 +83,6 @@ const TimelinePlayer = ({ timelineState, autoScrollWhenPlay, setScale, data }: T
     const zoomOut = () => {
         setScale((prev) => prev * 0.8)
     }
-
     const trash = () => {
         data.clear()
     }
@@ -88,6 +91,17 @@ const TimelinePlayer = ({ timelineState, autoScrollWhenPlay, setScale, data }: T
     return (
         <Stack align='center' gap={2} css={{ padding: '$2' }}>
             <IconButton icon={isPlaying ? <Pause /> : <Play />} onClick={handlePlayOrPause} variant={'primary'}></IconButton>
+            <Select onValueChange={handleRateChange}>
+                <Select.Trigger label="Speed" value={rate+"x"} />
+                <Select.Content>
+                    {Rates.map((rate) => {
+                        return <Select.Item key={rate} value={rate}>{rate}x</Select.Item>
+                    })
+                    }
+                </Select.Content>
+            </Select>
+
+
             <IconButton icon={<UndoAction />} onClick={reset}></IconButton>
             <IconButton icon={<ZoomIn />} onClick={() => zoomIn()}></IconButton>
             <IconButton icon={<ZoomOut />} onClick={() => zoomOut()}></IconButton>

@@ -29,7 +29,6 @@ export interface DebuggerProps {
 
 const DebuggerInner = observer(({ data, domRef, timeline, scale }) => {
 
-
     return <Stack css={{ flex: 1 }}>
         <div
             ref={domRef}
@@ -66,10 +65,10 @@ const DebuggerInner = observer(({ data, domRef, timeline, scale }) => {
             scaleWidth={scale}
             ref={timeline}
             effects={{}}
-            onClickAction={(a, b, c) => console.log(a, b, c)}
             getActionRender={(action, row) => {
                 return <CustomRender0 action={action} row={row} index={Number.parseInt(row.id)} />;
             }}
+            {...rest}
         />
     </Stack>
 });

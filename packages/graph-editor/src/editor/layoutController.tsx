@@ -199,25 +199,48 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                 },
                             ],
                         },
-
                         {
-                            id: 'graphs',
+
                             size: 700,
-                            group: 'graph',
-                            panelLock: { panelStyle: 'graph' },
-                            tabs: [
+                            mode: 'vertical',
+                            children:[
                                 {
-                                    closable: true,
-                                    cached: true,
-                                    id: 'graph1',
+                                    id: 'graphs',
+                                    size: 700,
                                     group: 'graph',
-                                    title: 'Graph',
-                                    content: (
-                                        <GraphEditor {...props} id='graph1' ref={ref} />
-                                    ),
+                                    panelLock: { panelStyle: 'graph' },
+                                    tabs: [
+                                        {
+                                            closable: true,
+                                            cached: true,
+                                            id: 'graph1',
+                                            group: 'graph',
+                                            title: 'Graph',
+                                            content: (
+                                                <GraphEditor {...props} id='graph1' ref={ref} />
+                                            ),
+                                        },
+                                    ],
                                 },
-                            ],
+                            
+                                {
+                                    size:300,
+                                    tabs:[
+                                        {
+                                            closable: true,
+                                            group: 'popout',
+                                            id: 'debugger',
+                                            title: 'Debugger',
+                                            content: <DebugPanel />,
+                                        },
+                                    ]
+                                }
+                            
+                             
+                            ]
+
                         },
+                        
                         {
                             size: 300,
                             mode: 'vertical',
@@ -269,13 +292,7 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                             title: 'Graph Settings',
                                             content: <GraphPanel />,
                                         },
-                                        {
-                                            closable: true,
-                                            group: 'popout',
-                                            id: 'debugger',
-                                            title: 'Debugger',
-                                            content: <DebugPanel />,
-                                        },
+                                     
                                     ],
                                 },
                             ],
