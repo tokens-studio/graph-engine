@@ -90,6 +90,7 @@ export enum NodeTypes {
   COLOR_NAME = "studio.tokens.color.name",
   NEAREST_TOKENS = "studio.tokens.color.nearestTokens",
   SET_COLOR_LUMINANCE = "studio.tokens.color.setColorLuminance",
+  FLATTE_ALPHA = "studio.tokens.color.flattenAlpha",
 
 
   //Series

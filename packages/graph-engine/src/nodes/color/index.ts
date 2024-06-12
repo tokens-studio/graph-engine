@@ -3,6 +3,7 @@ import contrasting from "./contrasting.js";
 import convert from "./convert.js";
 import create from "./create.js";
 import distance from "./distance.js";
+import flattenAlpha from "./flattenAlpha.js";
 import poline from "./poline.js";
 import scale from "./scale.js";
 import wheel from "./wheel.js";
@@ -12,10 +13,11 @@ export const nodes = [
   blend,
   poline,
   contrasting,
-  scale,
-  convert,
-  name,
   create,
-  wheel,
+  convert,
   distance,
+  flattenAlpha,
+  name,
+  scale,
+  wheel,
 ];
