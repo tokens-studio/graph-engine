@@ -15,7 +15,7 @@ import { useLocalGraph } from '@/context/graph.js';
 
 const isHexColor = (str) => {
   if (typeof str !== 'string') return false;
-  return /^#(?:[0-9a-fA-F]{3}){1,2}$/.test(str);;
+  return /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(str);;
 };
 
 export type UiNodeDefinition = {
@@ -156,7 +156,7 @@ const getColorPreview = (color: string, showValue = false) => {
   return (
     <Stack direction="row" gap={2}>
       {colorSwatch}    
-      {showValue ? <Text css={{ fontSize: '$small', color: '$gray12' }}>{color}</Text> : null}
+      {showValue ? <Text css={{ fontSize: '$small', color: '$gray12' }}>{color.toUpperCase()}</Text> : null}
     </Stack>
   );
 }

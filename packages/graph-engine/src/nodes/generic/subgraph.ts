@@ -39,6 +39,11 @@ export default class SubgraphNode extends Node {
     this._innerGraph.addNode(input);
     this._innerGraph.addNode(output);
 
+    this.addOutput("value", {
+      type: AnySchema,
+      visible: true,
+    });
+
     autorun(() => {
 
       //Get the existing inputs 
@@ -94,11 +99,10 @@ export default class SubgraphNode extends Node {
       return acc;
     }, {});
 
-
     const result = await this._innerGraph.execute({
       inputs
     });
 
-    this.setOutput("value", result.output?.value, result.output?.type);
+    this.setOutput("value", result.output?.value.value, result.output?.value.type);
   }
 }
