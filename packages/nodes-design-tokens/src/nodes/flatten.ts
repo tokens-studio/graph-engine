@@ -11,7 +11,7 @@ export default class FlattenNode extends Node {
     super(props);
     this.addInput("tokens", {
       type: {
-        ...createVariadicSchema(TokenSetSchema),
+        ...createVariadicSchema(TokenSchema),
         default: [],
       },
       variadic: true,

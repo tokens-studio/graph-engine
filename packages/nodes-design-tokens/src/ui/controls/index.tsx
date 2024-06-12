@@ -3,10 +3,13 @@ import { TokenArrayField } from "./tokenSet.js"
 import { TokenField } from "./token.js"
 import { VariadicTokenSet } from "./variadicTokenSet.js"
 import { variadicMatcher } from "@tokens-studio/graph-editor"
-import type { Port } from "@tokens-studio/graph-engine"
+import type { Input, Port } from "@tokens-studio/graph-engine"
 
 export const controls = [{
-    matcher: (port: Port) => port.type.type === 'array' && port.type.items?.$id === TOKEN,
+    matcher: (port: Port) => {
+        const inputPort = port as Input;
+        return inputPort.type.type === 'array' && inputPort.type.items?.$id === TOKEN && !inputPort.variadic
+    },
     component: TokenArrayField,
 },
 {
