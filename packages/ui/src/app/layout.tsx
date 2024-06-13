@@ -1,14 +1,15 @@
 
-import { Metadata } from 'next'
-import type { Viewport } from 'next'
-import StitchesProvider from './registry.tsx';
 import 'sanitize.css';
-import '@/styles/styles.scss';
+import 'sanitize.css/assets.css';
 import 'sanitize.css/forms.css';
 import 'sanitize.css/system-ui.css'
-import 'sanitize.css/ui-monospace.css';
 import 'sanitize.css/typography.css';
-import 'sanitize.css/assets.css';
+import 'sanitize.css/ui-monospace.css';
+import { Metadata } from 'next'
+import StitchesProvider from './registry.tsx';
+import type { Viewport } from 'next'
+
+import '@/styles/styles.scss';
 
 
 export const viewport: Viewport = {

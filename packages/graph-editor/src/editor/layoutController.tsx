@@ -162,18 +162,6 @@ const layoutDataFactory = (props, ref): LayoutData => {
                             mode: 'vertical',
                             children: [
                                 {
-                                    size: 78,
-                                    tabs: [
-                                        {
-                                            group: 'popout',
-                                            id: 'playControls',
-                                            title: 'Play Controls',
-                                            content: <PlayPanel />,
-                                            closable: true,
-                                        },
-                                    ],
-                                },
-                                {
                                     size: 545,
                                     tabs: [
                                         {
@@ -223,19 +211,6 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                     ],
                                 },
                             
-                                {
-                                    size:300,
-                                    tabs:[
-                                        {
-                                            closable: true,
-                                            group: 'popout',
-                                            id: 'debugger',
-                                            title: 'Debugger',
-                                            content: <DebugPanel />,
-                                        },
-                                    ]
-                                }
-                            
                              
                             ]
 
@@ -255,23 +230,7 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                             id: 'input',
                                             title: 'Inputs',
                                             content: <Inputsheet />,
-                                        },
-                                        {
-                                            closable: true,
-                                            cached: true,
-                                            group: 'popout',
-                                            id: 'nodeSettings',
-                                            title: 'Node Settings',
-                                            content: <NodeSettingsPanel />,
-                                        },
-                                        {
-                                            closable: true,
-                                            cached: true,
-                                            group: 'popout',
-                                            id: 'logs',
-                                            title: 'Logs',
-                                            content: <LogsPanel />,
-                                        },
+                                        }
                                     ],
                                 },
                                 {
@@ -284,14 +243,7 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                             id: 'outputs',
                                             title: 'Outputs',
                                             content: <OutputSheet />,
-                                        },
-                                        {
-                                            closable: true,
-                                            group: 'popout',
-                                            id: 'graphSettings',
-                                            title: 'Graph Settings',
-                                            content: <GraphPanel />,
-                                        },
+                                        }
                                      
                                     ],
                                 },

@@ -1,27 +1,27 @@
 'use client';
 
+import '@/styles/styles.scss';
 import '@tokens-studio/graph-editor/index.css';
-import '../../styles/styles.scss';
 
 import { Box } from '@tokens-studio/ui';
-import { useDispatch } from '@/hooks/index.ts';
-import { useSelector } from 'react-redux';
-import React, { useCallback, useEffect } from 'react';
+import { EditorTab } from '@/components/editor/index.tsx';
+import { GraphService } from '@/api/index.ts';
+import { ImperativeEditorRef } from '@tokens-studio/graph-editor';
+import { JoyrideTooltip } from '@/components/joyride/tooltip.tsx';
+import { SerializedGraph } from '@tokens-studio/graph-engine';
+import { observer } from 'mobx-react-lite';
 import {
   showJourneySelector,
 } from '@/redux/selectors/index.ts';
-import Joyride, { CallBackProps, STATUS } from 'react-joyride';
-import { useJourney } from '@/components/journeys/basic.tsx';
-import { JoyrideTooltip } from '@/components/joyride/tooltip.tsx';
-import { EditorTab } from '@/components/editor/index.tsx';
-import globalState, { GlobalState } from '@/mobx/index.tsx';
-import { observer } from 'mobx-react-lite';
-import { useRouter } from 'next/router.js';
-import { GraphService } from '@/api/index.ts';
-import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from '@/hooks/index.ts';
 import { useErrorToast } from '@/hooks/useToast.tsx';
-import { ImperativeEditorRef } from '@tokens-studio/graph-editor';
-import { SerializedGraph } from '@tokens-studio/graph-engine';
+import { useJourney } from '@/components/journeys/basic.tsx';
+import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/router.js';
+import { useSelector } from 'react-redux';
+import Joyride, { CallBackProps, STATUS } from 'react-joyride';
+import React, { useCallback, useEffect } from 'react';
+import globalState, { GlobalState } from '@/mobx/index.tsx';
 
 const Wrapper = observer(({ theme }: { theme: GlobalState['ui']['theme'] }) => {
   const dispatch = useDispatch();
