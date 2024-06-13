@@ -1,9 +1,6 @@
-app: graph-engine
+app: graph-engine-beta
 env: prod
 namespace: graph-engine
-deploy:
-  branch: major/strong-typing
-  event: push
 chart:
   repository: https://chart.onechart.dev
   name: onechart
@@ -21,7 +18,7 @@ values:
     ingressClassName: traefik
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
-    host: graph.alpha.tokens.studio
+    host: graph.beta.tokens.studio
     path: /
     tlsEnabled: true
   replicas: 1
