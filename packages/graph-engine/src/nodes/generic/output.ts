@@ -44,7 +44,7 @@ export default class NodeDefinition<T> extends Node {
         });
       }
 
-      this.setOutput(input, rawInput.value);
+      this.setOutput(input, rawInput.value, rawInput.type);
     });
 
     Object.keys(outputs).forEach((output) => {
