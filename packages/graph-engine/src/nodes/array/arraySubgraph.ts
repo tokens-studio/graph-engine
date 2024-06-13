@@ -93,9 +93,9 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
       });
 
       if (!result.output) throw new Error("No output from subgraph");
-      return output.concat([result.output]);
+      return output.concat([result.output.value]);
     }, Promise.resolve([]));
-
+    
     const flattened = output.map(x => x.value);
 
     const type = output.length > 0 ? output[0].type : input.type;

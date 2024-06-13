@@ -114,7 +114,7 @@ export default class ReduceSubgraph<T, V> extends SubgraphNode {
             });
             console.log(result.output)
             if (!result.output) throw new Error("No output from subgraph");
-            return result.output;
+            return result.output?.value;
         }, Promise.resolve(accumulator));
         this.setOutput("value", output.value, output.type);
     }
