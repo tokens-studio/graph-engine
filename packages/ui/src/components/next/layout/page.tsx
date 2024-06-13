@@ -1,8 +1,7 @@
+import { Box, Stack, Text } from '@tokens-studio/ui';
+import { GlobalState } from '@/mobx/index.tsx';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
-import { GlobalState } from '@/mobx/index.tsx';
-import { Box, Stack, Text } from '@tokens-studio/ui';
-import { Rail } from '../../rail.tsx'
 
 const PageLayout = observer(
   ({
@@ -21,7 +20,6 @@ const PageLayout = observer(
     return (
       <Stack css={{ height: '100%', width: '100%'}}>
         <Box>
-          <Rail />
         </Box>
         <Box css={{ flex: '1' }}>
           {children}
