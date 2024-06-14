@@ -3,12 +3,12 @@
  *
  * @packageDocumentation
  */
-import { AnySchema } from "../../schemas/index.js";
-import { INodeDefinition, Node } from "../../programmatic/node.js";
-import { NodeTypes } from "../../types.js";
 import { ToInput } from "../../programmatic/input.js";
 import { ToOutput } from "../../programmatic/output.js";
 import { annotatedDynamicInputs, annotatedSingleton } from '../../annotations/index.js';
+import { NodeTypes } from "../../types.js";
+import { Node, INodeDefinition } from "../../programmatic/node.js";
+import { AnySchema } from "../../schemas/index.js";
 
 
 export default class NodeDefinition<T> extends Node {
@@ -32,25 +32,18 @@ export default class NodeDefinition<T> extends Node {
 
   execute(): void | Promise<void> {
     const inputs = this.getAllInputs();
-    const outputs = this.getAllOutputs();
+
+    //Remove all outputs
+    this.clearOutputs();
 
     //Passthrough all
     Object.keys(inputs).forEach((input) => {
       const rawInput = this.getRawInput(input);
 
-      if(!(input in outputs)) {
-          this.addOutput(input, {
-          type: rawInput.type,
-        });
-      }
-
-      this.setOutput(input, rawInput.value, rawInput.type);
-    });
-
-    Object.keys(outputs).forEach((output) => {
-      if(!(output in inputs)) {
-        delete this.outputs[output];
-      }
+      this.addOutput(input, {
+        type: rawInput.type
+      });
+      this.setOutput(input, rawInput.value);
     });
   }
 }
