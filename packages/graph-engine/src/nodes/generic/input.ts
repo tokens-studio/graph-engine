@@ -4,9 +4,9 @@
  * @packageDocumentation
  */
 import { INodeDefinition } from "../../programmatic/node.js";
-import { annotatedDynamicInputs, annotatedSingleton } from '../../annotations/index.js';
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
+import { NodeTypes } from "../../types.js";
+import { annotatedDynamicInputs, annotatedSingleton } from '../../annotations/index.js';
 
 export default class NodeDefinition extends Node {
   static title = "Input";
@@ -23,19 +23,26 @@ export default class NodeDefinition extends Node {
 
   execute(): void | Promise<void> {
     const inputs = this.getAllInputs();
-
-    //Remove all outputs
-    this.clearOutputs();
+    const outputs = this.getAllOutputs();
 
     //Passthrough all
     Object.keys(inputs).forEach((input) => {
       const rawInput = this.getRawInput(input);
 
-      this.addOutput(input, {
-        type: rawInput.type,
-        visible: true,
-      });
-      this.setOutput(input, rawInput.value);
+      if(!(input in outputs)) {
+        this.addOutput(input, {
+          type: rawInput.type,
+          visible: true,
+        });
+      }
+
+      this.setOutput(input, rawInput.value, rawInput.type);
+    });
+
+    Object.keys(outputs).forEach((output) => {
+      if(!(output in inputs)) {
+        delete this.outputs[output];
+      }
     });
   }
 }
