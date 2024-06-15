@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { Editor, PanelGroup, DropPanelStore, PanelItem, defaultPanelGroupsFactory } from '@tokens-studio/graph-editor';
+import { Editor, defaultPanelGroupsFactory } from '@tokens-studio/graph-editor';
 import '@tokens-studio/graph-editor/index.css';
 import './index.css';
 

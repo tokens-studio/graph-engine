@@ -71,6 +71,7 @@ const NodeWrap = observer(({ node }: INodeWrap) => {
       title={node.annotations[title] || node.factory.title || 'Node'}
       error={node.error || null}
       controls={''}
+      style={{minWidth:'350px'}}
     >
       <Stack direction="column" gap={2}>
         <Stack direction="row" gap={3} css={{ padding: '$3' }}>

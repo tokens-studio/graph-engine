@@ -1,7 +1,7 @@
-import { INodeDefinition } from "../../index.js";
-import { NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
 import {  ColorSchema, NumberSchema } from "../../schemas/index.js";
+import { INodeDefinition } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
+import { NodeTypes } from "../../types.js";
 import Color from "colorjs.io";
 
 export default class NodeDefinition extends Node {
@@ -48,9 +48,6 @@ export default class NodeDefinition extends Node {
     } else {
       // Decompose the background color to RGB (assume opaque)
       const [r2, g2, b2] = bg.to('srgb').coords;
-      console.log('foreground:', r1, g1, b1, a1);
-      console.log('background:', r2, g2, b2);
-
       // Perform alpha blending formula
       const alpha = 1 - a1;
       const r = r2 * alpha + r1 * a1;

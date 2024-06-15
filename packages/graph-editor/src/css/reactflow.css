@@ -28,6 +28,10 @@
     opacity: 0.25;
 }
 
+.react-flow__node {
+    display: flex;
+}
+
 .react-flow__node.selectable.selected,
 .react-flow__node.selectable:focus {
     --nodeBorderColor: var(--gray-6);
@@ -93,4 +97,12 @@
 
 .react-flow__handle.react-flow__handle-valid {
     outline: 1px solid var(--colors-borderDefault);
+}
+
+.react-flow__resize-control{
+    display: none;
+}
+
+.react-flow__node.selected .react-flow__resize-control {
+    display: initial;
 }

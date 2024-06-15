@@ -1,9 +1,9 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
+import { NodeTypes } from "../../types.js";
 import { StringSchema } from "../../schemas/index.js";
 //@ts-ignore
-import cssFunctionsData from "mdn-data/css/functions.json" assert { type: "json" } ;
+import * as  cssFunctionsData from "mdn-data/css/functions.json" ;
 
 const FUNCTION_NAMES = Object.keys(cssFunctionsData);
 

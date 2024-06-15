@@ -27,6 +27,7 @@ export interface IPortPanel {
 export const PortPanel = observer(({ ports, readOnly }: IPortPanel) => {
   const entries = Object.values(ports).sort();
 
+
   return (
     <Stack direction="column" gap={3} width="full">
       {entries.filter(x=>!x.annotations[hidden]).map((x) => (

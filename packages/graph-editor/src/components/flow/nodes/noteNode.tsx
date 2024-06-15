@@ -6,6 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { description, title } from '@/annotations';
 import { Node } from '@tokens-studio/graph-engine';
 import { useLocalGraph } from '@/context/graph';
+import { Node as Wrapper } from '../wrapper/node'
 
 const minWidth = 120;
 function NoteNode(props: NodeProps) {
@@ -35,63 +36,35 @@ const Note = observer(({ node, annotations }: IAnnotation) => {
   }, [dispatch.graph, node.id]);
 
 
-  return <div
-    style={{
-      height: '100%',
-      width: '100%',
-      position: 'relative',
-    }}
-  >
+  return <Wrapper id={node.id} title={annotations[title] as string || 'Note'}>
     <NodeResizer
-
       minWidth={minWidth}
       minHeight={minWidth}
-    /><Stack direction='column' onClick={onClick} css={{ height: '100%' }}>
-      <Stack
-        direction="row"
-        justify="between"
-        align="center"
-        css={{
-          padding: '$3 $5',
-          borderBottom:
-            '2px solid var(--nodeBorderColor, var(--colors-borderSubtle))',
-          backgroundColor: 'var(--nodeBgColor, var(--colors-bgSubtle))',
-          borderRadius: '$medium',
-        }}
-      >
-        <Stack direction="row" gap={2} align="center">
-          <Text
-            css={{
-              fontSize: '$xxsmall',
-              fontWeight: '$sansMedium',
-              textTransform: 'uppercase',
-              color: 'var(--nodeTextColor, var(--colors-fgSubtle))',
-              letterSpacing: '0.15px',
-            }}
-          >
-            {annotations[title] || 'Note'}
-          </Text>
-        </Stack>
-      </Stack>
-      <Box css={{ padding: '$3', flex: 1,
+    />
+    <Box css={{
+      padding: '$3', flex: 1,
       //Fix limitation with text area
-      '>*':{
+      '>*': {
         height: '100%'
-      
-      } }}>
-        <Textarea
-          css={{
-            height: '100%',
-            width: '100%'
-          }}
-          disabled
-          placeholder='Add a description in the node settings'
-          value={annotations[description]}
-        >
-        </Textarea>
-      </Box>
-    </Stack>
-  </div>
+      }
+    }}>
+
+      <Textarea
+        css={{
+          height: '100%',
+          width: '100%'
+        }}
+        disabled
+        placeholder='Add a description in the node settings'
+        value={annotations[description]}
+      >
+      </Textarea>
+    </Box>
+
+  </Wrapper>
+
+
+
 
 })
 

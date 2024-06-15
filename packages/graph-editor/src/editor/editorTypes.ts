@@ -74,6 +74,8 @@ export interface EditorProps {
    * Additional icons to display in the editor for custom types
    */
   icons?: Record<string, React.ReactNode>;
+
+  initialGraph?: Graph;
 }
 
 export interface GraphEditorProps {
@@ -91,6 +93,7 @@ export interface GraphEditorProps {
    */
   nodeTypes?: Record<string, typeof GraphNode>;
   children?: React.ReactNode;
+  initialGraph?: SerializedGraph;
 }
 
 

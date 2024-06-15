@@ -4,15 +4,10 @@ import {
   Stack,
   Text,
 } from '@tokens-studio/ui';
-import {
-  ReactFlowInstance,
-} from 'reactflow';
 import { styled } from '@stitches/react';
 import React, { useCallback, useMemo } from 'react';
-import classNames from 'classnames/dedupe.js';
 import GraphLib from '@dagrejs/graphlib';
 import { useDispatch } from '@/hooks/useDispatch.js';
-const { Graph, alg } = GraphLib;
 
 const CollapserContainer = styled('div', {});
 
@@ -24,7 +19,7 @@ interface NodeProps {
   id: string;
   icon?: React.ReactNode;
   title: string;
-  error: Error | null;
+  error?: Error | null;
   isAsync?: boolean;
   children?: React.ReactNode;
   controls?: React.ReactNode;
@@ -60,7 +55,6 @@ export const Collapser = ({ children, collapsed }) => {
 };
 
 const NodeWrapper = styled('div', {
-  minWidth: '500px',
   position: 'relative',
   borderRadius: '$medium',
   background: '$gray2',

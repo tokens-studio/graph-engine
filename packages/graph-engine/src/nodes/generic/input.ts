@@ -4,9 +4,9 @@
  * @packageDocumentation
  */
 import { INodeDefinition } from "../../programmatic/node.js";
-import { annotatedDynamicInputs, annotatedSingleton } from '../../annotations/index.js';
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
+import { NodeTypes } from "../../types.js";
+import { annotatedDynamicInputs, annotatedSingleton } from '../../annotations/index.js';
 
 export default class NodeDefinition extends Node {
   static title = "Input";

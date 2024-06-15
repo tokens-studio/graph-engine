@@ -108,7 +108,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     const { getIntersectingNodes } = reactFlowInstance;
     const store = useStoreApi();
 
-    const initialGraph = useMemo(() => new Graph(), []);
+    const initialGraph: Graph = useMemo(()=>new Graph(), []);
 
     const [graph, setTheGraph] = useState(initialGraph);
 
@@ -160,7 +160,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
       })
 
-      const valueDetecterDisposer =graph.on('valueSent', (edges) => {
+      const valueDetecterDisposer = graph.on('valueSent', (edges) => {
         edges
         const edgeLookup = edges.reduce((acc, edge) => {
           acc[edge.id] = edge;
@@ -241,7 +241,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
       });
 
-      return ()=>{
+      return () => {
         valueDetecterDisposer();
         EdgeUpdaterDisposer();
       }
@@ -524,7 +524,14 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
       }),
       [reactFlowInstance, fullNodeLookup, dispatch.graph, graph, setNodes, setEdges],
     );
-    0
+    
+
+    useEffect(()=>{
+      if (props.initialGraph){
+        internalRef.current?.loadRaw(props.initialGraph);
+      }
+    },[])
+
     const onConnect = useMemo(
       () => connectNodes({ graph, setEdges, dispatch }),
       [dispatch, graph, setEdges],

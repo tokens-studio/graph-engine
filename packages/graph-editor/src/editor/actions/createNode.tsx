@@ -4,7 +4,7 @@ import { NodeTypes, Node, Graph, NodeFactory } from '@tokens-studio/graph-engine
 import { ReactFlowInstance } from 'reactflow';
 
 export type NodeRequest = {
-  type: NodeTypes;
+  type: string;
   position?: { x: number; y: number };
   data?: any;
 }
@@ -58,6 +58,8 @@ export const createNode = ({
       alert('Only one output node allowed');
       return;
     }
+
+
     //Lookup the node type
     const Factory = nodeLookup[nodeRequest.type];
 

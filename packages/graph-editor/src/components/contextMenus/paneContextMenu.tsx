@@ -11,6 +11,7 @@ import { clear } from '../../editor/actions/clear';
 import { v4 as uuidv4, v4 } from 'uuid';
 import { NodeTypes } from '@/components/flow/types';
 import { useLocalGraph } from '@/context/graph';
+import { useAction } from '@/editor/actions/provider';
 
 export interface IPaneContextMenu {
   id: string;
@@ -23,6 +24,7 @@ export const PaneContextMenu = ({ id }: IPaneContextMenu) => {
   const snapGridValue = useSelector(snapGrid);
   const dispatch = useDispatch();
   const graph = useLocalGraph();
+  const createNode = useAction('createNode');
 
   const handleTriggerAddNode = useCallback(
     (e) => {
@@ -34,22 +36,21 @@ export const PaneContextMenu = ({ id }: IPaneContextMenu) => {
   const handleAddNote = useCallback(
     (e) => {
       const position = reactFlowInstance.screenToFlowPosition({
-        x: e.triggerEvent.screenX,
-        y: e.triggerEvent.screenY,
+        x: e.triggerEvent.clientX,
+        y: e.triggerEvent.clientY,
       });
 
       const noteNode = {
-        id: v4(),
-        type: NodeTypes.NOTE,
+        type: 'studio.tokens.generic.note',
         position,
         data: {
           text: '',
         },
       };
+      createNode(noteNode);
 
-      reactFlowInstance.addNodes([noteNode]);
     },
-    [reactFlowInstance],
+    [reactFlowInstance, createNode],
   );
 
   const recenter = useCallback(() => {
