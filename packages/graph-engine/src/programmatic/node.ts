@@ -1,12 +1,12 @@
+import { Graph } from '../graph/index.js';
+import { GraphSchema } from "../schemas/index.js";
+import { IDeserializeOpts, SerializedNode } from "../graph/types.js";
 import { Input } from "./input.js";
 import { Output } from "./output.js";
-import { v4 as uuid } from 'uuid';
-import { Graph } from '../graph/index.js';
-import { SerializedNode, IDeserializeOpts } from "../graph/types.js";
-import { annotatedNodeRunning } from "../annotations/index.js";
-import { GraphSchema } from "../schemas/index.js";
-import getDefaults from "json-schema-defaults";
 import { action, computed, makeObservable, observable } from "mobx";
+import { annotatedNodeRunning } from "../annotations/index.js";
+import { v4 as uuid } from 'uuid';
+import getDefaults from "json-schema-defaults";
 import type { NodeRun } from "../types.js";
 
 
@@ -31,7 +31,7 @@ export interface TypeDefinition {
   /**
    * Additional annotations to store on the input
    */
-  annotations?: Record<string, any>;
+  annotations?: Record<string, unknown>;
 }
 
 
@@ -42,7 +42,7 @@ export class Node {
   readonly id: string;
   public static readonly description?: string;
   public static readonly title?: string;
-  public static readonly annotations: Record<string, any> = {};
+  public static readonly annotations: Record<string, unknown> = {};
   /**
    * The groups this node belongs to as a string array
    */
@@ -54,7 +54,7 @@ export class Node {
    */
   public inputs: Record<string, Input> = {};
   public outputs: Record<string, Output> = {};
-  public annotations: Record<string, any> = {};
+  public annotations: Record<string, unknown> = {};
 
   public lastExecutedDuration = 0;
 
@@ -80,6 +80,7 @@ export class Node {
       execute: action,
       addOutput: action,
       clearOutputs: action,
+      removeInput:action
     });
     //Defined nodes would be specified here
   }
@@ -89,7 +90,7 @@ export class Node {
    * @param name
    * @param input
    */
-  addInput<T = any>(name: string, type: TypeDefinition) {
+  addInput<T = unknown>(name: string, type: TypeDefinition) {
     //Extract the default value from the schema
     return (this.inputs[name] = new Input<T>({
       name,
@@ -99,7 +100,7 @@ export class Node {
       node: this,
     }));
   }
-  addOutput<T = any>(name: string, type: TypeDefinition) {
+  addOutput<T = unknown>(name: string, type: TypeDefinition) {
     this.outputs[name] = new Output<T>({
       name,
       ...type,
@@ -177,7 +178,7 @@ export class Node {
    * @param uri 
    * @param data 
    */
-  async load(uri: string, data?: any) {
+  async load(uri: string, data?: unknown) {
     this._graph?.loadResource(uri, this, data);
   }
 
@@ -276,7 +277,7 @@ export class Node {
     return this.type;
   };
 
-  getAllInputs = <T = Record<string, any>>(): T => {
+  getAllInputs = <T = Record<string, unknown>>(): T => {
     return Object.fromEntries(
       Object.entries(this.inputs).map(([key, value]) => [key, value.value])
     ) as T;
@@ -311,7 +312,7 @@ export class Node {
    * @param type
    */
 
-  protected setOutput = (name: string, value: any, type?: GraphSchema) => {
+  protected setOutput = (name: string, value: unknown, type?: GraphSchema) => {
     this.outputs[name]?.set(value, type);
   };
 
@@ -349,12 +350,5 @@ export class Node {
   public onResume = () => {
     this.onStart();
   };
-  /**
-   * Triggered when a message is received from the graph.
-   * @param action 
-   * @param data 
-   */
-  public onAction = (action: string, data: any) => { };
-
 }
 
