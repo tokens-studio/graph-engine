@@ -1,12 +1,12 @@
-import { Graph } from '../graph/index.js';
-import { GraphSchema } from "../schemas/index.js";
-import { IDeserializeOpts, SerializedNode } from "../graph/types.js";
 import { Input } from "./input.js";
 import { Output } from "./output.js";
-import { action, computed, makeObservable, observable } from "mobx";
-import { annotatedNodeRunning } from "../annotations/index.js";
 import { v4 as uuid } from 'uuid';
+import { Graph } from '../graph/index.js';
+import { SerializedNode, IDeserializeOpts } from "../graph/types.js";
+import { annotatedNodeRunning } from "../annotations/index.js";
+import { GraphSchema } from "../schemas/index.js";
 import getDefaults from "json-schema-defaults";
+import { action, computed, makeObservable, observable } from "mobx";
 import type { NodeRun } from "../types.js";
 
 
@@ -279,12 +279,6 @@ export class Node {
   getAllInputs = <T = Record<string, any>>(): T => {
     return Object.fromEntries(
       Object.entries(this.inputs).map(([key, value]) => [key, value.value])
-    ) as T;
-  };
-
-  getAllOutputs = <T = Record<string, any>>(): T => {
-    return Object.fromEntries(
-      Object.entries(this.outputs).map(([key, value]) => [key, value.value])
     ) as T;
   };
 
