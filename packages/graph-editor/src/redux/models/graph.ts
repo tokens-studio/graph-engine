@@ -3,6 +3,7 @@ import { createModel } from '@rematch/core';
 import { Graph, annotatedPlayState } from '@tokens-studio/graph-engine';
 import type { PlayState } from '@tokens-studio/graph-engine';
 import { ImperativeEditorRef } from '@/editor/editorTypes.js';
+import { MAIN_GRAPH_ID } from '@/constants.js';
 
 export interface ILog {
   data: Record<string, any>;
@@ -31,7 +32,7 @@ export const graphState = createModel<RootModel>()({
     graph: undefined,
     graphPlayState: 'stopped',
     panels: {},
-    currentPanelId: 'graph1',
+    currentPanelId: MAIN_GRAPH_ID,
     currentPanel: null,
     logs: [],
   } as GraphState,

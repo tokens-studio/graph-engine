@@ -17,7 +17,7 @@ import { PlayPanel } from '../panels/play';
 import { LogsPanel } from '../panels/logs';
 import { GraphPanel } from '../panels/graph';
 import { DropPanel } from '../panels/dropPanel';
-import { graphEditorSelector } from '@/redux/selectors/graph';
+import { graphEditorSelector, mainGraphSelector } from '@/redux/selectors/graph';
 import { title } from '@/annotations';
 import { useDispatch } from '@/hooks';
 
@@ -145,10 +145,8 @@ export const defaultMenuDataFactory = (): Menu =>
           new MenuItem({
             name: 'download',
             render: function FileSave(rest) {
-              const graphRef = useSelector(
-                graphEditorSelector,
-              ) as (ImperativeEditorRef | undefined);
-
+              const mainGraph = useSelector(mainGraphSelector);
+              const graphRef = mainGraph?.ref as (ImperativeEditorRef | undefined);
 
               const onSave = () => {
                 const saved = graphRef!.save();

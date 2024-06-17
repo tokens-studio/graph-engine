@@ -19,7 +19,8 @@ interface NodeProps {
   id: string;
   icon?: React.ReactNode;
   title: string;
-  error?: Error | null;
+  subtitle?: string;
+  error: Error | null;
   isAsync?: boolean;
   children?: React.ReactNode;
   controls?: React.ReactNode;
@@ -57,7 +58,7 @@ export const Collapser = ({ children, collapsed }) => {
 const NodeWrapper = styled('div', {
   position: 'relative',
   borderRadius: '$medium',
-  background: '$gray2',
+  background: '$gray6',
   flex:1,
   display:'flex',
   variants: {
@@ -72,7 +73,7 @@ const NodeWrapper = styled('div', {
 });
 
 export const Node = (props: NodeProps) => {
-  const { id, icon, title, error, isAsync, children, controls, ...rest } =
+  const { id, icon, title, subtitle, error, isAsync, children, controls, ...rest } =
     props;
   const dispatch = useDispatch();
 
@@ -100,8 +101,7 @@ export const Node = (props: NodeProps) => {
               align="center"
               css={{
                 padding: '$3',
-                borderBottom: '2px solid var(--nodeBorderColor, var(--colors-borderSubtle))',
-                backgroundColor: '$gray3',
+                backgroundColor: '$gray4',
                 borderRadius: '$medium',
                 borderBottomLeftRadius: 0,
                 borderBottomRightRadius: 0,
@@ -111,23 +111,32 @@ export const Node = (props: NodeProps) => {
                 {icon && (
                   <Box
                     css={{
-                      color: 'var(--nodeTextColor, var(--colors-fgSubtle))',
+                      color: 'var(--nodeTextColor, var(--colors-gray12))',
                     }}
                   >
                     {icon}
                   </Box>
                 )}
-                <Text
-                  css={{
-                    fontSize: '$xxsmall',
-                    fontWeight: '$sansMedium',
-                    textTransform: 'uppercase',
-                    color: 'var(--nodeTextColor, var(--colors-fgSubtle))',
-                    letterSpacing: '0.15px',
-                  }}
-                >
-                  {title}
-                </Text>
+                <Stack direction="column">
+                  <Text
+                    css={{
+                      fontSize: '$medium',
+                      color: 'var(--nodeTextColor, var(--colors-gray12))',
+                    }}
+                  >
+                    {title}
+                  </Text>
+                  {subtitle && (
+                    <Text
+                      css={{
+                        fontSize: '$xsmall',
+                        color: 'var(--nodeTextColor, var(--colors-gray10))',
+                      }}
+                    >
+                      {subtitle}
+                    </Text>
+                  )}
+                </Stack>
                 {isAsync && <Spinner />}
               </Stack>
               <Stack direction="row" gap={2}>

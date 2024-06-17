@@ -10,6 +10,8 @@ import { Graph } from 'graphlib';
 import { useAction } from '@/editor/actions/provider';
 import { graph } from '@/redux/selectors';
 import { useLocalGraph } from '@/hooks';
+import { useCanDeleteNode } from '@/hooks/useCanDeleteNode';
+import { useToast } from '@/hooks/useToast';
 
 export interface INodeContextMenuProps {
   id: string;
@@ -72,11 +74,19 @@ export const NodeContextMenu = ({
   id,
   nodes,
 }: INodeContextMenuProps) => {
+  const trigger = useToast();
   const reactFlowInstance = useReactFlow();
   const duplicateNodes = useAction('duplicateNodes');
   const graph = useLocalGraph();
 
+  const isDeletable = useCanDeleteNode(nodes?.[0]?.id);
+
   const deleteEl = useCallback(() => {
+    if (isDeletable) {
+      trigger({ title: 'Node is not deletable', description: 'This node cannot be deleted' })
+      return;
+    }
+
     if (nodes) {
       reactFlowInstance.deleteElements({ nodes });
     }
@@ -143,7 +153,7 @@ export const NodeContextMenu = ({
 
   const forceExecution = useCallback(() => {
     if (nodes) {
- 
+
       nodes.forEach((node) => {
         const graphNode = graph.getNode(node.id);
         if (graphNode) {
@@ -151,13 +161,13 @@ export const NodeContextMenu = ({
         }
       });
     }
-  },[graph, nodes]);
+  }, [graph, nodes]);
 
   return (
     <Menu id={id}>
       <Item onClick={onDuplicate}>Duplicate</Item>
       <Item onClick={focus}>Focus</Item>
-      <Item onClick={deleteEl}>Delete</Item>
+      <Item disabled={!isDeletable} onClick={deleteEl}>Delete</Item>
       <Item onClick={forceExecution}>Force Execution</Item>
       <Separator />
       {nodes?.length == 1 && (

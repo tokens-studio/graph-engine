@@ -44,7 +44,7 @@ export const HandleContainer = ({
       <Stack
         direction="column"
         gap={2}
-        css={{ flexBasis: full ? '100%' : '50%', position: 'relative', textAlign: type === 'source' ? 'right' : 'left'}}
+        css={{ flexBasis: full ? '100%' : '50%', position: 'relative', textAlign: type === 'source' ? 'right' : 'left', minWidth: '250px' }}
         className={className}
       >
         {children}

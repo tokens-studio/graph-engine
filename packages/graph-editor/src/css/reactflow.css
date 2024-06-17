@@ -37,9 +37,9 @@
     --nodeBorderColor: var(--gray-6);
     --nodeBgColor: var(--gray-3);
     --nodeTextColor: var(--gray-12);
-    outline: 1px solid var(--gray-6);
+    outline: 5px solid var(--purple-10);
     outline-offset: 5px;
-    border-radius: var(--radii-small, 4px);
+    border-radius: var(--radii-medium, 8px);
 }
 
 .react-flow__edge.selected .react-flow__edge-path,
@@ -61,7 +61,7 @@
 }
 
 .react-flow__minimap-mask {
-    fill: var(--gray-6) !important;
+    fill: var(--gray-12) !important;
 }
 
 .react-flow__handle-right {
@@ -76,14 +76,14 @@
 
 .react-flow__edge-path,
 .react-flow__connection-path {
-    stroke: var(--gray-6);
+    stroke: var(--gray-12);
 }
 
 .react-flow__edge.selected .react-flow__edge-path,
 .react-flow__edge:focus .react-flow__edge-path,
 .react-flow__edge:focus-visible .react-flow__edge-path {
     stroke-width: 2 !important;
-    stroke: var(--gray-8);
+    stroke: var(--purple-10);
 }
 
 .react-flow__handle-connecting:not(.react-flow__handle-valid) {

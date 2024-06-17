@@ -21,6 +21,7 @@ const isHexColor = (str) => {
 export type UiNodeDefinition = {
   //Name of the Node
   title?: string;
+  subtitle: string;
   // Whether to support custom rendering by specifying a component
   wrapper?: React.FC;
   icon?: React.ReactNode;
@@ -55,6 +56,7 @@ export interface INodeWrap {
    * Optional title to override the default title
    */
   title?: string;
+  subtitle?: string;
   node: GraphNode;
 }
 const NodeWrap = observer(({ node }: INodeWrap) => {
@@ -69,6 +71,7 @@ const NodeWrap = observer(({ node }: INodeWrap) => {
       isAsync={node.annotations[annotatedNodeRunning] as boolean}
       // icon={nodeDef.icon}
       title={(node.annotations[title] as string) || node.factory.title || 'Node'}
+      subtitle={node.annotations[title] ? node.factory.title : ""}
       error={node.error || null}
       controls={''}
       style={{minWidth:'350px'}}
