@@ -1,17 +1,26 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
 import { AnyArraySchema, AnySchema, NumberSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
 export default class NodeDefinition<T> extends Node {
   static title = "Index Array";
-  static type = NodeTypes.ARRAY_INDEX;
+  static type = "studio.tokens.array.index";
   static description = "Extracts a value from an array at a given index";
 
   declare inputs: ToInput<{
+    /**
+     * The array to extract the value from
+     */
     array: T[]
+    /**
+     * The index to extract the value from. 
+     * @default 0
+     */
     index: number
   }>
   declare outputs: ToOutput<{
+    /**
+     * The value at the given index
+     */
     value: T
   }>
 

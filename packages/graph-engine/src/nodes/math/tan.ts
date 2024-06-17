@@ -1,11 +1,10 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Tan";
-  static type = NodeTypes.TAN;
+  static type = "studio.tokens.math.tan";
   static description = "Tan node allows you to get the sin of a number.";
 
 

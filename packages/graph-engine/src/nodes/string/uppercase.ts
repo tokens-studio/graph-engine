@@ -1,11 +1,10 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { StringSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Uppercase";
-  static type = NodeTypes.UPPERCASE;
+  static type = "studio.tokens.string.uppercase";
   static description = "Converts a string to uppercase";
 
   declare inputs: ToInput<{

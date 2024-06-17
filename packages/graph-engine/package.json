@@ -21,7 +21,7 @@
     "alias": "tsc-alias -p tsconfig.prod.json --dir dist/esm",
     "build": "tsup",
     "dev": "tsup --watch",
-    "docs": "typedoc",
+    "docs": "typedoc && typedoc --out docs --json ./docs/docs.json",
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint --ext .tsx,.ts,.js,.html . --fix",
     "format:prettier": "prettier \"**/*.{ts,js,md,json}\" --write",

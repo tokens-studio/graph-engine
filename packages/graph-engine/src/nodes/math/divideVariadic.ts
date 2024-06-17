@@ -1,11 +1,10 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema, createVariadicSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Divide (Variadic)";
-  static type = NodeTypes.DIV_VARIADIC;
+  static type = "studio.tokens.math.divideVariadic";
   static description = "Divide node allows you to divide two or more numbers.";
 
   declare inputs: ToInput<{

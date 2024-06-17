@@ -1,4 +1,4 @@
-import { Color, NodeTypes } from "../../types.js";
+import { Color } from "../../types.js";
 import {
   ColorSchema,
   NumberSchema,
@@ -37,7 +37,7 @@ export type ColorSpace = typeof colorSpaces[number];
 
 export default class NodeDefinition extends Node {
   static title = "Convert Color";
-  static type = NodeTypes.CONVERT_COLOR;
+  static type = "studio.tokens.color.convert";
   static description =
     "Converts a color from one color space to another and exposes the channels as outputs";
 
@@ -47,10 +47,25 @@ export default class NodeDefinition extends Node {
   }>;
 
   declare outputs: ToOutput<{
+    /**
+     * The first channel of the color
+     */
     a: number;
+    /**
+    * The second channel of the color
+    */
     b: number;
+    /**
+     * The third channel of the color
+     */
     c: number;
+    /**
+     * The fourth channel of the color. This is optional and only present in some color spaces
+     */
     d?: number;
+    /**
+     * The channels of the color as an array of numbers
+     */
     channels: (number | undefined)[];
     labels: string[];
   }>;

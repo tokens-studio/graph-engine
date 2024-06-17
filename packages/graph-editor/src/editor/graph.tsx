@@ -36,7 +36,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import ReactFlow, { updateEdge } from 'reactflow';
+import ReactFlow from 'reactflow';
 
 import groupNode from '../components/flow/nodes/groupNode.js';
 import noteNode from '../components/flow/nodes/noteNode.js';
@@ -69,6 +69,8 @@ import { ActionProvider } from './actions/provider.js';
 import { HotKeys } from '@/components/hotKeys/index.js';
 import { currentPanelIdSelector } from '@/redux/selectors/graph.js';
 import { debugInfo } from '@/components/debugger/data.js';
+import { NOTE, PASSTHROUGH } from '@/ids.js';
+
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -390,9 +392,9 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     const fullNodeTypesRef = useRef({
       ...customNodeUI,
       GenericNode: NodeV2,
-      [NodeTypes.PASS_THROUGH]: PassthroughNode,
+      [PASSTHROUGH]: PassthroughNode,
       [EditorNodeTypes.GROUP]: groupNode,
-      [NodeTypes.NOTE]: noteNode
+      [NOTE]: noteNode
     });
 
     const customNodeMap = useMemo(() => {
@@ -400,8 +402,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
       return Object.fromEntries(Object.entries(
         {
           ...customNodeUI,
-          [NodeTypes.NOTE]: NodeTypes.NOTE,
-          [NodeTypes.PREVIEW]: NodeTypes.PREVIEW,
+          [NOTE]: NOTE,
+          "studio.tokens.generic.preview": "studio.tokens.generic.preview",
         }).map(([k, _]) => [k, k]))
     }, [customNodeUI]);
 
@@ -448,6 +450,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           }
         },
         load: (loadedGraph: Graph) => {
+
           //capabilities.forEach(cap => graph.registerCapability(cap));
           //const loadedGraph = graph.deserialize(serializedGraph, fullNodeLookup);
           //Read the annotaions 
@@ -603,16 +606,16 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
           y: event.clientY,
         });
 
-        const newNode = new fullNodeLookup[NodeTypes.PASS_THROUGH]({
+        const newNode = new fullNodeLookup[PASSTHROUGH]({
           graph
         });
 
-        newNode.annotations[uiNodeType] = NodeTypes.PASS_THROUGH;
+        newNode.annotations[uiNodeType] = PASSTHROUGH;
         graph.addNode(newNode);
 
         const editorNode = {
           id: newNode.id,
-          type: NodeTypes.PASS_THROUGH,
+          type: PASSTHROUGH,
           data: {},
           position: position || { x: 0, y: 0 },
         } as Node;

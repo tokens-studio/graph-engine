@@ -1,14 +1,16 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Base Font Size";
-  static type = NodeTypes.BASE_FONT_SIZE;
+  static type = 'studio.tokens.accessibility.baseFontSize';
 
   declare inputs: ToInput<{
     visualAcuity: number;
+    /**
+     * The correct factor 
+     */
     correctionFactor: number;
     lightingCondition: number;
     distance: number;
@@ -23,6 +25,9 @@ export default class NodeDefinition extends Node {
 
   static description =
     "Base Font node allows you to calculate the base font size with DIN 1450.";
+
+
+
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("visualAcuity", {

@@ -1,6 +1,5 @@
-import { Node } from "../programmatic/node.js";
-import { NodeTypes } from "../types.js";
 import { Graph } from "./graph.js";
+import { Node } from "../programmatic/node.js";
 
 export type Terminals = {
   input?: Node;
@@ -15,10 +14,10 @@ export const findTerminals = (graph: Graph): Terminals => {
 
   Object.values(graph.nodes).forEach((node) => {
     switch (node.factory.type) {
-      case NodeTypes.INPUT:
+      case 'studio.tokens.generic.input':
         terminals.input = node;
         break;
-      case NodeTypes.OUTPUT:
+      case 'studio.tokens.generic.output':
         terminals.output = node;
         break;
     }

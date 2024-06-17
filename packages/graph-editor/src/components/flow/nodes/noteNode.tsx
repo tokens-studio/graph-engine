@@ -29,13 +29,10 @@ interface IAnnotation {
 
 const Note = observer(({ node, annotations }: IAnnotation) => {
 
-  const dispatch = useDispatch();
+  const onChange = (str)=>{
+    node.setAnnotation(description, str);
 
-  const onClick = useCallback(() => {
-    dispatch.graph.setCurrentNode(node.id);
-  }, [dispatch.graph, node.id]);
-
-
+  }
   return <Wrapper id={node.id} title={annotations[title] as string || 'Note'}>
     <NodeResizer
       minWidth={minWidth}
@@ -54,8 +51,8 @@ const Note = observer(({ node, annotations }: IAnnotation) => {
           height: '100%',
           width: '100%'
         }}
-        disabled
-        placeholder='Add a description in the node settings'
+        onChange={onChange}
+        placeholder='Add a description...'
         value={annotations[description]}
       >
       </Textarea>

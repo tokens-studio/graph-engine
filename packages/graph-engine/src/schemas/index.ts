@@ -341,7 +341,6 @@ export const AllSchemas = [
   StringSchema,
   ColorSchema,
   AnySchema,
-  AnyArraySchema,
   BooleanSchema,
   ObjectSchema,
   CurveSchema,

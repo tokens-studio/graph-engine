@@ -1,17 +1,16 @@
+
+
+import { AnySchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
+
+
 /**
  * A node that passes through the input to the output.
- *
- * @packageDocumentation
  */
-
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
-import { AnySchema } from "../../schemas/index.js";
-
 export default class NodeDefinition<T> extends Node {
   static title = "Passthrough";
-  static type = NodeTypes.PASS_THROUGH;
+  static type = "studio.tokens.generic.passthrough";
   static description = "Passes a value through to the output";
 
   declare inputs: ToInput<{

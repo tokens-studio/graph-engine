@@ -42,7 +42,7 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
   const readOnly = isReadOnly || port.isConnected;
   const controlSelector = useSelector(controls);
   const graph = useGraph();
-  const isInput = NodeTypes.INPUT === port.node.factory.type;
+  const isInput = "studio.tokens.generic.input" === port.node.factory.type;
   const isDynamicInput = Boolean(port.annotations[deletable]);
   const resettable = Boolean(port.annotations[resetable]);
 

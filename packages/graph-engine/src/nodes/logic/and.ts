@@ -1,11 +1,11 @@
+import { AnySchema, BooleanSchema, createVariadicSchema } from "../../schemas/index.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
-import { createVariadicSchema, AnySchema, BooleanSchema } from "../../schemas/index.js";
+
 
 export default class NodeDefinition<T> extends Node {
   static title = "Logical and";
-  static type = NodeTypes.AND;
+  static type = "studio.tokens.logic.and";
   static description = "AND node allows you to check if all inputs are true.";
 
   declare inputs: ToInput<{

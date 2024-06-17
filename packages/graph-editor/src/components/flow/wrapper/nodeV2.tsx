@@ -66,9 +66,9 @@ const NodeWrap = observer(({ node }: INodeWrap) => {
   return (
     <Node
       id={node.id}
-      isAsync={node.annotations[annotatedNodeRunning]}
+      isAsync={node.annotations[annotatedNodeRunning] as boolean}
       // icon={nodeDef.icon}
-      title={node.annotations[title] || node.factory.title || 'Node'}
+      title={(node.annotations[title] as string) || node.factory.title || 'Node'}
       error={node.error || null}
       controls={''}
       style={{minWidth:'350px'}}
@@ -164,7 +164,7 @@ const getColorPreview = (color: string, showValue = false) => {
 
 
 const getValuePreview = (value, type) => {
-  if (!value) {
+  if (value === undefined) {
     return null;
   }
 
@@ -190,6 +190,9 @@ const getValuePreview = (value, type) => {
     case 'number':
       valuePreview = value.toString();
       break;
+    case 'string':
+      valuePreview = value;
+      break
     default:
       if (isHexColor(value)) {
         return getColorPreview(value,true);
@@ -260,9 +263,8 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
     >
       {!hideName && (
         <Box css={{ display: 'grid', justifyContent: 'center', direction: 'row' }}>
-          {inlineValuesValue && <Text css={{ fontSize: '$small', color: '$gray12' }}>{getValuePreview(input.value, input.type) || port.name}</Text>}
-
-          {port.value && <Text css={{ fontSize: '$medium', color: '$gray11' }}>{port.name}</Text>}
+          {inlineValuesValue && <Text css={{ fontSize: '$small', color: '$gray12' }}>{getValuePreview(input.value, input.type) ?? input.name}</Text>}
+          {port.value !== undefined ? <Text css={{ fontSize: '$medium', color: '$gray11' }}>{input.name}</Text> : null}
         </Box>
       )}
       {inlineTypesValue && <InlineTypeLabel port={port} />}

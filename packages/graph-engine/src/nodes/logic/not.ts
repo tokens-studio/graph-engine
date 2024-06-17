@@ -1,11 +1,10 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
 import { AnySchema, BooleanSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
 
 export default class NodeDefinition<T> extends Node {
   static title = "Logical Not";
-  static type = NodeTypes.NOT;
+  static type = "studio.tokens.logic.not";
   static description = "Not node allows you to negate a boolean value.";
 
   declare inputs: ToInput<{

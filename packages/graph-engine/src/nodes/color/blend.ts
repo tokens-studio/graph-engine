@@ -1,5 +1,5 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes, Color as ColorType } from "../../types.js";
+import { Color as ColorType } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import Color from "colorjs.io";
 import {
@@ -25,7 +25,7 @@ function convertModifiedColorToHex(baseColor: string, modifier: ColorModifier) {
 
 export default class NodeDefinition extends Node {
   static title = "Blend Colors";
-  static type = NodeTypes.BLEND;
+  static type = "studio.tokens.color.blend";
   static description = "Blends two colors together";
 
   declare inputs: ToInput<{
@@ -39,7 +39,7 @@ export default class NodeDefinition extends Node {
   declare outputs: ToOutput<{
     value: ColorType
   }>;
-  
+
 
 
   constructor(props: INodeDefinition) {

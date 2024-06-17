@@ -1,10 +1,10 @@
 import { GraphSchema } from "../schemas/index.js";
 import { Node } from "./node.js";
-import { TypeDefinition } from "./node.js";
 import { Port } from "./port.js";
-import getDefaults from "json-schema-defaults";
 import { SerializedInput } from "../graph/types.js";
+import { TypeDefinition } from "./node.js";
 import { action, makeObservable } from "mobx";
+import getDefaults from "json-schema-defaults";
 
 export interface IInputProps<T = any> {
   name: string;

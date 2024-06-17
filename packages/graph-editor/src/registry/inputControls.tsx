@@ -1,5 +1,4 @@
 import {
-  NodeTypes,
   StringSchema,
 } from '@tokens-studio/graph-engine';
 import {
@@ -64,5 +63,5 @@ const CSSMapSpecifics = observer(({ node }: { node: Node }) => {
 });
 
 export const inputControls = {
-  [NodeTypes.CSS_MAP]: CSSMapSpecifics,
+  "studio.tokens.css.map": CSSMapSpecifics,
 } as Record<string, React.FC<{ node: Node }>>;

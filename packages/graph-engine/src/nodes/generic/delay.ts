@@ -1,13 +1,12 @@
-/**
- * A node that passes through the input to the output.
- *
- * @packageDocumentation
- */
 
+
+import { AnySchema, NumberSchema } from "../../schemas/index.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
-import { AnySchema, NumberSchema } from "../../schemas/index.js";
 
+/**
+ * A node that passes through the input to the output.
+ */
 export default class NodeDefinition<T> extends Node {
     static title = "Delay";
     static type = 'studio.tokens.generic.delay';
@@ -15,6 +14,10 @@ export default class NodeDefinition<T> extends Node {
 
     declare inputs: ToInput<{
         value: T;
+        /**
+         * The delay in milliseconds
+         * @default 1000
+         */
         delay: number;
     }>;
     declare outputs: ToOutput<{

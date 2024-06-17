@@ -1,12 +1,11 @@
-import { NodeTypes } from "../../types.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
 import { StringSchema } from "../../schemas/index.js";
-import { Input, ToInput } from "../../programmatic/input.js";
-import { Output, ToOutput } from "../../programmatic";
+import { ToInput } from "../../programmatic/input.js";
+import { ToOutput } from "../../programmatic";
 
 export default class NodeDefinition extends Node {
   static title = "Split String";
-  static type = NodeTypes.SPLIT_STRING;
+  static type = "studio.tokens.string.split";
   declare inputs: ToInput<{
     value: string;
     separator: string;

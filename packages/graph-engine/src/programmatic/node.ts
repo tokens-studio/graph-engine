@@ -80,7 +80,9 @@ export class Node {
       execute: action,
       addOutput: action,
       clearOutputs: action,
-      removeInput:action
+      setAnnotation:action,
+      removeInput:action,
+      removeOutput: action,
     });
     //Defined nodes would be specified here
   }
@@ -111,6 +113,9 @@ export class Node {
     });
   }
 
+  setAnnotation(key: string, value: unknown) {
+    this.annotations[key] = value;
+  }
   /**
    * Removes a named input from the node. This should only be used for dynamic inputs
    * @param name 
@@ -130,6 +135,19 @@ export class Node {
       //Ask to be recalculated
       this._graph?.update(this.id);
     }
+  }
+
+  removeOutput(name: string) {
+    if (this._graph) {
+      this._graph.outEdges(this.id, name).forEach((edge) => {
+        if (edge.id) {
+          return;
+        }
+        this._graph?.removeEdge(edge.id);
+      });
+    }
+    delete this.outputs[name];
+    //We do not need to be recalculated
   }
 
   /**
@@ -277,9 +295,17 @@ export class Node {
     return this.type;
   };
 
-  getAllInputs = <T = Record<string, unknown>>(): T => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getAllInputs = <T = Record<string, any>>(): T => {
     return Object.fromEntries(
       Object.entries(this.inputs).map(([key, value]) => [key, value.value])
+    ) as T;
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getAllOutputs = <T = Record<string, any>>(): T => {
+    return Object.fromEntries(
+      Object.entries(this.outputs).map(([key, value]) => [key, value.value])
     ) as T;
   };
 
@@ -319,7 +345,7 @@ export class Node {
   protected getInput = (name: string) => {
     return this.inputs[name].value;
   };
-  protected getRawInput = (name: string) => {
+  public getRawInput = (name: string) => {
     return this.inputs[name];
   };
   /**

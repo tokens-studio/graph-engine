@@ -1,12 +1,11 @@
-import {  ColorSchema, NumberSchema } from "../../schemas/index.js";
+import {  ColorSchema } from "../../schemas/index.js";
 import { INodeDefinition } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
-import { NodeTypes } from "../../types.js";
 import Color from "colorjs.io";
 
 export default class NodeDefinition extends Node {
   static title = "Flatten Alpha";
-  static type = NodeTypes.FLATTE_ALPHA;
+  static type = "studio.tokens.color.flattenAlpha";
   static description =
     "Reduces two colors to one by blending them together and removing the alpha channel. Expects a background color without alpha.";
   constructor(props: INodeDefinition) {

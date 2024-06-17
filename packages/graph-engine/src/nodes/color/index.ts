@@ -4,10 +4,10 @@ import convert from "./convert.js";
 import create from "./create.js";
 import distance from "./distance.js";
 import flattenAlpha from "./flattenAlpha.js";
+import name from "./name.js";
 import poline from "./poline.js";
 import scale from "./scale.js";
 import wheel from "./wheel.js";
-import name from "./name.js";
 
 export const nodes = [
   blend,

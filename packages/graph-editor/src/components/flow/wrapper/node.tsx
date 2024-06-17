@@ -58,6 +58,8 @@ const NodeWrapper = styled('div', {
   position: 'relative',
   borderRadius: '$medium',
   background: '$gray2',
+  flex:1,
+  display:'flex',
   variants: {
     error: {
       true: {
@@ -82,15 +84,17 @@ export const Node = (props: NodeProps) => {
   return (
     <NodeWrapper error={Boolean(error)} className={error ? 'error' : ''}>
       <Stack
+        className='reactflow-draggable-handle'
         direction="column"
         gap={0}
+        css={{flex:1}}
         onClick={onClick}
         {...rest}
       >
         {title && (
           <>
             <Stack
-              className='reactflow-draggable-handle'
+             
               direction="row"
               justify="between"
               align="center"

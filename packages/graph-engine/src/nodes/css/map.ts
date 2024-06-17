@@ -1,8 +1,7 @@
 import { INodeDefinition } from "../../programmatic/node.js";
-import { annotatedDynamicInputs } from '../../annotations/index.js';
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { ObjectSchema } from "../../schemas/index.js";
+import { annotatedDynamicInputs } from '../../annotations/index.js';
 
 /**
  * Similar to the Objectify node, this expects that inputs will be added to it dynamically.
@@ -13,7 +12,7 @@ import { ObjectSchema } from "../../schemas/index.js";
  */
 export default class NodeDefinition extends Node {
   static title = "CSS Map";
-  static type = NodeTypes.CSS_MAP;
+  static type = "studio.tokens.css.map";
 
 
 

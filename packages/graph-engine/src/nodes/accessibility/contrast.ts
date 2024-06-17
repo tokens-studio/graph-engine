@@ -1,12 +1,11 @@
+import { BooleanSchema, ColorSchema, NumberSchema } from "../../schemas/index.js";
 import { INodeDefinition } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
-import { NumberSchema, ColorSchema, BooleanSchema } from "../../schemas/index.js";
 import Color from "colorjs.io";
 
 export default class NodeDefinition extends Node {
   static title = "Contrast";
-  static type = NodeTypes.CONTRAST;
+  static type = "studio.tokens.accessibility.contrast";
   static description = "Calculates the contrast between two colors";
   constructor(props: INodeDefinition) {
     super(props);
@@ -40,8 +39,8 @@ export default class NodeDefinition extends Node {
 
   execute(): void | Promise<void> {
     const { a, b, absolute } = this.getAllInputs();
-    let color = new Color(a);
-    let background = new Color(b);
+    const color = new Color(a);
+    const background = new Color(b);
     const calculated = background.contrast(color, "APCA");
     this.setOutput("value", absolute ? Math.abs(calculated) : calculated);
   }

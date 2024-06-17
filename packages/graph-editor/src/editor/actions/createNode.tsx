@@ -1,4 +1,5 @@
-import { xpos, ypos } from '@/annotations';
+import { uiNodeType, xpos, ypos } from '@/annotations';
+import { INPUT, OUTPUT } from '@/ids';
 import { Dispatch } from '@/redux/store';
 import { NodeTypes, Node, Graph, NodeFactory } from '@tokens-studio/graph-engine';
 import { ReactFlowInstance } from 'reactflow';
@@ -45,15 +46,15 @@ export const createNode = ({
       return;
     }
     if (
-      nodeRequest.type == NodeTypes.INPUT &&
-      nodes.some((x) => x.nodeType() == NodeTypes.INPUT)
+      nodeRequest.type == INPUT &&
+      nodes.some((x) => x.nodeType() == INPUT)
     ) {
       alert('Only one input node allowed');
       return;
     }
     if (
-      nodeRequest.type == NodeTypes.OUTPUT &&
-      nodes.some((x) => x.nodeType() == NodeTypes.OUTPUT)
+      nodeRequest.type == OUTPUT &&
+      nodes.some((x) => x.nodeType() == OUTPUT)
     ) {
       alert('Only one output node allowed');
       return;
@@ -73,6 +74,10 @@ export const createNode = ({
 
     node.annotations[xpos] = finalPos.x;
     node.annotations[ypos] = finalPos.y;
+
+    if (customUI[nodeRequest.type]){
+      node.annotations[uiNodeType] = customUI[nodeRequest.type];
+    }
 
     //Set values from the request
     Object.entries(nodeRequest.data || {}).forEach(([name, value]) => {

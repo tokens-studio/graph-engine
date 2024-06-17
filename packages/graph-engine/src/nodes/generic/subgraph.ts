@@ -30,22 +30,13 @@ export default class SubgraphNode extends Node {
     input.annotations[annotatedDeleteable] = false;
     const output = new OutputNode({ graph: this._innerGraph });
     output.annotations[annotatedDeleteable] = false;
-    output.addInput("value", {
-      type: AnySchema,
-      visible: true,
-    });
   
     //Create the initial input and output nodes
     this._innerGraph.addNode(input);
     this._innerGraph.addNode(output);
 
-    this.addOutput("value", {
-      type: AnySchema,
-      visible: true,
-    });
 
     autorun(() => {
-
       //Get the existing inputs 
       const existing = this.inputs;
       //Iterate through the inputs of the input node in the inner graph
@@ -70,7 +61,35 @@ export default class SubgraphNode extends Node {
         }
         //TODO handle deletions and mutations
       });
-      //Handle updates from the inner graph
+    });
+
+    //Update when the outputs change
+    autorun(() => {
+      const existing = this.outputs;
+      const existingPorts = Object.keys(existing);
+      Object.entries(output.inputs).map(([key, value]) => {
+        //If the key doesn't exist in the existing inputs, add it
+        if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
+          //Always add it as visible
+          this.addOutput(key, {
+            type: value.type,
+            visible: true,
+          });
+          this.outputs[key].set(value.value,value.type);
+        } else {
+          //Note its possible that the input key still does not exist due to an annotation ,etc 
+          //Update the value 
+          this.outputs[key]?.set(value.value,value.type);
+        }
+      });
+
+      //Remove any outputs that are no longer in the inner graph
+      existingPorts.forEach((port) => { 
+        if (!output.inputs[port]) {
+          this.removeOutput(port);
+        }
+      });
+      
     });
   }
 
@@ -103,6 +122,8 @@ export default class SubgraphNode extends Node {
       inputs
     });
 
-    this.setOutput("value", result.output?.value.value, result.output?.value.type);
+    Object.entries(result.output).forEach(([key, value]) => {
+      this.setOutput(key, value.value, value.type);
+    });
   }
 }
