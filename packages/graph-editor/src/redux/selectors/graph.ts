@@ -9,6 +9,8 @@ export const logSelector = createSelector(graph, (state) => state.logs);
 
 export const playStateSelector = createSelector(graph, (state) => state.graphPlayState);
 
+export const mainGraphSelector = createSelector(graph, (state) => state.panels?.graph1);
+
 export const graphEditorSelector = createSelector(
     graph,
     (state) => state.currentPanel?.ref
