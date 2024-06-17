@@ -15,8 +15,6 @@ export function flattenAlpha(
     } else {
         // Decompose the background color to RGB (assume opaque)
         const [r2, g2, b2] = background.to('srgb').coords;
-        console.log('foreground:', r1, g1, b1, a1);
-        console.log('background:', r2, g2, b2);
 
         // Perform alpha blending formula
         const alpha = 1 - a1;
