@@ -74,6 +74,11 @@ export interface EditorProps {
    * Additional icons to display in the editor for custom types
    */
   icons?: Record<string, React.ReactNode>;
+
+  /**
+   * Triggers when graph state changes
+   */
+  onGraphChange?: (graph: SerializedGraph) => void;
 }
 
 export interface GraphEditorProps {
@@ -91,6 +96,8 @@ export interface GraphEditorProps {
    */
   nodeTypes?: Record<string, typeof GraphNode>;
   children?: React.ReactNode;
+  onOutputChange?: (output: Record<string, unknown>) => void;
+  onGraphChange?: (graph: SerializedGraph) => void;
 }
 
 

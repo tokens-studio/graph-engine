@@ -96,7 +96,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
     const panelItems = useSelector(panelItemsSelector);
     const fullNodeLookup = useSelector(nodeTypesSelector);
-    const { id, customNodeUI = {}, children } = props;
+    const { id, customNodeUI = {}, children, onGraphChange } = props;
 
 
     const showMinimap = useSelector(showMinimapSelector);
@@ -111,6 +111,10 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     const initialGraph = useMemo(() => new Graph(), []);
 
     const [graph, setTheGraph] = useState(initialGraph);
+
+    useEffect(() => {
+      onGraphChange?.(graph.serialize());
+    }, [graph, onGraphChange]);
 
     const showGridValue = useSelector(showGrid);
     const snapGridValue = useSelector(snapGrid);
@@ -160,7 +164,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
       })
 
-      const valueDetecterDisposer =graph.on('valueSent', (edges) => {
+      const valueDetecterDisposer = graph.on('valueSent', (edges) => {
         edges
         const edgeLookup = edges.reduce((acc, edge) => {
           acc[edge.id] = edge;
@@ -241,7 +245,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
       });
 
-      return ()=>{
+      return () => {
         valueDetecterDisposer();
         EdgeUpdaterDisposer();
       }
@@ -747,6 +751,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
               display: 'flex',
               flexDirection: 'row',
               flexGrow: 1,
+              // border: '2px solid red'
             }}
           >
             <HotKeys>
