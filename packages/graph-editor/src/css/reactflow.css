@@ -37,8 +37,8 @@
     --nodeBorderColor: var(--gray-6);
     --nodeBgColor: var(--gray-3);
     --nodeTextColor: var(--gray-12);
-    outline: 3px solid var(--gray-11);
-    outline-offset: 0;
+    outline: 5px solid var(--purple-10);
+    outline-offset: 5px;
     border-radius: var(--radii-medium, 8px);
 }
 
@@ -83,7 +83,7 @@
 .react-flow__edge:focus .react-flow__edge-path,
 .react-flow__edge:focus-visible .react-flow__edge-path {
     stroke-width: 2 !important;
-    stroke: var(--blue-10);
+    stroke: var(--purple-10);
 }
 
 .react-flow__handle-connecting:not(.react-flow__handle-valid) {

@@ -160,10 +160,11 @@ const layoutDataFactory = (props, ref): LayoutData => {
                     mode: 'horizontal',
                     children: [
                         {
+                            size: 2,
                             mode: 'vertical',
                             children: [
                                 {
-                                    size: 545,
+                                    size: 16,
                                     tabs: [
                                         {
                                             group: 'popout',
@@ -175,7 +176,7 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                     ],
                                 },
                                 {
-                                    size: 300,
+                                    size: 8,
                                     tabs: [
                                         {
                                             group: 'popout',
@@ -190,7 +191,7 @@ const layoutDataFactory = (props, ref): LayoutData => {
                         },
                         {
 
-                            size: 700,
+                            size: 18,
                             mode: 'vertical',
                             children:[
                                 {
@@ -218,11 +219,11 @@ const layoutDataFactory = (props, ref): LayoutData => {
                         },
                         
                         {
-                            size: 300,
+                            size: 4,
                             mode: 'vertical',
                             children: [
                                 {
-                                    size: 300,
+                                    size: 12,
                                     tabs: [
                                         {
                                             closable: true,
@@ -235,7 +236,7 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                     ],
                                 },
                                 {
-                                    size: 300,
+                                    size: 12,
                                     tabs: [
                                         {
                                             closable: true,
