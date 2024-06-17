@@ -23,6 +23,7 @@ import { BoxBase, DockLayout, LayoutBase, LayoutData, PanelBase, TabGroup } from
 import React, { MutableRefObject, useEffect, useMemo } from 'react';
 import { EditorProps, ImperativeEditorRef } from "./editorTypes.js";
 import { FindDialog } from "@/components/dialogs/findDialog";
+import { MAIN_GRAPH_ID } from "@/constants";
 
 const DockButton = (rest) => {
     return (
@@ -201,11 +202,11 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                         {
                                             closable: true,
                                             cached: true,
-                                            id: 'graph1',
+                                            id: MAIN_GRAPH_ID,
                                             group: 'graph',
                                             title: 'Graph',
                                             content: (
-                                                <GraphEditor {...props} id='graph1' ref={ref} />
+                                                <GraphEditor {...props} id={MAIN_GRAPH_ID} ref={ref} />
                                             ),
                                         },
                                     ],
