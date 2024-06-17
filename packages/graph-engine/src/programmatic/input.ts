@@ -50,10 +50,16 @@ export class Input<T = any> extends Port<T> {
    */
   setValue(value: T, opts?: ISetValue) {
     this._value = value;
+    // debugger;
     if (opts?.type !== undefined) {
 
+      if (this?.type?.type === 'array' && opts?.type?.type === 'array') {
+        if (this?.type?.items?.type !== opts?.type?.items?.type) {
+          this._dynamicType = opts?.type;
+        }
+      }
       //Only if the type differs do we set it
-      if (this._type?.$id !== opts.type.$id) {
+      else if (this._type?.$id !== opts.type.$id) {
         this._dynamicType = opts?.type;
       }
     }
