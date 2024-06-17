@@ -1,0 +1,64 @@
+---
+title: Constant
+---
+import { Editor, PanelGroup, DropPanelStore, PanelItem } from '@tokens-studio/graph-editor';
+import {InitialLayout} from '@site/src/components/editor/layout';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import {example0} from '@site/src/components/editor/nodes/nodes/generic/constant/index.ts';
+
+# constant
+
+Node Type ID: `"studio.tokens.generic.constant"`
+
+## Package 
+
+This is a core package available at [Graph Engine](https://www.npmjs.com/package/@tokens-studio/graph-engine)
+
+To install 
+
+<Tabs>
+  <TabItem value="npm" label="NPM" default>
+```bash
+npm install @tokens-studio/graph-engine
+```
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+```bash
+yarn add @tokens-studio/graph-engine
+```
+  </TabItem>
+</Tabs>
+
+
+
+## Description
+Constant node allows you to provide a constant value. You can use this node to set a constant value for a specific property.
+
+## Inputs
+
+
+#### value
+
+The value to output
+
+
+
+
+## Outputs
+
+
+#### value
+
+*No description*
+
+
+
+
+
+## Example
+
+<div style={{height:'100vh',width:'65vw'}}>
+    <Editor initialLayout={InitialLayout} showMenu={false} initialGraph={example0} />
+</div>
+

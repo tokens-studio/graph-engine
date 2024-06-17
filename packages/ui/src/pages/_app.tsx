@@ -2,24 +2,24 @@
 import '../scripts/wdyr';
 
 import 'sanitize.css';
+import 'sanitize.css/assets.css';
 import 'sanitize.css/forms.css';
 import 'sanitize.css/system-ui.css'
-import 'sanitize.css/ui-monospace.css';
 import 'sanitize.css/typography.css';
-import 'sanitize.css/assets.css';
+import 'sanitize.css/ui-monospace.css';
 
 import { AppProps } from 'next/app.ts';
 import { Head } from '@/components/next/index.ts';
 import { ThemeProvider } from 'next-themes';
+import { Tooltip } from '@tokens-studio/ui';
 import { dark, light } from '@/config/themes.ts';
+import { globalState } from '@/mobx/index.tsx';
 import NoSSR from 'react-no-ssr';
 import PageLayout from '@/components/next/layout/page.tsx';
 import React from 'react';
 import Store from '../redux/index.tsx';
-import { Tooltip } from '@tokens-studio/ui';
-import { globalState } from '@/mobx/index.tsx';
 
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ToastProvider } from '@/hooks/useToast.tsx';
 
 export default function App(props: AppProps) {

@@ -19,6 +19,7 @@ import { GraphPanel } from '../panels/graph';
 import { DropPanel } from '../panels/dropPanel';
 import { graphEditorSelector } from '@/redux/selectors/graph';
 import { title } from '@/annotations';
+import { useDispatch } from '@/hooks';
 
 export interface IWindowButton {
   //Id of the tab
@@ -180,23 +181,23 @@ export const defaultMenuDataFactory = (): Menu =>
         title: 'Edit',
         name: 'edit',
         items: [
-          new MenuItem({
-            name: 'undo',
-            render: ({key,...rest}) => <MenuItemElement key={key} icon={<Undo />} {...rest} >Undo</MenuItemElement>,
-          }),
-          new MenuItem({
-            name: 'redo',
-            render: ({ key, ...rest }) => <MenuItemElement key={key} icon={<Redo />} {...rest}>Redo</MenuItemElement>,
-          }),
-
+          // new MenuItem({
+          //   name: 'undo',
+          //   render: ({key,...rest}) => <MenuItemElement key={key} icon={<Undo />} {...rest} >Undo</MenuItemElement>,
+          // }),
+          // new MenuItem({
+          //   name: 'redo',
+          //   render: ({ key, ...rest }) => <MenuItemElement key={key} icon={<Redo />} {...rest}>Redo</MenuItemElement>,
+          // }),
           new Seperator(),
           new MenuItem({
             name: 'find',
-            render: ({ key, ...rest }) => (
-              <MenuItemElement key={key} {...rest}>
+            render: ({ key, ...rest }) => {
+              const dispatch = useDispatch();
+              return <MenuItemElement key={key} {...rest} onClick={() => dispatch.settings.setShowSearch(true)}>
                 Find
               </MenuItemElement>
-            ),
+            },
           }),
         ],
       }),

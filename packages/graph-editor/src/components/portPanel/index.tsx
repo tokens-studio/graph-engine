@@ -8,10 +8,10 @@ import {
 } from '@tokens-studio/ui';
 import { useSelector } from 'react-redux';
 import { observer } from 'mobx-react-lite';
-import { Input, NodeTypes } from '@tokens-studio/graph-engine';
+import { Input } from '@tokens-studio/graph-engine';
 import { Port as GraphPort } from '@tokens-studio/graph-engine';
 
-import { Xmark, MoreVert, EyeClosed, Settings, Puzzle, Undo, EyeSolid, Download } from 'iconoir-react';
+import { Xmark, MoreVert, EyeClosed, Puzzle, Undo, EyeSolid, Download } from 'iconoir-react';
 import { InlineTypeLabel } from '@/components/flow';
 import { useGraph } from '@/hooks/useGraph';
 import { controls } from '@/redux/selectors/registry';
@@ -27,6 +27,7 @@ export interface IPortPanel {
 export const PortPanel = observer(({ ports, readOnly }: IPortPanel) => {
   const entries = Object.values(ports).sort();
 
+
   return (
     <Stack direction="column" gap={3} width="full">
       {entries.filter(x=>!x.annotations[hidden]).map((x) => (
@@ -41,7 +42,7 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
   const readOnly = isReadOnly || port.isConnected;
   const controlSelector = useSelector(controls);
   const graph = useGraph();
-  const isInput = NodeTypes.INPUT === port.node.factory.type;
+  const isInput = "studio.tokens.generic.input" === port.node.factory.type;
   const isDynamicInput = Boolean(port.annotations[deletable]);
   const resettable = Boolean(port.annotations[resetable]);
 

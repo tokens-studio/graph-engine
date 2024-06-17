@@ -31,20 +31,17 @@ export function NodeSettingsPanel() {
       css={{ height: '100%', flex: 1, padding: '$3', overflow: 'auto' }}
     >
       <Box css={{ padding: '$3' }}>
-        <NodeSettings selectedNode={selectedNode} key={nodeID} />
+        <NodeSettings selectedNode={selectedNode} annotations={selectedNode.annotations} key={nodeID} />
       </Box>
     </Stack>
   );
 }
 
 
-interface IAnnotation {
-  annotations: Record<string, string>;
-}
 
-const Annotations = observer(({ annotations }: IAnnotation) => {
+const Annotations = observer(({ annotations }: Record<string, unknown>) => {
 
-  return <>{Object.entries(annotations).reduce((acc, [key, value]) => {
+  return <>{Object.entries(annotations as Record<string,any>).reduce((acc, [key, value]) => {
 
     switch (key) {
       case title:
@@ -92,34 +89,37 @@ const NodeTitle = ({ selectedNode }: { selectedNode: Node }) => {
       <Label>Title</Label>
       <TextInput
         onChange={onChangeTitle}
-        value={selectedNode.annotations[title]}
+        value={selectedNode.annotations[title] as string}
       />
     </Stack>
   );
 }
 
-const NodeDescription = ({ selectedNode }: { selectedNode: Node }) => {
+const NodeDescription = ({ selectedNode, annotations }: { selectedNode: Node, annotations:Record<string,any> }) => {
 
   const onChangeDesc = useCallback(
     (newString: string) => {
-      selectedNode.annotations[description] = newString;
+      selectedNode.setAnnotation(description, newString);
     },
-    [selectedNode.annotations],
+    [selectedNode],
   );
+
 
   return <Stack direction='column' gap={2}>
     <Label>Description</Label>
     <Textarea
       placeholder={selectedNode.factory.description}
       onChange={onChangeDesc}
-      value={selectedNode.annotations[description]}
+      value={annotations[description] as string}
     />
   </Stack>
 
 };
 
 
-const NodeSettings = ({ selectedNode }: { selectedNode: Node }) => {
+const NodeSettings = ({ selectedNode, annotations }: { selectedNode: Node, annotations: Record<string, unknown> }) => {
+
+  console.log('node setting')
   return (
     <Stack direction="column" gap={2}>
       <Label>Node ID</Label>
@@ -131,9 +131,9 @@ const NodeSettings = ({ selectedNode }: { selectedNode: Node }) => {
         {selectedNode?.factory.type}
       </Text>
       <NodeTitle selectedNode={selectedNode} />
-      <NodeDescription selectedNode={selectedNode} />
+      <NodeDescription selectedNode={selectedNode} annotations={annotations} />
       <Label>Annotations</Label>
-      <Annotations annotations={selectedNode.annotations} />
+      <Annotations annotations={annotations} />
     </Stack>
   );
 };

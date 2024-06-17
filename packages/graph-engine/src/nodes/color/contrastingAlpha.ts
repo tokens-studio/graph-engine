@@ -29,7 +29,7 @@ export const contrastCheck = (foreground: Color, background: Color, wcag: WcagVe
 
 export default class NodeDefinition extends Node {
   static title = "Contrasting Alpha";
-  static type = NodeTypes.CONTRASTING;
+  static type = "studio.tokens.color.contrasting";
   static description = "Reduce alpha until you are close to the threshold.";
 
   declare inputs: {

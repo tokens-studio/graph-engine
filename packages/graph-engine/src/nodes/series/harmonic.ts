@@ -1,5 +1,4 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
 import { arrayOf } from "../../schemas/utils.js";
@@ -11,7 +10,7 @@ type HarmonicValue = {
 
 export default class NodeDefinition extends Node {
   static title = "Harmonic Series";
-  static type = NodeTypes.HARMONIC_SERIES;
+  static type = "studio.tokens.series.harmonic";
   static description =
     'A "Harmonic Series" is a sequence of numbers whose reciprocals form an arithmetic progression. For example, in the series 1, 1/2, 1/3, 1/4, 1/5, the reciprocals form an arithmetic progression with common difference 1/6.';
 
@@ -80,7 +79,7 @@ export default class NodeDefinition extends Node {
     });
     this.addOutput("indexed", {
       type: {
-        $id: `https://schemas.tokens.studio/${NodeTypes.HARMONIC_SERIES}/indexed.json`,
+        $id: `https://schemas.tokens.studio/studio.tokens.series.harmonic/indexed.json`,
         type: "object",
         properties: {
           index: {

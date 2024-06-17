@@ -1,11 +1,10 @@
-import { INodeDefinition,  ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema, createVariadicSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Subtract (Variadic)";
-  static type = NodeTypes.SUBTRACT_VARIADIC;
+  static type = "studio.tokens.math.subtractVariadic";
   static description = "Allows you to subtract two or more numbers.";
 
   declare inputs: ToInput<{

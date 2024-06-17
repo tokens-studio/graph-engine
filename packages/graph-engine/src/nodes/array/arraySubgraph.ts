@@ -1,6 +1,5 @@
 import { AnyArraySchema, AnySchema, NumberSchema, SchemaObject } from "../../schemas/index.js";
 import { Input, ToInput, ToOutput } from "../../programmatic/index.js";
-import { NodeTypes } from "../../types.js";
 import { annotatedDynamicInputs, hideFromParentSubgraph } from "../../annotations/index.js";
 import { extractArray } from "../../schemas/utils.js";
 import SubgraphNode from "../generic/subgraph.js";
@@ -22,13 +21,13 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
     super(props);
 
     //Create the hardcoded input values in the innergraph
-    const input = Object.values(this._innerGraph.nodes).find((x) => x.factory.type === NodeTypes.INPUT);
+    const input = Object.values(this._innerGraph.nodes).find((x) => x.factory.type === 'studio.tokens.generic.input');
 
     if (!input) throw new Error("No input node found in subgraph");
 
     input.annotations[annotatedDynamicInputs] = true;
 
-    input.addInput("value", {
+    input.addInput("value ", {
       type: AnySchema,
       visible: false,
       annotations: {
@@ -64,6 +63,7 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
   async execute() {
     const input = this.getRawInput("array");
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const otherInputs: [string, Input<any>][] = Object.keys(this.inputs).filter(x => x !== "array").map(x => [x, this.getRawInput(x)]);
     const other = Object.fromEntries(otherInputs.map(([name, x]) => [name, {
       value: x.value,
@@ -72,11 +72,10 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
 
     //Todo optimize this to run in parallel. We have to run this in series because the inner graph is not designed to run in parallel
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const output = await (input.value as any[]).reduce(async (acc, item, i) => {
 
       const output = await acc;
-
-
 
       const result = await this._innerGraph.execute({
         //By default this is any so we need to overwrite it with its runtime type
@@ -93,9 +92,9 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
       });
 
       if (!result.output) throw new Error("No output from subgraph");
-      return output.concat([result.output]);
+      return output.concat([result.output.value]);
     }, Promise.resolve([]));
-
+    
     const flattened = output.map(x => x.value);
 
     const type = output.length > 0 ? output[0].type : input.type;

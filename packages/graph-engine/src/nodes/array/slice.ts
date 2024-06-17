@@ -1,10 +1,9 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
 import { AnyArraySchema, NumberSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
 export default class NodeDefinition<T> extends Node {
   static title = "Slice Array";
-  static type = NodeTypes.SLICE;
+  static type = "studio.tokens.array.slice";
   static description = "Slices an input array";
 
   declare inputs: ToInput<{

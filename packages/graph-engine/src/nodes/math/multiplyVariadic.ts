@@ -1,11 +1,10 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema, createVariadicSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Multiply (Variadic)";
-  static type = NodeTypes.MULTIPLY_VARIADIC;
+  static type = "studio.tokens.math.multiplyVariadic";
   static description =
     "Multiply node allows you to multiply two or more numbers.";
 

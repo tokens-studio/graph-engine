@@ -1,6 +1,6 @@
-import { v4 as uuid } from 'uuid';
-import { makeObservable, observable } from "mobx";
 import { SerializedEdge } from '..';
+import { makeObservable, observable } from "mobx";
+import { v4 as uuid } from 'uuid';
 
 /**
  * Additional data stored on an edge
@@ -18,7 +18,6 @@ export interface IEdge {
     target: string;
     targetHandle: string;
     annotations?: Record<string, any>;
-
 }
 
 

@@ -8,7 +8,6 @@ import {
 } from '../panels/dropPanel/index.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { showNodesCmdPaletteSelector } from '@/redux/selectors/ui';
-import { NodeTypes } from '@tokens-studio/graph-engine';
 import { styled } from '@/lib/stitches';
 import { Search } from 'iconoir-react';
 import { observer } from 'mobx-react-lite';
@@ -17,7 +16,7 @@ import { isActiveElementTextEditable } from '@/utils/isActiveElementTextEditable
 export interface ICommandMenu {
   reactFlowWrapper: React.MutableRefObject<HTMLDivElement | null>;
   items: DropPanelStore;
-  handleSelectNewNodeType: (node: { type: NodeTypes }) => void;
+  handleSelectNewNodeType: (node: { type: string }) => void;
 }
 
 const CommandItem = observer(

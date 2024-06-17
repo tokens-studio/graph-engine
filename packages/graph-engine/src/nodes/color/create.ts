@@ -1,8 +1,8 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Color, NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
+import { Color } from "../../types.js";
 import { ColorSchema, NumberSchema, StringSchema } from "../../schemas/index.js";
-import { getMode, formatHex8, Color as CuloriColor } from "culori";
+import { Color as CuloriColor, formatHex8, getMode } from "culori";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
 export { ColorModifierTypes } from "@tokens-studio/types";
 
 export const colorSpaces = [
@@ -55,14 +55,29 @@ export type ColorSpace = typeof colorSpaces[number];
 
 export default class NodeDefinition extends Node {
   static title = "Create Color";
-  static type = NodeTypes.CREATE_COLOR;
+  static type = "studio.tokens.color.create";
   static description = "Creates a color";
 
   declare inputs: ToInput<{
+    /**
+     * The color space to create the color in
+     */
     space: ColorSpace;
+    /**
+     * The first channel value
+     */
     a: number;
+    /**
+     * The second channel value
+     */
     b: number;
+    /**
+     * The third channel value
+     */
     c: number;
+    /**
+     * The fourth channel value
+     */
     d?: number;
   }>;
 

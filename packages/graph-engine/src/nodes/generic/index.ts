@@ -1,14 +1,14 @@
-import input from "./input.js";
-import passthrough from "./passthrough.js";
-import output from "./output.js";
-import subgraph from "./subgraph.js";
-import panic from "./panic.js";
 import constant from "./constant.js";
-import objectify from "./objectify.js";
+import delay from "./delay.js";
+import input from "./input.js";
 import note from "./note.js";
 import objectMerge from "./objectMerge.js";
+import objectify from "./objectify.js";
+import output from "./output.js";
+import panic from "./panic.js";
+import passthrough from "./passthrough.js";
+import subgraph from "./subgraph.js";
 import time from "./time.js";
-import delay from "./delay.js";
 
 
 export const nodes = [

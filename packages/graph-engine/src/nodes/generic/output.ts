@@ -1,19 +1,17 @@
-/**
- * Acts as an output node for the graph. There can only be a single output node per graph.
- *
- * @packageDocumentation
- */
+
+import { IDeserializeOpts } from "../../graph/types.js";
+import { INodeDefinition, Node } from "../../programmatic/node.js";
 import { ToInput } from "../../programmatic/input.js";
 import { ToOutput } from "../../programmatic/output.js";
 import { annotatedDynamicInputs, annotatedSingleton } from '../../annotations/index.js';
-import { NodeTypes } from "../../types.js";
-import { Node, INodeDefinition } from "../../programmatic/node.js";
-import { AnySchema } from "../../schemas/index.js";
 
 
+/**
+ * Acts as an output node for the graph. There should only be a single output node per graph.
+ */
 export default class NodeDefinition<T> extends Node {
   static title = "Output";
-  static type = NodeTypes.OUTPUT;
+  static type = "studio.tokens.generic.output";
 
   //Override with static typing
   public declare inputs: ToInput<{
@@ -30,20 +28,44 @@ export default class NodeDefinition<T> extends Node {
     this.annotations[annotatedDynamicInputs] = true;
   }
 
+
+  static override deserialize(opts: IDeserializeOpts) {
+    const node = super.deserialize(opts);
+
+    //Create the outputs immediately
+    Object.keys(node.inputs).forEach((input) => {
+      const rawInput = node.getRawInput(input);
+      node.addOutput(input, {
+        type: rawInput.type,
+        visible: true,
+      });
+    });
+
+    return node;
+  }
+
+
   execute(): void | Promise<void> {
     const inputs = this.getAllInputs();
-
-    //Remove all outputs
-    this.clearOutputs();
+    const outputs = this.getAllOutputs();
 
     //Passthrough all
     Object.keys(inputs).forEach((input) => {
       const rawInput = this.getRawInput(input);
 
-      this.addOutput(input, {
-        type: rawInput.type
-      });
-      this.setOutput(input, rawInput.value);
+      if (!(input in outputs)) {
+        this.addOutput(input, {
+          type: rawInput.type,
+        });
+      }
+
+      this.setOutput(input, rawInput.value, rawInput.type);
+    });
+
+    Object.keys(outputs).forEach((output) => {
+      if (!(output in inputs)) {
+        delete this.outputs[output];
+      }
     });
   }
 }

@@ -1,11 +1,10 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
 import { AnySchema, BooleanSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
 
 export default class NodeDefinition<T, V> extends Node {
   static title = "If";
-  static type = NodeTypes.IF;
+  static type = "studio.tokens.logic.if";
   static description =
     "If node allows you to conditionally choose a value based on a condition.";
 

@@ -1,19 +1,20 @@
-/**
- * A node that passes through the input to the output.
- *
- * @packageDocumentation
- */
 
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+
+import { INodeDefinition, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
 
-export default class NodeDefinition<T> extends Node {
+
+/**
+ * A node that returns the current time each tick in seconds since the Unix epoch.
+ * When the node is started, it will update the time every second.
+ */
+export default class NodeDefinition extends Node {
     static title = "Time";
     static type = 'studio.tokens.generic.time';
     static description = "Provides the current time each tick";
 
-    declare inputs: ToInput<{}>;
+
     declare outputs: ToOutput<{
         value: number;
     }>;

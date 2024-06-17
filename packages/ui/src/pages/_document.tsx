@@ -2,7 +2,6 @@
 import { Head, Html, Main, NextScript } from 'next/document.js';
 import { getCssText } from '@/lib/stitches/index.ts';
 
-
 export default function Document() {
   return (
     <Html lang="en">
@@ -90,6 +89,8 @@ export default function Document() {
       </Head>
       <body>
         <Main />
+
+
         <NextScript />
       </body>
     </Html>

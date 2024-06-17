@@ -1,10 +1,9 @@
-import { NodeTypes } from "../../types.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
 import orderBy from "lodash.orderby";
 
 import { AnyArraySchema, StringSchema } from "../../schemas/index.js";
 
-import { ToInput,ToOutput } from "../../programmatic";
+import { ToInput, ToOutput } from "../../programmatic";
 
 export enum Order {
   ASC = "asc",
@@ -22,16 +21,16 @@ export const defaults = {
 };
 export default class NodeDefinition<T> extends Node {
   static title = "Sort Array";
-  static type = NodeTypes.SORT;
+  static type = "studio.tokens.array.sort";
 
   declare inputs: ToInput<{
-    array:T[];
-    order:Order;
-    sortBy:string;
+    array: T[];
+    order: Order;
+    sortBy: string;
   }>;
 
   declare outputs: ToOutput<{
-    value:T[];
+    value: T[];
   }>
 
   static description = "Sorts an array";

@@ -1,5 +1,4 @@
 import { Plus, Star } from 'iconoir-react';
-import { NodeTypes } from '@tokens-studio/graph-engine';
 import React from 'react';
 import preset from '@/data/preset.js';
 import tinyCore from '@/data/tiny/core.js';
@@ -103,22 +102,22 @@ export class DropPanelStore {
  *      key: 'myCustomGroup',
  *      items: [
  *      {
- *          type: NodeTypes.INPUT,
- *          icon: icons[NodeTypes.INPUT],
+ *          type: 'studio.tokens.generic.input',
+ *          icon: icons['studio.tokens.generic.input'],
  *          text: 'Input',
  *      }],
  * }];
  */
 
 const knownDocs = {
-  [NodeTypes.INPUT]:
+  "studio.tokens.generic.input":
     'https://docs.graph.tokens.studio/nodes/generic-nodes/input',
 };
 
 const knownIcons = {
-  [NodeTypes.INPUT]: <Star />,
-  [NodeTypes.OUTPUT]: <Star />,
-  [NodeTypes.CSS_FUNCTIONS]: 'x()',
+  "studio.tokens.generic.input": <Star />,
+  "studio.tokens.generic.output": <Star />,
+  "studio.tokens.css.function": 'x()',
 };
 function CapitalCase(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);

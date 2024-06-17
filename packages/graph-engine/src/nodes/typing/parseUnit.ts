@@ -1,15 +1,14 @@
-import valueParser from "postcss-value-parser";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import {
   NumberSchema,
   StringSchema,
 } from "../../schemas/index.js";
+import valueParser from "postcss-value-parser";
 
 export default class NodeDefinition extends Node {
   static title = "Parse unit";
-  static type = NodeTypes.PARSE_UNIT;
+  static type = "studio.tokens.typing.parseUnit";
   static description =
     "Parse unit node allows you to seperate units from a number.";
 

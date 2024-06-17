@@ -1,7 +1,7 @@
+import { GraphSchema } from "../schemas/index.js";
 import { Input } from "./input.js";
 import { Node } from "./node.js";
 import { Port } from "./port.js";
-import { GraphSchema } from "../schemas/index.js";
 import { action, makeObservable } from "mobx";
 
 export interface IOutputProps<T = any> {

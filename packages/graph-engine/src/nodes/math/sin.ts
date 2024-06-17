@@ -1,11 +1,10 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Sine";
-  static type = NodeTypes.SIN;
+  static type = "studio.tokens.math.sin";
   static description = "Sin node allows you to get the sin of a number.";
 
 

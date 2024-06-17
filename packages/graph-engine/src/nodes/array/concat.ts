@@ -1,11 +1,10 @@
 
-import { NodeTypes } from "../../types.js";
-import { INodeDefinition, Node } from "../../programmatic/node.js";
 import { AnyArraySchema } from "../../schemas/index.js";
+import { INodeDefinition, Node } from "../../programmatic/node.js";
 import { ToInput, ToOutput } from "../../programmatic";
 export default class NodeDefinition<T> extends Node {
   static title = "Concat Array";
-  static type = NodeTypes.CONCAT;
+  static type = "studio.tokens.array.concat";
   declare inputs: ToInput<{
     a: T[];
     b: T[];

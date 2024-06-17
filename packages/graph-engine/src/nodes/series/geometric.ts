@@ -1,5 +1,4 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
 import { arrayOf } from "../../schemas/utils.js";
@@ -11,7 +10,7 @@ type GeometricValue = {
 
 export default class NodeDefinition extends Node {
   static title = "Geometric Series";
-  static type = NodeTypes.GEOMETRIC_SERIES;
+  static type = "studio.tokens.series.geometric";
   static description =
     "Generates a geometric series f(n)= c * (f(n-1)) of numbers based on the base value, steps down, steps and increment.";
 
@@ -71,7 +70,7 @@ export default class NodeDefinition extends Node {
     });
     this.addOutput("indexed", {
       type: {
-        $id: `https://schemas.tokens.studio/${NodeTypes.GEOMETRIC_SERIES}/indexed.json`,
+        $id: `https://schemas.tokens.studio/studio.tokens.series.geometric/indexed.json`,
         type: "object",
         properties: {
           index: {

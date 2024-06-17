@@ -1,7 +1,7 @@
-import { StringSchema, Node, createVariadicSchema, ColorSchema, INodeDefinition } from "@tokens-studio/graph-engine";
-import type { Color as ColorType, ToInput, ToOutput } from "@tokens-studio/graph-engine";
 import { Color, blend, converter, formatHex } from "culori";
+import { ColorSchema, INodeDefinition, Node, StringSchema, createVariadicSchema } from "@tokens-studio/graph-engine";
 import { NonEmptyArray } from "culori/src/common.js";
+import type { Color as ColorType, ToInput, ToOutput } from "@tokens-studio/graph-engine";
 
 
 export enum BlendTypes {
