@@ -12,6 +12,7 @@ import { HotKeys as HotKeysComp } from 'react-hotkeys';
 import { useAction } from '@/editor/actions/provider';
 import { useAutoLayout } from '@/editor/hooks/useAutolayout';
 import React from 'react';
+import { annotatedDeleteable } from '@tokens-studio/graph-engine';
 
 export const keyMap = {
     AUTO_LAYOUT: 'ctrl+alt+f',
@@ -58,7 +59,6 @@ export const useHotkeys = () => {
     const duplicateNodes = useAction('duplicateNodes');
     const deleteNode = useAction('deleteNode');
     const copyNodes = useAction('copyNodes');
-
     const layout = useAutoLayout();
 
     const dispatch = useDispatch();
@@ -110,6 +110,11 @@ export const useHotkeys = () => {
                 const selectedNodes = reactFlowInstance.getNodes().filter((x) => x.selected).map((x) => x.id);
 
                 selectedNodes.forEach((id) => {
+                    const edgeNode = graph.getNode(id);
+                    if (edgeNode?.annotations[annotatedDeleteable] === false) {
+                        trigger({ title: 'Node not deletable', description: `Node ${edgeNode.nodeType()} is not deletable` });
+                        return;
+                    }
                     deleteNode(id);
                 });
 
