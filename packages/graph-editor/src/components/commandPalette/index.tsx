@@ -12,9 +12,9 @@ import { styled } from '@/lib/stitches';
 import { Search } from 'iconoir-react';
 import { observer } from 'mobx-react-lite';
 import { isActiveElementTextEditable } from '@/utils/isActiveElementTextEditable.js';
+import { useReactFlow } from 'reactflow';
 
 export interface ICommandMenu {
-  reactFlowWrapper: React.MutableRefObject<HTMLDivElement | null>;
   items: DropPanelStore;
   handleSelectNewNodeType: (node: { type: string }) => void;
 }
@@ -73,19 +73,18 @@ const CommandMenuGroup = observer(
 );
 
 const CommandMenu = ({
-  reactFlowWrapper,
   items,
   handleSelectNewNodeType,
 }: ICommandMenu) => {
   const showNodesCmdPalette = useSelector(showNodesCmdPaletteSelector);
   const dispatch = useDispatch();
-  const cursorPositionRef = React.useRef<{ x: number; y: number }>({x:0,y:0});
+  const cursorPositionRef = React.useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const [selectedItem, setSelectedItem] = React.useState('input');
-  const wrapperBounds = reactFlowWrapper.current?.getBoundingClientRect();
+  const reactflow = useReactFlow();
 
   const handleSelectItem = (item) => {
     handleSelectNewNodeType({
-      position: cursorPositionRef.current,
+      position: reactflow.screenToFlowPosition(cursorPositionRef.current),
       ...item,
     });
     dispatch.ui.setShowNodesCmdPalette(false);
@@ -94,21 +93,22 @@ const CommandMenu = ({
   // Store the mouse cursor position when the mouse is moved
   React.useEffect(() => {
     const move = (e) => {
-      if (wrapperBounds) {
-        cursorPositionRef.current = {
-          x: e.clientX - wrapperBounds!.left,
-          y: e.clientY - wrapperBounds!.top,
-        };
-      }
+
+      cursorPositionRef.current = {
+        x: e.clientX,
+        y: e.clientY,
+      };
+
     };
+
 
     document.addEventListener('mousemove', move);
     return () => document.removeEventListener('mousemove', move);
-  }, [wrapperBounds]);
+  }, []);
 
   // Toggle the menu when shift + K is pressed
   React.useEffect(() => {
-    const down = (e) => {  
+    const down = (e) => {
       if (e.key === 'K' && e.shiftKey && !isActiveElementTextEditable()) {
         e.preventDefault();
 
