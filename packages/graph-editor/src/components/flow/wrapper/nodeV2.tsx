@@ -226,9 +226,7 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
           {inlineTypesValue && <InlineTypeLabel port={port} />}
         </Handle>
         {port._edges.map((edge, i) => {
-          const valuePreview = isHexColor(input.value[i])
-            ? getColorPreview(input.value[i], true)
-            : <Text css={{ fontSize: 'medium', color: '$gray12' }}>{input.value[i]}</Text>;
+
           return (
             <Handle
               {...typeCol}
