@@ -43,7 +43,7 @@ import noteNode from '../components/flow/nodes/noteNode.js';
 
 import { GraphEditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { Box } from '@tokens-studio/ui';
-import { BatchRunError, Graph, NodeTypes } from '@tokens-studio/graph-engine';
+import { BatchRunError, Graph } from '@tokens-studio/graph-engine';
 import { useContextMenu } from 'react-contexify';
 import { version } from '../../package.json';
 import { NodeContextMenu } from '../components/contextMenus/nodeContextMenu.js';

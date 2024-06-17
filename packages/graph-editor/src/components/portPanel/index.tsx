@@ -8,10 +8,10 @@ import {
 } from '@tokens-studio/ui';
 import { useSelector } from 'react-redux';
 import { observer } from 'mobx-react-lite';
-import { Input, NodeTypes } from '@tokens-studio/graph-engine';
+import { Input } from '@tokens-studio/graph-engine';
 import { Port as GraphPort } from '@tokens-studio/graph-engine';
 
-import { Xmark, MoreVert, EyeClosed, Settings, Puzzle, Undo, EyeSolid, Download } from 'iconoir-react';
+import { Xmark, MoreVert, EyeClosed, Puzzle, Undo, EyeSolid, Download } from 'iconoir-react';
 import { InlineTypeLabel } from '@/components/flow';
 import { useGraph } from '@/hooks/useGraph';
 import { controls } from '@/redux/selectors/registry';

@@ -1,5 +1,4 @@
 import { Plus, Star } from 'iconoir-react';
-import { NodeTypes } from '@tokens-studio/graph-engine';
 import React from 'react';
 import preset from '@/data/preset.js';
 import tinyCore from '@/data/tiny/core.js';

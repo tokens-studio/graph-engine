@@ -1,7 +1,7 @@
 import { uiNodeType, xpos, ypos } from '@/annotations';
 import { INPUT, OUTPUT } from '@/ids';
 import { Dispatch } from '@/redux/store';
-import { NodeTypes, Node, Graph, NodeFactory } from '@tokens-studio/graph-engine';
+import {  Node, Graph, NodeFactory } from '@tokens-studio/graph-engine';
 import { ReactFlowInstance } from 'reactflow';
 
 export type NodeRequest = {
