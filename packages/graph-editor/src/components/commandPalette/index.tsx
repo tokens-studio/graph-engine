@@ -79,9 +79,8 @@ const CommandMenu = ({
 }: ICommandMenu) => {
   const showNodesCmdPalette = useSelector(showNodesCmdPaletteSelector);
   const dispatch = useDispatch();
-  const cursorPositionRef = React.useRef<{ x: number; y: number } | null>(null);
+  const cursorPositionRef = React.useRef<{ x: number; y: number }>({x:0,y:0});
   const [selectedItem, setSelectedItem] = React.useState('input');
-
   const wrapperBounds = reactFlowWrapper.current?.getBoundingClientRect();
 
   const handleSelectItem = (item) => {

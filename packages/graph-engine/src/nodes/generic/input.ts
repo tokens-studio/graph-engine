@@ -1,4 +1,4 @@
-import { IDeserializeOpts } from "../../graph/types.js";
+import { IDeserializeOpts, SerializedInput } from "../../graph/types.js";
 import { INodeDefinition } from "../../programmatic/node.js";
 import { Node } from "../../programmatic/node.js";
 import { annotatedDynamicInputs, annotatedSingleton } from '../../annotations/index.js';
@@ -29,6 +29,15 @@ export default class NodeDefinition extends Node {
 
   static override deserialize(opts: IDeserializeOpts) { 
     const node = super.deserialize(opts);
+
+    //Create the values immediately
+    opts.serialized.inputs.forEach((input: SerializedInput) => {
+      node.addInput(input.name, {
+        type: input.type,
+        visible: false,
+        ...input
+      });
+    });
 
     //Create the outputs immediately
     Object.keys(node.inputs).forEach((input) => {

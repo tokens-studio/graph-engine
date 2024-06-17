@@ -33,7 +33,6 @@ const SubgraphExplorer = ({ node }) => {
         const existing = dockerRef.current.find(graphId);
 
 
-
         const ref = (o: ImperativeEditorRef) => {
             if (o && !oneShot) {
                 o.load(innerGraph);
