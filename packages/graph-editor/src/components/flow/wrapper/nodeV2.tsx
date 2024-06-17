@@ -163,7 +163,7 @@ const getColorPreview = (color: string, showValue = false) => {
 
 
 const getValuePreview = (value, type) => {
-  if (value === undefined) {
+  if (!value) {
     return null;
   }
 
@@ -188,9 +188,6 @@ const getValuePreview = (value, type) => {
       break;
     case 'number':
       valuePreview = value.toString();
-      break;
-    case 'string':
-      valuePreview = value;
       break;
     default:
       if (isHexColor(value)) {
@@ -262,8 +259,9 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
     >
       {!hideName && (
         <Box css={{ display: 'grid', justifyContent: 'center', direction: 'row' }}>
-          {inlineValuesValue && <Text css={{ fontSize: '$small', color: '$gray12' }}>{getValuePreview(input.value, input.type) ?? input.name}</Text>}
-          {port.value !== undefined ? <Text css={{ fontSize: '$medium', color: '$gray11' }}>{input.name}</Text> : null}
+          {inlineValuesValue && <Text css={{ fontSize: '$small', color: '$gray12' }}>{getValuePreview(input.value, input.type) || port.name}</Text>}
+
+          {port.value && <Text css={{ fontSize: '$medium', color: '$gray11' }}>{port.name}</Text>}
         </Box>
       )}
       {inlineTypesValue && <InlineTypeLabel port={port} />}
