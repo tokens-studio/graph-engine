@@ -1,7 +1,7 @@
 import { Connection, useReactFlow } from 'reactflow';
 import { useCallback } from 'react';
 import GraphLib from '@dagrejs/graphlib';
-import { canConvertSchemaTypes } from '@tokens-studio/graph-engine';
+import { ANY, canConvertSchemaTypes } from '@tokens-studio/graph-engine';
 import { stripVariadic } from '@/utils/stripVariadic';
 import { useLocalGraph } from './useLocalGraph';
 const { Graph: CycleGraph, alg } = GraphLib;
@@ -45,6 +45,12 @@ export const useIsValidConnection = ({
       }
       if (source.outputs[connection.sourceHandle!].type.items) {
         sourceType = source.outputs[connection.sourceHandle!].type.items;
+      }
+
+      const fullTargetType = target?.inputs[strippedVariadic].fullType();
+      //Any types should be allowed to connect to anything
+      if (fullTargetType.type.$id === ANY || fullTargetType.type.items?.$id === ANY) {
+        return true;
       }
 
       const canConvert = canConvertSchemaTypes(sourceType, targetType);

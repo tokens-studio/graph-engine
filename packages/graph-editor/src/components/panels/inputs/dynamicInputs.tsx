@@ -30,9 +30,16 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
     const newInput = () => {
         //Find the schema
         const schema = AllSchemas.find((x) => x.$id === inputType);
-        const type = {
+        let type = {
             ...schema,
         };
+
+        if (asArray) {
+            type = {
+                type: "array",
+                items: type
+            }
+        }
 
         if (enumerated) {
             type.enum = enumeratedValues.split(',').map((x) => x.trim());
@@ -92,14 +99,14 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
             </Select>
 
             <Stack gap={3} align="center">
-                <Label>Array</Label>
+                <Label>Is an array?</Label>
                 <Checkbox onCheckedChange={(v) => setAsArray(Boolean(v))} checked={asArray} />
 
             </Stack>
-       
+
             {inputType === STRING && (
                 <Stack gap={3} align="center">
-                    <Label>Enumerated?</Label>
+                    <Label>Is enumerated?</Label>
                     <Checkbox
                         onCheckedChange={(v) => setEnumerated(Boolean(v))}
                         checked={enumerated}

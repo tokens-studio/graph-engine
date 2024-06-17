@@ -52,15 +52,14 @@ export class Input<T = any> extends Port<T> {
     this._value = value;
     // debugger;
     if (opts?.type !== undefined) {
-
-      if (this?.type?.type === 'array' && opts?.type?.type === 'array') {
-        if (this?.type?.items?.type !== opts?.type?.items?.type) {
-          this._dynamicType = opts?.type;
+      if (this._type?.$id !== undefined) {
+        if (this._type?.$id !== opts.type.$id) {
+          this._dynamicType = opts.type;
         }
       }
-      //Only if the type differs do we set it
-      else if (this._type?.$id !== opts.type.$id) {
-        this._dynamicType = opts?.type;
+      //Otherwise do a structural comparison
+      else if (JSON.stringify(this._type) !== JSON.stringify(opts.type)) {
+        this._dynamicType = opts.type;
       }
     }
     if (!opts?.noPropagate) {

@@ -1,13 +1,23 @@
 import { AnyArraySchema, AnySchema, NumberSchema, SchemaObject } from "../../schemas/index.js";
+import { Graph } from "../../graph/graph.js";
+import { INodeDefinition, Node } from "../../programmatic/node.js";
 import { Input, ToInput, ToOutput } from "../../programmatic/index.js";
-import { annotatedDynamicInputs, hideFromParentSubgraph } from "../../annotations/index.js";
-import { extractArray } from "../../schemas/utils.js";
-import SubgraphNode from "../generic/subgraph.js";
+import { annotatedDeleteable, annotatedDynamicInputs, hideFromParentSubgraph } from "../../annotations/index.js";
+import { arrayOf, extractArray } from "../../schemas/utils.js";
+import InputNode from "../generic/input.js";
+import OutputNode from "../generic/output.js";
 
-export default class ArraySubgraph<T, V> extends SubgraphNode {
+
+export interface IArraySubgraph extends INodeDefinition{
+  innerGraph?: Graph;
+}
+
+export default class ArraySubgraph<T, V> extends Node {
   static title = "Array Map";
   static type = 'tokens.studio.array.map';
   static description = "Allows you to map an array of items";
+
+  _innerGraph: Graph;
 
   declare inputs: ToInput<{
     array: T[];
@@ -17,17 +27,35 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
     value: V
   }>
 
-  constructor(props) {
+  constructor(props: IArraySubgraph) {
     super(props);
 
-    //Create the hardcoded input values in the innergraph
-    const input = Object.values(this._innerGraph.nodes).find((x) => x.factory.type === 'studio.tokens.generic.input');
+    this._innerGraph = props.innerGraph || new Graph();
+    //Pass capabilities down
+    this._innerGraph.capabilities = this.getGraph().capabilities;
 
-    if (!input) throw new Error("No input node found in subgraph");
+    const input = new InputNode({ graph: this._innerGraph });
+    input.annotations[annotatedDeleteable] = false;
+    const output = new OutputNode({ graph: this._innerGraph });
+    output.annotations[annotatedDeleteable] = false;
+    //Do not allow additional inputs to be added
+    delete output.annotations[annotatedDynamicInputs];
+
+    //Create the initial input and output nodes
+    this._innerGraph.addNode(input);
+    this._innerGraph.addNode(output);
 
     input.annotations[annotatedDynamicInputs] = true;
 
-    input.addInput("value ", {
+    output.addInput("value", {
+      type: arrayOf(AnySchema),
+      visible: true,
+      annotations: {
+        "ui.editable": false,
+      }
+    });
+
+    input.addInput("value", {
       type: AnySchema,
       visible: false,
       annotations: {
@@ -47,11 +75,20 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
       }
     });
 
+    input.addInput("length", {
+      type: NumberSchema,
+      visible: false,
+      annotations: {
+        "ui.editable": false,
+        [hideFromParentSubgraph]: true
+      }
+    });
 
     this.addInput("array", {
       type: AnyArraySchema,
       visible: true,
     });
+
     this.inputs["array"].annotations["ui.editable"] = false
 
     this.addOutput("value", {
@@ -71,18 +108,23 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
     }]));
 
     //Todo optimize this to run in parallel. We have to run this in series because the inner graph is not designed to run in parallel
+    const itemType = extractArray(input.type);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const output = await (input.value as any[]).reduce(async (acc, item, i) => {
 
       const output = await acc;
 
+
       const result = await this._innerGraph.execute({
         //By default this is any so we need to overwrite it with its runtime type
         inputs: {
           value: {
             value: item,
-            type: extractArray(input.type)
+            type: itemType
+          },
+          length:{
+            value: input.value.length
           },
           index: {
             value: i
@@ -94,7 +136,7 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
       if (!result.output) throw new Error("No output from subgraph");
       return output.concat([result.output.value]);
     }, Promise.resolve([]));
-    
+
     const flattened = output.map(x => x.value);
 
     const type = output.length > 0 ? output[0].type : input.type;
@@ -110,4 +152,24 @@ export default class ArraySubgraph<T, V> extends SubgraphNode {
 
     this.setOutput("value", flattened, dynamicTypeSchema);
   }
+
+  override serialize() {
+    const serialized = super.serialize();
+    return {
+      ...serialized,
+      innergraph: this._innerGraph.serialize(),
+    };
+  }
+
+  static override deserialize(opts) {
+   
+    const innerGraph = new Graph().deserialize((opts.serialized).innergraph, opts.lookup);
+
+    const node = super.deserialize({
+      ...opts,
+      innerGraph
+    });
+    return node;
+  }
+
 }
