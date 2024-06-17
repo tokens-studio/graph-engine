@@ -1,9 +1,9 @@
-import { observer } from 'mobx-react-lite';
+import { Accordion, Button, Separator, Stack } from '@tokens-studio/ui';
 import { IField } from '@tokens-studio/graph-editor';
-import React from 'react';
-import { Stack, Accordion, Separator, Button } from '@tokens-studio/ui';
 import { Token } from './token.js';
 import { flatTokensRestoreToMap } from '../../utils/index.js';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
 
 export const TokenArrayField = observer(({ port, readOnly }: IField) => {
 

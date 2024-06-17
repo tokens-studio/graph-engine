@@ -106,7 +106,7 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
 
             {inputType === STRING && (
                 <Stack gap={3} align="center">
-                    <Label>Is enumerated?</Label>
+                    <Label>Is numerated?</Label>
                     <Checkbox
                         onCheckedChange={(v) => setEnumerated(Boolean(v))}
                         checked={enumerated}

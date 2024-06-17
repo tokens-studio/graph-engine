@@ -1,5 +1,5 @@
-import { SingleToken } from "@tokens-studio/types";
 import { BooleanSchema, INodeDefinition, Node, StringSchema } from '@tokens-studio/graph-engine'
+import { SingleToken } from "@tokens-studio/types";
 import { TokenSchema } from "../schemas/index.js";
 import { arrayOf } from "../schemas/utils.js";
 

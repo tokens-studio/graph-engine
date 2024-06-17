@@ -261,7 +261,7 @@ export class Node {
   public static deserialize(opts: IDeserializeOpts): Node {
     const newNode = new this({
       id: opts.serialized.id,
-      graph: opts.graph,
+      ...opts
     });
 
     newNode.annotations = opts.serialized.annotations || {};
@@ -283,6 +283,7 @@ export class Node {
           annotations: input.annotations,
         });
       } else {
+
         //Set the value from the saved value
         foundInput.deserialize(input);
       }
