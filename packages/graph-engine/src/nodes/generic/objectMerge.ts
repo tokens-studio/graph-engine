@@ -1,7 +1,6 @@
+import { AnySchema, StringSchema, createVariadicSchema } from "../../schemas/index.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
-import { createVariadicSchema, AnySchema, StringSchema } from "../../schemas/index.js";
 import deepMerge from 'deepmerge';
 
 
@@ -28,7 +27,7 @@ const COMBINE = 'combine';
 
 export default class NodeDefinition extends Node {
     static title = "Merge objects";
-    static type = NodeTypes.MERGE_OBJECTS;
+    static type = "studio.tokens.generic.mergeObjects";
     static description = "Merges an array of objects into a single object, with later objects taking precedence.";
 
     declare inputs: ToInput<{

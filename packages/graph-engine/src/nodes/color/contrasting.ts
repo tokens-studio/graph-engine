@@ -1,27 +1,25 @@
-/**
- * Performs a contrast calculation between two colors using APCA-W3 calcs
- *
- * @packageDocumentation
- */
+
 import {
-  ColorSchema,
-  StringSchema,
-  NumberSchema,
   BooleanSchema,
+  ColorSchema,
+  NumberSchema,
+  StringSchema,
 } from "../../schemas/index.js";
-import { NodeTypes } from "../../types.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
-import Color from "colorjs.io";
 import { Input, Output } from "../../programmatic";
+import Color from "colorjs.io";
 
 export enum WcagVersion {
   V2 = "2.1",
   V3 = "3.0",
 }
 
+/**
+ * Performs a contrast calculation between two colors using APCA-W3 calcs
+ */
 export default class NodeDefinition extends Node {
   static title = "Contrasting Color";
-  static type = NodeTypes.CONTRASTING;
+  static type = "studio.tokens.color.contrasting";
   static description = "Returns the name of the color";
 
   declare inputs: {
@@ -94,9 +92,9 @@ export default class NodeDefinition extends Node {
     const { wcag, a, b, background, threshold } = this.getAllInputs();
 
     let contrastA, contrastB;
-    let colorA = new Color(a);
-    let colorB = new Color(b);
-    let backgroundCol = new Color(background);
+    const colorA = new Color(a);
+    const colorB = new Color(b);
+    const backgroundCol = new Color(background);
 
     if (wcag == WcagVersion.V2) {
       contrastA = backgroundCol.contrast(colorA, "WCAG21");

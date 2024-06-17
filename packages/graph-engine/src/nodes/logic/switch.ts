@@ -1,9 +1,8 @@
+import { AnySchema, StringSchema } from "../../schemas/index.js";
+import { INodeDefinition, Node } from "../../programmatic/node.js";
 import { ToInput } from "../../programmatic/input.js";
 import { ToOutput } from "../../programmatic/output.js";
 import { annotatedDynamicInputs } from '../../annotations/index.js';
-import { NodeTypes } from "../../types.js";
-import { Node, INodeDefinition } from "../../programmatic/node.js";
-import { AnySchema, StringSchema } from "../../schemas/index.js";
 
 /**
  * @example
@@ -25,7 +24,7 @@ import { AnySchema, StringSchema } from "../../schemas/index.js";
  */
 export default class NodeDefinition<T> extends Node {
   static title = "Switch";
-  static type = NodeTypes.SWITCH;
+  static type = "studio.tokens.logic.switch";
   static description =
     "Switch node allows you to conditionally choose a value based on a condition.";
 

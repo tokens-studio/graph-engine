@@ -1,11 +1,10 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Power";
-  static type = NodeTypes.POW;
+  static type = "studio.tokens.math.pow";
   static description =
     "Power node allows you to Raises a base number to the power of an exponent.";
 

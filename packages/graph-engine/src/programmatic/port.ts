@@ -1,7 +1,7 @@
 import { AnySchema, GraphSchema } from "../schemas/index.js";
+import { Edge } from "./edge.js";
 import { Node } from "./node.js";
 import { action, computed, makeObservable, observable } from "mobx";
-import { Edge } from "./edge.js";
 
 export interface IPort<T = any> {
   name: string;

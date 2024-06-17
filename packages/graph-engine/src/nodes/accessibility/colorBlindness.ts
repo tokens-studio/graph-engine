@@ -1,15 +1,10 @@
-/**
- * Converts provided colors to the colors as perceived by the specified color blindness type.
- *
- * @packageDocumentation
- */
 
+
+import { ColorSchema, NumberSchema, StringSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
 import blinder from "color-blind";
 import chroma from "chroma-js";
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
-import { NumberSchema, ColorSchema, StringSchema } from "../../schemas/index.js";
 
 export enum ColorBlindnessTypes {
   TRITANOPIA = "tritanopia",
@@ -22,9 +17,12 @@ export enum ColorBlindnessTypes {
   ACHROMATOMALY = "achromatomaly",
 }
 
+/**
+ * Converts provided colors to the colors as perceived by the specified color blindness type.
+ */
 export default class NodeDefinition extends Node {
   static title = "Color Blindness";
-  static type = NodeTypes.COLOR_BLINDNESS;
+  static type = 'studio.tokens.accessibility.colorBlindness';
   static description =
     "Converts provided colors to the colors as perceived by the specified color blindness type.";
 
@@ -34,6 +32,9 @@ export default class NodeDefinition extends Node {
   }>
 
   declare outputs: ToOutput<{
+    /**
+     * The calculated color contrast based on the input color and the specified color blindness type.
+     */
     value: string;
   }>;
 

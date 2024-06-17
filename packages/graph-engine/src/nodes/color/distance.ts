@@ -1,11 +1,11 @@
+import { Color } from "../../types.js";
+import { ColorSchema, NumberSchema } from "../../schemas/index.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Color, NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import chroma from "chroma-js";
-import { ColorSchema, NumberSchema } from "../../schemas/index.js";
 export default class NodeDefinition extends Node {
   static title = "Color Distance";
-  static type = NodeTypes.COLOR_DISTANCE;
+  static type = "studio.tokens.color.distance";
   static description =
     "Distance node allows you to calculate the distance between two colors.";
 
@@ -15,7 +15,7 @@ export default class NodeDefinition extends Node {
     color2: Color;
   }>;
   declare outputs: ToOutput<{
-    value:number
+    value: number
   }>;
 
 

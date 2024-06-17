@@ -1,11 +1,10 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Exponentiation";
-  static type = NodeTypes.EXPONENT;
+  static type = "studio.tokens.math.exponent";
   static description =
     "Specifically calculates e (Euler's number, approximately 2.71828) raised to a power.";
 

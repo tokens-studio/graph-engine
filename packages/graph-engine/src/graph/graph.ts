@@ -501,6 +501,8 @@ export class Graph {
 
       return acc;
     }, {});
+
+
     return this;
   }
 
@@ -567,7 +569,7 @@ export class Graph {
    * @returns
    */
   async execute(opts?: GraphExecuteOptions): Promise<BatchExecution> {
-    const { inputs, stats, journal } = opts || {};
+    const { inputs, stats } = opts || {};
 
     const start = performance.now();
     const statsTracker = {};

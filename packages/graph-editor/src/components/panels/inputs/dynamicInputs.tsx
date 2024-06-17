@@ -23,6 +23,7 @@ import { deletable } from '@/annotations';
 export const DynamicInputs = observer(({ node }: { node: Node }) => {
     const [inputName, setInputName] = React.useState('');
     const [inputType, setInputType] = React.useState('-');
+    const [asArray, setAsArray] = React.useState(false);
     const [enumerated, setEnumerated] = React.useState(false);
     const [enumeratedValues, setEnumeratedValues] = React.useState<string>('');
 
@@ -40,7 +41,7 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
 
         const input = node.addInput(inputName, {
             type,
-            visible: node.nodeType() !== NodeTypes.INPUT,
+            visible: node.nodeType() !== "studio.tokens.generic.input",
         });
         input.annotations[deletable] = true;
         //We trigger running the node to either propagate the new input or to update the node
@@ -90,6 +91,12 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
                 </Select.Content>
             </Select>
 
+            <Stack gap={3} align="center">
+                <Label>Array</Label>
+                <Checkbox onCheckedChange={(v) => setAsArray(Boolean(v))} checked={asArray} />
+
+            </Stack>
+       
             {inputType === STRING && (
                 <Stack gap={3} align="center">
                     <Label>Enumerated?</Label>

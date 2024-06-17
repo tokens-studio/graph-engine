@@ -1,11 +1,9 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
 import { AnyArraySchema, AnySchema, createVariadicSchema } from "../../schemas/index.js";
-
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
 export default class NodeDefinition<T> extends Node {
   static title = "Arrify";
-  static type = NodeTypes.ARRIFY;
+  static type = "studio.tokens.array.arrify";
   static description = "Dynamically generates an array";
 
   declare inputs: ToInput<{

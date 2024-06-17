@@ -1,11 +1,11 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Curve, NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
+import { Curve } from "../../types.js";
 import {
   CurveSchema,
   NumberSchema,
   Vec2Schema,
 } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
 
 
 const scaleVec = (vec, scale) => vec.map((v) => v * scale);
@@ -25,15 +25,24 @@ const sampleBezier = (bezier: Curve["curves"][0], sample) => {
 
 export default class NodeDefinition extends Node {
   static title = "Sample Curve";
-  static type = NodeTypes.SAMPLE_CURVE;
+  static type = "studio.tokens.curve.sample";
   static description = "Samples a curve at a specified point";
 
   declare inputs: ToInput<{
+    /**
+     * The curve to sample
+     */
     curve: Curve;
+    /**
+     * The sample point to evaluate the curve at. This should be a value between 0 and 1
+     */
     sample: number;
   }>;
 
   declare outputs: ToOutput<{
+    /**
+     * A 2D vector representing the value of the curve at the sample point
+     */
     value: [number, number];
   }>;
 

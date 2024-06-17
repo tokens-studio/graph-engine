@@ -1,11 +1,10 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Square Root";
-  static type = NodeTypes.SQRT;
+  static type = "studio.tokens.math.sqrt";
   static description =
     "Calculates the square root of a number. This finds the value which, when multiplied by itself, equals the original number.";
 

@@ -11,7 +11,7 @@ import { Graph } from "./graph.js";
  * @returns
  */
 export function topologicalSort(graph: Graph): string[] {
-  const visited = new Set<String>();
+  const visited = new Set<string>();
   const stack: string[] = [];
 
   function dfs(node: string) {

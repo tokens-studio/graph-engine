@@ -1,7 +1,6 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
 import { AnySchema, BooleanSchema, StringSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
 
 export enum Operator {
   EQUAL = "==",
@@ -14,7 +13,7 @@ export enum Operator {
 
 export default class NodeDefinition<T> extends Node {
   static title = "Compare";
-  static type = NodeTypes.COMPARE;
+  static type = "studio.tokens.logic.compare";
   static description =
     "Compare node allows you to compare two values using multiple operators.";
 

@@ -1,11 +1,10 @@
 import { INodeDefinition, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Random";
-  static type = NodeTypes.RANDOM;
+  static type = "studio.tokens.math.random";
   static description =
     "Random node allows you to generate a random number between 0 and 1.";
 

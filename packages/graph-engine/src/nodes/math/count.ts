@@ -1,11 +1,11 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
+
 import { AnyArraySchema, NumberSchema } from "../../schemas/index.js";
+import { Node } from "../../programmatic/node.js";
 
 export default class NodeDefinition extends Node {
   static title = "Count";
-  static type = NodeTypes.COUNT;
+  static type = "studio.tokens.math.count";
   static description = "Counts the amount of items in an array.";
 
 

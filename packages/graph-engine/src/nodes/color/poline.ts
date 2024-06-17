@@ -1,6 +1,3 @@
-import { INodeDefinition } from "../../index.js";
-import { NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
 import {
   BooleanSchema,
   ColorSchema,
@@ -8,6 +5,8 @@ import {
   StringSchema,
 } from "../../schemas/index.js";
 import { Hsl, converter, formatHex } from "culori";
+import { INodeDefinition } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
 import { Poline, PositionFunction, Vector3, positionFunctions } from "poline";
 import { arrayOf } from "../../schemas/utils.js";
 
@@ -23,7 +22,7 @@ export type PolineNodeOptions = {
 const positionFuncs = Object.keys(positionFunctions);
 
 const convertHexToHsl = (hexColor: string): Vector3 => {
-  let hsl = converter("hsl");
+  const hsl = converter("hsl");
 
   const hslColor = hsl(hexColor) as Hsl;
 
@@ -32,7 +31,7 @@ const convertHexToHsl = (hexColor: string): Vector3 => {
 
 export default class NodeDefinition extends Node {
   static title = "Poline";
-  static type = NodeTypes.POLINE;
+  static type = "studio.tokens.color.poline";
   static description = "";
   constructor(props: INodeDefinition) {
     super(props);
@@ -93,7 +92,7 @@ export default class NodeDefinition extends Node {
       throw new Error("Not enough color inputs");
     }
     anchorColors.forEach((hexColor) => {
-      let hsl = converter("hsl");
+      const hsl = converter("hsl");
 
       const hslColor = hsl(hexColor) as unknown as Hsl;
       if (!hslColor || hslColor.h === undefined) {

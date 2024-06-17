@@ -1,11 +1,10 @@
 import { INodeDefinition,  ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema, } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Multiply";
-  static type = NodeTypes.MULTIPLY;
+  static type = "studio.tokens.math.multiply";
   static description = "Multiply node allows you to multiply two  numbers.";
 
   declare inputs: ToInput<{

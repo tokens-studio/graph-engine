@@ -1,7 +1,6 @@
-import { NodeTypes } from "../../types.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
-import { Input, ToInput } from "../../programmatic/input.js";
+import { ToInput } from "../../programmatic/input.js";
 import { ToOutput } from "../../programmatic";
 import { arrayOf } from "../../schemas/utils.js";
 export type ArithemeticValue = {
@@ -25,7 +24,7 @@ export default class NodeDefinition extends Node {
     indexed: ArithemeticValue[];
   }>
 
-  static type = NodeTypes.ARITHMETIC_SERIES;
+  static type = "studio.tokens.series.arithmetic";
   static description =
     "Generates an arithmetic f(n)= c + (f(n-1)) series of numbers based on the base value, steps down, steps and increment.";
   constructor(props: INodeDefinition) {
@@ -71,7 +70,7 @@ export default class NodeDefinition extends Node {
     });
     this.addOutput("indexed", {
       type: {
-        $id: `https://schemas.tokens.studio/${NodeTypes.ARITHMETIC_SERIES}/indexed.json`,
+        $id: `https://schemas.tokens.studio/studio.tokens.series.arithmetic/indexed.json`,
         type: "object",
         properties: {
           index: {

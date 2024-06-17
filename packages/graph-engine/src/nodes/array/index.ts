@@ -1,17 +1,15 @@
-import arrify from "./arrify.js";
-import sort from "./sort.js";
-import push from "./push.js";
-import indexArray from "./indexArray.js";
-import concat from "./concat.js";
-import join from "./join.js";
-import reverse from "./reverse.js";
 import arraySubgraph from "./arraySubgraph.js";
-import reduce from "./reduce.js";
+import arrify from "./arrify.js";
+import concat from "./concat.js";
+import indexArray from "./indexArray.js";
+import join from "./join.js";
+import push from "./push.js";
+import reverse from "./reverse.js";
 import slice from "./slice.js";
+import sort from "./sort.js";
 
 export const nodes = [
   arraySubgraph,
-  reduce,
   arrify,
   concat,
   sort,

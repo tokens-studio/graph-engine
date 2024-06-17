@@ -27,6 +27,7 @@ export interface IPortPanel {
 export const PortPanel = observer(({ ports, readOnly }: IPortPanel) => {
   const entries = Object.values(ports).sort();
 
+
   return (
     <Stack direction="column" gap={3} width="full">
       {entries.filter(x=>!x.annotations[hidden]).map((x) => (
@@ -41,7 +42,7 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
   const readOnly = isReadOnly || port.isConnected;
   const controlSelector = useSelector(controls);
   const graph = useGraph();
-  const isInput = NodeTypes.INPUT === port.node.factory.type;
+  const isInput = "studio.tokens.generic.input" === port.node.factory.type;
   const isDynamicInput = Boolean(port.annotations[deletable]);
   const resettable = Boolean(port.annotations[resetable]);
 

@@ -1,13 +1,12 @@
-import { INodeDefinition } from "../../index.js";
-import { NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
 import {  ColorSchema, NumberSchema } from "../../schemas/index.js";
-import Color from "colorjs.io";
+import { INodeDefinition } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
 import { arrayOf } from "../../schemas/utils.js";
+import Color from "colorjs.io";
 
 export default class NodeDefinition extends Node {
   static title = "Color Wheel";
-  static type = NodeTypes.WHEEL;
+  static type = "studio.tokens.color.wheel";
   static description =
     "Generate Color Wheel node allows you to create a color scale based on a base color and rotation in hue. You can use this node to generate a color scale for a specific color property.";
   constructor(props: INodeDefinition) {

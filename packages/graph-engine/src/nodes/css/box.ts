@@ -1,11 +1,10 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema, StringSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "CSS Box";
-  static type = NodeTypes.CSS_BOX;
+  static type = "studio.tokens.css.box";
   static description =
     "CSS Box node allows you to generate a CSS box from 4 values";
     

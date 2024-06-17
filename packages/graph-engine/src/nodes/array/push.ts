@@ -1,17 +1,25 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
-import { Node } from "../../programmatic/node.js";
 import { AnyArraySchema, AnySchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
 export default class NodeDefinition<T> extends Node {
   static title = "Array push";
-  static type = NodeTypes.ARRAY_PUSH;
+  static type = "studio.tokens.array.push";
   static description = "Pushes an item to an array";
 
   declare inputs: ToInput<{
+    /**
+     * The array to push to
+     */
     array: T[];
+    /**
+     * The item to push to the array
+     */
     item: T;
   }>
   declare outputs: ToOutput<{
+    /**
+     * The array with the item pushed to it
+     */
     value: T[];
   }>
 

@@ -33,7 +33,7 @@ export const flatten = (
   return Object.entries(nested).reduce((acc, [key, val]) => {
     //Check if leaf node
     if (val && typeof val.value !== "undefined") {
-      let leaf = val as SingleToken;
+      const leaf = val as SingleToken;
       acc.push({
         name: [...keyPath, key].join("."),
         value: leaf.value,
@@ -80,34 +80,3 @@ export const flatTokensRestoreToMap = (tokens: IResolvedToken[]) => {
   return returning;
 };
 
-export type W3CToken = {
-  $value: string;
-  $type: TokenTypes;
-  alpha?: number;
-  $extensions?: Record<string, any>;
-};
-export interface W3CDeepKeyTokenMap {
-  [key: string]: W3CDeepKeyTokenMap | W3CToken;
-}
-
-export const convertW3CToStudio = (
-  obj: W3CDeepKeyTokenMap
-): DeepKeyTokenMap => {
-  return Object.entries(obj).reduce((acc, [key, value]) => {
-    if (Object.hasOwn(value, "$value")) {
-      const val = value as W3CToken;
-      const newValue = {
-        value: value.$value,
-      } as SingleToken;
-
-      if (Object.hasOwn(value, "$type")) {
-        //@ts-ignore
-        newValue.type = val.$type;
-      }
-      acc[key] = newValue;
-    } else {
-      acc[key] = convertW3CToStudio(value as W3CDeepKeyTokenMap);
-    }
-    return acc;
-  }, {} as DeepKeyTokenMap);
-};

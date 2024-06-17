@@ -1,11 +1,10 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { NodeTypes } from "../../types.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Fluid";
-  static type = NodeTypes.FLUID_VALUE;
+  static type = "studio.tokens.math.fluid";
   static description =
     "Fluid node allows you to dynamically calculates a dimension based on the current viewport width, transitioning smoothly between a minimum and maximum dimension as the viewport width changes within a defined range (from min viewport to max viewport)";
 

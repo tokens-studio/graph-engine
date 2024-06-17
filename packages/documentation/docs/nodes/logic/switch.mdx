@@ -1,0 +1,80 @@
+---
+title: Switch
+---
+import { Editor, PanelGroup, DropPanelStore, PanelItem } from '@tokens-studio/graph-editor';
+import {InitialLayout} from '@site/src/components/editor/layout';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import {} from '@site/src/components/editor/nodes/nodes/logic/switch/index.ts';
+
+# switch
+
+Node Type ID: `"studio.tokens.logic.switch"`
+
+## Package 
+
+This is a core package available at [Graph Engine](https://www.npmjs.com/package/@tokens-studio/graph-engine)
+
+To install 
+
+<Tabs>
+  <TabItem value="npm" label="NPM" default>
+```bash
+npm install @tokens-studio/graph-engine
+```
+  </TabItem>
+  <TabItem value="yarn" label="Yarn">
+```bash
+yarn add @tokens-studio/graph-engine
+```
+  </TabItem>
+</Tabs>
+
+
+
+## Description
+Switch node allows you to conditionally choose a value based on a condition.
+
+## Inputs
+
+
+#### condition
+
+*No description*
+
+
+
+
+#### default
+
+*No description*
+
+
+
+
+## Outputs
+
+*No outputs*
+
+
+## Example
+
+
+```ts
+
+const switchNode = new SwitchNode();
+switchNode.addInput("foo", {
+ type: AnySchema,
+});
+
+switchNode.addInput("bar", {
+type: AnySchema,
+});
+
+//Now if the condition matches the name 'foo' it will output the value of the foo input
+// If no condition matches, it will output the value of the `default` input
+
+
+```
+
+
