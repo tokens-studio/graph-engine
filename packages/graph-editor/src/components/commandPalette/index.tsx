@@ -146,6 +146,7 @@ const CommandMenu = ({
           color: '$fgSubtle',
           display: 'flex',
           flexDirection: 'row',
+          alignItems: 'center',
           gap: 1,
           padding: '$4',
           borderBottom: '1px solid $borderSubtle',
@@ -160,7 +161,7 @@ const CommandMenu = ({
         </Command.Empty>
         <Stack
           direction="row"
-          css={{ overflowY: 'scroll', maxHeight: '450px' }}
+          css={{ overflowY: 'scroll', maxHeight: '450px', scrollbarColor: 'var(--colors-bgSubtle) transparent', scrollbarWidth: 'thin' }}
         >
           <Box
             css={{
