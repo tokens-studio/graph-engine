@@ -1,10 +1,10 @@
 import { GraphSchema } from "../schemas/index.js";
 import { Node } from "./node.js";
-import { TypeDefinition } from "./node.js";
 import { Port } from "./port.js";
-import getDefaults from "json-schema-defaults";
 import { SerializedInput } from "../graph/types.js";
+import { TypeDefinition } from "./node.js";
 import { action, makeObservable } from "mobx";
+import getDefaults from "json-schema-defaults";
 
 export interface IInputProps<T = any> {
   name: string;
@@ -50,10 +50,16 @@ export class Input<T = any> extends Port<T> {
    */
   setValue(value: T, opts?: ISetValue) {
     this._value = value;
+    // debugger;
     if (opts?.type !== undefined) {
 
+      if (this?.type?.type === 'array' && opts?.type?.type === 'array') {
+        if (this?.type?.items?.type !== opts?.type?.items?.type) {
+          this._dynamicType = opts?.type;
+        }
+      }
       //Only if the type differs do we set it
-      if (this._type?.$id !== opts.type.$id) {
+      else if (this._type?.$id !== opts.type.$id) {
         this._dynamicType = opts?.type;
       }
     }
