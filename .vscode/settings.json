@@ -3,6 +3,11 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit"
     },
+    "eslint.workingDirectories": [
+        {
+            "mode": "auto"
+        }
+    ],
     "eslint.options": {
         "extensions": [
             ".js",

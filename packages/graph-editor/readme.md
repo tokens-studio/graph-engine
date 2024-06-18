@@ -79,3 +79,7 @@ In the example above, we use the useRef hook to create a reference to the Editor
 **save()**: The save() function is called on the Editor component's ref, and it returns the current state of the editor. The state includes information about nodes, edges, and node states.
 
 **load()**: The load(data) function allows you to load a specific graph data into the editor. You can fetch the data from an external source or use data from a previously saved state.
+
+## Development
+
+We need to force the cypress react selector to use a version of `resq` that supports 18.2.0

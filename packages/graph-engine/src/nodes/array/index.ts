@@ -1,23 +1,21 @@
-import { node as arrify } from "./arrify.js";
-import { node as concat } from "./concat.js";
-import { node as dotProp } from "./dotProp.js";
-import { node as indexArray } from "./indexArray.js";
-import { node as join } from "./join.js";
-import { node as reverse } from "./reverse.js";
-import { node as slice } from "./slice.js";
-import { node as sort } from "./sort.js";
-import { node as arrayPassUnit } from "./passUnit.js";
-import { node as name } from "./name.js";
+import arraySubgraph from "./arraySubgraph.js";
+import arrify from "./arrify.js";
+import concat from "./concat.js";
+import indexArray from "./indexArray.js";
+import join from "./join.js";
+import push from "./push.js";
+import reverse from "./reverse.js";
+import slice from "./slice.js";
+import sort from "./sort.js";
 
 export const nodes = [
+  arraySubgraph,
   arrify,
   concat,
-  dotProp,
+  sort,
+  push,
   indexArray,
   reverse,
   slice,
   join,
-  sort,
-  arrayPassUnit,
-  name,
 ];

@@ -1,39 +1,52 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
+import { NumberSchema } from "../../schemas/index.js";
 
-export const type = NodeTypes.CLAMP;
+export default class NodeDefinition extends Node {
+  static title = "Clamp";
+  static type = "studio.tokens.math.clamp";
+  static description =
+    "Clamp node allows you to restricts a value within a specified minimum and maximum range.";
 
-export const defaults = {
-  value: 0,
-  min: 0,
-  max: 0,
-};
 
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-export const process = (input, state) => {
-  //Override with state if defined
-  const final = {
-    ...state,
-    ...input,
-  };
+  declare inputs: ToInput<{
+    value: number;
+    min: number;
+    max: number;
+  }>;
+  declare outputs: ToOutput<{
+    value: number;
+  }>;
 
-  const value = parseFloat(final.value);
-  const min = parseFloat(final.min);
-  const max = parseFloat(final.max);
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("value", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+        visible: true,
+      },
+    });
+    this.addInput("min", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+      },
+    });
+    this.addInput("max", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+      },
+    });
+    this.addOutput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
+  }
 
-  return value > max ? max : value < min ? min : value;
-};
-
-export const node: NodeDefinition = {
-  description:
-    "Clamp node allows you to restricts a value within a specified minimum and maximum range.",
-  type,
-  defaults,
-  process,
-};
+  execute(): void | Promise<void> {
+    const { value, min, max } = this.getAllInputs();
+    this.setOutput("value", value > max ? max : value < min ? min : value);
+  }
+}

@@ -1,42 +1,58 @@
-/**
- * Extracts a value from an array at a given index
- *
- * @packageDocumentation
- */
+import { AnyArraySchema, AnySchema, NumberSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
+export default class NodeDefinition<T> extends Node {
+  static title = "Index Array";
+  static type = "studio.tokens.array.index";
+  static description = "Extracts a value from an array at a given index";
 
-import { NodeDefinition, NodeTypes } from "../../types.js";
+  declare inputs: ToInput<{
+    /**
+     * The array to extract the value from
+     */
+    array: T[]
+    /**
+     * The index to extract the value from. 
+     * @default 0
+     */
+    index: number
+  }>
+  declare outputs: ToOutput<{
+    /**
+     * The value at the given index
+     */
+    value: T
+  }>
 
-const type = NodeTypes.ARRAY_INDEX;
 
-export type Input = {
-  array: any[];
-  index: number;
-};
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("array", {
+      type: AnyArraySchema,
+      visible: true,
+    });
+    this.addInput("index", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+      },
+    });
 
-export type State = {
-  index: number;
-  monad: boolean;
-};
+    this.addOutput("value", {
+      type: AnySchema,
+      visible: true,
+    });
+  }
 
-export const defaults = {
-  index: 0,
-  monad: false,
-};
+  execute(): void | Promise<void> {
+    const array = this.getRawInput("array");
+    const { index } = this.getAllInputs();
+    //Get the value
+    const calculated = array.value[index];
+    //Extract the type
+    //We assume that the array has a single defined item
 
-const process = (input: Input, state: State) => {
-  const final = {
-    ...state,
-    ...input,
-  };
-
-  const value = final.array[final.index];
-
-  return final.monad ? [value] : value;
-};
-
-export const node: NodeDefinition<Input, State> = {
-  description: "Extracts a value from an array at a given index",
-  type,
-  defaults,
-  process,
-};
+    const type = array.value[0];
+    this.setOutput("value", calculated, type);
+  }
+}

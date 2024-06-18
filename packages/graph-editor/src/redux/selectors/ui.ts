@@ -1,10 +1,5 @@
 import { createSelector } from 'reselect';
-import { ui } from './roots.ts';
-
-export const showNodesPanelSelector = createSelector(
-  ui,
-  (state) => state.showNodesPanel,
-);
+import { ui } from './roots.js';
 
 export const showNodesCmdPaletteSelector = createSelector(
   ui,
@@ -14,4 +9,14 @@ export const showNodesCmdPaletteSelector = createSelector(
 export const storeNodeInsertPositionSelector = createSelector(
   ui,
   (state) => state.storeNodeInsertPosition,
+);
+
+export const contextMenuSelector = createSelector(
+  ui,
+  (state) => state.contextMenus,
+);
+
+export const currentFlowSelector = createSelector(
+  ui,
+  (state) => state.currentReactFlow,
 );

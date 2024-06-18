@@ -1,9 +1,20 @@
-import { ColorModifier, ColorModifierTypes } from "@tokens-studio/types";
-import { NodeDefinition, NodeTypes } from "../../types.js";
-import { modifyColor } from "./lib/modifyColor.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Color as ColorType } from "../../types.js";
+import { Node } from "../../programmatic/node.js";
 import Color from "colorjs.io";
+import {
+  ColorModifier,
+  ColorModifierTypes,
+  ColorSpaceTypes,
+} from "@tokens-studio/types";
+import {
+  ColorSchema,
+  NumberSchema,
+  StringSchema,
+} from "../../schemas/index.js";
+import { modifyColor } from "./lib/modifyColor.js";
 
-const type = NodeTypes.BLEND;
+export { ColorModifierTypes } from "@tokens-studio/types";
 
 function convertModifiedColorToHex(baseColor: string, modifier: ColorModifier) {
   let returnedColor = baseColor;
@@ -12,53 +23,76 @@ function convertModifiedColorToHex(baseColor: string, modifier: ColorModifier) {
   return returnedColorInSpace.to("srgb").toString({ format: "hex" });
 }
 
-export type BlendNodeData = {
-  /**
-   * Start
-   */
-  color: string;
-  /**
-   * The number for steps for the shades
-   */
-  modifierType: ColorModifierTypes;
-  /**
-   * Value to apply to the modifier
-   */
-  value: string;
-  /**
-   * Mixing color
-   */
-  mixColor: string;
-  /**
-   * The color space we are operating in
-   */
-  space: string;
-};
+export default class NodeDefinition extends Node {
+  static title = "Blend Colors";
+  static type = "studio.tokens.color.blend";
+  static description = "Blends two colors together";
 
-export const defaults = {
-  value: 0.5,
-  space: "srgb",
-  modifierType: ColorModifierTypes.DARKEN,
-};
+  declare inputs: ToInput<{
+    color: ColorType;
+    mixColor: ColorType;
+    value: number;
+    space: ColorSpaceTypes;
+    modifierType: ColorModifierTypes;
+  }>;
 
-const process = (input, state) => {
-  const final = {
-    ...state,
-    ...input,
-  };
+  declare outputs: ToOutput<{
+    value: ColorType
+  }>;
 
-  return convertModifiedColorToHex(input.color, {
-    type: final.modifierType,
-    color: final.mixColor,
-    space: final.space,
-    value: final.value,
-  } as ColorModifier);
-};
 
-export const node: NodeDefinition = {
-  type,
-  defaults,
-  process,
-};
 
-export { ColorModifierTypes } from "@tokens-studio/types";
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("color", {
+      type: ColorSchema,
+      visible: true,
+    });
+    this.addInput("mixColor", {
+      type: {
+        ...ColorSchema,
+        description: "Mixing color",
+      },
+    });
+    this.addInput("value", {
+      type: {
+        ...NumberSchema,
+        default: 0.5,
+        description: "Value to apply to the modifier",
+      },
+    });
+    this.addInput("space", {
+      type: {
+        ...StringSchema,
+        default: "srgb",
+        enum: Object.keys(ColorSpaceTypes),
+        description: "The color space we are operating in",
+      },
+    });
+    this.addInput("modifierType", {
+      type: {
+        ...StringSchema,
+        default: ColorModifierTypes.DARKEN,
+        enum: Object.values(ColorModifierTypes),
+        description: "The color space we are operating in",
+      },
+    });
+
+    this.addOutput("value", {
+      type: ColorSchema,
+      visible: true,
+    });
+  }
+
+  execute(): void | Promise<void> {
+    const { modifierType, mixColor, space, value, color } = this.getAllInputs();
+
+    const converted = convertModifiedColorToHex(color, {
+      type: modifierType,
+      color: mixColor,
+      space,
+      value,
+    } as ColorModifier);
+    this.setOutput("value", converted);
+  }
+}

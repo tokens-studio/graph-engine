@@ -1,5 +1,5 @@
-import { node as colorBlindness } from "./colorBlindness.js";
-import { node as contrast } from "./contrast.js";
-import { node as baseFontSize } from "./baseFontSize.js";
+import baseFontSize from "./baseFontSize.js";
+import colorBlindness from "./colorBlindness.js";
+import contrast from "./contrast.js";
 
 export const nodes = [contrast, colorBlindness, baseFontSize];

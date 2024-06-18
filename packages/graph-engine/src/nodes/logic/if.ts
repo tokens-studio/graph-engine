@@ -1,28 +1,53 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { AnySchema, BooleanSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
 
-export const type = NodeTypes.IF;
+export default class NodeDefinition<T, V> extends Node {
+  static title = "If";
+  static type = "studio.tokens.logic.if";
+  static description =
+    "If node allows you to conditionally choose a value based on a condition.";
 
-type Input = {
-  condition: boolean;
-  a: any;
-  b: any;
-};
 
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-export const process = (input: Input) => {
-  return input.condition ? input.a : input.b;
-};
+  declare inputs: ToInput<{
+    condition: boolean;
+    a: T;
+    b: V;
+  }>;
 
-export const node: NodeDefinition<Input> = {
-  description:
-    "If node allows you to conditionally choose a value based on a condition.",
-  type,
-  process,
-};
+  declare outputs: ToOutput<{
+    value: T | V;
+  }>;
+
+
+
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("condition", {
+      type: BooleanSchema,
+      visible: true,
+    });
+    this.addInput("a", {
+      type: AnySchema,
+      visible: true,
+    });
+    this.addInput("b", {
+      type: AnySchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: AnySchema,
+      visible: true,
+    });
+  }
+
+  execute(): void | Promise<void> {
+    const { condition } = this.getAllInputs();
+    const a = this.getRawInput("a");
+    const b = this.getRawInput("b");
+
+    const val = condition ? a : b;
+
+    this.setOutput("value", val.value, val.type);
+  }
+}

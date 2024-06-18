@@ -1,13 +1,14 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import {
+  BooleanSchema,
+  ColorSchema,
+  NumberSchema,
+  StringSchema,
+} from "../../schemas/index.js";
 import { Hsl, converter, formatHex } from "culori";
+import { INodeDefinition } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
 import { Poline, PositionFunction, Vector3, positionFunctions } from "poline";
-
-export const type = NodeTypes.POLINE;
-
-export const defaults: PolineNodeInput = {
-  anchorColors: [],
-  numPoints: 4,
-};
+import { arrayOf } from "../../schemas/utils.js";
 
 export type PolineNodeOptions = {
   anchorColors: Vector3[];
@@ -18,124 +19,106 @@ export type PolineNodeOptions = {
   positionFunctionZ?: PositionFunction;
 };
 
-export type PolineNodeInput = {
-  anchorColors: string[];
-  numPoints?: number;
-  invertedLightness?: boolean;
-  positionFnX?: string;
-  positionFnY?: string;
-  positionFnZ?: string;
-  hueShift?: number;
-};
+const positionFuncs = Object.keys(positionFunctions);
 
 const convertHexToHsl = (hexColor: string): Vector3 => {
-  let hsl = converter("hsl");
+  const hsl = converter("hsl");
 
   const hslColor = hsl(hexColor) as Hsl;
 
   return [hslColor.h ?? 0, hslColor.s, hslColor.l];
 };
 
-const validateInputs = (input: PolineNodeInput, state) => {
-  if (!input.anchorColors || input.anchorColors.length < 2) {
-    throw new Error("Not enough color inputs");
+export default class NodeDefinition extends Node {
+  static title = "Poline";
+  static type = "studio.tokens.color.poline";
+  static description = "";
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("anchorColors", {
+      type: arrayOf(ColorSchema),
+      visible: true,
+    });
+    this.addInput("numPoints", {
+      type: {
+        ...NumberSchema,
+        default: 4,
+      },
+      visible: true,
+    });
+    this.addInput("invertedLightness", {
+      type: BooleanSchema,
+    });
+    this.addInput("positionFnX", {
+      type: {
+        ...StringSchema,
+        enum: positionFuncs,
+      },
+    });
+    this.addInput("positionFnY", {
+      type: {
+        ...StringSchema,
+        enum: positionFuncs,
+      },
+    });
+    this.addInput("positionFnZ", {
+      type: {
+        ...StringSchema,
+        enum: positionFuncs,
+      },
+    });
+
+    this.addInput("hueShift", {
+      type: NumberSchema,
+    });
+    this.addOutput("value", {
+      type: arrayOf(ColorSchema),
+      visible: true,
+    });
   }
 
-  input.anchorColors.forEach((hexColor) => {
-    let hsl = converter("hsl");
+  execute(): void | Promise<void> {
+    const {
+      numPoints,
+      hueShift,
+      anchorColors,
+      positionFnX,
+      positionFnY,
+      positionFnZ,
+      invertedLightness,
+    } = this.getAllInputs();
 
-    const hslColor = hsl(hexColor);
-    if (!hslColor || hslColor.h === undefined) {
-      throw new Error("Invalid color input");
+    if (!anchorColors || anchorColors.length < 2) {
+      throw new Error("Not enough color inputs");
     }
-  });
-};
+    anchorColors.forEach((hexColor) => {
+      const hsl = converter("hsl");
 
-const convertToInt = (value): number => {
-  return typeof value === "string" ? parseInt(value, 10) : value;
-};
+      const hslColor = hsl(hexColor) as unknown as Hsl;
+      if (!hslColor || hslColor.h === undefined) {
+        throw new Error("Invalid color input");
+      }
+    });
 
-const convertToFloat = (value): number => {
-  return typeof value === "string" ? parseFloat(value) : value;
-};
-
-export const process = (
-  input: PolineNodeInput,
-  state: PolineNodeInput
-): string[] => {
-  const final: PolineNodeInput = {
-    ...state,
-    ...input,
-  };
-
-  final.numPoints = convertToInt(final.numPoints);
-  final.hueShift = convertToFloat(final.hueShift);
-
-  if (final.anchorColors.length < 2) {
-    return [];
-  }
-
-  const polineOptions: PolineNodeOptions = {
-    ...final,
-    numPoints: final.numPoints ?? 4,
-    anchorColors: final.anchorColors.map((hexColor) =>
-      convertHexToHsl(hexColor)
-    ),
-    positionFunctionX:
-      positionFunctions[
-        final.positionFnX ? final.positionFnX : "sinusoidalPosition"
-      ],
-    positionFunctionY:
-      positionFunctions[
-        final.positionFnY ? final.positionFnY : "sinusoidalPosition"
-      ],
-    positionFunctionZ:
-      positionFunctions[
-        final.positionFnZ ? final.positionFnZ : "sinusoidalPosition"
-      ],
-  };
-
-  const poline = new Poline(polineOptions);
-  if (final.hueShift) {
-    poline.shiftHue(final.hueShift);
-  }
-
-  const hexColors: string[] = [];
-
-  poline.colorsCSS.forEach((hslColor) => {
-    const hexColor = formatHex(hslColor);
-    if (hexColor) {
-      hexColors.push(hexColor);
-    }
-  });
-
-  return hexColors;
-};
-
-export const mapOutput = (input, state, processed) => {
-  const array = processed.map((x, i) => {
-    return {
-      name: "" + i,
-      value: x,
-      type: "color",
+    const polineOptions: PolineNodeOptions = {
+      invertedLightness,
+      numPoints,
+      anchorColors: anchorColors.map((hexColor) => convertHexToHsl(hexColor)),
+      positionFunctionX:
+        positionFunctions[positionFnX ? positionFnX : "sinusoidalPosition"],
+      positionFunctionY:
+        positionFunctions[positionFnY ? positionFnY : "sinusoidalPosition"],
+      positionFunctionZ:
+        positionFunctions[positionFnZ ? positionFnZ : "sinusoidalPosition"],
     };
-  });
 
-  return processed.reduce(
-    (acc, color, i) => {
-      acc[i] = color;
-      return acc;
-    },
-    {
-      array,
+    const poline = new Poline(polineOptions);
+    if (hueShift) {
+      poline.shiftHue(hueShift);
     }
-  );
-};
-
-export const node: NodeDefinition<PolineNodeInput, PolineNodeInput> = {
-  type,
-  validateInputs,
-  defaults,
-  process,
-  mapOutput,
-};
+    const hexColors: string[] = (poline.colorsCSS as string[]).map(
+      (hslColor) => formatHex(hslColor) as string
+    );
+    this.setOutput("value", hexColors);
+  }
+}

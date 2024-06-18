@@ -1,35 +1,53 @@
-import { node as abs } from "./abs.js";
-import { node as add } from "./add.js";
-import { node as clamp } from "./clamp.js";
-import { node as cos } from "./cos.js";
-import { node as count } from "./count.js";
-import { node as divide } from "./divide.js";
-import { node as lerp } from "./lerp.js";
-import { node as mod } from "./mod.js";
-import { node as multiply } from "./multiply.js";
-import { node as random } from "./random.js";
-import { node as round } from "./round.js";
-import { node as sin } from "./sin.js";
-import { node as pow } from "./pow.js";
-import { node as subtract } from "./subtract.js";
-import { node as tan } from "./tan.js";
-import { node as fluid } from "./fluid.js";
+import abs from "./abs.js";
+import add from "./add.js";
+import addVariadic from "./addVariadic.js";
+import ceil from "./ceil.js";
+import clamp from "./clamp.js";
+import cos from "./cos.js";
+import count from "./count.js";
+import divide from "./divide.js";
+import divideVariadic from "./divideVariadic.js";
+import evalNode from "./eval.js";
+import exp from "./exp.js";
+import floor from "./floor.js";
+import fluid from "./fluid.js";
+import lerp from "./lerp.js";
+import mod from "./mod.js";
+import multiply from "./multiply.js";
+import multiplyVariadic from "./multiplyVariadic.js";
+import pow from "./pow.js";
+import random from "./random.js";
+import round from "./round.js";
+import sin from "./sin.js";
+import sqrt from "./sqrt.js";
+import subtract from "./subtract.js";
+import subtractVariadic from "./subtractVariadic.js";
+import tan from "./tan.js";
 
 export const nodes = [
   abs,
   add,
+  addVariadic,
+  ceil,
   clamp,
   cos,
   count,
   divide,
+  divideVariadic,
+  evalNode,
+  exp,
+  floor,
   lerp,
   mod,
   pow,
+  sqrt,
   multiply,
+  multiplyVariadic,
   random,
   round,
   sin,
   subtract,
+  subtractVariadic,
   tan,
   fluid,
 ];

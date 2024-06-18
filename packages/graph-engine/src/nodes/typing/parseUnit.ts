@@ -1,40 +1,55 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
-
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
+import {
+  NumberSchema,
+  StringSchema,
+} from "../../schemas/index.js";
 import valueParser from "postcss-value-parser";
-const type = NodeTypes.PARSE_UNIT;
 
-type Input = {
-  input: string;
-};
-type Output = {
-  unit?: string;
-  number?: string;
-};
+export default class NodeDefinition extends Node {
+  static title = "Parse unit";
+  static type = "studio.tokens.typing.parseUnit";
+  static description =
+    "Parse unit node allows you to seperate units from a number.";
 
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-const process = (input: Input) => {
-  const x = valueParser.unit("" + input.input);
-  if (!x) {
-    return {};
+
+  declare inputs: ToInput<{
+    value: string;
+    unit: string;
+  }>;
+
+  declare outputs: ToOutput<{
+    number: number;
+    unit: string;
+  }>;
+
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("value", {
+      type: StringSchema,
+      visible: true,
+    });
+    this.addOutput("unit", {
+      type: StringSchema,
+      visible: true,
+    });
+    this.addOutput("number", {
+      type: NumberSchema,
+      visible: true,
+    });
   }
 
-  return x;
-};
+  execute(): void | Promise<void> {
+    const { value } = this.getAllInputs();
 
-const mapOutput = (input: Input, state: any, output: Output) => {
-  return output;
-};
+    const x = valueParser.unit(value);
+    if (!x) {
+      this.setOutput("number", 0);
+      this.setOutput("unit", "");
+      return;
+    }
 
-export const node: NodeDefinition<Input, any, Output> = {
-  description: "Parse unit node allows you to seperate units from a number.",
-  type,
-  mapOutput,
-  process,
-};
+    this.setOutput("number", x.number);
+    this.setOutput("unit", x.unit);
+  }
+}

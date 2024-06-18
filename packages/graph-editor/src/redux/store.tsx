@@ -1,10 +1,10 @@
-import { InputState } from './models/input.ts';
-import { NodeState } from './models/node.ts';
 import { RematchDispatch, init } from '@rematch/core';
-import { RootModel, models } from './models/index.ts';
-import { SettingsState } from './models/settings.ts';
-import { UIState } from './models/ui.ts';
-import { GraphState } from './models/graph.ts';
+import { RootModel, models } from './models/index.js';
+import { SettingsState } from './models/settings.js';
+import { UIState } from './models/ui.js';
+import { GraphState } from './models/graph.js';
+import { RefState } from './models/refs.js';
+import { RegistryState } from './models/registry.js';
 
 export const store = init({
   models,
@@ -19,9 +19,9 @@ export const store = init({
 
 export type Dispatch = RematchDispatch<RootModel>;
 export type RootState = {
-  node: NodeState;
-  input: InputState;
   graph: GraphState;
   settings: SettingsState;
   ui: UIState;
+  refs: RefState;
+  registry: RegistryState;
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import * as HoverCard from '@radix-ui/react-hover-card';
-import { styled, keyframes } from '#/lib/stitches/index.ts';
+import { styled, keyframes } from '@/lib/stitches/index.js';
 import { Box, Heading, Link, Stack, Text } from '@tokens-studio/ui';
 
 interface INodeHoverCard {

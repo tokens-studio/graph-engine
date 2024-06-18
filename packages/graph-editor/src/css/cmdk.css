@@ -1,0 +1,79 @@
+[cmdk-overlay] {
+    background: rgba(25, 25, 25, 0.5);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 500;
+}
+
+[cmdk-dialog] {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+[cmdk-root] {
+    background-color: var(--colors-bgDefault);
+    border-radius: var(--radii-medium);
+    box-shadow: var(--shadows-contextMenu);
+    border: 1px solid var(--colors-borderSubtle);
+    font-size: var(--fontSizes-small);
+    color: var(--colors-fgMuted);
+    width: 100%;
+    max-width: 640px;
+    max-height: 70vh;
+    overflow: hidden;
+    position: relative;
+}
+
+[cmdk-input] {
+    border: none;
+    width: 100%;
+    cursor: text;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+[cmdk-item] {
+    font-size: var(--fontSizes-small);
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radii-medium);
+}
+
+[cmdk-group-heading] {
+    padding: var(--space-1) var(--space-5);
+    font-weight: var(--fontWeights-sansMedium);
+    color: var(--colors-fgSubtle);
+    font-size: var(--fontSizes-xxsmall);
+}
+
+[cmdk-item][data-selected="true"] {
+    background-color: var(--colors-bgSubtle);
+}
+
+
+[cmdk-framer-separator] {
+    width: 1px;
+    border: 0;
+    margin-right: 8px;
+    background: var(--gray6);
+}
+
+[cmdk-framer-right] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin-left: 8px;
+    width: 60%;
+}

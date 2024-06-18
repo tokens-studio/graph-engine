@@ -1,20 +1,30 @@
 // https://nextjs.org/docs/advanced-features/custom-app
 import '../scripts/wdyr';
-import '@tokens-studio/graph-editor/index.css';
-import './styles.css';
+
+import 'sanitize.css';
+import 'sanitize.css/assets.css';
+import 'sanitize.css/forms.css';
+import 'sanitize.css/system-ui.css'
+import 'sanitize.css/typography.css';
+import 'sanitize.css/ui-monospace.css';
 
 import { AppProps } from 'next/app.ts';
-import { Head } from '#/components/next/index.ts';
+import { Head } from '@/components/next/index.ts';
 import { ThemeProvider } from 'next-themes';
-import { dark, light } from '#/config/themes.ts';
+import { Tooltip } from '@tokens-studio/ui';
+import { dark, light } from '@/config/themes.ts';
+import { globalState } from '@/mobx/index.tsx';
 import NoSSR from 'react-no-ssr';
-import PageLayout from '#/layout/page.tsx';
+import PageLayout from '@/components/next/layout/page.tsx';
 import React from 'react';
 import Store from '../redux/index.tsx';
-import { Tooltip } from '@tokens-studio/ui';
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ToastProvider } from '@/hooks/useToast.tsx';
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
+  const queryClient = new QueryClient()
   return (
     <Head
       as={ThemeProvider}
@@ -23,13 +33,17 @@ export default function App(props: AppProps) {
       value={{ 'light-theme': light, 'dark-theme': dark }}
       body={
         <NoSSR>
-          <Tooltip.Provider>
-            <Store>
-              <PageLayout>
-                <Component {...pageProps} />
-              </PageLayout>
-            </Store>
-          </Tooltip.Provider>
+          <ToastProvider>
+          <QueryClientProvider client={queryClient}>
+            <Tooltip.Provider>
+              <Store>
+                <PageLayout theme={globalState.ui.theme}>
+                  <Component {...pageProps} />
+                </PageLayout>
+              </Store>
+            </Tooltip.Provider>
+          </QueryClientProvider>
+          </ToastProvider>
         </NoSSR>
       }
     />

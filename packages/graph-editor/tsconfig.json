@@ -1,14 +1,17 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "include": ["src", "package.json"],
-  "exclude": ["node_modules"],
+  "exclude": [
+    "cypress.config.ts",
+    "cypress",
+    "node_modules"
+  ],
   "compilerOptions": {
     "composite": false,
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "allowImportingTsExtensions": true,
     "forceConsistentCasingInFileNames": true,
     "inlineSources": false,
     "isolatedModules": true,
@@ -22,7 +25,7 @@
     "target": "esnext",
     "baseUrl": ".",
     "paths": {
-      "#/*": ["src/*"]
+      "@/*": ["src/*"]
     },
     "noImplicitAny": false,
     "rootDir": ".",

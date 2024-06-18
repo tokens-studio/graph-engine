@@ -1,31 +1,37 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition,  ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
+import { NumberSchema, } from "../../schemas/index.js";
 
-import { MappedInput } from "./common.js";
+export default class NodeDefinition extends Node {
+  static title = "Multiply";
+  static type = "studio.tokens.math.multiply";
+  static description = "Multiply node allows you to multiply two  numbers.";
 
-export const type = NodeTypes.MULTIPLY;
-import { mapInput, validateInputs } from "./common.js";
+  declare inputs: ToInput<{
+    a: number;
+    b: number;
+  }>;
+  declare outputs: ToOutput<{
+    value: number;
+  }>;
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("a", {
+      type: NumberSchema,
+      visible: true,
+    });
+    this.addInput("b", {
+      type: NumberSchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
+  }
 
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-export const process = (input: MappedInput) => {
-  return input.inputs.reduce((acc, x) => {
-    if (isNaN(x.value)) {
-      throw new Error("Invalid input");
-    }
-    return acc * x.value;
-  }, 1);
-};
-
-export const node: NodeDefinition<MappedInput> = {
-  description: "Multiply node allows you to multiply two or more numbers.",
-  type,
-  mapInput,
-  validateInputs,
-  process,
-};
+  execute(): void | Promise<void> {
+    const { a, b } = this.getAllInputs();
+    this.setOutput("value", a * b);
+  }
+}

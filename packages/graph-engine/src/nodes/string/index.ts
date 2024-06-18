@@ -1,9 +1,9 @@
-import { node as lowercase } from "./lowercase.js";
-import { node as joinString } from "./join.js";
-import { node as regex } from "./regex.js";
-import { node as uppercase } from "./uppercase.js";
-import { node as split } from "./split.js";
-import { node as stringify } from "./stringify.js";
+import joinString from "./join.js";
+import lowercase from "./lowercase.js";
+import regex from "./regex.js";
+import split from "./split.js";
+import stringify from "./stringify.js";
+import uppercase from "./uppercase.js";
 
 export const nodes = [
   lowercase,

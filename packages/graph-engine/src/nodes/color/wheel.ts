@@ -1,83 +1,76 @@
-import { NodeDefinition, NodeTypes } from "#/types.js";
-import chroma from "chroma-js";
+import {  ColorSchema, NumberSchema } from "../../schemas/index.js";
+import { INodeDefinition } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
+import { arrayOf } from "../../schemas/utils.js";
+import Color from "colorjs.io";
 
-export const type = NodeTypes.WHEEL;
+export default class NodeDefinition extends Node {
+  static title = "Color Wheel";
+  static type = "studio.tokens.color.wheel";
+  static description =
+    "Generate Color Wheel node allows you to create a color scale based on a base color and rotation in hue. You can use this node to generate a color scale for a specific color property.";
+  constructor(props: INodeDefinition) {
+    super(props);
 
-export type State = {
-  hueAmount: number;
-  hueAngle: number;
-  saturation: number;
-  lightness: number;
-  colors: number;
-};
+    this.addInput("baseHue", {
+      type: {
+        ...NumberSchema,
+        default: 360,
+      },
+      visible: true,
+    });
+    this.addInput("angle", {
+      type: {
+        ...NumberSchema,
+        default: 180,
+      },
+      visible: true,
+    });
+    this.addInput("saturation", {
+      type: {
+        ...NumberSchema,
+        default: 80,
+      },
+      visible: true,
+    });
+    this.addInput("lightness", {
+      type: {
+        ...NumberSchema,
+        default: 80,
+      },
+      visible: true,
+    });
+    this.addInput("colors", {
+      type: {
+        ...NumberSchema,
+        default: 8,
+      },
+      visible: true,
+    });
 
-export const defaults: State = {
-  hueAmount: 360,
-  hueAngle: 180,
-  saturation: 80,
-  lightness: 50,
-  colors: 8,
-};
-
-type colorValue = {
-  index: number;
-  value: string;
-};
-
-export type Input = {
-  hueAmount: number;
-  hueAngle: number;
-  saturation: number;
-  lightness: number;
-  colors: number;
-} & State;
-
-const validateInputs = (input: Input, state: State) => {
-  if (input.colors < 0 || state.colors < 0) {
-    throw new Error("Colors must be greater than 0");
-  }
-};
-
-export const process = (input: Input, state: State): colorValue[] => {
-  const final = {
-    ...state,
-    ...input,
-  };
-
-  const colorList: colorValue[] = [];
-
-  let step;
-  for (step = 0; step < final.colors; step++) {
-    const hue =
-      (parseFloat(final.hueAngle as any) +
-        (step * parseFloat(final.hueAmount as any)) /
-          parseInt(final.colors as any)) %
-      360;
-    const color = chroma.hsl(hue, final.saturation, final.lightness);
-    colorList.push({
-      index: step,
-      value: color.hex(),
+    this.addOutput("value", {
+      type: arrayOf(ColorSchema),
+      visible: true,
     });
   }
 
-  return colorList;
-};
+  execute(): void | Promise<void> {
+    const { colors, baseHue, angle, saturation, lightness } = this.getAllInputs();
 
-export const mapOutput = (input, state, processed: colorValue[]) => {
-  const mapped = { asArray: processed };
+    const colorList: string[] = [];
 
-  processed.forEach((item) => {
-    mapped[item.index] = item.value;
-  });
-  return mapped;
-};
+    for (let step = 0; step < colors; step++) {
+      // Hue Calculation
+      const hueIncrement = (colors > 1) ? (angle / (colors - 1)) * step : 0;
+      const hue = (baseHue + hueIncrement) % 360;
+      
+      // Color Generation with colorjs.io
+      const color = new Color("hsl", [hue, saturation, lightness]);
+      const srgbColor = color.to("srgb");
 
-export const node: NodeDefinition<Input, State, colorValue[]> = {
-  description:
-    "Generate Color Wheel node allows you to create a color scale based on a base color and rotation in hue. You can use this node to generate a color scale for a specific color property.",
-  type,
-  validateInputs,
-  defaults,
-  process,
-  mapOutput,
-};
+      colorList.push(srgbColor.toString({ format: "hex" })); 
+    }
+
+    this.setOutput("value", colorList);
+  }
+}

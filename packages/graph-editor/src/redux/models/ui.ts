@@ -1,23 +1,26 @@
-import { RootModel } from './root.ts';
+import { ReactFlowInstance } from 'reactflow';
+import { RootModel } from './root.js';
 import { createModel } from '@rematch/core';
 
 export interface UIState {
-  showNodesPanel: boolean;
+  currentReactFlow?: ReactFlowInstance;
   showNodesCmdPalette: boolean;
   storeNodeInsertPosition: { x: number; y: number };
+  contextMenus: boolean;
 }
 
 export const uiState = createModel<RootModel>()({
   state: {
-    showNodesPanel: true,
+    currentReactFlow: undefined,
     showNodesCmdPalette: false,
     storeNodeInsertPosition: { x: 0, y: 0 },
+    contextMenus:true
   } as UIState,
   reducers: {
-    setShowNodesPanel(state, showNodesPanel: boolean) {
+    setContextMenus(state, contextMenus: boolean) {
       return {
         ...state,
-        showNodesPanel,
+        contextMenus,
       };
     },
     setShowNodesCmdPalette(state, showNodesCmdPalette: boolean) {
@@ -30,6 +33,12 @@ export const uiState = createModel<RootModel>()({
       return {
         ...state,
         storeNodeInsertPosition: nodeInsertPosition,
+      };
+    },
+    setCurrentReactFlow(state, currentReactFlow: ReactFlowInstance) {
+      return {
+        ...state,
+        currentReactFlow,
       };
     },
   },

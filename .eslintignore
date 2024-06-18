@@ -6,3 +6,4 @@ site
 cypress
 cli
 .rollup
+*.md

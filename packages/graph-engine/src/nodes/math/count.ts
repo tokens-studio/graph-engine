@@ -1,22 +1,36 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 
-export const type = NodeTypes.COUNT;
+import { AnyArraySchema, NumberSchema } from "../../schemas/index.js";
+import { Node } from "../../programmatic/node.js";
 
-/**
- * Optional validation function.
- * @param inputs
- */
-export const validateInputs = (inputs) => {
-  if (!Array.isArray(inputs.input)) {
-    throw new Error("Input must be an array");
+export default class NodeDefinition extends Node {
+  static title = "Count";
+  static type = "studio.tokens.math.count";
+  static description = "Counts the amount of items in an array.";
+
+
+  declare inputs: ToInput<{
+    value: any[];
+
+  }>;
+  declare outputs: ToOutput<{
+    value: number;
+  }>;
+
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("value", {
+      type: AnyArraySchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
   }
-};
 
-export const process = (input) => (input.input || []).length;
-
-export const node: NodeDefinition = {
-  description: "Counts the amount of items in an array.",
-  type,
-  validateInputs,
-  process,
-};
+  execute(): void | Promise<void> {
+    const value = this.getInput("value");
+    this.setOutput("value", value.length);
+  }
+}

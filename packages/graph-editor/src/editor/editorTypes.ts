@@ -1,28 +1,31 @@
-import { PanelGroup } from '#/components/flow/DropPanel/PanelItems';
-import { ExternalLoadOptions } from '@tokens-studio/graph-engine';
+import { Menu } from '@/components/menubar/data';
+import { DropPanelStore } from '@/components/panels/dropPanel/index.js';
+import {
+  ExternalLoadOptions,
+  SerializedGraph,
+  Node as GraphNode,
+  CapabilityFactory,
+  Graph,
+} from '@tokens-studio/graph-engine';
 import { Edge, Node, ReactFlowInstance } from 'reactflow';
+import { Control } from '../types/controls.js';
+import { LayoutBase } from 'rc-dock';
 
 export interface EditorProps {
   id: string;
-  /**
-   * Items to display in the drop panel.
-   * Not populating this will result in the default items being displayed.
-   */
-  panelItems?: PanelGroup[];
+
+
   /**
    * A lookup of the custom node types to display in the editor.
    * Not populating this will result in the default items being displayed.
+   * 
+   * This replaces all of the node types, so you will be responsible for loading them all
    */
-  nodeTypes?: Record<string, React.ReactElement>;
+  nodeTypes?: Record<string, typeof GraphNode>;
+
   /**
-   * A lookup of the initial state of the custom nodes.
-   * Not populating this will result in the default items being displayed.
+   * Content to display in a graph editor when there are no nodes
    */
-  stateInitializer?: Record<string, Record<string, unknown>>;
-  /**
-   * Menu content to displya
-   */
-  menuContent?: React.ReactNode;
   emptyContent?: React.ReactNode;
   children?: React.ReactNode;
   onOutputChange?: (output: Record<string, unknown>) => void;
@@ -31,21 +34,69 @@ export interface EditorProps {
    * Whether or not to show the menu
    */
   showMenu?: boolean;
+
   /**
-   * Whether or not to show the nodes panel
+   * A custom menu to display in the editor.
    */
-  shouldShowNodesPanel?: boolean;
+  menuItems?: Menu;
+
   /**
-   * Callback to be called when the nodes panel is shown or hidden
+   * Capabilities to load into the graphs. Each factory is loaded into each graph individually
    */
-  onShowNodesPanelChange?: (show: boolean) => void;
+  capabilities?: CapabilityFactory[]
+  /**
+ * Items to display in the drop panel.
+  * Not populating this will result in the default items being displayed.
+ */
+  panelItems: DropPanelStore;
+
+  /**
+   * Customize the controls that are displayed in the editor
+   */
+  controls?: Control[];
+
+  /**
+   * A lookup of the custom node ui types to display in the editor.
+   */
+  customNodeUI?: Record<string, React.ReactElement>;
+
+  /**
+   * Additional specifics to display in the editor for custom types
+   */
+  specifics?: Record<string, React.FC<{ node: Node }>>;
+
+  /**
+   * An initial layout to use
+   */
+  initialLayout?: LayoutBase
+
+  /**
+   * Additional icons to display in the editor for custom types
+   */
+  icons?: Record<string, React.ReactNode>;
+
+  initialGraph?: Graph;
 }
 
-export type EditorState = {
-  nodes: Node[];
-  edges: Edge[];
-  nodeState: Record<string, unknown>;
-};
+export interface GraphEditorProps {
+  id: string;
+  emptyContent?: React.ReactNode;
+  /**
+ * A lookup of the custom node uiS types to display in the editor.
+ */
+  customNodeUI?: Record<string, React.ReactElement>;
+  /**
+   * A lookup of the custom node types to display in the editor.
+   * Not populating this will result in the default items being displayed.
+   * 
+   * This replaces all of the node types, so you will be responsible for loading them all
+   */
+  nodeTypes?: Record<string, typeof GraphNode>;
+  children?: React.ReactNode;
+  initialGraph?: SerializedGraph;
+}
+
+
 
 export type ImperativeEditorRef = {
   /**
@@ -53,10 +104,11 @@ export type ImperativeEditorRef = {
    * @returns
    */
   clear: () => void;
-  save: () => EditorState;
-  forceUpdate: () => void;
-  load: (state: EditorState) => void;
+  save: () => SerializedGraph;
+  load: (state: Graph) => void;
+  loadRaw: (state: SerializedGraph) => void;
   getFlow: () => ReactFlowInstance;
+  getGraph: () => Graph;
 };
 
 export type EditorNode = Node;

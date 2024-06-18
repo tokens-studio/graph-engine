@@ -1,70 +1,68 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { Color } from "../../types.js";
+import {
+  ColorSchema,
+  NumberSchema,
+} from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
+import { arrayOf } from "../../schemas/utils.js";
 import chroma from "chroma-js";
 
-export const type = NodeTypes.SCALE;
+export default class NodeDefinition extends Node {
+  static title = "Scale colors";
+  static type = "studio.tokens.color.scale";
+  static description = "";
 
-export type State = {
-  stepsUp: number;
-  stepsDown: number;
-};
 
-export const defaults: State = {
-  stepsUp: 4,
-  stepsDown: 4,
-};
 
-export type Input = {
-  color: string;
-} & State;
+  declare inputs: ToInput<{
+    color: Color;
+    stepsUp: number;
+    stepsDown: number;
+  }>;
+  declare outputs: ToOutput<{
+    value: Color[]
+  }>;
 
-export const process = (input: Input, state: State) => {
-  const final = {
-    ...state,
-    ...input,
-  };
 
-  const stepsUp = Math.max(0, parseInt("" + final.stepsUp)) + 2;
-  const stepsDown = Math.max(0, parseInt("" + final.stepsDown)) + 2;
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("color", {
+      type: ColorSchema,
+      visible: true,
+    });
+    this.addInput("stepsUp", {
+      type: NumberSchema,
+    });
+    this.addInput("stepsDown", {
+      type: NumberSchema,
+    });
+    this.addOutput("value", {
+      type: arrayOf(ColorSchema),
+      visible: true,
+    });
+  }
 
-  const lighter = chroma
-    .scale(["white", final.color])
-    .mode("hsl")
-    .colors(stepsUp)
-    .slice(1, -1);
+  execute(): void | Promise<void> {
+    const { stepsUp, stepsDown, color } = this.getAllInputs();
 
-  const mid = [chroma(final.color).hex()];
+    const sUp = Math.max(0, stepsUp) + 2;
+    const sDown = Math.max(0, stepsDown) + 2;
 
-  const darker = chroma
-    .scale([final.color, "black"])
-    .mode("hsl")
-    .colors(stepsDown)
-    .slice(1, -1);
-  return ([] as string[]).concat(lighter, mid, darker) as string[];
-};
+    const lighter = chroma
+      .scale(["white", color])
+      .mode("hsl")
+      .colors(sUp)
+      .slice(1, -1);
 
-export const mapOutput = (input, state, processed) => {
-  const array = processed.map((x, i) => {
-    return {
-      name: "" + i,
-      value: x,
-      type: "color",
-    };
-  });
+    const mid = [chroma(color).hex()];
 
-  return processed.reduce(
-    (acc, color, i) => {
-      acc[i] = color;
-      return acc;
-    },
-    {
-      array,
-    }
-  );
-};
-
-export const node: NodeDefinition<Input, State> = {
-  type,
-  defaults,
-  process,
-  mapOutput,
-};
+    const darker = chroma
+      .scale([color, "black"])
+      .mode("hsl")
+      .colors(sDown)
+      .slice(1, -1);
+    const final = ([] as string[]).concat(lighter, mid, darker) as string[];
+    this.setOutput("value", final);
+  }
+}

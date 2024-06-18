@@ -1,49 +1,47 @@
-/**
- * Performs a contrast calculation between two colors using APCA-W3 calcs
- *
- * @packageDocumentation
- */
-
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { BooleanSchema, ColorSchema, NumberSchema } from "../../schemas/index.js";
+import { INodeDefinition } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
 import Color from "colorjs.io";
 
-const type = NodeTypes.CONTRAST;
+export default class NodeDefinition extends Node {
+  static title = "Contrast";
+  static type = "studio.tokens.accessibility.contrast";
+  static description = "Calculates the contrast between two colors";
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("a", {
+      type: {
+        ...ColorSchema,
+        default: "#000000",
+      },
+      visible: true,
+    });
+    this.addInput("b", {
+      type: {
+        ...ColorSchema,
+        default: "#ffffff",
+      },
+      visible: true,
+    });
+    this.addInput("absolute", {
+      type: {
+        ...BooleanSchema,
+        default: false,
+      },
+      visible: true,
+    });
 
-type Inputs = {
-  /**
-   * Color
-   */
-  a: string;
-  /**
-   * Color
-   */
-  b: string;
+    this.addOutput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
+  }
 
-  absolute?: boolean;
-};
-
-const defaults = {
-  a: "#000000",
-  b: "#ffffff",
-};
-
-const process = (input: Inputs, state) => {
-  const final = {
-    ...state,
-    ...input,
-  };
-
-  let color = new Color(final.a);
-  let background = new Color(final.b);
-
-  const calculated = background.contrast(color, "APCA");
-
-  return final.absolute ? Math.abs(calculated) : calculated;
-};
-
-export const node: NodeDefinition<Inputs> = {
-  description: "Calculates the contrast between two colors",
-  type,
-  defaults,
-  process,
-};
+  execute(): void | Promise<void> {
+    const { a, b, absolute } = this.getAllInputs();
+    const color = new Color(a);
+    const background = new Color(b);
+    const calculated = background.contrast(color, "APCA");
+    this.setOutput("value", absolute ? Math.abs(calculated) : calculated);
+  }
+}

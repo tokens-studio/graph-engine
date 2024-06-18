@@ -1,165 +1,21 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/series/arithmetic.js";
+import Node from "../../../../src/nodes/series/arithmetic.js";
+import { Graph } from "../../../../src/graph/graph.js";
 
 describe("series/arithmetic", () => {
   it("generates the expected series", async () => {
-    const output = await executeNode({
-      input: {
-        base: 16,
-        stepsDown: 1,
-        steps: 1,
-        increment: 1,
-        precision: 0,
-      },
-      node,
-      state: {},
-      nodeId: "",
-    });
+    const graph = new Graph();
+    const node = new Node({ graph });
+    
+    node.inputs.base.setValue(16);
+    node.inputs.stepsDown.setValue(1);
+    node.inputs.stepsUp.setValue(1);
+    node.inputs.increment.setValue(1);
+    node.inputs.precision.setValue(0);
 
-    expect(output).toStrictEqual({
-      "-1": 15,
-      0: 16,
-      1: 17,
-      asArray: [
-        {
-          index: -1,
-          value: 15,
-        },
-        {
-          index: 0,
-          value: 16,
-        },
-        {
-          index: 1,
-          value: 17,
-        },
-      ],
-    });
-  });
-});
+    await node.execute();
 
-describe("series/arithmetic with precision", () => {
-  it("handles precision correctly", async () => {
-    // Case 1: Test for precision = 1
-    const output1 = await executeNode({
-      input: {
-        base: 16,
-        stepsDown: 1,
-        steps: 1,
-        increment: 0.5,
-        precision: 1,
-      },
-      node,
-      state: {},
-      nodeId: "",
-    });
+    const output = node.outputs.array.value;
 
-    expect(output1).toStrictEqual({
-      "-1": 15.5,
-      0: 16.0,
-      1: 16.5,
-      asArray: [
-        {
-          index: -1,
-          value: 15.5,
-        },
-        {
-          index: 0,
-          value: 16.0,
-        },
-        {
-          index: 1,
-          value: 16.5,
-        },
-      ],
-    });
-
-    // Case 2: Test for precision = 2
-    const output2 = await executeNode({
-      input: {
-        base: 16,
-        stepsDown: 2,
-        steps: 2,
-        increment: 0.25,
-        precision: 2,
-      },
-      node,
-      state: {},
-      nodeId: "",
-    });
-
-    expect(output2).toStrictEqual({
-      "-2": 15.5,
-      "-1": 15.75,
-      0: 16.0,
-      1: 16.25,
-      2: 16.5,
-      asArray: [
-        {
-          index: -2,
-          value: 15.5,
-        },
-        {
-          index: -1,
-          value: 15.75,
-        },
-        {
-          index: 0,
-          value: 16.0,
-        },
-        {
-          index: 1,
-          value: 16.25,
-        },
-        {
-          index: 2,
-          value: 16.5,
-        },
-      ],
-    });
-
-    // Case 3: Test for a negative increment with precision
-    const output3 = await executeNode({
-      input: {
-        base: 16,
-        stepsDown: 2,
-        steps: 2,
-        increment: -0.3,
-        precision: 1,
-      },
-      node,
-      state: {},
-      nodeId: "",
-    });
-
-    expect(output3).toStrictEqual({
-      "-2": 16.6,
-      "-1": 16.3,
-      0: 16.0,
-      1: 15.7,
-      2: 15.4,
-      asArray: [
-        {
-          index: -2,
-          value: 16.6,
-        },
-        {
-          index: -1,
-          value: 16.3,
-        },
-        {
-          index: 0,
-          value: 16.0,
-        },
-        {
-          index: 1,
-          value: 15.7,
-        },
-        {
-          index: 2,
-          value: 15.4,
-        },
-      ],
-    });
+    expect(output).toStrictEqual([15, 16, 17]);
   });
 });

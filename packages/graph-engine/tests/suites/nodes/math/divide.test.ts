@@ -1,79 +1,30 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/math/divide.js";
+import Node from "../../../../src/nodes/math/divideVariadic";
+import { Graph } from "../../../../src/graph/graph.js";
 
-describe("math/divide", () => {
+describe("math/div", () => {
   it("divides two numbers", async () => {
-    const output = await executeNode({
-      input: {
-        0: 4,
-        1: 2,
-      },
-      node,
-      state: {},
-      nodeId: "",
-    });
+    const graph = new Graph();
+    const node = new Node({ graph });
+    
+    node.inputs.inputs.setValue([1, 2]);
+    await node.execute();
+    expect(node.outputs.value.value).toStrictEqual(0.5);
+  });
+  it("divides multiple numbers", async () => {
+    const graph = new Graph();
+    const node = new Node({ graph });
+    
+    node.inputs.inputs.setValue([8, 2, 2]);
+    await node.execute();
+    expect(node.outputs.value.value).toStrictEqual(2);
+  });
 
-    expect(output).toStrictEqual({
-      output: 2,
-    });
-  });
-  it("converts string values if detected", async () => {
-    const output = await executeNode({
-      input: {
-        0: "1",
-        1: "2.0000",
-      },
-      node,
-      state: {},
-      nodeId: "",
-    });
-
-    expect(output).toStrictEqual({
-      output: 0.5,
-    });
-  });
-  it("multiplies multiple numbers with gaps", async () => {
-    const output = await executeNode({
-      input: {
-        0: 10,
-        1: 2,
-        4: 5,
-        10: "10.0",
-      },
-      node,
-      state: {},
-      nodeId: "",
-    });
-
-    expect(output).toStrictEqual({
-      output: 0.1,
-    });
-  });
-  it("throws an error with no inputs", async () => {
-    await expect(
-      executeNode({
-        input: {},
-        node,
-        state: {},
-        nodeId: "testId",
-      })
-    ).rejects.toThrowError(
-      'Validation failed for node "testId" of type "studio.tokens.math.divide" with error "Error: Not enough inputs "'
-    );
-  });
   it("returns infinity when dividing by zero", async () => {
-    const output = await executeNode({
-      input: {
-        0: 10,
-        1: 0,
-      },
-      node,
-      state: {},
-      nodeId: "",
-    });
-
-    expect(output).toStrictEqual({
-      output: Infinity,
-    });
+    const graph = new Graph();
+    const node = new Node({ graph });
+    
+    node.inputs.inputs.setValue([1, 0]);
+    await node.execute();
+    expect(node.outputs.value.value).toStrictEqual(Infinity);
   });
 });

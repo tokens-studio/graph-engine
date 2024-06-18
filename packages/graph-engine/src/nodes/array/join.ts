@@ -1,30 +1,43 @@
-/**
- * Performs an array join using a string delimiter
- *
- * @packageDocumentation
- */
+import { AnyArraySchema, StringSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
+export default class NodeDefinition<T> extends Node {
+  static title = "Join Array";
+  static type = "studio.tokens.array.join";
 
-import { NodeDefinition, NodeTypes } from "../../types.js";
+  declare inputs: ToInput<{
+    array: T[];
+    delimiter: string;
+  }>
 
-const type = NodeTypes.JOIN;
+  declare outputs: ToOutput<{
+    value: string;
+  }>
 
-export type NamedInput = {
-  array: any[];
-  delimiter: string;
-};
 
-export const process = (input: NamedInput, state) => {
-  const final = {
-    ...state,
-    ...input,
-  };
-  //Normal reverse mutates the array. We don't want that.
-  return final.array.join(final.delimiter);
-};
+  static description =
+    "Join node allows you to join an array into a string using a delimiter.";
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("array", {
+      type: AnyArraySchema,
+      visible: true,
+    });
+    this.addInput("delimiter", {
+      type: {
+        ...StringSchema,
+        default: ",",
+      },
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: StringSchema,
+      visible: true,
+    });
+  }
 
-export const node: NodeDefinition<NamedInput> = {
-  description:
-    "Join node allows you to join an array into a string using a delimiter.",
-  type,
-  process,
-};
+  execute(): void | Promise<void> {
+    const { delimiter, array } = this.getAllInputs();
+    this.setOutput("value", array.join(delimiter));
+  }
+}

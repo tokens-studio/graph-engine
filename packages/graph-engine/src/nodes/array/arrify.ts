@@ -1,43 +1,37 @@
-/**
- * Allows creation of the an array from a series of inputs
- *
- * @packageDocumentation
- */
+import { AnyArraySchema, AnySchema, createVariadicSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
+export default class NodeDefinition<T> extends Node {
+  static title = "Arrify";
+  static type = "studio.tokens.array.arrify";
+  static description = "Dynamically generates an array";
 
-import { NodeDefinition, NodeTypes } from "../../types.js";
+  declare inputs: ToInput<{
+    items: T[];
+  }>;
+  declare outputs: ToOutput<{
+    value: T[];
+  }>;
 
-const type = NodeTypes.ARRIFY;
 
-export type MappedInput = {
-  inputs: {
-    key: string;
-    value: any;
-  }[];
-};
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("items", {
+      type: {
+        ...createVariadicSchema(AnySchema),
+        default: [],
+      },
+      visible: true,
+      variadic: true,
+    });
+    this.addOutput("value", {
+      type: AnyArraySchema,
+      visible: true,
+    });
+  }
 
-/**
- * Pure function
- * @param input
- * @param state
- */
-export const mapInput = (input: Record<string, any>): MappedInput => {
-  const values = Object.entries(input).sort((a, b) => {
-    return a[0].localeCompare(b[0]);
-  });
-
-  //Returns the expected array of inputs
-  return {
-    inputs: values.map(([key, value]) => ({ key, value })),
-  } as MappedInput;
-};
-
-export const process = (input: MappedInput) => {
-  return input.inputs.map((input) => input.value);
-};
-
-export const node: NodeDefinition<MappedInput> = {
-  description: "Allows creation of the an array from a series of inputs",
-  mapInput,
-  type,
-  process,
-};
+  execute(): void | Promise<void> {
+    const items = this.getRawInput("items");
+    this.setOutput("value", items.value, items.type);
+  }
+}

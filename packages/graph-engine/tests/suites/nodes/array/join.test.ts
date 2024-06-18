@@ -1,35 +1,27 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/array/join.js";
+import Node from "../../../../src/nodes/array/join.js";
+import { Graph } from "../../../../src/graph/graph.js";
+
 
 describe("array/join", () => {
   it("joins the values as expected", async () => {
-    const output = await executeNode({
-      input: {
-        array: [1, 3, 4],
-        delimiter: ",",
-      },
-      node,
-      state: {},
-      nodeId: "",
-    });
+    const graph = new Graph();
+    const node = new Node({ graph });
+    
+    node.inputs.array.setValue([1, 2, 3]);
+    node.inputs.delimiter.setValue(",");
 
-    expect(output).toStrictEqual({
-      output: "1,3,4",
-    });
+    await node.execute();
+
+    expect(node.outputs.value.value).toStrictEqual("1,2,3");
   });
-  it("cuses the default delimiter if not specified", async () => {
-    const output = await executeNode({
-      input: {
-        array: [1, 3, 4],
-        delimiter: ",",
-      },
-      node,
-      state: {},
-      nodeId: "",
-    });
+  it("uses the default delimiter if not specified", async () => {
+    const graph = new Graph();
+    const node = new Node({ graph });
+    
+    node.inputs.array.setValue([1, 2, 3]);
 
-    expect(output).toStrictEqual({
-      output: "1,3,4",
-    });
+    await node.execute();
+
+    expect(node.outputs.value.value).toStrictEqual("1,2,3");
   });
 });

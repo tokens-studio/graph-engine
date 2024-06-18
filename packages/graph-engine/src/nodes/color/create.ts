@@ -1,56 +1,138 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
-import chroma from "chroma-js";
-
-export const type = NodeTypes.CREATE_COLOR;
+import { Color } from "../../types.js";
+import { ColorSchema, NumberSchema, StringSchema } from "../../schemas/index.js";
+import { Color as CuloriColor, formatHex8, getMode } from "culori";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
+export { ColorModifierTypes } from "@tokens-studio/types";
 
 export const colorSpaces = [
+  // RGB
   "rgb",
+  "lrgb",
+  "p3",
+  "prophoto",
+  "rec2020",
+  "a98",
+  //HSL
   "hsl",
   "hsv",
   "hsi",
+  "hwb",
+  //LAB
   "lab",
   "lch",
+  "lab65",
+  "lch65",
+  //Luv
+  "luv",
+  "lchuv",
+  //Din99"
+  "dlab",
+  "dlch",
+  //OkLab
   "oklab",
   "oklch",
-  "hcl",
-  "cmyk",
-  "gl",
-];
+  "okhsl",
+  "okhsv",
+  //jab
+  "jab",
+  "jch",
+  //Yiq
+  "yiq",
+  //XYZ
+  "xyz50",
+  "xyz65",
+  //XyB
+  "xyb",
+  //ITP
+  'itp',
 
-type ColorData = {
-  a: string;
-  b: string;
-  c: string;
-  d: string;
-  space: string;
-};
+  //Cubehelix
+  "cubehelix"
+] as const;
 
-export const defaults = {
-  space: "rgb",
-  a: 1,
-  b: 1,
-  c: 1,
-  d: 1,
-};
+export type ColorSpace = typeof colorSpaces[number];
 
-const process = (input: ColorData, state) => {
-  const final = {
-    ...state,
-    ...input,
-  };
+export default class NodeDefinition extends Node {
+  static title = "Create Color";
+  static type = "studio.tokens.color.create";
+  static description = "Creates a color";
 
-  const a = parseFloat(final.a);
-  const b = parseFloat(final.b);
-  const c = parseFloat(final.c);
-  const d = parseFloat(final.d);
+  declare inputs: ToInput<{
+    /**
+     * The color space to create the color in
+     */
+    space: ColorSpace;
+    /**
+     * The first channel value
+     */
+    a: number;
+    /**
+     * The second channel value
+     */
+    b: number;
+    /**
+     * The third channel value
+     */
+    c: number;
+    /**
+     * The fourth channel value
+     */
+    d?: number;
+  }>;
 
-  return chroma([a, b, c, d], final.space).hex();
-};
+  declare outputs: ToOutput<{
+    value: Color;
+  }>;
 
-export const node: NodeDefinition<ColorData> = {
-  //@ts-ignore
-  colorSpaces,
-  type,
-  defaults,
-  process,
-};
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("space", {
+      type: {
+        ...StringSchema,
+        enum: colorSpaces,
+        default: "rgb",
+      },
+    });
+    this.addInput("a", {
+      type: NumberSchema,
+      visible: true,
+    });
+    this.addInput("b", {
+      type: NumberSchema,
+      visible: true,
+    });
+    this.addInput("c", {
+      type: NumberSchema,
+      visible: true,
+    });
+    this.addInput("d", {
+      type: NumberSchema,
+      visible: true,
+    });
+
+    this.addOutput("value", {
+      type: ColorSchema,
+      visible: true,
+    });
+  }
+
+  execute(): void | Promise<void> {
+    const { a, b, c, d, space } = this.getAllInputs();
+
+    const mode = getMode(space);
+    const channels = [a, b, c, d];
+
+    const colorObj = {
+      mode: mode.mode,
+    } as unknown as CuloriColor;
+
+    mode.channels.forEach((channel, index) => {
+      //@ts-ignore
+      colorObj[channel] = channels[index];
+    });
+
+    const converted = formatHex8(colorObj);
+    this.setOutput("value", converted);
+  }
+}

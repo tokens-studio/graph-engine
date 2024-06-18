@@ -1,25 +1,64 @@
-import { Graph } from "#/graph/graph.js";
-import { topologicalSort } from "#/index.js";
+import { topologicalSort } from "../../../src/graph";
+import { Graph } from "../../../src/graph/graph.js";
+import Passthrough from "../../../src/nodes/generic/passthrough";
 
 describe("Graph/topologic", () => {
   it("Creates the expected topologic output ", async () => {
-    const g = new Graph();
+    const graph = new Graph();
 
-    g.setNode("a", "a");
-    g.setNode("b", "b");
-    g.setNode("c", "c");
-    g.setNode("d", "d");
-    g.setNode("e", "e");
-    g.setNode("f", "f");
+    graph.addNode(new Passthrough({ id: "a", graph }));
+    graph.addNode(new Passthrough({ id: "b", graph }));
+    graph.addNode(new Passthrough({ id: "c", graph }));
+    graph.addNode(new Passthrough({ id: "d", graph }));
+    graph.addNode(new Passthrough({ id: "e", graph }));
+    graph.addNode(new Passthrough({ id: "f", graph }));
 
-    g.setEdge("a->b", "a", "b", "input", "output");
-    g.setEdge("a->c", "a", "c", "input", "output");
-    g.setEdge("b->d", "b", "d", "input", "output");
-    g.setEdge("b->e", "b", "e", "input", "output");
-    g.setEdge("c->f", "c", "f", "input", "output");
-    g.setEdge("e->g", "e", "f", "input", "output");
+    graph.createEdge({
+      id: "a->b",
+      source: "a",
+      target: "b",
+      sourceHandle: "value",
+      targetHandle: "value",
 
-    const sorted = topologicalSort(g);
+    });
+    graph.createEdge({
+      id: "a->c",
+      source: "a",
+      target: "c",
+      sourceHandle: "value",
+      targetHandle: "value",
+    });
+    graph.createEdge({
+      id: "b->d",
+      source: "b",
+      target: "d",
+      sourceHandle: "value",
+      targetHandle: "value",
+    });
+    graph.createEdge({
+      id: "b->e",
+      source: "b",
+      target: "e",
+      sourceHandle: "value",
+      targetHandle: "value",
+    });
+    graph.createEdge({
+      id: "c->f",
+      source: "c",
+      target: "f",
+      sourceHandle: "value",
+      targetHandle: "value",
+    });
+    graph.createEdge({
+      id: "e->g",
+      source: "e",
+      target: "f",
+      sourceHandle: "value",
+      targetHandle: "value",
+    });
+  
+
+    const sorted = topologicalSort(graph);
 
     expect(sorted).toEqual(["a", "c", "b", "e", "f", "d"]);
   });

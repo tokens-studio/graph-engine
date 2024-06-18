@@ -1,116 +1,71 @@
-/**
- * Acts as an input nodes for the graph. There can only be a single input node per graph.
- *
- * @packageDocumentation
- */
-
-import { IResolvedToken, flatten } from "#/utils/index.js";
-import { NodeDefinition, NodeTypes } from "../../types.js";
-import { DeepKeyTokenMap } from "@tokens-studio/types";
-
-const type = NodeTypes.INPUT;
+import { IDeserializeOpts, SerializedInput } from "../../graph/types.js";
+import { INodeDefinition } from "../../programmatic/node.js";
+import { Node } from "../../programmatic/node.js";
+import { annotatedDynamicInputs, annotatedSingleton } from '../../annotations/index.js';
 
 /**
- * Defines the starting state of the node
+ * Acts as an output node for the graph. There can only be a single output node per graph.
+ * 
+ * @example
+ * 
+ * ```json
+ * {"nodes":[{"id":"06820963-bbea-4a11-9d63-5e99dbcb27f7","type":"studio.tokens.generic.input","inputs":[{"name":"MyNumber","value":43,"type":{"$id":"https://schemas.tokens.studio/number.json","title":"Number","type":"number"},"annotations":{"ui.deletable":true}},{"name":"IsWorking","value":true,"type":{"$id":"https://schemas.tokens.studio/boolean.json","title":"Boolean","type":"boolean","default":false},"annotations":{"ui.deletable":true}},{"name":"BackgroundColor","value":"#2cd6d8","type":{"$id":"https://schemas.tokens.studio/color.json","title":"Color","type":"string"},"annotations":{"ui.deletable":true}},{"name":"SomeName","value":"Foo Bar","type":{"$id":"https://schemas.tokens.studio/string.json","title":"String","type":"string"},"annotations":{"ui.deletable":true}}],"annotations":{"engine.singleton":true,"engine.dynamicInputs":true,"ui.position.x":160.45137532552098,"ui.position.y":261.9444427490234}},{"id":"7dcf7462-3f8f-4144-9b2f-e9a7770495d4","type":"studio.tokens.generic.note","inputs":[],"annotations":{"ui.position.x":165.78470865885419,"ui.position.y":134.40046183268234,"ui.nodeType":"studio.tokens.generic.note","ui.description":"Inputs are the primary way information is passed into your graph. You should only have one of them per graph."}}],"edges":[],"annotations":{"engine.id":"efa13f81-66dc-4d9e-8651-a18e750773c5","engine.version":"0.12.0","ui.viewport":{"x":0,"y":0,"zoom":1.5},"ui.version":"2.9.4"}}
+ * ```
  */
-const defaults = {
-  //The default values for the node
-  values: {},
-  definition: {},
-};
+export default class NodeDefinition extends Node {
+  static title = "Input";
+  static type = "studio.tokens.generic.input";
 
-export type TokenSet = {
-  name: string;
-  tokens: DeepKeyTokenMap;
-};
+  static description =
+    "Allows you to provide initial values for the whole graph. An input node can be used only once at the start of the graph. You can use this node to set brand decisions or any initial values.";
 
-export type TypeDefinition = {
-  type: "string" | "number" | "boolean" | "integer" | "tokenSet" | "json";
-  enum?: string[];
-  /**
-   * Json schema for the type. Only used if the type is json
-   */
-  schema?: string;
-  modifier?: boolean;
-};
 
-export type State = {
-  values: Record<string, any>;
-  definition: Record<string, TypeDefinition>;
-};
+  constructor(props: INodeDefinition) {
+    super(props);
+    //By default we don't define any ports, these are all dynamic
+    this.annotations[annotatedSingleton] = true;
+    this.annotations[annotatedDynamicInputs] = true;
+  }
 
-export type Input = Record<string, any>;
+  static override deserialize(opts: IDeserializeOpts) {
+    const node = super.deserialize(opts);
+    //Create the outputs immediately
+    Object.keys(node.inputs).forEach((input) => {
+      const rawInput = node.getRawInput(input);
+      node.addOutput(input, {
+        type: rawInput.type,
+        visible: true,
+      });
+    });
 
-/**
- * Optional validation function.
- * @param inputs
- */
-const validateInputs = (inputs, state) => {
-  //Use the state to determine if the inputs were valid
+    return node;
+  }
 
-  Object.keys(inputs).forEach((key) => {
-    const definition = state.definition[key];
-    if (definition === undefined) {
-      throw new Error("Unknown input key: " + key);
-    }
-    /**
-     * @deprecated this is a hack because definitions were not being enforced. This should always be an object
-     */
-    if (typeof definition == "object") {
-      switch (definition.type) {
-        case "tokenSet": {
-          if (typeof inputs[key] !== "object") {
-            throw new Error("Expected object for input: " + key);
-          }
-          break;
-        }
-        case "string":
-          if (typeof inputs[key] !== "string") {
-            throw new Error("Expected string for input: " + key);
-          }
+
+  execute(): void | Promise<void> {
+    const inputs = this.getAllInputs();
+    const outputs = this.getAllOutputs();
+
+    //Passthrough all
+    Object.keys(inputs).forEach((input) => {
+      const rawInput = this.getRawInput(input);
+
+      if (!(input in outputs)) {
+        this.addOutput(input, {
+          type: rawInput.type,
+          visible: true,
+        });
+      } else {
+        this.setOutput(input, rawInput.value, rawInput.type);
       }
-    }
-  });
-};
 
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
- */
-const process = (input: Input, state: State) => {
-  const final = {
-    ...state.values,
-    ...input,
-  };
+      this.setOutput(input, rawInput.value, rawInput.type);
+    });
 
-  //We need to process the values
-  return Object.fromEntries(
-    Object.entries(final).map(([key, value]) => {
-      const definition = state.definition[key];
-      switch (definition.type) {
-        case "tokenSet":
-          return [key, flatten(value.tokens || {}, [])];
-        default:
-          return [key, value];
+    Object.keys(outputs).forEach((output) => {
+      if (!(output in inputs)) {
+        delete this.outputs[output];
       }
-    })
-  );
-};
-
-const mapOutput = (input, state, processed) => {
-  return processed;
-};
-
-export const node: NodeDefinition<Input, State> = {
-  description:
-    "Allows you to provide initial values for the whole graph. An input node can be used only once at the start of the graph. You can use this node to set brand decisions or any initial values.",
-  type,
-  defaults,
-  validateInputs,
-  process,
-  mapOutput,
-};
+    });
+  }
+}

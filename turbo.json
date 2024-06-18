@@ -1,6 +1,5 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "baseBranch": "origin/master",
   "globalDependencies": [
     "**/.env.*local"
   ],
@@ -42,6 +41,7 @@
       "dependsOn": [
         "^build"
       ],
+      "persistent": true,
       "cache": false
     },
     "clean": {

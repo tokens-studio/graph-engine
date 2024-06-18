@@ -1,47 +1,37 @@
-import { MappedInput } from "./common.js";
-import { NodeDefinition, NodeTypes } from "../../types.js";
-import { mapInput } from "./common.js";
+import { INodeDefinition,  ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
+import { NumberSchema } from "../../schemas/index.js";
 
-export const type = NodeTypes.SUBTRACT;
+export default class NodeDefinition extends Node {
+  static title = "Subtract";
+  static type = "studio.tokens.math.subtract";
+  static description = "Allows you to subtract two numbers.";
 
-/**
- * Optional validation function.
- * @param inputs
- */
-export const validateInputs = (inputs) => {
-  if (inputs.inputs.length < 2) {
-    throw new Error("Not enough inputs");
-  }
-  inputs.inputs.forEach((x) => {
-    if (isNaN(x.value)) {
-      throw new Error("Invalid input, expected a number");
-    }
-  });
-};
-
-/**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @returns
- */
-export const process = (input: MappedInput) => {
-  if (input.inputs.length == 0) {
-    return 0;
-  }
-  if (input.inputs.length == 1) {
-    return input.inputs[0].value;
+  declare inputs: ToInput<{
+    a: number;
+    b: number;
+  }>;
+  declare outputs: ToOutput<{
+    value: number;
+  }>;
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("a", {
+      type: NumberSchema,
+      visible: true,
+    });
+    this.addInput("b", {
+      type: NumberSchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
   }
 
-  const vals = input.inputs.slice(1);
-  return vals.reduce((acc, x) => acc - x.value, input.inputs[0].value);
-};
-
-export const node: NodeDefinition<MappedInput> = {
-  type,
-  mapInput,
-  description: "Subtract node allows you to subtract two or more numbers.",
-  validateInputs,
-  process,
-};
+  execute(): void | Promise<void> {
+    const { a, b } = this.getAllInputs();
+    this.setOutput("value", a - b);
+  }
+}

@@ -1,0 +1,8 @@
+body {
+    margin: 0
+}
+
+#graph-editor {
+    height: 100vh;
+    background: var(--colors-bgCanvas)
+}

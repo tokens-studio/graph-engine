@@ -1,32 +1,13 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/string/uppercase.js";
+import Node from "../../../../src/nodes/string/uppercase.js";
+import { Graph } from "../../../../src/graph/graph.js";
 
 describe("string/uppercase", () => {
-  it("throws and error if not passed a string", async () => {
-    await expect(
-      executeNode({
-        input: {},
-        node,
-        state: {},
-        nodeId: "testId",
-      })
-    ).rejects.toThrowError(
-      'Validation failed for node "testId" of type "studio.tokens.string.uppercase" with error "Error: Invalid input, expected a string"'
-    );
-  });
-
   it("uppercases all characters", async () => {
-    const output = await executeNode({
-      input: {
-        input: "hhh",
-      },
-      node,
-      state: {},
-      nodeId: "",
-    });
+    const graph = new Graph();
+    const node = new Node({ graph });
 
-    expect(output).toStrictEqual({
-      output: "HHH",
-    });
+    node.inputs.value.setValue("jjj");
+    await node.execute();
+    expect(node.outputs.value.value).toStrictEqual("JJJ");
   });
 });

@@ -1,40 +1,72 @@
+
+import { IDeserializeOpts } from "../../graph/types.js";
+import { INodeDefinition, Node } from "../../programmatic/node.js";
+import { ToInput } from "../../programmatic/input.js";
+import { ToOutput } from "../../programmatic/output.js";
+import { annotatedDynamicInputs, annotatedSingleton } from '../../annotations/index.js';
+
+
 /**
- * Acts as an output node for the graph. There can only be a single output node per graph.
- *
- * @packageDocumentation
+ * Acts as an output node for the graph. There should only be a single output node per graph.
  */
+export default class NodeDefinition<T> extends Node {
+  static title = "Output";
+  static type = "studio.tokens.generic.output";
 
-import { NodeDefinition, NodeTypes } from "../../types.js";
+  //Override with static typing
+  public declare inputs: ToInput<{
+    input: T;
+  }>;
+  public declare outputs: ToOutput<{
+    value: T;
+  }>;
 
-const type = NodeTypes.OUTPUT;
+  static description = "Allows you to expose outputs of the node";
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.annotations[annotatedSingleton] = true;
+    this.annotations[annotatedDynamicInputs] = true;
+  }
 
-const defaults = {
-  mappings: [],
-};
 
-//Passthrough
-const process = (input) => {
-  return input;
-};
+  static override deserialize(opts: IDeserializeOpts) {
+    const node = super.deserialize(opts);
 
-const mapOutput = (input, state, processed) => {
-  //convert the mappings to a lookup
-  const lookup = state.mappings.reduce((acc, { key, name }) => {
-    acc[key] = name;
-    return acc;
-  }, {});
+    //Create the outputs immediately as we are just a passthrough
+    Object.keys(node.inputs).forEach((input) => {
+      const rawInput = node.getRawInput(input);
+      node.addOutput(input, {
+        type: rawInput.type,
 
-  return Object.entries(processed).reduce((acc, [key, value]) => {
-    acc[lookup[key]] = value;
-    return acc;
-  }, {});
-};
+      });
+    });
 
-export const node: NodeDefinition = {
-  description:
-    "Allows you to provide initial values for the whole graph. An input node can be used only once at the start of the graph. You can use this node to set brand decisions or any initial values.",
-  type,
-  defaults,
-  process,
-  mapOutput,
-};
+    return node;
+  }
+
+
+  execute(): void | Promise<void> {
+    const inputs = this.getAllInputs();
+    const outputs = this.getAllOutputs();
+
+
+    //Passthrough all
+    Object.keys(inputs).forEach((input) => {
+      const rawInput = this.getRawInput(input);
+
+      if (!(input in outputs)) {
+        this.addOutput(input, {
+          type: rawInput.type,
+        });
+      }
+
+      this.setOutput(input, rawInput.value, rawInput.type);
+    });
+
+    Object.keys(outputs).forEach((output) => {
+      if (!(output in inputs)) {
+        delete this.outputs[output];
+      }
+    });
+  }
+}

@@ -1,45 +1,13 @@
-import { executeNode } from "#/core.js";
-import { node } from "#/nodes/math/abs.js";
+import Node from "../../../../src/nodes/math/abs.js";
+import { Graph } from "../../../../src/graph/graph.js";
 
 describe("math/abs", () => {
   it("absolutes the input", async () => {
-    const output = await executeNode({
-      input: {
-        input: -1,
-      },
-      node,
-      state: {},
-      nodeId: "",
-    });
-
-    expect(output).toStrictEqual({
-      output: 1,
-    });
-  });
-  it("returns undefined if no input", async () => {
-    const output = await executeNode({
-      input: {},
-      node,
-      state: {},
-      nodeId: "",
-    });
-
-    expect(output).toStrictEqual({
-      output: undefined,
-    });
-  });
-  it("returns undefined if input is undefined", async () => {
-    const output = await executeNode({
-      input: {
-        input: undefined,
-      },
-      node,
-      state: {},
-      nodeId: "",
-    });
-
-    expect(output).toStrictEqual({
-      output: undefined,
-    });
+    const graph = new Graph();
+    const node = new Node({ graph });
+    
+    node.inputs.input.setValue(-1);
+    await node.execute();
+    expect(node.outputs.value.value).toStrictEqual(1);
   });
 });

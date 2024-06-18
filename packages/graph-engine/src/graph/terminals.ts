@@ -1,23 +1,23 @@
-import { MinimizedFlowGraph, MinimizedNode } from "./types.js";
-import { NodeTypes } from "../types.js";
+import { Graph } from "./graph.js";
+import { Node } from "../programmatic/node.js";
 
 export type Terminals = {
-  input?: MinimizedNode;
-  output?: MinimizedNode;
+  input?: Node;
+  output?: Node;
 };
 
-export const findTerminals = (graph: MinimizedFlowGraph): Terminals => {
+export const findTerminals = (graph: Graph): Terminals => {
   const terminals: Terminals = {
     input: undefined,
     output: undefined,
   };
 
-  graph.nodes.forEach((node) => {
-    switch (node.type) {
-      case NodeTypes.INPUT:
+  Object.values(graph.nodes).forEach((node) => {
+    switch (node.factory.type) {
+      case 'studio.tokens.generic.input':
         terminals.input = node;
         break;
-      case NodeTypes.OUTPUT:
+      case 'studio.tokens.generic.output':
         terminals.output = node;
         break;
     }

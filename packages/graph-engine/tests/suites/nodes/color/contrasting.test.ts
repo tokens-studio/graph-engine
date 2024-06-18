@@ -1,20 +1,23 @@
-import { node, WcagVersion } from "#/nodes/color/contrasting.js";
-import { executeNode } from "#/core.js";
+import Node, { WcagVersion } from "../../../../src/nodes/color/contrasting.js";
+import { Graph } from "../../../../src/graph/graph.js";
 
-describe("color/blend", () => {
+import { getAllOutputs } from "../utils";
+
+describe("color/contrasting", () => {
   it("should return the more contrasting color correctly with WCAG 3", async () => {
-    const output = await executeNode({
-      input: {
-        a: "#000000",
-        b: "#ffffff",
-        background: "#ffffff",
-        wcag: WcagVersion.V3,
-        threshold: 60,
-      },
-      node,
-      state: node.defaults,
-      nodeId: "",
-    });
+    const graph = new Graph();
+    const node = new Node({ graph });
+    
+
+    node.inputs.a.setValue("#000000");
+    node.inputs.b.setValue("#ffffff");
+    node.inputs.background.setValue("#ffffff");
+    node.inputs.wcag.setValue(WcagVersion.V3);
+    node.inputs.threshold.setValue(60);
+
+    await node.run();
+
+    const output = getAllOutputs(node);
 
     expect(output).toEqual({
       color: "#000000",
@@ -24,18 +27,19 @@ describe("color/blend", () => {
   });
 
   it("should return the more contrasting color correctly with WCAG 2", async () => {
-    const output = await executeNode({
-      input: {
-        a: "#000000",
-        b: "#ffffff",
-        background: "#000000",
-        wcag: WcagVersion.V2,
-        threshold: 4.5,
-      },
-      node,
-      state: node.defaults,
-      nodeId: "",
-    });
+    const graph = new Graph();
+    const node = new Node({ graph });
+    
+
+    node.inputs.a.setValue("#000000");
+    node.inputs.b.setValue("#ffffff");
+    node.inputs.background.setValue("#000000");
+    node.inputs.wcag.setValue(WcagVersion.V2);
+    node.inputs.threshold.setValue(4.5);
+
+    await node.run();
+
+    const output = getAllOutputs(node);
 
     expect(output).toEqual({
       color: "#ffffff",
@@ -45,18 +49,19 @@ describe("color/blend", () => {
   });
 
   it("should return false for sufficient contrast if below threshold", async () => {
-    const output = await executeNode({
-      input: {
-        a: "#dddddd",
-        b: "#bbbbbb",
-        background: "#ffffff",
-        wcag: WcagVersion.V3,
-        threshold: 60,
-      },
-      node,
-      state: node.defaults,
-      nodeId: "",
-    });
+    const graph = new Graph();
+    const node = new Node({ graph });
+    
+    
+    node.inputs.a.setValue("#dddddd");
+    node.inputs.b.setValue("#bbbbbb");
+    node.inputs.background.setValue("#ffffff");
+    node.inputs.wcag.setValue(WcagVersion.V3);
+    node.inputs.threshold.setValue(60);
+
+    await node.run();
+
+    const output = getAllOutputs(node);
 
     expect(output).toEqual({
       color: "#bbbbbb",

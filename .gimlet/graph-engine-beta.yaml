@@ -1,0 +1,29 @@
+app: graph-engine-beta
+env: prod
+namespace: graph-engine
+chart:
+  repository: https://chart.onechart.dev
+  name: onechart
+  version: 0.64.0
+values:
+  containerPort: 3000
+  gitRepository: tokens-studio/graph-engine
+  gitSha: '{{ .SHA }}'
+  image:
+    repository: ghcr.io/tokens-studio/graph-engine
+    tag: frontend-{{ .SHA }}
+  imagePullSecrets:
+    - ghcr-login-secret
+  ingress:
+    ingressClassName: traefik
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    host: graph.beta.tokens.studio
+    path: /
+    tlsEnabled: true
+  replicas: 1
+  resources:
+    ignoreLimits: true
+  vars:
+    TS_DEMO_MODE: true
+    HOSTNAME: 0.0.0.0

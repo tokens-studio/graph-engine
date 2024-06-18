@@ -1,27 +1,59 @@
+'use client';
+
+import '@/styles/styles.scss';
+import '@tokens-studio/graph-editor/index.css';
+
 import { Box } from '@tokens-studio/ui';
-import { LiveProvider } from 'react-live';
-import { scope } from '#/components/preview/scope.tsx';
-import { useDispatch } from '#/hooks/index.ts';
-import { useSelector } from 'react-redux';
-import React, { useState } from 'react';
+import { EditorTab } from '@/components/editor/index.tsx';
+import { GraphService } from '@/api/index.ts';
+import { ImperativeEditorRef } from '@tokens-studio/graph-editor';
+import { JoyrideTooltip } from '@/components/joyride/tooltip.tsx';
+import { SerializedGraph } from '@tokens-studio/graph-engine';
+import { observer } from 'mobx-react-lite';
 import {
-  previewCodeSelector,
   showJourneySelector,
-} from '#/redux/selectors/index.ts';
+} from '@/redux/selectors/index.ts';
+import { useDispatch } from '@/hooks/index.ts';
+import { useErrorToast } from '@/hooks/useToast.tsx';
+import { useJourney } from '@/components/journeys/basic.tsx';
+import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/router.js';
+import { useSelector } from 'react-redux';
 import Joyride, { CallBackProps, STATUS } from 'react-joyride';
-// @ts-ignore
-import { themes } from 'prism-react-renderer';
+import React, { useCallback, useEffect } from 'react';
+import globalState from '@/mobx/index.tsx';
 
-import { useTheme } from '#/hooks/useTheme.tsx';
-import { useJourney } from '#/journeys/basic.tsx';
-import { JoyrideTooltip } from '#/components/joyride/tooltip.tsx';
-import { EditorTab } from '#/components/editor/index.tsx';
-
-const Wrapper = () => {
+const Wrapper = observer(() => {
   const dispatch = useDispatch();
+
+  const router = useRouter();
+  const editor = globalState.refs.editor.get();
+
+  const ref = useCallback((editor) => {
+    globalState.refs.editor.set(editor);
+  }, []);
+
+
   const showJourney = useSelector(showJourneySelector);
-  const theme = useTheme();
-  const previewCode = useSelector(previewCodeSelector);
+
+
+  const { isLoading, data, error } = useQuery({
+    queryKey: ['graph', router.query.id],
+    queryFn: () => GraphService.getGraph({
+      graphId: router.query.id as string
+    }),
+    enabled: !!router.query.id
+  });
+
+  useErrorToast(error);
+
+
+  useEffect(() => {
+    if (editor && data?.graph) {
+      editor.loadRaw(data?.graph as SerializedGraph)
+    }
+  }, [data, editor])
+
 
   const [{ steps }] = useJourney();
   const handleJoyrideCallback = (data: CallBackProps) => {
@@ -32,6 +64,7 @@ const Wrapper = () => {
       dispatch.journey.setShowJourney(false);
     }
   };
+
 
   return (
     <>
@@ -60,23 +93,19 @@ const Wrapper = () => {
           width: '100%',
           height: '100%',
           overflow: 'hidden',
-          background: '$bgDefault',
+          background: '$bgCanvas',
           isolation: 'isolate',
         }}
       >
-        <LiveProvider
-          code={previewCode}
-          scope={scope}
-          theme={theme === 'light' ? themes.vsLight : themes.vsDark}
-          noInline={true}
-          enableTypeScript={true}
-          language="jsx"
-        >
-          <EditorTab />
-        </LiveProvider>
+        <EditorTab ref={ref} loading={isLoading} />
       </Box>
     </>
   );
-};
+});
 
-export default Wrapper;
+const Index = () => {
+  return <Wrapper />;
+}
+
+
+export default Index;

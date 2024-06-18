@@ -1,9 +1,8 @@
-import { SearchIcon } from '@iconicicons/react';
+import {Search} from 'iconoir-react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Command } from 'cmdk';
-import React, { useCallback } from 'react';
-import { store } from '#/redux/store.tsx';
-import { examples } from '../examples/examples.tsx';
+import React from 'react';
+import { examples } from '../data/examples/examples.tsx';
 import { IExample } from '../types/IExample.tsx';
 
 const ExamplesPicker = ({ open, onClose, loadExample }) => {
@@ -28,7 +27,7 @@ const ExamplesPicker = ({ open, onClose, loadExample }) => {
           padding: '0 $4',
         }}
       >
-        <SearchIcon />
+        <Search />
         <Command.Input placeholder="Find an example to load…" />
       </Box>
       <Command.List>
@@ -39,6 +38,7 @@ const ExamplesPicker = ({ open, onClose, loadExample }) => {
             key={example.key}
             value={example.key}
             onSelect={() => handleSelectItem(example)}
+            style={{ cursor: 'pointer' }}
           >
             <Stack direction="column" gap={2} align="start">
               <Text css={{ fontWeight: '$sansMedium', fontSize: '$xsmall' }}>

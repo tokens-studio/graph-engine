@@ -1,13 +1,9 @@
-import { showNodesPanelSelector } from '#/redux/selectors/index.ts';
-import {
-  BatteryChargingIcon,
-  FilePlusIcon,
-  TabletIcon,
-} from '@iconicicons/react';
+import { BatteryCharging, JournalPage, PagePlus } from 'iconoir-react';
 import { Box, Button, EmptyState, Stack } from '@tokens-studio/ui';
+import { showNodesPanelSelector } from '@/redux/selectors/index.ts';
 import { useCallback } from 'react';
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 
 interface IEmptyStateProps {
   onLoadExamples: () => void;
@@ -46,18 +42,18 @@ export function EmptyStateEditor({ onLoadExamples }: IEmptyStateProps) {
       }}
     >
       <EmptyState
-        icon={<BatteryChargingIcon style={{ width: 48, height: 48 }} />}
+        icon={<BatteryCharging style={{ width: 48, height: 48 }} />}
         title="Build scalable and flexible design systems."
         description="Add your first node to get started or load an example"
       >
         <Stack direction="row" gap={3} css={{ pointerEvents: 'all' }}>
-          <Button onClick={handleTriggerShowExamples} icon={<FilePlusIcon />}>
+          <Button onClick={handleTriggerShowExamples} icon={<PagePlus />}>
             Load example
           </Button>
           <Button
             variant="primary"
             onClick={handleTriggerAddNode}
-            icon={<TabletIcon />}
+            icon={<JournalPage />}
           >
             Add your first node
           </Button>

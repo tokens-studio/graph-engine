@@ -1,87 +1,59 @@
-import { executeNode } from "#/core.js";
-import { node, mapOutput } from "#/nodes/color/poline.js";
+import Node from "../../../../src/nodes/color/poline.js";
+import { Graph } from "../../../../src/graph/graph.js";
 
 describe("color/poline", () => {
   it("creates the expected color palette with these inputs 1", async () => {
-    const input = {
-      anchorColors: ["#ff0000", "#00ff00"],
-      numPoints: 2,
-      hueShift: 20,
-      positionFnX: "linearPosition",
-    };
+    const graph = new Graph();
+    const node = new Node({ graph });
+    
+    node.inputs.anchorColors.setValue(["#ff0000", "#00ff00"]);
+    node.inputs.numPoints.setValue(2);
+    node.inputs.hueShift.setValue(20);
+    node.inputs.positionFnX.setValue("linearPosition");
+    await node.execute();
 
-    const state = {
-      anchorColors: [],
-      numPoints: 4,
-    };
+    const output = node.outputs.value.value;
 
-    const output = await executeNode({
-      input: input,
-      node,
-      state: state,
-      nodeId: "",
-    });
-
-    expect(output).toStrictEqual(
-      mapOutput(input, state, ["#ff5500", "#9d8b00", "#20a200", "#00ff55"])
-    );
+    expect(output).toStrictEqual(["#ff5500", "#9d8b00", "#20a200", "#00ff55"]);
   });
 
   it("creates the expected color palette with these inputs 2", async () => {
-    const input = {
-      anchorColors: ["#ff0000", "#00ff00"],
-      numPoints: 6,
-      invertedLightness: true,
-      positionFnY: "arcPosition",
-    };
+    const graph = new Graph();
+    const node = new Node({ graph });
+    
+    node.inputs.anchorColors.setValue(["#ff0000", "#00ff00"]);
+    node.inputs.numPoints.setValue(6);
+    node.inputs.invertedLightness.setValue(true);
+    node.inputs.hueShift.setValue(20);
+    node.inputs.positionFnY.setValue("arcPosition");
+    await node.execute();
 
-    const state = {
-      anchorColors: [],
-      numPoints: 4,
-    };
+    const output = node.outputs.value.value;
 
-    const output = await executeNode({
-      input: input,
-      node,
-      state: state,
-      nodeId: "",
-    });
-
-    expect(output).toStrictEqual(
-      mapOutput(input, state, [
-        "#ff0000",
-        "#ff6454",
-        "#ffc1a0",
-        "#f3ffc7",
-        "#a7ffa7",
-        "#77ff90",
-        "#4aff6a",
-        "#00ff00",
-      ])
-    );
+    expect(output).toStrictEqual([
+      "#ff5500",
+      "#ffb255",
+      "#faff90",
+      "#a9ff90",
+      "#67ff84",
+      "#3bff80",
+      "#1aff75",
+      "#00ff55",
+    ]);
   });
 
   it("creates the expected color palette with two color inputs and a given state", async () => {
-    const input = {
-      anchorColors: ["#ff0000", "#00ff00"],
-    };
+    const graph = new Graph();
+    const node = new Node({ graph });
+    
+    node.inputs.anchorColors.setValue(["#ff0000", "#00ff00"]);
+    node.inputs.numPoints.setValue(2);
+    node.inputs.hueShift.setValue(20);
+    node.inputs.positionFnX.setValue("linearPosition");
+    await node.execute();
 
-    const state = {
-      anchorColors: [],
-      numPoints: 2,
-      hueShift: 20,
-      positionFnX: "linearPosition",
-    };
+    const output = node.outputs.value.value;
 
-    const output = await executeNode({
-      input: input,
-      node,
-      state: state,
-      nodeId: "",
-    });
-
-    expect(output).toStrictEqual(
-      mapOutput(input, state, ["#ff5500", "#9d8b00", "#20a200", "#00ff55"])
-    );
+    expect(output).toStrictEqual(["#ff5500", "#9d8b00", "#20a200", "#00ff55"]);
   });
 });

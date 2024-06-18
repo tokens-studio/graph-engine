@@ -1,0 +1,74 @@
+import { observer } from 'mobx-react-lite';
+import { IField } from './interface';
+import React, { useCallback } from 'react';
+import { Input } from '@tokens-studio/graph-engine';
+import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
+import { ColorPickerPopover } from '../colorPicker';
+import { useSelector } from 'react-redux';
+import { delayedUpdateSelector } from '@/redux/selectors';
+import { FloppyDisk } from 'iconoir-react';
+
+export const ColorField = observer(({ port, readOnly }: IField) => {
+
+  const useDelayed = useSelector(delayedUpdateSelector);
+  const [val, setVal] = React.useState(port.value);
+
+  React.useEffect(() => {
+    setVal(port.value);
+  }, [port.value]);
+
+
+
+  const onChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+
+      let col;
+      //Weird  problem with the color picker if the user decides to use the text input
+      if (typeof e === 'string') {
+        col = e
+      } else {
+        col = e.target.value;
+      }
+      setVal(col);
+      if (useDelayed) {
+        return;
+      }
+      (port as Input).setValue(col);
+    },
+    [port, useDelayed],
+  );
+
+  if (readOnly) {
+    return (
+      <Stack direction="row" justify="between" align="center">
+        <Box
+          as="button"
+          css={{
+            all: 'unset',
+            backgroundColor: port.value,
+            cursor: 'pointer',
+            borderRadius: '$small',
+            width: 16,
+            height: 16,
+            outline: '1px solid $borderMuted',
+            flexShrink: 0,
+            '&:hover': {
+              outline: '1px solid $borderDefault',
+            },
+          }}
+          type="button"
+        />
+        <Text>{port.value}</Text>
+
+      </Stack>
+    );
+  }
+
+  return (
+    <Stack direction="row" justify="between" align="center" gap={2}>
+      <ColorPickerPopover value={val} onChange={onChange} />
+      <Text muted>{val}</Text>
+      {useDelayed && <IconButton icon={<FloppyDisk />} onClick={() => (port as Input).setValue(val)} />}
+    </Stack>
+  );
+});

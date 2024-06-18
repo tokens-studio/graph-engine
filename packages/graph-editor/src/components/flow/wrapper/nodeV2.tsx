@@ -1,84 +1,31 @@
-import { Edge, useReactFlow } from 'reactflow';
-import { ErrorBoundary } from 'react-error-boundary';
-import { Node } from './node.tsx';
-import {
-  NodeDefinition,
-  NodeTypes,
-  defaultMapOutput,
-} from '@tokens-studio/graph-engine';
-import { getOutgoingEdges } from '../utils.ts';
-import {
-  inputSelector,
-  stateSelector,
-} from '../../../redux/selectors/index.ts';
-import { useDispatch } from '../../../hooks/index.ts';
-import { useInvalidator } from '../../../editor/forceUpdateContext.tsx';
+import { Node } from './node.js';
+
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import { Box, Stack, Text } from '@tokens-studio/ui';
+import { Handle, HandleContainer } from '../handles.js';
+import { COLOR, Input, OBJECT, Port, annotatedNodeRunning } from '@tokens-studio/graph-engine';
+import { Node as GraphNode } from '@tokens-studio/graph-engine'
+import colors from '@/tokens/colors.js';
 import { useSelector } from 'react-redux';
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import isPromise from 'is-promise';
-import { useOnOutputChange } from '#/context/OutputContext.tsx';
-import { useExternalLoader } from '#/context/ExternalLoaderContext.tsx';
-import { useExternalData } from '#/context/ExternalDataContext.tsx';
+import { inlineTypes, inlineValues, showTimings } from '@/redux/selectors/settings.js';
+import { icons, nodeSpecifics } from '@/redux/selectors/registry.js';
+import { title, xpos } from '@/annotations/index.js';
+import { useLocalGraph } from '@/context/graph.js';
+
+const isHexColor = (str) => {
+  if (typeof str !== 'string') return false;
+  return /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(str);;
+};
 
 export type UiNodeDefinition = {
   //Name of the Node
   title?: string;
+  subtitle: string;
   // Whether to support custom rendering by specifying a component
   wrapper?: React.FC;
   icon?: React.ReactNode;
-} & NodeDefinition<any, any, any>;
-
-export type INodeContext<Input = any, State = any, Output = any> = {
-  setTitle: React.Dispatch<React.SetStateAction<string>>;
-  setControls: React.Dispatch<React.SetStateAction<React.ReactNode>>;
-  state: State;
-  setState: (state: any) => void;
-  input: Input;
-  output: Output;
-  error: Error | null;
-  /**
-   * Creates a new value connection. Useful when generating a new dynamic handle
-   * @param key
-   * @param value
-   * @returns
-   */
-  createInput: (key: string, value?: any) => void;
-  disconnectInput: (key: string) => void;
-  disconnectInputs: (keys: string[]) => void;
-  disconnectAllOutputs: () => void;
-  onConnect: (edge: Edge) => void;
-  ephemeralState: object;
-  setEphemeralState: (state: object) => void;
-  loadingEphemeralData: boolean;
 };
-const noop = () => {
-  /** Do nothing */
-};
-
-const NodeContext = createContext<INodeContext>({
-  setTitle: noop,
-  setControls: noop,
-  createInput: noop,
-  error: null,
-  state: {},
-  input: {},
-  output: undefined,
-  onConnect: noop,
-  disconnectInput: noop,
-  disconnectInputs: noop,
-  disconnectAllOutputs: noop,
-  setState: noop,
-  ephemeralState: {},
-  setEphemeralState: noop,
-  loadingEphemeralData: false,
-});
 
 export type WrappedNodeDefinition = {
   type: string;
@@ -92,315 +39,236 @@ export type WrappedNodeDefinition = {
  * @param nodeDef
  * @returns
  */
-export const WrapNode = (
-  InnerNode,
-  nodeDef: UiNodeDefinition,
-): WrappedNodeDefinition => {
-  const WrappedNode = (data) => {
-    const { loadSetTokens } = useExternalData();
-    const { externalLoader } = useExternalLoader();
-    const [ephemeralState, setEphemeralState] = useState({});
-    const [loadingEphemeralData, setLoadingEphemeralData] = useState(false);
-    const { onOutputChange } = useOnOutputChange();
-    const [error, setError] = useState<Error | null>(null);
-    const [title, setTitle] = useState<string>(nodeDef.title || '');
-    const [execTime, setExecTime] = useState<number>(0);
-    const [isLoading, setIsLoading] = useState(false);
-    const flow = useReactFlow();
-    const [controls, setControls] = useState<React.ReactNode>(null);
-    const forceUpdate = useInvalidator();
+export const NodeV2 = (args) => {
+  const { id } = args;
+  const graph = useLocalGraph();
+  const node = graph.getNode(id);
 
-    const dispatch = useDispatch();
-    //We have access to our child state
-    const input = useSelector(inputSelector(data.id));
-    const state = useSelector(stateSelector(data.id));
+  if (!node) {
+    return <Box>Node not found</Box>;
+  }
 
-    const [output, setOutput] = useState<any>(undefined);
-    const disconnectInput = useCallback((key) => {
-      //Remove the value form the input
-      dispatch.input.remove({
-        id: data.id,
-        key,
-      });
+  return <NodeWrap node={node} />;
+};
 
-      //and also remove from the graph
-      flow.setEdges((edges) =>
-        edges.filter((edge) => {
-          return !(edge.target == data.id && edge.targetHandle == key);
-        }),
-      );
-    }, []);
+export interface INodeWrap {
+  /**
+   * Optional title to override the default title
+   */
+  title?: string;
+  subtitle?: string;
+  node: GraphNode;
+}
+const NodeWrap = observer(({ node }: INodeWrap) => {
+  const showTimingsValue = useSelector(showTimings);
+  const specifics = useSelector(nodeSpecifics);
 
-    const disconnectInputs = useCallback((keys) => {
-      //Remove the values from the input
-      keys.forEach((key) => {
-        dispatch.input.remove({
-          id: data.id,
-          key,
-        });
-      });
+  const Specific = specifics[node.factory.type];
 
-      //and also remove from the graph
-      flow.setEdges((edges) =>
-        edges.filter((edge) => {
-          return !(edge.target == data.id && keys.includes(edge.targetHandle));
-        }),
-      );
-    }, []);
+  return (
+    <Node
+      id={node.id}
+      isAsync={node.annotations[annotatedNodeRunning] as boolean}
+      // icon={nodeDef.icon}
+      title={(node.annotations[title] as string) || node.factory.title || 'Node'}
+      subtitle={node.annotations[title] ? node.factory.title : ""}
+      error={node.error || null}
+      controls={''}
+      style={{minWidth:'350px'}}
+    >
+      <Stack direction="column" gap={2}>
+        <Stack direction="row" gap={3} css={{ padding: '$3' }}>
+          <HandleContainer type="target" className={'target'} full>
+            <PortArray ports={node.inputs} />
+          </HandleContainer>
+          <HandleContainer type="source" className={'source'} full>
+            <PortArray ports={node.outputs} />
+          </HandleContainer>
+        </Stack>
+        {Specific && <Specific node={node} />}
+      </Stack>
+      {showTimingsValue && (
+        <Box css={{ position: 'absolute', bottom: '-1.5em' }}>
+          <Text size="xsmall" muted>
+            {node.lastExecutedDuration}ms
+          </Text>
+        </Box>
+      )}
+    </Node>
+  );
+});
 
-    const disconnectAllOutputs = useCallback(() => {
-      const self = flow.getNode(data.id);
-      const edges = flow.getEdges();
+export interface IPortArray {
+  ports: Record<string, Port>;
+  hideNames?: boolean
+}
+export const PortArray = observer(({ ports, hideNames }: IPortArray) => {
+  const entries = Object.values(ports).sort();
+  return (
+    <>
+      {entries.filter(x => x.visible || x.isConnected).map((input) => (
+        <InputHandle port={input} hideName={hideNames} />
+      ))}
+    </>
+  );
+});
 
-      const outgoing = getOutgoingEdges(self, edges);
-      outgoing.forEach((edge) => {
-        dispatch.input.remove({
-          id: edge.target!,
-          key: edge.targetHandle!,
-        });
-      });
+const extractTypeIcon = (
+  port: Port,
+  iconLookup: Record<string, React.ReactNode>,
+) => {
+  let id = port.type.$id || '';
+  const isArray = Boolean(port.type.type == 'array');
 
-      flow.setEdges((edges) =>
-        edges.filter((edge) => {
-          return !outgoing.find((outEdge) => outEdge.id === edge.id);
-        }),
-      );
-    }, [flow, output, data.id, dispatch.node]);
+  if (!id && isArray) {
+    id = port.type.items.$id || '';
+  }
 
-    const setState = useCallback(
-      (newVal) => {
-        dispatch.node.set({
-          id: data.id,
-          value: newVal,
-        });
-      },
-      [data.id, dispatch.node],
-    );
+  let icon = iconLookup[id] || iconLookup[OBJECT];
 
-    const mappedInput = useMemo(() => {
-      if (nodeDef.mapInput) {
-        const val = nodeDef.mapInput(input, state);
-        return val;
+  const color = colors[id]?.color || 'black';
+  const backgroundColor = colors[id]?.backgroundColor || 'white';
+
+  return { isArray, icon, color, backgroundColor };
+};
+
+export const InlineTypeLabel = ({ port }: { port: Port }) => {
+  //TODO add support for specific types through the $id
+  return (
+    <Box
+      css={{
+        background: '$gray1',
+        color: '$fgOnEmphasis',
+        padding: '$1 $2',
+        fontSize: '$xxsmall',
+        borderRadius: '$small',
+        textTransform: 'uppercase',
+      }}
+    >
+      {port.type.type || 'any'}
+    </Box>
+  );
+};
+
+const getColorPreview = (color: string, showValue = false) => {
+  const colorSwatch = <Box css={{ width: '16px', height: '16px', borderRadius: '$medium', backgroundColor: color }} />;
+
+  if (!showValue) {
+    return colorSwatch;
+  }
+
+  return (
+    <Stack direction="row" gap={2}>
+      {colorSwatch}    
+      {showValue ? <Text css={{ fontSize: '$small', color: '$gray12' }}>{color.toUpperCase()}</Text> : null}
+    </Stack>
+  );
+}
+
+
+const getValuePreview = (value, type) => {
+  if (value === undefined) {
+    return null;
+  }
+
+  let valuePreview = '';
+  switch (type.type) {
+    case 'array':
+      const allColors = value.every(isHexColor);
+      if (allColors) {
+        return (<Stack direction="row" gap={1}>
+          {value.length > 5 ? (
+            <>
+              {value.slice(0, 5).map((val) => getColorPreview(val))}
+              <Text>+{value.length - 5}</Text>
+            </>
+          ) : value.map((val) => getColorPreview(val))}
+        </Stack>)
       }
-      return input;
-    }, [input, state]);
-
-    useEffect(() => {
-      if (nodeDef.type === NodeTypes.SET) {
-        const getTokens = async () => {
-          setLoadingEphemeralData(true);
-          const set = await loadSetTokens(state.identifier);
-          setEphemeralState(set);
-          setLoadingEphemeralData(false);
-        };
-
-        if (state.identifier) {
-          getTokens();
-        }
+      valuePreview = JSON.stringify(value);
+      break;
+    case 'object':
+      valuePreview = JSON.stringify(value);
+      break;
+    case 'number':
+      valuePreview = value.toString();
+      break;
+    case 'string':
+      valuePreview = value;
+      break
+    default:
+      if (isHexColor(value)) {
+        return getColorPreview(value,true);
       }
-    }, [state?.identifier, loadSetTokens]);
+      valuePreview = JSON.stringify(value);
+  }
 
-    useEffect(() => {
-      async function fetchExternalData() {
-        if (nodeDef.external && !externalLoader) {
-          throw new Error(
-            `Node "${data.id}" of type "${nodeDef.type}" requires an external loader`,
-          );
-        } else if (nodeDef.external && externalLoader) {
-          const ephemeralRequest = nodeDef.external(mappedInput, state);
-          let ephemeralData = await externalLoader({
-            type: nodeDef.type,
-            id: data.id,
-            data: ephemeralRequest,
-          });
-          setEphemeralState(ephemeralData);
-        }
-      }
+  return valuePreview.length > 20 ? `${valuePreview.substring(0, 20)}...` : valuePreview;
+}
 
-      fetchExternalData();
-    }, [state?.identifier, mappedInput, state, externalLoader]);
+const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boolean }) => {
+  const inlineTypesValue = useSelector(inlineTypes);
+  const iconTypeRegistry = useSelector(icons);
+  const inlineValuesValue = useSelector(inlineValues);
+  const typeCol = extractTypeIcon(port, iconTypeRegistry);
+  const input = port as unknown as Input;
 
-    useMemo(async () => {
-      setIsLoading(true);
-      try {
-        if (mappedInput !== undefined) {
-          const processStart = performance.now();
-          let value = nodeDef.process(mappedInput, state, ephemeralState);
 
-          //@ts-ignore
-          const asyncProcess = isPromise(value);
-          if (asyncProcess) {
-            setIsLoading(true);
-            value = await value;
-          }
 
-          const processEnd = performance.now();
-          setExecTime(processEnd - processStart);
-          const mappedOutput = (nodeDef.mapOutput || defaultMapOutput)(
-            mappedInput,
-            state,
-            value,
-            ephemeralState,
-          );
-          setError(null);
-          setIsLoading(false);
-
-          if (nodeDef.type === NodeTypes.OUTPUT) {
-            onOutputChange(mappedOutput);
-          }
-          setOutput(mappedOutput);
-        }
-      } catch (err) {
-        console.error(err);
-        setError(err as Error);
-        //Clear the output
-        setOutput(undefined);
-      }
-      setIsLoading(false);
-    }, [mappedInput, state, forceUpdate, ephemeralState, onOutputChange]);
-
-    const onConnect = useCallback(
-      async (params) => {
-        //If we haven't create a value
-        if (output === undefined) return;
-        dispatch.input.updateInput({
-          id: params.target,
-          key: params.targetHandle,
-          value: output[params.sourceHandle],
-        });
-      },
-      [JSON.stringify(output)],
-    );
-
-    /**
-     * This should be used sparingly. Its only real use is dynamically creating new handles
-     */
-    const createInput = useCallback(
-      (key, value) => {
-        dispatch.input.updateInput({
-          id: data.id,
-          key,
-          value,
-        });
-      },
-      [data.id],
-    );
-
-    const values = useMemo(() => {
-      return {
-        error,
-        setTitle,
-        setControls,
-        createInput,
-        input: mappedInput,
-        state,
-        setState,
-        output,
-        disconnectInput,
-        disconnectInputs,
-        disconnectAllOutputs,
-        onConnect,
-        ephemeralState,
-        setEphemeralState,
-        loadingEphemeralData,
-      };
-    }, [
-      error,
-      mappedInput,
-      state,
-      setState,
-      output,
-      disconnectInput,
-      disconnectInputs,
-      disconnectAllOutputs,
-      onConnect,
-      createInput,
-      ephemeralState,
-      setEphemeralState,
-      loadingEphemeralData,
-    ]);
-
-    useEffect(() => {
-      async function propagate() {
-        //Handle propagating the value to the next node
-
-        if (output === undefined) return;
-
-        let outputVal = output;
-
-        //@ts-ignore
-        if (isPromise(output)) {
-          outputVal = (await output) as Promise<any>;
-        }
-        //It might fail
-        if (outputVal === undefined) return;
-
-        const self = flow.getNode(data.id);
-        const edges = flow.getEdges();
-
-        const outgoing = getOutgoingEdges(self, edges);
-        outgoing.forEach((edge) => {
-          dispatch.input.updateInput({
-            id: edge.target!,
-            key: edge.targetHandle!,
-            value: output[edge.sourceHandle!],
-          });
-        });
-      }
-      propagate();
-    }, [JSON.stringify(output)]);
-
-    const stats = useMemo(
-      () => ({
-        executionTime: execTime,
-      }),
-      [execTime],
-    );
-
-    const Wrapped = useMemo(() => {
-      if (nodeDef.wrapper) {
-        return nodeDef.wrapper;
-      }
-      return Node;
-    }, [nodeDef.wrapper]);
-
-    const logError = useCallback((error, info) => {
-      console.error(error, info);
-    }, []);
-
+  if (input.variadic) {
     return (
-      <NodeContext.Provider value={values}>
-        <Wrapped
-          key={data.id}
-          id={data.id}
-          isAsync={isLoading}
-          icon={nodeDef.icon}
-          title={title}
-          error={error}
-          controls={controls}
-          stats={stats}
+      <>
+        <Handle
+          {...typeCol}
+          visible={port.visible || port.isConnected}
+          id={port.name}
+          full
+          variadic
         >
-          <ErrorBoundary
-            fallbackRender={() => 'Oops I just accidentally ...'}
-            onError={logError}
-          >
-            <InnerNode />
-          </ErrorBoundary>
-        </Wrapped>
-      </NodeContext.Provider>
+          {!hideName && <Text>{port.name} + </Text>}
+          {inlineTypesValue && <InlineTypeLabel port={port} />}
+        </Handle>
+        {port._edges.map((edge, i) => {
+
+          return (
+            <Handle
+              {...typeCol}
+              visible={port.visible || port.isConnected}
+              id={port.name + `[${edge.annotations['engine.index']}]`}
+              key={i}
+              full
+            >
+              {!hideName && (
+                <Box css={{ display: 'grid', justifyContent: 'center', direction: 'row' }}>
+                  {inlineValuesValue && <Text css={{ fontSize: 'medium', color: '$gray11' }}>{getValuePreview(input.value[i], input.type.items)}</Text>}
+
+                  <Text css={{ fontSize: 'small', color: '$gray12' }}>{input.name} - [{i}]</Text>
+                </Box>
+              )}
+
+              {inlineTypesValue && <InlineTypeLabel port={port} />}
+            </Handle>
+          );
+        })}
+      </>
     );
-  };
+    //We need to render additional handles
+  }
 
-  //@ts-ignore
-  WrapNode.whyDidYouRender = true;
-
-  return {
-    type: nodeDef.type,
-    state: nodeDef.defaults || {},
-    component: React.memo(WrappedNode),
-  };
-};
-
-export const useNode = <Input = any, State = any, Output = any>() => {
-  return useContext(NodeContext) as INodeContext<Input, State, Output>;
-};
+  return (
+    <Handle
+      {...typeCol}
+      visible={port.visible || port.isConnected}
+      id={port.name}
+      full
+    >
+      {!hideName && (
+        <Box css={{ display: 'grid', justifyContent: 'center', direction: 'row' }}>
+          {inlineValuesValue && <Text css={{ fontSize: '$small', color: '$gray12' }}>{getValuePreview(input.value, input.type) ?? input.name}</Text>}
+          {port.value !== undefined ? <Text css={{ fontSize: '$medium', color: '$gray11' }}>{input.name}</Text> : null}
+        </Box>
+      )}
+      {inlineTypesValue && <InlineTypeLabel port={port} />}
+    </Handle>
+  );
+});

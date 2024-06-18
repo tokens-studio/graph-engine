@@ -1,22 +1,41 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
+import { NumberSchema } from "../../schemas/index.js";
 
-export const type = NodeTypes.ABS;
 /**
- * Core logic for the node. Will only be called if all inputs are valid.
- * Return undefined if the node is not ready to execute.
- * Execution can also be optionally delayed by returning a promise.
- * @param input
- * @param state
- * @returns
+ * @example
+ * 
+ * ```json
+ * {"nodes":[{"id":"9cfd3826-4570-493c-a672-ed8b642ed537","type":"studio.tokens.math.abs","inputs":[{"name":"input","value":-100,"type":{"$id":"https://schemas.tokens.studio/number.json","title":"Number","type":"number"},"visible":true}],"annotations":{"ui.position.x":444.45137532552087,"ui.position.y":215.06712849934894}},{"id":"0a1e0778-47b0-423d-8d21-57230bd84b6d","type":"studio.tokens.generic.constant","inputs":[{"name":"value","value":-100,"type":{"$id":"https://schemas.tokens.studio/any.json","title":"Any"},"dynamicType":{"$id":"https://schemas.tokens.studio/number.json","title":"Number","type":"number"},"annotations":{"ui.resetable":true}}],"annotations":{"ui.position.x":53.11804199218744,"ui.position.y":214.4004618326823}}],"edges":[{"id":"f076c4f6-536c-4ddc-bfee-6b658eab3036","source":"0a1e0778-47b0-423d-8d21-57230bd84b6d","sourceHandle":"value","target":"9cfd3826-4570-493c-a672-ed8b642ed537","targetHandle":"input"}],"annotations":{"engine.id":"81cead46-1d98-478a-adcc-074d90c81f9f","engine.capabilities.web-audio":"0.0.0","engine.capabilities.fs":"0.0.0","engine.version":"0.12.0","ui.viewport":{"x":145.0460710070189,"y":146.7716604603002,"zoom":1.1023008602108806},"ui.version":"2.9.4"}}
+ * ```
  */
-export const process = (input) => {
-  if (input.input === undefined) return undefined;
-  return Math.abs(input.input);
-};
+export default class NodeDefinition extends Node {
+  static title = "Absolute";
+  static type = "studio.tokens.math.abs";
+  static description =
+    "Absolute node allows you to get the absolute value of a number. Turning a negative number to positive.";
 
-export const node: NodeDefinition = {
-  description:
-    "Absolute node allows you to get the absolute value of a number. Turning a negative number to positive.",
-  type,
-  process,
-};
+
+  declare inputs: ToInput<{
+    input: number;
+  }>;
+  declare outputs: ToOutput<{
+    value: number;
+  }>;
+
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("input", {
+      type: NumberSchema,
+    });
+    this.addOutput("value", {
+      type: NumberSchema,
+      visible: true,
+    });
+  }
+
+  execute(): void | Promise<void> {
+    const input = this.getInput("input") as number;
+    this.setOutput("value", Math.abs(input));
+  }
+}

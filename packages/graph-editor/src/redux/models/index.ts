@@ -1,16 +1,17 @@
-import { RootModel } from './root.ts';
-import { inputState } from './input.ts';
-import { nodeState } from './node.ts';
-import { settingsState } from './settings.ts';
-import { uiState } from './ui.ts';
-import { graphState } from './graph.ts';
+import { RootModel } from './root.js';
+
+import { settingsState } from './settings.js';
+import { uiState } from './ui.js';
+import { graphState } from './graph.js';
+import { refState } from './refs.js';
+import { registryState } from './registry.js';
 
 export const models: RootModel = {
-  node: nodeState,
-  input: inputState,
   graph: graphState,
   settings: settingsState,
   ui: uiState,
+  refs: refState,
+  registry: registryState,
 };
 
-export type { RootModel } from './root.ts';
+export type { RootModel } from './root.js';

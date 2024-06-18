@@ -3,7 +3,9 @@
   "include": [
     "src",
     "src/scripts",
-    "next-env.d.ts"
+    "next-env.d.ts",
+    "prisma",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
@@ -26,7 +28,7 @@
     "noImplicitAny": false,
     "rootDir": ".",
     "composite": true,
-    "module": "ES2020",
+    "module": "NodeNext",
     "moduleResolution": "nodenext",
     "experimentalDecorators": true,
     "allowImportingTsExtensions": true,
@@ -55,7 +57,7 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "#/*": [
+      "@/*": [
         "src/*"
       ],
       "#selectors": [
@@ -67,6 +69,11 @@
       "#selectors/*": [
         "src/redux/selectors/*"
       ]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   }
 }

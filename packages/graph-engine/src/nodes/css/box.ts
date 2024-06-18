@@ -1,38 +1,64 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
-const type = NodeTypes.CSS_BOX;
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { Node } from "../../programmatic/node.js";
+import { NumberSchema, StringSchema } from "../../schemas/index.js";
 
-export type Input = {
-  top?: number;
-  right?: number;
-  bottom?: number;
-  left?: number;
-};
+export default class NodeDefinition extends Node {
+  static title = "CSS Box";
+  static type = "studio.tokens.css.box";
+  static description =
+    "CSS Box node allows you to generate a CSS box from 4 values";
+    
 
-export type State = {
-  top: number;
-  right: number;
-  bottom: number;
-  left: number;
-};
+  declare inputs: ToInput<{
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+  }>;
+  declare outputs: ToOutput<{
+    value: string;
+  }>;
 
-const defaults = {
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
-};
 
-const process = (input: Input, state: State) => {
-  const { top, right, bottom, left } = {
-    ...state,
-    ...input,
-  };
-  return `${top} ${right} ${bottom} ${left}`;
-};
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("top", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+      },
+      visible: true,
+    });
+    this.addInput("right", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+      },
+      visible: true,
+    });
+    this.addInput("bottom", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+      },
+      visible: true,
+    });
+    this.addInput("left", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+      },
+      visible: true,
+    });
 
-export const node: NodeDefinition<Input, State> = {
-  type,
-  description: "CSS Box node allows you to generate a CSS box from 4 values.",
-  defaults,
-  process,
-};
+    this.addOutput("value", {
+      type: StringSchema,
+      visible: true,
+    });
+  }
+
+  execute(): void | Promise<void> {
+    const { top, right, bottom, left } = this.getAllInputs();
+    this.setOutput("value", `${top} ${right} ${bottom} ${left}`);
+  }
+}

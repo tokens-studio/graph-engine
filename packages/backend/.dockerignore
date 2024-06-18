@@ -1,0 +1,6 @@
+dist
+docs
+jest-coverage
+*.log
+tests
+.env.local

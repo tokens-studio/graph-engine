@@ -9,23 +9,29 @@
     "noEmit": true,
     "jsx": "react",
     "target": "ESNext",
-    "rootDir": "./",
     "outDir": "./types",
     "preserveConstEnums": true,
     "module": "esnext",
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
+    "rootDir": ".",
     "noImplicitAny": false,
     "esModuleInterop": true,
+    "experimentalDecorators": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "types": ["jest", "node"],
-    "baseUrl": ".",
-    "paths": {
-      "#/*": ["src/*"]
-    }
+    "types": [
+      "jest",
+      "node"
+    ],
+    "baseUrl": "."
   },
-  "include": ["src/**/*", "tests/**/*"],
-  "exclude": ["node_modules", "cypress/**"]
+  "include": [
+    "stories/**/*",
+    "src/**/*",
+    "tests/**/*" ],
+  "exclude": [
+    "node_modules",
+    "cypress/**"
+  ]
 }

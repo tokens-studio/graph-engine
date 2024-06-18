@@ -1,46 +1,44 @@
-/**
- * Performs an array join using a string delimiter
- *
- * @packageDocumentation
- */
 
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { AnyArraySchema } from "../../schemas/index.js";
+import { INodeDefinition, Node } from "../../programmatic/node.js";
+import { ToInput, ToOutput } from "../../programmatic";
+export default class NodeDefinition<T> extends Node {
+  static title = "Concat Array";
+  static type = "studio.tokens.array.concat";
+  declare inputs: ToInput<{
+    a: T[];
+    b: T[];
+  }>;
 
-const type = NodeTypes.CONCAT;
+  declare outputs: ToOutput<{
+    value: T[];
+  }>;
 
-export type MappedInput = {
-  array: {
-    key: string;
-    value: any[];
-  }[];
-};
+  static description = "Performs an array join using a string delimiter";
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("a", {
+      type: AnyArraySchema,
+      visible: true,
+    });
+    this.addInput("b", {
+      type: AnyArraySchema,
+      visible: true,
+    });
+    this.addOutput("value", {
+      type: AnyArraySchema,
+      visible: true,
+    });
+  }
 
-/**
- * Pure function
- * @param input
- * @param state
- */
-export const mapInput = (input: Record<string, any>): MappedInput => {
-  const values = Object.entries(input).sort((a, b) => {
-    return a[0].localeCompare(b[0]);
-  });
+  execute(): void | Promise<void> {
+    const a = this.getRawInput("a");
+    const b = this.getRawInput("b");
 
-  //Returns the expected array of inputs
-  return {
-    array: values.map(([key, value]) => ({ key, value })),
-  } as MappedInput;
-};
+    //Verify types
+    if (a.type.$id !== b.type.$id) throw new Error("Array types must match");
 
-export const process = (input: MappedInput) => {
-  return input.array.reduce((acc, x) => {
-    acc.push.apply(acc, x.value);
-    return acc;
-  }, [] as any[]);
-};
-
-export const node: NodeDefinition<MappedInput> = {
-  description: "Performs an array join using a string delimiter",
-  type,
-  mapInput,
-  process,
-};
+    const calculated = a.value.concat(b.value);
+    this.setOutput("value", calculated, a.type);
+  }
+}

@@ -1,69 +1,121 @@
-import { NodeDefinition, NodeTypes } from "../../types.js";
-
-export const type = NodeTypes.ARITHMETIC_SERIES;
-
-export const defaults = {
-  base: 16,
-  stepsDown: 0,
-  steps: 1,
-  increment: 1,
-  precision: 2,
-};
-
+import { INodeDefinition, Node } from "../../programmatic/node.js";
+import { NumberSchema } from "../../schemas/index.js";
+import { ToInput } from "../../programmatic/input.js";
+import { ToOutput } from "../../programmatic";
+import { arrayOf } from "../../schemas/utils.js";
 export type ArithemeticValue = {
   index: number;
   value: number;
 };
 
-export const process = (input, state) => {
-  const final = {
-    ...state,
-    ...input,
-  };
+export default class NodeDefinition extends Node {
+  static title = "Arithmetic Series";
 
-  const values: ArithemeticValue[] = [];
-  //Fixes issue with string concatenation
-  const base = parseFloat(final.base);
-  const shift = 10 ** final.precision;
+  declare inputs: ToInput<{
+    base: number;
+    stepsDown: number;
+    stepsUp: number;
+    increment: number;
+    precision: number;
+  }>;
 
-  for (let i = Math.abs(final.stepsDown); i > 0; i--) {
-    const value = Math.round((base - final.increment * i) * shift) / shift;
-    values.push({
-      index: 0 - i,
-      value: value,
+  declare outputs: ToOutput<{
+    array: number[];
+    indexed: ArithemeticValue[];
+  }>
+
+  static type = "studio.tokens.series.arithmetic";
+  static description =
+    "Generates an arithmetic f(n)= c + (f(n-1)) series of numbers based on the base value, steps down, steps and increment.";
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("base", {
+      type: {
+        ...NumberSchema,
+        default: 16,
+      },
+      visible: true,
+    });
+    this.addInput("stepsDown", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+      },
+      visible: true,
+    });
+    this.addInput("stepsUp", {
+      type: {
+        ...NumberSchema,
+        default: 1,
+      },
+      visible: true,
+    });
+
+    this.addInput("increment", {
+      type: {
+        ...NumberSchema,
+        default: 1,
+      },
+    });
+
+    this.addInput("precision", {
+      type: {
+        ...NumberSchema,
+        default: 2,
+      },
+    });
+    this.addOutput("array", {
+      type: arrayOf(NumberSchema),
+      visible: true,
+    });
+    this.addOutput("indexed", {
+      type: {
+        $id: `https://schemas.tokens.studio/studio.tokens.series.arithmetic/indexed.json`,
+        type: "object",
+        properties: {
+          index: {
+            type: NumberSchema,
+          },
+          value: {
+            type: NumberSchema,
+          },
+        },
+      },
+      visible: false,
     });
   }
-  values.push({
-    index: 0,
-    value: Math.round(final.base * shift) / shift,
-  });
 
-  for (let i = 0; i < Math.abs(final.steps); i++) {
-    const value =
-      Math.round((base + final.increment * (i + 1)) * shift) / shift;
+  execute(): void | Promise<void> {
+    const { base, precision, increment, stepsDown, stepsUp } =
+      this.getAllInputs();
+
+    const values: ArithemeticValue[] = [];
+    const shift = 10 ** precision;
+
+    for (let i = Math.abs(stepsDown); i > 0; i--) {
+      const value = Math.round((base - increment * i) * shift) / shift;
+      values.push({
+        index: 0 - i,
+        value: value,
+      });
+    }
     values.push({
-      index: i + 1,
-      value: value,
+      index: 0,
+      value: Math.round(base * shift) / shift,
     });
+
+    for (let i = 0; i < Math.abs(stepsUp); i++) {
+      const value = Math.round((base + increment * (i + 1)) * shift) / shift;
+      values.push({
+        index: i + 1,
+        value: value,
+      });
+    }
+
+    this.setOutput(
+      "array",
+      values.map((x) => x.value)
+    );
+    this.setOutput("indexed", values);
   }
-
-  return values;
-};
-
-export const mapOutput = (input, state, processed: ArithemeticValue[]) => {
-  const mapped = { asArray: processed };
-
-  processed.forEach((item) => {
-    mapped[item.index] = item.value;
-  });
-  return mapped;
-};
-
-export const node: NodeDefinition = {
-  description:
-    "Generates an arithmetic f(n)= c + (f(n-1)) series of numbers based on the base value, steps down, steps and increment.",
-  defaults,
-  type,
-  process,
-  mapOutput,
-};
+}

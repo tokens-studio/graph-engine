@@ -1,0 +1,67 @@
+.dock-panel {
+    border-color: var(--colors-borderSubtle);
+}
+
+.dock-top .dock-bar {
+    border-bottom-color: var(--colors-borderSubtle);
+}
+
+.dock-tab {
+    color: var(--colors-fgDefault);
+
+    border-bottom-color: var(--colors-borderDefault);
+}
+
+.dock-tab-close-btn {
+    position: relative;
+    right: 0;
+    top: 0;
+    border-radius: var(--radii-small);
+    font-family: inherit;
+    text-transform: lowercase;
+}
+
+.dock-tab-close-btn:hover {
+    background: var(--colors-buttonPrimaryBgHover);
+}
+
+.dock-nav{
+    flex-grow: 1;
+}
+
+.dock-nav-wrap {
+    cursor: move;
+}
+
+.dock-panel.dock-style-main .dock-tab,
+.dock-tab {
+    background: var(--colors-bgDefault);
+}
+
+.drag-initiator {
+    display: flex;
+    align-items: center;
+    gap: var(--sizes-3);
+}
+
+.dock-panel,
+.dock-top .dock-bar,
+.dock-tab {
+    background: var(--colors-bgSurface)
+}
+
+.dock-panel.dock-style-main .dock-bar {
+    border-bottom-color: var(--colors-borderDefault);
+}
+
+.drag-initiator {
+    transition: width 0.2s;
+}
+
+.drag-initiator .dock-tab-close-btn {
+    display: none;
+}
+
+.drag-initiator:hover>.dock-tab-close-btn {
+    display: block;
+}

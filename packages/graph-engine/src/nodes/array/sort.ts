@@ -1,38 +1,67 @@
-/**
- * Sort a given array without mutating the original
- *
- * @packageDocumentation
- */
-
-import { NodeDefinition, NodeTypes } from "../../types.js";
+import { INodeDefinition, Node } from "../../programmatic/node.js";
 import orderBy from "lodash.orderby";
 
-const type = NodeTypes.SORT;
+import { AnyArraySchema, StringSchema } from "../../schemas/index.js";
 
-export enum OrderMap {
+import { ToInput, ToOutput } from "../../programmatic";
+
+export enum Order {
   ASC = "asc",
   DESC = "desc",
 }
 
 export type NamedInput = {
   array: any[];
-  order?: OrderMap.ASC | OrderMap.DESC; // Optional parameter to specify the sort order
+  order?: Order.ASC | Order.DESC; // Optional parameter to specify the sort order
   sortBy?: string; // Optional parameter to specify the property to sort by
 };
 
 export const defaults = {
-  order: OrderMap.ASC,
+  order: Order.ASC,
 };
+export default class NodeDefinition<T> extends Node {
+  static title = "Sort Array";
+  static type = "studio.tokens.array.sort";
 
-export const process = (input: NamedInput, state: NamedInput) => {
-  const { array, order, sortBy } = { ...state, ...input };
+  declare inputs: ToInput<{
+    array: T[];
+    order: Order;
+    sortBy: string;
+  }>;
 
-  return orderBy(array, [sortBy], order);
-};
+  declare outputs: ToOutput<{
+    value: T[];
+  }>
 
-export const node: NodeDefinition<NamedInput, NamedInput> = {
-  description: "Sort a given array without mutating the original",
-  type,
-  defaults,
-  process,
-};
+  static description = "Sorts an array";
+  constructor(props: INodeDefinition) {
+    super(props);
+    this.addInput("array", {
+      type: AnyArraySchema,
+      visible: true,
+    });
+    this.addInput("order", {
+      type: {
+        ...StringSchema,
+        enum: [Order.ASC, Order.DESC],
+        default: Order.ASC,
+      },
+      visible: true,
+    });
+    this.addInput("sortBy", {
+      type: StringSchema,
+    });
+    this.addOutput("value", {
+      type: AnyArraySchema,
+      visible: true,
+    });
+  }
+
+  execute(): void | Promise<void> {
+    const { sortBy, order } = this.getAllInputs();
+    const array = this.getRawInput("array");
+    const sorted = orderBy(array.value, [sortBy], order);
+
+    this.setOutput("value", sorted, array.type);
+  }
+}
