@@ -1,5 +1,17 @@
 # @tokens-studio/graph-engine-ui
 
+## 2.2.0
+
+### Minor Changes
+
+- bdc94f2: Prevent toolpanel from covering canvas
+
+### Patch Changes
+
+- Updated dependencies [bdc94f2]
+- Updated dependencies [f954273]
+  - @tokens-studio/graph-editor@2.10.0
+
 ## 2.1.3
 
 ### Patch Changes
