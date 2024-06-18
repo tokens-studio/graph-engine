@@ -3,7 +3,7 @@ app: graph-engine-docs
 env: prod
 namespace: graph-engine
 deploy:
-  branch: major/strong-typing
+  branch: master
   event: push
 chart:
   repository: https://chart.onechart.dev
