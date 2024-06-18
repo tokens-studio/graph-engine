@@ -82,7 +82,7 @@ export const NodeContextMenu = ({
   const isDeletable = useCanDeleteNode(nodes?.[0]?.id);
 
   const deleteEl = useCallback(() => {
-    if (isDeletable) {
+    if (!isDeletable) {
       trigger({ title: 'Node is not deletable', description: 'This node cannot be deleted' })
       return;
     }

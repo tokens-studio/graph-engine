@@ -1,0 +1,377 @@
+{
+    "nodes": [
+        {
+            "id": "2e00e4e8-0d8c-4eeb-928e-bd9fecf6d184",
+            "type": "studio.tokens.color.name",
+            "inputs": [
+                {
+                    "name": "color",
+                    "value": "#857447",
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/color.json",
+                        "title": "Color",
+                        "type": "string"
+                    },
+                    "visible": true
+                }
+            ],
+            "annotations": {
+                "ui.position.x": 1402.1332612449492,
+                "ui.position.y": -17.031023053619265
+            }
+        },
+        {
+            "id": "b9d59b8c-5eb1-428b-b350-4b000540b863",
+            "type": "studio.tokens.color.blend",
+            "inputs": [
+                {
+                    "name": "color",
+                    "value": "#26bc8c",
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/color.json",
+                        "title": "Color",
+                        "type": "string"
+                    },
+                    "visible": true
+                },
+                {
+                    "name": "mixColor",
+                    "value": "#930a0a",
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/color.json",
+                        "title": "Color",
+                        "type": "string",
+                        "description": "Mixing color"
+                    },
+                    "visible": true
+                },
+                {
+                    "name": "value",
+                    "value": 0.5,
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/number.json",
+                        "title": "Number",
+                        "type": "number",
+                        "default": 0.5,
+                        "description": "Value to apply to the modifier"
+                    }
+                },
+                {
+                    "name": "space",
+                    "value": "srgb",
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/string.json",
+                        "title": "String",
+                        "type": "string",
+                        "default": "srgb",
+                        "enum": [
+                            "LCH",
+                            "SRGB",
+                            "P3",
+                            "HSL"
+                        ],
+                        "description": "The color space we are operating in"
+                    }
+                },
+                {
+                    "name": "modifierType",
+                    "value": "mix",
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/string.json",
+                        "title": "String",
+                        "type": "string",
+                        "default": "darken",
+                        "enum": [
+                            "lighten",
+                            "darken",
+                            "mix",
+                            "alpha"
+                        ],
+                        "description": "The color space we are operating in"
+                    }
+                }
+            ],
+            "annotations": {
+                "ui.position.x": 787.2799129225878,
+                "ui.position.y": -6.448349244284316
+            }
+        },
+        {
+            "id": "da44f8cb-2ab4-4f8d-a4c3-c343c7ec1e2d",
+            "type": "studio.tokens.generic.input",
+            "inputs": [
+                {
+                    "name": "base",
+                    "value": "#26bc8c",
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/color.json",
+                        "title": "Color",
+                        "type": "string"
+                    },
+                    "annotations": {
+                        "ui.deletable": true
+                    }
+                }
+            ],
+            "annotations": {
+                "engine.singleton": true,
+                "engine.dynamicInputs": true,
+                "ui.position.x": 129.06108745678887,
+                "ui.position.y": -183.17900186017823
+            }
+        },
+        {
+            "id": "70655b75-5944-4b02-ba4a-ffca90fac651",
+            "type": "studio.tokens.preview.colorCompare",
+            "inputs": [
+                {
+                    "name": "colorA",
+                    "value": "#26bc8c",
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/color.json",
+                        "title": "Color",
+                        "type": "string"
+                    },
+                    "visible": true
+                },
+                {
+                    "name": "colorB",
+                    "value": "#857447",
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/color.json",
+                        "title": "Color",
+                        "type": "string"
+                    },
+                    "visible": true
+                }
+            ],
+            "annotations": {
+                "ui.position.x": 1414.8559552909865,
+                "ui.position.y": -356.85539301847035
+            }
+        },
+        {
+            "id": "6140e3a1-b81a-4012-a72e-812ab983241e",
+            "type": "studio.tokens.generic.note",
+            "inputs": [],
+            "annotations": {
+                "ui.position.x": 672.3937968994117,
+                "ui.position.y": -683.4295398113978,
+                "ui.nodeType": "studio.tokens.generic.note",
+                "ui.description": "Example of the name color taking in an existing color and blending it and then creating a dynamically named design token"
+            }
+        },
+        {
+            "id": "1416f0ad-242b-422c-8a8b-29420e7016a9",
+            "type": "studio.tokens.design.create",
+            "inputs": [
+                {
+                    "name": "name",
+                    "value": "darkolivegreen",
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/string.json",
+                        "title": "String",
+                        "type": "string"
+                    },
+                    "visible": true
+                },
+                {
+                    "name": "type",
+                    "value": "color",
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/string.json",
+                        "title": "String",
+                        "type": "string",
+                        "enum": [
+                            "asset",
+                            "boolean",
+                            "border",
+                            "borderRadius",
+                            "borderWidth",
+                            "boxShadow",
+                            "color",
+                            "composition",
+                            "dimension",
+                            "fontFamilies",
+                            "fontSizes",
+                            "fontWeights",
+                            "letterSpacing",
+                            "lineHeights",
+                            "number",
+                            "opacity",
+                            "other",
+                            "paragraphIndent",
+                            "paragraphSpacing",
+                            "sizing",
+                            "spacing",
+                            "strokeStyle",
+                            "text",
+                            "textCase",
+                            "textDecoration",
+                            "typography"
+                        ]
+                    },
+                    "visible": true
+                },
+                {
+                    "name": "value",
+                    "value": "#857447",
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/string.json",
+                        "title": "String",
+                        "type": "string"
+                    },
+                    "visible": true
+                }
+            ],
+            "annotations": {
+                "ui.position.x": 2046.766217986711,
+                "ui.position.y": 19.356215930872878
+            }
+        },
+        {
+            "id": "81e851ee-a511-48b7-baf5-42e9a4bb3c5a",
+            "type": "studio.tokens.generic.output",
+            "inputs": [
+                {
+                    "name": "token",
+                    "value": {
+                        "name": "darkolivegreen",
+                        "type": "color",
+                        "value": "#857447"
+                    },
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/any.json",
+                        "title": "Any"
+                    },
+                    "dynamicType": {
+                        "$id": "https://schemas.tokens.studio/token.json",
+                        "title": "Token",
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "$id": "https://schemas.tokens.studio/string.json",
+                                "title": "String",
+                                "type": "string"
+                            },
+                            "value": {
+                                "$id": "https://schemas.tokens.studio/string.json",
+                                "title": "String",
+                                "type": "string"
+                            },
+                            "type": {
+                                "$id": "https://schemas.tokens.studio/string.json",
+                                "title": "String",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "visible": true,
+                    "annotations": {
+                        "ui.deletable": true
+                    }
+                }
+            ],
+            "annotations": {
+                "engine.singleton": true,
+                "engine.dynamicInputs": true,
+                "ui.position.x": 2616.250546481787,
+                "ui.position.y": 12.636636833585754
+            }
+        },
+        {
+            "id": "4408c318-b786-4f19-bc74-1fdb1753566e",
+            "type": "studio.tokens.string.stringify",
+            "inputs": [
+                {
+                    "name": "value",
+                    "value": "#857447",
+                    "type": {
+                        "$id": "https://schemas.tokens.studio/any.json",
+                        "title": "Any"
+                    },
+                    "dynamicType": {
+                        "$id": "https://schemas.tokens.studio/color.json",
+                        "title": "Color",
+                        "type": "string"
+                    },
+                    "visible": true
+                }
+            ],
+            "annotations": {
+                "ui.position.x": 1405.0464141957973,
+                "ui.position.y": 143.6684292306831
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "02328940-508c-4acf-89f5-404653c8afd8",
+            "source": "b9d59b8c-5eb1-428b-b350-4b000540b863",
+            "sourceHandle": "value",
+            "target": "2e00e4e8-0d8c-4eeb-928e-bd9fecf6d184",
+            "targetHandle": "color"
+        },
+        {
+            "id": "bcd1a91b-54e8-4baf-afed-b4fd482cb28b",
+            "source": "da44f8cb-2ab4-4f8d-a4c3-c343c7ec1e2d",
+            "sourceHandle": "base",
+            "target": "b9d59b8c-5eb1-428b-b350-4b000540b863",
+            "targetHandle": "color"
+        },
+        {
+            "id": "228391fd-620a-4d35-82ad-174a2c36b804",
+            "source": "da44f8cb-2ab4-4f8d-a4c3-c343c7ec1e2d",
+            "sourceHandle": "base",
+            "target": "70655b75-5944-4b02-ba4a-ffca90fac651",
+            "targetHandle": "colorA"
+        },
+        {
+            "id": "6c209e77-1e85-4d6d-8597-8992b210ed3f",
+            "source": "b9d59b8c-5eb1-428b-b350-4b000540b863",
+            "sourceHandle": "value",
+            "target": "70655b75-5944-4b02-ba4a-ffca90fac651",
+            "targetHandle": "colorB"
+        },
+        {
+            "id": "18db4cf1-2882-4fca-b9d1-9af9463ab751",
+            "source": "1416f0ad-242b-422c-8a8b-29420e7016a9",
+            "sourceHandle": "token",
+            "target": "81e851ee-a511-48b7-baf5-42e9a4bb3c5a",
+            "targetHandle": "token"
+        },
+        {
+            "id": "5c64fe40-39d9-4985-85b9-37ee645f1e5f",
+            "source": "2e00e4e8-0d8c-4eeb-928e-bd9fecf6d184",
+            "sourceHandle": "value",
+            "target": "1416f0ad-242b-422c-8a8b-29420e7016a9",
+            "targetHandle": "name"
+        },
+        {
+            "id": "49ba658e-716f-4000-b22e-3b2881f38eb9",
+            "source": "b9d59b8c-5eb1-428b-b350-4b000540b863",
+            "sourceHandle": "value",
+            "target": "4408c318-b786-4f19-bc74-1fdb1753566e",
+            "targetHandle": "value"
+        },
+        {
+            "id": "a1061a11-9ee7-4831-9e8f-5d713c3601b5",
+            "source": "4408c318-b786-4f19-bc74-1fdb1753566e",
+            "sourceHandle": "value",
+            "target": "1416f0ad-242b-422c-8a8b-29420e7016a9",
+            "targetHandle": "value"
+        }
+    ],
+    "annotations": {
+        "engine.id": "c5bbd806-2d54-46d8-b2d7-25c44d84ff52",
+        "engine.capabilities.web-audio": "0.0.0",
+        "engine.capabilities.fs": "0.0.0",
+        "engine.version": "0.12.0",
+        "ui.viewport": {
+            "x": 161.70282092274067,
+            "y": 678.0856832332086,
+            "zoom": 0.3214664804525477
+        },
+        "ui.version": "2.9.4"
+    }
+}

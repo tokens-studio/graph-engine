@@ -21,20 +21,18 @@ import { useRouter } from 'next/router.js';
 import { useSelector } from 'react-redux';
 import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 import React, { useCallback, useEffect } from 'react';
-import globalState, { GlobalState } from '@/mobx/index.tsx';
+import globalState from '@/mobx/index.tsx';
 
-const Wrapper = observer(({ theme }: { theme: GlobalState['ui']['theme'] }) => {
+const Wrapper = observer(() => {
   const dispatch = useDispatch();
 
   const router = useRouter();
-  const [editor, setEditor] = React.useState<ImperativeEditorRef>();
+  const editor = globalState.refs.editor.get();
 
   const ref = useCallback((editor) => {
-
-    setEditor(editor);
+    globalState.refs.editor.set(editor);
   }, []);
 
-  // const ref = React.createRef<ImperativeEditorRef>();
 
   const showJourney = useSelector(showJourneySelector);
 
@@ -55,8 +53,6 @@ const Wrapper = observer(({ theme }: { theme: GlobalState['ui']['theme'] }) => {
       editor.loadRaw(data?.graph as SerializedGraph)
     }
   }, [data, editor])
-
-
 
 
   const [{ steps }] = useJourney();
@@ -108,7 +104,7 @@ const Wrapper = observer(({ theme }: { theme: GlobalState['ui']['theme'] }) => {
 });
 
 const Index = () => {
-  return <Wrapper theme={globalState.ui.theme} />;
+  return <Wrapper />;
 }
 
 

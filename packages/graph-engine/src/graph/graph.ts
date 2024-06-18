@@ -849,7 +849,14 @@ export class Graph {
 
     if (targetPort.variadic) {
       //Extend the variadic array
-      targetPort.setValue((targetPort.value || []).concat([sourcePort.value]));
+      targetPort.setValue((targetPort.value || []).concat([sourcePort.value]), {
+        //TODO
+        // Note that this is a quick fix and that we should probably restrict the update of the typing so that it cannot be overriden later
+        type: {
+          type: "array",
+          items: sourcePort.type
+        }
+      });
     }
 
     sourcePort._edges.push(edge);

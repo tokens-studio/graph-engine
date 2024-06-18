@@ -1,21 +1,16 @@
-import { useDispatch } from '@/hooks/useDispatch.ts';
-import { Editor } from '@tokens-studio/graph-editor';
 import { Box, Spinner } from '@tokens-studio/ui';
-import React, { forwardRef, useCallback } from 'react';
+import { Editor } from '@tokens-studio/graph-editor';
 import { EmptyStateEditor } from '../EmptyStateEditor.tsx';
 import { ExamplesPicker } from '../ExamplesPicker.tsx';
-
-
+import { capabilities, controls, icons, menu, nodeTypes, panelItems, specifics } from './data.ts';
+import { observer } from 'mobx-react-lite';
 import { useGetEditor } from '@/hooks/useGetEditor.ts';
-import globalState, { GlobalState } from '@/mobx/index.tsx';
-import { capabilities, menu, panelItems, nodeTypes, icons, controls, specifics } from './data.ts';
+import React, { useCallback } from 'react';
+import globalState from '@/mobx/index.tsx';
 
-export const EditorTab = forwardRef(({ loading }: { loading?: boolean }, ref) => {
-  const dispatch = useDispatch();
+export const EditorTab = observer(({ loading }: { loading?: boolean }, ref) => {
 
-
-  const { loadExample } = useGetEditor();
-
+  const { loadExample } = useGetEditor();;
   const onCloseExamplePicker = useCallback(() => {
     globalState.ui.showExamplePicker.set(false);
   }, []);
@@ -40,13 +35,13 @@ export const EditorTab = forwardRef(({ loading }: { loading?: boolean }, ref) =>
         //@ts-expect-error
         specifics={specifics}
         icons={icons}
-        // emptyContent={<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />}
+        emptyContent={<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />}
       ></Editor>
-      {/* <ExamplesPicker
-        open={showExamplePicker.get()}
+      <ExamplesPicker
+        open={globalState.ui.showExamplePicker.get()}
         onClose={onCloseExamplePicker}
         loadExample={loadExample}
-      /> */}
+      />
       {loading && (
         <Box
           css={{
@@ -68,6 +63,8 @@ export const EditorTab = forwardRef(({ loading }: { loading?: boolean }, ref) =>
       )}
     </Box>
   );
+},{
+  forwardRef: true
 });
 
 EditorTab.displayName = 'EditorTab';
