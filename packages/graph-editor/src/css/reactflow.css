@@ -4,8 +4,9 @@
 .react-flow {
     background: var(--gray-1);
 }
+
 .react-flow__handle {
-    position: unset;
+    position: relative;
     user-select: none;
     pointer-events: all;
     box-sizing: content-box;
@@ -20,6 +21,7 @@
     display: grid;
     place-items: center;
 }
+
 .react-flow__handle svg {
     pointer-events: none;
 }
@@ -67,10 +69,14 @@
 .react-flow__handle-right {
     transform: unset;
     margin-right: unset;
+    top: unset;
+    left: unset;
 }
 
 .react-flow__handle-left {
     transform: unset;
+    top: unset;
+    left: unset;
     margin-left: unset;
 }
 
@@ -99,7 +105,7 @@
     outline: 1px solid var(--colors-borderDefault);
 }
 
-.react-flow__resize-control{
+.react-flow__resize-control {
     display: none;
 }
 

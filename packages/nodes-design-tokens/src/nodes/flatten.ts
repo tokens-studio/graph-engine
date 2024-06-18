@@ -1,6 +1,6 @@
-import { TokenSchema, TokenSetSchema } from "../schemas/index.js";
+import { INodeDefinition, Node } from '@tokens-studio/graph-engine'
 import { SingleToken } from "@tokens-studio/types";
-import { INodeDefinition, Node, createVariadicSchema } from '@tokens-studio/graph-engine'
+import { TokenSchema } from "../schemas/index.js";
 import { arrayOf } from "../schemas/utils.js";
 
 export default class FlattenNode extends Node {
@@ -11,10 +11,9 @@ export default class FlattenNode extends Node {
     super(props);
     this.addInput("tokens", {
       type: {
-        ...createVariadicSchema(TokenSchema),
+        ...arrayOf(arrayOf(TokenSchema)),
         default: [],
       },
-      variadic: true,
       visible: true,
     });
     this.addOutput("value", {
