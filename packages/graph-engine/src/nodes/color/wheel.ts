@@ -12,13 +12,14 @@ export default class NodeDefinition extends Node {
   constructor(props: INodeDefinition) {
     super(props);
 
-    this.addInput("hueAmount", {
+    this.addInput("baseHue", {
       type: {
         ...NumberSchema,
         default: 360,
       },
+      visible: true,
     });
-    this.addInput("hueAngle", {
+    this.addInput("angle", {
       type: {
         ...NumberSchema,
         default: 180,
@@ -54,12 +55,14 @@ export default class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
-    const { colors, hueAngle, hueAmount, saturation, lightness } = this.getAllInputs();
+    const { colors, baseHue, angle, saturation, lightness } = this.getAllInputs();
 
     const colorList: string[] = [];
 
     for (let step = 0; step < colors; step++) {
-      const hue = (hueAngle + ((step * hueAmount) / colors)) % 360;
+      // Hue Calculation
+      const hueIncrement = (colors > 1) ? (angle / (colors - 1)) * step : 0;
+      const hue = (baseHue + hueIncrement) % 360;
       
       // Color Generation with colorjs.io
       const color = new Color("hsl", [hue, saturation, lightness]);
