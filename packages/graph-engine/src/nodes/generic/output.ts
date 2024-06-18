@@ -32,12 +32,12 @@ export default class NodeDefinition<T> extends Node {
   static override deserialize(opts: IDeserializeOpts) {
     const node = super.deserialize(opts);
 
-    //Create the outputs immediately
+    //Create the outputs immediately as we are just a passthrough
     Object.keys(node.inputs).forEach((input) => {
       const rawInput = node.getRawInput(input);
       node.addOutput(input, {
         type: rawInput.type,
-        visible: true,
+
       });
     });
 
@@ -48,6 +48,7 @@ export default class NodeDefinition<T> extends Node {
   execute(): void | Promise<void> {
     const inputs = this.getAllInputs();
     const outputs = this.getAllOutputs();
+
 
     //Passthrough all
     Object.keys(inputs).forEach((input) => {

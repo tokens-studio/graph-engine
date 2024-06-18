@@ -23,13 +23,11 @@ type Story = StoryObj<typeof CommandMenu>;
 export const Default: Story = {
   render: (args) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const ref = useRef<HTMLDivElement>(null);
-
     return (
       <Provider store={mockedStore}>
         <div ref={ref}>
           <CommandMenu
-            reactFlowWrapper={ref}
+
             items={defaultPanelItems}
             handleSelectNewNodeType={() => {}}
           />

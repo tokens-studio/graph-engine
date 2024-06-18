@@ -7,9 +7,6 @@ import { showGrid, snapGrid } from '@/redux/selectors/settings';
 import { useDispatch } from '@/hooks';
 import { ContextMenuItem } from './ContextMenuStyles';
 import { clear } from '../../editor/actions/clear';
-
-import { v4 as uuidv4, v4 } from 'uuid';
-import { NodeTypes } from '@/components/flow/types';
 import { useLocalGraph } from '@/context/graph';
 import { useAction } from '@/editor/actions/provider';
 

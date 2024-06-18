@@ -808,7 +808,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
                 {nodeCount === 0 && props.emptyContent}
                 {activeGraphId === id && (
                   <CommandMenu
-                    reactFlowWrapper={reactFlowWrapper}
                     items={panelItems}
                     handleSelectNewNodeType={handleSelectNewNodeType}
                   />

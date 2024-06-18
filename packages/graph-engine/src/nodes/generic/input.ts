@@ -27,18 +27,8 @@ export default class NodeDefinition extends Node {
     this.annotations[annotatedDynamicInputs] = true;
   }
 
-  static override deserialize(opts: IDeserializeOpts) { 
+  static override deserialize(opts: IDeserializeOpts) {
     const node = super.deserialize(opts);
-
-    //Create the values immediately
-    opts.serialized.inputs.forEach((input: SerializedInput) => {
-      node.addInput(input.name, {
-        type: input.type,
-        visible: false,
-        ...input
-      });
-    });
-
     //Create the outputs immediately
     Object.keys(node.inputs).forEach((input) => {
       const rawInput = node.getRawInput(input);

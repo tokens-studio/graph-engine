@@ -216,9 +216,7 @@ export default class ArraySubgraph<T, V> extends Node {
   }
 
   static override deserialize(opts) {
-    console.log(opts)
     const innerGraph = new Graph().deserialize(opts.serialized.innergraph, opts.lookup);
-    console.log(innerGraph)
     const node = super.deserialize({
       ...opts,
       innerGraph

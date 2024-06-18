@@ -10,7 +10,6 @@ import {
 } from "../../schemas/index.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
 import { Input, Output } from "../../programmatic";
-import { NodeTypes } from "../../types.js";
 import { flattenAlpha } from "./lib/flattenAlpha.js";
 import Color from "colorjs.io";
 
