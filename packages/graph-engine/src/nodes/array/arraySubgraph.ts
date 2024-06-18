@@ -197,7 +197,6 @@ export default class ArraySubgraph<T, V> extends Node {
 
     const { title } = type;
 
-    console.log(type);
     const dynamicTypeSchema: SchemaObject = {
       title,
       //Override the type
