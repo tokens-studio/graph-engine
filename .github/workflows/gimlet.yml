@@ -1,8 +1,8 @@
-name: Publish docker image
+name: Gimlet
 
 on:
   push:
-    branches: [ major/strong-typing ]
+    branches: [ master ]
 
 jobs:
   build:
