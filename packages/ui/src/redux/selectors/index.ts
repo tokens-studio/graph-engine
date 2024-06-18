@@ -1,6 +1,6 @@
 import { RootState } from '../store.tsx';
-import { ui } from './roots.ts';
 import { createSelector } from 'reselect';
+import { ui } from './roots.ts';
 
 export const previewCodeSelector = createSelector(
   ui,

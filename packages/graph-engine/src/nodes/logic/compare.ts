@@ -67,6 +67,7 @@ export default class NodeDefinition<T> extends Node {
         break;
       case Operator.LESS_THAN:
         answer = a < b;
+        break;
       case Operator.GREATER_THAN_OR_EQUAL:
         answer = a >= b;
         break;

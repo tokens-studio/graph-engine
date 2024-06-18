@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 0.17.5
+
+### Patch Changes
+
+- 813f33c: Fix issue with squash node indexing
+
 ## 0.17.4
 
 ### Patch Changes

@@ -5,10 +5,8 @@ export const useCanDeleteNode = (nodeId: string) => {
     const graph = useLocalGraph();
     const node = graph.getNode(nodeId);
 
-    if (node) {
-        if (node.annotations[annotatedDeleteable] === false) {
-            return false;
-        }
+    if (node && node.annotations[annotatedDeleteable] === false) {
+        return false;
     }
 
     return true;

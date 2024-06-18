@@ -1,9 +1,9 @@
-import { showNodesPanelSelector } from '@/redux/selectors/index.ts';
-import {PagePlus, JournalPage, BatteryCharging} from 'iconoir-react';
+import { BatteryCharging, JournalPage, PagePlus } from 'iconoir-react';
 import { Box, Button, EmptyState, Stack } from '@tokens-studio/ui';
+import { showNodesPanelSelector } from '@/redux/selectors/index.ts';
 import { useCallback } from 'react';
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 
 interface IEmptyStateProps {
   onLoadExamples: () => void;

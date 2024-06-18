@@ -32,8 +32,8 @@
                 }
             ],
             "annotations": {
-                "ui.position.x": -139.54862467447913,
-                "ui.position.y": 189.1365712483724
+                "ui.position.x": -391.3865505270938,
+                "ui.position.y": 194.07456979450214
             }
         },
         {
@@ -54,8 +54,8 @@
             ],
             "annotations": {
                 "engine.singleton": true,
-                "ui.position.x": 563.784708658854,
-                "ui.position.y": 185.80323791503906
+                "ui.position.x": 806.9811370557417,
+                "ui.position.y": 174.69274118624725
             }
         },
         {
@@ -91,8 +91,19 @@
                 }
             ],
             "annotations": {
-                "ui.position.x": 225.78470865885419,
-                "ui.position.y": 187.1365712483724
+                "ui.position.x": 184.80190113171858,
+                "ui.position.y": 161.29864539575772
+            }
+        },
+        {
+            "id": "9bdf5afb-304e-4f7d-89e1-84f339846702",
+            "type": "studio.tokens.generic.note",
+            "inputs": [],
+            "annotations": {
+                "ui.position.x": 230.52588658522728,
+                "ui.position.y": -154.16489314375525,
+                "ui.nodeType": "studio.tokens.generic.note",
+                "ui.description": "## To use\n\n1. Open up the Play controls if you haven't already\n\n2. Press play"
             }
         }
     ],
@@ -102,27 +113,24 @@
             "source": "c316391a-63fd-4f3d-82b8-06b760375563",
             "sourceHandle": "node",
             "target": "8c081ba3-5914-4c16-9196-b9dccf355e66",
-            "targetHandle": "input",
-            "annotations": {}
+            "targetHandle": "input"
         },
         {
             "id": "8c712cfa-66a9-471b-9528-e4fe1ebbcc47",
             "source": "8c081ba3-5914-4c16-9196-b9dccf355e66",
             "sourceHandle": "node",
             "target": "9c3461b6-84b7-48bc-ae85-ba5972f95455",
-            "targetHandle": "input",
-            "annotations": {}
+            "targetHandle": "input"
         }
     ],
     "annotations": {
         "engine.id": "a77e07b4-dd75-4363-8001-293959ebc701",
         "engine.capabilities.web-audio": true,
         "engine.capabilities.fs": true,
-        "engine.playState": "paused",
         "ui.viewport": {
-            "x": 0,
-            "y": 0,
-            "zoom": 1.5
+            "x": 251.04147738911513,
+            "y": 233.48116138714119,
+            "zoom": 0.8100447909477649
         },
         "ui.version": "2.9.4",
         "engine.version": "0.12.0"
