@@ -31,14 +31,23 @@ export const duplicateNodes = ({ graph, reactFlowInstance, nodeLookup }: IDuplic
             }
             const newID = uuidv4();
             const saved = graphNode.serialize();
+            const newPosition = {
+                x: node.position.x + 20,
+                y: node.position.y + 100,
+            }
 
             const newGraphNode = graphNode?.factory.deserialize({
                 serialized: {
                     ...saved,
                     id: newID,
+                    annotations: {
+                        ...saved.annotations,
+                        'ui.position.x': newPosition.x,
+                        'ui.position.y': newPosition.y,
+                    }
                 },
                 graph,
-                lookup: nodeLookup
+                lookup: nodeLookup,
             }
             );
 
@@ -71,10 +80,7 @@ export const duplicateNodes = ({ graph, reactFlowInstance, nodeLookup }: IDuplic
                 ...node,
                 id: newID,
                 selected: true,
-                position: {
-                    x: node.position.x + 20,
-                    y: node.position.y + 100,
-                },
+                position: newPosition,
             }];
 
 
