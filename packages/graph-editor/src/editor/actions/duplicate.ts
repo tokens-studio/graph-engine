@@ -41,6 +41,7 @@ export const duplicateNodes = ({ graph, reactFlowInstance, nodeLookup }: IDuplic
                     ...saved,
                     id: newID,
                     annotations: {
+                        ...saved.annotations,
                         'ui.position.x': newPosition.x,
                         'ui.position.y': newPosition.y,
                     }
