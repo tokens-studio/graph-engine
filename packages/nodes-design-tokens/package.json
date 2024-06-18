@@ -1,6 +1,6 @@
 {
   "name": "@tokens-studio/graph-engine-nodes-design-tokens",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Design token support for the graph engine",
   "license": "MIT",
   "author": "andrew@hyma.io",

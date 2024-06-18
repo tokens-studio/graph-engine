@@ -1,5 +1,15 @@
 # @tokens-studio/graph-engine
 
+## 1.0.0
+
+### Major Changes
+
+- 069b413: Major overhaul for strong typing v2
+
+### Patch Changes
+
+- 069b413: Fixes the color wheel calculation.
+
 ## 0.17.5
 
 ### Patch Changes

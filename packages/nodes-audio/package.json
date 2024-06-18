@@ -1,6 +1,6 @@
 {
   "name": "@tokens-studio/graph-engine-nodes-audio",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Audio nodes for the graph engine",
   "license": "MIT",
   "author": "andrew@hyma.io",
