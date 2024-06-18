@@ -1,5 +1,17 @@
 # @tokens-studio/graph-editor
 
+## 3.0.0
+
+### Major Changes
+
+- 069b413: Major overhaul for strong typing v2
+
+### Patch Changes
+
+- Updated dependencies [069b413]
+- Updated dependencies [069b413]
+  - @tokens-studio/graph-engine@1.0.0
+
 ## 2.10.0
 
 ### Minor Changes
