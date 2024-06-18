@@ -20,7 +20,7 @@ interface NodeProps {
   icon?: React.ReactNode;
   title: string;
   subtitle?: string;
-  error: Error | null;
+  error?: Error | null;
   isAsync?: boolean;
   children?: React.ReactNode;
   controls?: React.ReactNode;
