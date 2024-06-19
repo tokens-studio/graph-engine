@@ -42,7 +42,7 @@ jobs:
       with:
         tags: |
           type=sha,format=long,prefix=${{matrix.type}}-
-          type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'major/strong-typing') }}
+          type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
         images: |
           ghcr.io/tokens-studio/graph-engine
 

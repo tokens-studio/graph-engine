@@ -1,4 +1,4 @@
-import { Edge, FlowGraph, Node } from "@tokens-studio/graph-engine";
+import { Edge, Graph, Node } from "@tokens-studio/graph-engine";
 
 /**
  * Finds all nodes of a specified type in the graph
@@ -6,19 +6,19 @@ import { Edge, FlowGraph, Node } from "@tokens-studio/graph-engine";
  * @param type
  * @returns
  */
-export const findNodesOfType = (graph: FlowGraph, type: string) =>
-  graph.nodes.filter((node) => node.type === type);
+export const findNodesOfType = (graph: Graph, type: string) =>
+  Object.values(graph.nodes).filter((node) => node.factory.type === type);
 
-export const findOutEdges = (graph: FlowGraph, id: string) =>
-  graph.edges.filter((edge) => edge.source === id);
+export const findOutEdges = (graph: Graph, id: string) =>
+  Object.values(graph.edges).filter((edge) => edge.source === id);
 
 /**
  * Converts the array of nodes in the graph to a lookup for O(1) performance
  * @param graph
  * @returns
  */
-export const toNodeLookup = (graph: FlowGraph): Record<string, Node> =>
-  graph.nodes.reduce((acc, node) => {
+export const toNodeLookup = (graph: Graph): Record<string, Node> =>
+  Object.values(graph.nodes).reduce((acc, node) => {
     acc[node.id] = node;
     return acc;
   }, {});
@@ -28,8 +28,8 @@ export const toNodeLookup = (graph: FlowGraph): Record<string, Node> =>
  * @param graph
  * @returns
  */
-export const toEdgeLookup = (graph: FlowGraph): Record<string, Edge> =>
-  graph.edges.reduce((acc, edge) => {
+export const toEdgeLookup = (graph: Graph): Record<string, Edge> =>
+  Object.values(graph.edges).reduce((acc, edge) => {
     acc[edge.id] = edge;
     return acc;
   }, {});
@@ -48,19 +48,19 @@ export type SourceToTarget = {
  * @returns
  */
 export const findSourceToTargetOfType = (
-  graph: FlowGraph,
+  graph: Graph,
   sourceType: string,
   targetType: string
 ): SourceToTarget[] => {
   const nodeLookup = toNodeLookup(graph);
 
-  return graph.nodes
-    .filter((node) => node.type === sourceType)
+  return Object.values(graph.nodes)
+    .filter((node) => node.factory.type === sourceType)
     .reduce((acc, node) => {
       const edges = findOutEdges(graph, node.id);
 
       const foundTargets = edges
-        .filter((edge) => nodeLookup[edge.target].type === targetType)
+        .filter((edge) => nodeLookup[edge.target].factory.type === targetType)
         .map((edge) => {
           return {
             source: node,

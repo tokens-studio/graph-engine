@@ -74,7 +74,7 @@ const NodeWrap = observer(({ node }: INodeWrap) => {
       subtitle={node.annotations[title] ? node.factory.title : ""}
       error={node.error || null}
       controls={''}
-      style={{minWidth:'350px'}}
+      style={{ minWidth: '350px' }}
     >
       <Stack direction="column" gap={2}>
         <Stack direction="row" gap={3} css={{ padding: '$3' }}>
@@ -159,7 +159,7 @@ const getColorPreview = (color: string, showValue = false) => {
 
   return (
     <Stack direction="row" gap={2}>
-      {colorSwatch}    
+      {colorSwatch}
       {showValue ? <Text css={{ fontSize: '$small', color: '$gray12' }}>{color.toUpperCase()}</Text> : null}
     </Stack>
   );
@@ -174,8 +174,9 @@ const getValuePreview = (value, type) => {
   let valuePreview = '';
   switch (type.type) {
     case 'array':
-      const allColors = value.every(isHexColor);
-      if (allColors) {
+
+      if (type.items?.$id === COLOR) {
+
         return (<Stack direction="row" gap={1}>
           {value.length > 5 ? (
             <>
@@ -184,7 +185,9 @@ const getValuePreview = (value, type) => {
             </>
           ) : value.map((val) => getColorPreview(val))}
         </Stack>)
+
       }
+
       valuePreview = JSON.stringify(value);
       break;
     case 'object':
@@ -198,7 +201,7 @@ const getValuePreview = (value, type) => {
       break
     default:
       if (isHexColor(value)) {
-        return getColorPreview(value,true);
+        return getColorPreview(value, true);
       }
       valuePreview = JSON.stringify(value);
   }
