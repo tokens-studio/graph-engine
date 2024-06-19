@@ -7,7 +7,7 @@ import {
 import * as Toolbar from '@radix-ui/react-toolbar';
 import { styled } from '@stitches/react';
 import { violet, blackA, mauve } from '@radix-ui/colors';
-import { ChatBubbleEmpty, IconoirProvider, LayoutLeft, Pause, Play, Settings, Sparks, Square } from 'iconoir-react';
+import { ChatBubbleEmpty, IconoirProvider, Download, Pause, Play, Settings, Sparks, Square, Upload } from 'iconoir-react';
 import { AlignDropdown } from './dropdowns/align';
 import { AddDropdown } from './dropdowns/add';
 import { ZoomDropdown } from './dropdowns/zoom';
@@ -19,7 +19,7 @@ export const GraphToolbar = () => (
   <ToolbarRoot aria-label="Formatting options">
     <AddDropdown />
 
-    <Button variant='invisible' disabled>
+    <Button variant='invisible' disabled style={{paddingRight: '0'}}>
       <Sparks />
     </Button>
     <Button variant='invisible' disabled style={{paddingLeft: '0', paddingRight: '0'}}>
@@ -52,9 +52,18 @@ export const GraphToolbar = () => (
     </Button>
     <HelpDropdown />
 
+    <ToolbarSeparator />
+
+    <Button variant='invisible' style={{paddingLeft: '0', paddingRight: '0'}}>
+      <Upload />
+    </Button>
+    <Button variant='invisible' style={{paddingLeft: '0', paddingRight: '0'}}>
+      <Download />
+    </Button>
+
     <ToolbarSeparator style={{background: 'transparent'}}/>
 
-    <Button variant='primary'>Share</Button>
+    <Button variant='primary' disabled>Share</Button>
   </ToolbarRoot>
   </IconoirProvider>
 );
