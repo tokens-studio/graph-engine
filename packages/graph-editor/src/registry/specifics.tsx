@@ -13,6 +13,8 @@ import { ColorScale } from "@/components/preview/colorScale";
 import { ColorCompare } from "@/components/preview/colorCompare";
 import { MathExpression } from "@/components/preview/mathExpression";
 import { title as annotatedTitle } from "@/annotations";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundaryContent } from "@/components/ErrorBoundaryContent";
 
 const SubgraphExplorer = ({ node }) => {
 
@@ -28,7 +30,7 @@ const SubgraphExplorer = ({ node }) => {
         let oneShot = false;
         const innerGraph = node._innerGraph;
         const graphId = innerGraph.annotations['engine.id'];
-        const title = node.annotations[annotatedTitle] || innerGraph.annotations['engine.title'] || 'Subgraph' ;
+        const title = node.annotations[annotatedTitle] || innerGraph.annotations['engine.title'] || 'Subgraph';
         //Find the container
         const existing = dockerRef.current.find(graphId);
 
@@ -49,7 +51,9 @@ const SubgraphExplorer = ({ node }) => {
                 group: 'graph',
                 title,
                 content: (
-                    <GraphEditor ref={ref} id={graphId} />
+                    <ErrorBoundary fallback={<ErrorBoundaryContent />}>
+                        <GraphEditor ref={ref} id={graphId} />
+                    </ErrorBoundary>
                 ),
             };
 
@@ -96,7 +100,7 @@ const NumberPreview = observer(({ node }: { node: Node }) => {
     const shift = 10 ** precision;
     const number = Math.round(value * shift) / shift;
 
-    return <Box css={{backgroundColor: '$bgEmphasis', color: '$fgOnEmphasis', fontFamily: '$mono', fontSize: '64px', padding: '$5', textAlign: 'center'}}>{number}</Box>;
+    return <Box css={{ backgroundColor: '$bgEmphasis', color: '$fgOnEmphasis', fontFamily: '$mono', fontSize: '64px', padding: '$5', textAlign: 'center' }}>{number}</Box>;
 });
 
 export const defaultSpecifics = {
