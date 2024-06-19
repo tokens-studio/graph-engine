@@ -1,3 +1,3 @@
-import { FlowGraph } from "@tokens-studio/graph-engine";
+import { Graph } from "@tokens-studio/graph-engine";
 
-export type UpgradeFunction = (graph: FlowGraph) => Promise<FlowGraph>;
+export type UpgradeFunction = (graph: Graph) => Promise<Graph>;

@@ -33,17 +33,21 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
         let type = {
             ...schema,
         };
+        let innerType = type;
 
         if (asArray) {
             type = {
                 type: "array",
-                items: type
+                items: type,
+                default: [],
             }
         }
 
         if (enumerated) {
-            type.enum = enumeratedValues.split(',').map((x) => x.trim());
-            type.default = type.enum[0];
+            innerType.enum = enumeratedValues.split(',').map((x) => x.trim());
+            if (!asArray) {
+                innerType.default = type.enum[0];
+            }
         }
 
         const input = node.addInput(inputName, {
