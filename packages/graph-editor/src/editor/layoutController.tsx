@@ -19,11 +19,12 @@ import { dockerSelector } from '@/redux/selectors/refs.js';
 import { useDispatch } from '@/hooks/useDispatch.js';
 import { BoxBase, DockLayout, LayoutBase, LayoutData, PanelBase, TabGroup } from 'rc-dock';
 
-
 import React, { MutableRefObject, useEffect, useMemo } from 'react';
 import { EditorProps, ImperativeEditorRef } from "./editorTypes.js";
 import { FindDialog } from "@/components/dialogs/findDialog";
 import { MAIN_GRAPH_ID } from "@/constants";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundaryContent } from "@/components/ErrorBoundaryContent";
 
 const DockButton = (rest) => {
     return (
@@ -170,7 +171,11 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                             group: 'popout',
                                             id: 'dropPanel',
                                             title: 'Nodes',
-                                            content: <DropPanel />,
+                                            content: (
+                                                <ErrorBoundary fallback={<ErrorBoundaryContent />}>
+                                                    <DropPanel />
+                                                </ErrorBoundary>
+                                            ),
                                             closable: true,
                                         },
                                     ],
@@ -193,7 +198,7 @@ const layoutDataFactory = (props, ref): LayoutData => {
 
                             size: 18,
                             mode: 'vertical',
-                            children:[
+                            children: [
                                 {
                                     id: 'graphs',
                                     size: 700,
@@ -207,17 +212,19 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                             group: 'graph',
                                             title: 'Graph',
                                             content: (
-                                                <GraphEditor {...props} id={MAIN_GRAPH_ID} ref={ref} />
+                                                <ErrorBoundary fallback={<ErrorBoundaryContent />}>
+                                                    <GraphEditor {...props} id={MAIN_GRAPH_ID} ref={ref} />
+                                                </ErrorBoundary>
                                             ),
                                         },
                                     ],
                                 },
-                            
-                             
+
+
                             ]
 
                         },
-                        
+
                         {
                             size: 4,
                             mode: 'vertical',
@@ -231,7 +238,12 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                             group: 'popout',
                                             id: 'input',
                                             title: 'Inputs',
-                                            content: <Inputsheet />,
+                                            content: (
+                                                <ErrorBoundary fallback={<ErrorBoundaryContent />}>
+                                                    <Inputsheet />
+                                                </ErrorBoundary>
+
+                                            ),
                                         }
                                     ],
                                 },
@@ -244,9 +256,13 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                             group: 'popout',
                                             id: 'outputs',
                                             title: 'Outputs',
-                                            content: <OutputSheet />,
+                                            content: (
+                                                <ErrorBoundary fallback={<ErrorBoundaryContent />}>
+                                                    <OutputSheet />
+                                                </ErrorBoundary>
+                                            )
                                         }
-                                     
+
                                     ],
                                 },
                             ],
@@ -315,7 +331,7 @@ export const LayoutController = React.forwardRef<
                         style={{ flex: 1 }}
                         onLayoutChange={onLayoutChange}
                     />
-                    <FindDialog/>
+                    <FindDialog />
                 </Tooltip.Provider>
             </Stack>
         </ExternalLoaderProvider>
