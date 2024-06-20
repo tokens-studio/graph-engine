@@ -55,6 +55,7 @@ export const Collapser = ({ children, collapsed }) => {
 
 const NodeWrapper = styled('div', {
   position: 'relative',
+  boxShadow: '$contextMenu',
   borderRadius: '$medium',
   background: '$gray6',
   flex: 1,
