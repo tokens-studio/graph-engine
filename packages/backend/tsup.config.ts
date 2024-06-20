@@ -6,9 +6,12 @@ export default defineConfig({
   noExternal:['**'],
   entry: ['src/index.ts'],
   dts: true,
-  bundle: true,
   sourcemap: true,
-  format: ['esm', 'cjs'],
+  format: 'esm',
   skipNodeModulesBundle: true,
-  clean: false
+  clean: false,
+  splitting: false,
+  minify: false,
+  bundle: false,
+  target: "esnext"
 });

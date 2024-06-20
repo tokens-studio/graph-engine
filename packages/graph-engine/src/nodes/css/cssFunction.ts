@@ -1,8 +1,7 @@
+import cssFunctionsData from "mdn-data/css/functions.json" with { type: 'json' };
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { StringSchema } from "../../schemas/index.js";
-//@ts-ignore
-import * as  cssFunctionsData from "mdn-data/css/functions.json" ;
 
 const FUNCTION_NAMES = Object.keys(cssFunctionsData);
 

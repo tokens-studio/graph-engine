@@ -12,8 +12,6 @@
       "types": "./dist/index.d.ts"
     }
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
   "files": [
     "dist"
   ],
@@ -31,7 +29,6 @@
     "test": "jest --detectOpenHandles"
   },
   "sideEffects": false,
-  "types": "./dist/index.d.ts",
   "dependencies": {
     "@tokens-studio/types": "^0.3.0",
     "ajv": "^8.12.0",
@@ -72,9 +69,9 @@
     "ts-jest": "28.0.3",
     "ts-jest-resolver": "^2.0.1",
     "ts-node": "^10.9.1",
-    "tsup": "^8.0.2",
+    "tsup": "^8.1.0",
     "typedoc": "^0.24.7",
-    "typescript": "4.8.4",
+    "typescript": "^5.4.5",
     "typescript-transform-paths": "^3.4.6"
   },
   "keywords": [

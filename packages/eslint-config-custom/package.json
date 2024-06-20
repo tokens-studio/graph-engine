@@ -20,10 +20,5 @@
   },
   "files": [
     "index.js"
-  ],
-  "devDependencies": {
-    "react": "18.2",
-    "react-dom": "18.2",
-    "typescript": "4.8.4"
-  }
+  ]
 }

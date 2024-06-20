@@ -12,14 +12,12 @@
       "types": "./dist/esm/index.d.ts"
     }
   },
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm.js",
   "files": [
     "dist"
   ],
   "scripts": {
     "routes": "tsoa spec-and-routes",
-    "build": "npm run routes &&  tsup",
+    "build": "npm run routes && tsup",
     "live": "concurrently \"nodemon -x tsoa spec-and-routes\" \"nodemon\"",
     "dev": "npm run routes && nodemon",
     "docs": "typedoc",
@@ -33,7 +31,6 @@
     "test": "jest --passWithNoTests"
   },
   "sideEffects": true,
-  "types": "./dist/esm/index.d.ts",
   "dependencies": {
     "@grpc/grpc-js": "^1.10.6",
     "@opentelemetry/api": "^1.8.0",
@@ -66,7 +63,7 @@
     "eslint": "8.57.0",
     "prisma": "^5.13.0",
     "supertest": "^6.3.4",
-    "tsup": "^8.0.2",
+    "tsup": "^8.1.0",
     "tsx": "^4.7.2",
     "typescript": "^5.4.5"
   },
