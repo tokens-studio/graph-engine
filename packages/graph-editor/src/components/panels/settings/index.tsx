@@ -12,12 +12,12 @@ import {
 } from '@tokens-studio/ui';
 import { useSelector } from 'react-redux';
 import {
+  connectOnClickSelector,
   delayedUpdateSelector,
   edgeType,
   inlineTypes,
   inlineValues,
   layoutType,
-  obscureDistance,
   showMinimapSelector,
   showTimings,
 } from '@/redux/selectors/settings';
@@ -32,18 +32,14 @@ const LayoutValues = Object.values(LayoutType);
 export const Settings = () => {
   const edgeTypeValue = useSelector(edgeType);
   const layoutTypeValue = useSelector(layoutType);
-  const obscureDistanceValue = useSelector(obscureDistance);
   const showTimingsValue = useSelector(showTimings);
   const inlineTypesValue = useSelector(inlineTypes);
   const inlineValuesValue = useSelector(inlineValues);
   const delayedUpdateValue = useSelector(delayedUpdateSelector);
+  const connectOnClick = useSelector(connectOnClickSelector);
   const contextMenus = useSelector(contextMenuSelector);
   const showMinimap = useSelector(showMinimapSelector);
   const dispatch = useDispatch();
-
-  const onObscureDistanceChange = (event) => {
-    dispatch.settings.setObscureDistance(parseFloat(event.target.value));
-  };
 
 
   return (
@@ -127,6 +123,28 @@ export const Settings = () => {
         </Stack>
         <Stack direction="column" gap={2} justify="between">
           <Stack direction="row" gap={2} justify="between">
+            <Label>Click to connect</Label>
+            <Tooltip
+              label={
+                'Allows you to quick connect nodes by clicking on the 2 port'
+              }
+            >
+              <Box>
+                <Text>
+                  <InfoCircleSolid />
+                </Text>
+              </Box>
+            </Tooltip>
+          </Stack>
+          <Checkbox
+            onCheckedChange={(checked) =>
+              dispatch.settings.setConnectOnClick(Boolean(checked))
+            }
+            checked={connectOnClick}
+          />
+        </Stack>
+        <Stack direction="column" gap={2} justify="between">
+          <Stack direction="row" gap={2} justify="between">
             <Label>Show execution time</Label>
             <Tooltip label={'Shows how long it takes for a node to process'}>
               <Box>
@@ -178,27 +196,6 @@ export const Settings = () => {
             }
             checked={contextMenus}
           />
-        </Stack>
-        <Stack direction="column" gap={2} justify="between">
-          <Stack direction="row" gap={2} justify="between">
-            <Label>Obscure distance</Label>
-            <Tooltip
-              label={
-                'How far away the node will be till obscured. Set to 0 to disable hiding nodes'
-              }
-            >
-              <Box>
-                <Text>
-                  <InfoCircleSolid />
-                </Text>
-              </Box>
-            </Tooltip>
-          </Stack>
-          <TextInput
-            type="number"
-            value={'' + obscureDistanceValue}
-            onChange={onObscureDistanceChange}
-          ></TextInput>
         </Stack>
         <Stack direction="column" gap={2} justify="between">
           <Label>Edge Type</Label>

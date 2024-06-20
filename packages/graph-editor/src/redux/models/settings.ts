@@ -5,7 +5,7 @@ export enum EdgeType {
   bezier = 'Bezier',
   smoothStep = 'Smooth step',
   straight = 'Straight',
-  simpleBezier = 'Simple Bezier',
+  simpleBezier = 'Simple Bezier'
 }
 export enum LayoutType {
   dagre = 'Dagre',
@@ -16,10 +16,6 @@ export enum LayoutType {
 }
 
 export interface SettingsState {
-  /**
-   * The distance away from a node to obscure the UI
-   */
-  obscureDistance: number;
   edgeType: EdgeType;
   layoutType: LayoutType;
   debugMode: boolean;
@@ -39,15 +35,16 @@ export interface SettingsState {
    * Whether to show the values inline with the nodes
    */
   inlineValues: boolean;
+  connectOnClick: boolean;
   snapGrid: boolean;
 }
 
 export const settingsState = createModel<RootModel>()({
   state: {
-    obscureDistance: 0.5,
     edgeType: EdgeType.bezier,
     layoutType: LayoutType.dagre,
     showGrid: true,
+    connectOnClick: true,
     showTimings: false,
     showSearch: false,
     inlineTypes: false,
@@ -59,6 +56,12 @@ export const settingsState = createModel<RootModel>()({
   } as SettingsState,
   reducers: {
 
+    setConnectOnClick(state, connectOnClick: boolean) {
+      return {
+        ...state,
+        connectOnClick,
+      };
+    },
     setShowSearch(state, showSearch: boolean) {
       return {
         ...state,
@@ -95,12 +98,6 @@ export const settingsState = createModel<RootModel>()({
       return {
         ...state,
         debugMode,
-      };
-    },
-    setObscureDistance(state, obscureDistance: number) {
-      return {
-        ...state,
-        obscureDistance,
       };
     },
     setInlineTypes(state, inlineTypes: boolean) {

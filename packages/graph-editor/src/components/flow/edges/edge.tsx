@@ -5,10 +5,12 @@ import {
   getStraightPath,
   Position,
 } from 'reactflow';
+import { getBetterBezierPath } from "./offsetBezier.js";
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { edgeType as edgeTypeSelector } from '../../../redux/selectors/settings.js';
 import { EdgeType } from '../../../redux/models/settings.js';
+
 
 interface IArticulatedPath {
   sourceX: number;
@@ -87,7 +89,7 @@ export default function CustomEdge({
   let edgeFn;
   switch (edgeType) {
     case EdgeType.bezier:
-      edgeFn = getBezierPath;
+      edgeFn = getBetterBezierPath;
       break;
     case EdgeType.simpleBezier:
       edgeFn = getSimpleBezierPath;
