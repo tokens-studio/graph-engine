@@ -1,11 +1,11 @@
-import { INodeDefinition, Node } from '@tokens-studio/graph-engine'
+import { INodeDefinition, Node } from "@tokens-studio/graph-engine";
 import { SingleToken } from "@tokens-studio/types";
 import { TokenSchema } from "../schemas/index.js";
 import { arrayOf } from "../schemas/utils.js";
 
 export default class FlattenNode extends Node {
   static title = "Flatten Token Sets";
-  static type = 'studio.tokens.design.flatten';
+  static type = "studio.tokens.design.flatten";
   static description = "Flattens a set of tokens";
   constructor(props: INodeDefinition) {
     super(props);
@@ -24,7 +24,7 @@ export default class FlattenNode extends Node {
 
   execute(): void | Promise<void> {
     const { tokens } = this.getAllInputs();
-    
+
     const { vals } = (tokens as SingleToken[][])
       .flat()
       .flat()
@@ -41,7 +41,7 @@ export default class FlattenNode extends Node {
         {
           vals: [] as SingleToken[],
           lookup: {},
-        }
+        },
       );
     this.setOutput("value", vals.reverse());
   }

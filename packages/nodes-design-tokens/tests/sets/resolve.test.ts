@@ -6,9 +6,8 @@ import {
   TokenTypes,
 } from "@tokens-studio/types";
 import { Graph } from "@tokens-studio/graph-engine";
-import { IResolvedToken, flatten } from "../../src/utils/index.js";
+import { flatten } from "../../src/utils/index.js";
 import Node from "../../src/nodes/resolve.js";
-
 
 describe("set/resolve", () => {
   it("resolves complex values correctly", async () => {

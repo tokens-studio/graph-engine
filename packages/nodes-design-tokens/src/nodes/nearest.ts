@@ -1,13 +1,17 @@
-
-import { INodeDefinition, Node, ColorSchema, StringSchema, BooleanSchema } from "@tokens-studio/graph-engine";
+import {
+  BooleanSchema,
+  ColorSchema,
+  INodeDefinition,
+  Node,
+  StringSchema,
+} from "@tokens-studio/graph-engine";
 import { TokenSchema } from "../schemas/index.js";
 import { WcagVersion, sortTokens } from "../utils/sortTokens";
 import { arrayOf } from "../schemas/utils.js";
 
-
 export default class NearestColorNode extends Node {
   static title = "Nearest tokens";
-  static type = 'studio.tokens.design.nearestColor';
+  static type = "studio.tokens.design.nearestColor";
   static description = "Sorts Token Set by distance to Color";
   constructor(props: INodeDefinition) {
     super(props);
@@ -62,7 +66,7 @@ export default class NearestColorNode extends Node {
       sourceColor,
       compare,
       wcag,
-      inverted
+      inverted,
     );
 
     this.setOutput("value", sortedTokens);

@@ -1,13 +1,16 @@
-
-import { INodeDefinition, Node, StringSchema } from "@tokens-studio/graph-engine";
-import { TokenTypes } from "@tokens-studio/types";
+import {
+  INodeDefinition,
+  Node,
+  StringSchema,
+} from "@tokens-studio/graph-engine";
 import { TokenSchema } from "../schemas/index.js";
+import { TokenTypes } from "@tokens-studio/types";
 
 const types = Object.values(TokenTypes).sort();
 
 export default class NodeDefinition extends Node {
   static title = "Create Design Token";
-  static type = 'studio.tokens.design.create';
+  static type = "studio.tokens.design.create";
   static description = "Creates a design token from inputs";
   constructor(props: INodeDefinition) {
     super(props);

@@ -1,6 +1,6 @@
-import { Separator, Text, Stack } from '@tokens-studio/ui';
-import React from 'react';
+import { Separator, Stack, Text } from '@tokens-studio/ui';
 import { observer } from "mobx-react-lite";
+import React from 'react';
 import type PreviewNode from '../../nodes/previewTypography.js';
 
 export const Typography = ({ value, text }) => {

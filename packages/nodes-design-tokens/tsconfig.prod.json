@@ -1,8 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "plugins": [
-    ],
+    "plugins": [],
     "baseUrl": ".",
     "sourceMap": true,
     "declaration": true,
@@ -21,20 +20,9 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "typeRoots": [
-      "../../node_modules/@types",
-      "node_modules/@types"
-    ],
-    "types": [
-      "jest",
-      "node"
-    ]
+    "typeRoots": ["../../node_modules/@types", "node_modules/@types"],
+    "types": ["jest", "node"]
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.test.ts"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.test.ts"]
 }

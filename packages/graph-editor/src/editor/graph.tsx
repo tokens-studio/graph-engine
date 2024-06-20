@@ -50,7 +50,7 @@ import { NodeContextMenu } from '../components/contextMenus/nodeContextMenu.js';
 import { EdgeContextMenu } from '../components/contextMenus/edgeContextMenu.js';
 import { PaneContextMenu } from '../components/contextMenus/paneContextMenu.js';
 import { useSelector } from 'react-redux';
-import { showGrid, showMinimapSelector, snapGrid } from '@/redux/selectors/settings.js';
+import { connectOnClickSelector, showGrid, showMinimapSelector, snapGrid } from '@/redux/selectors/settings.js';
 import { NodeV2 } from '@/components/index.js';
 import { CommandMenu } from '@/components/commandPalette/index.js';
 import { clear } from './actions/clear.js';
@@ -103,6 +103,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     const showMinimap = useSelector(showMinimapSelector);
     const capabilities = useSelector(capabilitiesSelector);
     const contextMenus = useSelector(contextMenuSelector);
+    const connectOnClick = useSelector(connectOnClickSelector)
     const reactFlowWrapper = useRef<HTMLDivElement>(null);
     const reactFlowInstance = useReactFlow();
     const dispatch = useDispatch();
@@ -764,6 +765,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
                 onEdgeDoubleClick={onEdgeDblClick}
                 onEdgesDelete={onEdgesDeleted}
                 edges={edges}
+                connectOnClick={connectOnClick}
                 elevateNodesOnSelect={true}
                 onNodeDragStop={onNodeDragStop}
                 snapToGrid={snapGridValue}

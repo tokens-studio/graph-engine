@@ -1,8 +1,8 @@
-import React from 'react';
-import { Stack, TextInput } from '@tokens-studio/ui';
-import { withVariadicField } from '@tokens-studio/graph-editor';
 import { Edge, Port } from '@tokens-studio/graph-engine';
+import { Stack } from '@tokens-studio/ui';
 import { getPreview } from './token';
+import { withVariadicField } from '@tokens-studio/graph-editor';
+import React from 'react';
 
 const VariadicTokensUI = ({ port, edge }: { port: Port, edge: Edge }) => {
   const value = port.value[edge.annotations['engine.index']];
