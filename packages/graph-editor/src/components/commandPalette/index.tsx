@@ -94,7 +94,9 @@ const CommandMenu = ({
       position: reactflow.screenToFlowPosition(cursorPositionRef.current),
       ...item,
     });
-    selectAddedNodes([newNode.flowNode])
+    if (newNode) {
+      selectAddedNodes([newNode.flowNode])
+    }
 
     dispatch.ui.setShowNodesCmdPalette(false);
   };
