@@ -1,4 +1,4 @@
-import { Text, Box } from '@tokens-studio/ui';
+import { Box, Text } from '@tokens-studio/ui';
 import React from 'react';
 
 

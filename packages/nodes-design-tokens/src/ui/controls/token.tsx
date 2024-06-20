@@ -1,9 +1,9 @@
-import { observer } from 'mobx-react-lite';
+import { Box, Stack } from '@tokens-studio/ui';
 import { IField } from '@tokens-studio/graph-editor';
-import React from 'react';
-import { Stack, Box } from '@tokens-studio/ui';
 import { PreviewColor } from './preview/color.js';
 import { TokenTypes } from '@tokens-studio/types';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
 
 
 
@@ -17,6 +17,7 @@ export const getPreview = (tokenData) => {
 };
 
 type PreviewProps = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     token: any;
     hideName?: boolean;
 };
@@ -118,6 +119,6 @@ export const Token = ({ token }) => {
 
 }
 
-export const TokenField = observer(({ port, readOnly }: IField) => {
+export const TokenField = observer(({ port }: IField) => {
     return <Token token={port.value} />;
 });

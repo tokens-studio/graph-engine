@@ -5,7 +5,7 @@ import { flatTokensRestoreToMap } from '../../utils/index.js';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
-export const TokenArrayField = observer(({ port, readOnly }: IField) => {
+export const TokenArrayField = observer(({ port }: IField) => {
 
     const downloadTokens = () => {
         const element = document.createElement('a');

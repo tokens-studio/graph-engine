@@ -1,10 +1,13 @@
-
-import { INodeDefinition, Node, StringSchema } from "@tokens-studio/graph-engine";
-import {  TokenSetSchema } from "../schemas/index.js";
+import {
+  INodeDefinition,
+  Node,
+  StringSchema,
+} from "@tokens-studio/graph-engine";
+import { TokenSetSchema } from "../schemas/index.js";
 
 export default class UngroupNode extends Node {
   static title = "Ungroup tokens";
-  static type = 'studio.tokens.design.ungroup';
+  static type = "studio.tokens.design.ungroup";
   static description = "Ungroups tokens by removing their namespace";
   constructor(props: INodeDefinition) {
     super(props);

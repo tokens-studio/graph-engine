@@ -1,11 +1,10 @@
-
 import { INodeDefinition, Node } from "@tokens-studio/graph-engine";
 import { TokenSchema } from "../schemas/index.js";
 import { arrayOf } from "../schemas/utils.js";
 
 export default class InlineTokenNode extends Node {
   static title = "Inline Token Set";
-  static type = 'studio.tokens.design.inline';
+  static type = "studio.tokens.design.inline";
   static description =
     "Creates a set of tokens and stores it directly in the graph";
   constructor(props: INodeDefinition) {

@@ -1,7 +1,6 @@
+import { compareFunctions } from "./compareFunctions";
 import Color from "colorjs.io";
 import orderBy from "lodash.orderby";
-import { compareFunctions } from "./compareFunctions";
-
 
 export enum WcagVersion {
   V2 = "2.1",
@@ -11,12 +10,12 @@ export enum WcagVersion {
 export const sortTokens = (tokens, sourceColor, compare, wcag, inverted) =>
   orderBy(
     tokens.map((token) => {
-      let foreground = new Color(token.value);
-      let background = new Color(sourceColor);
-      let compareValue = compareFunctions[compare](
+      const foreground = new Color(token.value);
+      const background = new Color(sourceColor);
+      const compareValue = compareFunctions[compare](
         foreground,
         background,
-        wcag
+        wcag,
       );
 
       return {
@@ -25,5 +24,5 @@ export const sortTokens = (tokens, sourceColor, compare, wcag, inverted) =>
       };
     }),
     ["compareValue"],
-    [inverted ? "desc" : "asc"]
+    [inverted ? "desc" : "asc"],
   );
