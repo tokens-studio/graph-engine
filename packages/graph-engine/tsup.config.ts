@@ -1,16 +1,16 @@
 import type { Options } from 'tsup';
 
-
 const env: string = process.env.NODE_ENV || 'development';
 
 export const tsup: Options = {
-    splitting: false,
     sourcemap: env === 'production', // source map is only available in prod
-    clean: false, // rimraf disr
+    clean: false, // rimraf dist
     dts: true, // generate dts file for main module
-    format: ['cjs', 'esm'] ,
-    bundle: true,
-    target: 'es2020',
+    format: 'esm',
     outDir: 'dist',
-    entry: ['src/index.ts']
+    entry: ['src/index.ts'],
+    splitting: false,
+    minify: false,
+    bundle: false,
+    target: "esnext"
 };

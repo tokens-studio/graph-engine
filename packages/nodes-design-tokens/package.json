@@ -17,8 +17,6 @@
       "types": "./dist/index.d.ts"
     }
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
   "files": [
     "dist"
   ],
@@ -35,7 +33,6 @@
     "test": "jest --passWithNoTests"
   },
   "sideEffects": false,
-  "types": "./dist/index.d.ts",
   "dependencies": {
     "@adobe/leonardo-contrast-colors": "^1.0.0",
     "@tokens-studio/types": "^0.4.0",
@@ -67,9 +64,9 @@
     "ts-jest": "28.0.3",
     "ts-jest-resolver": "^2.0.1",
     "ts-node": "^10.9.1",
-    "tsup": "^8.0.2",
+    "tsup": "^8.1.0",
     "typedoc": "^0.24.7",
-    "typescript": "4.8.4"
+    "typescript": "^5.4.5"
   },
   "keywords": [
     "studio",
