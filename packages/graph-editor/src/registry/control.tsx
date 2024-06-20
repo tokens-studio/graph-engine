@@ -25,6 +25,7 @@ import { SliderField } from '@/components/controls/slider';
 import { VariadicAny } from '@/components/controls/variadicAny';
 import { VariadicNumber } from '@/components/controls/variadicNumber';
 import { VariadicColor } from '@/components/controls/variadicColor';
+import { ArrayField } from '@/components/controls/array';
 
 
 export const variadicMatcher = (id) => (port: Port) => port.type.type === 'array' && port.type.items.$id === id && (port as Input).variadic;
@@ -78,7 +79,10 @@ export const defaultControls = [
     matcher: (port: Port) => port.type.$id === ANY,
     component: AnyField,
   },
-
+  {
+    matcher: (port: Port) => port.type.type === 'array',
+    component: ArrayField,
+  },
   {
     matcher: variadicMatcher(NUMBER),
     component: VariadicNumber,
