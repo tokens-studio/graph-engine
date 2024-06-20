@@ -12,11 +12,17 @@ import { styled } from '@/lib/stitches';
 import { Search } from 'iconoir-react';
 import { observer } from 'mobx-react-lite';
 import { isActiveElementTextEditable } from '@/utils/isActiveElementTextEditable.js';
-import { useReactFlow } from 'reactflow';
+import { useReactFlow, Node as FlowNode } from 'reactflow';
+import { Node } from '@tokens-studio/graph-engine';
+import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
+import { NodeRequest } from '@/editor/actions/createNode.js';
 
 export interface ICommandMenu {
   items: DropPanelStore;
-  handleSelectNewNodeType: (node: { type: string }) => void;
+  handleSelectNewNodeType: (node: NodeRequest) => {
+    graphNode: Node,
+    flowNode: FlowNode
+  } | undefined;
 }
 
 const CommandItem = observer(
@@ -81,12 +87,17 @@ const CommandMenu = ({
   const cursorPositionRef = React.useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const [selectedItem, setSelectedItem] = React.useState('input');
   const reactflow = useReactFlow();
+  const selectAddedNodes = useSelectAddedNodes();
 
   const handleSelectItem = (item) => {
-    handleSelectNewNodeType({
+    const newNode = handleSelectNewNodeType({
       position: reactflow.screenToFlowPosition(cursorPositionRef.current),
       ...item,
     });
+    if (newNode) {
+      selectAddedNodes([newNode.flowNode])
+    }
+
     dispatch.ui.setShowNodesCmdPalette(false);
   };
 
