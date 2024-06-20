@@ -55,7 +55,6 @@ import { NodeV2 } from '@/components/index.js';
 import { CommandMenu } from '@/components/commandPalette/index.js';
 import { clear } from './actions/clear.js';
 import { copyNodeAction } from './actions/copyNodes.js';
-import { selectNode } from './actions/selectNode.js';
 import { deleteNode } from './actions/deleteNode.js';
 import { duplicateNodes } from './actions/duplicate.js';
 import { PassthroughNode } from '@/components/flow/nodes/passthroughNode.js';
@@ -70,7 +69,8 @@ import { HotKeys } from '@/components/hotKeys/index.js';
 import { currentPanelIdSelector } from '@/redux/selectors/graph.js';
 import { debugInfo } from '@/components/debugger/data.js';
 import { NOTE, PASSTHROUGH } from '@/ids.js';
-
+import { useSetCurrentNode } from '@/hooks/useSetCurrentNode.js';
+import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
@@ -92,7 +92,6 @@ const defaultEdgeOptions = {
 };
 
 
-
 export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>(
   (props: GraphEditorProps, ref) => {
 
@@ -110,7 +109,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     const { getIntersectingNodes } = reactFlowInstance;
     const store = useStoreApi();
 
-    const initialGraph: Graph = useMemo(()=>new Graph(), []);
+    const initialGraph: Graph = useMemo(() => new Graph(), []);
 
     const [graph, setTheGraph] = useState(initialGraph);
 
@@ -408,10 +407,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     }, [customNodeUI]);
 
 
-    const handleSelectNode = useMemo(() => {
-      return selectNode(dispatch);
-    }, [dispatch])
-
     const handleDeleteNode = useMemo(() => {
       return deleteNode(graph, dispatch, reactFlowInstance);
     }, [graph, dispatch, reactFlowInstance])
@@ -527,13 +522,14 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
       }),
       [reactFlowInstance, fullNodeLookup, dispatch.graph, graph, setNodes, setEdges],
     );
-    
 
-    useEffect(()=>{
-      if (props.initialGraph){
+    useSetCurrentNode();
+
+    useEffect(() => {
+      if (props.initialGraph) {
         internalRef.current?.loadRaw(props.initialGraph);
       }
-    },[])
+    }, [])
 
     const onConnect = useMemo(
       () => connectNodes({ graph, setEdges, dispatch }),
@@ -712,6 +708,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
 
     const copyNodes = copyNodeAction(reactFlowInstance, graph, fullNodeLookup);
+    const selectAddedNodes = useSelectAddedNodes();
 
     const onDrop = useCallback(
       async (event) => {
@@ -729,15 +726,13 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
         })
 
 
-
         //Some of the nodes might be invalid, so remember to filter them out
-        const newNodes = positionUpdated.map((nodeRequest) => handleSelectNewNodeType(nodeRequest)).filter(x => !!x).map(x => x?.graphNode);
+        const newNodes = positionUpdated.map((nodeRequest) => handleSelectNewNodeType(nodeRequest)).filter(x => !!x).map(x => x?.flowNode ?? {} as Node);
 
-        if (newNodes.length == 1) {
-          handleSelectNode(newNodes[0]!.id);
-        }
+        selectAddedNodes(newNodes);
+
       },
-      [handleSelectNewNodeType, handleSelectNode],
+      [handleSelectNewNodeType, reactFlowInstance],
     );
     const nodeCount = nodes.length;
     return (
@@ -762,13 +757,14 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
             <HotKeys>
               <ReactFlow
                 ref={reactFlowWrapper}
+                elevateEdgesOnSelect={true}
                 nodes={nodes}
                 onNodesChange={managedNodesChange}
                 onEdgesChange={managedEdgeChange}
                 onEdgeDoubleClick={onEdgeDblClick}
                 onEdgesDelete={onEdgesDeleted}
                 edges={edges}
-                elevateNodesOnSelect={false}
+                elevateNodesOnSelect={true}
                 onNodeDragStop={onNodeDragStop}
                 snapToGrid={snapGridValue}
                 edgeTypes={edgeTypes}

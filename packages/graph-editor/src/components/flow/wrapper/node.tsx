@@ -5,9 +5,7 @@ import {
   Text,
 } from '@tokens-studio/ui';
 import { styled } from '@stitches/react';
-import React, { useCallback, useMemo } from 'react';
-import GraphLib from '@dagrejs/graphlib';
-import { useDispatch } from '@/hooks/useDispatch.js';
+import React, { useMemo } from 'react';
 
 const CollapserContainer = styled('div', {});
 
@@ -59,8 +57,8 @@ const NodeWrapper = styled('div', {
   position: 'relative',
   borderRadius: '$medium',
   background: '$gray6',
-  flex:1,
-  display:'flex',
+  flex: 1,
+  display: 'flex',
   variants: {
     error: {
       true: {
@@ -75,12 +73,7 @@ const NodeWrapper = styled('div', {
 export const Node = (props: NodeProps) => {
   const { id, icon, title, subtitle, error, isAsync, children, controls, ...rest } =
     props;
-  const dispatch = useDispatch();
 
-
-  const onClick = useCallback(() => {
-    dispatch.graph.setCurrentNode(id);
-  }, [dispatch.graph, id]);
 
   return (
     <NodeWrapper error={Boolean(error)} className={error ? 'error' : ''}>
@@ -88,14 +81,13 @@ export const Node = (props: NodeProps) => {
         className='reactflow-draggable-handle'
         direction="column"
         gap={0}
-        css={{flex:1}}
-        onClick={onClick}
+        css={{ flex: 1 }}
         {...rest}
       >
         {title && (
           <>
             <Stack
-             
+
               direction="row"
               justify="between"
               align="center"

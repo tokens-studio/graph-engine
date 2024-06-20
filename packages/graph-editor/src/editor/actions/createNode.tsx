@@ -1,8 +1,8 @@
 import { uiNodeType, xpos, ypos } from '@/annotations';
 import { INPUT, OUTPUT } from '@/ids';
 import { Dispatch } from '@/redux/store';
-import {  Node, Graph, NodeFactory } from '@tokens-studio/graph-engine';
-import { ReactFlowInstance } from 'reactflow';
+import { Node, Graph, NodeFactory } from '@tokens-studio/graph-engine';
+import { ReactFlowInstance, Node as ReactFlowNode } from 'reactflow';
 
 export type NodeRequest = {
   type: string;
@@ -75,7 +75,7 @@ export const createNode = ({
     node.annotations[xpos] = finalPos.x;
     node.annotations[ypos] = finalPos.y;
 
-    if (customUI[nodeRequest.type]){
+    if (customUI[nodeRequest.type]) {
       node.annotations[uiNodeType] = customUI[nodeRequest.type];
     }
 
@@ -92,15 +92,14 @@ export const createNode = ({
     //Update immediately
     graph.update(node.id);
 
-
     //Add the node to the react flow instance
     const reactFlowNode = {
       id: node.id,
-      dragHandle:'.reactflow-draggable-handle',
+      dragHandle: '.reactflow-draggable-handle',
       type: customUI[nodeRequest.type] || 'GenericNode',
       data: {},
       position: finalPos,
-    };
+    } as ReactFlowNode;
 
     dispatch.graph.appendLog({
       time: new Date(),
@@ -113,6 +112,7 @@ export const createNode = ({
     })
 
     reactFlowInstance.addNodes(reactFlowNode);
+
     return {
       graphNode: node,
       flowNode: reactFlowNode
