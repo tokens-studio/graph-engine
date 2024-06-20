@@ -15,13 +15,14 @@ import { isActiveElementTextEditable } from '@/utils/isActiveElementTextEditable
 import { useReactFlow, Node as FlowNode } from 'reactflow';
 import { Node } from '@tokens-studio/graph-engine';
 import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
+import { NodeRequest } from '@/editor/actions/createNode.js';
 
 export interface ICommandMenu {
   items: DropPanelStore;
-  handleSelectNewNodeType: (node: { type: string }) => {
+  handleSelectNewNodeType: (node: NodeRequest) => {
     graphNode: Node,
     flowNode: FlowNode
-  };
+  } | undefined;
 }
 
 const CommandItem = observer(
