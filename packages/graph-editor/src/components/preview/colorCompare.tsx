@@ -24,7 +24,7 @@ export const ColorCompare = ({ colors }) => {
     {colors && (
         <Stack direction='row' gap={0}>
             {colors.map(color =>
-                <Box css={{display: 'grid', placeItems: 'center', minHeight: '100px', backgroundColor: color, padding: '$8'}}>
+                <Box css={{display: 'grid', placeItems: 'center', minHeight: '100px', backgroundColor: color, padding: '$8', width: '100%'}}>
                     <Text css={{fontFamily: '$mono', fontSize: 'xx-large', color: contrastingColor(color)}}>{color}</Text>
                 </Box>
             )}
