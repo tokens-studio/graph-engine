@@ -65,7 +65,7 @@ const SubgraphExplorer = ({ node }) => {
 
 
 
-    return <Button icon={<EyeSolid />} onClick={onToggle}>Subgraph Explorer</Button>
+    return <Button variant="primary" icon={<EyeSolid />} onClick={onToggle}>Subgraph Explorer</Button>
 
 }
 

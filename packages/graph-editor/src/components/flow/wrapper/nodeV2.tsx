@@ -85,7 +85,10 @@ const NodeWrap = observer(({ node }: INodeWrap) => {
             <PortArray ports={node.outputs} />
           </HandleContainer>
         </Stack>
-        {Specific && <Specific node={node} />}
+        {Specific && <Stack direction="column" gap={3} css={{ padding: '$3' }}>
+            <Specific node={node} />
+          </Stack>
+        }
       </Stack>
       {showTimingsValue && (
         <Box css={{ position: 'absolute', bottom: '-1.5em' }}>
