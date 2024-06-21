@@ -1,5 +1,5 @@
 import { Box, Text } from '@tokens-studio/ui';
-import React from 'react';
+import React, { useMemo } from 'react';
 import Color from 'colorjs.io';
 
 function contrastingColor(value: string) {
@@ -19,17 +19,28 @@ function contrastingColor(value: string) {
 
 export const ColorSwatch = ({ value }) => {
 
-  return (
-    <>
-    {value && (
+    const color = useMemo(() => {
+        try {
+            return contrastingColor(value)
+        } catch (error) {
+            console.log(error)
+            return '';
+        }
+    }, [value])
+
+    return (
         <>
-            <Box css={{display: 'grid', placeItems: 'center', width: '100%', minHeight: '100px', backgroundColor: value, padding: '$5'}}>
-                <Text css={{fontFamily: '$mono', fontSize: '64px', color: contrastingColor(value)}}>{value}</Text>
-            </Box>
+            {value && (
+                <>
+                    <Box css={{ display: 'grid', placeItems: 'center', width: '100%', minHeight: '100px', backgroundColor: value, padding: '$5' }}>
+                        <Text css={{ fontFamily: '$mono', fontSize: '64px', color }}>{
+                            typeof value === 'string' ? value : JSON.stringify(value)
+                        }</Text>
+                    </Box>
+                </>
+            )}
         </>
-    )}
-    </>
-  );
+    );
 };
 
 export default ColorSwatch;
