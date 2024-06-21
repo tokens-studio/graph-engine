@@ -95,19 +95,31 @@ export default class NodeDefinition extends Node {
       },
     });
     this.addInput("a", {
-      type: NumberSchema,
+      type: {
+        ...NumberSchema,
+        default: "255",
+      },
       visible: true,
     });
     this.addInput("b", {
-      type: NumberSchema,
+      type: {
+        ...NumberSchema,
+        default: "255",
+      },
       visible: true,
     });
     this.addInput("c", {
-      type: NumberSchema,
+      type: {
+        ...NumberSchema,
+        default: "255",
+      },
       visible: true,
     });
     this.addInput("d", {
-      type: NumberSchema,
+      type: {
+        ...NumberSchema,
+        default: "1",
+      },
       visible: true,
     });
 
