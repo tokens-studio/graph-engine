@@ -1,7 +1,7 @@
 import { CurveEditor } from './index';
+import { vec } from 'mafs';
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { vec, ConstraintFunction } from 'mafs';
 
 const meta: Meta<typeof CurveEditor> = {
   title: 'Components/Curve Editor',
@@ -11,7 +11,7 @@ const meta: Meta<typeof CurveEditor> = {
 export default meta;
 type Story = StoryObj<typeof CurveEditor>;
 export const Default: Story = {
-  render: (args) => {
+  render: () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [points, setPoints] = React.useState<vec.Vector2[]>([
       [0, 0],

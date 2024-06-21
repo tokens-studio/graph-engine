@@ -23,7 +23,7 @@ export default class NodeDefinition extends Node {
   declare outputs: ToOutput<{
     array: number[];
     indexed: ArithemeticValue[];
-  }>
+  }>;
 
   static type = "studio.tokens.series.arithmetic";
   static description =
@@ -110,7 +110,7 @@ export default class NodeDefinition extends Node {
 
     this.setOutput(
       "array",
-      values.map((x) => x.value)
+      values.map((x) => x.value),
     );
     this.setOutput("indexed", values);
   }

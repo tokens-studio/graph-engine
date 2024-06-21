@@ -1,7 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
-import { pathsToModuleNameMapper } from "ts-jest";
-import tsconfig from "./tsconfig.json";
-
 export default {
   coverageDirectory: "<rootDir>/jest-coverage",
   collectCoverage: true,
@@ -19,7 +15,7 @@ export default {
     // Yes it should be an array to ensure consistency, but jest does not offer this
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
       "<rootDir>/tests/__mocks__/file-mock.js",
-    ".+\\.(css|less|scss|sass|styl)$": "identity-obj-proxy"
+    ".+\\.(css|less|scss|sass|styl)$": "identity-obj-proxy",
   },
   transform: {
     "^.+\\.(js|jsx)$": "babel-jest",

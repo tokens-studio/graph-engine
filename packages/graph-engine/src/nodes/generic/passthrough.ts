@@ -1,9 +1,6 @@
-
-
 import { AnySchema } from "../../schemas/index.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
-
 
 /**
  * A node that passes through the input to the output.

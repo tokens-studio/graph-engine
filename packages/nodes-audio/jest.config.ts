@@ -1,6 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
-import tsconfig from "./tsconfig.json";
-
 export default {
   coverageDirectory: "<rootDir>/jest-coverage",
   collectCoverage: true,

@@ -1,14 +1,15 @@
-/* eslint-disable react/display-name */
-import { Box, Text, Stack, TextInput, Accordion } from '@tokens-studio/ui';
-import React, { useState } from 'react';
-import { DropPanelStore } from './data.js';
+import { Accordion, Box, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { DragItem } from './DragItem.js';
+import { DropPanelStore } from './data.js';
+import { NavArrowRight } from 'iconoir-react';
 import { NodeEntry } from './NodeEntry.js';
-import { styled } from '@/lib/stitches/index.js';
 import { observer } from 'mobx-react-lite';
 import { IconoirProvider, NavArrowRight } from 'iconoir-react';
 import { useSelector } from 'react-redux';
 import { panelItemsSelector } from '@/redux/selectors/registry.js';
+import { styled } from '@/lib/stitches/index.js';
+import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
 
 const StyledAccordionTrigger = styled(Accordion.Trigger, {
   display: 'flex',
@@ -54,10 +55,9 @@ export interface IDropPanel {
 }
 
 export const DropPanel = () => {
-
   const data = useSelector(panelItemsSelector);
   return <DropPanelInner data={data} />;
-}
+};
 
 export const DropPanelInner = observer(({ data }: IDropPanel) => {
   const [search, setSearch] = React.useState('');
@@ -72,7 +72,6 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
       setOpened(data.groups.map((group) => group.key));
     }
   };
-
 
   return (
     <Box
@@ -89,7 +88,13 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
       <Stack
         direction="column"
         gap={3}
-        css={{ paddingTop: '$1', width: '100%', flex: 1, overflow: 'auto', boxSizing: 'border-box' }}
+        css={{
+          paddingTop: '$1',
+          width: '100%',
+          flex: 1,
+          overflow: 'auto',
+          boxSizing: 'border-box',
+        }}
       >
         <Stack
           direction="column"
@@ -98,7 +103,12 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
         >
           <TextInput placeholder="Search…" value={search} onChange={onSearch} />
         </Stack>
-        <StyledAccordion type="multiple" defaultValue={[]} value={opened} onValueChange={setOpened} >
+        <StyledAccordion
+          type="multiple"
+          defaultValue={[]}
+          value={opened}
+          onValueChange={setOpened}
+        >
           {data.groups.map((value) => {
             const filteredValues = value.items
               .filter((item) =>
@@ -123,13 +133,17 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
             }
 
             return (
-              <Accordion.Item value={value.key} key={value.key} data-test-class='drop-panel-trigger'>
+              <Accordion.Item
+                value={value.key}
+                key={value.key}
+                data-test-class="drop-panel-trigger"
+              >
                 <StyledAccordionTrigger>
-                  <Stack align='center' justify='between' width='full' css={{padding: '$3 0'}}>
-                    <IconoirProvider iconProps={{ width: '0.875em', height: '0.875em'}}>
+                  <Stack align='center' justify='between' width='full' css={{ padding: '$3 0' }}>
+                    <IconoirProvider iconProps={{ width: '0.875em', height: '0.875em' }}>
                       <Stack gap={3} align='center'>
-                          {value.icon}
-                        <Text size="xsmall" bold css={{textAlign: 'left'}}>
+                        {value.icon}
+                        <Text size="xsmall" bold css={{ textAlign: 'left' }}>
                           {value.title}
                         </Text>
                       </Stack>

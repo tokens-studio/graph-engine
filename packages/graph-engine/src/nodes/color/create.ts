@@ -1,5 +1,9 @@
 import { Color } from "../../types.js";
-import { ColorSchema, NumberSchema, StringSchema } from "../../schemas/index.js";
+import {
+  ColorSchema,
+  NumberSchema,
+  StringSchema,
+} from "../../schemas/index.js";
 import { Color as CuloriColor, formatHex8, getMode } from "culori";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
@@ -45,13 +49,13 @@ export const colorSpaces = [
   //XyB
   "xyb",
   //ITP
-  'itp',
+  "itp",
 
   //Cubehelix
-  "cubehelix"
+  "cubehelix",
 ] as const;
 
-export type ColorSpace = typeof colorSpaces[number];
+export type ColorSpace = (typeof colorSpaces)[number];
 
 export default class NodeDefinition extends Node {
   static title = "Create Color";

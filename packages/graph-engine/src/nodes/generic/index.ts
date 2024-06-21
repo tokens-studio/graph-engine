@@ -10,7 +10,6 @@ import passthrough from "./passthrough.js";
 import subgraph from "./subgraph.js";
 import time from "./time.js";
 
-
 export const nodes = [
   constant,
   input,
@@ -22,5 +21,5 @@ export const nodes = [
   note,
   objectMerge,
   time,
-  delay
+  delay,
 ];

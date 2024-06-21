@@ -1,15 +1,15 @@
+import { Box, Heading, IconButton, Stack } from '@tokens-studio/ui';
 import React, { useMemo } from 'react';
-import { Box, IconButton, Stack, Heading } from '@tokens-studio/ui';
 
-import { currentNode } from '@/redux/selectors/graph';
-import { useSelector } from 'react-redux';
-import { useGraph } from '@/hooks/useGraph';
-import { inputControls } from '@/redux/selectors/registry';
-import { PortPanel } from '@/components/portPanel';
-import { InfoCircle } from 'iconoir-react';
 import { DynamicInputs } from './dynamicInputs';
+import { InfoCircle } from 'iconoir-react';
+import { PortPanel } from '@/components/portPanel';
 import { annotatedDynamicInputs } from '@tokens-studio/graph-engine';
+import { currentNode } from '@/redux/selectors/graph';
 import { editable } from '@/annotations/index.js';
+import { inputControls } from '@/redux/selectors/registry';
+import { useGraph } from '@/hooks/useGraph';
+import { useSelector } from 'react-redux';
 
 export function Inputsheet() {
   const graph = useGraph();
@@ -17,7 +17,6 @@ export function Inputsheet() {
   const selectedNode = useMemo(() => graph?.getNode(nodeID), [graph, nodeID]);
 
   const inputControlRegistry = useSelector(inputControls);
-
 
   const SpecificInput = useMemo(() => {
     if (!selectedNode) {
@@ -30,8 +29,9 @@ export function Inputsheet() {
     return <></>;
   }
 
-  const dynamicInputs = selectedNode.annotations[annotatedDynamicInputs] && selectedNode.annotations[editable] !=false;
-
+  const dynamicInputs =
+    selectedNode.annotations[annotatedDynamicInputs] &&
+    selectedNode.annotations[editable] != false;
 
   return (
     <Box
@@ -60,7 +60,6 @@ export function Inputsheet() {
         </Stack>
 
         <Box css={{ padding: '$3' }}>
-
           {dynamicInputs && <DynamicInputs node={selectedNode} />}
 
           {SpecificInput ? <SpecificInput node={selectedNode} /> : null}

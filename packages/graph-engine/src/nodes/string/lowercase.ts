@@ -2,7 +2,6 @@ import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { StringSchema } from "../../schemas/index.js";
 
-
 /**
  * This node converts a string to lowercase
  */
@@ -13,11 +12,10 @@ export default class NodeDefinition extends Node {
 
   declare inputs: ToInput<{
     value: string;
-  }>
+  }>;
   declare outputs: ToOutput<{
     value: string;
-  }>
-
+  }>;
 
   constructor(props: INodeDefinition) {
     super(props);

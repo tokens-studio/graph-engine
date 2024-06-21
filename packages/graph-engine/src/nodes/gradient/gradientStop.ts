@@ -1,4 +1,8 @@
-import { ColorSchema, GradientStopSchema, NumberSchema } from "../../schemas/index.js";
+import {
+  ColorSchema,
+  GradientStopSchema,
+  NumberSchema,
+} from "../../schemas/index.js";
 import { INodeDefinition } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 
@@ -22,6 +26,6 @@ export default class NodeDefinition extends Node {
 
   execute(): void | Promise<void> {
     const { color, position } = this.getAllInputs();
-    this.setOutput("gradientStop", { 'color': color, 'position': position});
+    this.setOutput("gradientStop", { color: color, position: position });
   }
 }

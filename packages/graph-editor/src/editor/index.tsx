@@ -1,28 +1,29 @@
-/* eslint-disable react/display-name */
-// import 'reactflow/dist/style.css';
 import '../index.scss';
-import React from 'react';
-import { ReduxProvider } from '../redux/index.js';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { LayoutController } from './layoutController.js';
-import { nodeLookup as defaultNodeLookup } from '@tokens-studio/graph-engine';
+import { ReduxProvider } from '../redux/index.js';
 import { ToastProvider } from '@/hooks/useToast';
-import { defaultControls, defaultPanelGroupsFactory, defaultSpecifics } from '..';
+import {
+  defaultControls,
+  defaultPanelGroupsFactory,
+  defaultSpecifics,
+} from '..';
+import { nodeLookup as defaultNodeLookup } from '@tokens-studio/graph-engine';
+import React from 'react';
 
 /**
  * The main editor component
- * 
+ *
  */
 export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
   (props: EditorProps, ref) => {
-
     const {
-      panelItems =defaultPanelGroupsFactory(),
+      panelItems = defaultPanelGroupsFactory(),
       capabilities,
       nodeTypes = defaultNodeLookup,
-      controls = [...(defaultControls )],
+      controls = [...defaultControls],
       specifics = defaultSpecifics,
-      icons
+      icons,
     } = props;
 
     // Note that the provider exists around the layout controller so that the layout controller can register itself during mount
@@ -34,11 +35,11 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
           panelItems={panelItems}
           nodeTypes={nodeTypes}
           specifics={specifics}
-          capabilities={capabilities}>
+          capabilities={capabilities}
+        >
           <LayoutController {...props} ref={ref} />
         </ReduxProvider>
       </ToastProvider>
     );
   },
 );
-

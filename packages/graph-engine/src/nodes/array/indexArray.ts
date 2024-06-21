@@ -1,4 +1,8 @@
-import { AnyArraySchema, AnySchema, NumberSchema } from "../../schemas/index.js";
+import {
+  AnyArraySchema,
+  AnySchema,
+  NumberSchema,
+} from "../../schemas/index.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 export default class NodeDefinition<T> extends Node {
@@ -10,20 +14,19 @@ export default class NodeDefinition<T> extends Node {
     /**
      * The array to extract the value from
      */
-    array: T[]
+    array: T[];
     /**
-     * The index to extract the value from. 
+     * The index to extract the value from.
      * @default 0
      */
-    index: number
-  }>
+    index: number;
+  }>;
   declare outputs: ToOutput<{
     /**
      * The value at the given index
      */
-    value: T
-  }>
-
+    value: T;
+  }>;
 
   constructor(props: INodeDefinition) {
     super(props);

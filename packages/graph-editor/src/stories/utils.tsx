@@ -1,6 +1,6 @@
-import { RootModel, models } from '@/redux/models';
 import { RootState } from '@/redux/store';
 import { init } from '@rematch/core';
+import { models } from '@/redux/models';
 
 export const createMockStore = (
   initialState: Partial<{
@@ -16,6 +16,7 @@ export const createMockStore = (
         ...storeModels[key].state,
         ...value,
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any; // this is only for mock purposes so we don't need to worry too much here
   });
 

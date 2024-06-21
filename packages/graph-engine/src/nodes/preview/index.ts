@@ -5,12 +5,11 @@ import mathExpression from "./mathExpression.js";
 import number from "./number.js";
 import swatch from "./swatch.js";
 
-
 export const nodes = [
   colorCompare,
   colorScale,
   curve,
   mathExpression,
   number,
-  swatch
+  swatch,
 ];

@@ -7,7 +7,7 @@ import Color from "colorjs.io";
 
 export function modifyColor(
   baseColor: string,
-  modifier: ColorModifier
+  modifier: ColorModifier,
 ): string {
   const color: Color = new Color(baseColor);
   let returnedColor: Color = color;
@@ -23,7 +23,7 @@ export function modifyColor(
         color,
         modifier.space,
         Number(modifier.value),
-        new Color(modifier.color)
+        new Color(modifier.color),
       );
       break;
     case ColorModifierTypes.ALPHA: {

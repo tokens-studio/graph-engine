@@ -1,12 +1,15 @@
 {
   "private": true,
-  "name": "@tokens-studio/eslint-custom-config",
+  "name": "@tokens-studio/eslint-config-custom",
   "version": "0.0.0",
   "license": "MIT",
-  "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "@typescript-eslint/parser": "^7.1.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-config-turbo": "latest",
     "eslint-import-resolver-typescript": "3.5.5",

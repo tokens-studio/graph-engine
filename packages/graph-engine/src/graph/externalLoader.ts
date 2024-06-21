@@ -1,5 +1,5 @@
-import { Node } from "../programmatic/node.js";
 import { Graph } from "./graph.js";
+import { Node } from "../programmatic/node.js";
 
 export type ExternalLoadOptions = {
   /**

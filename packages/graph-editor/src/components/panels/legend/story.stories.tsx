@@ -1,7 +1,7 @@
 import { LegendInner } from './index';
+import { icons } from '@/registry/icon.js';
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { icons } from '@/registry/icon.js';
 
 const meta: Meta<typeof LegendInner> = {
   title: 'Panels/Legend',
@@ -12,6 +12,6 @@ const iconsRegistry = icons();
 export default meta;
 type Story = StoryObj<typeof LegendInner>;
 export const Default: Story = {
-  render: (args) => <LegendInner iconsRegistry={iconsRegistry} />,
+  render: () => <LegendInner iconsRegistry={iconsRegistry} />,
   args: {},
 };

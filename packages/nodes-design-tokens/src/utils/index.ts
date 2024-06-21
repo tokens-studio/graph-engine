@@ -87,8 +87,7 @@ export type W3CToken = {
   $value: string;
   $type: TokenTypes;
   alpha?: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  $extensions?: Record<string, any>;
+  $extensions?: Record<string, never>;
 };
 export interface W3CDeepKeyTokenMap {
   [key: string]: W3CDeepKeyTokenMap | W3CToken;

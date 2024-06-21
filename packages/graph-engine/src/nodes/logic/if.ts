@@ -8,7 +8,6 @@ export default class NodeDefinition<T, V> extends Node {
   static description =
     "If node allows you to conditionally choose a value based on a condition.";
 
-
   declare inputs: ToInput<{
     condition: boolean;
     a: T;
@@ -18,8 +17,6 @@ export default class NodeDefinition<T, V> extends Node {
   declare outputs: ToOutput<{
     value: T | V;
   }>;
-
-
 
   constructor(props: INodeDefinition) {
     super(props);

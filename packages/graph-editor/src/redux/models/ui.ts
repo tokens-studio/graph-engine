@@ -14,7 +14,7 @@ export const uiState = createModel<RootModel>()({
     currentReactFlow: undefined,
     showNodesCmdPalette: false,
     storeNodeInsertPosition: { x: 0, y: 0 },
-    contextMenus:true
+    contextMenus: true,
   } as UIState,
   reducers: {
     setContextMenus(state, contextMenus: boolean) {

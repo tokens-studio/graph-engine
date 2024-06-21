@@ -1,14 +1,13 @@
-import { RematchDispatch, init } from '@rematch/core';
-import { RootModel, models } from './models/index.ts';
-import { UIState } from './models/ui.ts';
-import persistPlugin from '@rematch/persist';
-import storage from 'redux-persist/lib/storage';
+import { GithubStorage } from '@/lib/storage/providers/github.ts';
 import { JourneyState } from './models/journey.ts';
 import { RefState } from './models/refs.ts';
-import { createTransform } from 'redux-persist';
+import { RematchDispatch, init } from '@rematch/core';
+import { RootModel, models } from './models/index.ts';
 import { StorageState, storageState } from './models/storage.ts';
-import { GithubStorage } from '@/lib/storage/providers/github.ts';
-
+import { UIState } from './models/ui.ts';
+import { createTransform } from 'redux-persist';
+import persistPlugin from '@rematch/persist';
+import storage from 'redux-persist/lib/storage';
 
 const StorageTransform = createTransform(
   // transform state on its way to being serialized and persisted.
@@ -18,10 +17,10 @@ const StorageTransform = createTransform(
 
       if (inbound.storage) {
         return {
-          ...inbound, storage: inbound.storage.serialize(),
-        }
+          ...inbound,
+          storage: inbound.storage.serialize(),
+        };
       }
-
     }
     // convert mySet to an Array.
     return { ...inboundState };
@@ -35,16 +34,16 @@ const StorageTransform = createTransform(
       const val = {
         ...storageState.state,
         ...outbound,
-        storage: outbound.storage ? GithubStorage.deserialize(outbound.storage) : undefined
+        storage: outbound.storage
+          ? GithubStorage.deserialize(outbound.storage)
+          : undefined,
       };
       return val;
-
     }
     // convert mySet back to a Set.
     return { ...outboundState };
-  }
+  },
 );
-
 
 const persistConfig = {
   key: 'root',
@@ -52,7 +51,6 @@ const persistConfig = {
   whitelist: ['journey', 'settings', 'storage'],
   transforms: [StorageTransform],
 };
-
 
 export const store = init({
   models,

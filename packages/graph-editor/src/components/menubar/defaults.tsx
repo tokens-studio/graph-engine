@@ -1,25 +1,36 @@
-import { Download, PagePlusIn, Settings as SettingsIcon, Play, Upload, Undo, Redo, Cpu, Archive } from 'iconoir-react';
-import { Menu, MenuItem, Seperator, SubMenu } from './data';
-import React, { MutableRefObject, useCallback } from 'react';
-import { MenuItemElement } from './menuItem';
-import { useSelector } from 'react-redux';
-import { dockerSelector } from '@/redux/selectors/refs';
-import DockLayout, { TabData } from 'rc-dock';
-import { OutputSheet } from '../panels/output';
-import { Legend } from '../panels/legend';
-import { DebugPanel } from '../panels/debugger';
-import { ImperativeEditorRef } from '@/editor/editorTypes';
-import { Settings } from '../panels/settings';
-import { Inputsheet } from '../panels/inputs';
-import { NodeSettingsPanel } from '../panels/nodeSettings';
 import { AlignmentPanel } from '../panels/alignment';
-import { PlayPanel } from '../panels/play';
-import { LogsPanel } from '../panels/logs';
-import { GraphPanel } from '../panels/graph';
+import {
+  Archive,
+  Cpu,
+  Download,
+  PagePlusIn,
+  Play,
+  Settings as SettingsIcon,
+  Upload,
+} from 'iconoir-react';
+import { DebugPanel } from '../panels/debugger';
 import { DropPanel } from '../panels/dropPanel';
-import { graphEditorSelector, mainGraphSelector } from '@/redux/selectors/graph';
+import { GraphPanel } from '../panels/graph';
+import { ImperativeEditorRef } from '@/editor/editorTypes';
+import { Inputsheet } from '../panels/inputs';
+import { Legend } from '../panels/legend';
+import { LogsPanel } from '../panels/logs';
+import { Menu, MenuItem, Seperator, SubMenu } from './data';
+import { MenuItemElement } from './menuItem';
+import { NodeSettingsPanel } from '../panels/nodeSettings';
+import { OutputSheet } from '../panels/output';
+import { PlayPanel } from '../panels/play';
+import { Settings } from '../panels/settings';
+import { dockerSelector } from '@/redux/selectors/refs';
+import {
+  graphEditorSelector,
+  mainGraphSelector,
+} from '@/redux/selectors/graph';
 import { title } from '@/annotations';
 import { useDispatch } from '@/hooks';
+import { useSelector } from 'react-redux';
+import DockLayout, { TabData } from 'rc-dock';
+import React, { MutableRefObject, useCallback } from 'react';
 
 export interface IWindowButton {
   //Id of the tab
@@ -32,8 +43,8 @@ export interface IWindowButton {
 }
 /**
  * A simple button that toggles a window panel
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export const windowButton = ({
   name,
@@ -81,7 +92,11 @@ export const windowButton = ({
         }
       };
 
-      return <MenuItemElement onClick={onToggle} key={title} icon={icon}>{title}</MenuItemElement >;
+      return (
+        <MenuItemElement onClick={onToggle} key={title} icon={icon}>
+          {title}
+        </MenuItemElement>
+      );
     },
   });
 
@@ -106,10 +121,7 @@ export const defaultMenuDataFactory = (): Menu =>
           new MenuItem({
             name: 'upload',
             render: function FileLoad(rest) {
-
-              const graphRef = useSelector(
-                graphEditorSelector,
-              );
+              const graphRef = useSelector(graphEditorSelector);
 
               const onClick = () => {
                 if (!graphRef) return;
@@ -124,8 +136,8 @@ export const defaultMenuDataFactory = (): Menu =>
                   if (!file) return;
                   const reader = new FileReader();
                   reader.onload = (e) => {
-                    const text = (e.target as any).result;
-                    const data = JSON.parse(text);
+                    const text = (e.target as FileReader).result;
+                    const data = JSON.parse(text as string);
 
                     //TODO open a new tab
                     graphRef.loadRaw(data);
@@ -146,7 +158,9 @@ export const defaultMenuDataFactory = (): Menu =>
             name: 'download',
             render: function FileSave(rest) {
               const mainGraph = useSelector(mainGraphSelector);
-              const graphRef = mainGraph?.ref as (ImperativeEditorRef | undefined);
+              const graphRef = mainGraph?.ref as
+                | ImperativeEditorRef
+                | undefined;
 
               const onSave = () => {
                 const saved = graphRef!.save();
@@ -191,10 +205,17 @@ export const defaultMenuDataFactory = (): Menu =>
           new MenuItem({
             name: 'find',
             render: ({ key, ...rest }) => {
+              // eslint-disable-next-line react-hooks/rules-of-hooks
               const dispatch = useDispatch();
-              return <MenuItemElement key={key} {...rest} onClick={() => dispatch.settings.setShowSearch(true)}>
-                Find
-              </MenuItemElement>
+              return (
+                <MenuItemElement
+                  key={key}
+                  {...rest}
+                  onClick={() => dispatch.settings.setShowSearch(true)}
+                >
+                  Find
+                </MenuItemElement>
+              );
             },
           }),
         ],
@@ -296,7 +317,11 @@ export const defaultMenuDataFactory = (): Menu =>
                 link.click();
               }, [dockerRef]);
               return (
-                <MenuItemElement icon={<Download />} onClick={saveLayout} {...rest}>
+                <MenuItemElement
+                  icon={<Download />}
+                  onClick={saveLayout}
+                  {...rest}
+                >
                   Save Layout
                 </MenuItemElement>
               );
@@ -320,8 +345,8 @@ export const defaultMenuDataFactory = (): Menu =>
                   if (!file) return;
                   const reader = new FileReader();
                   reader.onload = (e) => {
-                    const text = (e.target as any).result;
-                    const data = JSON.parse(text);
+                    const text = (e.target as FileReader).result;
+                    const data = JSON.parse(text as string);
                     dockerRef.current.loadLayout(data);
                   };
                   reader.readAsText(file);
@@ -330,7 +355,11 @@ export const defaultMenuDataFactory = (): Menu =>
               }, [dockerRef]);
 
               return (
-                <MenuItemElement icon={<Upload />} onClick={loadLayout} {...rest}>
+                <MenuItemElement
+                  icon={<Upload />}
+                  onClick={loadLayout}
+                  {...rest}
+                >
                   Load Layout
                 </MenuItemElement>
               );

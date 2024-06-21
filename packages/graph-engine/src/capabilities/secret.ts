@@ -1,28 +1,27 @@
-import { CapabilityFactory, Graph } from "../graph";
-
+import { CapabilityFactory } from "../graph";
 
 export type SecretConfig = {
-    secret: string;
-    key: string;
-}
+  secret: string;
+  key: string;
+};
 
 export interface SecretCapability {
-    getSecret(config: SecretConfig): Promise<string>;
+  getSecret(config: SecretConfig): Promise<string>;
 }
 
 /**
  * This is a dummy factory that shows how to suport the secret capability
- * @returns 
+ * @returns
  */
 export const SecretCapability: CapabilityFactory = {
-    name: "secret",
-    register: (graph: Graph) => {
-        const ctx = {
-            getSecret: async (config: SecretConfig) => {
-                return '';
-            }
-        } as SecretCapability;
+  name: "secret",
+  register: () => {
+    const ctx = {
+      getSecret: async () => {
+        return "";
+      },
+    } as SecretCapability;
 
-        return ctx;
-    }
-}
+    return ctx;
+  },
+};

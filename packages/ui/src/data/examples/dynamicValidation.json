@@ -1,266 +1,259 @@
 {
-    "nodes": [
+  "nodes": [
+    {
+      "id": "e8c2cad6-e0d1-43ee-a2fa-40a7317ace84",
+      "type": "studio.tokens.generic.input",
+      "inputs": [
         {
-            "id": "e8c2cad6-e0d1-43ee-a2fa-40a7317ace84",
-            "type": "studio.tokens.generic.input",
-            "inputs": [
-                {
-                    "name": "number",
-                    "value": 5,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/number.json",
-                        "title": "Number",
-                        "type": "number"
-                    },
-                    "annotations": {
-                        "ui.deletable": true
-                    }
-                }
-            ],
-            "annotations": {
-                "engine.singleton": true,
-                "engine.dynamicInputs": true,
-                "ui.position.x": 260.5599203187626,
-                "ui.position.y": 172.5
-            }
-        },
-        {
-            "id": "7160b44e-daac-4fd1-9de4-c34755fd2b57",
-            "type": "studio.tokens.logic.compare",
-            "inputs": [
-                {
-                    "name": "a",
-                    "value": 1,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/any.json",
-                        "title": "Any"
-                    },
-                    "dynamicType": {
-                        "$id": "https://schemas.tokens.studio/number.json",
-                        "title": "Number",
-                        "type": "number"
-                    },
-                    "visible": true
-                },
-                {
-                    "name": "b",
-                    "value": 0,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/any.json",
-                        "title": "Any"
-                    },
-                    "dynamicType": {
-                        "$id": "https://schemas.tokens.studio/number.json",
-                        "title": "Number",
-                        "type": "number"
-                    },
-                    "visible": true,
-                    "annotations": {
-                        "ui.resetable": true
-                    }
-                },
-                {
-                    "name": "operator",
-                    "value": "==",
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/string.json",
-                        "title": "String",
-                        "type": "string",
-                        "enum": [
-                            "==",
-                            "!=",
-                            ">",
-                            "<",
-                            ">=",
-                            "<="
-                        ],
-                        "default": "=="
-                    },
-                    "visible": true
-                }
-            ],
-            "annotations": {
-                "ui.position.x": 1410,
-                "ui.position.y": 83.5
-            }
-        },
-        {
-            "id": "f23f8736-3993-499c-a54b-e0eb3f199727",
-            "type": "studio.tokens.generic.panic",
-            "inputs": [
-                {
-                    "name": "trigger",
-                    "value": false,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/any.json",
-                        "title": "Any"
-                    },
-                    "dynamicType": {
-                        "$id": "https://schemas.tokens.studio/boolean.json",
-                        "title": "Boolean",
-                        "type": "boolean",
-                        "default": false
-                    },
-                    "visible": true
-                }
-            ],
-            "annotations": {
-                "ui.position.x": 1984,
-                "ui.position.y": 83.5
-            }
-        },
-        {
-            "id": "197ad98a-d584-4b2d-858e-46758e0b1363",
-            "type": "studio.tokens.math.mod",
-            "inputs": [
-                {
-                    "name": "a",
-                    "value": 5,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/number.json",
-                        "title": "Number",
-                        "type": "number"
-                    },
-                    "visible": true
-                },
-                {
-                    "name": "b",
-                    "value": 2,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/number.json",
-                        "title": "Number",
-                        "type": "number"
-                    },
-                    "visible": true
-                }
-            ],
-            "annotations": {
-                "ui.position.x": 836,
-                "ui.position.y": 83.5
-            }
-        },
-        {
-            "id": "54c74026-d435-4628-8b18-241e658cd9e6",
-            "type": "studio.tokens.generic.note",
-            "inputs": [],
-            "annotations": {
-                "ui.position.x": 920.2097303281437,
-                "ui.position.y": -234.35051016594764,
-                "ui.nodeType": "studio.tokens.generic.note",
-                "ui.description": "In this example we are doing dynamic validation of a number. \n\nWe are checking to see if a number is even, in which case we throw an error, otherwise proceed with the rest of the evaluation.\n\nChange the input to `4` to see it in action.\n\nWhen running this graph as a oneshot batch you will receive an error to say that you've failed"
-            }
-        },
-        {
-            "id": "91be3b55-303d-4029-b1d3-fac772ee386f",
-            "type": "studio.tokens.generic.output",
-            "inputs": [
-                {
-                    "name": "value",
-                    "value": 30,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/any.json",
-                        "title": "Any"
-                    },
-                    "dynamicType": {
-                        "$id": "https://schemas.tokens.studio/number.json",
-                        "title": "Number",
-                        "type": "number"
-                    },
-                    "visible": true,
-                    "annotations": {
-                        "ui.deletable": true
-                    }
-                }
-            ],
-            "annotations": {
-                "engine.singleton": true,
-                "engine.dynamicInputs": true,
-                "ui.position.x": 1410,
-                "ui.position.y": 261.5
-            }
-        },
-        {
-            "id": "abaa8b08-46c2-44c9-8e20-71eed47ff4f1",
-            "type": "studio.tokens.math.eval",
-            "inputs": [
-                {
-                    "name": "expression",
-                    "value": "25+x",
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/string.json",
-                        "title": "String",
-                        "type": "string"
-                    },
-                    "visible": true
-                },
-                {
-                    "name": "x",
-                    "value": 5,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/number.json",
-                        "title": "Number",
-                        "type": "number"
-                    },
-                    "visible": true,
-                    "annotations": {
-                        "ui.deletable": true
-                    }
-                }
-            ],
-            "annotations": {
-                "engine.dynamicInputs": true,
-                "ui.position.x": 836,
-                "ui.position.y": 261.5
-            }
+          "name": "number",
+          "value": 5,
+          "type": {
+            "$id": "https://schemas.tokens.studio/number.json",
+            "title": "Number",
+            "type": "number"
+          },
+          "annotations": {
+            "ui.deletable": true
+          }
         }
-    ],
-    "edges": [
+      ],
+      "annotations": {
+        "engine.singleton": true,
+        "engine.dynamicInputs": true,
+        "ui.position.x": 260.5599203187626,
+        "ui.position.y": 172.5
+      }
+    },
+    {
+      "id": "7160b44e-daac-4fd1-9de4-c34755fd2b57",
+      "type": "studio.tokens.logic.compare",
+      "inputs": [
         {
-            "id": "4186118d-ca81-46b1-94e1-ef98c667f5fc",
-            "source": "7160b44e-daac-4fd1-9de4-c34755fd2b57",
-            "sourceHandle": "value",
-            "target": "f23f8736-3993-499c-a54b-e0eb3f199727",
-            "targetHandle": "trigger"
+          "name": "a",
+          "value": 1,
+          "type": {
+            "$id": "https://schemas.tokens.studio/any.json",
+            "title": "Any"
+          },
+          "dynamicType": {
+            "$id": "https://schemas.tokens.studio/number.json",
+            "title": "Number",
+            "type": "number"
+          },
+          "visible": true
         },
         {
-            "id": "61504d3e-0b45-4df8-a457-4050a82912fe",
-            "source": "e8c2cad6-e0d1-43ee-a2fa-40a7317ace84",
-            "sourceHandle": "number",
-            "target": "197ad98a-d584-4b2d-858e-46758e0b1363",
-            "targetHandle": "a"
+          "name": "b",
+          "value": 0,
+          "type": {
+            "$id": "https://schemas.tokens.studio/any.json",
+            "title": "Any"
+          },
+          "dynamicType": {
+            "$id": "https://schemas.tokens.studio/number.json",
+            "title": "Number",
+            "type": "number"
+          },
+          "visible": true,
+          "annotations": {
+            "ui.resetable": true
+          }
         },
         {
-            "id": "00417ac0-2be6-412e-8037-04f69d76a2a2",
-            "source": "197ad98a-d584-4b2d-858e-46758e0b1363",
-            "sourceHandle": "value",
-            "target": "7160b44e-daac-4fd1-9de4-c34755fd2b57",
-            "targetHandle": "a"
-        },
-        {
-            "id": "646da482-f889-454b-a489-e132ef7b5627",
-            "source": "e8c2cad6-e0d1-43ee-a2fa-40a7317ace84",
-            "sourceHandle": "number",
-            "target": "abaa8b08-46c2-44c9-8e20-71eed47ff4f1",
-            "targetHandle": "x"
-        },
-        {
-            "id": "25959d5f-ce56-4dd2-b661-ea89243fa02e",
-            "source": "abaa8b08-46c2-44c9-8e20-71eed47ff4f1",
-            "sourceHandle": "value",
-            "target": "91be3b55-303d-4029-b1d3-fac772ee386f",
-            "targetHandle": "value"
+          "name": "operator",
+          "value": "==",
+          "type": {
+            "$id": "https://schemas.tokens.studio/string.json",
+            "title": "String",
+            "type": "string",
+            "enum": ["==", "!=", ">", "<", ">=", "<="],
+            "default": "=="
+          },
+          "visible": true
         }
-    ],
-    "annotations": {
-        "engine.id": "c5bbd806-2d54-46d8-b2d7-25c44d84ff52",
-        "engine.capabilities.web-audio": "0.0.0",
-        "engine.capabilities.fs": "0.0.0",
-        "engine.version": "0.12.0",
-        "ui.viewport": {
-            "x": -476.15512073503885,
-            "y": 347.6940008868933,
-            "zoom": 0.9449407758537368
+      ],
+      "annotations": {
+        "ui.position.x": 1410,
+        "ui.position.y": 83.5
+      }
+    },
+    {
+      "id": "f23f8736-3993-499c-a54b-e0eb3f199727",
+      "type": "studio.tokens.generic.panic",
+      "inputs": [
+        {
+          "name": "trigger",
+          "value": false,
+          "type": {
+            "$id": "https://schemas.tokens.studio/any.json",
+            "title": "Any"
+          },
+          "dynamicType": {
+            "$id": "https://schemas.tokens.studio/boolean.json",
+            "title": "Boolean",
+            "type": "boolean",
+            "default": false
+          },
+          "visible": true
+        }
+      ],
+      "annotations": {
+        "ui.position.x": 1984,
+        "ui.position.y": 83.5
+      }
+    },
+    {
+      "id": "197ad98a-d584-4b2d-858e-46758e0b1363",
+      "type": "studio.tokens.math.mod",
+      "inputs": [
+        {
+          "name": "a",
+          "value": 5,
+          "type": {
+            "$id": "https://schemas.tokens.studio/number.json",
+            "title": "Number",
+            "type": "number"
+          },
+          "visible": true
         },
-        "ui.version": "2.9.4"
+        {
+          "name": "b",
+          "value": 2,
+          "type": {
+            "$id": "https://schemas.tokens.studio/number.json",
+            "title": "Number",
+            "type": "number"
+          },
+          "visible": true
+        }
+      ],
+      "annotations": {
+        "ui.position.x": 836,
+        "ui.position.y": 83.5
+      }
+    },
+    {
+      "id": "54c74026-d435-4628-8b18-241e658cd9e6",
+      "type": "studio.tokens.generic.note",
+      "inputs": [],
+      "annotations": {
+        "ui.position.x": 920.2097303281437,
+        "ui.position.y": -234.35051016594764,
+        "ui.nodeType": "studio.tokens.generic.note",
+        "ui.description": "In this example we are doing dynamic validation of a number. \n\nWe are checking to see if a number is even, in which case we throw an error, otherwise proceed with the rest of the evaluation.\n\nChange the input to `4` to see it in action.\n\nWhen running this graph as a oneshot batch you will receive an error to say that you've failed"
+      }
+    },
+    {
+      "id": "91be3b55-303d-4029-b1d3-fac772ee386f",
+      "type": "studio.tokens.generic.output",
+      "inputs": [
+        {
+          "name": "value",
+          "value": 30,
+          "type": {
+            "$id": "https://schemas.tokens.studio/any.json",
+            "title": "Any"
+          },
+          "dynamicType": {
+            "$id": "https://schemas.tokens.studio/number.json",
+            "title": "Number",
+            "type": "number"
+          },
+          "visible": true,
+          "annotations": {
+            "ui.deletable": true
+          }
+        }
+      ],
+      "annotations": {
+        "engine.singleton": true,
+        "engine.dynamicInputs": true,
+        "ui.position.x": 1410,
+        "ui.position.y": 261.5
+      }
+    },
+    {
+      "id": "abaa8b08-46c2-44c9-8e20-71eed47ff4f1",
+      "type": "studio.tokens.math.eval",
+      "inputs": [
+        {
+          "name": "expression",
+          "value": "25+x",
+          "type": {
+            "$id": "https://schemas.tokens.studio/string.json",
+            "title": "String",
+            "type": "string"
+          },
+          "visible": true
+        },
+        {
+          "name": "x",
+          "value": 5,
+          "type": {
+            "$id": "https://schemas.tokens.studio/number.json",
+            "title": "Number",
+            "type": "number"
+          },
+          "visible": true,
+          "annotations": {
+            "ui.deletable": true
+          }
+        }
+      ],
+      "annotations": {
+        "engine.dynamicInputs": true,
+        "ui.position.x": 836,
+        "ui.position.y": 261.5
+      }
     }
+  ],
+  "edges": [
+    {
+      "id": "4186118d-ca81-46b1-94e1-ef98c667f5fc",
+      "source": "7160b44e-daac-4fd1-9de4-c34755fd2b57",
+      "sourceHandle": "value",
+      "target": "f23f8736-3993-499c-a54b-e0eb3f199727",
+      "targetHandle": "trigger"
+    },
+    {
+      "id": "61504d3e-0b45-4df8-a457-4050a82912fe",
+      "source": "e8c2cad6-e0d1-43ee-a2fa-40a7317ace84",
+      "sourceHandle": "number",
+      "target": "197ad98a-d584-4b2d-858e-46758e0b1363",
+      "targetHandle": "a"
+    },
+    {
+      "id": "00417ac0-2be6-412e-8037-04f69d76a2a2",
+      "source": "197ad98a-d584-4b2d-858e-46758e0b1363",
+      "sourceHandle": "value",
+      "target": "7160b44e-daac-4fd1-9de4-c34755fd2b57",
+      "targetHandle": "a"
+    },
+    {
+      "id": "646da482-f889-454b-a489-e132ef7b5627",
+      "source": "e8c2cad6-e0d1-43ee-a2fa-40a7317ace84",
+      "sourceHandle": "number",
+      "target": "abaa8b08-46c2-44c9-8e20-71eed47ff4f1",
+      "targetHandle": "x"
+    },
+    {
+      "id": "25959d5f-ce56-4dd2-b661-ea89243fa02e",
+      "source": "abaa8b08-46c2-44c9-8e20-71eed47ff4f1",
+      "sourceHandle": "value",
+      "target": "91be3b55-303d-4029-b1d3-fac772ee386f",
+      "targetHandle": "value"
+    }
+  ],
+  "annotations": {
+    "engine.id": "c5bbd806-2d54-46d8-b2d7-25c44d84ff52",
+    "engine.capabilities.web-audio": "0.0.0",
+    "engine.capabilities.fs": "0.0.0",
+    "engine.version": "0.12.0",
+    "ui.viewport": {
+      "x": -476.15512073503885,
+      "y": 347.6940008868933,
+      "zoom": 0.9449407758537368
+    },
+    "ui.version": "2.9.4"
+  }
 }

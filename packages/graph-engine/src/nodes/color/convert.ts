@@ -33,7 +33,7 @@ export const colorSpaces = [
   "okhsl",
   "cubehelix",
 ] as const;
-export type ColorSpace = typeof colorSpaces[number];
+export type ColorSpace = (typeof colorSpaces)[number];
 
 export default class NodeDefinition extends Node {
   static title = "Convert Color";
@@ -51,8 +51,8 @@ export default class NodeDefinition extends Node {
      */
     a: number;
     /**
-    * The second channel of the color
-    */
+     * The second channel of the color
+     */
     b: number;
     /**
      * The third channel of the color
@@ -68,7 +68,6 @@ export default class NodeDefinition extends Node {
     channels: (number | undefined)[];
     labels: string[];
   }>;
-
 
   constructor(props: INodeDefinition) {
     super(props);
@@ -91,10 +90,10 @@ export default class NodeDefinition extends Node {
       type: NumberSchema,
     });
     this.addOutput("d", {
-      type: NumberSchema
+      type: NumberSchema,
     });
     this.addOutput("channels", {
-      type: arrayOf(NumberSchema)
+      type: arrayOf(NumberSchema),
     });
     this.addOutput("labels", {
       type: arrayOf(StringSchema),
@@ -102,7 +101,9 @@ export default class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
-    let { color, space } = this.getAllInputs();
+    const inputs = this.getAllInputs();
+    const { color } = inputs;
+    let { space } = inputs;
 
     if (!colorSpaces.includes(space)) {
       throw new Error("Invalid color space " + space);

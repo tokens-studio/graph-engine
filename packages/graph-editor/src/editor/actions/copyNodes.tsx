@@ -1,5 +1,5 @@
+import { Node, ReactFlowInstance } from 'reactflow';
 import { SerializedNode } from '@/types/serializedNode';
-import { ReactFlowInstance, Node } from 'reactflow';
 import { v4 as uuidv4 } from 'uuid';
 
 export const copyNodeAction = (

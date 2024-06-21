@@ -7,10 +7,8 @@ export default class NodeDefinition extends Node {
   static type = "studio.tokens.math.cos";
   static description = "Cos node allows you to get the cosine of a number.";
 
-
   declare inputs: ToInput<{
     value: number;
-
   }>;
   declare outputs: ToOutput<{
     value: number;

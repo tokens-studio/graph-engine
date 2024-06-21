@@ -1,6 +1,6 @@
 import { Graph, TypeDefinition } from "..";
-import { Node } from "../programmatic/node";
 import { GraphSchema } from "../schemas/index.js";
+import { Node } from "../programmatic/node";
 
 export interface SerializedInput {
   name: string;
@@ -34,12 +34,10 @@ export interface SerializedGraph {
   edges: SerializedEdge[];
 }
 
-
 export type IDeserializeOpts = {
   serialized: SerializedNode;
   graph: Graph;
   lookup: Record<string, NodeFactory>;
 };
-
 
 export type NodeFactory = typeof Node;

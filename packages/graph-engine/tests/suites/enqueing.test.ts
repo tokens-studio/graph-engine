@@ -13,11 +13,10 @@ describe("enqueing", () => {
     const sub = new SubtractNode({ id: "sub", graph });
     const output = new OutputNode({ id: "output", graph });
 
-    //Create an input port on the output node 
+    //Create an input port on the output node
     output.addInput("input", {
       type: NumberSchema,
     });
-
 
     //We should only be setting values here after we are sure that the nodes exists in a graph
     input1.inputs.value.setValue(2, {
@@ -39,7 +38,7 @@ describe("enqueing", () => {
       input: {
         type: NumberSchema,
         value: -1,
-      }
+      },
     };
 
     expect(final.output).toEqual(expected);

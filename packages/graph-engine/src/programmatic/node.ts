@@ -1,15 +1,13 @@
-import { Graph } from '../graph/index.js';
+import { Graph } from "../graph/index.js";
 import { GraphSchema } from "../schemas/index.js";
 import { IDeserializeOpts, SerializedNode } from "../graph/types.js";
 import { Input } from "./input.js";
 import { Output } from "./output.js";
 import { action, computed, makeObservable, observable } from "mobx";
 import { annotatedNodeRunning } from "../annotations/index.js";
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
 import getDefaults from "json-schema-defaults";
 import type { NodeRun } from "../types.js";
-
-
 
 export interface INodeDefinition {
   graph: Graph;
@@ -33,7 +31,6 @@ export interface TypeDefinition {
    */
   annotations?: Record<string, unknown>;
 }
-
 
 export class Node {
   /**
@@ -80,8 +77,8 @@ export class Node {
       execute: action,
       addOutput: action,
       clearOutputs: action,
-      setAnnotation:action,
-      removeInput:action,
+      setAnnotation: action,
+      removeInput: action,
       removeOutput: action,
     });
     //Defined nodes would be specified here
@@ -118,7 +115,7 @@ export class Node {
   }
   /**
    * Removes a named input from the node. This should only be used for dynamic inputs
-   * @param name 
+   * @param name
    */
   removeInput(name: string) {
     if (this._graph) {
@@ -155,13 +152,12 @@ export class Node {
    * This can be used directly, but you should preferably never call this and instead execute from the graph which will control the lifecycle of the node
    * @override
    */
-  execute(): Promise<void> | void { }
+  execute(): Promise<void> | void {}
 
   /**
    * Runs the node. Internally this calls the execute method, but the run entrypoint allows for additional tracking and lifecycle management
    */
   async run(): Promise<NodeRun> {
-
     this.annotations[annotatedNodeRunning] = true;
     const start = performance.now();
     this.getGraph()?.emit("nodeStarted", {
@@ -187,14 +183,14 @@ export class Node {
 
     this.getGraph()?.emit("nodeExecuted", result);
 
-    return result
+    return result;
   }
 
   /**
    * Asks the controlling graph to load a resource.
    * This cannot be called if the node is not part of a graph
-   * @param uri 
-   * @param data 
+   * @param uri
+   * @param data
    */
   async load(uri: string, data?: unknown) {
     this._graph?.loadResource(uri, this, data);
@@ -261,7 +257,7 @@ export class Node {
   public static deserialize(opts: IDeserializeOpts): Node {
     const newNode = new this({
       id: opts.serialized.id,
-      ...opts
+      ...opts,
     });
 
     newNode.annotations = opts.serialized.annotations || {};
@@ -283,7 +279,6 @@ export class Node {
           annotations: input.annotations,
         });
       } else {
-
         //Set the value from the saved value
         foundInput.deserialize(input);
       }
@@ -299,31 +294,31 @@ export class Node {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getAllInputs = <T = Record<string, any>>(): T => {
     return Object.fromEntries(
-      Object.entries(this.inputs).map(([key, value]) => [key, value.value])
+      Object.entries(this.inputs).map(([key, value]) => [key, value.value]),
     ) as T;
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getAllOutputs = <T = Record<string, any>>(): T => {
     return Object.fromEntries(
-      Object.entries(this.outputs).map(([key, value]) => [key, value.value])
+      Object.entries(this.outputs).map(([key, value]) => [key, value.value]),
     ) as T;
   };
 
   /**
    * Handles cleanup for nodes with state.
    * Use the super method to clear the graph reference
-   * 
+   *
    * @example
    * ```typescript
    * class MyNode extends Node {
    *  dispose() {
-   * 
+   *
    *   Node.prototype.dispose.call(this);
    *   // or if you have full ES6 support
    *   super.dispose();
-   * 
-   *  //Some additional manual cleanup 
+   *
+   *  //Some additional manual cleanup
    *  // ...
    * }
    */
@@ -355,7 +350,7 @@ export class Node {
    */
   public getOutput() {
     return Object.fromEntries(
-      Object.entries(this.outputs).map(([key, value]) => [key, value.value()])
+      Object.entries(this.outputs).map(([key, value]) => [key, value.value()]),
     );
   }
 
@@ -363,8 +358,8 @@ export class Node {
    * Function to call when the graph has been started.
    * This is only really necessary for nodes that need to do something when the graph is expected to be running continuously
    */
-  public onStart = () => { };
-  public onStop = () => { };
+  public onStart = () => {};
+  public onStop = () => {};
   /**
    * By default, the node will stop when the graph is paused
    */
@@ -378,4 +373,3 @@ export class Node {
     this.onStart();
   };
 }
-

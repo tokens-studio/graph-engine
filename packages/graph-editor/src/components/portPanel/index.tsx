@@ -1,23 +1,31 @@
-import React, { useCallback, useMemo } from 'react';
 import {
-  IconButton,
-  Stack,
-  Label,
-  Tooltip,
   DropdownMenu,
+  IconButton,
+  Label,
+  Stack,
+  Tooltip,
 } from '@tokens-studio/ui';
-import { useSelector } from 'react-redux';
-import { observer } from 'mobx-react-lite';
-import { Input } from '@tokens-studio/graph-engine';
 import { Port as GraphPort } from '@tokens-studio/graph-engine';
+import { Input } from '@tokens-studio/graph-engine';
+import { observer } from 'mobx-react-lite';
+import { useSelector } from 'react-redux';
+import React, { useCallback, useMemo } from 'react';
 
-import { Xmark, MoreVert, EyeClosed, Puzzle, Undo, EyeSolid, Download } from 'iconoir-react';
-import { InlineTypeLabel } from '@/components/flow';
-import { useGraph } from '@/hooks/useGraph';
-import { controls } from '@/redux/selectors/registry';
+import {
+  Download,
+  EyeClosed,
+  EyeSolid,
+  MoreVert,
+  Puzzle,
+  Undo,
+  Xmark,
+} from 'iconoir-react';
 import { IField } from '@/components/controls/interface';
+import { InlineTypeLabel } from '@/components/flow';
+import { controls } from '@/redux/selectors/registry';
+import { deletable, hidden, resetable } from '@/annotations';
+import { useGraph } from '@/hooks/useGraph';
 import copy from 'copy-to-clipboard';
-import { deletable, resetable, hidden } from '@/annotations';
 
 export interface IPortPanel {
   ports: Record<string, GraphPort>;
@@ -27,28 +35,28 @@ export interface IPortPanel {
 export const PortPanel = observer(({ ports, readOnly }: IPortPanel) => {
   const entries = Object.values(ports).sort();
 
-
   return (
     <Stack direction="column" gap={3} width="full">
-      {entries.filter(x=>!x.annotations[hidden]).map((x) => (
-        <Port port={x} key={x.name} readOnly={readOnly} />
-      ))}
+      {entries
+        .filter((x) => !x.annotations[hidden])
+        .map((x) => (
+          <Port port={x} key={x.name} readOnly={readOnly} />
+        ))}
     </Stack>
   );
 });
 
 export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
-
   const readOnly = isReadOnly || port.isConnected;
   const controlSelector = useSelector(controls);
   const graph = useGraph();
-  const isInput = "studio.tokens.generic.input" === port.node.factory.type;
+  const isInput = 'studio.tokens.generic.input' === port.node.factory.type;
   const isDynamicInput = Boolean(port.annotations[deletable]);
   const resettable = Boolean(port.annotations[resetable]);
 
   const inner = useMemo(() => {
     const field = controlSelector.find((x) => x.matcher(port, { readOnly }));
-    const Component = field?.component!;
+    const Component = field?.component as React.FC<IField>;
 
     return <Component port={port} readOnly={readOnly} />;
     //We use an explicit dependency on the type
@@ -67,7 +75,6 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
         .filter((x) => x.sourceHandle === port.name)
         .map((x) => graph.removeEdge(x.id));
     }
-
 
     port.node.removeInput(port.name);
 

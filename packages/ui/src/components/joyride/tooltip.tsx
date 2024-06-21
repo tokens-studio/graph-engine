@@ -1,4 +1,4 @@
-import { Box, Button, Heading, Stack, Separator } from '@tokens-studio/ui';
+import { Box, Button, Heading, Separator, Stack } from '@tokens-studio/ui';
 
 export const JoyrideTooltip = ({
   continuous,

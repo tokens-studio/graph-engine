@@ -1,4 +1,8 @@
-import { AnySchema, BooleanSchema, createVariadicSchema } from "../../schemas/index.js";
+import {
+  AnySchema,
+  BooleanSchema,
+  createVariadicSchema,
+} from "../../schemas/index.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 
@@ -6,7 +10,6 @@ export default class NodeDefinition<T> extends Node {
   static title = "Logical or";
   static type = "studio.tokens.logic.or";
   static description = "OR node allows you to check if all inputs are true.";
-
 
   declare inputs: ToInput<{
     value: T;

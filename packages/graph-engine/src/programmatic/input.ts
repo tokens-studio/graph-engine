@@ -17,7 +17,7 @@ export interface IInputProps<T = any> {
   /**
    * Whether the input is pure. Impure inputs will result in a trigger of the node if they change value, whereas if the input is pure and receives no change, it assumes the same output will be produced and is ignored.
    */
-  impure?: boolean
+  impure?: boolean;
 }
 
 export interface ISetValue {
@@ -117,7 +117,6 @@ export class Input<T = any> extends Port<T> {
       serialized.dynamicType = this._dynamicType;
     }
 
-
     //Try compact the serialization by omitting the value if its the default
     if (type.variadic) {
       serialized.variadic = true;
@@ -141,9 +140,8 @@ export class Input<T = any> extends Port<T> {
   }
 }
 
-
 /**
- * Converts a type definition to a map of inputs 
+ * Converts a type definition to a map of inputs
  * @example
  * ```ts
  * type myType = {

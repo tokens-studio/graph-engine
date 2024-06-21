@@ -1,5 +1,6 @@
 import { Edge, Graph, nodeLookup } from "../../src/index.js";
-import {  StringSchema } from "../../src/schemas/index.js";
+import { StringSchema } from "../../src/schemas/index.js";
+import { expect } from 'chai';
 import InputNode from "../../src/nodes/generic/input.js";
 import OutputNode from "../../src/nodes/generic/output.js";
 
@@ -30,7 +31,7 @@ describe("nodeUsage", () => {
     //Input is a special case with dynamic values so it needs to be executed and computed to generate the output values
     const res = await input.run();
 
-    expect(res.error).toBeUndefined();
+    expect(res.error).to.be.undefined;
 
 
     const edge = input.outputs.foo.connect(output.inputs.input);
@@ -44,7 +45,7 @@ describe("nodeUsage", () => {
     });
 
 
-    expect(final.output).toEqual({
+    expect(final.output).to.eql({
       input: {
         type: {
           $id: "https://schemas.tokens.studio/string.json",
@@ -57,12 +58,12 @@ describe("nodeUsage", () => {
 
     const serialized = graph.serialize();
 
-    expect(serialized.annotations['engine.version']).toEqual('0.12.0');
+    expect(serialized.annotations['engine.version']).to.equal('0.12.0');
 
-    expect(serialized).toHaveProperty('edges');
-    expect(serialized).toHaveProperty('nodes');
+    expect(serialized).to.have.property('edges');
+    expect(serialized).to.have.property('nodes');
 
-    expect(serialized.edges).toEqual([
+    expect(serialized.edges).to.eql([
       {
         id: (edge as Edge).id,
         source: "780c1b1a-6931-4176-90c5-2efaef37d43a",
@@ -71,10 +72,10 @@ describe("nodeUsage", () => {
         targetHandle: "input",
       },
     ]);
-    expect(serialized.nodes.length).toEqual(2);
+    expect(serialized.nodes.length).to.equal(2);
 
 
-    expect(serialized.nodes).toEqual(
+    expect(serialized.nodes).to.eql(
       [
         {
           id: "780c1b1a-6931-4176-90c5-2efaef37d43a",
@@ -125,7 +126,7 @@ describe("nodeUsage", () => {
       nodeLookup
     ).execute();
 
-    expect(deserializedOutput.output).toEqual({
+    expect(deserializedOutput.output).to.eql({
       input: {
         type: {
           $id: "https://schemas.tokens.studio/string.json",

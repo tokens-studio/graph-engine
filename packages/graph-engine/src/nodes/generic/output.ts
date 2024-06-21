@@ -1,10 +1,11 @@
-
 import { IDeserializeOpts } from "../../graph/types.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
 import { ToInput } from "../../programmatic/input.js";
 import { ToOutput } from "../../programmatic/output.js";
-import { annotatedDynamicInputs, annotatedSingleton } from '../../annotations/index.js';
-
+import {
+  annotatedDynamicInputs,
+  annotatedSingleton,
+} from "../../annotations/index.js";
 
 /**
  * Acts as an output node for the graph. There should only be a single output node per graph.
@@ -28,7 +29,6 @@ export default class NodeDefinition<T> extends Node {
     this.annotations[annotatedDynamicInputs] = true;
   }
 
-
   static override deserialize(opts: IDeserializeOpts) {
     const node = super.deserialize(opts);
 
@@ -37,18 +37,15 @@ export default class NodeDefinition<T> extends Node {
       const rawInput = node.getRawInput(input);
       node.addOutput(input, {
         type: rawInput.type,
-
       });
     });
 
     return node;
   }
 
-
   execute(): void | Promise<void> {
     const inputs = this.getAllInputs();
     const outputs = this.getAllOutputs();
-
 
     //Passthrough all
     Object.keys(inputs).forEach((input) => {

@@ -1,10 +1,10 @@
-import React from 'react';
-import { Button, Dialog, TextInput, Text, IconButton } from '@tokens-studio/ui';
-import { useSelector } from 'react-redux';
-import { graphEditorSelector, showSearchSelector } from '@/redux/selectors';
+import { Button, Dialog, IconButton, Text, TextInput } from '@tokens-studio/ui';
 import { Xmark } from 'iconoir-react';
-import { useDispatch, useGraph } from '@/hooks';
 import { title as annotatedTitle } from '@/annotations';
+import { graphEditorSelector, showSearchSelector } from '@/redux/selectors';
+import { useDispatch, useGraph } from '@/hooks';
+import { useSelector } from 'react-redux';
+import React from 'react';
 
 export const FindDialog = () => {
   const [id, setId] = React.useState('');
@@ -14,49 +14,52 @@ export const FindDialog = () => {
   const graph = useSelector(graphEditorSelector);
   const open = useSelector(showSearchSelector);
 
-
   const setOpen = (value: boolean) => {
     dispatch.settings.setShowSearch(value);
-  }
-
+  };
 
   const onClick = () => {
     const reactflow = graph?.getFlow();
     if (!localGraph || !reactflow) {
-      return
+      return;
     }
-
 
     const node = reactflow.getNodes().find((n) => n.id === id);
 
     if (node) {
-      reactflow.fitView({ padding: 0.2, includeHiddenNodes: true, nodes: [node] });
+      reactflow.fitView({
+        padding: 0.2,
+        includeHiddenNodes: true,
+        nodes: [node],
+      });
       setOpen(false);
     }
-
   };
 
   const onClickTitle = () => {
     const reactflow = graph?.getFlow();
     if (!localGraph || !reactflow) {
-      return
+      return;
     }
-
 
     const graphNodes = Object.values(localGraph.nodes);
 
-
-    const graphNode = graphNodes.find((n) => n.annotations[annotatedTitle] === title);
+    const graphNode = graphNodes.find(
+      (n) => n.annotations[annotatedTitle] === title,
+    );
     if (!graphNode) {
       return;
     }
     const flowNode = reactflow.getNode(graphNode?.id);
     if (flowNode) {
-      reactflow.fitView({ padding: 0.2, includeHiddenNodes: true, nodes: [flowNode] });
+      reactflow.fitView({
+        padding: 0.2,
+        includeHiddenNodes: true,
+        nodes: [flowNode],
+      });
       setOpen(false);
     }
-
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -73,13 +76,11 @@ export const FindDialog = () => {
           <TextInput value={title} onChange={(e) => setTitle(e.target.value)} />
           <Button onClick={onClickTitle}>Find</Button>
 
-
-
           <IconButton
             css={{
-              position: "absolute",
-              top: "$4",
-              right: "$4"
+              position: 'absolute',
+              top: '$4',
+              right: '$4',
             }}
             onClick={() => setOpen(false)}
             aria-label="Close"
@@ -88,7 +89,6 @@ export const FindDialog = () => {
           />
         </Dialog.Content>
       </Dialog.Portal>
-
     </Dialog>
   );
 };

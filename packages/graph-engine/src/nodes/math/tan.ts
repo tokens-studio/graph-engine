@@ -7,10 +7,8 @@ export default class NodeDefinition extends Node {
   static type = "studio.tokens.math.tan";
   static description = "Tan node allows you to get the sin of a number.";
 
-
   declare inputs: ToInput<{
     value: number;
-
   }>;
   declare outputs: ToOutput<{
     value: number;

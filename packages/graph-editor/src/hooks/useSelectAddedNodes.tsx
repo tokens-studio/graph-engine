@@ -1,4 +1,4 @@
-import { Node, useReactFlow } from 'reactflow'
+import { Node, useReactFlow } from 'reactflow';
 
 export const useSelectAddedNodes = () => {
   const reactFlowInstance = useReactFlow();
@@ -14,12 +14,9 @@ export const useSelectAddedNodes = () => {
           flowNode.selected = true;
           return flowNode;
         }),
-
-      ]
-    }
-    );
-  }
+      ];
+    });
+  };
 
   return selectAddedNodes;
-
-}
+};

@@ -97,7 +97,7 @@ export default class NodeDefinition extends Node {
 
     this.setOutput(
       "array",
-      values.map((x) => x.value)
+      values.map((x) => x.value),
     );
     this.setOutput("indexed", values);
   }

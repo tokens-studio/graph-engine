@@ -11,6 +11,12 @@
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
+    "format": "npm run format:eslint && npm run format:prettier",
+    "format:eslint": "eslint . --fix",
+    "format:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --write",
+    "lint": "npm run lint:prettier && npm run lint:eslint",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --check",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc"
@@ -31,6 +37,7 @@
   },
   "devDependencies": {
     "@tokens-studio/graph-engine-backend": "*",
+    "@tokens-studio/prettier-config-custom": "*",
     "@docusaurus/module-type-aliases": "3.2.1",
     "@docusaurus/tsconfig": "3.2.1",
     "@docusaurus/types": "3.2.1",

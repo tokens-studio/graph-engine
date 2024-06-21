@@ -42,7 +42,7 @@ export interface IResolvedToken {
    * Optional description of the token
    */
   description?: string;
-  $extensions?: Record<string, any>;
+  $extensions?: Record<string, never>;
 }
 
 export const flatten = (
@@ -77,10 +77,13 @@ export const flatten = (
 };
 
 export const flatTokensToMap = (tokens: IResolvedToken[]) => {
-  return tokens.reduce((acc, token) => {
-    acc[token.name] = token;
-    return acc;
-  }, {} as Record<string, IResolvedToken>);
+  return tokens.reduce(
+    (acc, token) => {
+      acc[token.name] = token;
+      return acc;
+    },
+    {} as Record<string, IResolvedToken>,
+  );
 };
 
 export const flatTokensRestoreToMap = (tokens: IResolvedToken[]) => {
@@ -98,7 +101,7 @@ export type W3CToken = {
   $value: string;
   $type: TokenTypes;
   alpha?: number;
-  $extensions?: Record<string, any>;
+  $extensions?: Record<string, never>;
 };
 export interface W3CDeepKeyTokenMap {
   [key: string]: W3CDeepKeyTokenMap | W3CToken;

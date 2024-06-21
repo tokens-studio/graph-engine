@@ -1,7 +1,10 @@
-import { AnySchema, BooleanSchema, createVariadicSchema } from "../../schemas/index.js";
+import {
+  AnySchema,
+  BooleanSchema,
+  createVariadicSchema,
+} from "../../schemas/index.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
-
 
 export default class NodeDefinition<T> extends Node {
   static title = "Logical and";
@@ -15,7 +18,6 @@ export default class NodeDefinition<T> extends Node {
   declare outputs: ToOutput<{
     value: boolean;
   }>;
-
 
   constructor(props: INodeDefinition) {
     super(props);

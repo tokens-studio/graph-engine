@@ -1,9 +1,6 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
-import {
-    NumberSchema,
-    Vec2Schema
-} from "../../schemas/index.js";
+import { NumberSchema, Vec2Schema } from "../../schemas/index.js";
 import { Vec2 } from "../../index.js";
 
 export default class NodeDefinition extends Node {
@@ -39,8 +36,6 @@ export default class NodeDefinition extends Node {
 
     execute(): void | Promise<void> {
         const { x, y } = this.getAllInputs();
-
         this.setOutput("value", [x, y]);
-
     }
 }

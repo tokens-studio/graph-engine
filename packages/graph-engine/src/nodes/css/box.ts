@@ -7,7 +7,6 @@ export default class NodeDefinition extends Node {
   static type = "studio.tokens.css.box";
   static description =
     "CSS Box node allows you to generate a CSS box from 4 values";
-    
 
   declare inputs: ToInput<{
     top: number;
@@ -18,7 +17,6 @@ export default class NodeDefinition extends Node {
   declare outputs: ToOutput<{
     value: string;
   }>;
-
 
   constructor(props: INodeDefinition) {
     super(props);

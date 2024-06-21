@@ -18,9 +18,9 @@ export const process = async () => {
       const parsed = JSON.parse(value.toString());
       await fs.writeFile(
         path.join(__dirname, "./data/processed/" + x),
-        JSON.stringify(minimizeFlowGraph(parsed), null, 4)
+        JSON.stringify(minimizeFlowGraph(parsed), null, 4),
       );
-    })
+    }),
   );
 
   console.log(`Processed ${values.length} files`);

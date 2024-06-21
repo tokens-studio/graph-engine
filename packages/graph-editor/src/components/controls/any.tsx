@@ -1,14 +1,10 @@
-import { observer } from 'mobx-react-lite';
+import { AllSchemas, Input } from '@tokens-studio/graph-engine';
+import { Button, Select, Stack } from '@tokens-studio/ui';
 import { IField } from './interface';
-import { AllSchemas, Input, STRING } from '@tokens-studio/graph-engine';
-import {
-  Button,
-  Select,
-  Stack,
-} from '@tokens-studio/ui';
-import React from 'react';
 import { JSONTree } from 'react-json-tree';
+import { observer } from 'mobx-react-lite';
 import { resetable } from '@/annotations';
+import React from 'react';
 
 export const AnyField = observer(({ port, readOnly }: IField) => {
   const [inputType, setInputType] = React.useState(port.type.$id!);
@@ -25,7 +21,9 @@ export const AnyField = observer(({ port, readOnly }: IField) => {
   };
 
   if (readOnly) {
-    return <JSONTree shouldExpandNodeInitially={()=>true} data={port.value} />;
+    return (
+      <JSONTree shouldExpandNodeInitially={() => true} data={port.value} />
+    );
   }
 
   return (

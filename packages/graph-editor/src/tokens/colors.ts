@@ -1,6 +1,13 @@
-import {  ANY, COLOR, CURVE, STRING, BOOLEAN, NUMBER, OBJECT } from '@tokens-studio/graph-engine'
+import {
+  ANY,
+  BOOLEAN,
+  COLOR,
+  CURVE,
+  NUMBER,
+  OBJECT,
+  STRING,
+} from '@tokens-studio/graph-engine';
 
-/* eslint-disable import/no-anonymous-default-export */
 export default {
   [COLOR]: {
     color: 'var(--violet-12)',
@@ -29,5 +36,5 @@ export default {
   [OBJECT]: {
     color: 'var(--teal-12)',
     backgroundColor: 'var(--teal-8)',
-  }
+  },
 };

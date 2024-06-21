@@ -1,31 +1,21 @@
-import React from 'react';
-import { Text, TextInput } from '@tokens-studio/ui';
-import withVariadicField from './withVariadicField';
 import { Edge, Port } from '@tokens-studio/graph-engine';
+import { Text, TextInput } from '@tokens-studio/ui';
+import React from 'react';
+import withVariadicField from './withVariadicField';
 
-const VariadicAnyUI = ({ port, edge }: { port: Port, edge: Edge }) => {
+const VariadicAnyUI = ({ port, edge }: { port: Port; edge: Edge }) => {
   const value = port.value[edge.annotations['engine.index']];
 
   switch (typeof value) {
     case 'string':
-      return (
-        <TextInput value={value} disabled />
-      );
+      return <TextInput value={value} disabled />;
     case 'number':
-      return (
-        <TextInput value={value.toString()} disabled />
-      );
+      return <TextInput value={value.toString()} disabled />;
     case 'boolean':
-      return (
-        <TextInput value={value.toString()} disabled />
-      );
+      return <TextInput value={value.toString()} disabled />;
 
     default:
-      return (
-        <Text>
-          {`${port.name}-${edge.annotations['engine.index']}`}
-        </Text>
-      )
+      return <Text>{`${port.name}-${edge.annotations['engine.index']}`}</Text>;
   }
 };
 

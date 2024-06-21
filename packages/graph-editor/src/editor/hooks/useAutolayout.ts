@@ -1,9 +1,8 @@
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
-import { layoutType as layoutTypeSelector } from '@/redux/selectors/settings';
 import { LayoutType } from '@/redux/models/settings';
-
+import { layoutType as layoutTypeSelector } from '@/redux/selectors/settings';
 
 import { useDagreLayout } from '@/layouts/dagre';
 
@@ -17,5 +16,5 @@ export const useAutoLayout = () => {
         dagreAutoLayout();
         break;
     }
-  }, [dagreAutoLayout,  layoutType]);
+  }, [dagreAutoLayout, layoutType]);
 };

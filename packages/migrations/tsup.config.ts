@@ -10,5 +10,5 @@ export default defineConfig({
   skipNodeModulesBundle: true,
   clean: false,
   minify: false,
-  target: "esnext"
+  target: "esnext",
 });

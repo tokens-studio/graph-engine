@@ -1,5 +1,5 @@
-import Node from "../../../../src/nodes/math/add";
 import { Graph } from "../../../../src/graph/graph.js";
+import Node from "../../../../src/nodes/math/add";
 
 describe("math/add", () => {
   it("adds two numbers", async () => {

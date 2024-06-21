@@ -1,5 +1,5 @@
-import { topologicalSort } from "../../../src/graph";
 import { Graph } from "../../../src/graph/graph.js";
+import { topologicalSort } from "../../../src/graph";
 import Passthrough from "../../../src/nodes/generic/passthrough";
 
 describe("Graph/topologic", () => {
@@ -19,7 +19,6 @@ describe("Graph/topologic", () => {
       target: "b",
       sourceHandle: "value",
       targetHandle: "value",
-
     });
     graph.createEdge({
       id: "a->c",
@@ -56,7 +55,6 @@ describe("Graph/topologic", () => {
       sourceHandle: "value",
       targetHandle: "value",
     });
-  
 
     const sorted = topologicalSort(graph);
 

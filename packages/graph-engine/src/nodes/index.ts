@@ -44,5 +44,5 @@ export const nodeLookup: Record<string, typeof Node> = nodes.reduce(
     acc[node.type] = node;
     return acc;
   },
-  {}
+  {},
 );

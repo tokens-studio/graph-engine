@@ -10,7 +10,7 @@ export default class NodeDefinition extends Node {
   declare inputs: ToInput<{
     visualAcuity: number;
     /**
-     * The correct factor 
+     * The correct factor
      */
     correctionFactor: number;
     lightingCondition: number;
@@ -26,8 +26,6 @@ export default class NodeDefinition extends Node {
 
   static description =
     "calculate the base font size with DIN 1450. The output is a number representing the font size in pixels.";
-
-
 
   constructor(props: INodeDefinition) {
     super(props);

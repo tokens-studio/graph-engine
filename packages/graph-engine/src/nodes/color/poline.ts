@@ -114,7 +114,7 @@ export default class NodeDefinition extends Node {
       poline.shiftHue(hueShift);
     }
     const hexColors: string[] = (poline.colorsCSS as string[]).map(
-      (hslColor) => formatHex(hslColor) as string
+      (hslColor) => formatHex(hslColor) as string,
     );
     this.setOutput("value", hexColors);
   }
