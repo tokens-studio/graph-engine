@@ -4,7 +4,7 @@ import { NumberSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Base Font Size";
-  static type = 'studio.tokens.accessibility.baseFontSize';
+  static type = 'studio.tokens.typography.baseFontSize';
 
   declare inputs: ToInput<{
     visualAcuity: number;
@@ -42,18 +42,21 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 13,
       },
+      visible: true,
     });
     this.addInput("lightingCondition", {
       type: {
         ...NumberSchema,
         default: 0.83,
       },
+      visible: true,
     });
     this.addInput("distance", {
       type: {
         ...NumberSchema,
         default: 30,
       },
+      visible: true,
     });
 
     this.addInput("xHeightRatio", {
@@ -61,6 +64,7 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 0.53,
       },
+      visible: true,
     });
 
     this.addInput("ppi", {
@@ -68,12 +72,21 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 458,
       },
+      visible: true,
     });
     this.addInput("pixelDensity", {
       type: {
         ...NumberSchema,
         default: 3,
       },
+      visible: true,
+    });
+    this.addInput("precision", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+      },
+      visible: true,
     });
 
     this.addOutput("value", {
@@ -94,6 +107,7 @@ export default class NodeDefinition extends Node {
       ppi,
       pixelDensity,
       correctionFactor,
+      precision
     } = this.getAllInputs();
 
     const visualCorrection =
@@ -103,6 +117,9 @@ export default class NodeDefinition extends Node {
     const xHeightPX = (xHeightMM / 25.4) * (ppi / pixelDensity);
     const fontSizePX = (1 * xHeightPX) / xHeightRatio;
 
-    this.setOutput("value", fontSizePX);
+    const shift = 10 ** precision;
+    const output = Math.round(fontSizePX * shift) / shift;
+
+    this.setOutput("value", output);
   }
 }
