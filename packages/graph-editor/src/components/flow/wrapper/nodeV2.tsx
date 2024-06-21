@@ -165,7 +165,6 @@ const getColorPreview = (color: string, showValue = false) => {
   );
 }
 
-
 const getValuePreview = (value, type) => {
   if (value === undefined) {
     return null;
@@ -174,9 +173,7 @@ const getValuePreview = (value, type) => {
   let valuePreview = '';
   switch (type.type) {
     case 'array':
-
       if (type.items?.$id === COLOR) {
-
         return (<Stack direction="row" gap={1}>
           {value.length > 5 ? (
             <>
@@ -185,28 +182,24 @@ const getValuePreview = (value, type) => {
             </>
           ) : value.map((val) => getColorPreview(val))}
         </Stack>)
-
       }
-
-      valuePreview = JSON.stringify(value);
-      break;
-    case 'object':
       valuePreview = JSON.stringify(value);
       break;
     case 'number':
       valuePreview = value.toString();
       break;
     case 'string':
-      valuePreview = value;
-      break
-    default:
-      if (isHexColor(value)) {
+      if (type.$id === COLOR && isHexColor(value)) {
         return getColorPreview(value, true);
       }
+      valuePreview = value;
+      break;
+    case 'object':
+    default:
       valuePreview = JSON.stringify(value);
   }
 
-  return valuePreview.length > 20 ? `${valuePreview.substring(0, 20)}...` : valuePreview;
+  return valuePreview.length > 18 ? `${valuePreview.substring(0, 18)}...` : valuePreview;
 }
 
 const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boolean }) => {
@@ -215,8 +208,6 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
   const inlineValuesValue = useSelector(inlineValues);
   const typeCol = extractTypeIcon(port, iconTypeRegistry);
   const input = port as unknown as Input;
-
-
 
   if (input.variadic) {
     return (
@@ -248,7 +239,6 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
                   <Text css={{ fontSize: 'small', color: '$gray12' }}>{input.name} - [{i}]</Text>
                 </Box>
               )}
-
               {inlineTypesValue && <InlineTypeLabel port={port} />}
             </Handle>
           );
