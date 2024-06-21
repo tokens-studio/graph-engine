@@ -4,19 +4,22 @@ import { INodeDefinition} from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import Color from "colorjs.io";
 
-export const colorSpaces = [
-  "Lab",
-  "ICtCp",
-  "Jzazbz",
+export const algorithms = [
+  "76",
+  "CMC",
+  "2000",
+  "Jz",
+  "ITP",
+  "OK",
 ] as const;
 
-export type ColorSpace = typeof colorSpaces[number];
+export type algorithm = typeof algorithms[number];
 
 export default class NodeDefinition extends Node {
-  static title = "Distance";
-  static type = "studio.tokens.color.distance";
+  static title = "Detla E (ΔE)";
+  static type = "studio.tokens.color.deltaE";
   static description =
-    "Distance node allows you to calculate the distance between two colors.";
+    "Delta E node allows you to calculate the distance between two colors.";
 
 
   constructor(props: INodeDefinition) {
@@ -40,11 +43,11 @@ export default class NodeDefinition extends Node {
       },
       visible: true,
     });
-    this.addInput("space", {
+    this.addInput("algorithm", {
       type: {
         ...StringSchema,
-        enum: colorSpaces,
-        default: "Lab",
+        enum: algorithms,
+        default: "2000",
       },
     });
 
@@ -54,12 +57,12 @@ export default class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
-    const { colorA, colorB, space, precision } = this.getAllInputs();
+    const { colorA, colorB, algorithm, precision } = this.getAllInputs();
 
     const a = new Color(colorA);
     const b = new Color(colorB);
 
-    const distance = a.distance(b, space);
+    const distance = a.deltaE(b, algorithm);
 
     const shift = 10 ** precision;
     const output = Math.round(distance * shift) / shift;
