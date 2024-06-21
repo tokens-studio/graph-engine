@@ -12,6 +12,8 @@ import { inlineTypes, inlineValues, showTimings } from '@/redux/selectors/settin
 import { icons, nodeSpecifics } from '@/redux/selectors/registry.js';
 import { title, xpos } from '@/annotations/index.js';
 import { useLocalGraph } from '@/context/graph.js';
+import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
 
 const isHexColor = (str) => {
   if (typeof str !== 'string') return false;
@@ -48,7 +50,12 @@ export const NodeV2 = (args) => {
     return <Box>Node not found</Box>;
   }
 
-  return <NodeWrap node={node} />;
+  return (
+    <ErrorBoundary fallback={<ErrorBoundaryContent />}>
+      <NodeWrap node={node} />
+    </ErrorBoundary>
+  )
+
 };
 
 export interface INodeWrap {
@@ -86,8 +93,8 @@ const NodeWrap = observer(({ node }: INodeWrap) => {
           </HandleContainer>
         </Stack>
         {Specific && <Stack direction="column" gap={3} css={{ padding: '$3' }}>
-            <Specific node={node} />
-          </Stack>
+          <Specific node={node} />
+        </Stack>
         }
       </Stack>
       {showTimingsValue && (
