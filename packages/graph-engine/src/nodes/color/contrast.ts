@@ -10,7 +10,7 @@ export enum WcagVersion {
 
 export default class NodeDefinition extends Node {
   static title = "Contrast";
-  static type = "studio.tokens.accessibility.contrast";
+  static type = "studio.tokens.color.contrast";
   static description = "Calculates the contrast between two colors";
   constructor(props: INodeDefinition) {
     super(props);
