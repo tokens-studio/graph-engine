@@ -34,17 +34,18 @@ export default class NodeDefinition extends Node {
         enum: Object.values(WcagVersion),
         default: WcagVersion.V3,
       },
+      visible: true,
     });
     this.addInput("absolute", {
       type: {
         ...BooleanSchema,
         default: false,
-      }
+      },
+      visible: true,
     });
 
     this.addOutput("value", {
       type: NumberSchema,
-      visible: true,
     });
   }
 

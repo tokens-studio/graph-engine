@@ -42,7 +42,10 @@ export default class NodeDefinition extends Node {
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("color", {
-      type: ColorSchema,
+      type: {
+        ...ColorSchema,
+        default: "#fd0000",
+      },
       visible: true,
     });
     this.addInput("type", {
@@ -52,6 +55,7 @@ export default class NodeDefinition extends Node {
         enum: Object.values(ColorBlindnessTypes),
         default: ColorBlindnessTypes.PROTANOPIA,
       },
+      visible: true,
     });
     this.addOutput("value", {
       type: NumberSchema,
