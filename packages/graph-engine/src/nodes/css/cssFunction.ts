@@ -29,15 +29,12 @@ export default class NodeDefinition extends Node {
         ...StringSchema,
         enum: FUNCTION_NAMES,
       },
-      visible: true,
     });
     this.addInput("value", {
       type: StringSchema,
-      visible: true,
     });
     this.addOutput("value", {
       type: StringSchema,
-      visible: true,
     });
   }
 

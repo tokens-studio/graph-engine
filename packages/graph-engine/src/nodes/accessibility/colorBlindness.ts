@@ -46,7 +46,6 @@ export default class NodeDefinition extends Node {
         ...ColorSchema,
         default: "#fd0000",
       },
-      visible: true,
     });
     this.addInput("type", {
       type: {
@@ -55,11 +54,9 @@ export default class NodeDefinition extends Node {
         enum: Object.values(ColorBlindnessTypes),
         default: ColorBlindnessTypes.PROTANOPIA,
       },
-      visible: true,
     });
     this.addOutput("value", {
       type: NumberSchema,
-      visible: true,
     });
   }
 

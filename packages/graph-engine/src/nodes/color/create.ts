@@ -99,33 +99,28 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: "255",
       },
-      visible: true,
     });
     this.addInput("b", {
       type: {
         ...NumberSchema,
         default: "255",
       },
-      visible: true,
     });
     this.addInput("c", {
       type: {
         ...NumberSchema,
         default: "255",
       },
-      visible: true,
     });
     this.addInput("d", {
       type: {
         ...NumberSchema,
         default: "1",
       },
-      visible: true,
     });
 
     this.addOutput("value", {
       type: ColorSchema,
-      visible: true,
     });
   }
 

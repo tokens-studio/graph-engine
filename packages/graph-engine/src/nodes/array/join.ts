@@ -21,18 +21,15 @@ export default class NodeDefinition<T> extends Node {
     super(props);
     this.addInput("array", {
       type: AnyArraySchema,
-      visible: true,
     });
     this.addInput("delimiter", {
       type: {
         ...StringSchema,
         default: "-",
       },
-      visible: true,
     });
     this.addOutput("value", {
       type: StringSchema,
-      visible: true,
     });
   }
 

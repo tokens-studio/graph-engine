@@ -38,19 +38,22 @@ export default class NodeDefinition extends Node {
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("a", {
-      type: ColorSchema,
-      visible: true,
-    });
-    this.addInput("b", {
-      type: ColorSchema,
-      visible: true,
-    });
-    this.addInput("background", {
       type: {
         ...ColorSchema,
         default: "#ffffff",
       },
-      visible: true,
+    });
+    this.addInput("b", {
+      type: {
+        ...ColorSchema,
+        default: "#000000",
+      },
+    });
+    this.addInput("background", {
+      type: {
+        ...ColorSchema,
+        default: "#fd0000",
+      },
     });
 
     this.addInput("wcag", {
@@ -76,15 +79,12 @@ export default class NodeDefinition extends Node {
 
     this.addOutput("sufficient", {
       type: BooleanSchema,
-      visible: true,
     });
     this.addOutput("color", {
       type: ColorSchema,
-      visible: true,
     });
     this.addOutput("contrast", {
       type: NumberSchema,
-      visible: true,
     });
   }
 

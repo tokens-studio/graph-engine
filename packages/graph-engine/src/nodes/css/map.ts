@@ -25,7 +25,6 @@ export default class NodeDefinition extends Node {
     this.annotations[annotatedDynamicInputs] = true;
     this.addOutput("value", {
       type: ObjectSchema,
-      visible: true,
     });
   }
 

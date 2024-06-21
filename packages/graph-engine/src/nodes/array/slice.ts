@@ -18,19 +18,15 @@ export default class NodeDefinition<T> extends Node {
     super(props);
     this.addInput("array", {
       type: AnyArraySchema,
-      visible: true,
     });
     this.addInput("start", {
       type: NumberSchema,
-      visible: true,
     });
     this.addInput("end", {
       type: NumberSchema,
-      visible: true,
     });
     this.addOutput("value", {
       type: AnyArraySchema,
-      visible: true,
     });
   }
 

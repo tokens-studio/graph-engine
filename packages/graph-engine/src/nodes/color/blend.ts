@@ -27,22 +27,12 @@ export default class NodeDefinition extends Node {
         ...ColorSchema,
         default: "#ffffff"
       },
-      visible: true,
     });
     this.addInput("value", {
       type: {
         ...NumberSchema,
         default: 0.5,
         description: "Value to apply to the modifier",
-      },
-      visible: true,
-    });
-    this.addInput("space", {
-      type: {
-        ...StringSchema,
-        default: "srgb",
-        enum: Object.keys(ColorSpaceTypes),
-        description: "The color space we are operating in",
       },
     });
     this.addInput("modifierType", {
@@ -53,10 +43,17 @@ export default class NodeDefinition extends Node {
         description: "The color space we are operating in",
       },
     });
+    this.addInput("space", {
+      type: {
+        ...StringSchema,
+        default: "srgb",
+        enum: Object.keys(ColorSpaceTypes),
+        description: "The color space we are operating in",
+      },
+    });
 
     this.addOutput("value", {
       type: ColorSchema,
-      visible: true,
     });
   }
 

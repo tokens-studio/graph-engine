@@ -29,19 +29,16 @@ export default class NodeDefinition<T> extends Node {
     super(props);
     this.addInput("array", {
       type: AnyArraySchema,
-      visible: true,
     });
     this.addInput("index", {
       type: {
         ...NumberSchema,
         default: 0,
       },
-      visible: true,
     });
 
     this.addOutput("value", {
       type: AnySchema,
-      visible: true,
     });
   }
 

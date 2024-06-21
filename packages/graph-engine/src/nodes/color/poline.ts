@@ -44,7 +44,6 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 4,
       },
-      visible: true,
     });
     this.addInput("invertedLightness", {
       type: BooleanSchema,
@@ -73,7 +72,6 @@ export default class NodeDefinition extends Node {
     });
     this.addOutput("value", {
       type: arrayOf(ColorSchema),
-      visible: true,
     });
   }
 

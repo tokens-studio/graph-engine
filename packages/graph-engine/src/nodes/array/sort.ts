@@ -38,7 +38,6 @@ export default class NodeDefinition<T> extends Node {
     super(props);
     this.addInput("array", {
       type: AnyArraySchema,
-      visible: true,
     });
     this.addInput("order", {
       type: {
@@ -46,14 +45,12 @@ export default class NodeDefinition<T> extends Node {
         enum: [Order.ASC, Order.DESC],
         default: Order.ASC,
       },
-      visible: true,
     });
     this.addInput("sortBy", {
       type: StringSchema,
     });
     this.addOutput("value", {
       type: AnyArraySchema,
-      visible: true,
     });
   }
 

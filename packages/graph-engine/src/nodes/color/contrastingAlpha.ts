@@ -53,14 +53,12 @@ export default class NodeDefinition extends Node {
         ...ColorSchema,
         default: "#000000"
       },
-      visible: true,
     });
     this.addInput("background", {
       type: {
         ...ColorSchema,
         default: "#ffffff",
       },
-      visible: true,
     });
     this.addInput("wcag", {
       type: {
@@ -74,7 +72,6 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 60,
       },
-      visible: true,
     });
     this.addInput("precision", {
       type: {
@@ -134,7 +131,9 @@ export default class NodeDefinition extends Node {
       return;
     }
 
-    const finalAlpha = binarySearchAlpha(0, 1, foregroundColor, backgroundColor, threshold, precision);
+    const iterations = Math.max(10, precision );
+
+    const finalAlpha = binarySearchAlpha(0, 1, foregroundColor, backgroundColor, threshold, iterations);
 
     foregroundColor.alpha = finalAlpha;
     const finalColor = flattenAlpha(foregroundColor, backgroundColor);

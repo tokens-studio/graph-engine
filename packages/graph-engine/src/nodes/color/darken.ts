@@ -26,7 +26,6 @@ export default class NodeDefinition extends Node {
         ...ColorSchema,
         default: "#ffffff"
       },
-      visible: true,
     });
     this.addInput("value", {
       type: {
@@ -34,7 +33,6 @@ export default class NodeDefinition extends Node {
         default: 0.5,
         description: "Value to apply to the modifier",
       },
-      visible: true,
     });
     this.addInput("space", {
       type: {
@@ -47,7 +45,6 @@ export default class NodeDefinition extends Node {
 
     this.addOutput("value", {
       type: ColorSchema,
-      visible: true,
     });
   }
 

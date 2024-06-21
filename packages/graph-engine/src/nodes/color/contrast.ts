@@ -19,14 +19,12 @@ export default class NodeDefinition extends Node {
         ...ColorSchema,
         default: "#000000",
       },
-      visible: true,
     });
     this.addInput("b", {
       type: {
         ...ColorSchema,
         default: "#ffffff",
       },
-      visible: true,
     });
     this.addInput("wcag", {
       type: {
@@ -34,14 +32,12 @@ export default class NodeDefinition extends Node {
         enum: Object.values(WcagVersion),
         default: WcagVersion.V3,
       },
-      visible: true,
     });
     this.addInput("absolute", {
       type: {
         ...BooleanSchema,
         default: false,
       },
-      visible: true,
     });
 
     this.addOutput("value", {

@@ -17,40 +17,34 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 360,
       },
-      visible: true,
     });
     this.addInput("angle", {
       type: {
         ...NumberSchema,
         default: 180,
       },
-      visible: true,
     });
     this.addInput("saturation", {
       type: {
         ...NumberSchema,
         default: 80,
       },
-      visible: true,
     });
     this.addInput("lightness", {
       type: {
         ...NumberSchema,
         default: 80,
       },
-      visible: true,
     });
     this.addInput("colors", {
       type: {
         ...NumberSchema,
         default: 8,
       },
-      visible: true,
     });
 
     this.addOutput("value", {
       type: arrayOf(ColorSchema),
-      visible: true,
     });
   }
 
