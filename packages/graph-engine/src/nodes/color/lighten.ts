@@ -1,6 +1,5 @@
 import {
   ColorModifier,
-  ColorModifierTypes,
   ColorSpaceTypes,
 } from "@tokens-studio/types";
 import {
@@ -8,24 +7,24 @@ import {
   NumberSchema,
   StringSchema,
 } from "../../schemas/index.js";
-import { INodeDefinition} from "../../index.js";
+import { INodeDefinition } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { convertModifiedColorToHex } from "./lib/modifyColor.js";
+
 export { ColorModifierTypes } from "@tokens-studio/types";
 
+
 export default class NodeDefinition extends Node {
-  static title = "Blend Colors";
-  static type = "studio.tokens.color.blend";
-  static description = "Blends a color";
-
-
+  static title = "Lighten Color";
+  static type = "studio.tokens.color.lighten";
+  static description = "Lightens a color by a specified value";
 
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("color", {
       type: { 
         ...ColorSchema,
-        default: "#ffffff"
+        default: "#000000"
       },
       visible: true,
     });
@@ -45,14 +44,6 @@ export default class NodeDefinition extends Node {
         description: "The color space we are operating in",
       },
     });
-    this.addInput("modifierType", {
-      type: {
-        ...StringSchema,
-        default: ColorModifierTypes.DARKEN,
-        enum: Object.values(ColorModifierTypes),
-        description: "The color space we are operating in",
-      },
-    });
 
     this.addOutput("value", {
       type: ColorSchema,
@@ -61,10 +52,10 @@ export default class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
-    const { modifierType, space, value, color } = this.getAllInputs();
+    const { space, value, color } = this.getAllInputs();
 
     const converted = convertModifiedColorToHex(color, {
-      type: modifierType,
+      type: "lighten",
       space,
       value,
     } as ColorModifier);
