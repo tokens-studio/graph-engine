@@ -34,7 +34,6 @@ export default class NodeDefinition extends Node {
       const rawInput = node.getRawInput(input);
       node.addOutput(input, {
         type: rawInput.type,
-        visible: true,
       });
     });
 
@@ -53,7 +52,6 @@ export default class NodeDefinition extends Node {
       if (!(input in outputs)) {
         this.addOutput(input, {
           type: rawInput.type,
-          visible: true,
         });
       } else {
         this.setOutput(input, rawInput.value, rawInput.type);

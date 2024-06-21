@@ -20,7 +20,6 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("value", {
       type: NumberSchema,
-      visible: true,
     });
     this.addInput("precision", {
       type: NumberSchema,
@@ -28,7 +27,6 @@ export default class NodeDefinition extends Node {
 
     this.addOutput("value", {
       type: NumberSchema,
-      visible: true,
     });
   }
 

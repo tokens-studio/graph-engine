@@ -25,7 +25,6 @@ export default class NodeDefinition extends Node {
 
         this.addOutput("value", {
             type: NumberSchema,
-            visible: true,
         });
     }
 

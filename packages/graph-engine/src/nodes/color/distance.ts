@@ -38,7 +38,6 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 4,
       },
-      visible: true,
     });
     this.addInput("space", {
       type: {

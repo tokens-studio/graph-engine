@@ -34,21 +34,18 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 16,
       },
-      visible: true,
     });
     this.addInput("stepsDown", {
       type: {
         ...NumberSchema,
         default: 0,
       },
-      visible: true,
     });
     this.addInput("stepsUp", {
       type: {
         ...NumberSchema,
         default: 1,
       },
-      visible: true,
     });
 
     this.addInput("increment", {
@@ -66,7 +63,6 @@ export default class NodeDefinition extends Node {
     });
     this.addOutput("array", {
       type: arrayOf(NumberSchema),
-      visible: true,
     });
     this.addOutput("indexed", {
       type: {

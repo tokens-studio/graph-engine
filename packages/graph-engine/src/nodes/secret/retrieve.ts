@@ -1,5 +1,5 @@
-import { SecretCapability } from "../../capabilities/secret.js";
 import { Node } from "../../programmatic/node.js";
+import { SecretCapability } from "../../capabilities/secret.js";
 import { StringSchema } from "../../schemas";
 
 export default class NodeDefinition extends Node {
@@ -18,14 +18,12 @@ export default class NodeDefinition extends Node {
 
         this.addInput("secret", {
             type: StringSchema,
-            visible: true
         });
         this.addInput("key", {
             type: StringSchema
         });
         this.addOutput('value', {
             type: StringSchema,
-            visible: true,
         });
     }
     async execute() {

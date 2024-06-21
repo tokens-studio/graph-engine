@@ -47,7 +47,7 @@ export default class SubgraphNode extends Node {
           //Always add it as visible
           this.addInput(key, {
             type: value.type,
-            visible: true,
+            
           });
           this.inputs[key].setValue(value.value, {
             noPropagate: true
@@ -73,7 +73,6 @@ export default class SubgraphNode extends Node {
           //Always add it as visible
           this.addOutput(key, {
             type: value.type,
-            visible: true,
           });
           this.outputs[key].set(value.value,value.type);
         } else {
@@ -89,7 +88,6 @@ export default class SubgraphNode extends Node {
           this.removeOutput(port);
         }
       });
-      
     });
   }
 

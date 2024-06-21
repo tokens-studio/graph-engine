@@ -83,15 +83,12 @@ export default class NodeDefinition extends Node {
     // Outputs
     this.addOutput("alpha", {
       type: NumberSchema,
-      visible: true,
     });
     this.addOutput("color", {
       type: ColorSchema,
-      visible: true,
     });
     this.addOutput("contrast", {
       type: NumberSchema,
-      visible: true,
     });
   }
 

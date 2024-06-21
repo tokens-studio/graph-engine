@@ -26,27 +26,21 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("minSize", {
       type: NumberSchema,
-      visible: true,
     });
     this.addInput("maxSize", {
       type: NumberSchema,
-      visible: true,
     });
     this.addInput("minViewport", {
       type: NumberSchema,
-      visible: true,
     });
     this.addInput("maxViewport", {
       type: NumberSchema,
-      visible: true,
     });
     this.addInput("viewport", {
       type: NumberSchema,
-      visible: true,
     });
     this.addOutput("value", {
       type: NumberSchema,
-      visible: true,
     });
   }
 

@@ -23,11 +23,9 @@ export default class NodeDefinition extends Node {
         default: [],
       },
       variadic: true,
-      visible: true,
     });
     this.addOutput("value", {
       type: NumberSchema,
-      visible: true,
     });
   }
 

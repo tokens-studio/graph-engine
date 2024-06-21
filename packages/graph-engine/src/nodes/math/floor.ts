@@ -22,12 +22,10 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("value", {
       type: NumberSchema,
-      visible: true,
     });
 
     this.addOutput("value", {
       type: NumberSchema,
-      visible: true,
     });
   }
 

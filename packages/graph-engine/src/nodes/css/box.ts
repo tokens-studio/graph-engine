@@ -49,7 +49,6 @@ export default class NodeDefinition extends Node {
 
     this.addOutput("value", {
       type: StringSchema,
-      visible: true,
     });
   }
 

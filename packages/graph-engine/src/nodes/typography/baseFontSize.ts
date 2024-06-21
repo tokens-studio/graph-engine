@@ -35,28 +35,24 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 0.7,
       },
-      visible: true,
     });
     this.addInput("correctionFactor", {
       type: {
         ...NumberSchema,
         default: 13,
       },
-      visible: true,
     });
     this.addInput("lightingCondition", {
       type: {
         ...NumberSchema,
         default: 0.83,
       },
-      visible: true,
     });
     this.addInput("distance", {
       type: {
         ...NumberSchema,
         default: 30,
       },
-      visible: true,
     });
 
     this.addInput("xHeightRatio", {
@@ -64,7 +60,6 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 0.53,
       },
-      visible: true,
     });
 
     this.addInput("ppi", {
@@ -72,21 +67,18 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 458,
       },
-      visible: true,
     });
     this.addInput("pixelDensity", {
       type: {
         ...NumberSchema,
         default: 3,
       },
-      visible: true,
     });
     this.addInput("precision", {
       type: {
         ...NumberSchema,
         default: 0,
       },
-      visible: true,
     });
 
     this.addOutput("value", {
@@ -94,7 +86,6 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         description: "The generated font size",
       },
-      visible: true,
     });
   }
 

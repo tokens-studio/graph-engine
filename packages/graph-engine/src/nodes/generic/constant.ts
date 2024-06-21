@@ -32,7 +32,6 @@ export default class NodeDefinition<T> extends Node {
     });
     this.addOutput("value", {
       type: AnySchema,
-      visible: true,
     });
   }
 

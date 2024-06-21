@@ -30,14 +30,12 @@ export default class NodeDefinition extends Node {
     this.annotations[annotatedDynamicInputs] = true
     this.addInput("expression", {
       type: StringSchema,
-      visible: true,
     });
 
     //We expect users to expose the variables they want to use in the expression as inputs
 
     this.addOutput("value", {
       type: NumberSchema,
-      visible: true,
     });
     this.addOutput("expression", {
       type: StringSchema

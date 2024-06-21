@@ -25,19 +25,15 @@ export default class NodeDefinition<T, V> extends Node {
     super(props);
     this.addInput("condition", {
       type: BooleanSchema,
-      visible: true,
     });
     this.addInput("a", {
       type: AnySchema,
-      visible: true,
     });
     this.addInput("b", {
       type: AnySchema,
-      visible: true,
     });
     this.addOutput("value", {
       type: AnySchema,
-      visible: true,
     });
   }
 

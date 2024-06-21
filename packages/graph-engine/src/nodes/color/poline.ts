@@ -37,7 +37,6 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("anchorColors", {
       type: arrayOf(ColorSchema),
-      visible: true,
     });
     this.addInput("numPoints", {
       type: {
