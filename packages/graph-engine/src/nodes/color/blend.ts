@@ -40,7 +40,6 @@ export default class NodeDefinition extends Node {
         ...StringSchema,
         default: ColorModifierTypes.DARKEN,
         enum: Object.values(ColorModifierTypes),
-        description: "The color space we are operating in",
       },
     });
     this.addInput("space", {

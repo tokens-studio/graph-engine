@@ -2,6 +2,7 @@
 import { ColorSchema, NumberSchema, StringSchema } from "../../schemas/index.js";
 import { INodeDefinition} from "../../index.js";
 import { Node } from "../../programmatic/node.js";
+import { setToPrecision } from "../../utils/precision.js";
 import Color from "colorjs.io";
 
 export const algorithms = [
@@ -16,7 +17,7 @@ export const algorithms = [
 export type algorithm = typeof algorithms[number];
 
 export default class NodeDefinition extends Node {
-  static title = "Detla E (ΔE)";
+  static title = "Delta E (ΔE)";
   static type = "studio.tokens.color.deltaE";
   static description =
     "Delta E node allows you to calculate the distance between two colors.";
@@ -63,9 +64,6 @@ export default class NodeDefinition extends Node {
 
     const distance = a.deltaE(b, algorithm);
 
-    const shift = 10 ** precision;
-    const output = Math.round(distance * shift) / shift;
-
-    this.setOutput("value", output);
+    this.setOutput("value", setToPrecision(distance, precision));
   }
 }
