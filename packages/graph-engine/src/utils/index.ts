@@ -28,7 +28,7 @@ export interface IResolvedToken {
  */
 export const flatten = (
   nested: DeepKeyTokenMap,
-  keyPath: string[] = []
+  keyPath: string[] = [],
 ): IResolvedToken[] => {
   return Object.entries(nested).reduce((acc, [key, val]) => {
     //Check if leaf node
@@ -58,10 +58,13 @@ export const flatten = (
  * @returns
  */
 export const flatTokensToMap = (tokens: IResolvedToken[]) => {
-  return tokens.reduce((acc, token) => {
-    acc[token.name] = token;
-    return acc;
-  }, {} as Record<string, IResolvedToken>);
+  return tokens.reduce(
+    (acc, token) => {
+      acc[token.name] = token;
+      return acc;
+    },
+    {} as Record<string, IResolvedToken>,
+  );
 };
 
 /**
@@ -79,4 +82,3 @@ export const flatTokensRestoreToMap = (tokens: IResolvedToken[]) => {
   });
   return returning;
 };
-

@@ -1,6 +1,9 @@
+import {
+  AnyArraySchema,
+  AnySchema,
+  NumberSchema,
+} from "../../../src/schemas/index.js";
 import Ajv from "ajv";
-import { NumberSchema, AnySchema, AnyArraySchema } from "../../../src/schemas/index.js";
-// @ts-ignore
 const ajv = new Ajv({ useDefaults: true });
 
 describe("schema", () => {

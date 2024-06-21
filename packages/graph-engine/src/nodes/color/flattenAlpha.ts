@@ -14,12 +14,12 @@ export default class NodeDefinition extends Node {
 
     this.addInput("foreground", {
       type: {
-        ...ColorSchema
+        ...ColorSchema,
       },
     });
     this.addInput("background", {
       type: {
-        ...ColorSchema
+        ...ColorSchema,
       },
     });
 
@@ -36,6 +36,6 @@ export default class NodeDefinition extends Node {
     const fg = new Color(foreground);
 
     const resultColor = flattenAlpha(fg, bg);
-    this.setOutput("value", resultColor.to('srgb').toString({ format: 'hex' }));
+    this.setOutput("value", resultColor.to("srgb").toString({ format: "hex" }));
   }
 }

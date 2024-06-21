@@ -1,8 +1,8 @@
-import { observer } from 'mobx-react-lite';
 import { IField } from './interface';
-import React from 'react';
 import { Input } from '@tokens-studio/graph-engine';
-import { Label, Stack, Text, TextInput } from '@tokens-studio/ui';
+import { Label, Stack, TextInput } from '@tokens-studio/ui';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
 
 export const Vec2field = observer(({ port, readOnly }: IField) => {
   const onChangeX = (e: React.ChangeEvent<HTMLInputElement>) => {

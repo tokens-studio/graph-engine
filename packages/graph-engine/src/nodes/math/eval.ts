@@ -1,24 +1,21 @@
 import { INodeDefinition, Node } from "../../programmatic/node.js";
-import {
-  NumberSchema,
-  StringSchema,
-} from "../../schemas/index.js";
+import { NumberSchema, StringSchema } from "../../schemas/index.js";
 import { Parser } from "expr-eval";
 import { ToInput } from "../../programmatic/input.js";
 import { ToOutput } from "../../programmatic/output.js";
-import { annotatedDynamicInputs } from '../../annotations/index.js';
+import { annotatedDynamicInputs } from "../../annotations/index.js";
 
 export default class NodeDefinition extends Node {
   static title = "Evaluate math";
   static type = "studio.tokens.math.eval";
   static description = "Allows you to evaluate arbitrary math expressions";
 
-
   declare inputs: ToInput<{
     expression: string;
-  }> & ToInput<{
-    [key: string]: number
-  }>;
+  }> &
+    ToInput<{
+      [key: string]: number;
+    }>;
 
   declare outputs: ToOutput<{
     value: number;
@@ -27,7 +24,7 @@ export default class NodeDefinition extends Node {
   constructor(props: INodeDefinition) {
     super(props);
 
-    this.annotations[annotatedDynamicInputs] = true
+    this.annotations[annotatedDynamicInputs] = true;
     this.addInput("expression", {
       type: StringSchema,
     });
@@ -38,7 +35,7 @@ export default class NodeDefinition extends Node {
       type: NumberSchema,
     });
     this.addOutput("expression", {
-      type: StringSchema
+      type: StringSchema,
     });
   }
 

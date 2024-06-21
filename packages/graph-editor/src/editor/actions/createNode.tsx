@@ -1,30 +1,32 @@
-import { uiNodeType, xpos, ypos } from '@/annotations';
-import { INPUT, OUTPUT } from '@/ids';
 import { Dispatch } from '@/redux/store';
-import { Node, Graph, NodeFactory } from '@tokens-studio/graph-engine';
+import { Graph, Node, NodeFactory } from '@tokens-studio/graph-engine';
 import { ReactFlowInstance, Node as ReactFlowNode } from 'reactflow';
 
 export type NodeRequest = {
   type: string;
   position?: { x: number; y: number };
-  data?: any;
-}
-
+  data?: unknown;
+};
 
 export interface ICreateNode {
+<<<<<<< HEAD
   reactFlowInstance: ReactFlowInstance,
   graph: Graph,
   nodeLookup: Record<string, NodeFactory>,
   iconLookup: Record<string, string>,
+=======
+  reactFlowInstance: ReactFlowInstance;
+  graph: Graph;
+  nodeLookup: Record<string, NodeFactory>;
+>>>>>>> chore: fix linting and formatting issues
   /**
    * If a customized node would be created in the editor, it would be created using this UI lookup.
    * This takes a node type such as 'studio.tokens.math.add' as a key and a string of the custom node type as a value.
    */
-  customUI: Record<string, string>,
-  dropPanelPosition: { x: number; y: number },
-  dispatch: Dispatch
+  customUI: Record<string, string>;
+  dropPanelPosition: { x: number; y: number };
+  dispatch: Dispatch;
 }
-
 
 export const createNode = ({
   reactFlowInstance,
@@ -33,7 +35,7 @@ export const createNode = ({
   iconLookup,
   customUI,
   dropPanelPosition,
-  dispatch
+  dispatch,
 }: ICreateNode) => {
   return (nodeRequest: NodeRequest) => {
     const position = nodeRequest.position || {
@@ -47,10 +49,7 @@ export const createNode = ({
     if (!nodeRequest.type) {
       return;
     }
-    if (
-      nodeRequest.type == INPUT &&
-      nodes.some((x) => x.nodeType() == INPUT)
-    ) {
+    if (nodeRequest.type == INPUT && nodes.some((x) => x.nodeType() == INPUT)) {
       alert('Only one input node allowed');
       return;
     }
@@ -62,7 +61,6 @@ export const createNode = ({
       return;
     }
 
-
     //Lookup the node type
     const Factory = nodeLookup[nodeRequest.type];
 
@@ -72,7 +70,7 @@ export const createNode = ({
     });
     graph.addNode(node);
 
-    const finalPos = position || { x: 0, y: 0 }
+    const finalPos = position || { x: 0, y: 0 };
 
     node.annotations[xpos] = finalPos.x;
     node.annotations[ypos] = finalPos.y;
@@ -111,15 +109,15 @@ export const createNode = ({
       data: {
         type: nodeRequest.type,
         id: node.id,
-        msg: `Node created`
+        msg: `Node created`,
       },
-    })
+    });
 
     reactFlowInstance.addNodes(reactFlowNode);
 
     return {
       graphNode: node,
-      flowNode: reactFlowNode
+      flowNode: reactFlowNode,
     };
   };
 };

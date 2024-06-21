@@ -20,24 +20,12 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "types": [
-      "jest",
-      "node"
-    ],
+    "types": ["jest", "node"],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     }
   },
-  "include": [
-    "stories/**/*",
-    "src/**/*",
-    "tests/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "cypress/**"
-  ]
+  "include": ["stories/**/*", "src/**/*", "tests/**/*"],
+  "exclude": ["node_modules", "cypress/**"]
 }

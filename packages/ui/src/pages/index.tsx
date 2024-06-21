@@ -6,13 +6,10 @@ import '@tokens-studio/graph-editor/index.css';
 import { Box } from '@tokens-studio/ui';
 import { EditorTab } from '@/components/editor/index.tsx';
 import { GraphService } from '@/api/index.ts';
-import { ImperativeEditorRef } from '@tokens-studio/graph-editor';
 import { JoyrideTooltip } from '@/components/joyride/tooltip.tsx';
 import { SerializedGraph } from '@tokens-studio/graph-engine';
 import { observer } from 'mobx-react-lite';
-import {
-  showJourneySelector,
-} from '@/redux/selectors/index.ts';
+import { showJourneySelector } from '@/redux/selectors/index.ts';
 import { useDispatch } from '@/hooks/index.ts';
 import { useErrorToast } from '@/hooks/useToast.tsx';
 import { useJourney } from '@/components/journeys/basic.tsx';
@@ -33,27 +30,24 @@ const Wrapper = observer(() => {
     globalState.refs.editor.set(editor);
   }, []);
 
-
   const showJourney = useSelector(showJourneySelector);
-
 
   const { isLoading, data, error } = useQuery({
     queryKey: ['graph', router.query.id],
-    queryFn: () => GraphService.getGraph({
-      graphId: router.query.id as string
-    }),
-    enabled: !!router.query.id
+    queryFn: () =>
+      GraphService.getGraph({
+        graphId: router.query.id as string,
+      }),
+    enabled: !!router.query.id,
   });
 
   useErrorToast(error);
 
-
   useEffect(() => {
     if (editor && data?.graph) {
-      editor.loadRaw(data?.graph as SerializedGraph)
+      editor.loadRaw(data?.graph as SerializedGraph);
     }
-  }, [data, editor])
-
+  }, [data, editor]);
 
   const [{ steps }] = useJourney();
   const handleJoyrideCallback = (data: CallBackProps) => {
@@ -64,7 +58,6 @@ const Wrapper = observer(() => {
       dispatch.journey.setShowJourney(false);
     }
   };
-
 
   return (
     <>
@@ -105,7 +98,6 @@ const Wrapper = observer(() => {
 
 const Index = () => {
   return <Wrapper />;
-}
-
+};
 
 export default Index;

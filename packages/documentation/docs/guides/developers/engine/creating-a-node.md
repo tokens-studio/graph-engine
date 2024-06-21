@@ -8,12 +8,15 @@ You should use [reverse-domain-notation](https://en.wikipedia.org/wiki/Reverse_d
 
 Use the following as a template
 
-```ts 
-import { INodeDefinition,NumberSchema,Node } from "@tokens-studio/graph-engine";
-import type {  ToInput, ToOutput } from "@tokens-studio/graph-engine";
+```ts
+import {
+  INodeDefinition,
+  NumberSchema,
+  Node,
+} from "@tokens-studio/graph-engine";
+import type { ToInput, ToOutput } from "@tokens-studio/graph-engine";
 
 export default class MyCustomNode extends Node {
-
   //This is the title associated with your node
   static title = "Add";
   //This is your reverse domain notation node name
@@ -48,7 +51,7 @@ export default class MyCustomNode extends Node {
   }
 
   //This is the main logic of your node. The execute can be async or not.
-  execute(){
+  execute() {
     const { a, b } = this.getAllInputs();
     this.setOutput("value", a + b);
   }
@@ -63,7 +66,7 @@ Add a testing file. The following is a basic test of the logic of the above math
 //This will depend on where you created your node file in step 2
 import Node from "@/nodes/math/add";
 import { Graph } from "@tokens-studio/graph-engine";
-import {describe, it, expect} from '@jest/globals';
+import { describe, it, expect } from "@jest/globals";
 
 describe("math/add", () => {
   it("adds two numbers", async () => {
@@ -82,9 +85,9 @@ describe("math/add", () => {
 
 ## 4. Load the node into the UI (Optional)
 
-Now that you've made a visual representation of your node, you likely will want to add it into the visual editor. 
+Now that you've made a visual representation of your node, you likely will want to add it into the visual editor.
 
-You will need to load your node as a `panelItems` in the editor. 
+You will need to load your node as a `panelItems` in the editor.
 
 ```tsx
 import React from 'react'
@@ -133,4 +136,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 
 ```
 
-Congratulations, you have created your first node! 
+Congratulations, you have created your first node!

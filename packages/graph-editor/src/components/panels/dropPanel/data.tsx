@@ -1,23 +1,5 @@
-import { Plus } from 'iconoir-react';
-import React from 'react';
-import preset from '@/data/preset.js';
-import tinyCore from '@/data/tiny/core.js';
-import tinyCoreDark from '@/data/tiny/dark.js';
-import tinyCoreLight from '@/data/tiny/light.js';
 import { nodes } from '@tokens-studio/graph-engine';
 import { observable } from 'mobx';
-import { flatten } from '@/utils/index.js';
-
-//@ts-ignore
-const presetFlattened = flatten(preset);
-//@ts-ignore
-const tinyCoreFlattened = flatten(tinyCore);
-//@ts-ignore
-const tinyCoreLightFlattened = flatten(tinyCoreLight);
-//@ts-ignore
-const tinyCoreDarkFlattened = flatten(tinyCoreDark);
-
-const INLINE_SET = 'studio.tokens.design.inline';
 
 export interface IPanelItem {
   type: string;
@@ -27,7 +9,7 @@ export interface IPanelItem {
   docs?: string;
   data?: {
     identifier?: string;
-    value?: any[];
+    value?: unknown[];
     title?: string;
   };
 }
@@ -46,7 +28,7 @@ export class PanelItem {
   @observable
   data?: {
     identifier?: string;
-    value?: any[];
+    value?: unknown[];
     title?: string;
   };
   constructor(vals: IPanelItem) {
@@ -119,73 +101,33 @@ function CapitalCase(string) {
 
 export const defaultPanelGroupsFactory = (): DropPanelStore => {
   const auto = Object.values<PanelGroup>(
-    nodes.reduce((acc, node) => {
-      const defaultGroup = node.type.split('.');
-      const groups = node.groups || [defaultGroup[defaultGroup.length - 2]];
+    nodes.reduce(
+      (acc, node) => {
+        const defaultGroup = node.type.split('.');
+        const groups = node.groups || [defaultGroup[defaultGroup.length - 2]];
 
-      groups.forEach((group) => {
-        //If the group does not exist, create it
-        if (!acc[group]) {
-          acc[group] = new PanelGroup({
-            title: CapitalCase(group),
-            key: group,
-            items: [],
-          });
-        }
-        acc[group].items.push(
-          new PanelItem({
-            type: node.type,
-            text: CapitalCase(
-              node.title || defaultGroup[defaultGroup.length - 1],
-            ),
-            description: node.description
-          }),
-        );
-      });
-      return acc;
-    }, {} as Record<string, PanelGroup>),
+        groups.forEach((group) => {
+          //If the group does not exist, create it
+          if (!acc[group]) {
+            acc[group] = new PanelGroup({
+              title: CapitalCase(group),
+              key: group,
+              items: [],
+            });
+          }
+          acc[group].items.push(
+            new PanelItem({
+              type: node.type,
+              text: CapitalCase(
+                node.title || defaultGroup[defaultGroup.length - 1],
+              ),
+              description: node.description
+            }),
+          );
+        });
+        return acc;
+      }, {} as Record<string, PanelGroup>),
   );
-
-  const added = auto.concat([
-    new PanelGroup({
-      title: 'Basic Tokens',
-      key: 'basic',
-      items: [
-        new PanelItem({
-          type: INLINE_SET,
-          data: {
-            value: tinyCoreFlattened,
-            title: 'Tiny Core',
-          },
-          text: 'Tiny Core',
-        }),
-        new PanelItem({
-          type: INLINE_SET,
-          data: {
-            value: tinyCoreLightFlattened,
-            title: 'Tiny Light',
-          },
-          text: 'Tiny Light',
-        }),
-        new PanelItem({
-          type: INLINE_SET,
-          data: {
-            value: tinyCoreDarkFlattened,
-            title: 'Tiny Dark',
-          },
-          text: 'Tiny Dark',
-        }),
-        new PanelItem({
-          type: INLINE_SET,
-          data: {
-            value: presetFlattened,
-            title: 'Preset tokens',
-          },
-          text: 'Preset Tokens',
-        }),
-      ],
-    }),
-  ] as PanelGroup[]);
 
   return new DropPanelStore(auto);
 };

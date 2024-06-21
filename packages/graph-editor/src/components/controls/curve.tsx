@@ -1,8 +1,8 @@
-import { observer } from 'mobx-react-lite';
-import { IField } from './interface';
 import { CurveEditor } from '../curveEditor';
-import React from 'react';
+import { IField } from './interface';
 import { Input } from '@tokens-studio/graph-engine';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
 
 export const CurveField = observer(({ port, readOnly }: IField) => {
   const onChange = (index: number, value: number[]) => {

@@ -44,7 +44,7 @@ export default class NodeDefinition extends Node {
     this.addInput("foreground", {
       type: {
         ...ColorSchema,
-        default: "#000000"
+        default: "#000000",
       },
     });
     this.addInput("background", {
@@ -86,13 +86,29 @@ export default class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
+<<<<<<< HEAD
     const { algorithm, foreground, background, threshold, precision } = this.getAllInputs();
 
     const binarySearchAlpha = (low, high, fg, bg, targetContrast, iterations) => {
       
       if (iterations == 0 || high - low < 0.01) {  // Adding a minimum delta to prevent infinite recursion
+=======
+    const { wcag, foreground, background, threshold, precision } =
+      this.getAllInputs();
+
+    const binarySearchAlpha = (
+      low,
+      high,
+      fg,
+      bg,
+      targetContrast,
+      iterations,
+    ) => {
+      if (iterations == 0 || high - low < 0.01) {
+        // Adding a minimum delta to prevent infinite recursion
+>>>>>>> chore: fix linting and formatting issues
         fg.alpha = high; // Default to higher alpha if exact match isn't found
-        return high;  // Ensure we are returning the alpha that provides sufficient contrast
+        return high; // Ensure we are returning the alpha that provides sufficient contrast
       }
 
       const mid = (low + high) / 2;
@@ -101,12 +117,31 @@ export default class NodeDefinition extends Node {
       // Convert blended color back to Color object and then to hex string
       const solidColor = flattenAlpha(fg, bg);
 
+<<<<<<< HEAD
       currentContrast = contrastCheck(solidColor, bg, algorithm);
       
+=======
+      currentContrast = contrastCheck(solidColor, bg, wcag);
+
+>>>>>>> chore: fix linting and formatting issues
       if (currentContrast >= targetContrast) {
-        return binarySearchAlpha(low, mid, fg, bg, targetContrast, iterations - 1);
+        return binarySearchAlpha(
+          low,
+          mid,
+          fg,
+          bg,
+          targetContrast,
+          iterations - 1,
+        );
       } else {
-        return binarySearchAlpha(mid, high, fg, bg, targetContrast, iterations - 1);
+        return binarySearchAlpha(
+          mid,
+          high,
+          fg,
+          bg,
+          targetContrast,
+          iterations - 1,
+        );
       }
     };
 
@@ -116,19 +151,29 @@ export default class NodeDefinition extends Node {
 
     if (currentContrast <= threshold) {
       this.setOutput("alpha", 1);
-      this.setOutput("color", foregroundColor.to('srgb').toString({ format: 'hex' }));
+      this.setOutput(
+        "color",
+        foregroundColor.to("srgb").toString({ format: "hex" }),
+      );
       this.setOutput("contrast", currentContrast);
       return;
     }
 
-    const finalAlpha = binarySearchAlpha(0, 1, foregroundColor, backgroundColor, threshold, precision);
+    const finalAlpha = binarySearchAlpha(
+      0,
+      1,
+      foregroundColor,
+      backgroundColor,
+      threshold,
+      precision,
+    );
 
     foregroundColor.alpha = finalAlpha;
     const finalColor = flattenAlpha(foregroundColor, backgroundColor);
     const finalContrast = Math.abs(finalColor.contrast(backgroundColor, algorithm));
 
     this.setOutput("alpha", finalAlpha);
-    this.setOutput("color", finalColor.to('srgb').toString({ format: 'hex' }));
+    this.setOutput("color", finalColor.to("srgb").toString({ format: "hex" }));
     this.setOutput("contrast", finalContrast);
   }
 }

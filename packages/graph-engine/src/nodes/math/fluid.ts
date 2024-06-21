@@ -8,8 +8,6 @@ export default class NodeDefinition extends Node {
   static description =
     "Fluid node allows you to dynamically calculates a dimension based on the current viewport width, transitioning smoothly between a minimum and maximum dimension as the viewport width changes within a defined range (from min viewport to max viewport)";
 
-
-
   declare inputs: ToInput<{
     minSize: number;
     maxSize: number;
@@ -20,7 +18,6 @@ export default class NodeDefinition extends Node {
   declare outputs: ToOutput<{
     value: number;
   }>;
-
 
   constructor(props: INodeDefinition) {
     super(props);

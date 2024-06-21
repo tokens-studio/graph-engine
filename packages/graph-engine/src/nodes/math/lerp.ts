@@ -11,7 +11,7 @@ export default class NodeDefinition extends Node {
   declare inputs: ToInput<{
     a: number;
     b: number;
-    t:number
+    t: number;
   }>;
 
   declare outputs: ToOutput<{

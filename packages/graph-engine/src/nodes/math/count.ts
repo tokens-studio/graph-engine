@@ -8,10 +8,8 @@ export default class NodeDefinition extends Node {
   static type = "studio.tokens.math.count";
   static description = "Counts the amount of items in an array.";
 
-
   declare inputs: ToInput<{
     value: any[];
-
   }>;
   declare outputs: ToOutput<{
     value: number;

@@ -3,7 +3,7 @@ import { StringSchema } from "../../../src/schemas";
 
 export default {
   annotations: {
-    'engine.version': '100.0.0',
+    "engine.version": "100.0.0",
   },
   nodes: [
     {
@@ -20,10 +20,12 @@ export default {
     {
       id: "33952fc4-eced-4c10-a56d-7bdb65182b34",
       type: "studio.tokens.generic.output",
-      inputs: [{
-        name: "input",
-        type: StringSchema
-      }],
+      inputs: [
+        {
+          name: "input",
+          type: StringSchema,
+        },
+      ],
     },
   ] as SerializedNode[],
   edges: [

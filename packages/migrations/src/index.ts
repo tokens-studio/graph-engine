@@ -11,7 +11,7 @@ export interface IUpdateGraph {
 
 export const updateGraph = async (
   graph: Graph,
-  opts: IUpdateGraph = { verbose: true }
+  opts: IUpdateGraph = { verbose: true },
 ) => {
   const { verbose } = opts;
 
@@ -28,7 +28,7 @@ export const updateGraph = async (
       }
       return await upgrader(acc);
     },
-    Promise.resolve(copiedGraph)
+    Promise.resolve(copiedGraph),
   );
 
   return newGraph;

@@ -15,12 +15,10 @@ export default class NodeDefinition extends Node {
     match: string;
     flags: string;
     replace: string;
-  }>
+  }>;
   declare outputs: ToOutput<{
     value: string;
-  }>
-
-
+  }>;
 
   constructor(props: INodeDefinition) {
     super(props);

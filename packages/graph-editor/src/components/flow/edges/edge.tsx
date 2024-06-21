@@ -1,16 +1,16 @@
+import { EdgeType } from '../../../redux/models/settings.js';
 import {
-  getBezierPath,
+  Position,
   getSimpleBezierPath,
   getSmoothStepPath,
   getStraightPath,
-  Position,
 } from 'reactflow';
-import { getBetterBezierPath } from "./offsetBezier.js";
-import React from 'react';
-import { useSelector } from 'react-redux';
 import { edgeType as edgeTypeSelector } from '../../../redux/selectors/settings.js';
-import { EdgeType } from '../../../redux/models/settings.js';
-
+import { getBetterBezierPath } from './offsetBezier.js';
+import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import React from 'react';
+import React from 'react';
 
 interface IArticulatedPath {
   sourceX: number;
@@ -38,7 +38,6 @@ const getArticulatedPath = (opts: IArticulatedPath): [IPathOutput] => {
   const deltaX = targetX - sourceX;
   const deltaY = targetY - sourceY;
 
-
   let arc = '';
 
   //Get the smaller of the two distances
@@ -49,8 +48,9 @@ const getArticulatedPath = (opts: IArticulatedPath): [IPathOutput] => {
     const paddingX = (deltaX - dist) / 2;
 
     //Create the svg path
-    arc = `M ${sourceX} ${sourceY} C ${sourceX + paddingX} ${sourceY} ${targetX - paddingX
-      } ${targetY} ${targetX} ${targetY}`;
+    arc = `M ${sourceX} ${sourceY} C ${sourceX + paddingX} ${sourceY} ${
+      targetX - paddingX
+    } ${targetY} ${targetX} ${targetY}`;
   } else {
     const dist = deltaX;
 
@@ -58,18 +58,12 @@ const getArticulatedPath = (opts: IArticulatedPath): [IPathOutput] => {
     const paddingY = (deltaY - dist) / 2;
 
     //Create the svg path
-    arc = `M ${sourceX} ${sourceY} C ${sourceX} ${sourceY + paddingY
-      } ${targetX} ${targetY - paddingY} ${targetX} ${targetY}`;
+    arc = `M ${sourceX} ${sourceY} C ${sourceX} ${
+      sourceY + paddingY
+    } ${targetX} ${targetY - paddingY} ${targetX} ${targetY}`;
   }
 
-
-  return [
-    arc,
-    targetX,
-    targetY,
-    0,
-    0,
-  ];
+  return [arc, targetX, targetY, 0, 0];
 };
 
 export default function CustomEdge({

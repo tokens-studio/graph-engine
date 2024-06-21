@@ -1,5 +1,5 @@
-import Node from "../../../../src/nodes/string/split.js";
 import { Graph } from "../../../../src/graph/graph.js";
+import Node from "../../../../src/nodes/string/split.js";
 
 describe("string/split", () => {
   it("splits a string as expected", async () => {

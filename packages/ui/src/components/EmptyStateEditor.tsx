@@ -13,19 +13,13 @@ export function EmptyStateEditor({ onLoadExamples }: IEmptyStateProps) {
   const dispatch = useDispatch();
   const showNodesPanel = useSelector(showNodesPanelSelector);
 
-  const handleTriggerAddNode = useCallback(
-    (e) => {
-      dispatch.ui.setShowNodesCmdPalette(true);
-    },
-    [dispatch.ui],
-  );
+  const handleTriggerAddNode = useCallback(() => {
+    dispatch.ui.setShowNodesCmdPalette(true);
+  }, [dispatch.ui]);
 
-  const handleTriggerShowExamples = useCallback(
-    (e) => {
-      onLoadExamples();
-    },
-    [onLoadExamples],
-  );
+  const handleTriggerShowExamples = useCallback(() => {
+    onLoadExamples();
+  }, [onLoadExamples]);
 
   return (
     <Box

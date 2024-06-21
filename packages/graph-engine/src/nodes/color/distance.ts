@@ -20,7 +20,6 @@ export default class NodeDefinition extends Node {
   static description =
     "Calculate the distance between two colors. The output is a number representing the difference between the two colors. The lower the number, the closer the colors are to each other. The output is based on the CIEDE2000 color difference formula.";
 
-
   declare inputs: ToInput<{
     colorA: ColorType;
     colorB: ColorType;

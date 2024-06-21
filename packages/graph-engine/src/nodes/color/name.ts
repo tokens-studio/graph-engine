@@ -1,5 +1,3 @@
-
-
 import { ColorSchema, StringSchema } from "../../schemas/index.js";
 import { INodeDefinition } from "../../index.js";
 import { Node } from "../../programmatic/node.js";

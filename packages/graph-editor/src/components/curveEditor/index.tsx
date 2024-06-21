@@ -1,15 +1,14 @@
 import * as React from 'react';
 import {
+  ConstraintFunction,
   Coordinates,
-  Plot,
   Line,
   Mafs,
-  Theme,
-  useMovablePoint,
-  Text,
-  vec,
-  ConstraintFunction,
   MovablePoint,
+  Plot,
+  Text,
+  Theme,
+  vec,
 } from 'mafs';
 
 /**

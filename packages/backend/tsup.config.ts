@@ -1,17 +1,16 @@
-import { defineConfig } from 'tsup';
-
+import { defineConfig } from "tsup";
 
 export default defineConfig({
-  external:['@prisma/client'],
-  noExternal:['**'],
-  entry: ['src/index.ts'],
+  external: ["@prisma/client"],
+  noExternal: ["**"],
+  entry: ["src/index.ts"],
   dts: true,
   sourcemap: true,
-  format: 'esm',
+  format: "esm",
   skipNodeModulesBundle: true,
   clean: false,
   splitting: false,
   minify: false,
   bundle: false,
-  target: "esnext"
+  target: "esnext",
 });

@@ -13,7 +13,6 @@ export default class NodeDefinition<T> extends Node {
     value: T[];
   }>;
 
-
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("array", {

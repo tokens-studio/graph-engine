@@ -1,5 +1,5 @@
-import Node from "../../../../src/nodes/math/multiply";
 import { Graph } from "../../../../src/graph/graph.js";
+import Node from "../../../../src/nodes/math/multiply";
 
 describe("math/mul", () => {
   it("multiplies two numbers", async () => {

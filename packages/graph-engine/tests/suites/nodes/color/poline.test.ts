@@ -1,11 +1,11 @@
-import Node from "../../../../src/nodes/color/poline.js";
 import { Graph } from "../../../../src/graph/graph.js";
+import Node from "../../../../src/nodes/color/poline.js";
 
 describe("color/poline", () => {
   it("creates the expected color palette with these inputs 1", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-    
+
     node.inputs.anchorColors.setValue(["#ff0000", "#00ff00"]);
     node.inputs.numPoints.setValue(2);
     node.inputs.hueShift.setValue(20);
@@ -20,7 +20,7 @@ describe("color/poline", () => {
   it("creates the expected color palette with these inputs 2", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-    
+
     node.inputs.anchorColors.setValue(["#ff0000", "#00ff00"]);
     node.inputs.numPoints.setValue(6);
     node.inputs.invertedLightness.setValue(true);
@@ -45,7 +45,7 @@ describe("color/poline", () => {
   it("creates the expected color palette with two color inputs and a given state", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
-    
+
     node.inputs.anchorColors.setValue(["#ff0000", "#00ff00"]);
     node.inputs.numPoints.setValue(2);
     node.inputs.hueShift.setValue(20);

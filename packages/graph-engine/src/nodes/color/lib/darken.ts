@@ -4,7 +4,7 @@ import Color from "colorjs.io";
 export function darken(
   color: Color,
   colorSpace: ColorSpaceTypes,
-  amount: number
+  amount: number,
 ): Color {
   switch (colorSpace) {
     case ColorSpaceTypes.LCH: {

@@ -14,5 +14,5 @@ export default defineConfig({
   clean: false,
   esbuildPlugins: [sassPlugin()],
   minify: false,
-  target: "esnext"
+  target: 'esnext',
 });

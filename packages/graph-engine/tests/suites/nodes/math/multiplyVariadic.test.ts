@@ -1,5 +1,5 @@
-import Node from "../../../../src/nodes/math/multiplyVariadic";
 import { Graph } from "../../../../src/graph/graph.js";
+import Node from "../../../../src/nodes/math/multiplyVariadic";
 
 describe("math/mul", () => {
   it("multiplies two numbers", async () => {

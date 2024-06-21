@@ -32,7 +32,6 @@ class RefState {
   }
 }
 
-
 export class GlobalState {
   refs: RefState;
   ui: UIState;

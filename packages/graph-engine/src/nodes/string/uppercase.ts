@@ -9,10 +9,10 @@ export default class NodeDefinition extends Node {
 
   declare inputs: ToInput<{
     value: string;
-  }>
+  }>;
   declare outputs: ToOutput<{
     value: string;
-  }>
+  }>;
 
   constructor(props: INodeDefinition) {
     super(props);

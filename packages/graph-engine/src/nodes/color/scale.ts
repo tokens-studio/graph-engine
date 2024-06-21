@@ -1,8 +1,5 @@
 import { Color } from "../../types.js";
-import {
-  ColorSchema,
-  NumberSchema,
-} from "../../schemas/index.js";
+import { ColorSchema, NumberSchema } from "../../schemas/index.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { arrayOf } from "../../schemas/utils.js";
@@ -13,17 +10,14 @@ export default class NodeDefinition extends Node {
   static type = "studio.tokens.color.scale";
   static description = "Create a scale/ramp of colors based on a given color by specifying the number of steps up and down";
 
-
-
   declare inputs: ToInput<{
     color: Color;
     stepsUp: number;
     stepsDown: number;
   }>;
   declare outputs: ToOutput<{
-    value: Color[]
+    value: Color[];
   }>;
-
 
   constructor(props: INodeDefinition) {
     super(props);

@@ -1,23 +1,19 @@
-
 import { RootModel } from './root.ts';
 import { createModel } from '@rematch/core';
-
 
 export interface UIState {
   previewCode: string;
   theme: string;
   showExamplePicker: boolean;
   showNodesPanel: boolean;
-
 }
-
 
 export const uiState = createModel<RootModel>()({
   state: {
     previewCode: '',
     theme: 'dark',
     showExamplePicker: false,
-    showNodesPanel: true
+    showNodesPanel: true,
   } as UIState,
   reducers: {
     setTheme(state, theme: string) {
@@ -26,7 +22,6 @@ export const uiState = createModel<RootModel>()({
         theme,
       };
     },
-
 
     setPreviewCode(state, previewCode: string) {
       return {

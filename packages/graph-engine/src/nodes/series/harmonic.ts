@@ -15,7 +15,6 @@ export default class NodeDefinition extends Node {
   static description =
     'A "Harmonic Series" is a sequence of numbers whose reciprocals form an arithmetic progression. For example, in the series 1, 1/2, 1/3, 1/4, 1/5, the reciprocals form an arithmetic progression with common difference 1/6.';
 
-
   declare inputs: ToInput<{
     base: number;
     stepsDown: number;
@@ -29,7 +28,6 @@ export default class NodeDefinition extends Node {
     array: number[];
     indexed: HarmonicValue[];
   }>;
-
 
   constructor(props: INodeDefinition) {
     super(props);
@@ -107,7 +105,7 @@ export default class NodeDefinition extends Node {
 
     this.setOutput(
       "array",
-      values.map((x) => x.value)
+      values.map((x) => x.value),
     );
     this.setOutput("indexed", values);
   }

@@ -10,6 +10,6 @@ const meta: Meta<typeof Settings> = {
 export default meta;
 type Story = StoryObj<typeof Settings>;
 export const Default: Story = {
-  render: (args) => <Settings />,
+  render: () => <Settings />,
   args: {},
 };

@@ -7,13 +7,9 @@
     "prisma",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ],
+  "exclude": ["node_modules"],
   "ts-node": {
-    "require": [
-      "tsconfig-paths/register"
-    ],
+    "require": ["tsconfig-paths/register"],
     // "experimentalSpecifierResolution": "node",
     // "esm": true,
     // these options are overrides used only by ts-node
@@ -32,11 +28,7 @@
     "moduleResolution": "nodenext",
     "experimentalDecorators": true,
     "allowImportingTsExtensions": true,
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable"
-    ],
+    "lib": ["esnext", "dom", "dom.iterable"],
     "strict": true,
     "noEmit": true,
     "allowJs": true,
@@ -49,26 +41,14 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "types": [
-      "node"
-    ],
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "types": ["node"],
+    "typeRoots": ["node_modules/@types"],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "#selectors": [
-        "src/redux/selectors"
-      ],
-      "#vpages": [
-        "src/virtualPages/*"
-      ],
-      "#selectors/*": [
-        "src/redux/selectors/*"
-      ]
+      "@/*": ["src/*"],
+      "#selectors": ["src/redux/selectors"],
+      "#vpages": ["src/virtualPages/*"],
+      "#selectors/*": ["src/redux/selectors/*"]
     },
     "plugins": [
       {

@@ -2,7 +2,7 @@ import { AnySchema, StringSchema } from "../../schemas/index.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
 import { ToInput } from "../../programmatic/input.js";
 import { ToOutput } from "../../programmatic/output.js";
-import { annotatedDynamicInputs } from '../../annotations/index.js';
+import { annotatedDynamicInputs } from "../../annotations/index.js";
 
 /**
  * @example
@@ -31,15 +31,15 @@ export default class NodeDefinition<T> extends Node {
   declare inputs: ToInput<{
     default: T;
     condition: string;
-  }>
+  }>;
   declare output: ToOutput<{
     value: T;
-  }>
+  }>;
 
   constructor(props: INodeDefinition) {
     super(props);
 
-    this.annotations[annotatedDynamicInputs] = true
+    this.annotations[annotatedDynamicInputs] = true;
 
     this.addInput("default", {
       type: AnySchema,

@@ -31,7 +31,7 @@ export default class NodeDefinition<T> extends Node {
 
   declare outputs: ToOutput<{
     value: T[];
-  }>
+  }>;
 
   static description = "Sorts an array";
   constructor(props: INodeDefinition) {

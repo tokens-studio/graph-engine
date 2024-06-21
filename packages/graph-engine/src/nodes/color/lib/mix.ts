@@ -5,7 +5,7 @@ export function mix(
   color: Color,
   colorSpace: ColorSpaceTypes,
   amount: number,
-  mixColor: Color
+  mixColor: Color,
 ) {
   const mixValue = Math.max(0, Math.min(1, Number(amount)));
 

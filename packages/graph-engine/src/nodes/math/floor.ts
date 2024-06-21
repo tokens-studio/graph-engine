@@ -9,7 +9,6 @@ export default class NodeDefinition extends Node {
   static description =
     "Floor node allows you to adjusts a floating-point number to the nearest lower integer.";
 
-
   declare inputs: ToInput<{
     value: number;
   }>;

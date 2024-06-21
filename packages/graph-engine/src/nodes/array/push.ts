@@ -15,14 +15,13 @@ export default class NodeDefinition<T> extends Node {
      * The item to push to the array
      */
     item: T;
-  }>
+  }>;
   declare outputs: ToOutput<{
     /**
      * The array with the item pushed to it
      */
     value: T[];
-  }>
-
+  }>;
 
   constructor(props: INodeDefinition) {
     super(props);

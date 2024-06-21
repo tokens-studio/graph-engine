@@ -1,7 +1,7 @@
-import cssFunctionsData from "mdn-data/css/functions.json" with { type: 'json' };
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { StringSchema } from "../../schemas/index.js";
+import cssFunctionsData from "mdn-data/css/functions.json" with { type: "json" };
 
 const FUNCTION_NAMES = Object.keys(cssFunctionsData);
 
@@ -18,7 +18,6 @@ export default class NodeDefinition extends Node {
   declare outputs: ToOutput<{
     value: string;
   }>;
-
 
   constructor(props: INodeDefinition) {
     super(props);

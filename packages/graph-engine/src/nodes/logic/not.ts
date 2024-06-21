@@ -15,7 +15,6 @@ export default class NodeDefinition<T> extends Node {
     value: boolean;
   }>;
 
-
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {

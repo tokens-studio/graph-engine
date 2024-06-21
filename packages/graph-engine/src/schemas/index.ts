@@ -1,16 +1,15 @@
 import type { SchemaObject } from "ajv";
 
-
-export const variadicId = (id: string) => id.replace(".json", "-variadic.json")
+export const variadicId = (id: string) => id.replace(".json", "-variadic.json");
 
 export const createVariadicSchema = (baseSchema) => {
   return {
     //Currently we don't set the id here because we don't want to register this schema. Its likely that its structural and that anything that introspects it attempts to read the id from the baseschema
     title: baseSchema.title + "[]",
     type: "array",
-    items: baseSchema
+    items: baseSchema,
   };
-}
+};
 
 export type { SchemaObject } from "ajv";
 
@@ -35,7 +34,6 @@ export const ColorSchema: SchemaObject = {
   type: "string",
 };
 
-
 export const ANY = "https://schemas.tokens.studio/any.json";
 export const AnySchema: SchemaObject = {
   $id: ANY,
@@ -59,7 +57,6 @@ export const BooleanSchema: SchemaObject = {
   type: "boolean",
   default: false,
 };
-
 
 export const OBJECT = "https://schemas.tokens.studio/object.json";
 export const ObjectSchema: SchemaObject = {
@@ -176,7 +173,6 @@ export const Vec3Schema: SchemaObject = {
   default: [0, 0, 0],
 };
 
-
 export const GRADIENT_STOP = "https://schemas.tokens.studio/gradientStop.json";
 export const GradientStopSchema: SchemaObject = {
   $id: GRADIENT_STOP,
@@ -189,11 +185,9 @@ export const GradientStopSchema: SchemaObject = {
     },
     color: {
       type: "string",
-    }
+    },
   },
 };
-
-
 
 export const GRADIENT = "https://schemas.tokens.studio/gradient.json";
 export const GradientSchema: SchemaObject = {
@@ -220,7 +214,7 @@ export const GradientSchema: SchemaObject = {
             },
           ],
         },
-      ]
+      ],
     },
     stops: {
       type: "array",
@@ -232,11 +226,11 @@ export const GradientSchema: SchemaObject = {
           },
           color: {
             type: ColorSchema,
-          }
+          },
         },
         required: ["position", "color"],
-      }
-    }
+      },
+    },
   },
 };
 
@@ -247,9 +241,8 @@ export const BufferSchema: SchemaObject = {
   type: "object",
   default: null,
   //Listing all the properties of a buffer is not practical
-  properties: {
-  },
-}
+  properties: {},
+};
 
 /**
  * Checks whether a schema can be converted to another schema
@@ -259,7 +252,7 @@ export const BufferSchema: SchemaObject = {
  */
 export const canConvertSchemaTypes = (
   src: SchemaObject,
-  target: SchemaObject
+  target: SchemaObject,
 ) => {
   if (src.$id === target.$id) return true;
   //Any can always accept anything
@@ -268,7 +261,7 @@ export const canConvertSchemaTypes = (
   if (src.type == "array" && target.$id == ANY_ARRAY) {
     return true;
   }
-  if (src.type == "array" && target.type == 'array') {
+  if (src.type == "array" && target.type == "array") {
     if (target.items?.$id === ANY) return true;
   }
 
@@ -312,10 +305,8 @@ export const convertSchemaType = (
   srcSchema: SchemaObject,
   targetSchema: SchemaObject,
   src: any,
-  target: any
 ) => {
   switch (srcSchema.$id) {
-
     case NUMBER:
       switch (targetSchema.$id) {
         case STRING:

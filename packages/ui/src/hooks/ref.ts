@@ -1,4 +1,4 @@
-import { useCallback, useRef, MutableRefObject } from 'react';
+import { MutableRefObject, useCallback, useRef } from 'react';
 import { useDispatch } from './useDispatch.ts';
 
 /**

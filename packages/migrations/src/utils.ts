@@ -50,7 +50,7 @@ export type SourceToTarget = {
 export const findSourceToTargetOfType = (
   graph: Graph,
   sourceType: string,
-  targetType: string
+  targetType: string,
 ): SourceToTarget[] => {
   const nodeLookup = toNodeLookup(graph);
 

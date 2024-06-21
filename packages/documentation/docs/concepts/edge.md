@@ -20,11 +20,11 @@ The edge data structure looks like the following
     "target": "8c081ba3-5914-4c16-9196-b9dccf355e66",
     /**
      *  A specific port
-     */ 
+     */
     "targetHandle": "input",
     /**
      * Arbitrary metadata
-     */ 
+     */
     "annotations": {}
 }
 

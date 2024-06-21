@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import { createNode } from './actions/createNode.js';
 import {
   Background,
@@ -231,28 +230,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
         });
       });
 
-      const NodeStartListener = graph.on('nodeExecuted', (run) => {
-
-        const existing = debugInfo.rows.find(x => x.id == run.node.id);
-
-        if (!existing) {
-          debugInfo.addRow({
-            id: run.node.id,
-            name: run.node.factory.type,
-            actions: []
-          });
-        }
-
-        //Now we need to add the actions
-        debugInfo.addAction(run.node.id, {
-          id: `${run.node.id}-${Date.now()}`,
-          start: run.start,
-          end: run.end,
-          effectId: 'effect0'
-        });
-
-      });
-
       return () => {
         valueDetecterDisposer();
         EdgeUpdaterDisposer();
@@ -469,7 +446,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
             reactFlowInstance.setViewport(viewport);
           }
           let offset = -550;
-          const nodes = Object.entries(loadedGraph.nodes).map(([id, node]) => {
+          const nodes = Object.entries(loadedGraph.nodes).map(([, node]) => {
             //Generate the react flow nodes
             return {
               id: node.id,

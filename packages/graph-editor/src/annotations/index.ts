@@ -1,4 +1,3 @@
-
 //Used on ports to indicate meta from a ui
 
 /**
@@ -18,8 +17,8 @@ export const editable = 'ui.editable';
  */
 export const hidden = 'ui.hidden';
 //Used on nodes to indicate meta from a ui
-export const xpos = 'ui.position.x'
-export const ypos = 'ui.position.y'
+export const xpos = 'ui.position.x';
+export const ypos = 'ui.position.y';
 
 //Used on nodes and graph
 export const title = 'ui.title';

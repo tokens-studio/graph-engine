@@ -42,14 +42,12 @@ export class Output<T = any> extends Port<T> {
       };
     }
 
-
     return graph.connect(this.node, this, target.node, target);
   }
 }
 
-
 /**
- * Converts a type definition to a map of inputs 
+ * Converts a type definition to a map of inputs
  * @example
  * ```ts
  * type myType = {

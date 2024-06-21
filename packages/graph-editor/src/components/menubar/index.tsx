@@ -1,12 +1,12 @@
-import React, { useMemo } from 'react';
-import Menu, { SubMenu, Item as MenuItem, Divider } from 'rc-menu';
 import { Box } from '@tokens-studio/ui';
-import { observer } from 'mobx-react-lite';
 import {
   Menu as MenuData,
-  SubMenu as SubMenuData,
   MenuItem as MenuItemData,
+  SubMenu as SubMenuData,
 } from './data';
+import { observer } from 'mobx-react-lite';
+import Menu, { Divider, Item as MenuItem, SubMenu } from 'rc-menu';
+import React, { useMemo } from 'react';
 
 export type IItem = React.ComponentProps<typeof MenuItem> & {
   icon?: React.ReactNode;
@@ -20,14 +20,20 @@ const SubMenuObserver = observer(({ submenu }: { submenu: SubMenuData }) => {
   //https://github.com/react-component/menu/blob/master/src/SubMenu/index.tsx
   //However just populating the key seems to be broken
   return (
-    <SubMenu title={submenu.title} eventKey={'xx' + submenu.name} key={submenu.name}>
-      {submenu.items.map((item, i) => {
-        if (item instanceof MenuItemData) {
-          return item.render({key: item.name});
-        } else {
-          return <Divider key={i} />;
-        }
-      }).flat()}
+    <SubMenu
+      title={submenu.title}
+      eventKey={'xx' + submenu.name}
+      key={submenu.name}
+    >
+      {submenu.items
+        .map((item, i) => {
+          if (item instanceof MenuItemData) {
+            return item.render({ key: item.name });
+          } else {
+            return <Divider key={i} />;
+          }
+        })
+        .flat()}
     </SubMenu>
   );
 });

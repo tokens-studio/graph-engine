@@ -14,12 +14,20 @@
     "build": "tsc && vite build",
     "storybook": "storybook dev -p 2001",
     "build-storybook": "storybook build",
-    "test-storybook": "test-storybook --url http://localhost:2001  --coverage"
+    "test-storybook": "test-storybook --url http://localhost:2001  --coverage",
+    "format": "npm run format:eslint && npm run format:prettier",
+    "format:eslint": "eslint --ext .tsx,.ts,.js --fix .",
+    "format:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --write",
+    "lint": "npm run lint:prettier && npm run lint:eslint",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --check"
   },
   "devDependencies": {
     "@storybook/builder-vite": "^8.1.1",
     "@storybook/web-components": "^8.1.1",
     "@storybook/web-components-vite": "^8.1.1",
+    "@tokens-studio/eslint-config-custom": "*",
+    "@tokens-studio/prettier-config-custom": "*",
     "storybook": "^8.1.1",
     "typescript": "^5.4.5"
   }

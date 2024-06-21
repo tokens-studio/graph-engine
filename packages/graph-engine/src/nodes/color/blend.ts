@@ -12,7 +12,6 @@ import { Color as ColorType } from "../../types.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { convertModifiedColorToHex } from "./lib/modifyColor.js";
-import Color from "colorjs.io";
 
 export { ColorModifierTypes } from "@tokens-studio/types";
 
@@ -29,7 +28,7 @@ export default class NodeDefinition extends Node {
   }>;
 
   declare outputs: ToOutput<{
-    value: ColorType
+    value: ColorType;
   }>;
 
   constructor(props: INodeDefinition) {

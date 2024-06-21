@@ -8,7 +8,6 @@ export default class NodeDefinition extends Node {
   static description =
     "Multiply node allows you to multiply two or more numbers.";
 
-
   declare inputs: ToInput<{
     inputs: number[];
   }>;

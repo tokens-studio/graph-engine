@@ -18,13 +18,13 @@ export default class NodeDefinition<T> extends Node {
     "Compare node allows you to compare two values using multiple operators.";
 
   declare inputs: ToInput<{
-    a: T,
-    b: T,
-    operator: Operator
-  }>
+    a: T;
+    b: T;
+    operator: Operator;
+  }>;
   declare outputs: ToOutput<{
-    value: boolean
-  }>
+    value: boolean;
+  }>;
 
   constructor(props: INodeDefinition) {
     super(props);

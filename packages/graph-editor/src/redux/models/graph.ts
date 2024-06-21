@@ -1,12 +1,12 @@
-import { RootModel } from './root.js';
-import { createModel } from '@rematch/core';
 import { Graph, annotatedPlayState } from '@tokens-studio/graph-engine';
-import type { PlayState } from '@tokens-studio/graph-engine';
 import { ImperativeEditorRef } from '@/editor/editorTypes.js';
 import { MAIN_GRAPH_ID } from '@/constants.js';
+import { RootModel } from './root.js';
+import { createModel } from '@rematch/core';
+import type { PlayState } from '@tokens-studio/graph-engine';
 
 export interface ILog {
-  data: Record<string, any>;
+  data: Record<string, never>;
   time: Date;
   type: 'info' | 'error' | 'warning';
 }
@@ -38,19 +38,17 @@ export const graphState = createModel<RootModel>()({
   } as GraphState,
   reducers: {
     setCurrentPanel(state, id: string) {
-
       const currentPanel = state.panels[id] || null;
       return {
         ...state,
         currentPanelId: id,
         currentPanel,
-        graph: currentPanel?.graph
-      }
-
+        graph: currentPanel?.graph,
+      };
     },
-    registerPanel(state, payload: { id: string, panel: IPanel }) {
-
-      const currentPanel = payload.id == state.currentPanelId ? payload.panel : state.currentPanel;
+    registerPanel(state, payload: { id: string; panel: IPanel }) {
+      const currentPanel =
+        payload.id == state.currentPanelId ? payload.panel : state.currentPanel;
 
       const newState = {
         ...state,
@@ -61,7 +59,7 @@ export const graphState = createModel<RootModel>()({
           [payload.id]: payload.panel,
         },
       };
-      return newState
+      return newState;
     },
     setCurrentNode(state, payload: string) {
       return {
@@ -88,28 +86,28 @@ export const graphState = createModel<RootModel>()({
       state.graph?.start();
       return {
         ...state,
-        graphPlayState: state.graph?.annotations[annotatedPlayState]
+        graphPlayState: state.graph?.annotations[annotatedPlayState],
       };
     },
     pauseGraph(state) {
       state.graph?.pause();
       return {
         ...state,
-        graphPlayState: state.graph?.annotations[annotatedPlayState]
+        graphPlayState: state.graph?.annotations[annotatedPlayState],
       };
     },
     resumeGraph(state) {
       state.graph?.resume();
       return {
         ...state,
-        graphPlayState: state.graph?.annotations[annotatedPlayState]
+        graphPlayState: state.graph?.annotations[annotatedPlayState],
       };
     },
     stopGraph(state) {
       state.graph?.stop();
       return {
         ...state,
-        graphPlayState: state.graph?.annotations[annotatedPlayState]
+        graphPlayState: state.graph?.annotations[annotatedPlayState],
       };
     },
     clearLogs(state) {
@@ -161,6 +159,6 @@ export const graphState = createModel<RootModel>()({
         time: new Date(),
         type: 'info',
       });
-    }
+    },
   }),
 });

@@ -1,8 +1,6 @@
 {
-    "$schema": "https://json.schemastore.org/nodemon.json",
-    "exec": "tsx src/index.ts",
-    "watch": [
-        "src"
-    ],
-    "ext": "ts"
+  "$schema": "https://json.schemastore.org/nodemon.json",
+  "exec": "tsx src/index.ts",
+  "watch": ["src"],
+  "ext": "ts"
 }

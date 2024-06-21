@@ -4,7 +4,7 @@ import Color from "colorjs.io";
 export function lighten(
   color: Color,
   colorSpace: ColorSpaceTypes,
-  amount: number
+  amount: number,
 ): Color {
   switch (colorSpace) {
     case ColorSpaceTypes.LCH: {
@@ -36,15 +36,15 @@ export function lighten(
       const colorInP3 = color.to("p3");
       const newRed = Math.min(
         1,
-        colorInP3.p3.r + amount * (1 - colorInP3.p3.r)
+        colorInP3.p3.r + amount * (1 - colorInP3.p3.r),
       );
       const newGreen = Math.min(
         1,
-        colorInP3.p3.g + amount * (1 - colorInP3.p3.g)
+        colorInP3.p3.g + amount * (1 - colorInP3.p3.g),
       );
       const newBlue = Math.min(
         1,
-        colorInP3.p3.b + amount * (1 - colorInP3.p3.b)
+        colorInP3.p3.b + amount * (1 - colorInP3.p3.b),
       );
       colorInP3.set("p3.r", newRed);
       colorInP3.set("p3.g", newGreen);

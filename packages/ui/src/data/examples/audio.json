@@ -1,138 +1,133 @@
 {
-    "nodes": [
+  "nodes": [
+    {
+      "id": "c316391a-63fd-4f3d-82b8-06b760375563",
+      "type": "studio.tokens.audio.oscillator",
+      "inputs": [
         {
-            "id": "c316391a-63fd-4f3d-82b8-06b760375563",
-            "type": "studio.tokens.audio.oscillator",
-            "inputs": [
-                {
-                    "name": "type",
-                    "value": "sawtooth",
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/string.json",
-                        "title": "String",
-                        "type": "string",
-                        "enum": [
-                            "sawtooth",
-                            "sine",
-                            "square",
-                            "triangle"
-                        ],
-                        "default": "sine"
-                    }
-                },
-                {
-                    "name": "frequency",
-                    "value": 400,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/number.json",
-                        "title": "Number",
-                        "type": "number",
-                        "default": 3000
-                    }
-                }
-            ],
-            "annotations": {
-                "ui.position.x": -391.3865505270938,
-                "ui.position.y": 194.07456979450214
-            }
+          "name": "type",
+          "value": "sawtooth",
+          "type": {
+            "$id": "https://schemas.tokens.studio/string.json",
+            "title": "String",
+            "type": "string",
+            "enum": ["sawtooth", "sine", "square", "triangle"],
+            "default": "sine"
+          }
         },
         {
-            "id": "9c3461b6-84b7-48bc-ae85-ba5972f95455",
-            "type": "studio.tokens.audio.output",
-            "inputs": [
-                {
-                    "name": "input",
-                    "value": {},
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/audio/node.json",
-                        "title": "Node",
-                        "type": "object",
-                        "default": null
-                    },
-                    "visible": true
-                }
-            ],
-            "annotations": {
-                "engine.singleton": true,
-                "ui.position.x": 806.9811370557417,
-                "ui.position.y": 174.69274118624725
-            }
-        },
-        {
-            "id": "8c081ba3-5914-4c16-9196-b9dccf355e66",
-            "type": "studio.tokens.audio.gain",
-            "inputs": [
-                {
-                    "name": "gain",
-                    "value": 0.08,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/number.json",
-                        "title": "Number",
-                        "type": "number",
-                        "default": 1,
-                        "minimum": 0,
-                        "maximum": 1
-                    },
-                    "visible": true,
-                    "annotations": {
-                        "ui.control": "slider"
-                    }
-                },
-                {
-                    "name": "input",
-                    "value": {},
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/audio/node.json",
-                        "title": "Node",
-                        "type": "object",
-                        "default": null
-                    },
-                    "visible": true
-                }
-            ],
-            "annotations": {
-                "ui.position.x": 184.80190113171858,
-                "ui.position.y": 161.29864539575772
-            }
-        },
-        {
-            "id": "9bdf5afb-304e-4f7d-89e1-84f339846702",
-            "type": "studio.tokens.generic.note",
-            "inputs": [],
-            "annotations": {
-                "ui.position.x": 230.52588658522728,
-                "ui.position.y": -154.16489314375525,
-                "ui.nodeType": "studio.tokens.generic.note",
-                "ui.description": "## To use\n\n1. Open up the Play controls if you haven't already\n\n2. Press play"
-            }
+          "name": "frequency",
+          "value": 400,
+          "type": {
+            "$id": "https://schemas.tokens.studio/number.json",
+            "title": "Number",
+            "type": "number",
+            "default": 3000
+          }
         }
-    ],
-    "edges": [
+      ],
+      "annotations": {
+        "ui.position.x": -391.3865505270938,
+        "ui.position.y": 194.07456979450214
+      }
+    },
+    {
+      "id": "9c3461b6-84b7-48bc-ae85-ba5972f95455",
+      "type": "studio.tokens.audio.output",
+      "inputs": [
         {
-            "id": "00581271-8d68-462c-bf03-0a32bfd9af62",
-            "source": "c316391a-63fd-4f3d-82b8-06b760375563",
-            "sourceHandle": "node",
-            "target": "8c081ba3-5914-4c16-9196-b9dccf355e66",
-            "targetHandle": "input"
-        },
-        {
-            "id": "8c712cfa-66a9-471b-9528-e4fe1ebbcc47",
-            "source": "8c081ba3-5914-4c16-9196-b9dccf355e66",
-            "sourceHandle": "node",
-            "target": "9c3461b6-84b7-48bc-ae85-ba5972f95455",
-            "targetHandle": "input"
+          "name": "input",
+          "value": {},
+          "type": {
+            "$id": "https://schemas.tokens.studio/audio/node.json",
+            "title": "Node",
+            "type": "object",
+            "default": null
+          },
+          "visible": true
         }
-    ],
-    "annotations": {
-        "engine.id": "a77e07b4-dd75-4363-8001-293959ebc701",
-        "engine.capabilities.web-audio": true,
-        "engine.capabilities.fs": true,
-        "ui.viewport": {
-            "x": 251.04147738911513,
-            "y": 233.48116138714119,
-            "zoom": 0.8100447909477649
+      ],
+      "annotations": {
+        "engine.singleton": true,
+        "ui.position.x": 806.9811370557417,
+        "ui.position.y": 174.69274118624725
+      }
+    },
+    {
+      "id": "8c081ba3-5914-4c16-9196-b9dccf355e66",
+      "type": "studio.tokens.audio.gain",
+      "inputs": [
+        {
+          "name": "gain",
+          "value": 0.08,
+          "type": {
+            "$id": "https://schemas.tokens.studio/number.json",
+            "title": "Number",
+            "type": "number",
+            "default": 1,
+            "minimum": 0,
+            "maximum": 1
+          },
+          "visible": true,
+          "annotations": {
+            "ui.control": "slider"
+          }
         },
-        "ui.version": "2.9.4",
-        "engine.version": "0.12.0"
+        {
+          "name": "input",
+          "value": {},
+          "type": {
+            "$id": "https://schemas.tokens.studio/audio/node.json",
+            "title": "Node",
+            "type": "object",
+            "default": null
+          },
+          "visible": true
+        }
+      ],
+      "annotations": {
+        "ui.position.x": 184.80190113171858,
+        "ui.position.y": 161.29864539575772
+      }
+    },
+    {
+      "id": "9bdf5afb-304e-4f7d-89e1-84f339846702",
+      "type": "studio.tokens.generic.note",
+      "inputs": [],
+      "annotations": {
+        "ui.position.x": 230.52588658522728,
+        "ui.position.y": -154.16489314375525,
+        "ui.nodeType": "studio.tokens.generic.note",
+        "ui.description": "## To use\n\n1. Open up the Play controls if you haven't already\n\n2. Press play"
+      }
     }
+  ],
+  "edges": [
+    {
+      "id": "00581271-8d68-462c-bf03-0a32bfd9af62",
+      "source": "c316391a-63fd-4f3d-82b8-06b760375563",
+      "sourceHandle": "node",
+      "target": "8c081ba3-5914-4c16-9196-b9dccf355e66",
+      "targetHandle": "input"
+    },
+    {
+      "id": "8c712cfa-66a9-471b-9528-e4fe1ebbcc47",
+      "source": "8c081ba3-5914-4c16-9196-b9dccf355e66",
+      "sourceHandle": "node",
+      "target": "9c3461b6-84b7-48bc-ae85-ba5972f95455",
+      "targetHandle": "input"
+    }
+  ],
+  "annotations": {
+    "engine.id": "a77e07b4-dd75-4363-8001-293959ebc701",
+    "engine.capabilities.web-audio": true,
+    "engine.capabilities.fs": true,
+    "ui.viewport": {
+      "x": 251.04147738911513,
+      "y": 233.48116138714119,
+      "zoom": 0.8100447909477649
+    },
+    "ui.version": "2.9.4",
+    "engine.version": "0.12.0"
+  }
 }

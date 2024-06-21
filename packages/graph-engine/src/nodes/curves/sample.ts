@@ -1,12 +1,7 @@
 import { Curve } from "../../types.js";
-import {
-  CurveSchema,
-  NumberSchema,
-  Vec2Schema,
-} from "../../schemas/index.js";
+import { CurveSchema, NumberSchema, Vec2Schema } from "../../schemas/index.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
-
 
 const scaleVec = (vec, scale) => vec.map((v) => v * scale);
 const addVec = (vec1, vec2) => vec1.map((v, i) => v + vec2[i]);
@@ -46,7 +41,6 @@ export default class NodeDefinition extends Node {
     value: [number, number];
   }>;
 
-
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("curve", {
@@ -76,7 +70,7 @@ export default class NodeDefinition extends Node {
     const foundCurve = (curve as Curve).curves.find(
       (piece) =>
         piece.points[0][0] <= sample &&
-        piece.points[piece.points.length - 1][0] >= sample
+        piece.points[piece.points.length - 1][0] >= sample,
     );
 
     if (!foundCurve) throw new Error("No curve found for sample");

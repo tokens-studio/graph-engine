@@ -8,7 +8,6 @@ export default class NodeDefinition extends Node {
   static description =
     "Clamp node allows you to restricts a value within a specified minimum and maximum range.";
 
-
   declare inputs: ToInput<{
     value: number;
     min: number;

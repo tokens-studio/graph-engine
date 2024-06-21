@@ -1,18 +1,18 @@
-import { Menu, Separator } from 'react-contexify';
-import React, { useCallback } from 'react';
-import { useReactFlow } from 'reactflow';
-import { useAutoLayout } from '../../editor/hooks/useAutolayout';
-import { useSelector } from 'react-redux';
-import { showGrid, snapGrid } from '@/redux/selectors/settings';
-import { useDispatch } from '@/hooks';
 import { ContextMenuItem } from './ContextMenuStyles';
+import { Menu, Separator } from 'react-contexify';
 import { clear } from '../../editor/actions/clear';
-import { useLocalGraph } from '@/context/graph';
+import { showGrid, snapGrid } from '@/redux/selectors/settings';
 import { useAction } from '@/editor/actions/provider';
+import { useAutoLayout } from '../../editor/hooks/useAutolayout';
+import { useDispatch } from '@/hooks';
+import { useLocalGraph } from '@/context/graph';
+import { useReactFlow } from 'reactflow';
+import { useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
 
 export interface IPaneContextMenu {
   id: string;
-  onSelectItem: (item: any) => void;
+  onSelectItem: (item: unknown) => void;
 }
 
 export const PaneContextMenu = ({ id }: IPaneContextMenu) => {
@@ -23,12 +23,9 @@ export const PaneContextMenu = ({ id }: IPaneContextMenu) => {
   const graph = useLocalGraph();
   const createNode = useAction('createNode');
 
-  const handleTriggerAddNode = useCallback(
-    (e) => {
-      dispatch.ui.setShowNodesCmdPalette(true);
-    },
-    [dispatch.ui],
-  );
+  const handleTriggerAddNode = useCallback(() => {
+    dispatch.ui.setShowNodesCmdPalette(true);
+  }, [dispatch.ui]);
 
   const handleAddNote = useCallback(
     (e) => {
@@ -45,7 +42,6 @@ export const PaneContextMenu = ({ id }: IPaneContextMenu) => {
         },
       };
       createNode(noteNode);
-
     },
     [reactFlowInstance, createNode],
   );

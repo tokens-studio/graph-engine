@@ -14,10 +14,10 @@ export const findTerminals = (graph: Graph): Terminals => {
 
   Object.values(graph.nodes).forEach((node) => {
     switch (node.factory.type) {
-      case 'studio.tokens.generic.input':
+      case "studio.tokens.generic.input":
         terminals.input = node;
         break;
-      case 'studio.tokens.generic.output':
+      case "studio.tokens.generic.output":
         terminals.output = node;
         break;
     }

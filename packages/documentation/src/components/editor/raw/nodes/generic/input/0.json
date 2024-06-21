@@ -1,2 +1,75 @@
-
-{"nodes":[{"id":"06820963-bbea-4a11-9d63-5e99dbcb27f7","type":"studio.tokens.generic.input","inputs":[{"name":"MyNumber","value":43,"type":{"$id":"https://schemas.tokens.studio/number.json","title":"Number","type":"number"},"annotations":{"ui.deletable":true}},{"name":"IsWorking","value":true,"type":{"$id":"https://schemas.tokens.studio/boolean.json","title":"Boolean","type":"boolean","default":false},"annotations":{"ui.deletable":true}},{"name":"BackgroundColor","value":"#2cd6d8","type":{"$id":"https://schemas.tokens.studio/color.json","title":"Color","type":"string"},"annotations":{"ui.deletable":true}},{"name":"SomeName","value":"Foo Bar","type":{"$id":"https://schemas.tokens.studio/string.json","title":"String","type":"string"},"annotations":{"ui.deletable":true}}],"annotations":{"engine.singleton":true,"engine.dynamicInputs":true,"ui.position.x":160.45137532552098,"ui.position.y":261.9444427490234}},{"id":"7dcf7462-3f8f-4144-9b2f-e9a7770495d4","type":"studio.tokens.generic.note","inputs":[],"annotations":{"ui.position.x":165.78470865885419,"ui.position.y":134.40046183268234,"ui.nodeType":"studio.tokens.generic.note","ui.description":"Inputs are the primary way information is passed into your graph. You should only have one of them per graph."}}],"edges":[],"annotations":{"engine.id":"efa13f81-66dc-4d9e-8651-a18e750773c5","engine.version":"0.12.0","ui.viewport":{"x":0,"y":0,"zoom":1.5},"ui.version":"2.9.4"}}
+{
+  "nodes": [
+    {
+      "id": "06820963-bbea-4a11-9d63-5e99dbcb27f7",
+      "type": "studio.tokens.generic.input",
+      "inputs": [
+        {
+          "name": "MyNumber",
+          "value": 43,
+          "type": {
+            "$id": "https://schemas.tokens.studio/number.json",
+            "title": "Number",
+            "type": "number"
+          },
+          "annotations": { "ui.deletable": true }
+        },
+        {
+          "name": "IsWorking",
+          "value": true,
+          "type": {
+            "$id": "https://schemas.tokens.studio/boolean.json",
+            "title": "Boolean",
+            "type": "boolean",
+            "default": false
+          },
+          "annotations": { "ui.deletable": true }
+        },
+        {
+          "name": "BackgroundColor",
+          "value": "#2cd6d8",
+          "type": {
+            "$id": "https://schemas.tokens.studio/color.json",
+            "title": "Color",
+            "type": "string"
+          },
+          "annotations": { "ui.deletable": true }
+        },
+        {
+          "name": "SomeName",
+          "value": "Foo Bar",
+          "type": {
+            "$id": "https://schemas.tokens.studio/string.json",
+            "title": "String",
+            "type": "string"
+          },
+          "annotations": { "ui.deletable": true }
+        }
+      ],
+      "annotations": {
+        "engine.singleton": true,
+        "engine.dynamicInputs": true,
+        "ui.position.x": 160.45137532552098,
+        "ui.position.y": 261.9444427490234
+      }
+    },
+    {
+      "id": "7dcf7462-3f8f-4144-9b2f-e9a7770495d4",
+      "type": "studio.tokens.generic.note",
+      "inputs": [],
+      "annotations": {
+        "ui.position.x": 165.78470865885419,
+        "ui.position.y": 134.40046183268234,
+        "ui.nodeType": "studio.tokens.generic.note",
+        "ui.description": "Inputs are the primary way information is passed into your graph. You should only have one of them per graph."
+      }
+    }
+  ],
+  "edges": [],
+  "annotations": {
+    "engine.id": "efa13f81-66dc-4d9e-8651-a18e750773c5",
+    "engine.version": "0.12.0",
+    "ui.viewport": { "x": 0, "y": 0, "zoom": 1.5 },
+    "ui.version": "2.9.4"
+  }
+}

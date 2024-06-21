@@ -34,7 +34,7 @@ export const handleDrop = async (event): Promise<NodeRequest[]> => {
                 type: INLINE_SET,
                 data: {
                   value: data.tokens,
-                }
+                },
               },
               { x: 30 * i++, y: 30 * i++ },
             );
@@ -67,7 +67,7 @@ export const handleDrop = async (event): Promise<NodeRequest[]> => {
                     type: INLINE_SET,
                     data: {
                       value: data?.tokens,
-                    }
+                    },
                   },
                   { x: 10 * i++, y: 10 * i++ },
                 );
