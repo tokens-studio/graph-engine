@@ -36,6 +36,7 @@ export default class NodeDefinition<T> extends Node {
         ...NumberSchema,
         default: 0,
       },
+      visible: true,
     });
 
     this.addOutput("value", {
