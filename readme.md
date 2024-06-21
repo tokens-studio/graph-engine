@@ -38,21 +38,29 @@ Running `docker-compose up` will create the following services
 - [kratos-selfservice-ui-node](https://github.com/ory/kratos-selfservice-ui-node). A user portal for users to signup and login 
 
 
-To access these services you will need to use the appropriate ports which should be opened on your localhost. **Note** that you should use a consistent way to reference your localhost. Do not mix and match `localhost` and `127.0.0.1`. We prefer `127.0.0.1`
+To use these services, make sure to open the necessary ports on your computer. It's important to consistently use either `localhost` or `127.0.0.1` to refer to your local machine. We recommend using `127.0.0.1`.
 
-You should be able to `http://127.0.0.1:7979/auth/`. This will go through oathkeeper and redirect you to a login. You can create a new account here. 
+Here's how to get started:
 
-After you have created an account, go to `http://127.0.0.1:4436` This will allow you to click on the verification link that kratos sent out for your new account.
+1. **Create an Account:**
+    - Visit `http://127.0.0.1:7979/auth/` to sign up. This page will guide you through creating a new account.
 
-Once this is complete, kratos will create a session auth token on the domain you signed up on. In this case `127.0.0.1`.
+2. **Verify Your Account:**
+    - After signing up, go to `http://127.0.0.1:4436` to verify your account. You'll need to click on a verification link sent to your email by Kratos.
 
-You can now spin up the backend for live development by using `npm run dev:api` from the root directory. This will run a live reloading version of the API.
+3. **Session Token:**
+    - Once verified, Kratos will issue a session authentication token for `127.0.0.1`.
 
-This api is proxied through oathkeeper as well. Oathkeeper will intercept the request, verify the identity with kratos and call the api backend with a jwt representing the identity of the user. 
+4. **Start the Backend for Development:**
+    - Run `npm run dev:api` from the root directory of your project. This starts the backend API with live reloading enabled.
 
-The url for the backend would be `http://127.0.0.1:7979/api/` as the base path.
+5. **Access the Backend:**
+    - The backend API can be accessed at `http://127.0.0.1:7979/api/`. Oathkeeper will check your identity with Kratos and allow the API to recognize you.
 
-You can access a swaggerUI via `http://127.0.0.1:7979/api/swagger` for a visual representation of the api
+6. **Explore the API:**
+    - For a visual guide to the API, visit `http://127.0.0.1:7979/api/swagger` to access SwaggerUI.
+
+Remember to use `127.0.0.1` consistently for all steps.
  
 
 ### Graph Engine

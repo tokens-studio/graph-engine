@@ -26,7 +26,7 @@
     box-shadow: var(--shadows-contextMenu);
     border: 1px solid var(--colors-borderSubtle);
     font-size: var(--fontSizes-small);
-    color: var(--colors-fgMuted);
+    color: var(--colors-fgDefault);
     width: 100%;
     max-width: 640px;
     max-height: 70vh;
@@ -47,13 +47,14 @@
 [cmdk-item] {
     font-size: var(--fontSizes-small);
     padding: var(--space-3) var(--space-5);
-    border-radius: var(--radii-medium);
+    /* border-radius: var(--radii-medium); */
+    border-radius: 0px
 }
 
 [cmdk-group-heading] {
     padding: var(--space-1) var(--space-5);
     font-weight: var(--fontWeights-sansMedium);
-    color: var(--colors-fgSubtle);
+    color: var(--colors-fgDefault);
     font-size: var(--fontSizes-xxsmall);
 }
 

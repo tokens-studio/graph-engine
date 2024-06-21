@@ -5,5 +5,5 @@
     --mafs-bg: var(--colors-bgSubtle);
     --mafs-origin-color: var(--colors-fgOnEmphasis);
     --mafs-line-color: var(--colors-borderDefault);
-    --grid-line-subdivision-color: var(--colors-borderMuted);
+    --grid-line-subdivision-color: var(--colors-borderSubtle);
 }
