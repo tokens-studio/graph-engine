@@ -26,7 +26,7 @@ export default class NodeDefinition<T> extends Node {
     this.addInput("delimiter", {
       type: {
         ...StringSchema,
-        default: ",",
+        default: "-",
       },
       visible: true,
     });
