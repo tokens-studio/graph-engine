@@ -51,15 +51,21 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("curve", {
       type: CurveSchema,
-      visible: true,
     });
     this.addInput("sample", {
-      type: NumberSchema,
-      visible: true,
+      type: {
+        ...NumberSchema,
+        default: 0.5,
+      }
     });
     this.addOutput("value", {
       type: Vec2Schema,
-      visible: true,
+    });
+    this.addOutput("x", {
+      type: NumberSchema,
+    });
+    this.addOutput("y", {
+      type: NumberSchema,
     });
   }
 
@@ -78,5 +84,7 @@ export default class NodeDefinition extends Node {
     const output = sampleBezier(foundCurve, sample);
 
     this.setOutput("value", output);
+    this.setOutput("x", output[0]);
+    this.setOutput("y", output[1]);
   }
 }
