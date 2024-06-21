@@ -1,7 +1,12 @@
-import { BooleanSchema, ColorSchema, NumberSchema } from "../../schemas/index.js";
+import { BooleanSchema, ColorSchema, NumberSchema, StringSchema } from "../../schemas/index.js";
 import { INodeDefinition } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import Color from "colorjs.io";
+
+export enum WcagVersion {
+  V2 = "2.1",
+  V3 = "3.0",
+}
 
 export default class NodeDefinition extends Node {
   static title = "Contrast";
@@ -23,12 +28,18 @@ export default class NodeDefinition extends Node {
       },
       visible: true,
     });
+    this.addInput("wcag", {
+      type: {
+        ...StringSchema,
+        enum: Object.values(WcagVersion),
+        default: WcagVersion.V3,
+      },
+    });
     this.addInput("absolute", {
       type: {
         ...BooleanSchema,
         default: false,
-      },
-      visible: true,
+      }
     });
 
     this.addOutput("value", {
@@ -38,10 +49,16 @@ export default class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
-    const { a, b, absolute } = this.getAllInputs();
+    const { a, b, wcag, absolute } = this.getAllInputs();
     const color = new Color(a);
     const background = new Color(b);
-    const calculated = background.contrast(color, "APCA");
+
+    let calculated;
+    if (wcag == WcagVersion.V2) {
+      calculated = background.contrast(color, "WCAG21");
+    } else {
+      calculated = background.contrast(color, "APCA");
+    }
     this.setOutput("value", absolute ? Math.abs(calculated) : calculated);
   }
 }
