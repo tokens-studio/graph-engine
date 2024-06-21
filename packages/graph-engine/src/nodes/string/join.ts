@@ -1,7 +1,6 @@
+import { AnySchema, StringSchema, createVariadicSchema } from "../../schemas/index.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
-import { StringSchema } from "../../schemas/index.js";
-import { arrayOf } from "../../schemas/utils.js";
 
 export default class NodeDefinition extends Node {
   static title = "Join String";
@@ -18,24 +17,26 @@ export default class NodeDefinition extends Node {
   }>
   constructor(props: INodeDefinition) {
     super(props);
-    this.addInput("array", {
-      type: arrayOf(StringSchema),
-      visible: true,
+    this.addInput("items", {
+      type: {
+        ...createVariadicSchema(AnySchema),
+        default: [],
+      },
+      variadic: true,
     });
     this.addInput("separator", {
       type: {
         ...StringSchema,
-        default: "",
+        default: "-",
       },
     });
     this.addOutput("value", {
       type: StringSchema,
-      visible: true,
     });
   }
 
   execute(): void | Promise<void> {
-    const { array, separator } = this.getAllInputs();
-    this.setOutput("value", array.join(separator));
+    const { items, separator } = this.getAllInputs();
+    this.setOutput("value", items.join(separator));
   }
 }
