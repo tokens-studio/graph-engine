@@ -1,32 +1,32 @@
-import { ColorSpaceTypes } from "@tokens-studio/types";
-import { Graph } from "../../../../src/graph/graph.js";
-import Node, { ColorModifierTypes } from "../../../../src/nodes/color/blend.js";
+import { ColorSpaceTypes } from '@tokens-studio/types';
+import { Graph } from '../../../../src/graph/graph.js';
+import Node, { ColorModifierTypes } from '../../../../src/nodes/color/blend.js';
 
-describe("color/blend", () => {
-  it("darkens the color correctly", async () => {
-    const graph = new Graph();
-    const node = new Node({ graph });
+describe('color/blend', () => {
+	it('darkens the color correctly', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-    node.inputs.color.setValue("red");
-    node.inputs.space.setValue(ColorSpaceTypes.SRGB);
-    node.inputs.modifierType.setValue(ColorModifierTypes.DARKEN);
-    node.inputs.value.setValue(0.5);
+		node.inputs.color.setValue('red');
+		node.inputs.space.setValue(ColorSpaceTypes.SRGB);
+		node.inputs.modifierType.setValue(ColorModifierTypes.DARKEN);
+		node.inputs.value.setValue(0.5);
 
-    await node.execute();
-    const output = node.outputs.value.value;
-    expect(output).toStrictEqual("#800000");
-  });
+		await node.execute();
+		const output = node.outputs.value.value;
+		expect(output).toStrictEqual('#800000');
+	});
 
-  it("lightens the color correctly", async () => {
-    const graph = new Graph();
-    const node = new Node({ graph });
+	it('lightens the color correctly', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-    node.inputs.color.setValue("red");
-    node.inputs.space.setValue(ColorSpaceTypes.SRGB);
-    node.inputs.modifierType.setValue(ColorModifierTypes.LIGHTEN);
-    node.inputs.value.setValue(0.5);
-    await node.execute();
-    const output = node.outputs.value.value;
-    expect(output).toStrictEqual("#ff8080");
-  });
+		node.inputs.color.setValue('red');
+		node.inputs.space.setValue(ColorSpaceTypes.SRGB);
+		node.inputs.modifierType.setValue(ColorModifierTypes.LIGHTEN);
+		node.inputs.value.setValue(0.5);
+		await node.execute();
+		const output = node.outputs.value.value;
+		expect(output).toStrictEqual('#ff8080');
+	});
 });

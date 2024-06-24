@@ -1,6 +1,6 @@
-import { Node } from "../../programmatic/node.js";
-import { SecretCapability } from "../../capabilities/secret.js";
-import { StringSchema } from "../../schemas";
+import { Node } from '../../programmatic/node.js';
+import { SecretCapability } from '../../capabilities/secret.js';
+import { StringSchema } from '../../schemas';
 
 export default class NodeDefinition extends Node {
     static title = "Retrieve Secret";

@@ -1,6 +1,6 @@
-import { AnySchema } from "../../schemas/index.js";
-import { INodeDefinition, ToInput } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
+import { AnySchema } from '../../schemas/index.js';
+import { INodeDefinition, ToInput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
 
 /**
  * @example
@@ -10,14 +10,14 @@ import { Node } from "../../programmatic/node.js";
  * ```
  */
 export default class NodeDefinition extends Node {
-  static title = "Panic";
-  static type = "studio.tokens.generic.panic";
-  static description = "Panics if passed a truthy value";
+	static title = 'Panic';
+	static type = 'studio.tokens.generic.panic';
+	static description = 'Panics if passed a truthy value';
 
-  declare inputs: ToInput<{
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    trigger: any;
-  }>;
+	declare inputs: ToInput<{
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		trigger: any;
+	}>;
 
   constructor(props: INodeDefinition) {
     super(props);
@@ -26,11 +26,11 @@ export default class NodeDefinition extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const { trigger } = this.getAllInputs();
+	execute(): void | Promise<void> {
+		const { trigger } = this.getAllInputs();
 
-    if (trigger) {
-      throw new Error(`Panic! Received ${trigger}`);
-    }
-  }
+		if (trigger) {
+			throw new Error(`Panic! Received ${trigger}`);
+		}
+	}
 }

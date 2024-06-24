@@ -1,8 +1,11 @@
 import { Button, Dialog, IconButton, Text, TextInput } from '@tokens-studio/ui';
 import { Xmark } from 'iconoir-react';
-import { title as annotatedTitle } from '@/annotations';
-import { graphEditorSelector, showSearchSelector } from '@/redux/selectors';
-import { useDispatch, useGraph } from '@/hooks';
+import { title as annotatedTitle } from '@/annotations/index.js';
+import {
+  graphEditorSelector,
+  showSearchSelector,
+} from '@/redux/selectors/index.js';
+import { useDispatch, useGraph } from '@/hooks/index.js';
 import { useSelector } from 'react-redux';
 import React from 'react';
 

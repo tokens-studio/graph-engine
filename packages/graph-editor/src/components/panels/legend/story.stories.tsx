@@ -1,4 +1,4 @@
-import { LegendInner } from './index';
+import { LegendInner } from './index.js';
 import { icons } from '@/registry/icon.js';
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';

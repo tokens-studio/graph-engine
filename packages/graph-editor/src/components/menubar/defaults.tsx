@@ -1,4 +1,4 @@
-import { AlignmentPanel } from '../panels/alignment';
+import { AlignmentPanel } from '../panels/alignment/index.js';
 import {
   Archive,
   Cpu,
@@ -8,29 +8,30 @@ import {
   Settings as SettingsIcon,
   Upload,
 } from 'iconoir-react';
-import { DebugPanel } from '../panels/debugger';
-import { DropPanel } from '../panels/dropPanel';
-import { GraphPanel } from '../panels/graph';
-import { ImperativeEditorRef } from '@/editor/editorTypes';
-import { Inputsheet } from '../panels/inputs';
-import { Legend } from '../panels/legend';
-import { LogsPanel } from '../panels/logs';
-import { Menu, MenuItem, Seperator, SubMenu } from './data';
-import { MenuItemElement } from './menuItem';
-import { NodeSettingsPanel } from '../panels/nodeSettings';
-import { OutputSheet } from '../panels/output';
-import { PlayPanel } from '../panels/play';
-import { Settings } from '../panels/settings';
-import { dockerSelector } from '@/redux/selectors/refs';
+import { DebugPanel } from '../panels/debugger/index.js';
+import { DropPanel } from '../panels/dropPanel/index.js';
+import { GraphPanel } from '../panels/graph/index.js';
+import { ImperativeEditorRef } from '@/editor/editorTypes.js';
+import { Inputsheet } from '../panels/inputs/index.js';
+import { Legend } from '../panels/legend/index.js';
+import { LogsPanel } from '../panels/logs/index.js';
+import { Menu, MenuItem, Seperator, SubMenu } from './data.js';
+import { MenuItemElement } from './menuItem.js';
+import { NodeSettingsPanel } from '../panels/nodeSettings/index.js';
+import { OutputSheet } from '../panels/output/index.js';
+import { PlayPanel } from '../panels/play/index.js';
+import { Settings } from '../panels/settings/index.js';
+import { TabData } from 'rc-dock';
+import { dockerSelector } from '@/redux/selectors/refs.js';
 import {
   graphEditorSelector,
   mainGraphSelector,
-} from '@/redux/selectors/graph';
-import { title } from '@/annotations';
-import { useDispatch } from '@/hooks';
+} from '@/redux/selectors/graph.js';
+import { title } from '@/annotations/index.js';
+import { useDispatch } from '@/hooks/index.js';
 import { useSelector } from 'react-redux';
-import DockLayout, { TabData } from 'rc-dock';
 import React, { MutableRefObject, useCallback } from 'react';
+import type { DockLayout } from 'rc-dock';
 
 export interface IWindowButton {
   //Id of the tab
@@ -204,6 +205,7 @@ export const defaultMenuDataFactory = (): Menu =>
           new Seperator(),
           new MenuItem({
             name: 'find',
+            /** @ts-expect-error key does not exist on the type, the type interface has not been specified besides `{}` */
             render: ({ key, ...rest }) => {
               // eslint-disable-next-line react-hooks/rules-of-hooks
               const dispatch = useDispatch();

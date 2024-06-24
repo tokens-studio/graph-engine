@@ -1,7 +1,7 @@
 import { Edge, Port } from '@tokens-studio/graph-engine';
 import { TextInput } from '@tokens-studio/ui';
 import React from 'react';
-import withVariadicField from './withVariadicField';
+import withVariadicField from './withVariadicField.js';
 
 const VariadicNumberUI = ({ port, edge }: { port: Port; edge: Edge }) => {
   return (

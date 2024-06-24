@@ -1,7 +1,7 @@
 import { Connection, Edge } from 'reactflow';
-import { Dispatch } from '@/redux/store';
+import { Dispatch } from '@/redux/store.js';
 import { Graph } from '@tokens-studio/graph-engine';
-import { getVariadicIndex, stripVariadic } from '@/utils/stripVariadic';
+import { getVariadicIndex, stripVariadic } from '@/utils/stripVariadic.js';
 
 export const connectNodes =
   ({

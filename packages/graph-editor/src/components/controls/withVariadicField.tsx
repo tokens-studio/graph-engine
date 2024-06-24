@@ -1,10 +1,10 @@
-import { DndItem, DndList, DndTrigger } from '../DndList';
-import { GrabberIcon } from '../icons';
-import { IField } from './interface';
+import { DndItem, DndList, DndTrigger } from '../DndList.js';
+import { GrabberIcon } from '../icons/index.js';
+import { IField } from './interface.js';
 import { Input } from '@tokens-studio/graph-engine';
 import { arrayMoveImmutable } from 'array-move';
 import { observer } from 'mobx-react-lite';
-import { useGraph } from '@/hooks';
+import { useGraph } from '@/hooks/index.js';
 import React from 'react';
 
 export const withVariadicField = (WrappedComponent) => {

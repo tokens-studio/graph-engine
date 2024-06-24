@@ -1,11 +1,11 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
-import { NumberSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
+import { NumberSchema } from '../../schemas/index.js';
 
 export default class NodeDefinition extends Node {
-  static title = "Subtract";
-  static type = "studio.tokens.math.subtract";
-  static description = "Allows you to subtract two numbers.";
+	static title = 'Subtract';
+	static type = 'studio.tokens.math.subtract';
+	static description = 'Allows you to subtract two numbers.';
 
   declare inputs: ToInput<{
     a: number;
@@ -27,8 +27,8 @@ export default class NodeDefinition extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const { a, b } = this.getAllInputs();
-    this.setOutput("value", a - b);
-  }
+	execute(): void | Promise<void> {
+		const { a, b } = this.getAllInputs();
+		this.setOutput('value', a - b);
+	}
 }

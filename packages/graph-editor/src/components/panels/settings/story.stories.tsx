@@ -1,4 +1,4 @@
-import { Settings } from './index';
+import { Settings } from './index.js';
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 

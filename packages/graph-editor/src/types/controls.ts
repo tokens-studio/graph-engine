@@ -1,4 +1,4 @@
-import { IField } from '@/components/controls/interface';
+import { IField } from '@/components/controls/interface.js';
 import { Port } from '@tokens-studio/graph-engine';
 
 /**

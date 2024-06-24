@@ -1,7 +1,7 @@
 import { processJson, processTokensFile } from '@/utils/tokenFiles.js';
 import JSZip from 'jszip';
 
-import { NodeRequest } from './createNode';
+import { NodeRequest } from './createNode.js';
 
 const INLINE_SET = 'studio.tokens.design.inline';
 

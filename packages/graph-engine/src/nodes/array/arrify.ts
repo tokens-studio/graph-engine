@@ -1,10 +1,10 @@
 import {
-  AnyArraySchema,
-  AnySchema,
-  createVariadicSchema,
-} from "../../schemas/index.js";
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
+	AnyArraySchema,
+	AnySchema,
+	createVariadicSchema
+} from '../../schemas/index.js';
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
 export default class NodeDefinition<T> extends Node {
   static title = "Arrify";
   static type = "studio.tokens.array.arrify";
@@ -31,8 +31,8 @@ export default class NodeDefinition<T> extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const items = this.getRawInput("items");
-    this.setOutput("value", items.value, items.type);
-  }
+	execute(): void | Promise<void> {
+		const items = this.getRawInput('items');
+		this.setOutput('value', items.value, items.type);
+	}
 }

@@ -5,13 +5,16 @@ import {
   PanelGroup,
   PanelItem,
 } from '../panels/dropPanel/index.js';
+import { Node } from '@tokens-studio/graph-engine';
+import { NodeRequest } from '@/editor/actions/createNode.js';
+import { Node as ReactFlowNode, useReactFlow } from 'reactflow';
 import { Search } from 'iconoir-react';
 import { isActiveElementTextEditable } from '@/utils/isActiveElementTextEditable.js';
 import { observer } from 'mobx-react-lite';
-import { showNodesCmdPaletteSelector } from '@/redux/selectors/ui';
-import { styled } from '@/lib/stitches';
+import { showNodesCmdPaletteSelector } from '@/redux/selectors/ui.js';
+import { styled } from '@/lib/stitches/index.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { useReactFlow } from 'reactflow';
+import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
 import React from 'react';
 
 export interface ICommandMenu {
@@ -19,7 +22,7 @@ export interface ICommandMenu {
   handleSelectNewNodeType: (node: NodeRequest) =>
     | {
         graphNode: Node;
-        flowNode: FlowNode;
+        flowNode: ReactFlowNode;
       }
     | undefined;
 }

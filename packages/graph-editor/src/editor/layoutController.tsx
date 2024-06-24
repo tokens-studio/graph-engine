@@ -7,21 +7,27 @@ import {
   TabGroup,
 } from 'rc-dock';
 import { ExternalLoaderProvider } from '@/context/ExternalLoaderContext.js';
-import { GraphEditor } from './graphEditor';
-import { Inputsheet } from '@/components/panels/inputs';
-import { Legend } from '@/components/panels/legend';
-import { MenuBar } from '@/components/menubar/index.js';
+import { GraphEditor } from './graphEditor.js';
+import { Inputsheet } from '@/components/panels/inputs/index.js';
+import { Legend } from '@/components/panels/legend/index.js';
+import { MenuBar, defaultMenuDataFactory } from '@/components/menubar/index.js';
 import { dockerSelector } from '@/redux/selectors/refs.js';
 import { useDispatch } from '@/hooks/useDispatch.js';
 import { useRegisterRef } from '@/hooks/useRegisterRef.js';
 import { useSelector } from 'react-redux';
 
+import { DropPanel } from '@/components/panels/dropPanel/dropPanel.js';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { ErrorBoundary } from 'react-error-boundary';
-import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent';
-import { FindDialog } from '@/components/dialogs/findDialog';
-import { MAIN_GRAPH_ID } from '@/constants';
+import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
+import { FindDialog } from '@/components/dialogs/findDialog.js';
+import { IconButton, Stack, Tooltip } from '@tokens-studio/ui';
+import { MAIN_GRAPH_ID } from '@/constants.js';
+import { Maximize, Reduce, Xmark } from 'iconoir-react';
+import { OutputSheet } from '@/components/panels/output/index.js';
 import React, { MutableRefObject, useEffect, useMemo } from 'react';
+
+OutputSheet;
 
 const DockButton = (rest) => {
   return (

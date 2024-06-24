@@ -1,7 +1,7 @@
-import { HandleContainer } from '../handles';
-import { PortArray } from '../wrapper/nodeV2';
+import { HandleContainer } from '../handles.js';
+import { PortArray } from '../wrapper/nodeV2.js';
 import { Stack } from '@tokens-studio/ui';
-import { useLocalGraph } from '@/context/graph';
+import { useLocalGraph } from '@/context/graph.js';
 import React from 'react';
 
 export const PassthroughNode = (args) => {

@@ -1,6 +1,6 @@
-import { INodeDefinition, ToOutput } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
-import { NumberSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToOutput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
+import { NumberSchema } from '../../schemas/index.js';
 
 /**
  * A node that returns the current time each tick in seconds since the Unix epoch.
@@ -25,21 +25,21 @@ export default class NodeDefinition extends Node {
         });
   }
 
-  onStart = () => {
-    if (this._interval) {
-      clearInterval(this._interval);
-    }
-    this._interval = setInterval(() => {
-      this.run();
-    }, 1000);
-  };
-  onStop = () => {
-    if (this._interval) {
-      clearInterval(this._interval);
-    }
-  };
+	onStart = () => {
+		if (this._interval) {
+			clearInterval(this._interval);
+		}
+		this._interval = setInterval(() => {
+			this.run();
+		}, 1000);
+	};
+	onStop = () => {
+		if (this._interval) {
+			clearInterval(this._interval);
+		}
+	};
 
-  execute(): void | Promise<void> {
-    this.setOutput("value", Date.now());
-  }
+	execute(): void | Promise<void> {
+		this.setOutput('value', Date.now());
+	}
 }

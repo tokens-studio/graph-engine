@@ -8,8 +8,6 @@ import {
 import { edgeType as edgeTypeSelector } from '../../../redux/selectors/settings.js';
 import { getBetterBezierPath } from './offsetBezier.js';
 import { useSelector } from 'react-redux';
-import { useSelector } from 'react-redux';
-import React from 'react';
 import React from 'react';
 
 interface IArticulatedPath {

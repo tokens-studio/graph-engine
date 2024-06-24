@@ -1,10 +1,10 @@
 import { Box, Heading, IconButton, Stack } from '@tokens-studio/ui';
 import { InfoCircleSolid } from 'iconoir-react';
 import { Node } from '@tokens-studio/graph-engine';
-import { PortPanel } from '@/components/portPanel';
-import { currentNode } from '@/redux/selectors/graph';
+import { PortPanel } from '@/components/portPanel/index.js';
+import { currentNode } from '@/redux/selectors/graph.js';
 import { observer } from 'mobx-react-lite';
-import { useGraph } from '@/hooks/useGraph';
+import { useGraph } from '@/hooks/useGraph.js';
 import { useSelector } from 'react-redux';
 import React, { useMemo } from 'react';
 

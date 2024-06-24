@@ -1,9 +1,9 @@
-import { INodeDefinition, Node } from "../../programmatic/node.js";
-import { NumberSchema, StringSchema } from "../../schemas/index.js";
-import { Parser } from "expr-eval";
-import { ToInput } from "../../programmatic/input.js";
-import { ToOutput } from "../../programmatic/output.js";
-import { annotatedDynamicInputs } from "../../annotations/index.js";
+import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { NumberSchema, StringSchema } from '../../schemas/index.js';
+import { Parser } from 'expr-eval';
+import { ToInput } from '../../programmatic/input.js';
+import { ToOutput } from '../../programmatic/output.js';
+import { annotatedDynamicInputs } from '../../annotations/index.js';
 
 export default class NodeDefinition extends Node {
   static title = "Evaluate math";

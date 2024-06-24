@@ -8,3 +8,8 @@ site
 cli
 .turbo
 .rollup.cache
+.rollup
+build
+storybook-static
+.docusaurus
+cypress

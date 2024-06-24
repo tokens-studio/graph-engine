@@ -1,7 +1,7 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
 
-import { NumberSchema } from "../../schemas/index.js";
+import { NumberSchema } from '../../schemas/index.js';
 
 export default class NodeDefinition extends Node {
   static title = "Floor";

@@ -20,11 +20,11 @@ import {
   Undo,
   Xmark,
 } from 'iconoir-react';
-import { IField } from '@/components/controls/interface';
-import { InlineTypeLabel } from '@/components/flow';
-import { controls } from '@/redux/selectors/registry';
-import { deletable, hidden, resetable } from '@/annotations';
-import { useGraph } from '@/hooks/useGraph';
+import { IField } from '@/components/controls/interface.js';
+import { InlineTypeLabel } from '@/components/flow/index.js';
+import { controls } from '@/redux/selectors/registry.js';
+import { deletable, hidden, resetable } from '@/annotations/index.js';
+import { useGraph } from '@/hooks/useGraph.js';
 import copy from 'copy-to-clipboard';
 
 export interface IPortPanel {

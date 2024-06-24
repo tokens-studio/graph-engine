@@ -19,30 +19,29 @@ import type { Node } from "../programmatic/node.js";
  * All nodes in the system available as an array
  */
 export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
-  accessibility,
-  array,
-  color,
-  css,
-  curve,
-  generic,
-  gradient,
-  logic,
-  math,
-  preview,
-  series,
-  string,
-  typing,
-  vector2,
-  typography
+	accessibility,
+	array,
+	color,
+	css,
+	curve,
+	generic,
+	gradient,
+	logic,
+	math,
+	preview,
+	series,
+	string,
+	typing,
+	vector2
 );
 
 /**
  * Nodes as a lookup map using the node type as the key
  */
 export const nodeLookup: Record<string, typeof Node> = nodes.reduce(
-  (acc, node) => {
-    acc[node.type] = node;
-    return acc;
-  },
-  {},
+	(acc, node) => {
+		acc[node.type] = node;
+		return acc;
+	},
+	{}
 );

@@ -1,12 +1,12 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
-import { NumberSchema, createVariadicSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
+import { NumberSchema, createVariadicSchema } from '../../schemas/index.js';
 
 export default class NodeDefinition extends Node {
-  static title = "Multiply (Variadic)";
-  static type = "studio.tokens.math.multiplyVariadic";
-  static description =
-    "Multiply node allows you to multiply two or more numbers.";
+	static title = 'Multiply (Variadic)';
+	static type = 'studio.tokens.math.multiplyVariadic';
+	static description =
+		'Multiply node allows you to multiply two or more numbers.';
 
   declare inputs: ToInput<{
     inputs: number[];
@@ -28,9 +28,9 @@ export default class NodeDefinition extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const inputs = this.getInput("inputs") as number[];
-    const output = inputs.reduce((acc, curr) => acc * curr, 1);
-    this.setOutput("value", output);
-  }
+	execute(): void | Promise<void> {
+		const inputs = this.getInput('inputs') as number[];
+		const output = inputs.reduce((acc, curr) => acc * curr, 1);
+		this.setOutput('value', output);
+	}
 }

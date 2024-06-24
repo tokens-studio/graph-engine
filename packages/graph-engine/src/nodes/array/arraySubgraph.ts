@@ -1,24 +1,24 @@
 import {
-  AnyArraySchema,
-  AnySchema,
-  NumberSchema,
-  SchemaObject,
-} from "../../schemas/index.js";
-import { Graph } from "../../graph/graph.js";
-import { INodeDefinition, Node } from "../../programmatic/node.js";
-import { Input, ToInput, ToOutput } from "../../programmatic/index.js";
+	AnyArraySchema,
+	AnySchema,
+	NumberSchema,
+	SchemaObject
+} from '../../schemas/index.js';
+import { Graph } from '../../graph/graph.js';
+import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { Input, ToInput, ToOutput } from '../../programmatic/index.js';
 import {
-  annotatedDeleteable,
-  annotatedDynamicInputs,
-  hideFromParentSubgraph,
-} from "../../annotations/index.js";
-import { arrayOf, extractArray } from "../../schemas/utils.js";
-import { autorun } from "mobx";
-import InputNode from "../generic/input.js";
-import OutputNode from "../generic/output.js";
+	annotatedDeleteable,
+	annotatedDynamicInputs,
+	hideFromParentSubgraph
+} from '../../annotations/index.js';
+import { arrayOf, extractArray } from '../../schemas/utils.js';
+import { autorun } from 'mobx';
+import InputNode from '../generic/input.js';
+import OutputNode from '../generic/output.js';
 
 export interface IArraySubgraph extends INodeDefinition {
-  innerGraph?: Graph;
+	innerGraph?: Graph;
 }
 
 export default class ArraySubgraph<T, V> extends Node {

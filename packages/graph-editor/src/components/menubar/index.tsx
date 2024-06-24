@@ -3,7 +3,7 @@ import {
   Menu as MenuData,
   MenuItem as MenuItemData,
   SubMenu as SubMenuData,
-} from './data';
+} from './data.js';
 import { observer } from 'mobx-react-lite';
 import Menu, { Divider, Item as MenuItem, SubMenu } from 'rc-menu';
 import React, { useMemo } from 'react';
@@ -49,6 +49,7 @@ export const MenuBar = observer(({ menu }: IMenuBar) => {
 
   return (
     <Box css={{ padding: '$2 $3' }}>
+      {/** @ts-expect-error not a valid JSX element apparently */}
       <Menu mode={'horizontal'}>{items}</Menu>
     </Box>
   );

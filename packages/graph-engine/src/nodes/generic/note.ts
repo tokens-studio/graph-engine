@@ -1,4 +1,4 @@
-import { Node } from "../../programmatic/node.js";
+import { Node } from '../../programmatic/node.js';
 
 /**
  * @example
@@ -8,8 +8,8 @@ import { Node } from "../../programmatic/node.js";
  * ```
  */
 export default class NodeDefinition extends Node {
-  static title = "Note";
-  static type = "studio.tokens.generic.note";
+	static title = 'Note';
+	static type = 'studio.tokens.generic.note';
 
-  static description = "A node that can be used to add comments.";
+	static description = 'A node that can be used to add comments.';
 }

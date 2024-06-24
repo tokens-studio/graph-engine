@@ -2,10 +2,10 @@ import { Box, IconButton, Textarea } from '@tokens-studio/ui';
 import { EditPencil } from 'iconoir-react';
 import { Node } from '@tokens-studio/graph-engine';
 import { NodeProps, NodeResizer } from 'reactflow';
-import { Node as Wrapper } from '../wrapper/node';
-import { description, title } from '@/annotations';
+import { Node as Wrapper } from '../wrapper/node.js';
+import { description, title } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
-import { useLocalGraph } from '@/context/graph';
+import { useLocalGraph } from '@/context/graph.js';
 import Markdown from 'react-markdown';
 import React from 'react';
 

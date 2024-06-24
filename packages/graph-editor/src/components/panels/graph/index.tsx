@@ -1,9 +1,9 @@
 import { Box, Label, Stack, TextInput } from '@tokens-studio/ui';
 import React from 'react';
 
-import { description, title } from '@/annotations';
+import { description, title } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
-import { useGraph } from '@/hooks/useGraph';
+import { useGraph } from '@/hooks/useGraph.js';
 
 export function GraphPanel() {
   const graph = useGraph();

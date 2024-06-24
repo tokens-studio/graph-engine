@@ -1,9 +1,9 @@
 import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
-import { ColorPickerPopover } from '../colorPicker';
+import { ColorPickerPopover } from '../colorPicker/index.js';
 import { FloppyDisk } from 'iconoir-react';
-import { IField } from './interface';
+import { IField } from './interface.js';
 import { Input } from '@tokens-studio/graph-engine';
-import { delayedUpdateSelector } from '@/redux/selectors';
+import { delayedUpdateSelector } from '@/redux/selectors/index.js';
 import { observer } from 'mobx-react-lite';
 import { useSelector } from 'react-redux';
 import React, { useCallback } from 'react';

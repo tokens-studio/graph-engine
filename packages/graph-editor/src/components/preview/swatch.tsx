@@ -1,6 +1,5 @@
 import { Box, Text } from '@tokens-studio/ui';
 import Color from 'colorjs.io';
-import React from 'react';
 import React, { useMemo } from 'react';
 
 function contrastingColor(value: string) {

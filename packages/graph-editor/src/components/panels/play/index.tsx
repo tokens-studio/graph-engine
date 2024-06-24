@@ -1,6 +1,8 @@
 import { Box, IconButton, Stack } from '@tokens-studio/ui';
 import { Pause, Play, Square } from 'iconoir-react';
-import { useDispatch } from '@/hooks';
+import { playStateSelector } from '@/redux/selectors/graph.js';
+import { useDispatch } from '@/hooks/index.js';
+import { useSelector } from 'react-redux';
 import React from 'react';
 
 enum PlayState {

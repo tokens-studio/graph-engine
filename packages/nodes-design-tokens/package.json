@@ -6,14 +6,8 @@
   "author": "andrew@hyma.io",
   "type": "module",
   "exports": {
-    "./*": {
-      "import": "./dist/*",
-      "require": "./dist/*",
-      "types": "./dist/*"
-    },
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
       "types": "./dist/index.d.ts"
     }
   },
@@ -21,7 +15,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsc -p tsconfig.prod.json",
     "dev": "tsup --watch",
     "docs": "typedoc",
     "format": "npm run format:eslint && npm run format:prettier",
@@ -33,7 +27,6 @@
     "release": "npm run build && changeset publish",
     "test": "jest --passWithNoTests"
   },
-  "sideEffects": false,
   "dependencies": {
     "@adobe/leonardo-contrast-colors": "^1.0.0",
     "@tokens-studio/types": "^0.4.0",
@@ -52,17 +45,17 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.21.5",
-    "@changesets/cli": "2.26.0",
+    "@changesets/cli": "^2.26.0",
     "@jest/globals": "^29.5.0",
     "@tokens-studio/eslint-config-custom": "*",
     "@tokens-studio/prettier-config-custom": "*",
     "@tokens-studio/graph-editor": "*",
     "@tokens-studio/graph-engine": "*",
-    "@types/jest": "28.1.0",
+    "@types/jest": "^28.1.0",
     "@types/node": "^18.15.11",
-    "jest": "28.1.0",
+    "jest": "^28.1.0",
     "jest-junit": "^15.0.0",
-    "ts-jest": "28.0.3",
+    "ts-jest": "^28.0.3",
     "ts-jest-resolver": "^2.0.1",
     "ts-node": "^10.9.1",
     "tsup": "^8.1.0",
@@ -73,6 +66,5 @@
     "studio",
     "tokens",
     "ui"
-  ],
-  "jsnext:main": "./dist/index.js"
+  ]
 }

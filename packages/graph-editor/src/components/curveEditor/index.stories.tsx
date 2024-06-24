@@ -1,4 +1,4 @@
-import { CurveEditor } from './index';
+import { CurveEditor } from './index.js';
 import { vec } from 'mafs';
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';

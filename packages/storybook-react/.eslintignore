@@ -1,9 +1,11 @@
 dist/**
+build/**
 coverage/**
 storybook-static/**
+.docusaurus
 docs
 site
 cypress
 cli
-.rollup.cache
-.turbo
+.rollup
+*.md

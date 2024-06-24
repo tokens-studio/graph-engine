@@ -1,5 +1,5 @@
-import { MenuBar } from './index';
-import { defaultMenuDataFactory } from './defaults';
+import { MenuBar } from './index.js';
+import { defaultMenuDataFactory } from './defaults.js';
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 

@@ -42,7 +42,7 @@ export interface IResolvedToken {
    * Optional description of the token
    */
   description?: string;
-  $extensions?: Record<string, never>;
+  $extensions?: Record<string, unknown>;
 }
 
 export const flatten = (
@@ -101,7 +101,7 @@ export type W3CToken = {
   $value: string;
   $type: TokenTypes;
   alpha?: number;
-  $extensions?: Record<string, never>;
+  $extensions?: Record<string, unknown>;
 };
 export interface W3CDeepKeyTokenMap {
   [key: string]: W3CDeepKeyTokenMap | W3CToken;

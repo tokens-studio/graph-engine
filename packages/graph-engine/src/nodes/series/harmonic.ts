@@ -5,32 +5,32 @@ import { arrayOf } from "../../schemas/utils.js";
 import { setToPrecision } from "../../utils/precision.js";
 
 type HarmonicValue = {
-  index: number;
-  value: number;
+	index: number;
+	value: number;
 };
 
 export default class NodeDefinition extends Node {
-  static title = "Harmonic Series";
-  static type = "studio.tokens.series.harmonic";
-  static description =
-    'A "Harmonic Series" is a sequence of numbers whose reciprocals form an arithmetic progression. For example, in the series 1, 1/2, 1/3, 1/4, 1/5, the reciprocals form an arithmetic progression with common difference 1/6.';
+	static title = 'Harmonic Series';
+	static type = 'studio.tokens.series.harmonic';
+	static description =
+		'A "Harmonic Series" is a sequence of numbers whose reciprocals form an arithmetic progression. For example, in the series 1, 1/2, 1/3, 1/4, 1/5, the reciprocals form an arithmetic progression with common difference 1/6.';
 
-  declare inputs: ToInput<{
-    base: number;
-    stepsDown: number;
-    stepsUp: number;
-    notes: number;
-    ratio: number;
-    precision: number;
-  }>;
+	declare inputs: ToInput<{
+		base: number;
+		stepsDown: number;
+		stepsUp: number;
+		notes: number;
+		ratio: number;
+		precision: number;
+	}>;
 
-  declare outputs: ToOutput<{
-    array: number[];
-    indexed: HarmonicValue[];
-  }>;
+	declare outputs: ToOutput<{
+		array: number[];
+		indexed: HarmonicValue[];
+	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
+	constructor(props: INodeDefinition) {
+		super(props);
 
     this.addInput("base", {
       type: {
@@ -57,12 +57,12 @@ export default class NodeDefinition extends Node {
       },
     });
 
-    this.addInput("ratio", {
-      type: {
-        ...NumberSchema,
-        default: 2,
-      },
-    });
+		this.addInput('ratio', {
+			type: {
+				...NumberSchema,
+				default: 2
+			}
+		});
 
     this.addInput("precision", {
       type: {
@@ -90,11 +90,11 @@ export default class NodeDefinition extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const { base, precision, ratio, stepsDown, stepsUp, notes } =
-      this.getAllInputs();
+	execute(): void | Promise<void> {
+		const { base, precision, ratio, stepsDown, stepsUp, notes } =
+			this.getAllInputs();
 
-    const values: HarmonicValue[] = [];
+		const values: HarmonicValue[] = [];
 
     for (let i = 0 - stepsDown; i <= stepsUp; i++) {
       values.push({
@@ -103,10 +103,10 @@ export default class NodeDefinition extends Node {
       });
     }
 
-    this.setOutput(
-      "array",
-      values.map((x) => x.value),
-    );
-    this.setOutput("indexed", values);
-  }
+		this.setOutput(
+			'array',
+			values.map(x => x.value)
+		);
+		this.setOutput('indexed', values);
+	}
 }

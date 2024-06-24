@@ -40,7 +40,7 @@ export type UiNodeDefinition = {
 
 export type WrappedNodeDefinition = {
   type: string;
-  state: Record<string, never>;
+  state: Record<string, unknown>;
   component: React.ReactNode | React.FC;
 };
 

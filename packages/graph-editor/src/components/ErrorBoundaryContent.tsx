@@ -1,6 +1,6 @@
 import { Button, Stack, Text } from '@tokens-studio/ui';
-import { ImperativeEditorRef, mainGraphSelector } from '..';
-import { title } from '@/annotations';
+import { ImperativeEditorRef, mainGraphSelector } from '../index.js';
+import { title } from '@/annotations/index.js';
 import { useSelector } from 'react-redux';
 import React from 'react';
 

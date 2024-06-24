@@ -9,7 +9,7 @@ import { Control } from '../types/controls.js';
 import { DropPanelStore } from '@/components/panels/dropPanel/index.js';
 import { Edge, Node, ReactFlowInstance } from 'reactflow';
 import { LayoutBase } from 'rc-dock';
-import { Menu } from '@/components/menubar/data';
+import { Menu } from '@/components/menubar/data.js';
 
 export interface EditorProps {
   id: string;

@@ -1,24 +1,24 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
-import { StringSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
+import { StringSchema } from '../../schemas/index.js';
 
 export default class NodeDefinition extends Node {
-  static title = "Regex";
-  static type = "studio.tokens.string.regex";
-  static description = "Replaces a string with a regex";
+	static title = 'Regex';
+	static type = 'studio.tokens.string.regex';
+	static description = 'Replaces a string with a regex';
 
-  declare inputs: ToInput<{
-    input: string;
-    /**
-     * The matching string. You do not need to include the slashes
-     */
-    match: string;
-    flags: string;
-    replace: string;
-  }>;
-  declare outputs: ToOutput<{
-    value: string;
-  }>;
+	declare inputs: ToInput<{
+		input: string;
+		/**
+		 * The matching string. You do not need to include the slashes
+		 */
+		match: string;
+		flags: string;
+		replace: string;
+	}>;
+	declare outputs: ToOutput<{
+		value: string;
+	}>;
 
   constructor(props: INodeDefinition) {
     super(props);
@@ -48,11 +48,11 @@ export default class NodeDefinition extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const { input, match, flags, replace } = this.getAllInputs();
-    const regex = new RegExp(match, flags);
-    const output = input.replace(regex, replace);
+	execute(): void | Promise<void> {
+		const { input, match, flags, replace } = this.getAllInputs();
+		const regex = new RegExp(match, flags);
+		const output = input.replace(regex, replace);
 
-    this.setOutput("value", output);
-  }
+		this.setOutput('value', output);
+	}
 }

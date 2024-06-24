@@ -19,8 +19,8 @@ import {
   layoutType,
   showMinimapSelector,
   showTimings,
-} from '@/redux/selectors/settings';
-import { contextMenuSelector } from '@/redux/selectors/ui';
+} from '@/redux/selectors/settings.js';
+import { contextMenuSelector } from '@/redux/selectors/ui.js';
 import { useDispatch } from '@/hooks/useDispatch.js';
 import { useSelector } from 'react-redux';
 import React from 'react';

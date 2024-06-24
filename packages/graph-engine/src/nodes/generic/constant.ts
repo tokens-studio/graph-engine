@@ -1,6 +1,6 @@
-import { AnySchema } from "../../schemas/index.js";
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
+import { AnySchema } from '../../schemas/index.js';
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
 /**
  * @example
  *
@@ -9,18 +9,18 @@ import { Node } from "../../programmatic/node.js";
  * ```
  */
 export default class NodeDefinition<T> extends Node {
-  static title = "Constant";
-  static type = "studio.tokens.generic.constant";
+	static title = 'Constant';
+	static type = 'studio.tokens.generic.constant';
 
-  declare inputs: ToInput<{
-    /**
-     * The value to output
-     */
-    value: T;
-  }>;
-  declare outputs: ToOutput<{
-    value: T;
-  }>;
+	declare inputs: ToInput<{
+		/**
+		 * The value to output
+		 */
+		value: T;
+	}>;
+	declare outputs: ToOutput<{
+		value: T;
+	}>;
 
   static description =
     "Constant node allows you to provide a constant value. You can use this node to set a constant value for a specific property.";
@@ -35,8 +35,8 @@ export default class NodeDefinition<T> extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const input = this.getRawInput("value");
-    this.setOutput("value", input.value, input.type);
-  }
+	execute(): void | Promise<void> {
+		const input = this.getRawInput('value');
+		this.setOutput('value', input.value, input.type);
+	}
 }

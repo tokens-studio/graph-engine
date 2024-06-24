@@ -7,22 +7,22 @@ export default class NodeDefinition extends Node {
   static title = "Base Font Size";
   static type = 'studio.tokens.typography.baseFontSize';
 
-  declare inputs: ToInput<{
-    visualAcuity: number;
-    /**
-     * The correct factor
-     */
-    correctionFactor: number;
-    lightingCondition: number;
-    distance: number;
-    xHeightRatio: number;
-    ppi: number;
-    pixelDensity: number;
-  }>;
+	declare inputs: ToInput<{
+		visualAcuity: number;
+		/**
+		 * The correct factor
+		 */
+		correctionFactor: number;
+		lightingCondition: number;
+		distance: number;
+		xHeightRatio: number;
+		ppi: number;
+		pixelDensity: number;
+	}>;
 
-  declare outputs: ToOutput<{
-    value: number;
-  }>;
+	declare outputs: ToOutput<{
+		value: number;
+	}>;
 
   static description =
     "calculate the base font size with DIN 1450. The output is a number representing the font size in pixels.";
@@ -54,12 +54,12 @@ export default class NodeDefinition extends Node {
       },
     });
 
-    this.addInput("xHeightRatio", {
-      type: {
-        ...NumberSchema,
-        default: 0.53,
-      },
-    });
+		this.addInput('xHeightRatio', {
+			type: {
+				...NumberSchema,
+				default: 0.53
+			}
+		});
 
     this.addInput("ppi", {
       type: {
@@ -100,12 +100,12 @@ export default class NodeDefinition extends Node {
       precision
     } = this.getAllInputs();
 
-    const visualCorrection =
-      correctionFactor * (lightingCondition / visualAcuity);
-    const xHeightMM =
-      Math.tan((visualCorrection * Math.PI) / 21600) * (distance * 10) * 2;
-    const xHeightPX = (xHeightMM / 25.4) * (ppi / pixelDensity);
-    const fontSizePX = (1 * xHeightPX) / xHeightRatio;
+		const visualCorrection =
+			correctionFactor * (lightingCondition / visualAcuity);
+		const xHeightMM =
+			Math.tan((visualCorrection * Math.PI) / 21600) * (distance * 10) * 2;
+		const xHeightPX = (xHeightMM / 25.4) * (ppi / pixelDensity);
+		const fontSizePX = (1 * xHeightPX) / xHeightRatio;
 
     this.setOutput("value", setToPrecision(fontSizePX, precision));
   }

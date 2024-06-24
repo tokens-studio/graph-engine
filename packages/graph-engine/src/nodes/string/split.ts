@@ -1,7 +1,7 @@
-import { INodeDefinition, Node } from "../../programmatic/node.js";
-import { StringSchema } from "../../schemas/index.js";
-import { ToInput } from "../../programmatic/input.js";
-import { ToOutput } from "../../programmatic";
+import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { StringSchema } from '../../schemas/index.js';
+import { ToInput } from '../../programmatic/input.js';
+import { ToOutput } from '../../programmatic';
 
 export default class NodeDefinition extends Node {
   static title = "Split String";
@@ -30,12 +30,12 @@ export default class NodeDefinition extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const { value, separator } = this.getAllInputs();
-    if (separator === undefined) {
-      this.setOutput("value", [value]);
-    } else {
-      this.setOutput("value", value.split(separator));
-    }
-  }
+	execute(): void | Promise<void> {
+		const { value, separator } = this.getAllInputs();
+		if (separator === undefined) {
+			this.setOutput('value', [value]);
+		} else {
+			this.setOutput('value', value.split(separator));
+		}
+	}
 }

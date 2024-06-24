@@ -1,5 +1,5 @@
-import { EditorApp } from './graph';
-import { GraphEditorProps, ImperativeEditorRef } from './editorTypes';
+import { EditorApp } from './graph.js';
+import { GraphEditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { ReactFlowProvider } from 'reactflow';
 import React from 'react';
 

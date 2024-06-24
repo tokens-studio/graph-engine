@@ -73,7 +73,7 @@ export class GithubStorage extends GitStorage {
 
   static deserialize(serialized: object): GitStorage {
     const { secret, owner, repository, branch, path, baseUrl, name } =
-      serialized as Record<string, never>;
+      serialized as Record<string, unknown>;
     return new GithubStorage(secret, owner, repository, baseUrl, name)
       .selectBranch(branch)
       .changePath(path);

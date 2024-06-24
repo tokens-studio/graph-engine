@@ -1,6 +1,6 @@
 import { Box, TextInput } from '@tokens-studio/ui';
 import { HexColorPicker } from 'react-colorful';
-import InputPopover from './InputPopover';
+import InputPopover from './InputPopover.js';
 import React from 'react';
 
 export function ColorPicker({ value, onChange }) {

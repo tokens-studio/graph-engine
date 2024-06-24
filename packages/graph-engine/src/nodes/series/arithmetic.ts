@@ -5,56 +5,59 @@ import { ToOutput } from "../../programmatic";
 import { arrayOf } from "../../schemas/utils.js";
 import { setToPrecision } from "../../utils/precision.js";
 export type ArithemeticValue = {
-  index: number;
-  value: number;
+	index: number;
+	value: number;
 };
 
 export default class NodeDefinition extends Node {
-  static title = "Arithmetic Series";
+	static title = 'Arithmetic Series';
 
-  declare inputs: ToInput<{
-    base: number;
-    stepsDown: number;
-    stepsUp: number;
-    increment: number;
-    precision: number;
-  }>;
+	declare inputs: ToInput<{
+		base: number;
+		stepsDown: number;
+		stepsUp: number;
+		increment: number;
+		precision: number;
+	}>;
 
-  declare outputs: ToOutput<{
-    array: number[];
-    indexed: ArithemeticValue[];
-  }>;
+	declare outputs: ToOutput<{
+		array: number[];
+		indexed: ArithemeticValue[];
+	}>;
 
-  static type = "studio.tokens.series.arithmetic";
-  static description =
-    "Generates an arithmetic f(n)= c + (f(n-1)) series of numbers based on the base value, steps down, steps and increment.";
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("base", {
-      type: {
-        ...NumberSchema,
-        default: 16,
-      },
-    });
-    this.addInput("stepsDown", {
-      type: {
-        ...NumberSchema,
-        default: 0,
-      },
-    });
-    this.addInput("stepsUp", {
-      type: {
-        ...NumberSchema,
-        default: 1,
-      },
-    });
+	static type = 'studio.tokens.series.arithmetic';
+	static description =
+		'Generates an arithmetic f(n)= c + (f(n-1)) series of numbers based on the base value, steps down, steps and increment.';
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('base', {
+			type: {
+				...NumberSchema,
+				default: 16
+			},
+			visible: true
+		});
+		this.addInput('stepsDown', {
+			type: {
+				...NumberSchema,
+				default: 0
+			},
+			visible: true
+		});
+		this.addInput('stepsUp', {
+			type: {
+				...NumberSchema,
+				default: 1
+			},
+			visible: true
+		});
 
-    this.addInput("increment", {
-      type: {
-        ...NumberSchema,
-        default: 1,
-      },
-    });
+		this.addInput('increment', {
+			type: {
+				...NumberSchema,
+				default: 1
+			}
+		});
 
     this.addInput("precision", {
       type: {
@@ -82,9 +85,9 @@ export default class NodeDefinition extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const { base, precision, increment, stepsDown, stepsUp } =
-      this.getAllInputs();
+	execute(): void | Promise<void> {
+		const { base, precision, increment, stepsDown, stepsUp } =
+			this.getAllInputs();
 
     const values: ArithemeticValue[] = [];
 
@@ -108,10 +111,10 @@ export default class NodeDefinition extends Node {
       });
     }
 
-    this.setOutput(
-      "array",
-      values.map((x) => x.value),
-    );
-    this.setOutput("indexed", values);
-  }
+		this.setOutput(
+			'array',
+			values.map(x => x.value)
+		);
+		this.setOutput('indexed', values);
+	}
 }

@@ -6,7 +6,7 @@ import { createModel } from '@rematch/core';
 import type { PlayState } from '@tokens-studio/graph-engine';
 
 export interface ILog {
-  data: Record<string, never>;
+  data: Record<string, unknown>;
   time: Date;
   type: 'info' | 'error' | 'warning';
 }

@@ -87,14 +87,14 @@ export default class NodeDefinition extends Node {
     const contrastA = Math.abs(backgroundCol.contrast(colorA, algorithm));
     const contrastB = Math.abs(backgroundCol.contrast(colorB, algorithm));
 
-    if (contrastA > contrastB) {
-      this.setOutput("color", a);
-      this.setOutput("sufficient", contrastA >= threshold);
-      this.setOutput("contrast", contrastA);
-    } else {
-      this.setOutput("color", b);
-      this.setOutput("sufficient", contrastB >= threshold);
-      this.setOutput("contrast", contrastB);
-    }
-  }
+		if (contrastA > contrastB) {
+			this.setOutput('color', a);
+			this.setOutput('sufficient', contrastA >= threshold);
+			this.setOutput('contrast', contrastA);
+		} else {
+			this.setOutput('color', b);
+			this.setOutput('sufficient', contrastB >= threshold);
+			this.setOutput('contrast', contrastB);
+		}
+	}
 }

@@ -1,9 +1,9 @@
 import { AllSchemas, Input } from '@tokens-studio/graph-engine';
 import { Button, Select, Stack } from '@tokens-studio/ui';
-import { IField } from './interface';
+import { IField } from './interface.js';
 import { JSONTree } from 'react-json-tree';
 import { observer } from 'mobx-react-lite';
-import { resetable } from '@/annotations';
+import { resetable } from '@/annotations/index.js';
 import React from 'react';
 
 export const AnyField = observer(({ port, readOnly }: IField) => {

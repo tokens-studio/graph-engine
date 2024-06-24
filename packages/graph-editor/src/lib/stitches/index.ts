@@ -16,6 +16,7 @@ import {
   violetDark,
 } from '@radix-ui/colors';
 import { core, darkTheme } from '@tokens-studio/tokens';
+import type {} from '@stitches/react';
 
 export type CSS = StitchesCSS<typeof config>;
 

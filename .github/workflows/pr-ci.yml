@@ -55,5 +55,12 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile --immutable
 
+      - name: Linting
+        run: yarn lint
+
+      # verify that build scripts function correctly
+      - name: Build
+        run: yarn build
+
       - name: Test
         run: yarn run test

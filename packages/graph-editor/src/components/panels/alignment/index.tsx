@@ -16,7 +16,7 @@ import {
 } from 'iconoir-react';
 import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
 import { Node } from 'reactflow';
-import { graphEditorSelector } from '@/redux/selectors';
+import { graphEditorSelector } from '@/redux/selectors/index.js';
 import { useSelector } from 'react-redux';
 import React from 'react';
 

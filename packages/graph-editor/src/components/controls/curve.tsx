@@ -1,5 +1,5 @@
-import { CurveEditor } from '../curveEditor';
-import { IField } from './interface';
+import { CurveEditor } from '../curveEditor/index.js';
+import { IField } from './interface.js';
 import { Input } from '@tokens-studio/graph-engine';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
