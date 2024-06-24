@@ -5,14 +5,11 @@ import {
   NumberSchema,
   StringSchema,
 } from "../../schemas/index.js";
+import { ContrastAlgorithm } from "../../types/index.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
 import { Input, Output } from "../../programmatic";
 import Color from "colorjs.io";
 
-export enum WcagVersion {
-  V2 = "2.1",
-  V3 = "3.0",
-}
 
 /**
  * Performs a contrast calculation between two colors using APCA-W3 calcs
@@ -56,24 +53,17 @@ export default class NodeDefinition extends Node {
       },
     });
 
-    this.addInput("wcag", {
+    this.addInput("algorithm", {
       type: {
         ...StringSchema,
-        enum: Object.values(WcagVersion),
-        default: WcagVersion.V3,
+        enum: Object.values(ContrastAlgorithm),
+        default: ContrastAlgorithm.APCA,
       },
     });
     this.addInput("threshold", {
       type: {
         ...NumberSchema,
         default: 60,
-      },
-    });
-
-    this.addInput("contrast", {
-      type: {
-        ...NumberSchema,
-        default: 0,
       },
     });
 
@@ -89,20 +79,14 @@ export default class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
-    const { wcag, a, b, background, threshold } = this.getAllInputs();
+    const { algorithm, a, b, background, threshold } = this.getAllInputs();
 
-    let contrastA, contrastB;
     const colorA = new Color(a);
     const colorB = new Color(b);
     const backgroundCol = new Color(background);
 
-    if (wcag == WcagVersion.V2) {
-      contrastA = backgroundCol.contrast(colorA, "WCAG21");
-      contrastB = backgroundCol.contrast(colorB, "WCAG21");
-    } else {
-      contrastA = Math.abs(backgroundCol.contrast(colorA, "APCA"));
-      contrastB = Math.abs(backgroundCol.contrast(colorB, "APCA"));
-    }
+    const contrastA = Math.abs(backgroundCol.contrast(colorA, algorithm));
+    const contrastB = Math.abs(backgroundCol.contrast(colorB, algorithm));
 
     if (contrastA > contrastB) {
       this.setOutput("color", a);
