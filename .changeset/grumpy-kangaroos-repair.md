@@ -1,5 +1,5 @@
 ---
-"@tokens-studio/graph-engine": minor
+"@tokens-studio/graph-engine": major
 ---
 
 Fix contrasting color node
