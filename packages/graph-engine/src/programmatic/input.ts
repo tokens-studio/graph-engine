@@ -69,7 +69,8 @@ export class Input<T = any> extends Port<T> {
             return outputs[edge.sourceHandle].type
           });
 
-          if (sourceNodesOutputTypes.every(type => JSON.stringify(type) === JSON.stringify(sourceNodesOutputTypes[0]))) {
+          const firstNodeTypeStringValue = JSON.stringify(sourceNodesOutputTypes[0])
+          if (sourceNodesOutputTypes.every(type => JSON.stringify(type) === firstNodeTypeStringValue)) {
               this._dynamicType = { 
                 type: 'array',
                 items: sourceNodesOutputTypes[0]
