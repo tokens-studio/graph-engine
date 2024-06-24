@@ -64,11 +64,11 @@ export class Input<T = any> extends Port<T> {
         // for variadic ports, we need to set the dynamic type depending on all the other connected types
         if (variadic && _dynamicType && JSON.stringify(_dynamicType) !== JSON.stringify(opts.type)) {          
           const graph = this.node.getGraph();
-          const inEdges = graph.inEdges(this.node.id);
-          const sourceNodesOutputs = inEdges.map(edge => edge.source).map(id => graph.getNode(id).outputs);
+          
+          const sourceNodesOutputs = this._edges.map(edge => graph.getNode(edge.source).outputs);
           const sourceNodesOuputTypes = sourceNodesOutputs.map(output => output.value?.type);
 
-          if (sourceNodesOuputTypes.every(type => type?.$id === sourceNodesOuputTypes[0].$id)) {
+          if (sourceNodesOuputTypes.every(type => JSON.stringify(type) === JSON.stringify(sourceNodesOuputTypes[0]))) {
               this._dynamicType = { 
                 type: 'array',
                 items: sourceNodesOuputTypes[0]
