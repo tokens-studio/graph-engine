@@ -3,7 +3,7 @@ import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 export default class NodeDefinition<T> extends Node {
   static title = "Join Array";
-  static type = "studio.tokens.array.join";
+  static type = "studio.tokens.string.join";
 
   declare inputs: ToInput<{
     array: T[];
