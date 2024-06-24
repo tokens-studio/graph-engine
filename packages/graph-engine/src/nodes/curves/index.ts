@@ -1,3 +1,3 @@
-import sample from "./sample.js";
+import sample from './sample.js';
 
 export const nodes = [sample];

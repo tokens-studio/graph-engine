@@ -10,21 +10,21 @@ import {
   VEC2,
   VEC3,
 } from '@tokens-studio/graph-engine';
-import { AnyField } from '@/components/controls/any';
-import { BooleanField } from '@/components/controls/boolean';
-import { ColorField } from '@/components/controls/color';
-import { CurveField } from '@/components/controls/curve';
-import { DefaultField } from '@/components/controls/default';
-import { EnumeratedTextfield } from '@/components/controls/enumerated';
-import { NumericField } from '@/components/controls/numeric';
-import { SliderField } from '@/components/controls/slider';
-import { TextArea } from '@/components/controls/text';
-import { Textfield } from '@/components/controls/string';
-import { VariadicAny } from '@/components/controls/variadicAny';
-import { VariadicColor } from '@/components/controls/variadicColor';
-import { VariadicNumber } from '@/components/controls/variadicNumber';
-import { Vec2field } from '@/components/controls/vec2';
-import { Vec3field } from '@/components/controls/vec3';
+import { AnyField } from '@/components/controls/any.js';
+import { BooleanField } from '@/components/controls/boolean.js';
+import { ColorField } from '@/components/controls/color.js';
+import { CurveField } from '@/components/controls/curve.js';
+import { DefaultField } from '@/components/controls/default.js';
+import { EnumeratedTextfield } from '@/components/controls/enumerated.js';
+import { NumericField } from '@/components/controls/numeric.js';
+import { SliderField } from '@/components/controls/slider.js';
+import { TextArea } from '@/components/controls/text.js';
+import { Textfield } from '@/components/controls/string.js';
+import { VariadicAny } from '@/components/controls/variadicAny.js';
+import { VariadicColor } from '@/components/controls/variadicColor.js';
+import { VariadicNumber } from '@/components/controls/variadicNumber.js';
+import { Vec2field } from '@/components/controls/vec2.js';
+import { Vec3field } from '@/components/controls/vec3.js';
 
 export const variadicMatcher = (id) => (port: Port) =>
   port.type.type === 'array' &&

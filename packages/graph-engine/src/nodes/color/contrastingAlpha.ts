@@ -86,27 +86,11 @@ export default class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
-<<<<<<< HEAD
     const { algorithm, foreground, background, threshold, precision } = this.getAllInputs();
 
     const binarySearchAlpha = (low, high, fg, bg, targetContrast, iterations) => {
       
       if (iterations == 0 || high - low < 0.01) {  // Adding a minimum delta to prevent infinite recursion
-=======
-    const { wcag, foreground, background, threshold, precision } =
-      this.getAllInputs();
-
-    const binarySearchAlpha = (
-      low,
-      high,
-      fg,
-      bg,
-      targetContrast,
-      iterations,
-    ) => {
-      if (iterations == 0 || high - low < 0.01) {
-        // Adding a minimum delta to prevent infinite recursion
->>>>>>> chore: fix linting and formatting issues
         fg.alpha = high; // Default to higher alpha if exact match isn't found
         return high; // Ensure we are returning the alpha that provides sufficient contrast
       }
@@ -117,13 +101,8 @@ export default class NodeDefinition extends Node {
       // Convert blended color back to Color object and then to hex string
       const solidColor = flattenAlpha(fg, bg);
 
-<<<<<<< HEAD
       currentContrast = contrastCheck(solidColor, bg, algorithm);
       
-=======
-      currentContrast = contrastCheck(solidColor, bg, wcag);
-
->>>>>>> chore: fix linting and formatting issues
       if (currentContrast >= targetContrast) {
         return binarySearchAlpha(
           low,

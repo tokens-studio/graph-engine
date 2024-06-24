@@ -13,7 +13,7 @@ import { Node } from '@tokens-studio/graph-engine';
 import { observer } from 'mobx-react-lite';
 import React, { useMemo } from 'react';
 
-import { deletable } from '@/annotations';
+import { deletable } from '@/annotations/index.js';
 
 export const DynamicInputs = observer(({ node }: { node: Node }) => {
   const [inputName, setInputName] = React.useState('');

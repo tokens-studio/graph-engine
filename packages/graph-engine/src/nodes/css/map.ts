@@ -1,7 +1,7 @@
-import { INodeDefinition } from "../../programmatic/node.js";
-import { Node } from "../../programmatic/node.js";
-import { ObjectSchema } from "../../schemas/index.js";
-import { annotatedDynamicInputs } from "../../annotations/index.js";
+import { INodeDefinition } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/node.js';
+import { ObjectSchema } from '../../schemas/index.js';
+import { annotatedDynamicInputs } from '../../annotations/index.js';
 
 /**
  * Similar to the Objectify node, this expects that inputs will be added to it dynamically.
@@ -11,13 +11,13 @@ import { annotatedDynamicInputs } from "../../annotations/index.js";
  * properties and their types. This is just a convenience node.
  */
 export default class NodeDefinition extends Node {
-  static title = "CSS Map";
-  static type = "studio.tokens.css.map";
+	static title = 'CSS Map';
+	static type = 'studio.tokens.css.map';
 
-  static description =
-    "Exposes all the css properties. You can link the input of any other node to the any property that is there in the css map node.";
-  constructor(props: INodeDefinition) {
-    super(props);
+	static description =
+		'Exposes all the css properties. You can link the input of any other node to the any property that is there in the css map node.';
+	constructor(props: INodeDefinition) {
+		super(props);
 
     //Indaicate that is uses dynamic inputs
     this.annotations[annotatedDynamicInputs] = true;
@@ -26,15 +26,15 @@ export default class NodeDefinition extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const inputs = this.getAllInputs();
-    const output = Object.entries(inputs).reduce((acc, [key, value]) => {
-      if (value !== undefined) {
-        acc[key] = value;
-      }
-      return acc;
-    }, {});
+	execute(): void | Promise<void> {
+		const inputs = this.getAllInputs();
+		const output = Object.entries(inputs).reduce((acc, [key, value]) => {
+			if (value !== undefined) {
+				acc[key] = value;
+			}
+			return acc;
+		}, {});
 
-    this.setOutput("value", output);
-  }
+		this.setOutput('value', output);
+	}
 }

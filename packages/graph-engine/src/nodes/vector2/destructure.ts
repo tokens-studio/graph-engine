@@ -1,22 +1,22 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
-import { NumberSchema, Vec2Schema } from "../../schemas/index.js";
-import { Vec2 } from "../../index.js";
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
+import { NumberSchema, Vec2Schema } from '../../schemas/index.js';
+import { Vec2 } from '../../index.js';
 
 export default class NodeDefinition extends Node {
-  static title = "Destructure vector2";
-  static type = "studio.tokens.vector2.destructure";
-  static description =
-    "Allows you to destructure a vector2 into its components";
+	static title = 'Destructure vector2';
+	static type = 'studio.tokens.vector2.destructure';
+	static description =
+		'Allows you to destructure a vector2 into its components';
 
-  declare inputs: ToInput<{
-    value: Vec2;
-  }>;
+	declare inputs: ToInput<{
+		value: Vec2;
+	}>;
 
-  declare outputs: ToOutput<{
-    x: number;
-    y: string;
-  }>;
+	declare outputs: ToOutput<{
+		x: number;
+		y: string;
+	}>;
 
   constructor(props: INodeDefinition) {
     super(props);
@@ -35,7 +35,7 @@ export default class NodeDefinition extends Node {
   execute(): void | Promise<void> {
     const { value } = this.getAllInputs();
 
-    this.setOutput("x", value[0]);
-    this.setOutput("y", value[1]);
-  }
+		this.setOutput('x', value[0]);
+		this.setOutput('y', value[1]);
+	}
 }

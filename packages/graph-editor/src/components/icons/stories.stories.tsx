@@ -1,6 +1,6 @@
-import { AppsIcon } from './index';
-import { BezierIcon } from './index';
-import { GrabberIcon } from './index';
+import { AppsIcon } from './index.js';
+import { BezierIcon } from './index.js';
+import { GrabberIcon } from './index.js';
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 

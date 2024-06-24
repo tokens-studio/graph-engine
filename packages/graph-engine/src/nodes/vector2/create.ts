@@ -1,7 +1,7 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
-import { NumberSchema, Vec2Schema } from "../../schemas/index.js";
-import { Vec2 } from "../../index.js";
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
+import { NumberSchema, Vec2Schema } from '../../schemas/index.js';
+import { Vec2 } from '../../index.js';
 
 export default class NodeDefinition extends Node {
     static title = "Create vector2";

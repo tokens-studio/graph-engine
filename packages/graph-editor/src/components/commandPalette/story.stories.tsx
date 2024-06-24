@@ -1,7 +1,7 @@
-import { CommandMenu } from './index';
+import { CommandMenu } from './index.js';
 import { Provider } from 'react-redux';
-import { createMockStore } from '@/stories/utils';
-import { defaultPanelGroupsFactory } from '../panels/dropPanel';
+import { createMockStore } from '@/stories/utils.js';
+import { defaultPanelGroupsFactory } from '../panels/dropPanel/index.js';
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 

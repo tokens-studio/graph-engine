@@ -1,11 +1,11 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
-import { NumberSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
+import { NumberSchema } from '../../schemas/index.js';
 
 export default class NodeDefinition extends Node {
-  static title = "Tan";
-  static type = "studio.tokens.math.tan";
-  static description = "Tan node allows you to get the sin of a number.";
+	static title = 'Tan';
+	static type = 'studio.tokens.math.tan';
+	static description = 'Tan node allows you to get the sin of a number.';
 
   declare inputs: ToInput<{
     value: number;
@@ -26,8 +26,8 @@ export default class NodeDefinition extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const value = this.getInput("value");
-    this.setOutput("value", Math.tan(value));
-  }
+	execute(): void | Promise<void> {
+		const value = this.getInput('value');
+		this.setOutput('value', Math.tan(value));
+	}
 }

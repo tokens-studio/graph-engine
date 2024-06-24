@@ -1,16 +1,16 @@
 import { HotKeys as HotKeysComp } from 'react-hotkeys';
-import { SerializedNode } from '@/types/serializedNode';
+import { SerializedNode } from '@/types/serializedNode.js';
 import { annotatedDeleteable } from '@tokens-studio/graph-engine';
-import { savedViewports } from '@/annotations';
-import { showGrid, snapGrid } from '@/redux/selectors/settings';
-import { useAction } from '@/editor/actions/provider';
-import { useAutoLayout } from '@/editor/hooks/useAutolayout';
+import { savedViewports } from '@/annotations/index.js';
+import { showGrid, snapGrid } from '@/redux/selectors/settings.js';
+import { useAction } from '@/editor/actions/provider.js';
+import { useAutoLayout } from '@/editor/hooks/useAutolayout.js';
 import { useDispatch } from '@/hooks/useDispatch.js';
-import { useLocalGraph } from '@/hooks';
+import { useLocalGraph } from '@/hooks/index.js';
 import { useMemo } from 'react';
 import { useReactFlow } from 'reactflow';
 import { useSelector } from 'react-redux';
-import { useToast } from '@/hooks/useToast';
+import { useToast } from '@/hooks/useToast.js';
 import React from 'react';
 import copy from 'copy-to-clipboard';
 

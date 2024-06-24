@@ -1,10 +1,10 @@
-import { IDeserializeOpts } from "../../graph/types.js";
-import { INodeDefinition } from "../../programmatic/node.js";
-import { Node } from "../../programmatic/node.js";
+import { IDeserializeOpts } from '../../graph/types.js';
+import { INodeDefinition } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/node.js';
 import {
-  annotatedDynamicInputs,
-  annotatedSingleton,
-} from "../../annotations/index.js";
+	annotatedDynamicInputs,
+	annotatedSingleton
+} from '../../annotations/index.js';
 
 /**
  * Acts as an output node for the graph. There can only be a single output node per graph.
@@ -16,18 +16,18 @@ import {
  * ```
  */
 export default class NodeDefinition extends Node {
-  static title = "Input";
-  static type = "studio.tokens.generic.input";
+	static title = 'Input';
+	static type = 'studio.tokens.generic.input';
 
-  static description =
-    "Allows you to provide initial values for the whole graph. An input node can be used only once at the start of the graph. You can use this node to set brand decisions or any initial values.";
+	static description =
+		'Allows you to provide initial values for the whole graph. An input node can be used only once at the start of the graph. You can use this node to set brand decisions or any initial values.';
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    //By default we don't define any ports, these are all dynamic
-    this.annotations[annotatedSingleton] = true;
-    this.annotations[annotatedDynamicInputs] = true;
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		//By default we don't define any ports, these are all dynamic
+		this.annotations[annotatedSingleton] = true;
+		this.annotations[annotatedDynamicInputs] = true;
+	}
 
   static override deserialize(opts: IDeserializeOpts) {
     const node = super.deserialize(opts);
@@ -39,16 +39,16 @@ export default class NodeDefinition extends Node {
       });
     });
 
-    return node;
-  }
+		return node;
+	}
 
-  execute(): void | Promise<void> {
-    const inputs = this.getAllInputs();
-    const outputs = this.getAllOutputs();
+	execute(): void | Promise<void> {
+		const inputs = this.getAllInputs();
+		const outputs = this.getAllOutputs();
 
-    //Passthrough all
-    Object.keys(inputs).forEach((input) => {
-      const rawInput = this.getRawInput(input);
+		//Passthrough all
+		Object.keys(inputs).forEach(input => {
+			const rawInput = this.getRawInput(input);
 
       if (!(input in outputs)) {
         this.addOutput(input, {
@@ -58,13 +58,13 @@ export default class NodeDefinition extends Node {
         this.setOutput(input, rawInput.value, rawInput.type);
       }
 
-      this.setOutput(input, rawInput.value, rawInput.type);
-    });
+			this.setOutput(input, rawInput.value, rawInput.type);
+		});
 
-    Object.keys(outputs).forEach((output) => {
-      if (!(output in inputs)) {
-        delete this.outputs[output];
-      }
-    });
-  }
+		Object.keys(outputs).forEach(output => {
+			if (!(output in inputs)) {
+				delete this.outputs[output];
+			}
+		});
+	}
 }

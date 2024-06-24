@@ -1,35 +1,35 @@
-import { Graph } from "../graph/index.js";
-import { GraphSchema } from "../schemas/index.js";
-import { IDeserializeOpts, SerializedNode } from "../graph/types.js";
-import { Input } from "./input.js";
-import { Output } from "./output.js";
-import { action, computed, makeObservable, observable } from "mobx";
-import { annotatedNodeRunning } from "../annotations/index.js";
-import { v4 as uuid } from "uuid";
-import getDefaults from "json-schema-defaults";
-import type { NodeRun } from "../types.js";
+import { Graph } from '../graph/index.js';
+import { GraphSchema } from '../schemas/index.js';
+import { IDeserializeOpts, SerializedNode } from '../graph/types.js';
+import { Input } from './input.js';
+import { Output } from './output.js';
+import { action, computed, makeObservable, observable } from 'mobx';
+import { annotatedNodeRunning } from '../annotations/index.js';
+import { v4 as uuid } from 'uuid';
+import getDefaults from 'json-schema-defaults-esm';
+import type { NodeRun } from '../types.js';
 
 export interface INodeDefinition {
-  graph: Graph;
-  id?: string;
-  inputs?: Record<string, Input>;
-  outputs?: Record<string, Output>;
+	graph: Graph;
+	id?: string;
+	inputs?: Record<string, Input>;
+	outputs?: Record<string, Output>;
 }
 
 export interface TypeDefinition {
-  type: GraphSchema;
-  /**
-   * When exposing an array of inputs or outputs, allow specific control for connecting each item
-   */
-  variadic?: boolean;
-  /**
-   * Whether the input is visible by default in the UI
-   */
-  visible?: boolean;
-  /**
-   * Additional annotations to store on the input
-   */
-  annotations?: Record<string, unknown>;
+	type: GraphSchema;
+	/**
+	 * When exposing an array of inputs or outputs, allow specific control for connecting each item
+	 */
+	variadic?: boolean;
+	/**
+	 * Whether the input is visible by default in the UI
+	 */
+	visible?: boolean;
+	/**
+	 * Additional annotations to store on the input
+	 */
+	annotations?: Record<string, unknown>;
 }
 
 export class Node {
@@ -95,6 +95,7 @@ export class Node {
       name,
       ...type,
       visible: type.visible !== undefined ? type.visible : true,
+			// @ts-ignore
       value: getDefaults(type.type),
       node: this,
     }));
@@ -105,6 +106,7 @@ export class Node {
       ...type,
       type: type.type,
       visible: type.visible !== undefined ? type.visible : true,
+			// @ts-ignore
       value: getDefaults(type.type),
       node: this,
     });

@@ -1,5 +1,5 @@
 import { annotatedDeleteable } from '@tokens-studio/graph-engine';
-import { useLocalGraph } from './useLocalGraph';
+import { useLocalGraph } from './useLocalGraph.js';
 
 export const useCanDeleteNode = (nodeId: string) => {
   const graph = useLocalGraph();

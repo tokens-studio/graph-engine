@@ -1,8 +1,8 @@
 import { Node as FlowNode } from 'reactflow';
 import { Node } from '@tokens-studio/graph-engine';
-import { SerializedNode } from '@/types/serializedNode';
+import { SerializedNode } from '@/types/serializedNode.js';
 import React from 'react';
-import type { NodeRequest } from './createNode';
+import type { NodeRequest } from './createNode.js';
 
 export type Actions = {
   createNode: (nodeRequest: NodeRequest) =>

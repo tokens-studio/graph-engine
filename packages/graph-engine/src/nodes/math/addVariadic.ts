@@ -1,6 +1,6 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
-import { NumberSchema, createVariadicSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
+import { NumberSchema, createVariadicSchema } from '../../schemas/index.js';
 
 /**
  * @example
@@ -10,16 +10,16 @@ import { NumberSchema, createVariadicSchema } from "../../schemas/index.js";
  * ```
  */
 export default class NodeDefinition extends Node {
-  static title = "Add Node (Variadic)";
-  static type = "studio.tokens.math.addVariadic";
-  static description = "Add node allows you to add two or more numbers.";
+	static title = 'Add Node (Variadic)';
+	static type = 'studio.tokens.math.addVariadic';
+	static description = 'Add node allows you to add two or more numbers.';
 
-  declare inputs: ToInput<{
-    inputs: number[];
-  }>;
-  declare outputs: ToOutput<{
-    value: number;
-  }>;
+	declare inputs: ToInput<{
+		inputs: number[];
+	}>;
+	declare outputs: ToOutput<{
+		value: number;
+	}>;
 
   constructor(props: INodeDefinition) {
     super(props);
@@ -35,9 +35,9 @@ export default class NodeDefinition extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const inputs = this.getInput("inputs") as number[];
-    const output = inputs.reduce((acc, curr) => acc + curr, 0);
-    this.setOutput("value", output);
-  }
+	execute(): void | Promise<void> {
+		const inputs = this.getInput('inputs') as number[];
+		const output = inputs.reduce((acc, curr) => acc + curr, 0);
+		this.setOutput('value', output);
+	}
 }

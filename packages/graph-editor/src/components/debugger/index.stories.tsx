@@ -1,4 +1,4 @@
-import { CustomTimelineRow, Debugger } from './index';
+import { CustomTimelineRow, Debugger } from './index.js';
 import { TimelineEffect } from '@xzdarcy/react-timeline-editor';
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';

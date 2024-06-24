@@ -10,7 +10,7 @@ Custom panels can be added for the editor. To create a custom panel we first nee
 import {
   defaultMenuDataFactory,
   windowButton,
-} from "@tokens-studio/graph-engine";
+} from "@tokens-studio/graph-editor";
 import CustomPanel from "./customPanel.tsx";
 import React from "react";
 

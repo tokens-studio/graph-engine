@@ -10,8 +10,6 @@ export default defineConfig({
   format: 'esm',
   skipNodeModulesBundle: true,
   clean: false,
-  splitting: false,
   minify: false,
-  bundle: false,
   target: "esnext"
 });

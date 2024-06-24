@@ -1,8 +1,8 @@
-import { ColorSchema } from "../../schemas/index.js";
-import { INodeDefinition } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
-import { flattenAlpha } from "./lib/flattenAlpha.js";
-import Color from "colorjs.io";
+import { ColorSchema } from '../../schemas/index.js';
+import { INodeDefinition } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
+import { flattenAlpha } from './lib/flattenAlpha.js';
+import Color from 'colorjs.io';
 
 export default class NodeDefinition extends Node {
   static title = "Flatten Alpha";
@@ -28,14 +28,14 @@ export default class NodeDefinition extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const { foreground, background } = this.getAllInputs();
+	execute(): void | Promise<void> {
+		const { foreground, background } = this.getAllInputs();
 
-    // Create color objects from strings
-    const bg = new Color(background);
-    const fg = new Color(foreground);
+		// Create color objects from strings
+		const bg = new Color(background);
+		const fg = new Color(foreground);
 
-    const resultColor = flattenAlpha(fg, bg);
-    this.setOutput("value", resultColor.to("srgb").toString({ format: "hex" }));
-  }
+		const resultColor = flattenAlpha(fg, bg);
+		this.setOutput('value', resultColor.to('srgb').toString({ format: 'hex' }));
+	}
 }

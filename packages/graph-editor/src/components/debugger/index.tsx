@@ -1,6 +1,6 @@
 import './debugger.scss';
 import { Box, Stack, Text } from '@tokens-studio/ui';
-import { DebugInfo } from './data';
+import { DebugInfo } from './data.js';
 import {
   Timeline,
   TimelineAction,
@@ -9,8 +9,8 @@ import {
   TimelineState,
 } from '@xzdarcy/react-timeline-editor';
 import { observer } from 'mobx-react-lite';
-import React, { useRef, useState } from 'react';
-import TimelinePlayer from './player';
+import React, { MutableRefObject, useRef, useState } from 'react';
+import TimelinePlayer from './player.js';
 
 export interface CustomTimelineRow extends TimelineRow {
   name: string;
@@ -29,62 +29,66 @@ export interface DebuggerProps {
   effects: Record<string, TimelineEffect>;
 }
 
-const DebuggerInner = observer(({ data, domRef, timeline, scale }) => {
-  return (
-    <Stack css={{ flex: 1 }}>
-      <div
-        ref={domRef}
-        style={{ overflow: 'auto' }}
-        onScroll={(e) => {
-          const target = e.target as HTMLDivElement;
-          timeline.current?.setScrollTop(target.scrollTop);
-        }}
-        className={'timeline-list'}
-      >
-        {data.rows.map((item) => {
-          return (
-            <Box
-              className="timeline-list-item"
-              key={item.id}
-              css={{ padding: '$1' }}
-            >
-              <Text>{item.name}</Text>
-            </Box>
-          );
-        })}
-      </div>
+const DebuggerInner = observer<DebuggerProps>(
+  /** @ts-expect-error observer not typed here...? */
+  ({ data, domRef, timeline, scale }) => {
+    return (
+      <Stack css={{ flex: 1 }}>
+        <div
+          ref={domRef}
+          style={{ overflow: 'auto' }}
+          onScroll={(e) => {
+            const target = e.target as HTMLDivElement;
+            timeline.current?.setScrollTop(target.scrollTop);
+          }}
+          className={'timeline-list'}
+        >
+          {data.rows.map((item) => {
+            return (
+              <Box
+                className="timeline-list-item"
+                key={item.id}
+                css={{ padding: '$1' }}
+              >
+                <Text>{item.name}</Text>
+              </Box>
+            );
+          })}
+        </div>
 
-      <Timeline
-        editorData={[...data.rows]}
-        onChange={() => {}}
-        disableDrag
-        onScroll={({ scrollTop }) => {
-          if (domRef.current) {
-            domRef.current.scrollTop = scrollTop;
-          }
-        }}
-        autoScroll={true}
-        scaleSplitCount={~~(scale / 10)}
-        // scale={scale}
-        scaleWidth={scale}
-        ref={timeline}
-        effects={{}}
-        getActionRender={(action, row) => {
-          return (
-            <CustomRender0
-              action={action}
-              row={row}
-              index={Number.parseInt(row.id)}
-            />
-          );
-        }}
-      />
-    </Stack>
-  );
-});
+        <Timeline
+          editorData={[...data.rows]}
+          onChange={() => {}}
+          disableDrag
+          onScroll={({ scrollTop }) => {
+            if (domRef.current) {
+              domRef.current.scrollTop = scrollTop;
+            }
+          }}
+          autoScroll={true}
+          scaleSplitCount={~~(scale / 10)}
+          // scale={scale}
+          scaleWidth={scale}
+          ref={timeline}
+          effects={{}}
+          getActionRender={(action, row) => {
+            return (
+              <CustomRender0
+                action={action}
+                row={row}
+                index={Number.parseInt(row.id)}
+              />
+            );
+          }}
+        />
+      </Stack>
+    );
+  },
+);
 
 export const Debugger = ({ data }: DebuggerProps) => {
-  const timelineState = useRef<TimelineState>();
+  const timelineState =
+    useRef<TimelineState>() as MutableRefObject<TimelineState>;
   const autoScrollWhenPlay = useRef<boolean>(true);
   const domRef = useRef<HTMLDivElement>();
 
@@ -100,6 +104,7 @@ export const Debugger = ({ data }: DebuggerProps) => {
       />
       <DebuggerInner
         data={data}
+        /** @ts-expect-error this domRef prop is not typed? */
         domRef={domRef}
         scale={scale}
         timeline={timelineState}

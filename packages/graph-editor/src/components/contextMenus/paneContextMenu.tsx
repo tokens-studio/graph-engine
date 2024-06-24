@@ -1,21 +1,21 @@
-import { ContextMenuItem } from './ContextMenuStyles';
+import { ContextMenuItem } from './ContextMenuStyles.js';
 import { Menu, Separator } from 'react-contexify';
-import { clear } from '../../editor/actions/clear';
-import { showGrid, snapGrid } from '@/redux/selectors/settings';
-import { useAction } from '@/editor/actions/provider';
-import { useAutoLayout } from '../../editor/hooks/useAutolayout';
-import { useDispatch } from '@/hooks';
-import { useLocalGraph } from '@/context/graph';
+import { clear } from '../../editor/actions/clear.js';
+import { showGrid, snapGrid } from '@/redux/selectors/settings.js';
+import { useAction } from '@/editor/actions/provider.js';
+import { useAutoLayout } from '../../editor/hooks/useAutolayout.js';
+import { useDispatch } from '@/hooks/index.js';
+import { useLocalGraph } from '@/context/graph.js';
 import { useReactFlow } from 'reactflow';
 import { useSelector } from 'react-redux';
 import React, { useCallback } from 'react';
 
-export interface IPaneContextMenu {
+export interface IPaneContextMenu<T = unknown> {
   id: string;
-  onSelectItem: (item: unknown) => void;
+  onSelectItem: (item: T) => void;
 }
 
-export const PaneContextMenu = ({ id }: IPaneContextMenu) => {
+export const PaneContextMenu = <T = unknown,>({ id }: IPaneContextMenu<T>) => {
   const reactFlowInstance = useReactFlow();
   const showGridValue = useSelector(showGrid);
   const snapGridValue = useSelector(snapGrid);

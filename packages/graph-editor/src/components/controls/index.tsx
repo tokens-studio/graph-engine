@@ -1,1 +1,1 @@
-export * from './withVariadicField';
+export * from './withVariadicField.js';

@@ -1,9 +1,9 @@
-import valueParser from "postcss-value-parser";
+import valueParser from 'postcss-value-parser';
 
-import { INodeDefinition, Node } from "../../programmatic/node.js";
-import { StringSchema } from "../../schemas/index.js";
-import { ToInput } from "../../programmatic/input.js";
-import { ToOutput } from "../../programmatic/output.js";
+import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { StringSchema } from '../../schemas/index.js';
+import { ToInput } from '../../programmatic/input.js';
+import { ToOutput } from '../../programmatic/output.js';
 
 export default class NodeDefinition extends Node {
   static title = "Pass unit";
@@ -32,18 +32,18 @@ export default class NodeDefinition extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const { value, fallback } = this.getAllInputs();
+	execute(): void | Promise<void> {
+		const { value, fallback } = this.getAllInputs();
 
-    const x = valueParser.unit(value);
-    if (!x) {
-      throw Error("Could not parse unit");
-    }
+		const x = valueParser.unit(value);
+		if (!x) {
+			throw Error('Could not parse unit');
+		}
 
-    if (x.unit) {
-      this.setOutput("value", value);
-    } else {
-      this.setOutput("value", `${value}${fallback || ""}`);
-    }
-  }
+		if (x.unit) {
+			this.setOutput('value', value);
+		} else {
+			this.setOutput('value', `${value}${fallback || ''}`);
+		}
+	}
 }

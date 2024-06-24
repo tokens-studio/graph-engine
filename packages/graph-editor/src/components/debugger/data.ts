@@ -1,4 +1,7 @@
-import { CustomTimeLineAction, CustomTimelineRow } from '@/components/debugger';
+import {
+  CustomTimeLineAction,
+  CustomTimelineRow,
+} from '@/components/debugger/index.js';
 import { action, computed, makeObservable, observable } from 'mobx';
 
 export class DebugInfo {

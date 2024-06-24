@@ -1,10 +1,10 @@
 import { Graph } from 'graphlib';
 import { Item, Menu, Separator } from 'react-contexify';
 import { Node, ReactFlowInstance, useReactFlow } from 'reactflow';
-import { useAction } from '@/editor/actions/provider';
-import { useCanDeleteNode } from '@/hooks/useCanDeleteNode';
-import { useLocalGraph } from '@/hooks';
-import { useToast } from '@/hooks/useToast';
+import { useAction } from '@/editor/actions/provider.js';
+import { useCanDeleteNode } from '@/hooks/useCanDeleteNode.js';
+import { useLocalGraph } from '@/hooks/index.js';
+import { useToast } from '@/hooks/useToast.js';
 import React, { useCallback } from 'react';
 import classNames from 'classnames/dedupe.js';
 

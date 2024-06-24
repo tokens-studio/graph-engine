@@ -1,0 +1,27 @@
+diff --git a/node_modules/colorjs.io/types/src/index.d.ts b/node_modules/colorjs.io/types/src/index.d.ts
+index 73bc03a..93f5d10 100644
+--- a/node_modules/colorjs.io/types/src/index.d.ts
++++ b/node_modules/colorjs.io/types/src/index.d.ts
+@@ -1,5 +1,5 @@
+ import { uv, xy } from "./chromaticity.js";
+-import Color, { ColorTypes, ToColorPrototype } from "./color.js";
++import BaseColor, { ColorTypes, ToColorPrototype } from "./color.js";
+ import contrast from "./contrast.js";
+ import {
+ 	contrastWCAG21,
+@@ -24,7 +24,7 @@ import { lighten, darken } from "./variations.js";
+ 
+ // Augment existing Color object
+ declare module "./color" {
+-	export default class Color {
++	export default class Color extends BaseColor {
+ 		// chromaticity
+ 		uv: ToColorPrototype<typeof uv>;
+ 		xy: ToColorPrototype<typeof xy>;
+@@ -121,5 +121,4 @@ declare module "./color" {
+ 		static darken: typeof darken;
+ 	}
+ }
+-
+ export default Color;
+\ No newline at end of file

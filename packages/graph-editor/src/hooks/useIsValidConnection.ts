@@ -1,8 +1,8 @@
 import { ANY, canConvertSchemaTypes } from '@tokens-studio/graph-engine';
 import { Connection, useReactFlow } from 'reactflow';
-import { stripVariadic } from '@/utils/stripVariadic';
+import { stripVariadic } from '@/utils/stripVariadic.js';
 import { useCallback } from 'react';
-import { useLocalGraph } from './useLocalGraph';
+import { useLocalGraph } from './useLocalGraph.js';
 import GraphLib from '@dagrejs/graphlib';
 const { Graph: CycleGraph, alg } = GraphLib;
 

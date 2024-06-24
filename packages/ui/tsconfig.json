@@ -16,7 +16,7 @@
     // same as our --compilerOptions flag and our TS_NODE_COMPILER_OPTIONS environment variable
     "compilerOptions": {
       "module": "es2020",
-      "moduleResolution": "node"
+      "moduleResolution": "bundler"
     }
   },
   "compilerOptions": {

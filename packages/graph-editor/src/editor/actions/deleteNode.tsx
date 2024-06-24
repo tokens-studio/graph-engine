@@ -1,4 +1,4 @@
-import { Dispatch } from '@/redux/store';
+import { Dispatch } from '@/redux/store.js';
 import { Graph } from '@tokens-studio/graph-engine';
 import { ReactFlowInstance } from 'reactflow';
 

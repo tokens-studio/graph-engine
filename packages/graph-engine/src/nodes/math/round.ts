@@ -4,18 +4,18 @@ import { NumberSchema } from "../../schemas/index.js";
 import { setToPrecision } from "../../utils/precision.js";
 
 export default class NodeDefinition extends Node {
-  static title = "Round";
-  static type = "studio.tokens.math.round";
-  static description =
-    "Round node allows you to adjusts a floating-point number to the nearest integer or to a specified precision.";
+	static title = 'Round';
+	static type = 'studio.tokens.math.round';
+	static description =
+		'Round node allows you to adjusts a floating-point number to the nearest integer or to a specified precision.';
 
-  declare inputs: ToInput<{
-    value: number;
-    precision: number;
-  }>;
-  declare outputs: ToOutput<{
-    value: number;
-  }>;
+	declare inputs: ToInput<{
+		value: number;
+		precision: number;
+	}>;
+	declare outputs: ToOutput<{
+		value: number;
+	}>;
 
   constructor(props: INodeDefinition) {
     super(props);

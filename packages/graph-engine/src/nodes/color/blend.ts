@@ -1,8 +1,8 @@
 import {
-  ColorModifier,
-  ColorModifierTypes,
-  ColorSpaceTypes,
-} from "@tokens-studio/types";
+	ColorModifier,
+	ColorModifierTypes,
+	ColorSpaceTypes
+} from '@tokens-studio/types';
 import {
   ColorSchema,
   NumberSchema,
@@ -13,7 +13,7 @@ import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { convertModifiedColorToHex } from "./lib/modifyColor.js";
 
-export { ColorModifierTypes } from "@tokens-studio/types";
+export { ColorModifierTypes } from '@tokens-studio/types';
 
 export default class NodeDefinition extends Node {
   static title = "Blend Colors";
@@ -27,9 +27,9 @@ export default class NodeDefinition extends Node {
     space: ColorSpaceTypes;
   }>;
 
-  declare outputs: ToOutput<{
-    value: ColorType;
-  }>;
+	declare outputs: ToOutput<{
+		value: ColorType;
+	}>;
 
   constructor(props: INodeDefinition) {
     super(props);

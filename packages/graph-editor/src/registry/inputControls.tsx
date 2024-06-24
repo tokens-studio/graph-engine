@@ -1,7 +1,7 @@
 import { Button, Heading, Scroll, Select, Stack } from '@tokens-studio/ui';
 import { Node } from '@tokens-studio/graph-engine';
 import { StringSchema } from '@tokens-studio/graph-engine';
-import { deletable } from '@/annotations';
+import { deletable } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
 import React, { useMemo } from 'react';
 // prettier-ignore

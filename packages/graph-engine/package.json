@@ -8,7 +8,6 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
       "types": "./dist/index.d.ts"
     }
   },
@@ -29,7 +28,6 @@
     "release": "npm run build && changeset publish",
     "test": "jest --detectOpenHandles"
   },
-  "sideEffects": false,
   "dependencies": {
     "@tokens-studio/types": "^0.3.0",
     "ajv": "^8.12.0",
@@ -56,18 +54,18 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.21.5",
-    "@changesets/cli": "2.26.0",
+    "@changesets/cli": "^2.26.0",
     "@jest/globals": "^29.5.0",
     "@tokens-studio/eslint-config-custom": "*",
     "@tokens-studio/prettier-config-custom": "*",
     "@types/chroma-js": "^2.4.0",
     "@types/culori": "^2.0.0",
-    "@types/jest": "28.1.0",
+    "@types/jest": "^28.1.0",
     "@types/lodash.orderby": "^4.6.7",
     "@types/node": "^18.15.11",
-    "jest": "28.1.0",
+    "jest": "^28.1.0",
     "jest-junit": "^15.0.0",
-    "ts-jest": "28.0.3",
+    "ts-jest": "^28.0.3",
     "ts-jest-resolver": "^2.0.1",
     "ts-node": "^10.9.1",
     "tsup": "^8.1.0",
@@ -79,6 +77,5 @@
     "studio",
     "tokens",
     "ui"
-  ],
-  "jsnext:main": "./dist/index.js"
+  ]
 }

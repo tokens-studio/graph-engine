@@ -1,37 +1,37 @@
-import { Color } from "../../types.js";
+import { Color } from '../../types.js';
 import {
-  ColorSchema,
-  NumberSchema,
-  StringSchema,
-} from "../../schemas/index.js";
-import { Hsl, Lab, Rgb, Xyz65, converter } from "culori";
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
-import { arrayOf } from "../../schemas/utils.js";
+	ColorSchema,
+	NumberSchema,
+	StringSchema
+} from '../../schemas/index.js';
+import { Hsl, Lab, Rgb, Xyz65, converter } from 'culori';
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
+import { arrayOf } from '../../schemas/utils.js';
 
 export const colorSpaces = [
-  "rgb",
-  "hsl",
-  "lab",
-  "oklab",
+	'rgb',
+	'hsl',
+	'lab',
+	'oklab',
 
-  //RGB like
-  "gl",
-  "a98",
-  "p3",
-  "prophoto",
-  "rec2020",
+	//RGB like
+	'gl',
+	'a98',
+	'p3',
+	'prophoto',
+	'rec2020',
 
-  //LAB like
-  "dlab",
-  "lab65",
+	//LAB like
+	'dlab',
+	'lab65',
 
-  //XYZ
-  "xyz65",
+	//XYZ
+	'xyz65',
 
-  //HSL like
-  "okhsl",
-  "cubehelix",
+	//HSL like
+	'okhsl',
+	'cubehelix'
 ] as const;
 export type ColorSpace = (typeof colorSpaces)[number];
 

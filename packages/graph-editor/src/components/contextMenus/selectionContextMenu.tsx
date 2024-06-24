@@ -1,10 +1,10 @@
 import { Edge, Graph } from '@tokens-studio/graph-engine';
 import { Item, Menu, Separator } from 'react-contexify';
 import { Node, getRectOfNodes, useReactFlow, useStoreApi } from 'reactflow';
-import { NodeTypes } from '../flow/types';
-import { getId } from '../flow/utils';
-import { useAction } from '@/editor/actions/provider';
-import { useLocalGraph } from '@/hooks';
+import { NodeTypes } from '../flow/types.js';
+import { getId } from '../flow/utils.js';
+import { useAction } from '@/editor/actions/provider.js';
+import { useLocalGraph } from '@/hooks/index.js';
 import { v4 as uuid } from 'uuid';
 import React, { useCallback } from 'react';
 

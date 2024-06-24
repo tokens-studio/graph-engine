@@ -5,28 +5,28 @@ import { arrayOf } from "../../schemas/utils.js";
 import { setToPrecision } from "../../utils/precision.js";
 
 type GeometricValue = {
-  index: number;
-  value: number;
+	index: number;
+	value: number;
 };
 
 export default class NodeDefinition extends Node {
-  static title = "Geometric Series";
-  static type = "studio.tokens.series.geometric";
-  static description =
-    "Generates a geometric series f(n)= c * (f(n-1)) of numbers based on the base value, steps down, steps and increment.";
+	static title = 'Geometric Series';
+	static type = 'studio.tokens.series.geometric';
+	static description =
+		'Generates a geometric series f(n)= c * (f(n-1)) of numbers based on the base value, steps down, steps and increment.';
 
-  declare inputs: ToInput<{
-    base: number;
-    stepsDown: number;
-    stepsUp: number;
-    ratio: number;
-    precision: number;
-  }>;
+	declare inputs: ToInput<{
+		base: number;
+		stepsDown: number;
+		stepsUp: number;
+		ratio: number;
+		precision: number;
+	}>;
 
-  declare outputs: ToOutput<{
-    array: number[];
-    indexed: GeometricValue[];
-  }>;
+	declare outputs: ToOutput<{
+		array: number[];
+		indexed: GeometricValue[];
+	}>;
 
   constructor(props: INodeDefinition) {
     super(props);
@@ -49,12 +49,12 @@ export default class NodeDefinition extends Node {
       },
     });
 
-    this.addInput("ratio", {
-      type: {
-        ...NumberSchema,
-        default: 1.5,
-      },
-    });
+		this.addInput('ratio', {
+			type: {
+				...NumberSchema,
+				default: 1.5
+			}
+		});
 
     this.addInput("precision", {
       type: {
@@ -82,8 +82,8 @@ export default class NodeDefinition extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const { base, precision, ratio, stepsDown, stepsUp } = this.getAllInputs();
+	execute(): void | Promise<void> {
+		const { base, precision, ratio, stepsDown, stepsUp } = this.getAllInputs();
 
     const values: GeometricValue[] = [];
 
@@ -95,10 +95,10 @@ export default class NodeDefinition extends Node {
       });
     }
 
-    this.setOutput(
-      "array",
-      values.map((x) => x.value),
-    );
-    this.setOutput("indexed", values);
-  }
+		this.setOutput(
+			'array',
+			values.map(x => x.value)
+		);
+		this.setOutput('indexed', values);
+	}
 }

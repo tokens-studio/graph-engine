@@ -1,7 +1,7 @@
 import { Edge, Port } from '@tokens-studio/graph-engine';
 import { Text, TextInput } from '@tokens-studio/ui';
 import React from 'react';
-import withVariadicField from './withVariadicField';
+import withVariadicField from './withVariadicField.js';
 
 const VariadicAnyUI = ({ port, edge }: { port: Port; edge: Edge }) => {
   const value = port.value[edge.annotations['engine.index']];

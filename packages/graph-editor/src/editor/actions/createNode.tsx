@@ -1,4 +1,4 @@
-import { Dispatch } from '@/redux/store';
+import { Dispatch } from '@/redux/store.js';
 import { Graph, Node, NodeFactory } from '@tokens-studio/graph-engine';
 import { ReactFlowInstance, Node as ReactFlowNode } from 'reactflow';
 
@@ -49,13 +49,16 @@ export const createNode = ({
     if (!nodeRequest.type) {
       return;
     }
-    if (nodeRequest.type == INPUT && nodes.some((x) => x.nodeType() == INPUT)) {
+    if (
+      nodeRequest.type == 'INPUT' &&
+      nodes.some((x) => x.nodeType() == 'INPUT')
+    ) {
       alert('Only one input node allowed');
       return;
     }
     if (
-      nodeRequest.type == OUTPUT &&
-      nodes.some((x) => x.nodeType() == OUTPUT)
+      nodeRequest.type == 'OUTPUT' &&
+      nodes.some((x) => x.nodeType() == 'OUTPUT')
     ) {
       alert('Only one output node allowed');
       return;
@@ -72,11 +75,11 @@ export const createNode = ({
 
     const finalPos = position || { x: 0, y: 0 };
 
-    node.annotations[xpos] = finalPos.x;
-    node.annotations[ypos] = finalPos.y;
+    node.annotations['xpos'] = finalPos.x;
+    node.annotations['ypos'] = finalPos.y;
 
     if (customUI[nodeRequest.type]) {
-      node.annotations[uiNodeType] = customUI[nodeRequest.type];
+      node.annotations['uiNodeType'] = customUI[nodeRequest.type];
     }
 
     //Set values from the request

@@ -1,5 +1,8 @@
-import { DropPanel, DropPanelInner } from './index';
-import { defaultPanelGroupsFactory } from './index';
+import {
+  DropPanel,
+  DropPanelInner,
+  defaultPanelGroupsFactory,
+} from './index.js';
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 

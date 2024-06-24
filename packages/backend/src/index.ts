@@ -1,9 +1,9 @@
-import "reflect-metadata";
+import 'reflect-metadata';
 
-import "dotenv/config";
+import 'dotenv/config';
 //Import immediately for tracing
-import "./tracing";
-import { app } from "./app.js";
+import './tracing';
+import { app } from './app.js';
 
 const port = process.env.PORT || 5000;
 

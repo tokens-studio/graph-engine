@@ -1,6 +1,6 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
-import { NumberSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
+import { NumberSchema } from '../../schemas/index.js';
 
 /**
  * @example
@@ -33,8 +33,8 @@ export default class NodeDefinition extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const { a, b } = this.getAllInputs();
-    this.setOutput("value", a + b);
-  }
+	execute(): void | Promise<void> {
+		const { a, b } = this.getAllInputs();
+		this.setOutput('value', a + b);
+	}
 }

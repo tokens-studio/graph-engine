@@ -3,8 +3,8 @@ import React, { useCallback, useEffect, useRef } from 'react';
 
 import { JSONTree } from 'react-json-tree';
 import { Trash } from 'iconoir-react';
-import { logSelector } from '@/redux/selectors/graph';
-import { useDispatch } from '@/hooks';
+import { logSelector } from '@/redux/selectors/graph.js';
+import { useDispatch } from '@/hooks/index.js';
 import { useSelector } from 'react-redux';
 
 export function LogsPanel() {

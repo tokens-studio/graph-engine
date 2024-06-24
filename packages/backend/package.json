@@ -7,9 +7,8 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/esm/index.d.ts"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     }
   },
   "files": [
@@ -31,7 +30,6 @@
     "release": "npm run build && changeset publish",
     "test": "jest --passWithNoTests"
   },
-  "sideEffects": true,
   "dependencies": {
     "@grpc/grpc-js": "^1.10.6",
     "@opentelemetry/api": "^1.8.0",

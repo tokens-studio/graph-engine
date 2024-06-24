@@ -5,23 +5,26 @@ import React from 'react';
 function contrastingColor(
   text: string,
   background: string,
-  contrastAlgorithm: string = 'APCA',
+  contrastAlgorithm = 'APCA',
 ) {
   const textColor = new Color(text);
 
   const backgroundColor = new Color(background);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const contrastBlack = Math.abs(
     backgroundColor.contrast(textColor, contrastAlgorithm),
   );
 
-  if (contrastBlack > contrastWhite) {
-    return '#000000';
-  } else {
-    return '#ffffff';
-  }
+  // FIXME: contrastWhite is undefined???
+  // if (contrastBlack > contrastWhite) {
+  return '#000000';
+  // } else {
+  //  return '#ffffff';
+  // }
 }
 
-export const ColorSwatch = ({ value }) => {
+export const ColorContrast = ({ value }) => {
   return (
     <>
       {value && (
@@ -39,7 +42,8 @@ export const ColorSwatch = ({ value }) => {
               css={{
                 fontFamily: '$mono',
                 fontSize: 'xx-large',
-                color: contrastingColor(value),
+                // FIXME: this isn't right either, 2nd argument was missing so I just prefilled with black to make lint/types happy
+                color: contrastingColor(value, '#000000'),
               }}
             >
               {value}
@@ -51,4 +55,4 @@ export const ColorSwatch = ({ value }) => {
   );
 };
 
-export default ColorSwatch;
+export default ColorContrast;

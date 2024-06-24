@@ -1,6 +1,6 @@
-import { RootState } from '@/redux/store';
+import { RootState } from '@/redux/store.js';
 import { init } from '@rematch/core';
-import { models } from '@/redux/models';
+import { models } from '@/redux/models/index.js';
 
 export const createMockStore = (
   initialState: Partial<{

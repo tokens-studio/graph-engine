@@ -9,10 +9,10 @@ import {
 import React, { useCallback, useMemo } from 'react';
 
 import { Node } from '@tokens-studio/graph-engine';
-import { currentNode } from '@/redux/selectors/graph';
-import { description, title } from '@/annotations';
+import { currentNode } from '@/redux/selectors/graph.js';
+import { description, title } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
-import { useGraph } from '@/hooks/useGraph';
+import { useGraph } from '@/hooks/useGraph.js';
 import { useSelector } from 'react-redux';
 
 export function NodeSettingsPanel() {
@@ -44,7 +44,7 @@ export function NodeSettingsPanel() {
 const Annotations = observer(({ annotations }: Record<string, unknown>) => {
   return (
     <>
-      {Object.entries(annotations as Record<string, never>).reduce(
+      {Object.entries(annotations as Record<string, unknown>).reduce(
         (acc, [key, value]) => {
           switch (key) {
             case title:
@@ -63,7 +63,7 @@ const Annotations = observer(({ annotations }: Record<string, unknown>) => {
               default:
                 return value;
             }
-          })();
+          })() as string;
 
           acc.push(
             <Stack direction="column" gap={2} justify="between" key={key}>
@@ -105,7 +105,7 @@ const NodeDescription = ({
   annotations,
 }: {
   selectedNode: Node;
-  annotations: Record<string, never>;
+  annotations: Record<string, unknown>;
 }) => {
   const onChangeDesc = useCallback(
     (newString: string) => {
