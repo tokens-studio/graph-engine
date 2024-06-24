@@ -2,6 +2,7 @@
 import { ColorSchema, NumberSchema, StringSchema } from "../../schemas/index.js";
 import { INodeDefinition} from "../../index.js";
 import { Node } from "../../programmatic/node.js";
+import { setToPrecision } from "../../utils/precision.js";
 import Color from "colorjs.io";
 
 export const colorSpaces = [
@@ -60,9 +61,6 @@ export default class NodeDefinition extends Node {
 
     const distance = a.distance(b, space);
 
-    const shift = 10 ** precision;
-    const output = Math.round(distance * shift) / shift;
-
-    this.setOutput("value", output);
+    this.setOutput("value", setToPrecision(distance, precision));
   }
 }

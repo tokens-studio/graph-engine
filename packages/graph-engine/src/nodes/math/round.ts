@@ -1,6 +1,7 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
+import { setToPrecision } from "../../utils/precision.js";
 
 export default class NodeDefinition extends Node {
   static title = "Round";
@@ -32,10 +33,6 @@ export default class NodeDefinition extends Node {
 
   execute(): void | Promise<void> {
     const { precision, value } = this.getAllInputs();
-
-    const shift = 10 ** precision;
-    const output = Math.round(value * shift) / shift;
-
-    this.setOutput("value", output);
+    this.setOutput("value", setToPrecision(value, precision));
   }
 }

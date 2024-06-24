@@ -2,6 +2,7 @@ import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
 import { arrayOf } from "../../schemas/utils.js";
+import { setToPrecision } from "../../utils/precision.js";
 
 type GeometricValue = {
   index: number;
@@ -85,10 +86,9 @@ export default class NodeDefinition extends Node {
     const { base, precision, ratio, stepsDown, stepsUp } = this.getAllInputs();
 
     const values: GeometricValue[] = [];
-    const shift = 10 ** precision;
 
     for (let i = 0 - stepsDown; i <= stepsUp; i++) {
-      const value = Math.round(base * Math.pow(ratio, i) * shift) / shift;
+      const value = setToPrecision(base * Math.pow(ratio, i), precision);
       values.push({
         index: i,
         value,

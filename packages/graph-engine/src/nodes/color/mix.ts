@@ -7,18 +7,28 @@ import {
   NumberSchema,
   StringSchema,
 } from "../../schemas/index.js";
-import { INodeDefinition } from "../../index.js";
+import { Color as ColorType } from "../../types.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { convertModifiedColorToHex } from "./lib/modifyColor.js";
 
 export { ColorModifierTypes } from "@tokens-studio/types";
 
-
-
 export default class NodeDefinition extends Node {
   static title = "Mix Colors";
   static type = "studio.tokens.color.mix";
   static description = "Mixes two colors together";
+
+  declare inputs: ToInput<{
+    colorA: ColorType;
+    colorB: ColorType;
+    value: number;
+    space: ColorSpaceTypes;
+  }>;
+
+  declare outputs: ToOutput<{
+    value: ColorType
+  }>;
 
 
   constructor(props: INodeDefinition) {

@@ -1,6 +1,7 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
+import { setToPrecision } from "../../utils/precision.js";
 
 export default class NodeDefinition extends Node {
   static title = "Base Font Size";
@@ -108,9 +109,6 @@ export default class NodeDefinition extends Node {
     const xHeightPX = (xHeightMM / 25.4) * (ppi / pixelDensity);
     const fontSizePX = (1 * xHeightPX) / xHeightRatio;
 
-    const shift = 10 ** precision;
-    const output = Math.round(fontSizePX * shift) / shift;
-
-    this.setOutput("value", output);
+    this.setOutput("value", setToPrecision(fontSizePX, precision));
   }
 }

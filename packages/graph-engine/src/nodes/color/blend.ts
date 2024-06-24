@@ -8,9 +8,11 @@ import {
   NumberSchema,
   StringSchema,
 } from "../../schemas/index.js";
-import { INodeDefinition} from "../../index.js";
+import { Color as ColorType } from "../../types.js";
+import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { convertModifiedColorToHex } from "./lib/modifyColor.js";
+
 export { ColorModifierTypes } from "@tokens-studio/types";
 
 export default class NodeDefinition extends Node {
@@ -18,7 +20,16 @@ export default class NodeDefinition extends Node {
   static type = "studio.tokens.color.blend";
   static description = "Blends a color";
 
+  declare inputs: ToInput<{
+    color: ColorType;
+    value: number;
+    modifierType: ColorModifierTypes;
+    space: ColorSpaceTypes;
+  }>;
 
+  declare outputs: ToOutput<{
+    value: ColorType
+  }>;
 
   constructor(props: INodeDefinition) {
     super(props);
