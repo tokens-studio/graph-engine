@@ -6,7 +6,7 @@ import { DragItem } from './DragItem.js';
 import { NodeEntry } from './NodeEntry.js';
 import { styled } from '@/lib/stitches/index.js';
 import { observer } from 'mobx-react-lite';
-import { NavArrowRight } from 'iconoir-react';
+import { IconoirProvider, NavArrowRight } from 'iconoir-react';
 import { useSelector } from 'react-redux';
 import { panelItemsSelector } from '@/redux/selectors/registry.js';
 
@@ -94,7 +94,7 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
         <Stack
           direction="column"
           gap={2}
-          css={{ padding: '0 $5', paddingTop: '$4' }}
+          css={{ padding: '0 $3', paddingTop: '$4' }}
         >
           <TextInput placeholder="Search…" value={search} onChange={onSearch} />
         </Stack>
@@ -125,25 +125,26 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
             return (
               <Accordion.Item value={value.key} key={value.key} data-test-class='drop-panel-trigger'>
                 <StyledAccordionTrigger>
-                  <Stack align='center' justify='between' width='full'>
-                    <Stack gap={2} align='center'>
-                      {value.icon}
-                      <Text size="xsmall" bold>
-                        {value.title}
-                      </Text>
-                    </Stack>
-                    <Box
-                      css={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: '$fgSubtle',
-                        width: '24px',
-                        height: '24px',
-                      }}
-                    >
-                      <StyledChevron />
-                    </Box>
+                  <Stack align='center' justify='between' width='full' css={{padding: '$3 0'}}>
+                    <IconoirProvider iconProps={{ width: '0.875em', height: '0.875em'}}>
+                      <Stack gap={3} align='center'>
+                          {value.icon}
+                        <Text size="xsmall" bold css={{textAlign: 'left'}}>
+                          {value.title}
+                        </Text>
+                      </Stack>
+                      <Box
+                        css={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: '$5'
+                        }}
+                      >
+                        <StyledChevron />
+                      </Box>
+
+                    </IconoirProvider>
                   </Stack>
                 </StyledAccordionTrigger>
                 <Accordion.Content>

@@ -1,4 +1,4 @@
-import { Accessibility, Calculator, CodeBrackets, CodeBracketsSquare, Css3, DatabaseScript, EaseCurveControlPoints, EditPencil, EyeSolid, FillColor, MathBook, SigmaFunction, SoundHigh, Star, Text, TwoPointsCircle, Type } from 'iconoir-react';
+import { Accessibility, Calculator, CodeBrackets, CodeBracketsSquare, Css3, DatabaseScript, EaseCurveControlPoints, EditPencil, EyeSolid, FillColor, SigmaFunction, SoundHigh, Star, Text, TwoPointsCircle, Type } from 'iconoir-react';
 import {
     PanelGroup,
     PanelItem,
