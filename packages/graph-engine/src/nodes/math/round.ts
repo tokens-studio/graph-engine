@@ -20,10 +20,16 @@ export default class NodeDefinition extends Node {
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {
-      type: NumberSchema,
+      type: {
+        ...NumberSchema,
+        default: 0
+      },
     });
     this.addInput("precision", {
-      type: NumberSchema,
+      type: {
+        ...NumberSchema,
+        default: 0
+      },
     });
 
     this.addOutput("value", {
