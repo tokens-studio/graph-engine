@@ -79,7 +79,6 @@
     margin-left: unset;
 }
 .react-flow__edge {
-    /* stroke: var(--green-10); */
     stroke-width: 1 !important;
     stroke-opacity: 1;
 
@@ -93,8 +92,6 @@
 .react-flow__edge-path,
 .react-flow__connection-path {
     stroke-width: 2 !important;
-
-    /* stroke: var(--gray-12); */
 }
 
 .react-flow__edge.selected .react-flow__edge-path,
@@ -110,14 +107,10 @@
 
 .react-flow__handle-connecting:not(.react-flow__handle-valid):after,
 .react-flow__handle-connecting:not(.react-flow__handle-valid)>* {
-    /* background: #ff6060 !important; */
-    /* outline: 2px solid var(--red-10); */
     transition: transform .3s; /* Animation */
 }
 .react-flow__handle-connecting.react-flow__handle-valid:after,
 .react-flow__handle-connecting.react-flow__handle-valid>* {
-    /* background: #ff6060 !important; */
-    /* outline: 2px solid var(--red-10); */
     transition: transform .3s; /* Animation */
 }
 
@@ -131,19 +124,16 @@
 }
   
 .react-flow__handle-connecting:not(.react-flow__handle-valid){
-    /* background: #ff6060 !important; */
     outline: 3px solid var(--red-10);
     animation: horizontal-shaking 0.35s;
 }
 
 .react-flow__handle.react-flow__handle-valid {
-    /* outline: 1px solid var(--colors-borderDefault); */
     outline: 3px solid var(--green-10);
     transform: scale(0.85);
 }
 .react-flow__handle:not(.react-flow__handle-valid) {
-    /* outline: 1px solid var(--colors-borderDefault); */
-    /* outline: 2px solid var(--red-10); */
+
 }
 
 .react-flow__resize-control {

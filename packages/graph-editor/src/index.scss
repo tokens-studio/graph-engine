@@ -30,12 +30,6 @@
     --globals-drop-panel-width: 240px;
 }
 .dark-theme {
-    // --colors-accentBg: #142D41;
-    // --colors-accentBorder: #306999;
-    // --colors-accentDefault: #75B3E7;
-    // --colors-accentEmphasis: #408ECF;
-    // --colors-accentMuted: #306999;
-    // --colors-accentOnAccent: #ffffff;
     --colors-bgCanvas: #292929;
     --colors-bgDefault: #2d2d2d;
     --colors-bgEmphasis: #2b2b2b;
@@ -46,61 +40,11 @@
     --colors-borderDefault: #636363; /* Desaturated from #4F6978 */
     --colors-borderMuted: #2e2e2e; /* Desaturated from #1F2B32 */
     --colors-borderSubtle: #454545;
-    // --colors-buttonPrimaryBgHover: #FDFDFE;
-    // --colors-buttonPrimaryBgRest: #F7FAFB;
-    // --colors-buttonPrimaryBorderRest: #EEF3F6;
-    // --colors-buttonPrimaryFg: #000000;
-    // --colors-buttonSecondaryBgHover: #141719;
-    // --colors-buttonSecondaryBgRest: #161d22;
-    // --colors-buttonSecondaryBorderRest: #243038;
-    // --colors-buttonSecondaryFg: #ffffff;
-    // --colors-dangerBg: #4b1b1b;
-    // --colors-dangerBorder: #c53030;
-    // --colors-dangerFg: #fc8181;
-    // --colors-fgDefault: #ffffff;
-    // --colors-fgDisabled: #6A8EA2;
-    // --colors-fgMuted: #BED1DC;
-    // --colors-fgOnEmphasis: #ffffff;
-    --colors-fgSubtle: #8a8a8a; /* Desaturated from #92B2C4 */    // --colors-interactionBg: #161d22;
-    // --colors-interactionHandle: #ffffff;
-    // --colors-interactionHandleInactive: #1F2B32;
-    // --colors-modalBackdrop: rgba(20, 23, 25, 0.75);
-    // --colors-shadowDefault: rgba(0, 0, 0, 0.05);
-    // --colors-successBg: #122b1f;
-    // --colors-successBorder: #2f855a;
-    // --colors-successFg: #68d391;
-    // --colors-focus: #408ECF;
-    // --colors-contextMenuBg: #0b0d0e;
-    // --colors-contextMenuBgHover: #1F2B32;
-    // --colors-contextMenuBorder: #1F2B32;
-    // --colors-contextMenuFg: #ffffff;
-    // --colors-contextMenuFgDisabled: #92B2C4;
-    // --colors-contextMenuFgMuted: #BED1DC;
-    // --colors-contextMenuSeparator: #1F2B32;
+
+    --colors-fgSubtle: #8a8a8a; /* Desaturated from #92B2C4 */    //
+   
     --colors-inputBg: #202020;
     --colors-inputBorderRest: #454545;
-    // --colors-loadingScreenBg: #141414;
-    // --colors-loadingScreenFg: #FFFFFF;
-    // --colors-loadingScreenFgMuted: #CECECE;
-    // --colors-spinnerDefaultActive: #ffffff;
-    // --colors-spinnerDefaultMuted: #1F2B32;
-    // --colors-spinnerOnAccentActive: #161d22;
-    // --colors-spinnerOnAccentMuted: #92B2C4;
-    // --colors-tooltipBg: #0b0d0e;
-    // --colors-tooltipBgAccent: #1F3D68;
-    // --colors-tooltipBgSubtle: #2B2A2A;
-    // --colors-tooltipFg: #ffffff;
-    // --colors-tooltipFgAccent: #A0C0EF;
-    // --colors-tooltipFgDanger: #E05534;
-    // --colors-tooltipFgMuted: rgba(255, 255, 255, 0.7);
-    // --shadows-buttonPrimaryShadow: 0 0 0 1px rgba(255, 255, 255, 0.9), 0 1px 1px 0 #FFFFFF40, inset 0 2px 0 0 #ffffff;
-    // --shadows-buttonSecondaryShadow: 0 0 0 1px rgba(200, 200, 255, 0.1), 0 1px 1px 0 #000000, inset 0 0 0 0 #FFFFFF26;
-    // --shadows-contextMenu: 0 10px 38px -10px rgba(22, 23, 24, 0.35), 0 10px 20px -15px rgba(22, 23, 24, 0.2);
-    // --shadows-focus: 0 0 0 2px #408ECF;
-    // --shadows-focusDanger: 0 0 0 2px #4b1b1b;
-    // --shadows-focusMuted: 0 0 0 2px #90CDF4;
-    // --shadows-small: 0 2px 1px 0 rgba(0, 0, 0, 0.05);
-    // --shadows-tokenFocus: 0 0 0 2px #1F2B32;
 }
 .dock-panel{
     color:inherit
