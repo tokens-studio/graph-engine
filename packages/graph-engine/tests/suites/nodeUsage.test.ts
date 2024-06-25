@@ -43,18 +43,17 @@ describe("nodeUsage", () => {
       },
     });
 
-    const expected = {
+
+    expect(final.output).toEqual({
       input: {
         type: {
           $id: "https://schemas.tokens.studio/string.json",
           title: "String",
           type: "string",
         },
-        value: "black",
+        value: "black"
       }
-    };
-
-    expect(final.output).toEqual(expected);
+    });
 
     const serialized = graph.serialize();
 
@@ -87,6 +86,7 @@ describe("nodeUsage", () => {
             {
               name: "foo",
               value: "black",
+              visible: true,
               type: {
                 $id: "https://schemas.tokens.studio/string.json",
                 title: "String",
@@ -113,8 +113,7 @@ describe("nodeUsage", () => {
                 "type": "string",
               },
               "value": "black",
-
-
+              visible: true,
             }],
           type: "studio.tokens.generic.output",
         },
@@ -126,6 +125,15 @@ describe("nodeUsage", () => {
       nodeLookup
     ).execute();
 
-    expect(deserializedOutput.output).toEqual(expected);
+    expect(deserializedOutput.output).toEqual({
+      input: {
+        type: {
+          $id: "https://schemas.tokens.studio/string.json",
+          title: "String",
+          type: "string",
+        },
+        value: "black"
+      }
+    });
   });
 });

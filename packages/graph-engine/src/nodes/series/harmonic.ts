@@ -2,6 +2,7 @@ import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
 import { arrayOf } from "../../schemas/utils.js";
+import { setToPrecision } from "../../utils/precision.js";
 
 type HarmonicValue = {
   index: number;
@@ -38,14 +39,12 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 16,
       },
-      visible: true,
     });
     this.addInput("stepsDown", {
       type: {
         ...NumberSchema,
         default: 0,
       },
-      visible: true,
     });
     this.addInput("stepsUp", {
       type: {
@@ -75,7 +74,6 @@ export default class NodeDefinition extends Node {
     });
     this.addOutput("array", {
       type: arrayOf(NumberSchema),
-      visible: true,
     });
     this.addOutput("indexed", {
       type: {
@@ -101,12 +99,9 @@ export default class NodeDefinition extends Node {
     const values: HarmonicValue[] = [];
 
     for (let i = 0 - stepsDown; i <= stepsUp; i++) {
-      const shift = 10 ** precision;
-      const size = base * Math.pow(ratio, i / notes);
-      const rounded = Math.round(size * shift) / shift;
       values.push({
         index: i,
-        value: rounded,
+        value: setToPrecision(base * Math.pow(ratio, i / notes), precision),
       });
     }
 

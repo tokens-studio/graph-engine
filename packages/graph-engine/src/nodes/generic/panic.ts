@@ -23,7 +23,6 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("trigger", {
       type: AnySchema,
-      visible: true,
     });
   }
 

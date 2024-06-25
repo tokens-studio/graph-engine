@@ -20,7 +20,6 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("base", {
       type: NumberSchema,
-      visible: true,
     });
     this.addInput("exponent", {
       type: {
@@ -30,7 +29,6 @@ export default class NodeDefinition extends Node {
     });
     this.addOutput("value", {
       type: NumberSchema,
-      visible: true,
     });
   }
 

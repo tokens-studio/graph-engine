@@ -20,7 +20,6 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("value", {
       type: StringSchema,
-      visible: true,
     });
     this.addInput("fallback", {
       type: {
@@ -30,7 +29,6 @@ export default class NodeDefinition extends Node {
     });
     this.addOutput("value", {
       type: StringSchema,
-      visible: true,
     });
   }
 

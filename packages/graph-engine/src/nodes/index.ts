@@ -11,6 +11,7 @@ import { nodes as preview } from "./preview/index.js";
 import { nodes as series } from "./series/index.js";
 import { nodes as string } from "./string/index.js";
 import { nodes as typing } from "./typing/index.js";
+import { nodes as typography } from "./typography/index.js";
 import { nodes as vector2 } from "./vector2/index.js";
 import type { Node } from "../programmatic/node.js";
 
@@ -31,7 +32,8 @@ export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
   series,
   string,
   typing,
-  vector2
+  vector2,
+  typography
 );
 
 /**

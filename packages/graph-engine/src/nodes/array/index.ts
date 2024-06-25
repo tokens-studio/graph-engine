@@ -2,7 +2,6 @@ import arraySubgraph from "./arraySubgraph.js";
 import arrify from "./arrify.js";
 import concat from "./concat.js";
 import indexArray from "./indexArray.js";
-import join from "./join.js";
 import push from "./push.js";
 import reverse from "./reverse.js";
 import slice from "./slice.js";
@@ -17,5 +16,4 @@ export const nodes = [
   indexArray,
   reverse,
   slice,
-  join,
 ];

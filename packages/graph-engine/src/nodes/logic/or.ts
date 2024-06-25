@@ -24,11 +24,9 @@ export default class NodeDefinition<T> extends Node {
         default: [],
       },
       variadic: true,
-      visible: true,
     });
     this.addOutput("value", {
       type: BooleanSchema,
-      visible: true,
     });
   }
 

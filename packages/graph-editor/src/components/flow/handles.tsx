@@ -19,6 +19,7 @@ type HolderProps = {
   shouldHide?: boolean;
   full?: boolean;
   className?: string;
+  isSmall?: boolean;
 };
 
 export const HandleContainerContext = createContext<{
@@ -35,6 +36,7 @@ export const HandleContainer = ({
   children,
   shouldHide = false,
   full,
+  isSmall,
   className
 }: HolderProps) => {
   if (shouldHide) return null;
@@ -44,7 +46,8 @@ export const HandleContainer = ({
       <Stack
         direction="column"
         gap={2}
-        css={{ flexBasis: full ? '100%' : '50%', position: 'relative', textAlign: type === 'source' ? 'right' : 'left', minWidth: '250px' }}
+        css={{ flexBasis: full ? '100%' : '50%', position: 'relative', textAlign: type === 'source' ? 'right' : 'left', minWidth: isSmall ? 'auto' : '250px' }}
+        justify='center'
         className={className}
       >
         {children}

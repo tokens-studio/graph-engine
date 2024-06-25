@@ -25,25 +25,21 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 0,
       },
-      visible: true,
     });
     this.addInput("b", {
       type: {
         ...NumberSchema,
         default: 0,
       },
-      visible: true,
     });
     this.addInput("t", {
       type: {
         ...NumberSchema,
         default: 0,
       },
-      visible: true,
     });
     this.addOutput("value", {
       type: NumberSchema,
-      visible: true,
     });
   }
 

@@ -88,7 +88,8 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
                     value={inputName}
                 />
             </Stack>
-            <Select value={inputType} onValueChange={setInputType}>
+            {/* @ts-ignore */}
+            <Select value={inputType} onValueChange={setInputType} style={{ background: 'red' }}  >
                 <Select.Trigger label="Type" value={inputType} />
                 {/* @ts-expect-error */}
                 <Select.Content css={{ maxHeight: '200px' }} position="popper">

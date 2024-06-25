@@ -8,27 +8,20 @@ import {
   NumberSchema,
   StringSchema,
 } from "../../schemas/index.js";
+import { ContrastAlgorithm } from "../../types/index.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
 import { Input, Output } from "../../programmatic";
 import { flattenAlpha } from "./lib/flattenAlpha.js";
 import Color from "colorjs.io";
 
-export enum WcagVersion {
-  V2 = "2.1",
-  V3 = "3.0",
-}
 
-export const contrastCheck = (foreground: Color, background: Color, wcag: WcagVersion): number => {
-  if (wcag == WcagVersion.V2) {
-    return foreground.contrast(background, "WCAG21");
-  } else {
-    return Math.abs(foreground.contrast(background, "APCA"));
-  }
+export const contrastCheck = (foreground: Color, background: Color, algorithm): number => {
+  return Math.abs(foreground.contrast(background, algorithm));
 }
 
 export default class NodeDefinition extends Node {
   static title = "Contrasting Alpha";
-  static type = "studio.tokens.color.contrasting";
+  static type = "studio.tokens.color.contrastingAlpha";
   static description = "Reduce alpha until you are close to the threshold.";
 
   declare inputs: {
@@ -53,20 +46,18 @@ export default class NodeDefinition extends Node {
         ...ColorSchema,
         default: "#000000"
       },
-      visible: true,
     });
     this.addInput("background", {
       type: {
         ...ColorSchema,
         default: "#ffffff",
       },
-      visible: true,
     });
-    this.addInput("wcag", {
+    this.addInput("algorithm", {
       type: {
         ...StringSchema,
-        enum: Object.values(WcagVersion),
-        default: WcagVersion.V3,
+        enum: Object.values(ContrastAlgorithm),
+        default: ContrastAlgorithm.APCA,
       },
     });
     this.addInput("threshold", {
@@ -74,7 +65,6 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 60,
       },
-      visible: true,
     });
     this.addInput("precision", {
       type: {
@@ -86,20 +76,17 @@ export default class NodeDefinition extends Node {
     // Outputs
     this.addOutput("alpha", {
       type: NumberSchema,
-      visible: true,
     });
     this.addOutput("color", {
       type: ColorSchema,
-      visible: true,
     });
     this.addOutput("contrast", {
       type: NumberSchema,
-      visible: true,
     });
   }
 
   execute(): void | Promise<void> {
-    const { wcag, foreground, background, threshold, precision } = this.getAllInputs();
+    const { algorithm, foreground, background, threshold, precision } = this.getAllInputs();
 
     const binarySearchAlpha = (low, high, fg, bg, targetContrast, iterations) => {
       
@@ -114,7 +101,7 @@ export default class NodeDefinition extends Node {
       // Convert blended color back to Color object and then to hex string
       const solidColor = flattenAlpha(fg, bg);
 
-      currentContrast = contrastCheck(solidColor, bg, wcag);
+      currentContrast = contrastCheck(solidColor, bg, algorithm);
       
       if (currentContrast >= targetContrast) {
         return binarySearchAlpha(low, mid, fg, bg, targetContrast, iterations - 1);
@@ -125,7 +112,7 @@ export default class NodeDefinition extends Node {
 
     const foregroundColor = new Color(foreground);
     const backgroundColor = new Color(background);
-    let currentContrast = contrastCheck(foregroundColor, backgroundColor, wcag);
+    let currentContrast = contrastCheck(foregroundColor, backgroundColor, algorithm);
 
     if (currentContrast <= threshold) {
       this.setOutput("alpha", 1);
@@ -138,12 +125,7 @@ export default class NodeDefinition extends Node {
 
     foregroundColor.alpha = finalAlpha;
     const finalColor = flattenAlpha(foregroundColor, backgroundColor);
-    let finalContrast;
-    if (wcag == WcagVersion.V2) {
-      finalContrast = finalColor.contrast(backgroundColor, "WCAG21");
-    } else {
-      finalContrast = Math.abs(finalColor.contrast(backgroundColor, "APCA"));
-    }
+    const finalContrast = Math.abs(finalColor.contrast(backgroundColor, algorithm));
 
     this.setOutput("alpha", finalAlpha);
     this.setOutput("color", finalColor.to('srgb').toString({ format: 'hex' }));

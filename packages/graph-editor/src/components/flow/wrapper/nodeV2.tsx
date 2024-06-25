@@ -12,6 +12,8 @@ import { inlineTypes, inlineValues, showTimings } from '@/redux/selectors/settin
 import { icons, nodeSpecifics } from '@/redux/selectors/registry.js';
 import { title, xpos } from '@/annotations/index.js';
 import { useLocalGraph } from '@/context/graph.js';
+import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
 
 const isHexColor = (str) => {
   if (typeof str !== 'string') return false;
@@ -48,7 +50,12 @@ export const NodeV2 = (args) => {
     return <Box>Node not found</Box>;
   }
 
-  return <NodeWrap node={node} />;
+  return (
+    <ErrorBoundary fallback={<ErrorBoundaryContent />}>
+      <NodeWrap node={node} />
+    </ErrorBoundary>
+  )
+
 };
 
 export interface INodeWrap {
@@ -85,7 +92,10 @@ const NodeWrap = observer(({ node }: INodeWrap) => {
             <PortArray ports={node.outputs} />
           </HandleContainer>
         </Stack>
-        {Specific && <Specific node={node} />}
+        {Specific && <Stack direction="column" gap={3} css={{ padding: '$3' }}>
+            <Specific node={node} />
+          </Stack>
+        }
       </Stack>
       {showTimingsValue && (
         <Box css={{ position: 'absolute', bottom: '-1.5em' }}>
@@ -165,7 +175,6 @@ const getColorPreview = (color: string, showValue = false) => {
   );
 }
 
-
 const getValuePreview = (value, type) => {
   if (value === undefined) {
     return null;
@@ -174,9 +183,7 @@ const getValuePreview = (value, type) => {
   let valuePreview = '';
   switch (type.type) {
     case 'array':
-
       if (type.items?.$id === COLOR) {
-
         return (<Stack direction="row" gap={1}>
           {value.length > 5 ? (
             <>
@@ -185,28 +192,24 @@ const getValuePreview = (value, type) => {
             </>
           ) : value.map((val) => getColorPreview(val))}
         </Stack>)
-
       }
-
-      valuePreview = JSON.stringify(value);
-      break;
-    case 'object':
       valuePreview = JSON.stringify(value);
       break;
     case 'number':
       valuePreview = value.toString();
       break;
     case 'string':
-      valuePreview = value;
-      break
-    default:
-      if (isHexColor(value)) {
+      if (type.$id === COLOR && isHexColor(value)) {
         return getColorPreview(value, true);
       }
+      valuePreview = value;
+      break;
+    case 'object':
+    default:
       valuePreview = JSON.stringify(value);
   }
 
-  return valuePreview.length > 20 ? `${valuePreview.substring(0, 20)}...` : valuePreview;
+  return valuePreview.length > 18 ? `${valuePreview.substring(0, 18)}...` : valuePreview;
 }
 
 const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boolean }) => {
@@ -215,8 +218,6 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
   const inlineValuesValue = useSelector(inlineValues);
   const typeCol = extractTypeIcon(port, iconTypeRegistry);
   const input = port as unknown as Input;
-
-
 
   if (input.variadic) {
     return (
@@ -248,7 +249,6 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
                   <Text css={{ fontSize: 'small', color: '$gray12' }}>{input.name} - [{i}]</Text>
                 </Box>
               )}
-
               {inlineTypesValue && <InlineTypeLabel port={port} />}
             </Handle>
           );

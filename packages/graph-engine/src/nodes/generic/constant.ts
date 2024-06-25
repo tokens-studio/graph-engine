@@ -28,10 +28,10 @@ export default class NodeDefinition<T> extends Node {
     super(props);
     this.addInput("value", {
       type: AnySchema,
+      visible: false,
     });
     this.addOutput("value", {
       type: AnySchema,
-      visible: true,
     });
   }
 

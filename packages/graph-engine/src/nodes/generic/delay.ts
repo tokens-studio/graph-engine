@@ -30,18 +30,15 @@ export default class NodeDefinition<T> extends Node {
 
         this.addInput("value", {
             type: AnySchema,
-            visible: true,
         });
         this.addInput("delay", {
             type: {
                 ...NumberSchema,
                 default: 1000
             },
-            visible: true,
         });
         this.addOutput("value", {
             type: AnySchema,
-            visible: true,
         });
     }
     async execute() {

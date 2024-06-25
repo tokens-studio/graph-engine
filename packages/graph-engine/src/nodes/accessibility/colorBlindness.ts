@@ -1,6 +1,4 @@
-
-
-import { ColorSchema, NumberSchema, StringSchema } from "../../schemas/index.js";
+import { ColorSchema, StringSchema } from "../../schemas/index.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import blinder from "color-blind";
@@ -42,8 +40,10 @@ export default class NodeDefinition extends Node {
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("color", {
-      type: ColorSchema,
-      visible: true,
+      type: {
+        ...ColorSchema,
+        default: "#fd0000",
+      },
     });
     this.addInput("type", {
       type: {
@@ -53,9 +53,9 @@ export default class NodeDefinition extends Node {
         default: ColorBlindnessTypes.PROTANOPIA,
       },
     });
+
     this.addOutput("value", {
-      type: NumberSchema,
-      visible: true,
+      type: ColorSchema,
     });
   }
 

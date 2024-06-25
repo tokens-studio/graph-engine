@@ -27,15 +27,12 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("value", {
       type: StringSchema,
-      visible: true,
     });
     this.addOutput("unit", {
       type: StringSchema,
-      visible: true,
     });
     this.addOutput("number", {
       type: NumberSchema,
-      visible: true,
     });
   }
 

@@ -23,11 +23,9 @@ export default class NodeDefinition<T> extends Node {
     super(props);
     this.addInput("value", {
       type: AnySchema,
-      visible: true,
     });
     this.addOutput("value", {
       type: AnySchema,
-      visible: true,
     });
   }
 

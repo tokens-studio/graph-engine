@@ -30,11 +30,9 @@ export default class NodeDefinition<T> extends Node {
     super(props);
     this.addInput("a", {
       type: AnySchema,
-      visible: true,
     });
     this.addInput("b", {
       type: AnySchema,
-      visible: true,
     });
     this.addInput("operator", {
       type: {
@@ -42,12 +40,10 @@ export default class NodeDefinition<T> extends Node {
         enum: Object.values(Operator),
         default: Operator.EQUAL,
       },
-      visible: true,
     });
 
     this.addOutput("value", {
       type: BooleanSchema,
-      visible: true,
     });
   }
 

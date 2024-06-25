@@ -69,7 +69,7 @@
     transform: unset;
     margin-right: unset;
     top: unset;
-    left: unset;
+    right: unset;
 }
 
 .react-flow__handle-left {

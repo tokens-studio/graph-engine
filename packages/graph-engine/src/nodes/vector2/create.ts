@@ -28,15 +28,12 @@ export default class NodeDefinition extends Node {
 
         this.addInput("x", {
             type: NumberSchema,
-            visible: true,
         });
         this.addInput("y", {
             type: NumberSchema,
-            visible: true,
         });
         this.addOutput("value", {
             type: Vec2Schema,
-            visible: true,
         });
     }
 

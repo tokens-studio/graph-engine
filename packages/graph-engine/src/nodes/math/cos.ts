@@ -22,12 +22,10 @@ export default class NodeDefinition extends Node {
       type: {
         ...NumberSchema,
         default: 0,
-        visible: true,
       },
     });
     this.addOutput("value", {
       type: NumberSchema,
-      visible: true,
     });
   }
 

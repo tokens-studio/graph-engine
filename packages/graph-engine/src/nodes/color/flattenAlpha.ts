@@ -16,18 +16,15 @@ export default class NodeDefinition extends Node {
       type: {
         ...ColorSchema
       },
-      visible: true,
     });
     this.addInput("background", {
       type: {
         ...ColorSchema
       },
-      visible: true,
     });
 
     this.addOutput("value", {
       type: ColorSchema,
-      visible: true,
     });
   }
 

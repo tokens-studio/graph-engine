@@ -1,10 +1,11 @@
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
+import { setToPrecision } from "../../utils/precision.js";
 
 export default class NodeDefinition extends Node {
   static title = "Base Font Size";
-  static type = 'studio.tokens.accessibility.baseFontSize';
+  static type = 'studio.tokens.typography.baseFontSize';
 
   declare inputs: ToInput<{
     visualAcuity: number;
@@ -35,7 +36,6 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: 0.7,
       },
-      visible: true,
     });
     this.addInput("correctionFactor", {
       type: {
@@ -75,13 +75,18 @@ export default class NodeDefinition extends Node {
         default: 3,
       },
     });
+    this.addInput("precision", {
+      type: {
+        ...NumberSchema,
+        default: 0,
+      },
+    });
 
     this.addOutput("value", {
       type: {
         ...NumberSchema,
         description: "The generated font size",
       },
-      visible: true,
     });
   }
 
@@ -94,6 +99,7 @@ export default class NodeDefinition extends Node {
       ppi,
       pixelDensity,
       correctionFactor,
+      precision
     } = this.getAllInputs();
 
     const visualCorrection =
@@ -103,6 +109,6 @@ export default class NodeDefinition extends Node {
     const xHeightPX = (xHeightMM / 25.4) * (ppi / pixelDensity);
     const fontSizePX = (1 * xHeightPX) / xHeightRatio;
 
-    this.setOutput("value", fontSizePX);
+    this.setOutput("value", setToPrecision(fontSizePX, precision));
   }
 }

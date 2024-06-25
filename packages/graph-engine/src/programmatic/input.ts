@@ -1,4 +1,4 @@
-import { GraphSchema } from "../schemas/index.js";
+import { AnyArraySchema, GraphSchema } from "../schemas/index.js";
 import { Node } from "./node.js";
 import { Port } from "./port.js";
 import { SerializedInput } from "../graph/types.js";
@@ -59,7 +59,29 @@ export class Input<T = any> extends Port<T> {
       }
       //Otherwise do a structural comparison
       else if (JSON.stringify(this._type) !== JSON.stringify(opts.type)) {
-        this._dynamicType = opts.type;
+        const {variadic, _dynamicType } = this;
+
+        // for variadic ports, we need to set the dynamic type depending on all the other connected types
+        if (variadic && _dynamicType && JSON.stringify(_dynamicType) !== JSON.stringify(opts.type)) {          
+          const graph = this.node.getGraph();
+          const sourceNodesOutputTypes = this._edges.map(edge => {
+            const outputs = graph.getNode(edge.source).outputs;
+            return outputs[edge.sourceHandle].type
+          });
+
+          const firstNodeTypeStringValue = JSON.stringify(sourceNodesOutputTypes[0])
+          if (sourceNodesOutputTypes.every(type => JSON.stringify(type) === firstNodeTypeStringValue)) {
+              this._dynamicType = { 
+                type: 'array',
+                items: sourceNodesOutputTypes[0]
+              }
+          } else {
+            this._dynamicType = undefined;
+          }
+
+        } else {
+          this._dynamicType = opts.type;
+        }
       }
     }
     if (!opts?.noPropagate) {
