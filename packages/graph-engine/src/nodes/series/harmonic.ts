@@ -2,7 +2,7 @@ import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
 import { arrayOf } from "../../schemas/utils.js";
-import { setToPrecision } from "src/utils/precision.js";
+import { setToPrecision } from "../../utils/precision.js";
 
 type HarmonicValue = {
   index: number;
