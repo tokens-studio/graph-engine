@@ -43,8 +43,8 @@ const CommandItem = observer(
           <Box
             css={{
               fontSize: '$xxsmall',
-              color: '$fgSubtle',
-              width: '24px',
+              color: '$fgMuted',
+              width: '12px',
               height: '24px',
               display: 'flex',
               alignItems: 'center',
@@ -153,7 +153,7 @@ const CommandMenu = ({
     >
       <Box
         css={{
-          color: '$fgSubtle',
+          color: '$fgDefault',
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',

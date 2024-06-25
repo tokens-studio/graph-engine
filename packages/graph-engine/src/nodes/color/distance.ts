@@ -18,7 +18,7 @@ export default class NodeDefinition extends Node {
   static title = "Distance";
   static type = "studio.tokens.color.distance";
   static description =
-    "Distance node allows you to calculate the distance between two colors.";
+    "Calculate the distance between two colors. The output is a number representing the difference between the two colors. The lower the number, the closer the colors are to each other. The output is based on the CIEDE2000 color difference formula.";
 
 
   declare inputs: ToInput<{

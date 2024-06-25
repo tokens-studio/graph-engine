@@ -56,7 +56,7 @@ export type ColorSpace = typeof colorSpaces[number];
 export default class NodeDefinition extends Node {
   static title = "Create Color";
   static type = "studio.tokens.color.create";
-  static description = "Creates a color";
+  static description = "Creates a color in a given color space with the specified channel values (using the ports a, b, c, etc) and returns it as a hex color string";
 
   declare inputs: ToInput<{
     /**

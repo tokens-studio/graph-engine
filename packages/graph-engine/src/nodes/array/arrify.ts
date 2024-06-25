@@ -4,8 +4,8 @@ import { Node } from "../../programmatic/node.js";
 export default class NodeDefinition<T> extends Node {
   static title = "Arrify";
   static type = "studio.tokens.array.arrify";
-  static description = "Dynamically generates an array";
-
+  static description = "Accepts a wide range of input types and formats, ensuring they are converted into a uniform array structure. The output is always an array.";
+  
   declare inputs: ToInput<{
     items: T[];
   }>;

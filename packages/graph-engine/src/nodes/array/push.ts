@@ -4,7 +4,7 @@ import { Node } from "../../programmatic/node.js";
 export default class NodeDefinition<T> extends Node {
   static title = "Array push";
   static type = "studio.tokens.array.push";
-  static description = "Pushes an item to an array";
+  static description = "Pushes an item to an array and returns the new array.";
 
   declare inputs: ToInput<{
     /**

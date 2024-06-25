@@ -1,22 +1,26 @@
 .dock-panel {
     border-color: var(--colors-borderSubtle);
+    border: none;
+    background: var(--colors-bgDefault);
 }
 
 .dock-top .dock-bar {
     border-bottom-color: var(--colors-borderSubtle);
+    padding-left: 0px;
+
 }
 
 .dock-tab {
     color: var(--colors-fgDefault);
-
-    border-bottom-color: var(--colors-borderDefault);
+    background: var(--colors-buttonPrimaryBgHover);
+    border-bottom: none;
 }
 
 .dock-tab-close-btn {
     position: relative;
     right: 0;
     top: 0;
-    border-radius: var(--radii-small);
+    border-radius: 0px;
     font-family: inherit;
     text-transform: lowercase;
 }
@@ -47,7 +51,11 @@
 .dock-panel,
 .dock-top .dock-bar,
 .dock-tab {
-    background: var(--colors-bgSurface)
+    background: var(--colors-bgDefault)
+}
+
+.dock-tab {
+    background: var(--colors-bgSubtle)
 }
 
 .dock-panel.dock-style-main .dock-bar {

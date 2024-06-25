@@ -25,7 +25,7 @@ export default class NodeDefinition extends Node {
   }>;
 
   static description =
-    "Base Font node allows you to calculate the base font size with DIN 1450.";
+    "calculate the base font size with DIN 1450. The output is a number representing the font size in pixels.";
 
 
 

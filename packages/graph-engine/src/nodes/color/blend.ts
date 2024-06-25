@@ -12,13 +12,14 @@ import { Color as ColorType } from "../../types.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { convertModifiedColorToHex } from "./lib/modifyColor.js";
+import Color from "colorjs.io";
 
 export { ColorModifierTypes } from "@tokens-studio/types";
 
 export default class NodeDefinition extends Node {
   static title = "Blend Colors";
   static type = "studio.tokens.color.blend";
-  static description = "Blends a color";
+  static description = "Blends two colors together based on a specified modifier. The output is a hex color string. The modifier can be used to lighten, darken, saturate, desaturate, or mix the two colors together.";
 
   declare inputs: ToInput<{
     color: ColorType;

@@ -17,7 +17,7 @@ import Color from "colorjs.io";
 export default class NodeDefinition extends Node {
   static title = "Contrasting Color";
   static type = "studio.tokens.color.contrasting";
-  static description = "Returns the name of the color";
+  static description = "Evaluates the contrast ratio between two colors using the APCA-W3 algorithm, and identifies the color with the higher contrast. Outputs include the color with the highest contrast, the calculated contrast ratio, and a boolean indicating whether this ratio meets a specified sufficiency threshold. Users can adjust the threshold for sufficiency and choose between WCAG 3.0 (default) or other versions for the contrast calculation.";
 
   declare inputs: ToInput<{
     a: ColorType;

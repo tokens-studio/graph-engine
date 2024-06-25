@@ -29,7 +29,23 @@
 :root {
     --globals-drop-panel-width: 240px;
 }
+.dark-theme {
+    --colors-bgCanvas: #292929;
+    --colors-bgDefault: #2d2d2d;
+    --colors-bgEmphasis: #2b2b2b;
+    --colors-bgSubtle: #373737;
+    --colors-bgSurface: #292929;
+    
+    /* Desaturated colors */
+    --colors-borderDefault: #636363; /* Desaturated from #4F6978 */
+    --colors-borderMuted: #2e2e2e; /* Desaturated from #1F2B32 */
+    --colors-borderSubtle: #454545;
 
+    --colors-fgSubtle: #8a8a8a; /* Desaturated from #92B2C4 */    //
+   
+    --colors-inputBg: #202020;
+    --colors-inputBorderRest: #454545;
+}
 .dock-panel{
     color:inherit
 }
