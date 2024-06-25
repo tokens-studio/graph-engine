@@ -1,4 +1,4 @@
-import { Plus, Star } from 'iconoir-react';
+import { Plus } from 'iconoir-react';
 import React from 'react';
 import preset from '@/data/preset.js';
 import tinyCore from '@/data/tiny/core.js';
@@ -21,7 +21,7 @@ const INLINE_SET = 'studio.tokens.design.inline';
 
 export interface IPanelItem {
   type: string;
-  icon: string | JSX.Element;
+  icon?: string | JSX.Element;
   text: string;
   description?: string;
   docs?: string;
@@ -36,7 +36,7 @@ export class PanelItem {
   @observable
   type: string;
   @observable
-  icon: string | JSX.Element;
+  icon?: string | JSX.Element;
   @observable
   text: string;
   @observable
@@ -63,6 +63,7 @@ export interface IPanelGroup {
   title: string;
   key: string;
   items: PanelItem[];
+  icon?: string | JSX.Element;
 }
 export class PanelGroup {
   @observable
@@ -74,10 +75,13 @@ export class PanelGroup {
   @observable
   expanded: boolean = false;
 
+  icon?: string | JSX.Element;
+
   constructor(vals: IPanelGroup) {
     this.title = vals.title;
     this.key = vals.key;
     this.items = vals.items;
+    this.icon = vals.icon;
   }
 }
 
@@ -109,16 +113,6 @@ export class DropPanelStore {
  * }];
  */
 
-const knownDocs = {
-  "studio.tokens.generic.input":
-    'https://docs.graph.tokens.studio/nodes/generic-nodes/input',
-};
-
-const knownIcons = {
-  "studio.tokens.generic.input": <Star />,
-  "studio.tokens.generic.output": <Star />,
-  "studio.tokens.css.function": 'x()',
-};
 function CapitalCase(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -141,12 +135,10 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
         acc[group].items.push(
           new PanelItem({
             type: node.type,
-            icon: knownIcons[node.type] || '??',
             text: CapitalCase(
               node.title || defaultGroup[defaultGroup.length - 1],
             ),
-            description: node.description,
-            docs: knownDocs[node.type],
+            description: node.description
           }),
         );
       });
@@ -165,7 +157,6 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
             value: tinyCoreFlattened,
             title: 'Tiny Core',
           },
-          icon: <Plus />,
           text: 'Tiny Core',
         }),
         new PanelItem({
@@ -174,7 +165,6 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
             value: tinyCoreLightFlattened,
             title: 'Tiny Light',
           },
-          icon: <Plus />,
           text: 'Tiny Light',
         }),
         new PanelItem({
@@ -183,7 +173,6 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
             value: tinyCoreDarkFlattened,
             title: 'Tiny Dark',
           },
-          icon: <Plus />,
           text: 'Tiny Dark',
         }),
         new PanelItem({
@@ -192,12 +181,11 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
             value: presetFlattened,
             title: 'Preset tokens',
           },
-          icon: <Plus />,
           text: 'Preset Tokens',
         }),
       ],
     }),
   ] as PanelGroup[]);
 
-  return new DropPanelStore(added);
+  return new DropPanelStore(auto);
 };

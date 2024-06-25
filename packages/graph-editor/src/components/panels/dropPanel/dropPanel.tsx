@@ -112,7 +112,6 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
                   docs={item.docs}
                   description={item.description}
                   title={item.text}
-                  icon={item.icon}
                   data-test-class='drop-panel-item'
                 >
                   <NodeEntry icon={item.icon} text={item.text} />
@@ -126,21 +125,26 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
             return (
               <Accordion.Item value={value.key} key={value.key} data-test-class='drop-panel-trigger'>
                 <StyledAccordionTrigger>
-                  <Box
-                    css={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: '$fgSubtle',
-                      width: '24px',
-                      height: '24px',
-                    }}
-                  >
-                    <StyledChevron />
-                  </Box>
-                  <Text size="xsmall" bold>
-                    {value.title}
-                  </Text>
+                  <Stack align='center' justify='between' width='full'>
+                    <Stack gap={2} align='center'>
+                      {value.icon}
+                      <Text size="xsmall" bold>
+                        {value.title}
+                      </Text>
+                    </Stack>
+                    <Box
+                      css={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '$fgSubtle',
+                        width: '24px',
+                        height: '24px',
+                      }}
+                    >
+                      <StyledChevron />
+                    </Box>
+                  </Stack>
                 </StyledAccordionTrigger>
                 <Accordion.Content>
                   <Stack

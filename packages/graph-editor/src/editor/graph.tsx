@@ -119,6 +119,16 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
     const internalRef = useRef<ImperativeEditorRef>(null);
     const activeGraphId = useSelector(currentPanelIdSelector);
 
+
+    const iconLookup = useMemo(() => {
+      return panelItems.groups.reduce((acc, group) => {
+        group.items.forEach((item) => {
+          acc[item.type] = item.icon || group.icon;
+        });
+        return acc;
+      }, {});
+    }, [panelItems]);
+
     const refProxy = useCallback((v) => {
       //@ts-ignore
       if (ref) {
@@ -342,6 +352,8 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
       [showNode],
     );
 
+
+
     const onEdgesDeleted = useCallback((edges) => {
       edges.forEach((edge) => {
         graph.removeEdge(edge.id);
@@ -417,7 +429,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
         reactFlowInstance,
         graph,
         nodeLookup: fullNodeLookup,
-
+        iconLookup,
         customUI: customNodeMap,
         dropPanelPosition,
         dispatch
@@ -462,7 +474,9 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
             return {
               id: node.id,
               type: node.annotations[uiNodeType] || 'GenericNode',
-              data: {},
+              data: {
+                icon: iconLookup[node.factory.type]
+              },
               position: {
                 x: node.annotations[xpos] || (offset += 550),
                 y: node.annotations[ypos] || 0,
