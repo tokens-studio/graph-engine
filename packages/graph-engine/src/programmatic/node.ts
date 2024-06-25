@@ -97,7 +97,7 @@ export class Node {
     return (this.inputs[name] = new Input<T>({
       name,
       ...type,
-      visible: Boolean(type.visible),
+      visible: type.visible !== undefined ? type.visible : true,
       value: getDefaults(type.type),
       node: this,
     }));
@@ -107,7 +107,7 @@ export class Node {
       name,
       ...type,
       type: type.type,
-      visible: Boolean(type.visible),
+      visible: type.visible !== undefined ? type.visible : true,
       value: getDefaults(type.type),
       node: this,
     });

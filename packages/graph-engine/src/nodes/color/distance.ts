@@ -1,49 +1,77 @@
-import { Color } from "../../types.js";
-import { ColorSchema, NumberSchema } from "../../schemas/index.js";
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+
+import { ColorSchema, NumberSchema, StringSchema } from "../../schemas/index.js";
+import { Color as ColorType } from "../../types.js";
+import { INodeDefinition, ToInput, ToOutput} from "../../index.js";
 import { Node } from "../../programmatic/node.js";
-import chroma from "chroma-js";
+import { setToPrecision } from "../../utils/precision.js";
+import Color from "colorjs.io";
+
+export const colorSpaces = [
+  "Lab",
+  "ICtCp",
+  "Jzazbz",
+] as const;
+
+export type ColorSpace = typeof colorSpaces[number];
+
 export default class NodeDefinition extends Node {
-  static title = "Color Distance";
+  static title = "Distance";
   static type = "studio.tokens.color.distance";
   static description =
     "Distance node allows you to calculate the distance between two colors.";
 
 
   declare inputs: ToInput<{
-    color1: Color;
-    color2: Color;
-  }>;
-  declare outputs: ToOutput<{
-    value: number
+    colorA: ColorType;
+    colorB: ColorType;
+    precision: number;
   }>;
 
+  declare outputs: ToOutput<{
+    value: ColorType
+  }>;
 
   constructor(props: INodeDefinition) {
     super(props);
-    this.addInput("color1", {
-      type: ColorSchema,
-      visible: true,
+    this.addInput("colorA", {
+      type: {
+        ...ColorSchema,
+        default: "#ffffff",
+      },
     });
-    this.addInput("color2", {
-      type: ColorSchema,
-      visible: true,
+    this.addInput("colorB", {
+      type: {
+        ...ColorSchema,
+        default: "#000000",
+      },
     });
+    this.addInput("precision", {
+      type: {
+        ...NumberSchema,
+        default: 4,
+      },
+    });
+    this.addInput("space", {
+      type: {
+        ...StringSchema,
+        enum: colorSpaces,
+        default: "Lab",
+      },
+    });
+
     this.addOutput("value", {
       type: NumberSchema,
-      visible: true,
     });
   }
 
   execute(): void | Promise<void> {
-    const { color1, color2 } = this.getAllInputs();
+    const { colorA, colorB, space, precision } = this.getAllInputs();
 
-    if (!chroma.valid(color1) || !chroma.valid(color2)) {
-      throw new Error("Invalid color inputs");
-    }
+    const a = new Color(colorA);
+    const b = new Color(colorB);
 
-    const distance = chroma.deltaE(color1, color2);
+    const distance = a.distance(b, space);
 
-    this.setOutput("value", distance);
+    this.setOutput("value", setToPrecision(distance, precision));
   }
 }

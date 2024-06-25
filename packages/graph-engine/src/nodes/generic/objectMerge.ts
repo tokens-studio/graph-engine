@@ -48,7 +48,6 @@ export default class NodeDefinition extends Node {
                 ...arrayOf(AnySchema),
                 default: [],
             },
-            visible: true,
         });
         this.addInput("concatArray", {
             type: {
@@ -59,7 +58,6 @@ export default class NodeDefinition extends Node {
         });
         this.addOutput("value", {
             type: AnySchema,
-            visible: true,
         });
     }
 

@@ -75,26 +75,21 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("color", {
       type: ColorSchema,
-      visible: true,
     });
     this.addInput("space", {
       type: {
         ...StringSchema,
         enum: colorSpaces,
       },
-      visible: true,
     });
     this.addOutput("a", {
       type: NumberSchema,
-      visible: true,
     });
     this.addOutput("b", {
       type: NumberSchema,
-      visible: true,
     });
     this.addOutput("c", {
       type: NumberSchema,
-      visible: true,
     });
     this.addOutput("d", {
       type: NumberSchema

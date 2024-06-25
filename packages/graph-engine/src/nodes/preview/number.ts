@@ -12,7 +12,6 @@ export default class NodeDefinition extends Node {
 
         this.addInput("value", {
             type: {...NumberSchema, default: 0},
-            visible: true
         });
 
         this.addInput("precision", {

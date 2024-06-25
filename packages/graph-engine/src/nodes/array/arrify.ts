@@ -21,12 +21,10 @@ export default class NodeDefinition<T> extends Node {
         ...createVariadicSchema(AnySchema),
         default: [],
       },
-      visible: true,
       variadic: true,
     });
     this.addOutput("value", {
       type: AnyArraySchema,
-      visible: true,
     });
   }
 

@@ -37,14 +37,12 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("anchorColors", {
       type: arrayOf(ColorSchema),
-      visible: true,
     });
     this.addInput("numPoints", {
       type: {
         ...NumberSchema,
         default: 4,
       },
-      visible: true,
     });
     this.addInput("invertedLightness", {
       type: BooleanSchema,
@@ -73,7 +71,6 @@ export default class NodeDefinition extends Node {
     });
     this.addOutput("value", {
       type: arrayOf(ColorSchema),
-      visible: true,
     });
   }
 

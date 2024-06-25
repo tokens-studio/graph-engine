@@ -12,7 +12,6 @@ export default class NodeDefinition extends Node {
 
         this.addInput("value", {
             type: StringSchema,
-            visible: true
         });
     }
 }

@@ -24,7 +24,6 @@ export default class NodeDefinition extends Node {
     //Purely runtime inputs
     this.addOutput("value", {
       type: ObjectSchema,
-      visible: true,
     });
   }
 

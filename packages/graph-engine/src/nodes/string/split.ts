@@ -18,18 +18,15 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("value", {
       type: StringSchema,
-      visible: true,
     });
     this.addInput("separator", {
       type: {
         ...StringSchema,
         default: ",",
       },
-      visible: true,
     });
     this.addOutput("value", {
       type: StringSchema,
-      visible: true,
     });
   }
 

@@ -95,25 +95,32 @@ export default class NodeDefinition extends Node {
       },
     });
     this.addInput("a", {
-      type: NumberSchema,
-      visible: true,
+      type: {
+        ...NumberSchema,
+        default: "0",
+      },
     });
     this.addInput("b", {
-      type: NumberSchema,
-      visible: true,
+      type: {
+        ...NumberSchema,
+        default: "0",
+      },
     });
     this.addInput("c", {
-      type: NumberSchema,
-      visible: true,
+      type: {
+        ...NumberSchema,
+        default: "0",
+      },
     });
     this.addInput("d", {
-      type: NumberSchema,
-      visible: true,
+      type: {
+        ...NumberSchema,
+        default: "1",
+      },
     });
 
     this.addOutput("value", {
       type: ColorSchema,
-      visible: true,
     });
   }
 

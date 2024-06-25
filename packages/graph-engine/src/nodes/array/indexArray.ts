@@ -29,7 +29,6 @@ export default class NodeDefinition<T> extends Node {
     super(props);
     this.addInput("array", {
       type: AnyArraySchema,
-      visible: true,
     });
     this.addInput("index", {
       type: {
@@ -40,7 +39,6 @@ export default class NodeDefinition<T> extends Node {
 
     this.addOutput("value", {
       type: AnySchema,
-      visible: true,
     });
   }
 

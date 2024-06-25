@@ -19,11 +19,9 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("exponent", {
       type: NumberSchema,
-      visible: true,
     });
     this.addOutput("value", {
       type: NumberSchema,
-      visible: true,
     });
   }
 

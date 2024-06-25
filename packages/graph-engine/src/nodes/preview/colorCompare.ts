@@ -1,5 +1,5 @@
-import { Node } from "../../programmatic/node.js";
 import { ColorSchema } from "../../schemas";
+import { Node } from "../../programmatic/node.js";
 
 export default class NodeDefinition extends Node {
     static title = "Color Compare";
@@ -12,12 +12,10 @@ export default class NodeDefinition extends Node {
 
         this.addInput("colorA", {
             type: ColorSchema,
-            visible: true
         });
 
         this.addInput("colorB", {
             type: ColorSchema,
-            visible: true
         });
     }
 }

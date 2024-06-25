@@ -11,15 +11,12 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("color", {
       type: ColorSchema,
-      visible: true,
     });
     this.addInput("position", {
       type: NumberSchema,
-      visible: true,
     });
     this.addOutput("gradientStop", {
       type: GradientStopSchema,
-      visible: true,
     });
   }
 

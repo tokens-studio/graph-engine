@@ -19,7 +19,6 @@ export default class NodeDefinition extends Node {
         ...NumberSchema,
         default: Math.random(),
       },
-      visible: true,
     });
   }
 

@@ -29,7 +29,6 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("color", {
       type: ColorSchema,
-      visible: true,
     });
     this.addInput("stepsUp", {
       type: NumberSchema,
@@ -39,7 +38,6 @@ export default class NodeDefinition extends Node {
     });
     this.addOutput("value", {
       type: arrayOf(ColorSchema),
-      visible: true,
     });
   }
 

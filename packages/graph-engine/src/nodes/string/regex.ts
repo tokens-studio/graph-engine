@@ -26,7 +26,6 @@ export default class NodeDefinition extends Node {
     super(props);
     this.addInput("input", {
       type: StringSchema,
-      visible: true,
     });
     this.addInput("match", {
       type: {
@@ -45,11 +44,9 @@ export default class NodeDefinition extends Node {
         ...StringSchema,
         default: "",
       },
-      visible: true,
     });
     this.addOutput("value", {
       type: StringSchema,
-      visible: true,
     });
   }
 

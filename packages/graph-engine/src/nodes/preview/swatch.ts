@@ -1,5 +1,5 @@
-import { Node } from "../../programmatic/node.js";
 import { ColorSchema } from "../../schemas";
+import { Node } from "../../programmatic/node.js";
 
 export default class NodeDefinition extends Node {
     static title = "Color Swatch";
@@ -12,7 +12,6 @@ export default class NodeDefinition extends Node {
 
         this.addInput("value", {
             type: ColorSchema,
-            visible: true
         });
     }
 }
