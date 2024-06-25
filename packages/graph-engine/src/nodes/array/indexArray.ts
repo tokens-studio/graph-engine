@@ -4,7 +4,7 @@ import { Node } from "../../programmatic/node.js";
 export default class NodeDefinition<T> extends Node {
   static title = "Index Array";
   static type = "studio.tokens.array.index";
-  static description = "Extracts a value from an array at a given index";
+  static description = "Extracts a value from an array at a given index. ";
 
   declare inputs: ToInput<{
     /**
@@ -52,7 +52,7 @@ export default class NodeDefinition<T> extends Node {
     //Extract the type
     //We assume that the array has a single defined item
 
-    const type = array.value[0];
+    const type = array.type.items;
     this.setOutput("value", calculated, type);
   }
 }

@@ -48,9 +48,9 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
             backgroundColor: port.value,
             cursor: 'pointer',
             borderRadius: '$small',
-            width: 16,
-            height: 16,
-            outline: '1px solid $borderMuted',
+            width: 26,
+            height: 26,
+            outline: '1px solid $borderDefault',
             flexShrink: 0,
             '&:hover': {
               outline: '1px solid $borderDefault',

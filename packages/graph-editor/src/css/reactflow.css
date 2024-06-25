@@ -2,7 +2,7 @@
 
 
 .react-flow {
-    background: var(--gray-1);
+    background: #191919;
 }
 
 .react-flow__handle {
@@ -33,7 +33,12 @@
 .react-flow__node {
     display: flex;
 }
-
+.react-flow__edge.updating {
+    stroke: var(--green-10);
+}
+.react-flow__handle-valid	{
+    outline: 1px solid var(--colors-borderDefault);
+}
 .react-flow__node.selectable.selected,
 .react-flow__node.selectable:focus {
     --nodeBorderColor: var(--gray-6);
@@ -42,12 +47,6 @@
     outline: 5px solid var(--purple-10);
     outline-offset: 5px;
     border-radius: var(--radii-medium, 8px);
-}
-
-.react-flow__edge.selected .react-flow__edge-path,
-.react-flow__edge:focus .react-flow__edge-path,
-.react-flow__edge:focus-visible .react-flow__edge-path {
-    stroke: var(--gray-5);
 }
 
 .react-flow__node.selectable.selected .group-color-picker {
@@ -79,10 +78,23 @@
     left: unset;
     margin-left: unset;
 }
+.react-flow__edge {
+    /* stroke: var(--green-10); */
+    stroke-width: 1 !important;
+    stroke-opacity: 1;
 
+}
+.react-flow__edges {
+    stroke: var(--green-10) !important;
+    stroke-width: 1 !important;
+    stroke-opacity: 0.5;
+
+}
 .react-flow__edge-path,
 .react-flow__connection-path {
-    stroke: var(--gray-12);
+    stroke-width: 2 !important;
+
+    /* stroke: var(--gray-12); */
 }
 
 .react-flow__edge.selected .react-flow__edge-path,
@@ -98,11 +110,40 @@
 
 .react-flow__handle-connecting:not(.react-flow__handle-valid):after,
 .react-flow__handle-connecting:not(.react-flow__handle-valid)>* {
-    background: #ff6060 !important;
+    /* background: #ff6060 !important; */
+    /* outline: 2px solid var(--red-10); */
+    transition: transform .3s; /* Animation */
+}
+.react-flow__handle-connecting.react-flow__handle-valid:after,
+.react-flow__handle-connecting.react-flow__handle-valid>* {
+    /* background: #ff6060 !important; */
+    /* outline: 2px solid var(--red-10); */
+    transition: transform .3s; /* Animation */
+}
+
+/* Negative feedback animation */
+@keyframes horizontal-shaking {
+    0% { transform: translateX(0) }
+    25% { transform: translateX(1px) }
+    50% { transform: translateX(-1px) }
+    75% { transform: translateX(1px) }
+    100% { transform: translateX(0) }
+}
+  
+.react-flow__handle-connecting:not(.react-flow__handle-valid){
+    /* background: #ff6060 !important; */
+    outline: 3px solid var(--red-10);
+    animation: horizontal-shaking 0.35s;
 }
 
 .react-flow__handle.react-flow__handle-valid {
-    outline: 1px solid var(--colors-borderDefault);
+    /* outline: 1px solid var(--colors-borderDefault); */
+    outline: 3px solid var(--green-10);
+    transform: scale(0.85);
+}
+.react-flow__handle:not(.react-flow__handle-valid) {
+    /* outline: 1px solid var(--colors-borderDefault); */
+    /* outline: 2px solid var(--red-10); */
 }
 
 .react-flow__resize-control {

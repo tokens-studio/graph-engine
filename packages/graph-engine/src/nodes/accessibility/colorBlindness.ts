@@ -24,7 +24,7 @@ export default class NodeDefinition extends Node {
   static title = "Color Blindness";
   static type = 'studio.tokens.accessibility.colorBlindness';
   static description =
-    "Converts provided colors to the colors as perceived by the specified color blindness type.";
+    "Converts provided colors to the colors as perceived by the specified color blindness type. The output is a hex color string. The color blindness types include protanopia, protanomaly, deuteranopia, deuteranomaly, tritanopia, tritanomaly, achromatopsia, and achromatomaly. The output is a hex color string.";
 
   declare inputs: ToInput<{
     color: string;
