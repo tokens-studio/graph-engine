@@ -47,7 +47,6 @@ export const HandleContainer = ({
         direction="column"
         gap={2}
         css={{ flexBasis: full ? '100%' : '50%', position: 'relative', textAlign: type === 'source' ? 'right' : 'left', minWidth: isSmall ? 'auto' : '250px' }}
-        justify='center'
         className={className}
       >
         {children}
