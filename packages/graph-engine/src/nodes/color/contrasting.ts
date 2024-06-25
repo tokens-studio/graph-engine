@@ -5,11 +5,11 @@ import {
   NumberSchema,
   StringSchema,
 } from "../../schemas/index.js";
+import { Color as ColorType } from "../../types.js";
 import { ContrastAlgorithm } from "../../types/index.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
-import { Input, Output } from "../../programmatic";
+import { Output, ToInput, ToOutput } from "../../programmatic";
 import Color from "colorjs.io";
-
 
 /**
  * Performs a contrast calculation between two colors using APCA-W3 calcs
@@ -19,18 +19,18 @@ export default class NodeDefinition extends Node {
   static type = "studio.tokens.color.contrasting";
   static description = "Returns the name of the color";
 
-  declare inputs: {
-    a: Input;
-    b: Input;
-    background: Input;
-    wcag: Input;
-    threshold: Input<number>;
-  };
-  declare outputs: {
+  declare inputs: ToInput<{
+    a: ColorType;
+    b: ColorType;
+    background: ColorType;
+    algorithm: ContrastAlgorithm;
+    threshold: number;
+  }>;
+  declare outputs: ToOutput<{
     color: Output;
     sufficient: Output<boolean>;
     contrast: Output<number>;
-  };
+  }>;
 
   constructor(props: INodeDefinition) {
     super(props);
