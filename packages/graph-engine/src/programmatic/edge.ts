@@ -1,5 +1,8 @@
-import { SerializedEdge } from '..';
-import { makeObservable, observable } from 'mobx';
+import { SerializedEdge } from '../index.js';
+import {
+	makeObservable,
+	observable
+} from 'mobx/dist/mobx.esm.production.min.js';
 import { v4 as uuid } from 'uuid';
 
 /**

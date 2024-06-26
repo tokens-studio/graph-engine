@@ -1,5 +1,6 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import Node from '../../../../src/nodes/array/slice';
+import { expect } from 'chai';
+import Node from '../../../../src/nodes/array/slice.js';
 
 describe('array/slice', () => {
 	it('performs an array slice', async () => {
@@ -14,8 +15,8 @@ describe('array/slice', () => {
 
 		await node.execute();
 
-		expect(node.outputs.value.value).toStrictEqual([1, 2, 3]);
+		expect(node.outputs.value.value).to.eql([1, 2, 3]);
 		//don't mutate the original array
-		expect(array).toStrictEqual([0, 1, 2, 3, 4]);
+		expect(array).to.eql([0, 1, 2, 3, 4]);
 	});
 });

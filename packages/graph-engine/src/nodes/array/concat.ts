@@ -1,6 +1,6 @@
 import { AnyArraySchema } from '../../schemas/index.js';
 import { INodeDefinition, Node } from '../../programmatic/node.js';
-import { ToInput, ToOutput } from '../../programmatic';
+import { ToInput, ToOutput } from '../../programmatic/index.js';
 export default class NodeDefinition<T> extends Node {
 	static title = 'Concat Array';
 	static type = 'studio.tokens.array.concat';

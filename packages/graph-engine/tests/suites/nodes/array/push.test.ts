@@ -1,5 +1,6 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import Node from '../../../../src/nodes/array/push';
+import { expect } from 'chai';
+import Node from '../../../../src/nodes/array/push.js';
 
 describe('array/push', () => {
 	it('does a non mutative push', async () => {
@@ -13,8 +14,8 @@ describe('array/push', () => {
 
 		await node.execute();
 
-		expect(node.outputs.value.value).toStrictEqual([1, 2, 3, 4]);
+		expect(node.outputs.value.value).to.eql([1, 2, 3, 4]);
 		//don't mutate the original array
-		expect(array).toStrictEqual([1, 2, 3]);
+		expect(array).to.eql([1, 2, 3]);
 	});
 });

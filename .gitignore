@@ -1,5 +1,6 @@
 cli/
 jest-coverage/
+coverage/
 .turbo
 node_modules
 dist

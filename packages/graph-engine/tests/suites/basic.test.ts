@@ -4,7 +4,8 @@ import {
 	SerializedGraph,
 	nodeLookup
 } from '../../src/index.js';
-import basic from '../data/processed/basic';
+import { expect } from 'chai';
+import basic from '../data/processed/basic.js';
 
 describe('basic', () => {
 	it('performs basic passthrough calculations', async () => {
@@ -14,7 +15,7 @@ describe('basic', () => {
 		);
 
 		const result = await graph.execute();
-		expect(result.output).toEqual({
+		expect(result.output).to.eql({
 			input: {
 				type: {
 					$id: 'https://schemas.tokens.studio/string.json',

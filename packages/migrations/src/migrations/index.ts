@@ -1,8 +1,8 @@
 import { UpgradeFunction } from './types.js';
-import cmp from 'semver-compare';
+import { compareVersions } from 'compare-versions';
 
 export const lookup: Record<string, UpgradeFunction> = {};
 
 export const sortedUpgrades = Object.entries(lookup).sort((a, b) =>
-	cmp(a[0], b[0])
+	compareVersions(a[0], b[0])
 );

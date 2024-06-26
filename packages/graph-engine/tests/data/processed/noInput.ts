@@ -1,4 +1,4 @@
-import { SerializedNode } from '../../../src/graph';
+import { SerializedNode } from '../../../src/graph/index.js';
 
 export default {
 	nodes: [

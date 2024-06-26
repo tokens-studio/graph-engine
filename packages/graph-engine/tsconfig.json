@@ -1,7 +1,4 @@
 {
-	"ts-node": {
-		"esm": true
-	},
 	"compilerOptions": {
 		"sourceMap": true,
 		"declaration": true,
@@ -11,8 +8,8 @@
 		"target": "ESNext",
 		"outDir": "./types",
 		"preserveConstEnums": true,
-		"module": "esnext",
-		"moduleResolution": "bundler",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 		"rootDir": ".",
 		"noImplicitAny": false,
 		"esModuleInterop": true,

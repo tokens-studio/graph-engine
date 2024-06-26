@@ -1,4 +1,5 @@
 import { Graph } from '../../../../src/graph/graph.js';
+import { expect } from 'chai';
 import Node from '../../../../src/nodes/math/subtract.js';
 
 describe('math/sub', () => {
@@ -8,6 +9,6 @@ describe('math/sub', () => {
 		node.inputs.a.setValue(1);
 		node.inputs.b.setValue(2);
 		await node.execute();
-		expect(node.outputs.value.value).toStrictEqual(-1);
+		expect(node.outputs.value.value).to.equal(-1);
 	});
 });

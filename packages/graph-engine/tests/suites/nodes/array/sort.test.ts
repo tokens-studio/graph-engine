@@ -1,4 +1,5 @@
 import { Graph } from '../../../../src/graph/graph.js';
+import { expect } from 'chai';
 import Node, { Order } from '../../../../src/nodes/array/sort.js';
 
 describe('array/sort', () => {
@@ -13,7 +14,7 @@ describe('array/sort', () => {
 
 		const output = node.outputs.value.value;
 
-		expect(output).toEqual([4, 3, 2, 1]);
+		expect(output).to.eql([4, 3, 2, 1]);
 	});
 
 	it('sorts the values as expected', async () => {
@@ -28,6 +29,6 @@ describe('array/sort', () => {
 
 		const output = node.outputs.value.value;
 
-		expect(output).toEqual([{ a: 2 }, { a: 3 }, { a: 4 }]);
+		expect(output).to.eql([{ a: 2 }, { a: 3 }, { a: 4 }]);
 	});
 });

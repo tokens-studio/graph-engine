@@ -1,4 +1,5 @@
 import { Graph } from '../../../../src/graph/graph.js';
+import { expect } from 'chai';
 import Node from '../../../../src/nodes/string/uppercase.js';
 
 describe('string/uppercase', () => {
@@ -8,6 +9,6 @@ describe('string/uppercase', () => {
 
 		node.inputs.value.setValue('jjj');
 		await node.execute();
-		expect(node.outputs.value.value).toStrictEqual('JJJ');
+		expect(node.outputs.value.value).to.equal('JJJ');
 	});
 });

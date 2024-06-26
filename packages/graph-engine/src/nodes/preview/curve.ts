@@ -1,4 +1,4 @@
-import { CurveSchema } from '../../schemas';
+import { CurveSchema } from '../../schemas/index.js';
 import { Node } from '../../programmatic/node.js';
 
 export default class NodeDefinition extends Node {

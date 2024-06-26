@@ -1,4 +1,4 @@
-import { ColorSchema } from '../../schemas';
+import { ColorSchema } from '../../schemas/index.js';
 import { Node } from '../../programmatic/node.js';
 import { arrayOf } from '../../schemas/utils.js';
 

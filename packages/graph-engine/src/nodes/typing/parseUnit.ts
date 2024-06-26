@@ -1,7 +1,7 @@
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 import { NumberSchema, StringSchema } from '../../schemas/index.js';
-import valueParser from 'postcss-value-parser';
+import valueParser from 'postcss-value-parser-esm';
 
 export default class NodeDefinition extends Node {
 	static title = 'Parse unit';

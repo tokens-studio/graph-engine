@@ -1,7 +1,7 @@
 import { INodeDefinition, Node } from "../../programmatic/node.js";
 import { NumberSchema } from "../../schemas/index.js";
 import { ToInput } from "../../programmatic/input.js";
-import { ToOutput } from "../../programmatic";
+import { ToOutput } from "../../programmatic/index.js";
 import { arrayOf } from "../../schemas/utils.js";
 import { setToPrecision } from "../../utils/precision.js";
 export type ArithemeticValue = {

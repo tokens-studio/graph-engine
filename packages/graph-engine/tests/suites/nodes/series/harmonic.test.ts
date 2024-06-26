@@ -1,5 +1,6 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import Node from '../../../../src/nodes/series/harmonic';
+import { expect } from 'chai';
+import Node from '../../../../src/nodes/series/harmonic.js';
 
 describe('series/harmonic', () => {
 	it('generates the expected series', async () => {
@@ -17,6 +18,6 @@ describe('series/harmonic', () => {
 
 		const output = node.outputs.array.value;
 
-		expect(output).toStrictEqual([14.2, 15.1, 16, 17, 18.1]);
+		expect(output).to.eql([14.2, 15.1, 16, 17, 18.1]);
 	});
 });

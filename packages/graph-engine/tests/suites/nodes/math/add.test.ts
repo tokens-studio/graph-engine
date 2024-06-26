@@ -1,5 +1,6 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import Node from '../../../../src/nodes/math/add';
+import { expect } from 'chai';
+import Node from '../../../../src/nodes/math/add.js';
 
 describe('math/add', () => {
 	it('adds two numbers', async () => {
@@ -9,6 +10,6 @@ describe('math/add', () => {
 		node.inputs.a.setValue(2);
 		node.inputs.b.setValue(1);
 		await node.execute();
-		expect(node.outputs.value.value).toStrictEqual(3);
+		expect(node.outputs.value.value).to.equal(3);
 	});
 });

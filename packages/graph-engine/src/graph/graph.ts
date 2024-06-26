@@ -11,10 +11,13 @@ import {
 	annotatedVariadicIndex,
 	annotatedVersion
 } from '../annotations/index.js';
-import { makeObservable, observable } from 'mobx';
+import { compareVersions } from 'compare-versions';
+import {
+	makeObservable,
+	observable
+} from 'mobx/dist/mobx.esm.production.min.js';
 import { topologicalSort } from './topologicSort.js';
 import { v4 as uuid } from 'uuid';
-import cmp from 'semver-compare';
 import type { NodeFactory, SerializedGraph } from './types.js';
 import type { NodeRun, NodeStart } from '../types.js';
 
@@ -454,7 +457,7 @@ export class Graph {
 			'0.0.0';
 
 		//Previously graphs didn't contain the version
-		if (cmp(version || '0.0.0', VERSION) == -1) {
+		if (compareVersions(version || '0.0.0', VERSION) == -1) {
 			throw new Error(
 				`Graph version is older than engine version. This might cause unexpected behaviour. Graph version: ${version}, Engine version: ${VERSION}`
 			);

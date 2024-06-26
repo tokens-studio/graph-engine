@@ -1,9 +1,7 @@
-import { INodeDefinition, Node } from '../../programmatic/node.js';
-import orderBy from 'lodash.orderby';
-
 import { AnyArraySchema, StringSchema } from '../../schemas/index.js';
-
-import { ToInput, ToOutput } from '../../programmatic';
+import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { ToInput, ToOutput } from '../../programmatic/index.js';
+import { orderBy } from 'lodash-es';
 
 export enum Order {
 	ASC = 'asc',

@@ -1,5 +1,6 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import Node from '../../../../src/nodes/array/reverse';
+import { expect } from 'chai';
+import Node from '../../../../src/nodes/array/reverse.js';
 
 describe('array/reverse', () => {
 	it('does a non mutative reverse', async () => {
@@ -12,8 +13,8 @@ describe('array/reverse', () => {
 
 		await node.execute();
 
-		expect(node.outputs.value.value).toStrictEqual([3, 2, 1]);
+		expect(node.outputs.value.value).to.eql([3, 2, 1]);
 		//don't mutate the original array
-		expect(array).toStrictEqual([1, 2, 3]);
+		expect(array).to.eql([1, 2, 3]);
 	});
 });

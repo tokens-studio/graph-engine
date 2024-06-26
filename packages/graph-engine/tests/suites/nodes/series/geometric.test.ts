@@ -1,5 +1,6 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import Node from '../../../../src/nodes/series/geometric';
+import { expect } from 'chai';
+import Node from '../../../../src/nodes/series/geometric.js';
 
 describe('series/geometric', () => {
 	it('generates the expected series', async () => {
@@ -16,6 +17,6 @@ describe('series/geometric', () => {
 
 		const output = node.outputs.array.value;
 
-		expect(output).toStrictEqual([13, 16, 19]);
+		expect(output).to.eql([13, 16, 19]);
 	});
 });

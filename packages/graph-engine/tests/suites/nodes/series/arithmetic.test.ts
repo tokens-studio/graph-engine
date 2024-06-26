@@ -1,4 +1,5 @@
 import { Graph } from '../../../../src/graph/graph.js';
+import { expect } from 'chai';
 import Node from '../../../../src/nodes/series/arithmetic.js';
 
 describe('series/arithmetic', () => {
@@ -16,6 +17,6 @@ describe('series/arithmetic', () => {
 
 		const output = node.outputs.array.value;
 
-		expect(output).toStrictEqual([15, 16, 17]);
+		expect(output).to.eql([15, 16, 17]);
 	});
 });

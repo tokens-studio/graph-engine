@@ -1,4 +1,5 @@
 import { Graph } from '../../../../src/graph/graph.js';
+import { expect } from 'chai';
 import Node from '../../../../src/nodes/math/abs.js';
 
 describe('math/abs', () => {
@@ -8,6 +9,6 @@ describe('math/abs', () => {
 
 		node.inputs.input.setValue(-1);
 		await node.execute();
-		expect(node.outputs.value.value).toStrictEqual(1);
+		expect(node.outputs.value.value).to.equal(1);
 	});
 });

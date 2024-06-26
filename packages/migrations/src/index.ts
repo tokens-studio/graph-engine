@@ -1,9 +1,9 @@
 import { Graph, annotatedVersion } from '@tokens-studio/graph-engine';
+import { compareVersions } from 'compare-versions';
 import { sortedUpgrades } from './migrations/index.js';
-import cmp from 'semver-compare';
 
 export const findUpgrades = (version: string) =>
-	sortedUpgrades.filter(([v]) => cmp(v, version) === 1);
+	sortedUpgrades.filter(([v]) => compareVersions(v, version) === 1);
 
 export interface IUpdateGraph {
 	verbose?: boolean;

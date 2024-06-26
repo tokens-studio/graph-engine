@@ -1,5 +1,5 @@
-import { SerializedNode } from '../../../src/graph';
-import { StringSchema } from '../../../src/schemas';
+import { SerializedNode } from '../../../src/graph/index.js';
+import { StringSchema } from '../../../src/schemas/index.js';
 
 export default {
 	annotations: {

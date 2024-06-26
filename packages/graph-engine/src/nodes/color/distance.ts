@@ -1,10 +1,8 @@
-
-import { ColorSchema, NumberSchema, StringSchema } from "../../schemas/index.js";
-import { Color as ColorType } from "../../types.js";
-import { INodeDefinition, ToInput, ToOutput} from "../../index.js";
-import { Node } from "../../programmatic/node.js";
-import { setToPrecision } from "../../utils/precision.js";
-import Color from "colorjs.io";
+import { ColorSchema, NumberSchema, StringSchema } from '../../schemas/index.js';
+import { Color as ColorType } from '../../types.js';
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
+import Color from 'colorjs.io';
 
 export const colorSpaces = [
   "Lab",
@@ -63,14 +61,20 @@ export default class NodeDefinition extends Node {
     });
   }
 
-  execute(): void | Promise<void> {
-    const { colorA, colorB, space, precision } = this.getAllInputs();
+	execute(): void | Promise<void> {
+		const { color1, color2 } = this.getAllInputs();
 
-    const a = new Color(colorA);
-    const b = new Color(colorB);
+		let c1;
+		let c2;
+		try {
+			c1 = new Color(color1);
+			c2 = new Color(color2);
+		} catch (e) {
+			throw new Error('Invalid color inputs');
+		}
 
-    const distance = a.distance(b, space);
+		const distance = Color.deltaE(c1, c2, 'CMC');
 
-    this.setOutput("value", setToPrecision(distance, precision));
-  }
+		this.setOutput('value', distance);
+	}
 }
