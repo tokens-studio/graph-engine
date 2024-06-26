@@ -2,19 +2,33 @@ import { Box, Stack, Text } from '@tokens-studio/ui';
 import React from 'react';
 import Color from 'colorjs.io';
 
-function contrastingColor(value: string) {
-    let black = new Color("srgb", [0, 0, 0]);
-    let white = new Color("srgb", [1, 1, 1]);
-
-    let background = new Color(value);
-    let contrastBlack = Math.abs(background.contrast(black, "APCA"));
-    let contrastWhite = Math.abs(background.contrast(white, "APCA"));
-
-    if (contrastBlack > contrastWhite) {
-        return '#000000';
-    } else {
-        return '#ffffff';
+function isValidColor(value: string): boolean {
+    try {
+      new Color(value);
+      return true;
+    } catch {
+      return false;
     }
+  }
+
+function contrastingColor(value: string) {
+    if (!isValidColor(value)) {
+        return '#000000'; // Default to black text if color is invalid
+      }
+    
+      try {
+        let black = new Color("srgb", [0, 0, 0]);
+        let white = new Color("srgb", [1, 1, 1]);
+    
+        let background = new Color(value);
+        let contrastBlack = Math.abs(background.contrast(black, "APCA"));
+        let contrastWhite = Math.abs(background.contrast(white, "APCA"));
+    
+        return contrastBlack > contrastWhite ? '#000000' : '#ffffff';
+      } catch (error) {
+        console.error("Error calculating contrasting color:", error);
+        return '#000000'; // Default to black text if there's an error
+      }
 }
 
 export const ColorCompare = ({ colors }) => {
