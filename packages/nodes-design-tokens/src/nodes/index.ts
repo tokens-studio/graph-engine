@@ -1,3 +1,6 @@
+import CreateBorderNode from "./createBorder.js";
+import CreateBoxShadowNode from "./createBoxShadow.js";
+import CreateTypographyNode from "./createTypography.js";
 import ExternalTokensNode from "./externalTokens.js";
 import ExtractTokenNode from "./extractSingleToken.js";
 import FlattenNode from "./flatten.js";
@@ -34,4 +37,7 @@ export const nodes = [
   LeonardoColorNode,
   LeonardoThemeNode,
   SetToArrayNode,
+  CreateTypographyNode,
+  CreateBorderNode,
+  CreateBoxShadowNode
 ];

@@ -72,7 +72,7 @@ export class Node {
     makeObservable(this, {
       inputs: observable,
       outputs: observable,
-      error: observable,
+      error: observable.ref,
       annotations: observable,
       addInput: action,
       isRunning: computed,
