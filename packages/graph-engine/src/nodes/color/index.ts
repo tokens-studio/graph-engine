@@ -13,6 +13,7 @@ import mix from "./mix.js";
 import name from "./name.js";
 import poline from "./poline.js";
 import scale from "./scale.js";
+import stringToColor from "./stringToColor.js";
 import wheel from "./wheel.js";
 
 export const nodes = [
@@ -25,6 +26,7 @@ export const nodes = [
   distance,
   deltaE,
   flattenAlpha,
+  stringToColor,
   name,
   poline,
   scale,
