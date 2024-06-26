@@ -59,7 +59,7 @@ const x = (vec: vec.Vector2) => vec[0];
 const y = (vec: vec.Vector2) => vec[1];
 
 export function CurveEditor(props: ICurveEditor) {
-  const { domain = [0, 1], range = [0, 1], points, onChange } = props;
+  const { domain = [0.3, 0.7], range = [0.3, 0.7], points, onChange } = props;
 
   const opacity = 0.25;
 
@@ -98,15 +98,15 @@ export function CurveEditor(props: ICurveEditor) {
   return (
     <>
       <Mafs
-        zoom
+        zoom={{ min: 1, max: 2 }}
         viewBox={{ x: domain, y: range }}
         width={'auto'}
-        height={250}
+        height={260}
         preserveAspectRatio={false}
       >
         <Coordinates.Cartesian
-          xAxis={{ axis: true, subdivisions: 4 }}
-          yAxis={{ axis: true, subdivisions: 4 }}
+          xAxis={{ axis: true, subdivisions: 8 }}
+          yAxis={{ axis: true, subdivisions: 16 }}
         />
 
         {/* Control lines */}
