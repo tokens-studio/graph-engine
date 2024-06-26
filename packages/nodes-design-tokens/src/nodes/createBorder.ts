@@ -1,4 +1,6 @@
 import {
+    ColorSchema,
+    DimensionSchema,
     INodeDefinition,
     Node,
     StringSchema,
@@ -21,11 +23,11 @@ export default class CreateBorderNode extends Node {
     constructor(props: INodeDefinition) {
         super(props);
         this.addInput("color", {
-            type: StringSchema,
+            type: ColorSchema,
             visible: true,
         });
         this.addInput("width", {
-            type: StringSchema,
+            type: DimensionSchema,
             visible: true,
         });
         this.addInput("style", {

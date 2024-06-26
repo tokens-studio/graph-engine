@@ -19,7 +19,12 @@ export const TokenSchema: SchemaObject = {
 	}
 };
 
-
+export const REFERENCE = "https://schemas.tokens.studio/reference.json";
+export const ReferenceSchema: SchemaObject = {
+  $id: REFERENCE,
+  title: "Reference",
+  type: "string",
+};
 
 export const TOKEN_TYPOGRAPHY = "https://schemas.tokens.studio/tokenTypography.json";
 export const TokenTypographySchema: SchemaObject = {
