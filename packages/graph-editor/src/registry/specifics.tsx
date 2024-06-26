@@ -2,7 +2,7 @@ import { dockerSelector } from "@/redux/selectors/refs";
 import { Box, Button } from "@tokens-studio/ui";
 import React, { useCallback } from 'react';
 import { useSelector } from "react-redux";
-import { EyeSolid } from "iconoir-react";
+import { OpenInBrowser } from "iconoir-react";
 import { GraphEditor } from "@/editor/graphEditor";
 import { ImperativeEditorRef } from "..";
 import { Node } from "@tokens-studio/graph-engine";
@@ -65,7 +65,7 @@ const SubgraphExplorer = ({ node }) => {
 
 
 
-    return <Button variant="primary" icon={<EyeSolid />} onClick={onToggle}>Subgraph Explorer</Button>
+    return <Button variant="primary" icon={<OpenInBrowser />} onClick={onToggle}>Edit Subgraph &#40;executes for each item&#41;</Button>
 
 }
 
