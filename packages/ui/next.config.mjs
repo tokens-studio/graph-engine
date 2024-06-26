@@ -16,6 +16,19 @@ export default withBundleAnalyzer({
   env: {
     API_PATH: process.env.API_PATH,
   },
+  webpack:(config,{isServer})=>{
+
+    config.experiments={
+      ...(config.experiments || {}),
+      asyncWebAssembly: true
+    }
+    if (!isServer) {
+      config.resolve.fallback = { fs: false,module:false };
+
+    }
+
+    return config
+  },
   experimental: {
     //Terrible hack to fix
     optimizePackageImports: ['iconoir-react', "lodash"],
@@ -25,7 +38,7 @@ export default withBundleAnalyzer({
     instrumentationHook: OTEL_ENABLED
   },
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production'
+  
   },
   output: "standalone"
 });

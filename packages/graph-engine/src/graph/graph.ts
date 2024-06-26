@@ -15,7 +15,7 @@ import type { NodeRun, NodeStart } from "../types.js";
 
 export type CapabilityFactory = {
   name: string;
-  register: (graph: Graph) => any;
+  register: (graph: Graph) => Promise<any>;
   version?: string;
 };
 
@@ -506,8 +506,8 @@ export class Graph {
     return this;
   }
 
-  registerCapability(factory: CapabilityFactory) {
-    const value = factory.register(this);
+  async registerCapability(factory: CapabilityFactory) {
+    const value = await factory.register(this);
     this.capabilities[factory.name] = value;
     //Make it obvious that this capability is present on the serialized graph
     this.annotations['engine.capabilities.' + factory.name] = factory.version || '0.0.0';

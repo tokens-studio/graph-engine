@@ -14,6 +14,6 @@ export const WebAudioCapability: CapabilityFactory = {
         graph.on("start", () => ctx.resume());
         graph.on("resume", () => ctx.resume());
 
-        return ctx;
+        return Promise.resolve(ctx);
     }
 }

@@ -136,8 +136,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
     //Attach sideeffect listeners
     useEffect(() => {
-      capabilities.forEach((factory) => graph.registerCapability(factory));
-
+   
       graph.onFinalize('serialize', (serialized) => {
 
         const nodes = reactFlowInstance.getNodes();
@@ -221,7 +220,7 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
         });
       });
 
-      const NodeStartListener = graph.on('nodeExecuted', (run) => {
+      const NodeStartDisposer = graph.on('nodeExecuted', (run) => {
 
         const existing = debugInfo.rows.find(x => x.id == run.node.id);
 
@@ -243,9 +242,13 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
 
       });
 
+      capabilities.forEach(async (factory) => await graph.registerCapability(factory));
+
+
       return () => {
         valueDetecterDisposer();
         EdgeUpdaterDisposer();
+        NodeStartDisposer();
       }
 
     }, [graph])

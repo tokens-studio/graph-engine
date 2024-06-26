@@ -7,6 +7,7 @@ import colorCurves from './colorCurves.json'
 import colorScale from './colorScale.json';
 import dynamicNaming from './dynamicNaming.json';
 import dynamicValidation from './dynamicValidation.json';
+import image from './image.json';
 import typescale from './typescale.json';
 
 
@@ -62,5 +63,12 @@ export const examples: IExample[] = [
             'A basic audio oscillator setup',
         file: audio as unknown as SerializedGraph,
         key: 'audio',
+    },
+    {
+        title: 'Image - Filters - EXPERIMENTAL',
+        description:
+            'Basic filter application to an image',
+        file: image as unknown as SerializedGraph,
+        key: 'image',
     }
 ];
