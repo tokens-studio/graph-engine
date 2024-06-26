@@ -18,7 +18,7 @@ export { ColorModifierTypes } from "@tokens-studio/types";
 export default class NodeDefinition extends Node {
   static title = "Lighten Color";
   static type = "studio.tokens.color.lighten";
-  static description = "Lightens a color by a specified value";
+  static description = "Lightens a color by a specified amount.\n\nInputs: Base Color, Lighten Amount, Color Space\nOutput: Lightened color\n\nUse this node to create lighter variations of a color. Adjust the amount to control the intensity of lightening. Useful for generating hover states, creating hierarchical color schemes, or adjusting colors for different lighting contexts in your designs.";
 
   declare inputs: ToInput<{
     color: ColorType;

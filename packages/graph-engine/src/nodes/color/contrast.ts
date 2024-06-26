@@ -8,7 +8,7 @@ import Color from "colorjs.io";
 export default class NodeDefinition extends Node {
   static title = "Contrast";
   static type = "studio.tokens.accessibility.contrast";
-  static description = "Calculates the contrast between two color values. The output is a number representing the contrast ratio between the two colors. The higher the number, the higher the contrast between the two colors. The output is based on the APCA-W3 contrast calculation.";
+  static description = "Calculates the contrast ratio between two colors.\n\nInputs: Color A, Color B, Contrast Algorithm\nOutput: Contrast ratio (number)\n\nUse this node to evaluate the visual difference between two colors. Choose from different contrast algorithms including APCA-W3. Essential for ensuring readability and accessibility in your designs, helping you meet WCAG guidelines. Useful for automatically adjusting text colors based on background.";
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("a", {

@@ -6,7 +6,7 @@ export default class NodeDefinition extends Node {
   static title = "CSS Box";
   static type = "studio.tokens.css.box";
   static description =
-    "CSS Box node allows you to generate a CSS box from 4 values";
+    "Generates a CSS box value from individual side measurements.\n\nInputs: Top, Right, Bottom, Left (all numbers)\nOutput: Formatted CSS box value string\n\nUse this node to create shorthand CSS values for properties like margin, padding, or border-width. Input values for each side to generate a properly formatted CSS string. Simplifies the process of creating consistent box model properties in your designs.";
     
 
   declare inputs: ToInput<{

@@ -23,7 +23,7 @@ export default class NodeDefinition<T> extends Node {
   }>;
 
   static description =
-    "Constant node allows you to provide a constant value. You can use this node to set a constant value for a specific property.";
+    "Provides a constant value of any type.\n\nInput: Value (set in node properties)\nOutput: Constant value\n\nUse this node to insert fixed values into your node graph. It's useful for defining constants, default values, or reference points in your designs. Can hold numbers, strings, colors, or any other data type, making it versatile for various scenarios in your workflow.";
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("value", {

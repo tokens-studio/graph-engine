@@ -9,7 +9,7 @@ const FUNCTION_NAMES = Object.keys(cssFunctionsData);
 export default class NodeDefinition extends Node {
   static title = "CSS Function";
   static type = "studio.tokens.css.function";
-  static description = "Applies a CSS function to the value";
+  static description = "Applies a CSS function to a value.\n\nInputs: Function name, Value\nOutput: Formatted CSS function string\n\nUse this node to generate CSS function calls like 'rgb()', 'calc()', or custom functions. Select the function and provide the value to create properly formatted CSS function strings. Useful for dynamic styling, complex CSS calculations, or generating CSS values that require function syntax.";
 
   declare inputs: ToInput<{
     functionName: keyof typeof cssFunctionsData;

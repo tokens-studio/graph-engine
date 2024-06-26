@@ -39,7 +39,7 @@ export default class NodeDefinition extends Node {
   static title = "Convert Color";
   static type = "studio.tokens.color.convert";
   static description =
-"Transforms a hex color string from its original color space into a specified target color space, providing the resulting color's channels as separate outputs.";
+"Transforms a color from one color space to another.\n\nInputs: Color, Target Color Space\nOutputs: Converted color, Individual channel values\n\nUse this node to change the representation of a color. Convert between spaces like RGB, HSL, LAB, etc. Outputs both the full color and its individual components. Useful for color analysis, applying color-space-specific operations, or ensuring color consistency across different contexts.";
   declare inputs: ToInput<{
     color: Color;
     space: ColorSpace;

@@ -10,7 +10,7 @@ import { Node } from "../../programmatic/node.js";
 export default class NodeDefinition<T> extends Node {
     static title = "Delay";
     static type = 'studio.tokens.generic.delay';
-    static description = "When trigger, it will output the provided value after a delay";
+    static description = "Delays the output of a value by a specified time.\n\nInputs: Value (any type), Delay (in milliseconds)\nOutput: Delayed value\n\nUse this node to introduce a time delay before passing a value. Useful for creating timed sequences, simulating network delays, or controlling the timing of operations in your workflow. Can be particularly helpful in animation or time-sensitive data processing scenarios.";
 
     declare inputs: ToInput<{
         value: T;

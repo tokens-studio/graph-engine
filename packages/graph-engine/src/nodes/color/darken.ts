@@ -17,7 +17,7 @@ export { ColorModifierTypes } from "@tokens-studio/types";
 export default class NodeDefinition extends Node {
   static title = "Darken Color";
   static type = "studio.tokens.color.darken";
-  static description = "Darkens a color by a specified value";
+  static description = "Darkens a color by a specified amount.\n\nInputs: Base Color, Darken Amount, Color Space\nOutput: Darkened color\n\nUse this node to create darker variations of a color. Adjust the amount to control the intensity of darkening. Useful for generating shadow effects, creating depth in color schemes, or adjusting colors for low-light contexts in your designs.";
 
   declare inputs: ToInput<{
     color: ColorType;
