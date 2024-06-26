@@ -50,9 +50,10 @@ export const NodeV2 = (args) => {
     return <Box>Node not found</Box>;
   }
 
+
   return (
     <ErrorBoundary fallback={<ErrorBoundaryContent />}>
-      <NodeWrap node={node} />
+      <NodeWrap node={node}  icon={args?.data?.icon}/>
     </ErrorBoundary>
   )
 
@@ -64,9 +65,10 @@ export interface INodeWrap {
    */
   title?: string;
   subtitle?: string;
+  icon?: React.ReactNode;
   node: GraphNode;
 }
-const NodeWrap = observer(({ node }: INodeWrap) => {
+const NodeWrap = observer(({ node,icon }: INodeWrap) => {
   const showTimingsValue = useSelector(showTimings);
   const specifics = useSelector(nodeSpecifics);
 
@@ -76,7 +78,7 @@ const NodeWrap = observer(({ node }: INodeWrap) => {
     <Node
       id={node.id}
       isAsync={node.annotations[annotatedNodeRunning] as boolean}
-      // icon={nodeDef.icon}
+      icon={icon}
       title={(node.annotations[title] as string) || node.factory.title || 'Node'}
       subtitle={node.annotations[title] ? node.factory.title : ""}
       error={node.error || null}

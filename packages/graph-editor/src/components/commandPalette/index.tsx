@@ -69,7 +69,7 @@ const CommandMenuGroup = observer(
     handleSelectItem: (PanelItem) => void;
   }) => {
     return (
-      <Command.Group key={group.key} heading={group.title}>
+      <Command.Group key={group.key} heading={<Stack align='center'>{group.icon}{group.title}</Stack>}>
         {group.items.map((item) => (
           <CommandItem item={item} handleSelectItem={handleSelectItem} />
         ))}

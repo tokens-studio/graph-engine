@@ -15,6 +15,7 @@ export interface ICreateNode {
   reactFlowInstance: ReactFlowInstance,
   graph: Graph,
   nodeLookup: Record<string, NodeFactory>,
+  iconLookup: Record<string, string>,
   /**
    * If a customized node would be created in the editor, it would be created using this UI lookup.
    * This takes a node type such as 'studio.tokens.math.add' as a key and a string of the custom node type as a value.
@@ -29,6 +30,7 @@ export const createNode = ({
   reactFlowInstance,
   graph,
   nodeLookup,
+  iconLookup,
   customUI,
   dropPanelPosition,
   dispatch
@@ -97,7 +99,9 @@ export const createNode = ({
       id: node.id,
       dragHandle: '.reactflow-draggable-handle',
       type: customUI[nodeRequest.type] || 'GenericNode',
-      data: {},
+      data: {
+        icon: iconLookup[nodeRequest.type],
+      },
       position: finalPos,
     } as ReactFlowNode;
 
