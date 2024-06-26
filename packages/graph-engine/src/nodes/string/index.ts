@@ -1,3 +1,4 @@
+import interpolate from "./interpolate.js";
 import join from "./join.js";
 import lowercase from "./lowercase.js";
 import regex from "./regex.js";
@@ -6,6 +7,7 @@ import stringify from "./stringify.js";
 import uppercase from "./uppercase.js";
 
 export const nodes = [
+  interpolate,
   lowercase,
   join,
   stringify,
