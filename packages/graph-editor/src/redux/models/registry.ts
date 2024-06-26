@@ -7,12 +7,14 @@ import { defaultControls } from '@/registry/control.js';
 import { defaultSpecifics } from '@/registry/specifics.js';
 import { DropPanelStore, defaultPanelGroupsFactory } from '@/components/panels/dropPanel/index.js';
 import { Control } from '@/types/controls.js';
+import { defaultTypeColors } from '@/registry/typeColors.js';
 
 
 export interface RegistryState {
   //Additional specific controls for nodes. Appended to the end of the default controls
   nodeSpecifics: Record<string, React.FC<{ node: Node }>>;
   icons: Record<string, React.ReactNode>;
+  typeColors: Record<string, {color: string, backgroundColor: string}>;
   inputControls: Record<string, React.FC<{ node: Node }>>;
   controls: Control[];
   nodeTypes: Record<string, typeof Node>
@@ -24,6 +26,7 @@ export const registryState = createModel<RootModel>()({
   state: {
     nodeSpecifics: defaultSpecifics,
     icons: icons(),
+    typeColors: { ...defaultTypeColors},
     inputControls: { ...inputControls },
     controls: [...(defaultControls as Control[])],
     panelItems: defaultPanelGroupsFactory(),
@@ -80,6 +83,12 @@ export const registryState = createModel<RootModel>()({
       return {
         ...state,
         panelItems: payload,
+      };
+    },
+    setTypeColors(state, payload: Record<string, {color: string, backgroundColor: string}>) {
+      return {
+        ...state,
+        typeColors: payload,
       };
     }
   },

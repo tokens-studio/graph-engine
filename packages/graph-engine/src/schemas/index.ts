@@ -35,6 +35,21 @@ export const ColorSchema: SchemaObject = {
   type: "string",
 };
 
+export const DIMENSION = "https://schemas.tokens.studio/dimension.json";
+export const DimensionSchema: SchemaObject = {
+  $id: DIMENSION,
+  title: "Dimension",
+  type: "object",
+  properties: {
+    value: {
+      type: NumberSchema,
+    },
+    unit: {
+      type: StringSchema,
+    }
+  },
+};
+
 
 export const ANY = "https://schemas.tokens.studio/any.json";
 export const AnySchema: SchemaObject = {

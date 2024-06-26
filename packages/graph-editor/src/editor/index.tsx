@@ -7,7 +7,7 @@ import { EditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { LayoutController } from './layoutController.js';
 import { nodeLookup as defaultNodeLookup } from '@tokens-studio/graph-engine';
 import { ToastProvider } from '@/hooks/useToast';
-import { defaultControls, defaultPanelGroupsFactory, defaultSpecifics } from '..';
+import { defaultControls, defaultPanelGroupsFactory, defaultSpecifics, defaultTypeColors } from '..';
 
 /**
  * The main editor component
@@ -22,7 +22,8 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
       nodeTypes = defaultNodeLookup,
       controls = [...(defaultControls )],
       specifics = defaultSpecifics,
-      icons
+      icons,
+      typeColors = defaultTypeColors,
     } = props;
 
     // Note that the provider exists around the layout controller so that the layout controller can register itself during mount
@@ -30,6 +31,7 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
       <ToastProvider>
         <ReduxProvider
           icons={icons}
+          typeColors={typeColors}
           controls={controls}
           panelItems={panelItems}
           nodeTypes={nodeTypes}

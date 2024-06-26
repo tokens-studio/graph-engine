@@ -2,12 +2,16 @@ import { Provider } from 'react-redux';
 import React, { useEffect } from 'react';
 import { store } from './store.js';
 
-export const ReduxProvider = ({ children, nodeTypes, panelItems, capabilities, icons, controls, specifics }) => {
+export const ReduxProvider = ({ children, nodeTypes, panelItems, capabilities, icons, controls, specifics, typeColors }) => {
 
 
   useEffect(() => {
     store.dispatch.registry.registerIcons(icons || {});
   }, [icons]);
+
+  useEffect(() => {
+    store.dispatch.registry.setTypeColors(typeColors || {});
+  }, [typeColors]);
 
   useEffect(() => {
     store.dispatch.registry.setControls(controls);
