@@ -23,6 +23,7 @@ import sqrt from "./sqrt.js";
 import subtract from "./subtract.js";
 import subtractVariadic from "./subtractVariadic.js";
 import tan from "./tan.js";
+import trigonometry from "./trigonometry.js";
 
 export const nodes = [
   abs,
@@ -50,4 +51,5 @@ export const nodes = [
   subtractVariadic,
   tan,
   fluid,
+  trigonometry,
 ];
