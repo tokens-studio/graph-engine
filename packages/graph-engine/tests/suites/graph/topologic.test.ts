@@ -1,6 +1,7 @@
 import { Graph } from '../../../src/graph/graph.js';
-import { topologicalSort } from '../../../src/graph';
-import Passthrough from '../../../src/nodes/generic/passthrough';
+import { expect } from 'chai';
+import { topologicalSort } from '../../../src/graph/index.js';
+import Passthrough from '../../../src/nodes/generic/passthrough.js';
 
 describe('Graph/topologic', () => {
 	it('Creates the expected topologic output ', async () => {
@@ -58,6 +59,6 @@ describe('Graph/topologic', () => {
 
 		const sorted = topologicalSort(graph);
 
-		expect(sorted).toEqual(['a', 'c', 'b', 'e', 'f', 'd']);
+		expect(sorted).to.eql(['a', 'c', 'b', 'e', 'f', 'd']);
 	});
 });

@@ -1,4 +1,5 @@
 import { Graph } from '../../../../src/graph/graph.js';
+import { expect } from 'chai';
 import Node from '../../../../src/nodes/array/concat.js';
 
 describe('array/concat', () => {
@@ -16,8 +17,8 @@ describe('array/concat', () => {
 
 		const actual = node.outputs.value.value;
 
-		expect(actual).toStrictEqual([1, 2, 3, 4, 5, 6]);
-		expect(a).toStrictEqual([1, 2, 3]);
-		expect(b).toStrictEqual([4, 5, 6]);
+		expect(actual).to.eql([1, 2, 3, 4, 5, 6]);
+		expect(a).to.eql([1, 2, 3]);
+		expect(b).to.eql([4, 5, 6]);
 	});
 });

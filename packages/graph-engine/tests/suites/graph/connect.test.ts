@@ -1,5 +1,6 @@
 import { Graph } from '../../../src/graph/graph.js';
-import Passthrough from '../../../src/nodes/generic/passthrough';
+import { expect } from 'chai';
+import Passthrough from '../../../src/nodes/generic/passthrough.js';
 
 describe('Graph/topologic', () => {
 	it('should throw an error if a connection would result in multiple connections', async () => {
@@ -12,6 +13,6 @@ describe('Graph/topologic', () => {
 		expect(() => {
 			a.outputs.value.connect(b.inputs.value);
 			c.outputs.value.connect(b.inputs.value);
-		}).toThrowError();
+		}).to.throw();
 	});
 });

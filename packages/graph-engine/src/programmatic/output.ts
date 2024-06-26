@@ -2,7 +2,7 @@ import { GraphSchema } from '../schemas/index.js';
 import { Input } from './input.js';
 import { Node } from './node.js';
 import { Port } from './port.js';
-import { action, makeObservable } from 'mobx';
+import { action, makeObservable } from 'mobx/dist/mobx.esm.production.min.js';
 
 export interface IOutputProps<T = any> {
 	name: string;

@@ -1,5 +1,6 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import Node from '../../../../src/nodes/math/subtractVariadic';
+import { expect } from 'chai';
+import Node from '../../../../src/nodes/math/subtractVariadic.js';
 
 describe('math/subVariadic', () => {
 	it('subtracts two numbers', async () => {
@@ -7,13 +8,13 @@ describe('math/subVariadic', () => {
 		const node = new Node({ graph });
 		node.inputs.inputs.setValue([1, 2]);
 		await node.execute();
-		expect(node.outputs.value.value).toStrictEqual(-1);
+		expect(node.outputs.value.value).to.equal(-1);
 	});
 	it('subtracts multiple numbers', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 		node.inputs.inputs.setValue([1, 2, 5, 10]);
 		await node.execute();
-		expect(node.outputs.value.value).toStrictEqual(-16);
+		expect(node.outputs.value.value).to.equal(-16);
 	});
 });

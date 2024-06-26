@@ -1,4 +1,4 @@
-import type { Node } from './programmatic/node';
+import type { Node } from './programmatic/node.js';
 
 export type ExternalLoadOptions = { type: string; id: string; data: any };
 export type ExternalLoader = (opts: ExternalLoadOptions) => Promise<any> | any;

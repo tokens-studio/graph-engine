@@ -1,4 +1,5 @@
 import { Graph } from '../../../../src/graph/graph.js';
+import { expect } from 'chai';
 import Node from '../../../../src/nodes/color/poline.js';
 
 describe('color/poline', () => {
@@ -14,7 +15,7 @@ describe('color/poline', () => {
 
 		const output = node.outputs.value.value;
 
-		expect(output).toStrictEqual(['#ff5500', '#9d8b00', '#20a200', '#00ff55']);
+		expect(output).to.eql(['#ff5500', '#9d8b00', '#20a200', '#00ff55']);
 	});
 
 	it('creates the expected color palette with these inputs 2', async () => {
@@ -30,7 +31,7 @@ describe('color/poline', () => {
 
 		const output = node.outputs.value.value;
 
-		expect(output).toStrictEqual([
+		expect(output).to.eql([
 			'#ff5500',
 			'#ffb255',
 			'#faff90',
@@ -54,6 +55,6 @@ describe('color/poline', () => {
 
 		const output = node.outputs.value.value;
 
-		expect(output).toStrictEqual(['#ff5500', '#9d8b00', '#20a200', '#00ff55']);
+		expect(output).to.eql(['#ff5500', '#9d8b00', '#20a200', '#00ff55']);
 	});
 });

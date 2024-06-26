@@ -1,7 +1,7 @@
 import { INodeDefinition, Node } from '../../programmatic/node.js';
 import { StringSchema } from '../../schemas/index.js';
 import { ToInput } from '../../programmatic/input.js';
-import { ToOutput } from '../../programmatic';
+import { ToOutput } from '../../programmatic/index.js';
 
 export default class NodeDefinition extends Node {
   static title = "Split String";

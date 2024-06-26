@@ -1,5 +1,6 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { getAllOutputs } from '../utils';
+import { expect } from 'chai';
+import { getAllOutputs } from '../utils.js';
 import Node from '../../../../src/nodes/color/convert.js';
 
 describe('color/convert', () => {
@@ -12,7 +13,7 @@ describe('color/convert', () => {
 
 		await node.execute();
 
-		expect(getAllOutputs(node)).toStrictEqual({
+		expect(getAllOutputs(node)).to.eql({
 			a: 255,
 			b: 0,
 			c: 0,
@@ -31,7 +32,7 @@ describe('color/convert', () => {
 
 		await node.execute();
 
-		expect(getAllOutputs(node)).toStrictEqual({
+		expect(getAllOutputs(node)).to.eql({
 			a: 255,
 			b: 0,
 			c: 0,
@@ -50,7 +51,7 @@ describe('color/convert', () => {
 
 		await node.execute();
 
-		expect(getAllOutputs(node)).toStrictEqual({
+		expect(getAllOutputs(node)).to.eql({
 			a: 0.513799063361875,
 			b: 0.9363407960900638,
 			c: 0.3440788676962286,
@@ -73,7 +74,7 @@ describe('color/convert', () => {
 		node.inputs.space.setValue('oklab');
 
 		await node.execute();
-		expect(getAllOutputs(node)).toStrictEqual({
+		expect(getAllOutputs(node)).to.eql({
 			a: 0.8446731133698594,
 			b: -0.19979243108966394,
 			c: 0.16178227223673358,
@@ -97,7 +98,7 @@ describe('color/convert', () => {
 
 		await node.execute();
 
-		expect(getAllOutputs(node)).toStrictEqual({
+		expect(getAllOutputs(node)).to.eql({
 			a: -11.61375995607493,
 			b: 0.7511787849960817,
 			c: 0.2469609193911593,

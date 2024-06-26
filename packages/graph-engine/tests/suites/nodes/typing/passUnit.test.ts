@@ -1,4 +1,5 @@
 import { Graph } from '../../../../src/graph/graph.js';
+import { expect } from 'chai';
 import Node from '../../../../src/nodes/typing/passUnit.js';
 
 describe('typing/passUnit', () => {
@@ -12,7 +13,7 @@ describe('typing/passUnit', () => {
 		await node.execute();
 
 		const output = node.outputs.value.value;
-		expect(output).toStrictEqual('0px');
+		expect(output).to.equal('0px');
 	});
 
 	it('adds unit if not detected', async () => {
@@ -25,7 +26,7 @@ describe('typing/passUnit', () => {
 		await node.execute();
 
 		const output = node.outputs.value.value;
-		expect(output).toStrictEqual('3px');
+		expect(output).to.equal('3px');
 	});
 
 	it('does not add unit if  detected', async () => {
@@ -38,6 +39,6 @@ describe('typing/passUnit', () => {
 		await node.execute();
 
 		const output = node.outputs.value.value;
-		expect(output).toStrictEqual('3px');
+		expect(output).to.equal('3px');
 	});
 });

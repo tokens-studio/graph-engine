@@ -1,4 +1,5 @@
 import { Graph } from '../../../../src/graph/graph.js';
+import { expect } from 'chai';
 import Node from '../../../../src/nodes/array/indexArray.js';
 
 describe('array/indexArray', () => {
@@ -12,8 +13,9 @@ describe('array/indexArray', () => {
 		await node.execute();
 
 		const output = node.outputs.value.value;
-		expect(output).toStrictEqual(1);
+		expect(output).to.eql(1);
 	});
+
 	it('returns undefined when out of bounds', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
@@ -24,6 +26,6 @@ describe('array/indexArray', () => {
 		await node.execute();
 
 		const output = node.outputs.value.value;
-		expect(output).toStrictEqual(undefined);
+		expect(output).to.be.undefined;
 	});
 });

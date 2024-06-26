@@ -7,7 +7,7 @@ import {
 import { Color as ColorType } from "../../types.js";
 import { ContrastAlgorithm } from "../../types/index.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
-import { Output, ToInput, ToOutput } from "../../programmatic";
+import { Output, ToInput, ToOutput } from "../../programmatic/index.js";
 import Color from "colorjs.io";
 
 /**

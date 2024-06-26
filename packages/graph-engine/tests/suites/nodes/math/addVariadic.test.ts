@@ -1,4 +1,5 @@
 import { Graph } from '../../../../src/graph/graph.js';
+import { expect } from 'chai';
 import Node from '../../../../src/nodes/math/addVariadic.js';
 
 describe('math/addVariadic', () => {
@@ -8,7 +9,7 @@ describe('math/addVariadic', () => {
 
 		node.inputs.inputs.setValue([1, 2]);
 		await node.execute();
-		expect(node.outputs.value.value).toStrictEqual(3);
+		expect(node.outputs.value.value).to.equal(3);
 	});
 	it('adds multiple numbers', async () => {
 		const graph = new Graph();
@@ -16,6 +17,6 @@ describe('math/addVariadic', () => {
 
 		node.inputs.inputs.setValue([1, 2, 5, 10]);
 		await node.execute();
-		expect(node.outputs.value.value).toStrictEqual(18);
+		expect(node.outputs.value.value).to.equal(18);
 	});
 });

@@ -1,6 +1,6 @@
-import { IObservableValue, makeAutoObservable, observable } from 'mobx';
+import { IObservableValue, makeAutoObservable, observable } from 'mobx/dist/mobx.esm.production.min.js';
 import { ImperativeEditorRef } from '@tokens-studio/graph-editor';
-import { configure } from 'mobx';
+import { configure } from 'mobx/dist/mobx.esm.production.min.js';
 
 configure({
   enforceActions: 'never',

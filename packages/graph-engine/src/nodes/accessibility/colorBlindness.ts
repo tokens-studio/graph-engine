@@ -1,8 +1,10 @@
-import { ColorSchema, StringSchema } from "../../schemas/index.js";
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
-import blinder from "color-blind";
-import chroma from "chroma-js";
+import {
+	ColorSchema,
+	StringSchema
+} from '../../schemas/index.js';
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
+import blinder from 'color-blind-esm';
 
 export enum ColorBlindnessTypes {
 	TRITANOPIA = 'tritanopia',
@@ -61,9 +63,7 @@ export default class NodeDefinition extends Node {
 	execute(): void | Promise<void> {
 		const { type, color } = this.getAllInputs();
 
-		const col = chroma(color).hex();
-
-		let processed = col;
+		let processed = color;
 
 		switch (type) {
 			case ColorBlindnessTypes.TRITANOPIA:

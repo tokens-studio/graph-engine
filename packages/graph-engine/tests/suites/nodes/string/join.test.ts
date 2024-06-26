@@ -1,4 +1,5 @@
 import { Graph } from '../../../../src/graph/graph.js';
+import { expect } from 'chai';
 import Node from '../../../../src/nodes/string/join.js';
 
 describe('string/join', () => {
@@ -11,6 +12,6 @@ describe('string/join', () => {
 
 		await node.execute();
 
-		expect(node.outputs.value.value).toStrictEqual('a,b,c');
+		expect(node.outputs.value.value).to.equal('a,b,c');
 	});
 });

@@ -1,17 +1,17 @@
-import type { SchemaObject } from 'ajv';
-
 export const variadicId = (id: string) => id.replace('.json', '-variadic.json');
+
+export type SchemaObject = {
+	[key: string]: any;
+};
 
 export const createVariadicSchema = baseSchema => {
 	return {
-		//Currently we don't set the id here because we don't want to register this schema. Its likely that its structural and that anything that introspects it attempts to read the id from the baseschema
+		// Currently we don't set the id here because we don't want to register this schema. Its likely that its structural and that anything that introspects it attempts to read the id from the baseschema
 		title: baseSchema.title + '[]',
 		type: 'array',
 		items: baseSchema
 	};
 };
-
-export type { SchemaObject } from 'ajv';
 
 export const NUMBER = 'https://schemas.tokens.studio/number.json';
 export const NumberSchema: SchemaObject = {

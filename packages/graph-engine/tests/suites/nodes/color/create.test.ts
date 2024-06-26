@@ -1,4 +1,5 @@
 import { Graph } from '../../../../src/graph/graph.js';
+import { expect } from 'chai';
 import Node from '../../../../src/nodes/color/create.js';
 
 describe('color/create', () => {
@@ -14,7 +15,7 @@ describe('color/create', () => {
 		await node.execute();
 		const output = node.outputs.value.value;
 
-		expect(output).toStrictEqual('#ffffffff');
+		expect(output).to.equal('#ffffffff');
 	});
 	it('creates the expected color with rgba', async () => {
 		const graph = new Graph();
@@ -28,7 +29,7 @@ describe('color/create', () => {
 
 		await node.execute();
 		const output = node.outputs.value.value;
-		expect(output).toStrictEqual('#ffffff80');
+		expect(output).to.equal('#ffffff80');
 	});
 
 	it('creates the expected color with hsl', async () => {
@@ -43,7 +44,7 @@ describe('color/create', () => {
 		await node.execute();
 		const output = node.outputs.value.value;
 
-		expect(output).toStrictEqual('#ff0000ff');
+		expect(output).to.equal('#ff0000ff');
 	});
 
 	it('creates the expected color with hsv', async () => {
@@ -59,6 +60,6 @@ describe('color/create', () => {
 		await node.execute();
 		const output = node.outputs.value.value;
 
-		expect(output).toStrictEqual('#00e60080');
+		expect(output).to.equal('#00e60080');
 	});
 });

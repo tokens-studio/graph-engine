@@ -1,5 +1,6 @@
 import { Graph } from '../../src/index.js';
 import { NumberSchema } from '../../src/schemas/index.js';
+import { expect } from 'chai';
 import ConstantNode from '../../src/nodes/generic/constant.js';
 import OutputNode from '../../src/nodes/generic/output.js';
 import SubtractNode from '../../src/nodes/math/subtractVariadic.js';
@@ -41,6 +42,6 @@ describe('enqueing', () => {
 			}
 		};
 
-		expect(final.output).toEqual(expected);
+		expect(final.output).to.eql(expected);
 	});
 });

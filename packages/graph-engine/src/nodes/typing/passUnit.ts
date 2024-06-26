@@ -1,4 +1,4 @@
-import valueParser from 'postcss-value-parser';
+import valueParser from 'postcss-value-parser-esm';
 
 import { INodeDefinition, Node } from '../../programmatic/node.js';
 import { StringSchema } from '../../schemas/index.js';

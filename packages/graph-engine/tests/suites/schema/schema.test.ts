@@ -3,14 +3,16 @@ import {
 	AnySchema,
 	NumberSchema
 } from '../../../src/schemas/index.js';
-import Ajv from 'ajv';
-const ajv = new Ajv({ useDefaults: true });
+import { expect } from 'chai';
+import ZSchema from 'z-schema-esm';
+
+const zschema = new ZSchema();
 
 describe('schema', () => {
 	[NumberSchema, AnySchema, AnyArraySchema].forEach(schema => {
 		it(`should validate ${schema.title}`, async () => {
-			const validate = ajv.validateSchema(schema);
-			expect(validate).toBe(true);
+			const validate = zschema.validateSchema(schema);
+			expect(validate).to.be.true;
 		});
 	});
 });
