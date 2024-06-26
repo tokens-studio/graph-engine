@@ -19,7 +19,54 @@ export const TokenSchema: SchemaObject = {
 	}
 };
 
-export const TOKEN_SET = 'https://schemas.tokens.studio/tokenSet.json';
+
+
+export const TOKEN_TYPOGRAPHY = "https://schemas.tokens.studio/tokenTypography.json";
+export const TokenTypographySchema: SchemaObject = {
+  $id: TOKEN_TYPOGRAPHY,
+  title: "Typography Token",
+  type: "object",
+  properties: {
+    fontFamily: StringSchema,
+    fontWeight: StringSchema,
+    fontSize: StringSchema,
+    lineHeight: StringSchema,
+    letterSpacing: StringSchema,
+    paragraphSpacing: StringSchema,
+    textDecoration: StringSchema,
+    textCase: StringSchema,
+  },
+};
+
+export const TOKEN_BORDER = "https://schemas.tokens.studio/tokenBorder.json";
+export const TokenBorderSchema: SchemaObject = {
+  $id: TOKEN_BORDER,
+  title: "Border Token",
+  type: "object",
+  properties: {
+    color: StringSchema,
+    width: StringSchema,
+    style: StringSchema,
+  },
+};
+
+
+export const TOKEN_BOX_SHADOW = "https://schemas.tokens.studio/tokenBoxShadow.json";
+export const TokenBoxShadowSchema: SchemaObject = {
+  $id: TOKEN_BOX_SHADOW,
+  title: "Box Shadow Token",
+  type: "object",
+  properties: {
+    x: StringSchema,
+    y: StringSchema,
+    blur: StringSchema,
+    spread: StringSchema,
+    type: StringSchema
+  },
+};
+
+
+export const TOKEN_SET = "https://schemas.tokens.studio/tokenSet.json";
 export const TokenSetSchema: SchemaObject = {
 	$id: TOKEN_SET,
 	title: 'Token Set',
