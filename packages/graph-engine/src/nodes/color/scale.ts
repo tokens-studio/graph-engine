@@ -28,13 +28,22 @@ export default class NodeDefinition extends Node {
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("color", {
-      type: ColorSchema,
+      type: {
+        ...ColorSchema,
+        default: "#7733dd",
+      },
     });
     this.addInput("stepsUp", {
-      type: NumberSchema,
+      type: {
+        ...NumberSchema,
+        default: 5,
+      }
     });
     this.addInput("stepsDown", {
-      type: NumberSchema,
+      type: {
+        ...NumberSchema,
+        default: 5,
+      },
     });
     this.addOutput("value", {
       type: arrayOf(ColorSchema),
