@@ -12,41 +12,41 @@ export default class NodeDefinition extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-    this.addInput("baseHue", {
-      type: {
-        ...NumberSchema,
-        default: 360,
-      },
-    });
-    this.addInput("angle", {
-      type: {
-        ...NumberSchema,
-        default: 180,
-      },
-    });
-    this.addInput("saturation", {
-      type: {
-        ...NumberSchema,
-        default: 80,
-      },
-    });
-    this.addInput("lightness", {
-      type: {
-        ...NumberSchema,
-        default: 80,
-      },
-    });
-    this.addInput("colors", {
-      type: {
-        ...NumberSchema,
-        default: 8,
-      },
-    });
+		this.addInput('baseHue', {
+			type: {
+				...NumberSchema,
+				default: 360
+			}
+		});
+		this.addInput('angle', {
+			type: {
+				...NumberSchema,
+				default: 180
+			}
+		});
+		this.addInput('saturation', {
+			type: {
+				...NumberSchema,
+				default: 80
+			}
+		});
+		this.addInput('lightness', {
+			type: {
+				...NumberSchema,
+				default: 80
+			}
+		});
+		this.addInput('colors', {
+			type: {
+				...NumberSchema,
+				default: 8
+			}
+		});
 
-    this.addOutput("value", {
-      type: arrayOf(ColorSchema),
-    });
-  }
+		this.addOutput('value', {
+			type: arrayOf(ColorSchema)
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { colors, baseHue, angle, saturation, lightness } =

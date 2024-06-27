@@ -58,9 +58,10 @@ export const colorSpaces = [
 export type ColorSpace = (typeof colorSpaces)[number];
 
 export default class NodeDefinition extends Node {
-  static title = "Create Color";
-  static type = "studio.tokens.color.create";
-  static description = "Creates a color in a given color space with the specified channel values (using the ports a, b, c, etc) and returns it as a hex color string";
+	static title = 'Create Color';
+	static type = 'studio.tokens.color.create';
+	static description =
+		'Creates a color in a given color space with the specified channel values (using the ports a, b, c, etc) and returns it as a hex color string';
 
 	declare inputs: ToInput<{
 		/**
@@ -89,44 +90,44 @@ export default class NodeDefinition extends Node {
 		value: Color;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("space", {
-      type: {
-        ...StringSchema,
-        enum: colorSpaces,
-        default: "rgb",
-      },
-    });
-    this.addInput("a", {
-      type: {
-        ...NumberSchema,
-        default: "0",
-      },
-    });
-    this.addInput("b", {
-      type: {
-        ...NumberSchema,
-        default: "0",
-      },
-    });
-    this.addInput("c", {
-      type: {
-        ...NumberSchema,
-        default: "0",
-      },
-    });
-    this.addInput("d", {
-      type: {
-        ...NumberSchema,
-        default: "1",
-      },
-    });
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('space', {
+			type: {
+				...StringSchema,
+				enum: colorSpaces,
+				default: 'rgb'
+			}
+		});
+		this.addInput('a', {
+			type: {
+				...NumberSchema,
+				default: '0'
+			}
+		});
+		this.addInput('b', {
+			type: {
+				...NumberSchema,
+				default: '0'
+			}
+		});
+		this.addInput('c', {
+			type: {
+				...NumberSchema,
+				default: '0'
+			}
+		});
+		this.addInput('d', {
+			type: {
+				...NumberSchema,
+				default: '1'
+			}
+		});
 
-    this.addOutput("value", {
-      type: ColorSchema,
-    });
-  }
+		this.addOutput('value', {
+			type: ColorSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { a, b, c, d, space } = this.getAllInputs();

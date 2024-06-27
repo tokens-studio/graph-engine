@@ -121,12 +121,14 @@ export const defaultPanelGroupsFactory = (): DropPanelStore => {
               text: CapitalCase(
                 node.title || defaultGroup[defaultGroup.length - 1],
               ),
-              description: node.description
+              description: node.description,
             }),
           );
         });
         return acc;
-      }, {} as Record<string, PanelGroup>),
+      },
+      {} as Record<string, PanelGroup>,
+    ),
   );
 
   return new DropPanelStore(auto);

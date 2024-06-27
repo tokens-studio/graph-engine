@@ -13,19 +13,19 @@ export default class NodeDefinition<T> extends Node {
 		value: T[];
 	}>;
 
-  static description = "Performs an array join using a string delimiter";
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("a", {
-      type: AnyArraySchema,
-    });
-    this.addInput("b", {
-      type: AnyArraySchema,
-    });
-    this.addOutput("value", {
-      type: AnyArraySchema,
-    });
-  }
+	static description = 'Performs an array join using a string delimiter';
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('a', {
+			type: AnyArraySchema
+		});
+		this.addInput('b', {
+			type: AnyArraySchema
+		});
+		this.addOutput('value', {
+			type: AnyArraySchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const a = this.getRawInput('a');

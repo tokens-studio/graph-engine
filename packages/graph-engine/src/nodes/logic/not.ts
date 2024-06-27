@@ -15,15 +15,15 @@ export default class NodeDefinition<T> extends Node {
 		value: boolean;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("value", {
-      type: AnySchema,
-    });
-    this.addOutput("value", {
-      type: BooleanSchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('value', {
+			type: AnySchema
+		});
+		this.addOutput('value', {
+			type: BooleanSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { value } = this.getAllInputs();

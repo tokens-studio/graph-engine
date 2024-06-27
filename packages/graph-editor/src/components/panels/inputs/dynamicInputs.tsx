@@ -70,7 +70,11 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
           />
         </Stack>
         {/* @ts-ignore */}
-        <Select value={inputType} onValueChange={setInputType} style={{ background: 'red' }}  >
+        <Select
+          value={inputType}
+          onValueChange={setInputType}
+          style={{ background: 'red' }}
+        >
           <Select.Trigger label="Type" value={inputType} />
           {/* @ts-expect-error */}
           <Select.Content css={{ maxHeight: '200px' }} position="popper">
@@ -86,8 +90,10 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
 
         <Stack gap={3} align="center">
           <Label>Is an array?</Label>
-          <Checkbox onCheckedChange={(v) => setAsArray(Boolean(v))} checked={asArray} />
-
+          <Checkbox
+            onCheckedChange={(v) => setAsArray(Boolean(v))}
+            checked={asArray}
+          />
         </Stack>
 
         {inputType === STRING && (

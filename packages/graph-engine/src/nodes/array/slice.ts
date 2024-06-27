@@ -6,29 +6,29 @@ export default class NodeDefinition<T> extends Node {
 	static type = 'studio.tokens.array.slice';
 	static description = 'Slices an input array';
 
-  declare inputs: ToInput<{
-    array: T[];
-    start: number;
-    end: number;
-  }>;
-  declare outputs: ToOutput<{
-    value: T[];
-  }>;
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("array", {
-      type: AnyArraySchema,
-    });
-    this.addInput("start", {
-      type: NumberSchema,
-    });
-    this.addInput("end", {
-      type: NumberSchema,
-    });
-    this.addOutput("value", {
-      type: AnyArraySchema,
-    });
-  }
+	declare inputs: ToInput<{
+		array: T[];
+		start: number;
+		end: number;
+	}>;
+	declare outputs: ToOutput<{
+		value: T[];
+	}>;
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('array', {
+			type: AnyArraySchema
+		});
+		this.addInput('start', {
+			type: NumberSchema
+		});
+		this.addInput('end', {
+			type: NumberSchema
+		});
+		this.addOutput('value', {
+			type: AnyArraySchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { start, end } = this.getAllInputs();

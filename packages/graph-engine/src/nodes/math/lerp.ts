@@ -18,30 +18,30 @@ export default class NodeDefinition extends Node {
 		value: number;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("a", {
-      type: {
-        ...NumberSchema,
-        default: 0,
-      },
-    });
-    this.addInput("b", {
-      type: {
-        ...NumberSchema,
-        default: 0,
-      },
-    });
-    this.addInput("t", {
-      type: {
-        ...NumberSchema,
-        default: 0,
-      },
-    });
-    this.addOutput("value", {
-      type: NumberSchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('a', {
+			type: {
+				...NumberSchema,
+				default: 0
+			}
+		});
+		this.addInput('b', {
+			type: {
+				...NumberSchema,
+				default: 0
+			}
+		});
+		this.addInput('t', {
+			type: {
+				...NumberSchema,
+				default: 0
+			}
+		});
+		this.addOutput('value', {
+			type: NumberSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { a, b, t } = this.getAllInputs();

@@ -10,8 +10,8 @@ export default class NodeDefinition extends Node {
 	constructor(props) {
 		super(props);
 
-        this.addInput("value", {
-            type: StringSchema,
-        });
-    }
+		this.addInput('value', {
+			type: StringSchema
+		});
+	}
 }

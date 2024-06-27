@@ -26,26 +26,26 @@ export default class NodeDefinition<T> extends Node {
 		value: boolean;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("a", {
-      type: AnySchema,
-    });
-    this.addInput("b", {
-      type: AnySchema,
-    });
-    this.addInput("operator", {
-      type: {
-        ...StringSchema,
-        enum: Object.values(Operator),
-        default: Operator.EQUAL,
-      },
-    });
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('a', {
+			type: AnySchema
+		});
+		this.addInput('b', {
+			type: AnySchema
+		});
+		this.addInput('operator', {
+			type: {
+				...StringSchema,
+				enum: Object.values(Operator),
+				default: Operator.EQUAL
+			}
+		});
 
-    this.addOutput("value", {
-      type: BooleanSchema,
-    });
-  }
+		this.addOutput('value', {
+			type: BooleanSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { operator, a, b } = this.getAllInputs();

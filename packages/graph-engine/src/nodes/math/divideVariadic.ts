@@ -7,25 +7,25 @@ export default class NodeDefinition extends Node {
 	static type = 'studio.tokens.math.divideVariadic';
 	static description = 'Divide node allows you to divide two or more numbers.';
 
-  declare inputs: ToInput<{
-    inputs: number[];
-  }>;
-  declare outputs: ToOutput<{
-    value: number;
-  }>;
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("inputs", {
-      type: {
-        ...createVariadicSchema(NumberSchema),
-        default: [],
-      },
-      variadic: true,
-    });
-    this.addOutput("value", {
-      type: NumberSchema,
-    });
-  }
+	declare inputs: ToInput<{
+		inputs: number[];
+	}>;
+	declare outputs: ToOutput<{
+		value: number;
+	}>;
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('inputs', {
+			type: {
+				...createVariadicSchema(NumberSchema),
+				default: []
+			},
+			variadic: true
+		});
+		this.addOutput('value', {
+			type: NumberSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const inputs = this.getInput('inputs') as number[];

@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.4% </span>
+                <span class="strong">22.85% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>44/188</span>
+                <span class='fraction'>40/175</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.4% </span>
+                <span class="strong">22.85% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>44/188</span>
+                <span class='fraction'>40/175</span>
             </div>
         
             
@@ -238,24 +238,7 @@
 <a name='L173'></a><a href='#L173'>173</a>
 <a name='L174'></a><a href='#L174'>174</a>
 <a name='L175'></a><a href='#L175'>175</a>
-<a name='L176'></a><a href='#L176'>176</a>
-<a name='L177'></a><a href='#L177'>177</a>
-<a name='L178'></a><a href='#L178'>178</a>
-<a name='L179'></a><a href='#L179'>179</a>
-<a name='L180'></a><a href='#L180'>180</a>
-<a name='L181'></a><a href='#L181'>181</a>
-<a name='L182'></a><a href='#L182'>182</a>
-<a name='L183'></a><a href='#L183'>183</a>
-<a name='L184'></a><a href='#L184'>184</a>
-<a name='L185'></a><a href='#L185'>185</a>
-<a name='L186'></a><a href='#L186'>186</a>
-<a name='L187'></a><a href='#L187'>187</a>
-<a name='L188'></a><a href='#L188'>188</a>
-<a name='L189'></a><a href='#L189'>189</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<a name='L176'></a><a href='#L176'>176</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
@@ -278,10 +261,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
@@ -302,12 +281,6 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -356,6 +329,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -449,31 +423,23 @@ import {
 	NumberSchema,
 	StringSchema
 } from '../../schemas/index.js';
+import { ContrastAlgorithm } from '../../types/index.js';
 import { INodeDefinition, Node } from '../../programmatic/node.js';
 import { Input, Output } from '../../programmatic/index.js';
 import { flattenAlpha } from './lib/flattenAlpha.js';
 import Color from 'colorjs.io';
 &nbsp;
-export enum WcagVersion {
-	V2 = '2.1',
-	V3 = '3.0'
-}
-&nbsp;
 export const contrastCheck = <span class="fstat-no" title="function not covered" >(</span>
 <span class="cstat-no" title="statement not covered" >	foreground: Color,</span>
 <span class="cstat-no" title="statement not covered" >	background: Color,</span>
-<span class="cstat-no" title="statement not covered" >	wcag: WcagVersion</span>
+<span class="cstat-no" title="statement not covered" >	algorithm</span>
 <span class="cstat-no" title="statement not covered" >): number =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >	if (wcag == WcagVersion.V2) {</span>
-<span class="cstat-no" title="statement not covered" >		return foreground.contrast(background, 'WCAG21');</span>
-<span class="cstat-no" title="statement not covered" >	} else {</span>
-<span class="cstat-no" title="statement not covered" >		return Math.abs(foreground.contrast(background, 'APCA'));</span>
-<span class="cstat-no" title="statement not covered" >	}</span>
+<span class="cstat-no" title="statement not covered" >	return Math.abs(foreground.contrast(background, algorithm));</span>
 <span class="cstat-no" title="statement not covered" >};</span>
 &nbsp;
 export default class NodeDefinition extends Node {
 	static title = 'Contrasting Alpha';
-	static type = 'studio.tokens.color.contrasting';
+	static type = 'studio.tokens.color.contrastingAlpha';
 	static description = 'Reduce alpha until you are close to the threshold.';
 &nbsp;
 	declare inputs: {
@@ -497,29 +463,26 @@ export default class NodeDefinition extends Node {
 <span class="cstat-no" title="statement not covered" >			type: {</span>
 <span class="cstat-no" title="statement not covered" >				...ColorSchema,</span>
 <span class="cstat-no" title="statement not covered" >				default: '#000000'</span>
-<span class="cstat-no" title="statement not covered" >			},</span>
-<span class="cstat-no" title="statement not covered" >			visible: true</span>
+<span class="cstat-no" title="statement not covered" >			}</span>
 <span class="cstat-no" title="statement not covered" >		});</span>
 <span class="cstat-no" title="statement not covered" >		this.addInput('background', {</span>
 <span class="cstat-no" title="statement not covered" >			type: {</span>
 <span class="cstat-no" title="statement not covered" >				...ColorSchema,</span>
 <span class="cstat-no" title="statement not covered" >				default: '#ffffff'</span>
-<span class="cstat-no" title="statement not covered" >			},</span>
-<span class="cstat-no" title="statement not covered" >			visible: true</span>
+<span class="cstat-no" title="statement not covered" >			}</span>
 <span class="cstat-no" title="statement not covered" >		});</span>
-<span class="cstat-no" title="statement not covered" >		this.addInput('wcag', {</span>
+<span class="cstat-no" title="statement not covered" >		this.addInput('algorithm', {</span>
 <span class="cstat-no" title="statement not covered" >			type: {</span>
 <span class="cstat-no" title="statement not covered" >				...StringSchema,</span>
-<span class="cstat-no" title="statement not covered" >				enum: Object.values(WcagVersion),</span>
-<span class="cstat-no" title="statement not covered" >				default: WcagVersion.V3</span>
+<span class="cstat-no" title="statement not covered" >				enum: Object.values(ContrastAlgorithm),</span>
+<span class="cstat-no" title="statement not covered" >				default: ContrastAlgorithm.APCA</span>
 <span class="cstat-no" title="statement not covered" >			}</span>
 <span class="cstat-no" title="statement not covered" >		});</span>
 <span class="cstat-no" title="statement not covered" >		this.addInput('threshold', {</span>
 <span class="cstat-no" title="statement not covered" >			type: {</span>
 <span class="cstat-no" title="statement not covered" >				...NumberSchema,</span>
 <span class="cstat-no" title="statement not covered" >				default: 60</span>
-<span class="cstat-no" title="statement not covered" >			},</span>
-<span class="cstat-no" title="statement not covered" >			visible: true</span>
+<span class="cstat-no" title="statement not covered" >			}</span>
 <span class="cstat-no" title="statement not covered" >		});</span>
 <span class="cstat-no" title="statement not covered" >		this.addInput('precision', {</span>
 <span class="cstat-no" title="statement not covered" >			type: {</span>
@@ -530,21 +493,18 @@ export default class NodeDefinition extends Node {
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >		// Outputs</span>
 <span class="cstat-no" title="statement not covered" >		this.addOutput('alpha', {</span>
-<span class="cstat-no" title="statement not covered" >			type: NumberSchema,</span>
-<span class="cstat-no" title="statement not covered" >			visible: true</span>
+<span class="cstat-no" title="statement not covered" >			type: NumberSchema</span>
 <span class="cstat-no" title="statement not covered" >		});</span>
 <span class="cstat-no" title="statement not covered" >		this.addOutput('color', {</span>
-<span class="cstat-no" title="statement not covered" >			type: ColorSchema,</span>
-<span class="cstat-no" title="statement not covered" >			visible: true</span>
+<span class="cstat-no" title="statement not covered" >			type: ColorSchema</span>
 <span class="cstat-no" title="statement not covered" >		});</span>
 <span class="cstat-no" title="statement not covered" >		this.addOutput('contrast', {</span>
-<span class="cstat-no" title="statement not covered" >			type: NumberSchema,</span>
-<span class="cstat-no" title="statement not covered" >			visible: true</span>
+<span class="cstat-no" title="statement not covered" >			type: NumberSchema</span>
 <span class="cstat-no" title="statement not covered" >		});</span>
 <span class="cstat-no" title="statement not covered" >	}</span>
 &nbsp;
 <span class="fstat-no" title="function not covered" >	execute(): void | Promise&lt;void&gt; {</span>
-<span class="cstat-no" title="statement not covered" >		const { wcag, foreground, background, threshold, precision } =</span>
+<span class="cstat-no" title="statement not covered" >		const { algorithm, foreground, background, threshold, precision } =</span>
 <span class="cstat-no" title="statement not covered" >			this.getAllInputs();</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >		const binarySearchAlpha = (</span>
@@ -567,7 +527,7 @@ export default class NodeDefinition extends Node {
 <span class="cstat-no" title="statement not covered" >			// Convert blended color back to Color object and then to hex string</span>
 <span class="cstat-no" title="statement not covered" >			const solidColor = flattenAlpha(fg, bg);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >			currentContrast = contrastCheck(solidColor, bg, wcag);</span>
+<span class="cstat-no" title="statement not covered" >			currentContrast = contrastCheck(solidColor, bg, algorithm);</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >			if (currentContrast &gt;= targetContrast) {</span>
 <span class="cstat-no" title="statement not covered" >				return binarySearchAlpha(</span>
@@ -592,7 +552,11 @@ export default class NodeDefinition extends Node {
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >		const foregroundColor = new Color(foreground);</span>
 <span class="cstat-no" title="statement not covered" >		const backgroundColor = new Color(background);</span>
-<span class="cstat-no" title="statement not covered" >		let currentContrast = contrastCheck(foregroundColor, backgroundColor, wcag);</span>
+<span class="cstat-no" title="statement not covered" >		let currentContrast = contrastCheck(</span>
+<span class="cstat-no" title="statement not covered" >			foregroundColor,</span>
+<span class="cstat-no" title="statement not covered" >			backgroundColor,</span>
+<span class="cstat-no" title="statement not covered" >			algorithm</span>
+<span class="cstat-no" title="statement not covered" >		);</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >		if (currentContrast &lt;= threshold) {</span>
 <span class="cstat-no" title="statement not covered" >			this.setOutput('alpha', 1);</span>
@@ -615,12 +579,9 @@ export default class NodeDefinition extends Node {
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >		foregroundColor.alpha = finalAlpha;</span>
 <span class="cstat-no" title="statement not covered" >		const finalColor = flattenAlpha(foregroundColor, backgroundColor);</span>
-<span class="cstat-no" title="statement not covered" >		let finalContrast;</span>
-<span class="cstat-no" title="statement not covered" >		if (wcag == WcagVersion.V2) {</span>
-<span class="cstat-no" title="statement not covered" >			finalContrast = finalColor.contrast(backgroundColor, 'WCAG21');</span>
-<span class="cstat-no" title="statement not covered" >		} else {</span>
-<span class="cstat-no" title="statement not covered" >			finalContrast = Math.abs(finalColor.contrast(backgroundColor, 'APCA'));</span>
-<span class="cstat-no" title="statement not covered" >		}</span>
+<span class="cstat-no" title="statement not covered" >		const finalContrast = Math.abs(</span>
+<span class="cstat-no" title="statement not covered" >			finalColor.contrast(backgroundColor, algorithm)</span>
+<span class="cstat-no" title="statement not covered" >		);</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >		this.setOutput('alpha', finalAlpha);</span>
 <span class="cstat-no" title="statement not covered" >		this.setOutput('color', finalColor.to('srgb').toString({ format: 'hex' }));</span>
@@ -634,7 +595,7 @@ export default class NodeDefinition extends Node {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-26T12:27:00.514Z
+                at 2024-06-27T10:43:44.682Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

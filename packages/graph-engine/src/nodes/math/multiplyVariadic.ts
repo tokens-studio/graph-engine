@@ -8,25 +8,25 @@ export default class NodeDefinition extends Node {
 	static description =
 		'Multiply node allows you to multiply two or more numbers.';
 
-  declare inputs: ToInput<{
-    inputs: number[];
-  }>;
-  declare outputs: ToOutput<{
-    value: number;
-  }>;
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("inputs", {
-      type: {
-        ...createVariadicSchema(NumberSchema),
-        default: [],
-      },
-      variadic: true,
-    });
-    this.addOutput("value", {
-      type: NumberSchema,
-    });
-  }
+	declare inputs: ToInput<{
+		inputs: number[];
+	}>;
+	declare outputs: ToOutput<{
+		value: number;
+	}>;
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('inputs', {
+			type: {
+				...createVariadicSchema(NumberSchema),
+				default: []
+			},
+			variadic: true
+		});
+		this.addOutput('value', {
+			type: NumberSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const inputs = this.getInput('inputs') as number[];

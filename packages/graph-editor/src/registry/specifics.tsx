@@ -17,12 +17,8 @@ import { useSelector } from 'react-redux';
 import React, { useCallback } from 'react';
 
 const SubgraphExplorer = ({ node }) => {
-
-  const dockerRef = useSelector(
-    dockerSelector,
-  );
+  const dockerRef = useSelector(dockerSelector);
   const onToggle = useCallback(() => {
-
     if (!dockerRef?.current) {
       return;
     }
@@ -30,18 +26,19 @@ const SubgraphExplorer = ({ node }) => {
     let oneShot = false;
     const innerGraph = node._innerGraph;
     const graphId = innerGraph.annotations['engine.id'];
-    const title = node.annotations[annotatedTitle] || innerGraph.annotations['engine.title'] || 'Subgraph';
+    const title =
+      node.annotations[annotatedTitle] ||
+      innerGraph.annotations['engine.title'] ||
+      'Subgraph';
     //Find the container
     const existing = dockerRef.current.find(graphId);
-
 
     const ref = (o: ImperativeEditorRef) => {
       if (o && !oneShot) {
         o.load(innerGraph);
-        oneShot = true
+        oneShot = true;
       }
-
-    }
+    };
 
     if (!existing) {
       const newTab = {
@@ -63,11 +60,12 @@ const SubgraphExplorer = ({ node }) => {
     }
   }, [dockerRef, node._innerGraph]);
 
-
-
-  return <Button variant="primary" icon={<EyeSolid />} onClick={onToggle}>Subgraph Explorer</Button>
-
-}
+  return (
+    <Button variant="primary" icon={<EyeSolid />} onClick={onToggle}>
+      Subgraph Explorer
+    </Button>
+  );
+};
 
 const ColorComparePreview = observer(({ node }: { node: Node }) => {
   return (

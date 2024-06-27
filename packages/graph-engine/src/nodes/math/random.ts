@@ -12,15 +12,15 @@ export default class NodeDefinition extends Node {
 		value: number;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addOutput("value", {
-      type: {
-        ...NumberSchema,
-        default: Math.random(),
-      },
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addOutput('value', {
+			type: {
+				...NumberSchema,
+				default: Math.random()
+			}
+		});
+	}
 
 	execute(): void | Promise<void> {
 		//Noop, random is generated on node creation

@@ -20,12 +20,12 @@ export default class NodeDefinition extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-    this.annotations[annotatedDynamicInputs] = true;
-    //Purely runtime inputs
-    this.addOutput("value", {
-      type: ObjectSchema,
-    });
-  }
+		this.annotations[annotatedDynamicInputs] = true;
+		//Purely runtime inputs
+		this.addOutput('value', {
+			type: ObjectSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const finalType = {

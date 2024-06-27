@@ -10,21 +10,21 @@ export default class NodeDefinition<T> extends Node {
 	static type = 'studio.tokens.generic.passthrough';
 	static description = 'Passes a value through to the output';
 
-  declare inputs: ToInput<{
-    value: T;
-  }>;
-  declare outputs: ToOutput<{
-    value: T;
-  }>;
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("value", {
-      type: AnySchema,
-    });
-    this.addOutput("value", {
-      type: AnySchema,
-    });
-  }
+	declare inputs: ToInput<{
+		value: T;
+	}>;
+	declare outputs: ToOutput<{
+		value: T;
+	}>;
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('value', {
+			type: AnySchema
+		});
+		this.addOutput('value', {
+			type: AnySchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const input = this.getRawInput('value');

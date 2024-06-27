@@ -27,22 +27,22 @@ export default class NodeDefinition<T> extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-        this.addInput("value", {
-            type: AnySchema,
-        });
-        this.addInput("delay", {
-            type: {
-                ...NumberSchema,
-                default: 1000
-            },
-        });
-        this.addOutput("value", {
-            type: AnySchema,
-        });
-    }
-    async execute() {
-        const { delay } = this.getAllInputs();
-        const raw = this.getRawInput("value");
+		this.addInput('value', {
+			type: AnySchema
+		});
+		this.addInput('delay', {
+			type: {
+				...NumberSchema,
+				default: 1000
+			}
+		});
+		this.addOutput('value', {
+			type: AnySchema
+		});
+	}
+	async execute() {
+		const { delay } = this.getAllInputs();
+		const raw = this.getRawInput('value');
 
 		return new Promise<void>(resolve => {
 			setTimeout(() => {

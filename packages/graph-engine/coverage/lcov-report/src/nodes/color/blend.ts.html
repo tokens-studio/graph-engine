@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>96/96</span>
+                <span class='fraction'>81/81</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>96/96</span>
+                <span class='fraction'>81/81</span>
             </div>
         
             
@@ -144,22 +144,7 @@
 <a name='L79'></a><a href='#L79'>79</a>
 <a name='L80'></a><a href='#L80'>80</a>
 <a name='L81'></a><a href='#L81'>81</a>
-<a name='L82'></a><a href='#L82'>82</a>
-<a name='L83'></a><a href='#L83'>83</a>
-<a name='L84'></a><a href='#L84'>84</a>
-<a name='L85'></a><a href='#L85'>85</a>
-<a name='L86'></a><a href='#L86'>86</a>
-<a name='L87'></a><a href='#L87'>87</a>
-<a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a>
-<a name='L93'></a><a href='#L93'>93</a>
-<a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a>
-<a name='L96'></a><a href='#L96'>96</a>
-<a name='L97'></a><a href='#L97'>97</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<a name='L82'></a><a href='#L82'>82</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
@@ -175,14 +160,6 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
@@ -236,15 +213,8 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
@@ -268,29 +238,21 @@ import {
 import { Color as ColorType } from '../../types.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
-import { modifyColor } from './lib/modifyColor.js';
-import Color from 'colorjs.io';
+import { convertModifiedColorToHex } from './lib/modifyColor.js';
 &nbsp;
 export { ColorModifierTypes } from '@tokens-studio/types';
-&nbsp;
-function convertModifiedColorToHex(baseColor: string, modifier: ColorModifier) {
-	let returnedColor = baseColor;
-	returnedColor = modifyColor(baseColor, modifier);
-	const returnedColorInSpace = new Color(returnedColor);
-	return returnedColorInSpace.to('srgb').toString({ format: 'hex' });
-}
 &nbsp;
 export default class NodeDefinition extends Node {
 	static title = 'Blend Colors';
 	static type = 'studio.tokens.color.blend';
-	static description = 'Blends two colors together';
+	static description =
+		'Blends two colors together based on a specified modifier. The output is a hex color string. The modifier can be used to lighten, darken, saturate, desaturate, or mix the two colors together.';
 &nbsp;
 	declare inputs: ToInput&lt;{
 		color: ColorType;
-		mixColor: ColorType;
 		value: number;
-		space: ColorSpaceTypes;
 		modifierType: ColorModifierTypes;
+		space: ColorSpaceTypes;
 	}&gt;;
 &nbsp;
 	declare outputs: ToOutput&lt;{
@@ -300,13 +262,9 @@ export default class NodeDefinition extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('color', {
-			type: ColorSchema,
-			visible: true
-		});
-		this.addInput('mixColor', {
 			type: {
 				...ColorSchema,
-				description: 'Mixing color'
+				default: '#ffffff'
 			}
 		});
 		this.addInput('value', {
@@ -314,6 +272,13 @@ export default class NodeDefinition extends Node {
 				...NumberSchema,
 				default: 0.5,
 				description: 'Value to apply to the modifier'
+			}
+		});
+		this.addInput('modifierType', {
+			type: {
+				...StringSchema,
+				default: ColorModifierTypes.DARKEN,
+				enum: Object.values(ColorModifierTypes)
 			}
 		});
 		this.addInput('space', {
@@ -324,27 +289,17 @@ export default class NodeDefinition extends Node {
 				description: 'The color space we are operating in'
 			}
 		});
-		this.addInput('modifierType', {
-			type: {
-				...StringSchema,
-				default: ColorModifierTypes.DARKEN,
-				enum: Object.values(ColorModifierTypes),
-				description: 'The color space we are operating in'
-			}
-		});
 &nbsp;
 		this.addOutput('value', {
-			type: ColorSchema,
-			visible: true
+			type: ColorSchema
 		});
 	}
 &nbsp;
 	execute(): void | Promise&lt;void&gt; {
-		const { modifierType, mixColor, space, value, color } = this.getAllInputs();
+		const { modifierType, space, value, color } = this.getAllInputs();
 &nbsp;
 		const converted = convertModifiedColorToHex(color, {
 			type: modifierType,
-			color: mixColor,
 			space,
 			value
 		} as ColorModifier);
@@ -358,7 +313,7 @@ export default class NodeDefinition extends Node {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-26T12:27:00.514Z
+                at 2024-06-27T10:43:44.682Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

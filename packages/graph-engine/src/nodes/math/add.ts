@@ -10,28 +10,28 @@ import { NumberSchema } from '../../schemas/index.js';
  * ```
  */
 export default class NodeDefinition extends Node {
-  static title = "Add";
-  static type = "studio.tokens.math.add";
-  static description = "Add node allows you to add two numbers.";
-  declare inputs: ToInput<{
-    a: number;
-    b: number;
-  }>;
-  declare outputs: ToOutput<{
-    value: number;
-  }>;
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("a", {
-      type: NumberSchema,
-    });
-    this.addInput("b", {
-      type: NumberSchema,
-    });
-    this.addOutput("value", {
-      type: NumberSchema,
-    });
-  }
+	static title = 'Add';
+	static type = 'studio.tokens.math.add';
+	static description = 'Add node allows you to add two numbers.';
+	declare inputs: ToInput<{
+		a: number;
+		b: number;
+	}>;
+	declare outputs: ToOutput<{
+		value: number;
+	}>;
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('a', {
+			type: NumberSchema
+		});
+		this.addInput('b', {
+			type: NumberSchema
+		});
+		this.addOutput('value', {
+			type: NumberSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { a, b } = this.getAllInputs();

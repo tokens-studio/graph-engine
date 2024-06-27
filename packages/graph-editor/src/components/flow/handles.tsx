@@ -46,17 +46,12 @@ export const HandleContainer = ({
       <Stack
         direction="column"
         gap={2}
-<<<<<<< HEAD
-        css={{ flexBasis: full ? '100%' : '50%', position: 'relative', textAlign: type === 'source' ? 'right' : 'left', minWidth: isSmall ? 'auto' : '250px' }}
-=======
         css={{
           flexBasis: full ? '100%' : '50%',
           position: 'relative',
           textAlign: type === 'source' ? 'right' : 'left',
           minWidth: isSmall ? 'auto' : '250px',
         }}
-        justify="center"
->>>>>>> chore: fix linting and formatting issues
         className={className}
       >
         {children}

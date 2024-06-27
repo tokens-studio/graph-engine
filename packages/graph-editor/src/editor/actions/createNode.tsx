@@ -9,16 +9,10 @@ export type NodeRequest = {
 };
 
 export interface ICreateNode {
-<<<<<<< HEAD
-  reactFlowInstance: ReactFlowInstance,
-  graph: Graph,
-  nodeLookup: Record<string, NodeFactory>,
-  iconLookup: Record<string, string>,
-=======
   reactFlowInstance: ReactFlowInstance;
   graph: Graph;
   nodeLookup: Record<string, NodeFactory>;
->>>>>>> chore: fix linting and formatting issues
+  iconLookup: Record<string, string>;
   /**
    * If a customized node would be created in the editor, it would be created using this UI lookup.
    * This takes a node type such as 'studio.tokens.math.add' as a key and a string of the custom node type as a value.

@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">48.68% </span>
+                <span class="strong">44.04% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>37/76</span>
+                <span class='fraction'>37/84</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">48.68% </span>
+                <span class="strong">44.04% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>37/76</span>
+                <span class='fraction'>37/84</span>
             </div>
         
             
@@ -139,7 +139,15 @@
 <a name='L74'></a><a href='#L74'>74</a>
 <a name='L75'></a><a href='#L75'>75</a>
 <a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
@@ -197,8 +205,16 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -261,16 +277,22 @@ export default class NodeDefinition extends Node {
 <span class="fstat-no" title="function not covered" >	constructor(props: INodeDefinition) {</span>
 <span class="cstat-no" title="statement not covered" >		super(props);</span>
 <span class="cstat-no" title="statement not covered" >		this.addInput('curve', {</span>
-<span class="cstat-no" title="statement not covered" >			type: CurveSchema,</span>
-<span class="cstat-no" title="statement not covered" >			visible: true</span>
+<span class="cstat-no" title="statement not covered" >			type: CurveSchema</span>
 <span class="cstat-no" title="statement not covered" >		});</span>
 <span class="cstat-no" title="statement not covered" >		this.addInput('sample', {</span>
-<span class="cstat-no" title="statement not covered" >			type: NumberSchema,</span>
-<span class="cstat-no" title="statement not covered" >			visible: true</span>
+<span class="cstat-no" title="statement not covered" >			type: {</span>
+<span class="cstat-no" title="statement not covered" >				...NumberSchema,</span>
+<span class="cstat-no" title="statement not covered" >				default: 0.5</span>
+<span class="cstat-no" title="statement not covered" >			}</span>
 <span class="cstat-no" title="statement not covered" >		});</span>
 <span class="cstat-no" title="statement not covered" >		this.addOutput('value', {</span>
-<span class="cstat-no" title="statement not covered" >			type: Vec2Schema,</span>
-<span class="cstat-no" title="statement not covered" >			visible: true</span>
+<span class="cstat-no" title="statement not covered" >			type: Vec2Schema</span>
+<span class="cstat-no" title="statement not covered" >		});</span>
+<span class="cstat-no" title="statement not covered" >		this.addOutput('x', {</span>
+<span class="cstat-no" title="statement not covered" >			type: NumberSchema</span>
+<span class="cstat-no" title="statement not covered" >		});</span>
+<span class="cstat-no" title="statement not covered" >		this.addOutput('y', {</span>
+<span class="cstat-no" title="statement not covered" >			type: NumberSchema</span>
 <span class="cstat-no" title="statement not covered" >		});</span>
 <span class="cstat-no" title="statement not covered" >	}</span>
 &nbsp;
@@ -289,6 +311,8 @@ export default class NodeDefinition extends Node {
 <span class="cstat-no" title="statement not covered" >		const output = sampleBezier(foundCurve, sample);</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >		this.setOutput('value', output);</span>
+<span class="cstat-no" title="statement not covered" >		this.setOutput('x', output[0]);</span>
+<span class="cstat-no" title="statement not covered" >		this.setOutput('y', output[1]);</span>
 <span class="cstat-no" title="statement not covered" >	}</span>
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -298,7 +322,7 @@ export default class NodeDefinition extends Node {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-26T12:27:00.514Z
+                at 2024-06-27T10:43:44.682Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

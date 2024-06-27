@@ -22,19 +22,19 @@ export default class NodeDefinition extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-    this.addInput("functionName", {
-      type: {
-        ...StringSchema,
-        enum: FUNCTION_NAMES,
-      },
-    });
-    this.addInput("value", {
-      type: StringSchema,
-    });
-    this.addOutput("value", {
-      type: StringSchema,
-    });
-  }
+		this.addInput('functionName', {
+			type: {
+				...StringSchema,
+				enum: FUNCTION_NAMES
+			}
+		});
+		this.addInput('value', {
+			type: StringSchema
+		});
+		this.addOutput('value', {
+			type: StringSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { functionName, value } = this.getAllInputs();

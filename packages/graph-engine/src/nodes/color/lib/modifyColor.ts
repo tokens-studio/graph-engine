@@ -37,9 +37,12 @@ export function modifyColor(
 	return returnedColor.toString({ inGamut: true, precision: 3 });
 }
 
-export function convertModifiedColorToHex(baseColor: string, modifier: ColorModifier) {
-  let returnedColor = baseColor;
-  returnedColor = modifyColor(baseColor, modifier);
-  const returnedColorInSpace = new Color(returnedColor);
-  return returnedColorInSpace.to("srgb").toString({ format: "hex" });
+export function convertModifiedColorToHex(
+	baseColor: string,
+	modifier: ColorModifier
+) {
+	let returnedColor = baseColor;
+	returnedColor = modifyColor(baseColor, modifier);
+	const returnedColorInSpace = new Color(returnedColor);
+	return returnedColorInSpace.to('srgb').toString({ format: 'hex' });
 }

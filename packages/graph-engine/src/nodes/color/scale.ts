@@ -22,7 +22,7 @@ export default class NodeDefinition extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('color', {
-			type: ColorSchema,
+			type: ColorSchema
 		});
 		this.addInput('stepsUp', {
 			type: NumberSchema
@@ -31,7 +31,7 @@ export default class NodeDefinition extends Node {
 			type: NumberSchema
 		});
 		this.addOutput('value', {
-			type: arrayOf(ColorSchema),
+			type: arrayOf(ColorSchema)
 		});
 	}
 

@@ -4,155 +4,172 @@
  * @packageDocumentation
  */
 import {
-  ColorSchema,
-  NumberSchema,
-  StringSchema,
-} from "../../schemas/index.js";
-import { ContrastAlgorithm } from "../../types/index.js";
-import { INodeDefinition, Node } from "../../programmatic/node.js";
-import { Input, Output } from "../../programmatic/index.js";
-import { flattenAlpha } from "./lib/flattenAlpha.js";
-import Color from "colorjs.io";
+	ColorSchema,
+	NumberSchema,
+	StringSchema
+} from '../../schemas/index.js';
+import { ContrastAlgorithm } from '../../types/index.js';
+import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { Input, Output } from '../../programmatic/index.js';
+import { flattenAlpha } from './lib/flattenAlpha.js';
+import Color from 'colorjs.io';
 
-
-export const contrastCheck = (foreground: Color, background: Color, algorithm): number => {
-  return Math.abs(foreground.contrast(background, algorithm));
-}
+export const contrastCheck = (
+	foreground: Color,
+	background: Color,
+	algorithm
+): number => {
+	return Math.abs(foreground.contrast(background, algorithm));
+};
 
 export default class NodeDefinition extends Node {
-  static title = "Contrasting Alpha";
-  static type = "studio.tokens.color.contrastingAlpha";
-  static description = "Reduce alpha until you are close to the threshold.";
+	static title = 'Contrasting Alpha';
+	static type = 'studio.tokens.color.contrastingAlpha';
+	static description = 'Reduce alpha until you are close to the threshold.';
 
-  declare inputs: {
-    a: Input;
-    b: Input;
-    background: Input;
-    wcag: Input;
-    threshold: Input<number>;
-  };
-  declare outputs: {
-    color: Output;
-    sufficient: Output<boolean>;
-    contrast: Output<number>;
-  };
+	declare inputs: {
+		a: Input;
+		b: Input;
+		background: Input;
+		wcag: Input;
+		threshold: Input<number>;
+	};
+	declare outputs: {
+		color: Output;
+		sufficient: Output<boolean>;
+		contrast: Output<number>;
+	};
 
-  constructor(props: INodeDefinition) {
-    super(props);
+	constructor(props: INodeDefinition) {
+		super(props);
 
-    // Inputs
-    this.addInput("foreground", {
-      type: {
-        ...ColorSchema,
-        default: "#000000",
-      },
-    });
-    this.addInput("background", {
-      type: {
-        ...ColorSchema,
-        default: "#ffffff",
-      },
-    });
-    this.addInput("algorithm", {
-      type: {
-        ...StringSchema,
-        enum: Object.values(ContrastAlgorithm),
-        default: ContrastAlgorithm.APCA,
-      },
-    });
-    this.addInput("threshold", {
-      type: {
-        ...NumberSchema,
-        default: 60,
-      },
-    });
-    this.addInput("precision", {
-      type: {
-        ...NumberSchema,
-        default: 5,
-      },
-    });
+		// Inputs
+		this.addInput('foreground', {
+			type: {
+				...ColorSchema,
+				default: '#000000'
+			}
+		});
+		this.addInput('background', {
+			type: {
+				...ColorSchema,
+				default: '#ffffff'
+			}
+		});
+		this.addInput('algorithm', {
+			type: {
+				...StringSchema,
+				enum: Object.values(ContrastAlgorithm),
+				default: ContrastAlgorithm.APCA
+			}
+		});
+		this.addInput('threshold', {
+			type: {
+				...NumberSchema,
+				default: 60
+			}
+		});
+		this.addInput('precision', {
+			type: {
+				...NumberSchema,
+				default: 5
+			}
+		});
 
-    // Outputs
-    this.addOutput("alpha", {
-      type: NumberSchema,
-    });
-    this.addOutput("color", {
-      type: ColorSchema,
-    });
-    this.addOutput("contrast", {
-      type: NumberSchema,
-    });
-  }
+		// Outputs
+		this.addOutput('alpha', {
+			type: NumberSchema
+		});
+		this.addOutput('color', {
+			type: ColorSchema
+		});
+		this.addOutput('contrast', {
+			type: NumberSchema
+		});
+	}
 
-  execute(): void | Promise<void> {
-    const { algorithm, foreground, background, threshold, precision } = this.getAllInputs();
+	execute(): void | Promise<void> {
+		const { algorithm, foreground, background, threshold, precision } =
+			this.getAllInputs();
 
-    const binarySearchAlpha = (low, high, fg, bg, targetContrast, iterations) => {
-      
-      if (iterations == 0 || high - low < 0.01) {  // Adding a minimum delta to prevent infinite recursion
-        fg.alpha = high; // Default to higher alpha if exact match isn't found
-        return high; // Ensure we are returning the alpha that provides sufficient contrast
-      }
+		const binarySearchAlpha = (
+			low,
+			high,
+			fg,
+			bg,
+			targetContrast,
+			iterations
+		) => {
+			if (iterations == 0 || high - low < 0.01) {
+				// Adding a minimum delta to prevent infinite recursion
+				fg.alpha = high; // Default to higher alpha if exact match isn't found
+				return high; // Ensure we are returning the alpha that provides sufficient contrast
+			}
 
-      const mid = (low + high) / 2;
-      fg.alpha = mid;
+			const mid = (low + high) / 2;
+			fg.alpha = mid;
 
-      // Convert blended color back to Color object and then to hex string
-      const solidColor = flattenAlpha(fg, bg);
+			// Convert blended color back to Color object and then to hex string
+			const solidColor = flattenAlpha(fg, bg);
 
-      currentContrast = contrastCheck(solidColor, bg, algorithm);
-      
-      if (currentContrast >= targetContrast) {
-        return binarySearchAlpha(
-          low,
-          mid,
-          fg,
-          bg,
-          targetContrast,
-          iterations - 1,
-        );
-      } else {
-        return binarySearchAlpha(
-          mid,
-          high,
-          fg,
-          bg,
-          targetContrast,
-          iterations - 1,
-        );
-      }
-    };
+			currentContrast = contrastCheck(solidColor, bg, algorithm);
 
-    const foregroundColor = new Color(foreground);
-    const backgroundColor = new Color(background);
-    let currentContrast = contrastCheck(foregroundColor, backgroundColor, algorithm);
+			if (currentContrast >= targetContrast) {
+				return binarySearchAlpha(
+					low,
+					mid,
+					fg,
+					bg,
+					targetContrast,
+					iterations - 1
+				);
+			} else {
+				return binarySearchAlpha(
+					mid,
+					high,
+					fg,
+					bg,
+					targetContrast,
+					iterations - 1
+				);
+			}
+		};
 
-    if (currentContrast <= threshold) {
-      this.setOutput("alpha", 1);
-      this.setOutput(
-        "color",
-        foregroundColor.to("srgb").toString({ format: "hex" }),
-      );
-      this.setOutput("contrast", currentContrast);
-      return;
-    }
+		const foregroundColor = new Color(foreground);
+		const backgroundColor = new Color(background);
+		let currentContrast = contrastCheck(
+			foregroundColor,
+			backgroundColor,
+			algorithm
+		);
 
-    const finalAlpha = binarySearchAlpha(
-      0,
-      1,
-      foregroundColor,
-      backgroundColor,
-      threshold,
-      precision,
-    );
+		if (currentContrast <= threshold) {
+			this.setOutput('alpha', 1);
+			this.setOutput(
+				'color',
+				foregroundColor.to('srgb').toString({ format: 'hex' })
+			);
+			this.setOutput('contrast', currentContrast);
+			return;
+		}
 
-    foregroundColor.alpha = finalAlpha;
-    const finalColor = flattenAlpha(foregroundColor, backgroundColor);
-    const finalContrast = Math.abs(finalColor.contrast(backgroundColor, algorithm));
+		const finalAlpha = binarySearchAlpha(
+			0,
+			1,
+			foregroundColor,
+			backgroundColor,
+			threshold,
+			precision
+		);
 
-    this.setOutput("alpha", finalAlpha);
-    this.setOutput("color", finalColor.to("srgb").toString({ format: "hex" }));
-    this.setOutput("contrast", finalContrast);
-  }
+		foregroundColor.alpha = finalAlpha;
+		const finalColor = flattenAlpha(foregroundColor, backgroundColor);
+		const finalContrast = Math.abs(
+			finalColor.contrast(backgroundColor, algorithm)
+		);
+
+		this.setOutput('alpha', finalAlpha);
+		this.setOutput('color', finalColor.to('srgb').toString({ format: 'hex' }));
+		this.setOutput('contrast', finalContrast);
+	}
 }

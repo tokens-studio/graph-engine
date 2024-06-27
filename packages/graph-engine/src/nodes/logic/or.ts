@@ -19,19 +19,19 @@ export default class NodeDefinition<T> extends Node {
 		value: boolean;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("inputs", {
-      type: {
-        ...createVariadicSchema(AnySchema),
-        default: [],
-      },
-      variadic: true,
-    });
-    this.addOutput("value", {
-      type: BooleanSchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('inputs', {
+			type: {
+				...createVariadicSchema(AnySchema),
+				default: []
+			},
+			variadic: true
+		});
+		this.addOutput('value', {
+			type: BooleanSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const inputs = this.getInput('inputs') as number[];

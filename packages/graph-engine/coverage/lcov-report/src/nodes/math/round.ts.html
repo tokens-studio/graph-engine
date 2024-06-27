@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">51.16% </span>
+                <span class="strong">52.27% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>22/43</span>
+                <span class='fraction'>23/44</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">51.16% </span>
+                <span class="strong">52.27% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>22/43</span>
+                <span class='fraction'>23/44</span>
             </div>
         
             
@@ -106,7 +106,8 @@
 <a name='L41'></a><a href='#L41'>41</a>
 <a name='L42'></a><a href='#L42'>42</a>
 <a name='L43'></a><a href='#L43'>43</a>
-<a name='L44'></a><a href='#L44'>44</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
@@ -125,6 +126,11 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -141,10 +147,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -152,6 +154,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 import { NumberSchema } from '../../schemas/index.js';
+import { setToPrecision } from '../../utils/precision.js';
 &nbsp;
 export default class NodeDefinition extends Node {
 	static title = 'Round';
@@ -170,26 +173,26 @@ export default class NodeDefinition extends Node {
 <span class="fstat-no" title="function not covered" >	constructor(props: INodeDefinition) {</span>
 <span class="cstat-no" title="statement not covered" >		super(props);</span>
 <span class="cstat-no" title="statement not covered" >		this.addInput('value', {</span>
-<span class="cstat-no" title="statement not covered" >			type: NumberSchema,</span>
-<span class="cstat-no" title="statement not covered" >			visible: true</span>
+<span class="cstat-no" title="statement not covered" >			type: {</span>
+<span class="cstat-no" title="statement not covered" >				...NumberSchema,</span>
+<span class="cstat-no" title="statement not covered" >				default: 0</span>
+<span class="cstat-no" title="statement not covered" >			}</span>
 <span class="cstat-no" title="statement not covered" >		});</span>
 <span class="cstat-no" title="statement not covered" >		this.addInput('precision', {</span>
-<span class="cstat-no" title="statement not covered" >			type: NumberSchema</span>
+<span class="cstat-no" title="statement not covered" >			type: {</span>
+<span class="cstat-no" title="statement not covered" >				...NumberSchema,</span>
+<span class="cstat-no" title="statement not covered" >				default: 0</span>
+<span class="cstat-no" title="statement not covered" >			}</span>
 <span class="cstat-no" title="statement not covered" >		});</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >		this.addOutput('value', {</span>
-<span class="cstat-no" title="statement not covered" >			type: NumberSchema,</span>
-<span class="cstat-no" title="statement not covered" >			visible: true</span>
+<span class="cstat-no" title="statement not covered" >			type: NumberSchema</span>
 <span class="cstat-no" title="statement not covered" >		});</span>
 <span class="cstat-no" title="statement not covered" >	}</span>
 &nbsp;
 <span class="fstat-no" title="function not covered" >	execute(): void | Promise&lt;void&gt; {</span>
 <span class="cstat-no" title="statement not covered" >		const { precision, value } = this.getAllInputs();</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >		const shift = 10 ** precision;</span>
-<span class="cstat-no" title="statement not covered" >		const output = Math.round(value * shift) / shift;</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >		this.setOutput('value', output);</span>
+<span class="cstat-no" title="statement not covered" >		this.setOutput('value', setToPrecision(value, precision));</span>
 <span class="cstat-no" title="statement not covered" >	}</span>
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -199,7 +202,7 @@ export default class NodeDefinition extends Node {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-26T12:27:00.514Z
+                at 2024-06-27T10:43:44.682Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

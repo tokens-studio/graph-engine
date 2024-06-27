@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>116/116</span>
+                <span class='fraction'>101/101</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>9/9</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>116/116</span>
+                <span class='fraction'>101/101</span>
             </div>
         
             
@@ -164,22 +164,7 @@
 <a name='L99'></a><a href='#L99'>99</a>
 <a name='L100'></a><a href='#L100'>100</a>
 <a name='L101'></a><a href='#L101'>101</a>
-<a name='L102'></a><a href='#L102'>102</a>
-<a name='L103'></a><a href='#L103'>103</a>
-<a name='L104'></a><a href='#L104'>104</a>
-<a name='L105'></a><a href='#L105'>105</a>
-<a name='L106'></a><a href='#L106'>106</a>
-<a name='L107'></a><a href='#L107'>107</a>
-<a name='L108'></a><a href='#L108'>108</a>
-<a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a>
-<a name='L111'></a><a href='#L111'>111</a>
-<a name='L112'></a><a href='#L112'>112</a>
-<a name='L113'></a><a href='#L113'>113</a>
-<a name='L114'></a><a href='#L114'>114</a>
-<a name='L115'></a><a href='#L115'>115</a>
-<a name='L116'></a><a href='#L116'>116</a>
-<a name='L117'></a><a href='#L117'>117</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<a name='L102'></a><a href='#L102'>102</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
@@ -214,15 +199,6 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
@@ -277,22 +253,16 @@
 <span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
@@ -301,14 +271,11 @@
 	NumberSchema,
 	StringSchema
 } from '../../schemas/index.js';
+import { Color as ColorType } from '../../types.js';
+import { ContrastAlgorithm } from '../../types/index.js';
 import { INodeDefinition, Node } from '../../programmatic/node.js';
-import { Input, Output } from '../../programmatic/index.js';
+import { Output, ToInput, ToOutput } from '../../programmatic/index.js';
 import Color from 'colorjs.io';
-&nbsp;
-export enum WcagVersion {
-	V2 = '2.1',
-	V3 = '3.0'
-}
 &nbsp;
 /**
  * Performs a contrast calculation between two colors using APCA-W3 calcs
@@ -316,44 +283,48 @@ export enum WcagVersion {
 export default class NodeDefinition extends Node {
 	static title = 'Contrasting Color';
 	static type = 'studio.tokens.color.contrasting';
-	static description = 'Returns the name of the color';
+	static description =
+		'Evaluates the contrast ratio between two colors using the APCA-W3 algorithm, and identifies the color with the higher contrast. Outputs include the color with the highest contrast, the calculated contrast ratio, and a boolean indicating whether this ratio meets a specified sufficiency threshold. Users can adjust the threshold for sufficiency and choose between WCAG 3.0 (default) or other versions for the contrast calculation.';
 &nbsp;
-	declare inputs: {
-		a: Input;
-		b: Input;
-		background: Input;
-		wcag: Input;
-		threshold: Input&lt;number&gt;;
-	};
-	declare outputs: {
+	declare inputs: ToInput&lt;{
+		a: ColorType;
+		b: ColorType;
+		background: ColorType;
+		algorithm: ContrastAlgorithm;
+		threshold: number;
+	}&gt;;
+	declare outputs: ToOutput&lt;{
 		color: Output;
 		sufficient: Output&lt;boolean&gt;;
 		contrast: Output&lt;number&gt;;
-	};
+	}&gt;;
 &nbsp;
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('a', {
-			type: ColorSchema,
-			visible: true
+			type: {
+				...ColorSchema,
+				default: '#ffffff'
+			}
 		});
 		this.addInput('b', {
-			type: ColorSchema,
-			visible: true
+			type: {
+				...ColorSchema,
+				default: '#000000'
+			}
 		});
 		this.addInput('background', {
 			type: {
 				...ColorSchema,
-				default: '#ffffff'
-			},
-			visible: true
+				default: '#fd0000'
+			}
 		});
 &nbsp;
-		this.addInput('wcag', {
+		this.addInput('algorithm', {
 			type: {
 				...StringSchema,
-				enum: Object.values(WcagVersion),
-				default: WcagVersion.V3
+				enum: Object.values(ContrastAlgorithm),
+				default: ContrastAlgorithm.APCA
 			}
 		});
 		this.addInput('threshold', {
@@ -363,42 +334,26 @@ export default class NodeDefinition extends Node {
 			}
 		});
 &nbsp;
-		this.addInput('contrast', {
-			type: {
-				...NumberSchema,
-				default: 0
-			}
-		});
-&nbsp;
 		this.addOutput('sufficient', {
-			type: BooleanSchema,
-			visible: true
+			type: BooleanSchema
 		});
 		this.addOutput('color', {
-			type: ColorSchema,
-			visible: true
+			type: ColorSchema
 		});
 		this.addOutput('contrast', {
-			type: NumberSchema,
-			visible: true
+			type: NumberSchema
 		});
 	}
 &nbsp;
 	execute(): void | Promise&lt;void&gt; {
-		const { wcag, a, b, background, threshold } = this.getAllInputs();
+		const { algorithm, a, b, background, threshold } = this.getAllInputs();
 &nbsp;
-		let contrastA, contrastB;
 		const colorA = new Color(a);
 		const colorB = new Color(b);
 		const backgroundCol = new Color(background);
 &nbsp;
-		if (wcag == WcagVersion.V2) {
-			contrastA = backgroundCol.contrast(colorA, 'WCAG21');
-			contrastB = backgroundCol.contrast(colorB, 'WCAG21');
-		} else {
-			contrastA = Math.abs(backgroundCol.contrast(colorA, 'APCA'));
-			contrastB = Math.abs(backgroundCol.contrast(colorB, 'APCA'));
-		}
+		const contrastA = Math.abs(backgroundCol.contrast(colorA, algorithm));
+		const contrastB = Math.abs(backgroundCol.contrast(colorB, algorithm));
 &nbsp;
 		if (contrastA &gt; contrastB) {
 			this.setOutput('color', a);
@@ -418,7 +373,7 @@ export default class NodeDefinition extends Node {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-26T12:27:00.514Z
+                at 2024-06-27T10:43:44.682Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

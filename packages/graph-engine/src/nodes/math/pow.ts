@@ -16,21 +16,21 @@ export default class NodeDefinition extends Node {
 		value: number;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("base", {
-      type: NumberSchema,
-    });
-    this.addInput("exponent", {
-      type: {
-        ...NumberSchema,
-        default: 2,
-      },
-    });
-    this.addOutput("value", {
-      type: NumberSchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('base', {
+			type: NumberSchema
+		});
+		this.addInput('exponent', {
+			type: {
+				...NumberSchema,
+				default: 2
+			}
+		});
+		this.addOutput('value', {
+			type: NumberSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { base, exponent } = this.getAllInputs();

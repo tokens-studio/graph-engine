@@ -20,33 +20,33 @@ export default class NodeDefinition extends Node {
 		value: string;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("input", {
-      type: StringSchema,
-    });
-    this.addInput("match", {
-      type: {
-        ...StringSchema,
-        default: "",
-      },
-    });
-    this.addInput("flags", {
-      type: {
-        ...StringSchema,
-        default: "",
-      },
-    });
-    this.addInput("replace", {
-      type: {
-        ...StringSchema,
-        default: "",
-      },
-    });
-    this.addOutput("value", {
-      type: StringSchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('input', {
+			type: StringSchema
+		});
+		this.addInput('match', {
+			type: {
+				...StringSchema,
+				default: ''
+			}
+		});
+		this.addInput('flags', {
+			type: {
+				...StringSchema,
+				default: ''
+			}
+		});
+		this.addInput('replace', {
+			type: {
+				...StringSchema,
+				default: ''
+			}
+		});
+		this.addOutput('value', {
+			type: StringSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { input, match, flags, replace } = this.getAllInputs();
