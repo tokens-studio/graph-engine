@@ -4,7 +4,7 @@ import React from 'react';
 import { IField } from './interface';
 import { toJS } from 'mobx';
 import { Button, IconButton, Select, Stack, TextInput } from '@tokens-studio/ui';
-import { Minus, Plus } from 'iconoir-react';
+import { FloppyDisk, Minus, Plus } from 'iconoir-react';
 import { ColorPickerPopover } from '../colorPicker';
 import { ANY, AllSchemas, COLOR, Input, NUMBER, STRING } from '@tokens-studio/graph-engine';
 import { delayedUpdateSelector } from '@/redux/selectors';
@@ -72,13 +72,13 @@ export const ArrayField = observer(({ port }: IField) => {
 
         setValue(newValueArray);
 
+        setAutofocusIndex(newValueArray.length - 1);
+
         if (useDelayed) {
             return;
         }
 
         (port as Input).setValue(newValueArray);
-
-        setAutofocusIndex(newValueArray.length - 1);
     };
 
     const removeItem = (index: number) => {
@@ -169,9 +169,12 @@ export const ArrayField = observer(({ port }: IField) => {
     const flexDirection = itemsType === COLOR ? 'row' : 'column';
 
     return (
-        <Stack direction={flexDirection} gap={3} align='center' wrap css={{ background: '$bgCanvas', padding: '$3' }}>
-            {itemList}
-            <IconButton title="Add item" icon={<Plus />} size="small" onClick={addItem} />
-        </Stack>
+        <>
+            <Stack direction={flexDirection} gap={3} align='center' wrap css={{ background: '$bgCanvas', padding: '$3' }}>
+                {itemList}
+                <IconButton title="Add item" icon={<Plus />} size="small" onClick={addItem} />
+            </Stack>
+            {useDelayed && <Stack justify="end"><IconButton icon={<FloppyDisk />} onClick={() => (port as Input).setValue(value)} /></Stack>}
+        </>
     )
 });
