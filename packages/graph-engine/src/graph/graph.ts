@@ -512,6 +512,44 @@ export class Graph {
     //Make it obvious that this capability is present on the serialized graph
     this.annotations['engine.capabilities.' + factory.name] = factory.version || '0.0.0';
   }
+
+  clone(): Graph {
+    const clonedGraph = new Graph();
+    const oldToNewIdMap = new Map<string, string>();
+  
+    // Clone nodes
+    Object.values(this.nodes).forEach((node) => {
+      const clonedNode = node.clone(clonedGraph);
+      oldToNewIdMap.set(node.id, clonedNode.id);
+      clonedNode.setGraph(clonedGraph);
+      clonedGraph.addNode(clonedNode);
+    });
+  
+    // Clone edges
+    Object.values(this.edges).forEach(edge => {
+      const newSourceId = oldToNewIdMap.get(edge.source);
+      const newTargetId = oldToNewIdMap.get(edge.target);
+  
+      if (newSourceId && newTargetId) {
+        clonedGraph.createEdge({
+          id: uuid(),
+          source: newSourceId,
+          target: newTargetId,
+          sourceHandle: edge.sourceHandle,
+          targetHandle: edge.targetHandle,
+          annotations: { ...edge.annotations },
+        });
+      }
+    });
+  
+    // Clone capabilities
+    Object.entries(this.capabilities).forEach(([key, value]) => {
+      clonedGraph.capabilities[key] = value;
+    });
+  
+    return clonedGraph;
+  }
+
   /**
    * Starts the graph in network mode 
    * TODO Complete
@@ -702,7 +740,7 @@ export class Graph {
     const targets = edges.reduce((acc, edge) => {
       const target = this.getNode(edge.target);
       if (!target) {
-        return;
+        return acc;
       }
       //Get the input
       const input = target.inputs[edge.targetHandle];
@@ -859,7 +897,7 @@ export class Graph {
       });
     }
 
-    sourcePort._edges.push(edge);
+    sourcePort?._edges.push(edge);
     this.emit("edgeAdded", edge);
     this.propagate(source);
     return edge;

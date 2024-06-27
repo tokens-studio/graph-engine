@@ -25,7 +25,7 @@ function NoteNode(props: NodeProps) {
 
 interface IAnnotation {
   node: Node;
-  annotations: Record<string, string>;
+  annotations: Record<string, unknown>;
 }
 
 const Note = observer(({ node, annotations }: IAnnotation) => {
@@ -50,7 +50,7 @@ const Note = observer(({ node, annotations }: IAnnotation) => {
       minWidth: '100px',
     }}>
 
-      {!editing && <Markdown>{annotations[description] || ''}</Markdown>}
+      {!editing && <Markdown>{annotations[description] as string || ''}</Markdown>}
       {editing && <Box css={{
         height: '100%',
         //Fix limitation with text area
@@ -64,7 +64,7 @@ const Note = observer(({ node, annotations }: IAnnotation) => {
         }}
         onChange={onChange}
         placeholder='Add a description...'
-        value={annotations[description]}
+        value={annotations[description] as string}
       >
         </Textarea>
       </Box>}

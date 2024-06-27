@@ -45,8 +45,31 @@ export class Output<T = any> extends Port<T> {
 
     return graph.connect(this.node, this, target.node, target);
   }
-}
 
+      /**
+   * Returns the underlying class of the input.
+   * @returns
+   */
+    get factory(): typeof Output {
+      //@ts-ignore
+      return this.constructor;
+    }
+    
+  clone(): Output<T> {
+    const clonedOutput = new this.factory({
+      name: this.name,
+      type: this.type,
+      value: this._value,
+      visible: this.visible,
+      node: this.node,
+    });
+
+    clonedOutput._dynamicType = this._dynamicType;
+    clonedOutput._edges = [...this._edges];
+
+    return clonedOutput;
+  }
+}
 
 /**
  * Converts a type definition to a map of inputs 
