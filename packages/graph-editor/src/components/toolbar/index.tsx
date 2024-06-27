@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import { mainGraphSelector } from '@/redux/selectors';
 import { ImperativeEditorRef } from '@/editor/editorTypes';
 import { useLayoutButton } from './hooks/useLayoutButton';
+import { PlayControls } from './groups/PlayControls';
 
 export const GraphToolbar = () => {
   const mainGraph = useSelector(mainGraphSelector);
@@ -80,15 +81,7 @@ const { onClick } = useLayoutButton();
 
         <ToolbarSeparator />
 
-        <Button variant='invisible' style={{ paddingLeft: '0', paddingRight: '0' }}>
-          <Play />
-        </Button>
-        <Button variant='invisible' style={{ paddingLeft: '0', paddingRight: '0' }}>
-          <Pause />
-        </Button>
-        <Button variant='invisible' style={{ paddingLeft: '0', paddingRight: '0' }}>
-          <Square />
-        </Button>
+        <PlayControls />
 
         <ToolbarSeparator />
 
