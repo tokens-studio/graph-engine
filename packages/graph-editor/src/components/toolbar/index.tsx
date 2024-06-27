@@ -17,10 +17,12 @@ import { HelpDropdown } from './dropdowns/help';
 import { useSelector } from 'react-redux';
 import { mainGraphSelector } from '@/redux/selectors';
 import { ImperativeEditorRef } from '@/editor/editorTypes';
+import { useLayoutButton } from './hooks/useLayoutButton';
 
 export const GraphToolbar = () => {
   const mainGraph = useSelector(mainGraphSelector);
   const graphRef = mainGraph?.ref as (ImperativeEditorRef | undefined);
+const { onClick } = useLayoutButton();
 
   const onDownload = () => {
     const saved = graphRef!.save();
@@ -91,9 +93,12 @@ export const GraphToolbar = () => {
         <ToolbarSeparator />
 
         <LayoutDropdown />
-        <Button variant='invisible' style={{ paddingLeft: '0', paddingRight: '0' }}>
-          <Settings />
-        </Button>
+
+        <Tooltip label="Settings" side="bottom">
+          <Button variant='invisible' style={{ paddingLeft: '0', paddingRight: '0' }} onClick={() => onClick('settings')}>
+            <Settings />
+          </Button>
+        </Tooltip>
         <HelpDropdown />
 
         <ToolbarSeparator />
@@ -111,7 +116,7 @@ export const GraphToolbar = () => {
 
         <ToolbarSeparator style={{ background: 'transparent' }} />
 
-        <Button variant='primary' disabled>Share</Button>
+        {/* <Button variant='primary' disabled>Share</Button> */}
       </ToolbarRoot>
     </IconoirProvider>
   )
