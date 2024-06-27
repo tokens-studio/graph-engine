@@ -17,7 +17,7 @@ const NEW_ITEM_DEFAULTS = {
     [COLOR]: '#000000',
 };
 
-export const ArrayField = observer(({ port }: IField) => {
+export const ArrayField = observer(({ port, readOnly }: IField) => {
     const [value, setValue] = React.useState(port.value);
     const [selectItemsType, setSelectItemsType] = React.useState(port.type.items.$id);
 
@@ -34,7 +34,6 @@ export const ArrayField = observer(({ port }: IField) => {
         }
     }, [autofocusIndex]);
 
-    const portName = port.constructor.name;
     const itemsType = port.type.items.$id;
 
     const getJSONTree = () => {
@@ -162,7 +161,7 @@ export const ArrayField = observer(({ port }: IField) => {
         );
     }
 
-    if (portName === 'Output' || port.isConnected || !inputItemTypes.includes(itemsType)) {
+    if (readOnly || !inputItemTypes.includes(itemsType)) {
         return getJSONTree();
     }
 
@@ -170,7 +169,7 @@ export const ArrayField = observer(({ port }: IField) => {
 
     return (
         <>
-            <Stack direction={flexDirection} gap={3} align='center' wrap css={{ background: '$bgCanvas', padding: '$3' }}>
+            <Stack direction={flexDirection} gap={3} align='center' wrap css={{ background: '$bgCanvas', padding: '$3', borderRadius: '$medium' }}>
                 {itemList}
                 <IconButton title="Add item" icon={<Plus />} size="small" onClick={addItem} />
             </Stack>
