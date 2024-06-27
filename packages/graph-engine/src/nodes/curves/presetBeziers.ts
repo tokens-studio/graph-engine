@@ -1,5 +1,3 @@
-// src/nodes/curves/bezierCurve.ts
-
 import { Curve } from "../../types.js";
 import { CurveSchema, StringSchema } from "../../schemas/index.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
