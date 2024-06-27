@@ -11,6 +11,11 @@ import { delayedUpdateSelector } from '@/redux/selectors';
 import { useSelector } from 'react-redux';
 
 const inputItemTypes = [STRING, NUMBER, COLOR];
+const NEW_ITEM_DEFAULTS = {
+    [STRING]: '',
+    [NUMBER]: 0,
+    [COLOR]: '#000000',
+};
 
 export const ArrayField = observer(({ port }: IField) => {
     const [value, setValue] = React.useState(port.value);
@@ -32,6 +37,10 @@ export const ArrayField = observer(({ port }: IField) => {
     const portName = port.constructor.name;
     const itemsType = port.type.items.$id;
 
+    const getJSONTree = () => {
+        return <JSONTree data={{ items: toJS(value) }} hideRoot shouldExpandNodeInitially={() => true} />;
+    }
+
     const onColorChange =
         (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
             let newColor: string;
@@ -46,12 +55,9 @@ export const ArrayField = observer(({ port }: IField) => {
         };
 
     const onChange = (newValue: any, index: number) => {
-        const newValueArray = value.map((val: any, i: number) => {
-            if (i === index) {
-                return itemsType === NUMBER ? +newValue : newValue;
-            }
-            return val;
-        });
+        const newValueArray = [...value];
+        newValueArray[index] = newValue;
+
         setValue(newValueArray);
 
         if (useDelayed) {
@@ -62,38 +68,62 @@ export const ArrayField = observer(({ port }: IField) => {
     };
 
     const addItem = () => {
-        const newValueArray = [...value];
-
-        switch (itemsType) {
-            case STRING:
-                newValueArray.push('');
-                break;
-            case NUMBER:
-                newValueArray.push(undefined);
-                break;
-            case COLOR:
-                newValueArray.push('#000000');
-                break;
-            default:
-                newValueArray.push('');
-                break;
-        }
-
+        const newValueArray = [...value, NEW_ITEM_DEFAULTS[itemsType]];
 
         setValue(newValueArray);
+
+        if (useDelayed) {
+            return;
+        }
+
         (port as Input).setValue(newValueArray);
 
         setAutofocusIndex(newValueArray.length - 1);
     };
 
     const removeItem = (index: number) => {
-        const newValueArray = value.filter((val: any, i: number) => i !== index);
+        const newValueArray = [...value];
+        newValueArray.splice(index, 1);
 
         setValue(newValueArray);
-        (port as Input).setValue(newValueArray);
-
         setAutofocusIndex(null);
+
+        if (useDelayed) {
+            return;
+        }
+
+        (port as Input).setValue(newValueArray);
     }
+
+    const itemList = React.useMemo(() => {
+        return value.map((val: any, index: number) => {
+            switch (itemsType) {
+                case STRING:
+                case NUMBER:
+                    return (
+                        <TextInput
+                            autoFocus={autofocusIndex === index}
+                            width={'100%'}
+                            value={val}
+                            onChange={({ target: { value } }) => { onChange(itemsType === NUMBER ? +value : value, index) }}
+                            trailingAction={<IconButton title="Remove item" size="small" variant="invisible" icon={<Minus />} onClick={() => removeItem(index)} />}
+                        />
+                    );
+                case COLOR:
+                    return (
+                        <ColorPickerPopover
+                            defaultOpen={autofocusIndex === index}
+                            value={val}
+                            onChange={(e) => { onColorChange(e, index) }}
+                            showRemoveButton
+                            onRemove={() => removeItem(index)}
+                        />
+                    );
+                default:
+                    return getJSONTree();
+            }
+        });
+    }, [value, itemsType, autofocusIndex]);
 
     const setType = () => {
         const schema = AllSchemas.find((x) => x.$id === selectItemsType);
@@ -101,8 +131,7 @@ export const ArrayField = observer(({ port }: IField) => {
             return;
         }
 
-        const input = port as Input;
-        input.setValue(value, {
+        (port as Input).setValue(value, {
             type: {
                 type: "array",
                 items: schema,
@@ -110,7 +139,7 @@ export const ArrayField = observer(({ port }: IField) => {
         });
     }
 
-    if (!port.isConnected && portName === 'Input' && itemsType === ANY && !(port as Input).variadic) {
+    if (itemsType === ANY) {
         return (
             <Stack direction="column" gap={3}>
                 <Select value={selectItemsType} onValueChange={setSelectItemsType}>
@@ -133,45 +162,15 @@ export const ArrayField = observer(({ port }: IField) => {
         );
     }
 
-    if (!inputItemTypes.includes(itemsType) || port.isConnected || portName === 'Output' || (portName === 'Input' && (port as Input).variadic)) {
-        return <JSONTree data={{ items: toJS(value) }} hideRoot shouldExpandNodeInitially={() => true} />;
-    }
-
-    const getItems = () => {
-        return value.map((val: any, index: number) => {
-            switch (itemsType) {
-                case STRING:
-                case NUMBER:
-                    return (
-                        <TextInput
-                            autoFocus={autofocusIndex === index}
-                            width={'100%'}
-                            value={val}
-                            onChange={(e) => { onChange(e.target.value, index) }}
-                            trailingAction={<IconButton title="Remove item" size="small" variant="invisible" icon={<Minus />} onClick={() => removeItem(index)} />}
-                        />
-                    );
-                case COLOR:
-                    return (
-                        <ColorPickerPopover
-                            defaultOpen={autofocusIndex === index}
-                            value={val}
-                            onChange={(e) => { onColorChange(e, index) }}
-                            showRemoveButton
-                            onRemove={() => removeItem(index)}
-                        />
-                    );
-                default:
-                    return <JSONTree data={{ items: toJS(value) }} hideRoot shouldExpandNodeInitially={() => true} />;
-            }
-        });
+    if (portName === 'Output' || port.isConnected || !inputItemTypes.includes(itemsType)) {
+        return getJSONTree();
     }
 
     const flexDirection = itemsType === COLOR ? 'row' : 'column';
 
     return (
         <Stack direction={flexDirection} gap={3} align='center' wrap css={{ background: '$bgCanvas', padding: '$3' }}>
-            {getItems()}
+            {itemList}
             <IconButton title="Add item" icon={<Plus />} size="small" onClick={addItem} />
         </Stack>
     )

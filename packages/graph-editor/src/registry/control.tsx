@@ -80,7 +80,7 @@ export const defaultControls = [
     component: AnyField,
   },
   {
-    matcher: (port: Port) => port.type.type === 'array',
+    matcher: (port: Port) => port.type.type === 'array' && !(port as Input).variadic,
     component: ArrayField,
   },
   {
