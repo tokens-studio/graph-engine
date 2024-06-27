@@ -2,7 +2,8 @@ import React from 'react';
 import {
   Button,
   DropdownMenu,
-  Text
+  Text,
+  Tooltip
 } from '@tokens-studio/ui';
 import * as Toolbar from '@radix-ui/react-toolbar';
 import { styled } from '@stitches/react';
@@ -13,60 +14,108 @@ import { AddDropdown } from './dropdowns/add';
 import { ZoomDropdown } from './dropdowns/zoom';
 import { LayoutDropdown } from './dropdowns/layout';
 import { HelpDropdown } from './dropdowns/help';
+import { useSelector } from 'react-redux';
+import { mainGraphSelector } from '@/redux/selectors';
+import { ImperativeEditorRef } from '@/editor/editorTypes';
 
-export const GraphToolbar = () => (
-  <IconoirProvider iconProps={{ width:'1.5em', height:'1.5em' }}> 
-  <ToolbarRoot aria-label="Formatting options">
-    <AddDropdown />
+export const GraphToolbar = () => {
+  const mainGraph = useSelector(mainGraphSelector);
+  const graphRef = mainGraph?.ref as (ImperativeEditorRef | undefined);
 
-    <Button variant='invisible' disabled style={{paddingRight: '0'}}>
-      <Sparks />
-    </Button>
-    <Button variant='invisible' disabled style={{paddingLeft: '0', paddingRight: '0'}}>
-      <ChatBubbleEmpty />
-    </Button>
-    
-    <ToolbarSeparator />
+  const onDownload = () => {
+    const saved = graphRef!.save();
+    const blob = new Blob([JSON.stringify(saved)], {
+      type: 'application/json',
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'graph.json';
+    document.body.appendChild(link);
+    link.click();
+  }
 
-    <ZoomDropdown />
-    <ToolbarSeparator style={{background: 'transparent'}}/>
-    <AlignDropdown />
+  const onUpload = () => {
+    if (!graphRef) return;
 
-    <ToolbarSeparator />
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    //@ts-expect-error
+    input.onchange = (e: HTMLInputElement) => {
+      //@ts-expect-error
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const text = (e.target as any).result;
+        const data = JSON.parse(text);
 
-    <Button variant='invisible' style={{paddingLeft: '0', paddingRight: '0'}}>
-      <Play />
-    </Button>
-    <Button variant='invisible' style={{paddingLeft: '0', paddingRight: '0'}}>
-      <Pause />
-    </Button>
-    <Button variant='invisible' style={{paddingLeft: '0', paddingRight: '0'}}>
-      <Square />
-    </Button>
+        graphRef.loadRaw(data);
+      };
+      reader.readAsText(file);
+    };
+    input.click();
+  }
 
-    <ToolbarSeparator />
+  return (
+    <IconoirProvider iconProps={{ width: '1.5em', height: '1.5em' }}>
+      <ToolbarRoot aria-label="Formatting options">
+        <AddDropdown />
 
-    <LayoutDropdown />
-    <Button variant='invisible' style={{paddingLeft: '0', paddingRight: '0'}}>
-      <Settings />
-    </Button>
-    <HelpDropdown />
+        <Button variant='invisible' disabled style={{ paddingRight: '0' }}>
+          <Sparks />
+        </Button>
+        <Button variant='invisible' disabled style={{ paddingLeft: '0', paddingRight: '0' }}>
+          <ChatBubbleEmpty />
+        </Button>
 
-    <ToolbarSeparator />
+        <ToolbarSeparator />
 
-    <Button variant='invisible' style={{paddingLeft: '0', paddingRight: '0'}}>
-      <Upload />
-    </Button>
-    <Button variant='invisible' style={{paddingLeft: '0', paddingRight: '0'}}>
-      <Download />
-    </Button>
+        <ZoomDropdown />
+        <ToolbarSeparator style={{ background: 'transparent' }} />
+        <AlignDropdown />
 
-    <ToolbarSeparator style={{background: 'transparent'}}/>
+        <ToolbarSeparator />
 
-    <Button variant='primary' disabled>Share</Button>
-  </ToolbarRoot>
-  </IconoirProvider>
-);
+        <Button variant='invisible' style={{ paddingLeft: '0', paddingRight: '0' }}>
+          <Play />
+        </Button>
+        <Button variant='invisible' style={{ paddingLeft: '0', paddingRight: '0' }}>
+          <Pause />
+        </Button>
+        <Button variant='invisible' style={{ paddingLeft: '0', paddingRight: '0' }}>
+          <Square />
+        </Button>
+
+        <ToolbarSeparator />
+
+        <LayoutDropdown />
+        <Button variant='invisible' style={{ paddingLeft: '0', paddingRight: '0' }}>
+          <Settings />
+        </Button>
+        <HelpDropdown />
+
+        <ToolbarSeparator />
+
+        <Tooltip label="Upload" side="bottom">
+          <Button variant='invisible' onClick={onUpload} style={{ paddingLeft: '0', paddingRight: '0' }}>
+            <Upload />
+          </Button>
+        </Tooltip>
+        <Tooltip label="Download" side="bottom">
+          <Button variant='invisible' onClick={onDownload} style={{ paddingLeft: '0', paddingRight: '0' }}>
+            <Download />
+          </Button>
+        </Tooltip>
+
+        <ToolbarSeparator style={{ background: 'transparent' }} />
+
+        <Button variant='primary' disabled>Share</Button>
+      </ToolbarRoot>
+    </IconoirProvider>
+  )
+};
 
 const ToolbarRoot = styled(Toolbar.Root, {
   display: 'flex',

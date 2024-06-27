@@ -26,7 +26,7 @@ export const EditorTab = observer(({ loading }: { loading?: boolean }, ref) => {
         id={""}
         // @ts-ignore
         ref={ref}
-        showMenu={false}
+        showMenu
         menuItems={menu}
         panelItems={panelItems}
         nodeTypes={nodeTypes}
