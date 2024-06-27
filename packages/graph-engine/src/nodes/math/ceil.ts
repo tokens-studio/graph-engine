@@ -12,19 +12,19 @@ export default class NodeDefinition extends Node {
 		value: number;
 	}>;
 
-  declare outputs: ToOutput<{
-    value: number;
-  }>;
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("value", {
-      type: NumberSchema,
-    });
+	declare outputs: ToOutput<{
+		value: number;
+	}>;
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('value', {
+			type: NumberSchema
+		});
 
-    this.addOutput("value", {
-      type: NumberSchema,
-    });
-  }
+		this.addOutput('value', {
+			type: NumberSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { value } = this.getAllInputs();

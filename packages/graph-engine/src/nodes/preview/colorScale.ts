@@ -11,8 +11,8 @@ export default class NodeDefinition extends Node {
 	constructor(props) {
 		super(props);
 
-        this.addInput("value", {
-            type: arrayOf(ColorSchema),
-        });
-    }
+		this.addInput('value', {
+			type: arrayOf(ColorSchema)
+		});
+	}
 }

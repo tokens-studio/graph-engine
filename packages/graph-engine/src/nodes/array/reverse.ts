@@ -13,15 +13,15 @@ export default class NodeDefinition<T> extends Node {
 		value: T[];
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("array", {
-      type: AnyArraySchema,
-    });
-    this.addOutput("value", {
-      type: AnyArraySchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('array', {
+			type: AnyArraySchema
+		});
+		this.addOutput('value', {
+			type: AnyArraySchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const array = this.getRawInput('array');

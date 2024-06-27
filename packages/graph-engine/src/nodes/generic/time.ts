@@ -7,23 +7,22 @@ import { NumberSchema } from '../../schemas/index.js';
  * When the node is started, it will update the time every second.
  */
 export default class NodeDefinition extends Node {
-  static title = "Time";
-    static type = 'studio.tokens.generic.time';
-    static description = "Provides the current time each tick";
+	static title = 'Time';
+	static type = 'studio.tokens.generic.time';
+	static description = 'Provides the current time each tick';
 
+	declare outputs: ToOutput<{
+		value: number;
+	}>;
 
-    declare outputs: ToOutput<{
-        value: number;
-    }>;
+	_interval: NodeJS.Timeout | null = null;
+	constructor(props: INodeDefinition) {
+		super(props);
 
-    _interval: NodeJS.Timeout | null = null;
-    constructor(props: INodeDefinition) {
-        super(props);
-
-        this.addOutput("value", {
-            type: NumberSchema,
-        });
-  }
+		this.addOutput('value', {
+			type: NumberSchema
+		});
+	}
 
 	onStart = () => {
 		if (this._interval) {

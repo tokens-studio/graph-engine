@@ -29,15 +29,15 @@ export default class NodeDefinition extends Node {
 		this.annotations[annotatedDynamicInputs] = true;
 	}
 
-  static override deserialize(opts: IDeserializeOpts) {
-    const node = super.deserialize(opts);
-    //Create the outputs immediately
-    Object.keys(node.inputs).forEach((input) => {
-      const rawInput = node.getRawInput(input);
-      node.addOutput(input, {
-        type: rawInput.type,
-      });
-    });
+	static override deserialize(opts: IDeserializeOpts) {
+		const node = super.deserialize(opts);
+		//Create the outputs immediately
+		Object.keys(node.inputs).forEach(input => {
+			const rawInput = node.getRawInput(input);
+			node.addOutput(input, {
+				type: rawInput.type
+			});
+		});
 
 		return node;
 	}
@@ -50,13 +50,13 @@ export default class NodeDefinition extends Node {
 		Object.keys(inputs).forEach(input => {
 			const rawInput = this.getRawInput(input);
 
-      if (!(input in outputs)) {
-        this.addOutput(input, {
-          type: rawInput.type,
-        });
-      } else {
-        this.setOutput(input, rawInput.value, rawInput.type);
-      }
+			if (!(input in outputs)) {
+				this.addOutput(input, {
+					type: rawInput.type
+				});
+			} else {
+				this.setOutput(input, rawInput.value, rawInput.type);
+			}
 
 			this.setOutput(input, rawInput.value, rawInput.type);
 		});

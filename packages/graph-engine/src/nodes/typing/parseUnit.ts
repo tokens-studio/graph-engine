@@ -19,18 +19,18 @@ export default class NodeDefinition extends Node {
 		unit: string;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("value", {
-      type: StringSchema,
-    });
-    this.addOutput("unit", {
-      type: StringSchema,
-    });
-    this.addOutput("number", {
-      type: NumberSchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('value', {
+			type: StringSchema
+		});
+		this.addOutput('unit', {
+			type: StringSchema
+		});
+		this.addOutput('number', {
+			type: NumberSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { value } = this.getAllInputs();

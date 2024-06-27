@@ -49,10 +49,10 @@ export default class NodeDefinition<T> extends Node {
 			type: StringSchema
 		});
 
-    this.addOutput("value", {
-      type: AnySchema,
-    });
-  }
+		this.addOutput('value', {
+			type: AnySchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { condition } = this.getAllInputs();

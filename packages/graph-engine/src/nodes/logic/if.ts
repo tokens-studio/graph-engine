@@ -18,21 +18,21 @@ export default class NodeDefinition<T, V> extends Node {
 		value: T | V;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("condition", {
-      type: BooleanSchema,
-    });
-    this.addInput("a", {
-      type: AnySchema,
-    });
-    this.addInput("b", {
-      type: AnySchema,
-    });
-    this.addOutput("value", {
-      type: AnySchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('condition', {
+			type: BooleanSchema
+		});
+		this.addInput('a', {
+			type: AnySchema
+		});
+		this.addInput('b', {
+			type: AnySchema
+		});
+		this.addOutput('value', {
+			type: AnySchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { condition } = this.getAllInputs();

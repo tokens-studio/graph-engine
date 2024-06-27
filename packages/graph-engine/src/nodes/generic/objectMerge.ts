@@ -39,25 +39,25 @@ export default class NodeDefinition extends Node {
 		value: object;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("objects", {
-        type: {
-            ...arrayOf(AnySchema),
-            default: [],
-        },
-    });
-    this.addInput("concatArray", {
-        type: {
-            ...StringSchema,
-            enum: [CONCAT, MERGE, COMBINE],
-            default: CONCAT,
-        },
-    });
-    this.addOutput("value", {
-        type: AnySchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('objects', {
+			type: {
+				...arrayOf(AnySchema),
+				default: []
+			}
+		});
+		this.addInput('concatArray', {
+			type: {
+				...StringSchema,
+				enum: [CONCAT, MERGE, COMBINE],
+				default: CONCAT
+			}
+		});
+		this.addOutput('value', {
+			type: AnySchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { objects, concatArray } = this.getAllInputs();

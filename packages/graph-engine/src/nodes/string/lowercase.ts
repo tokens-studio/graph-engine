@@ -17,15 +17,15 @@ export default class NodeDefinition extends Node {
 		value: string;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("value", {
-      type: StringSchema,
-    });
-    this.addOutput("value", {
-      type: StringSchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('value', {
+			type: StringSchema
+		});
+		this.addOutput('value', {
+			type: StringSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { value } = this.getAllInputs();

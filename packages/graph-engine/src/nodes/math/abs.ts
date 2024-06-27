@@ -22,15 +22,15 @@ export default class NodeDefinition extends Node {
 		value: number;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("input", {
-      type: NumberSchema,
-    });
-    this.addOutput("value", {
-      type: NumberSchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('input', {
+			type: NumberSchema
+		});
+		this.addOutput('value', {
+			type: NumberSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const input = this.getInput('input') as number;

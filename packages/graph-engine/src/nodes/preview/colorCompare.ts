@@ -10,12 +10,12 @@ export default class NodeDefinition extends Node {
 	constructor(props) {
 		super(props);
 
-        this.addInput("colorA", {
-            type: ColorSchema,
-        });
+		this.addInput('colorA', {
+			type: ColorSchema
+		});
 
-        this.addInput("colorB", {
-            type: ColorSchema,
-        });
-    }
+		this.addInput('colorB', {
+			type: ColorSchema
+		});
+	}
 }

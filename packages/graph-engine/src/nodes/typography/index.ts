@@ -1,3 +1,3 @@
-import baseFontSize from "./baseFontSize.js";
+import baseFontSize from './baseFontSize.js';
 
 export const nodes = [baseFontSize];

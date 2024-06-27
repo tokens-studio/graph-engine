@@ -19,27 +19,27 @@ export default class NodeDefinition extends Node {
 		value: number;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("minSize", {
-      type: NumberSchema,
-    });
-    this.addInput("maxSize", {
-      type: NumberSchema,
-    });
-    this.addInput("minViewport", {
-      type: NumberSchema,
-    });
-    this.addInput("maxViewport", {
-      type: NumberSchema,
-    });
-    this.addInput("viewport", {
-      type: NumberSchema,
-    });
-    this.addOutput("value", {
-      type: NumberSchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('minSize', {
+			type: NumberSchema
+		});
+		this.addInput('maxSize', {
+			type: NumberSchema
+		});
+		this.addInput('minViewport', {
+			type: NumberSchema
+		});
+		this.addInput('maxViewport', {
+			type: NumberSchema
+		});
+		this.addInput('viewport', {
+			type: NumberSchema
+		});
+		this.addOutput('value', {
+			type: NumberSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { minSize, maxSize, minViewport, maxViewport, viewport } =

@@ -18,22 +18,21 @@ export default class NodeDefinition extends Node {
 		y: string;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("value", {
-        type: Vec2Schema,
-    });
-    this.addOutput("x", {
-        type: NumberSchema,
-    });
-    this.addOutput("y", {
-        type: NumberSchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('value', {
+			type: Vec2Schema
+		});
+		this.addOutput('x', {
+			type: NumberSchema
+		});
+		this.addOutput('y', {
+			type: NumberSchema
+		});
+	}
 
-    
-  execute(): void | Promise<void> {
-    const { value } = this.getAllInputs();
+	execute(): void | Promise<void> {
+		const { value } = this.getAllInputs();
 
 		this.setOutput('x', value[0]);
 		this.setOutput('y', value[1]);

@@ -7,8 +7,8 @@ describe('string/join', () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-    node.inputs.array.setValue(["a", "b", "c"]);
-    node.inputs.delimiter.setValue(",");
+		node.inputs.array.setValue(['a', 'b', 'c']);
+		node.inputs.delimiter.setValue(',');
 
 		await node.execute();
 

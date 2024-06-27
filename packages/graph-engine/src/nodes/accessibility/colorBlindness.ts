@@ -1,7 +1,4 @@
-import {
-	ColorSchema,
-	StringSchema
-} from '../../schemas/index.js';
+import { ColorSchema, StringSchema } from '../../schemas/index.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 import blinder from 'color-blind-esm';
@@ -21,10 +18,10 @@ export enum ColorBlindnessTypes {
  * Converts provided colors to the colors as perceived by the specified color blindness type.
  */
 export default class NodeDefinition extends Node {
-  static title = "Color Blindness";
-  static type = "studio.tokens.accessibility.colorBlindness";
-  static description =
-    "Converts provided colors to the colors as perceived by the specified color blindness type. The output is a hex color string. The color blindness types include protanopia, protanomaly, deuteranopia, deuteranomaly, tritanopia, tritanomaly, achromatopsia, and achromatomaly. The output is a hex color string.";
+	static title = 'Color Blindness';
+	static type = 'studio.tokens.accessibility.colorBlindness';
+	static description =
+		'Converts provided colors to the colors as perceived by the specified color blindness type. The output is a hex color string. The color blindness types include protanopia, protanomaly, deuteranopia, deuteranomaly, tritanopia, tritanomaly, achromatopsia, and achromatomaly. The output is a hex color string.';
 
 	declare inputs: ToInput<{
 		color: string;
@@ -38,27 +35,27 @@ export default class NodeDefinition extends Node {
 		value: string;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("color", {
-      type: {
-        ...ColorSchema,
-        default: "#fd0000",
-      },
-    });
-    this.addInput("type", {
-      type: {
-        ...StringSchema,
-        title: "Color Blindness Type",
-        enum: Object.values(ColorBlindnessTypes),
-        default: ColorBlindnessTypes.PROTANOPIA,
-      },
-    });
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('color', {
+			type: {
+				...ColorSchema,
+				default: '#fd0000'
+			}
+		});
+		this.addInput('type', {
+			type: {
+				...StringSchema,
+				title: 'Color Blindness Type',
+				enum: Object.values(ColorBlindnessTypes),
+				default: ColorBlindnessTypes.PROTANOPIA
+			}
+		});
 
-    this.addOutput("value", {
-      type: ColorSchema,
-    });
-  }
+		this.addOutput('value', {
+			type: ColorSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { type, color } = this.getAllInputs();

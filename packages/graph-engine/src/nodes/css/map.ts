@@ -19,12 +19,12 @@ export default class NodeDefinition extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-    //Indaicate that is uses dynamic inputs
-    this.annotations[annotatedDynamicInputs] = true;
-    this.addOutput("value", {
-      type: ObjectSchema,
-    });
-  }
+		//Indaicate that is uses dynamic inputs
+		this.annotations[annotatedDynamicInputs] = true;
+		this.addOutput('value', {
+			type: ObjectSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const inputs = this.getAllInputs();

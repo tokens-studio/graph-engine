@@ -10,9 +10,9 @@ export default class NodeDefinition extends Node {
 	constructor(props) {
 		super(props);
 
-        this.addInput("value", {
-            type: {...NumberSchema, default: 0},
-        });
+		this.addInput('value', {
+			type: { ...NumberSchema, default: 0 }
+		});
 
 		this.addInput('precision', {
 			type: { ...NumberSchema, default: 2 }

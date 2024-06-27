@@ -1,11 +1,9 @@
 import { Accordion, Box, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { DragItem } from './DragItem.js';
 import { DropPanelStore } from './data.js';
-import { NavArrowRight } from 'iconoir-react';
+import { IconoirProvider, NavArrowRight } from 'iconoir-react';
 import { NodeEntry } from './NodeEntry.js';
 import { observer } from 'mobx-react-lite';
-import { IconoirProvider, NavArrowRight } from 'iconoir-react';
-import { useSelector } from 'react-redux';
 import { panelItemsSelector } from '@/redux/selectors/registry.js';
 import { styled } from '@/lib/stitches/index.js';
 import { useSelector } from 'react-redux';
@@ -122,7 +120,7 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
                   docs={item.docs}
                   description={item.description}
                   title={item.text}
-                  data-test-class='drop-panel-item'
+                  data-test-class="drop-panel-item"
                 >
                   <NodeEntry icon={item.icon} text={item.text} />
                 </DragItem>
@@ -139,9 +137,16 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
                 data-test-class="drop-panel-trigger"
               >
                 <StyledAccordionTrigger>
-                  <Stack align='center' justify='between' width='full' css={{ padding: '$3 0' }}>
-                    <IconoirProvider iconProps={{ width: '0.875em', height: '0.875em' }}>
-                      <Stack gap={3} align='center'>
+                  <Stack
+                    align="center"
+                    justify="between"
+                    width="full"
+                    css={{ padding: '$3 0' }}
+                  >
+                    <IconoirProvider
+                      iconProps={{ width: '0.875em', height: '0.875em' }}
+                    >
+                      <Stack gap={3} align="center">
                         {value.icon}
                         <Text size="xsmall" bold css={{ textAlign: 'left' }}>
                           {value.title}
@@ -152,12 +157,11 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          width: '$5'
+                          width: '$5',
                         }}
                       >
                         <StyledChevron />
                       </Box>
-
                     </IconoirProvider>
                   </Stack>
                 </StyledAccordionTrigger>

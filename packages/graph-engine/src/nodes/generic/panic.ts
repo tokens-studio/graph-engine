@@ -19,12 +19,12 @@ export default class NodeDefinition extends Node {
 		trigger: any;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("trigger", {
-      type: AnySchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('trigger', {
+			type: AnySchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { trigger } = this.getAllInputs();

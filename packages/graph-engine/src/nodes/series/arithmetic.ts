@@ -1,9 +1,9 @@
-import { INodeDefinition, Node } from "../../programmatic/node.js";
-import { NumberSchema } from "../../schemas/index.js";
-import { ToInput } from "../../programmatic/input.js";
-import { ToOutput } from "../../programmatic/index.js";
-import { arrayOf } from "../../schemas/utils.js";
-import { setToPrecision } from "../../utils/precision.js";
+import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { NumberSchema } from '../../schemas/index.js';
+import { ToInput } from '../../programmatic/input.js';
+import { ToOutput } from '../../programmatic/index.js';
+import { arrayOf } from '../../schemas/utils.js';
+import { setToPrecision } from '../../utils/precision.js';
 export type ArithemeticValue = {
 	index: number;
 	value: number;
@@ -59,57 +59,57 @@ export default class NodeDefinition extends Node {
 			}
 		});
 
-    this.addInput("precision", {
-      type: {
-        ...NumberSchema,
-        default: 2,
-      },
-    });
-    this.addOutput("array", {
-      type: arrayOf(NumberSchema),
-    });
-    this.addOutput("indexed", {
-      type: {
-        $id: `https://schemas.tokens.studio/studio.tokens.series.arithmetic/indexed.json`,
-        type: "object",
-        properties: {
-          index: {
-            type: NumberSchema,
-          },
-          value: {
-            type: NumberSchema,
-          },
-        },
-      },
-      visible: false,
-    });
-  }
+		this.addInput('precision', {
+			type: {
+				...NumberSchema,
+				default: 2
+			}
+		});
+		this.addOutput('array', {
+			type: arrayOf(NumberSchema)
+		});
+		this.addOutput('indexed', {
+			type: {
+				$id: `https://schemas.tokens.studio/studio.tokens.series.arithmetic/indexed.json`,
+				type: 'object',
+				properties: {
+					index: {
+						type: NumberSchema
+					},
+					value: {
+						type: NumberSchema
+					}
+				}
+			},
+			visible: false
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { base, precision, increment, stepsDown, stepsUp } =
 			this.getAllInputs();
 
-    const values: ArithemeticValue[] = [];
+		const values: ArithemeticValue[] = [];
 
-    for (let i = Math.abs(stepsDown); i > 0; i--) {
-      const value = setToPrecision((base - increment * i), precision);
-      values.push({
-        index: 0 - i,
-        value: value,
-      });
-    }
-    values.push({
-      index: 0,
-      value: setToPrecision((base), precision),
-    });
+		for (let i = Math.abs(stepsDown); i > 0; i--) {
+			const value = setToPrecision(base - increment * i, precision);
+			values.push({
+				index: 0 - i,
+				value: value
+			});
+		}
+		values.push({
+			index: 0,
+			value: setToPrecision(base, precision)
+		});
 
-    for (let i = 0; i < Math.abs(stepsUp); i++) {
-      const value = setToPrecision((base + increment * (i + 1)), precision);
-      values.push({
-        index: i + 1,
-        value: value,
-      });
-    }
+		for (let i = 0; i < Math.abs(stepsUp); i++) {
+			const value = setToPrecision(base + increment * (i + 1), precision);
+			values.push({
+				index: i + 1,
+				value: value
+			});
+		}
 
 		this.setOutput(
 			'array',

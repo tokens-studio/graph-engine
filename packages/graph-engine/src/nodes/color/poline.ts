@@ -30,49 +30,49 @@ const convertHexToHsl = (hexColor: string): Vector3 => {
 };
 
 export default class NodeDefinition extends Node {
-  static title = "Poline";
-  static type = "studio.tokens.color.poline";
-  static description = "";
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("anchorColors", {
-      type: arrayOf(ColorSchema),
-    });
-    this.addInput("numPoints", {
-      type: {
-        ...NumberSchema,
-        default: 4,
-      },
-    });
-    this.addInput("invertedLightness", {
-      type: BooleanSchema,
-    });
-    this.addInput("positionFnX", {
-      type: {
-        ...StringSchema,
-        enum: positionFuncs,
-      },
-    });
-    this.addInput("positionFnY", {
-      type: {
-        ...StringSchema,
-        enum: positionFuncs,
-      },
-    });
-    this.addInput("positionFnZ", {
-      type: {
-        ...StringSchema,
-        enum: positionFuncs,
-      },
-    });
+	static title = 'Poline';
+	static type = 'studio.tokens.color.poline';
+	static description = '';
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('anchorColors', {
+			type: arrayOf(ColorSchema)
+		});
+		this.addInput('numPoints', {
+			type: {
+				...NumberSchema,
+				default: 4
+			}
+		});
+		this.addInput('invertedLightness', {
+			type: BooleanSchema
+		});
+		this.addInput('positionFnX', {
+			type: {
+				...StringSchema,
+				enum: positionFuncs
+			}
+		});
+		this.addInput('positionFnY', {
+			type: {
+				...StringSchema,
+				enum: positionFuncs
+			}
+		});
+		this.addInput('positionFnZ', {
+			type: {
+				...StringSchema,
+				enum: positionFuncs
+			}
+		});
 
-    this.addInput("hueShift", {
-      type: NumberSchema,
-    });
-    this.addOutput("value", {
-      type: arrayOf(ColorSchema),
-    });
-  }
+		this.addInput('hueShift', {
+			type: NumberSchema
+		});
+		this.addOutput('value', {
+			type: arrayOf(ColorSchema)
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const {

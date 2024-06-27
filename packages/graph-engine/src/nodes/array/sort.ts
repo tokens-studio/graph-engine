@@ -31,26 +31,26 @@ export default class NodeDefinition<T> extends Node {
 		value: T[];
 	}>;
 
-  static description = "Sorts an array";
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("array", {
-      type: AnyArraySchema,
-    });
-    this.addInput("order", {
-      type: {
-        ...StringSchema,
-        enum: [Order.ASC, Order.DESC],
-        default: Order.ASC,
-      },
-    });
-    this.addInput("sortBy", {
-      type: StringSchema,
-    });
-    this.addOutput("value", {
-      type: AnyArraySchema,
-    });
-  }
+	static description = 'Sorts an array';
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('array', {
+			type: AnyArraySchema
+		});
+		this.addInput('order', {
+			type: {
+				...StringSchema,
+				enum: [Order.ASC, Order.DESC],
+				default: Order.ASC
+			}
+		});
+		this.addInput('sortBy', {
+			type: StringSchema
+		});
+		this.addOutput('value', {
+			type: AnyArraySchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { sortBy, order } = this.getAllInputs();

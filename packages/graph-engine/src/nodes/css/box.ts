@@ -18,37 +18,37 @@ export default class NodeDefinition extends Node {
 		value: string;
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("top", {
-      type: {
-        ...NumberSchema,
-        default: 0,
-      },
-    });
-    this.addInput("right", {
-      type: {
-        ...NumberSchema,
-        default: 0,
-      },
-    });
-    this.addInput("bottom", {
-      type: {
-        ...NumberSchema,
-        default: 0,
-      },
-    });
-    this.addInput("left", {
-      type: {
-        ...NumberSchema,
-        default: 0,
-      },
-    });
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('top', {
+			type: {
+				...NumberSchema,
+				default: 0
+			}
+		});
+		this.addInput('right', {
+			type: {
+				...NumberSchema,
+				default: 0
+			}
+		});
+		this.addInput('bottom', {
+			type: {
+				...NumberSchema,
+				default: 0
+			}
+		});
+		this.addInput('left', {
+			type: {
+				...NumberSchema,
+				default: 0
+			}
+		});
 
-    this.addOutput("value", {
-      type: StringSchema,
-    });
-  }
+		this.addOutput('value', {
+			type: StringSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { top, right, bottom, left } = this.getAllInputs();

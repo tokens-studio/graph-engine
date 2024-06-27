@@ -22,18 +22,18 @@ export default class NodeDefinition<T> extends Node {
 		value: T;
 	}>;
 
-  static description =
-    "Constant node allows you to provide a constant value. You can use this node to set a constant value for a specific property.";
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("value", {
-      type: AnySchema,
-      visible: false,
-    });
-    this.addOutput("value", {
-      type: AnySchema,
-    });
-  }
+	static description =
+		'Constant node allows you to provide a constant value. You can use this node to set a constant value for a specific property.';
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('value', {
+			type: AnySchema,
+			visible: false
+		});
+		this.addOutput('value', {
+			type: AnySchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const input = this.getRawInput('value');

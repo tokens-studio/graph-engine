@@ -11,18 +11,18 @@ export default class NodeDefinition extends Node {
 	static type = 'studio.tokens.gradient.stop';
 	static description = 'Create a gradient stop.';
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("color", {
-      type: ColorSchema,
-    });
-    this.addInput("position", {
-      type: NumberSchema,
-    });
-    this.addOutput("gradientStop", {
-      type: GradientStopSchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('color', {
+			type: ColorSchema
+		});
+		this.addInput('position', {
+			type: NumberSchema
+		});
+		this.addOutput('gradientStop', {
+			type: GradientStopSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { color, position } = this.getAllInputs();

@@ -41,27 +41,27 @@ export default class NodeDefinition extends Node {
 		value: [number, number];
 	}>;
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("curve", {
-      type: CurveSchema,
-    });
-    this.addInput("sample", {
-      type: {
-        ...NumberSchema,
-        default: 0.5,
-      }
-    });
-    this.addOutput("value", {
-      type: Vec2Schema,
-    });
-    this.addOutput("x", {
-      type: NumberSchema,
-    });
-    this.addOutput("y", {
-      type: NumberSchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('curve', {
+			type: CurveSchema
+		});
+		this.addInput('sample', {
+			type: {
+				...NumberSchema,
+				default: 0.5
+			}
+		});
+		this.addOutput('value', {
+			type: Vec2Schema
+		});
+		this.addOutput('x', {
+			type: NumberSchema
+		});
+		this.addOutput('y', {
+			type: NumberSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { curve, sample } = this.getAllInputs();
@@ -77,8 +77,8 @@ export default class NodeDefinition extends Node {
 
 		const output = sampleBezier(foundCurve, sample);
 
-    this.setOutput("value", output);
-    this.setOutput("x", output[0]);
-    this.setOutput("y", output[1]);
-  }
+		this.setOutput('value', output);
+		this.setOutput('x', output[0]);
+		this.setOutput('y', output[1]);
+	}
 }

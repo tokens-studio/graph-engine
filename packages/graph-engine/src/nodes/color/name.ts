@@ -160,18 +160,18 @@ const colorMap = {
  * Return the name of the color using the `color-namer` library.
  */
 export default class NodeDefinition extends Node {
-  static title = "Name Color";
-  static type = "studio.tokens.color.name";
-  static description = "Returns the name of the color";
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("color", {
-      type: ColorSchema,
-    });
-    this.addOutput("value", {
-      type: StringSchema,
-    });
-  }
+	static title = 'Name Color';
+	static type = 'studio.tokens.color.name';
+	static description = 'Returns the name of the color';
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('color', {
+			type: ColorSchema
+		});
+		this.addOutput('value', {
+			type: StringSchema
+		});
+	}
 
 	execute(): void | Promise<void> {
 		const { color } = this.getAllInputs();

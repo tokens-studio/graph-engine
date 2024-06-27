@@ -59,7 +59,6 @@ export const NodeV2 = (args) => {
     return <Box>Node not found</Box>;
   }
 
-
   return (
     <ErrorBoundary fallback={<ErrorBoundaryContent />}>
       <NodeWrap node={node} icon={args?.data?.icon} />
@@ -87,8 +86,10 @@ const NodeWrap = observer(({ node, icon }: INodeWrap) => {
       id={node.id}
       isAsync={node.annotations[annotatedNodeRunning] as boolean}
       icon={icon}
-      title={(node.annotations[title] as string) || node.factory.title || 'Node'}
-      subtitle={node.annotations[title] ? node.factory.title : ""}
+      title={
+        (node.annotations[title] as string) || node.factory.title || 'Node'
+      }
+      subtitle={node.annotations[title] ? node.factory.title : ''}
       error={node.error || null}
       controls={''}
       style={{ minWidth: '350px' }}
@@ -102,10 +103,11 @@ const NodeWrap = observer(({ node, icon }: INodeWrap) => {
             <PortArray ports={node.outputs} />
           </HandleContainer>
         </Stack>
-        {Specific && <Stack direction="column" gap={3} css={{ padding: '$3' }}>
-          <Specific node={node} />
-        </Stack>
-        }
+        {Specific && (
+          <Stack direction="column" gap={3} css={{ padding: '$3' }}>
+            <Specific node={node} />
+          </Stack>
+        )}
       </Stack>
       {showTimingsValue && (
         <Box css={{ position: 'absolute', bottom: '-1.5em' }}>
