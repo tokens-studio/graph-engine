@@ -3,6 +3,7 @@ jest-coverage/
 coverage/
 .turbo
 node_modules
+coverage/
 dist
 docs
 yarn-error.log

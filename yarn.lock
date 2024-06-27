@@ -9894,10 +9894,10 @@ collect-v8-coverage@^1.0.0:
   resolved "https://registry.yarnpkg.com/collect-v8-coverage/-/collect-v8-coverage-1.0.2.tgz#c0b29bcd33bcd0779a1344c2136051e6afd3d9e9"
   integrity sha512-lHl4d5/ONEbLlJvaJNtsF/Lz+WvB07u2ycqTYbdrq7UypDXailES4valYb2eWiJFxZlVmpGekfqoxQhzyFdT4Q==
 
-color-blind-esm@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/color-blind-esm/-/color-blind-esm-0.1.3.tgz#8f3169e824d06ce863764ff4633d2fb91c0f4870"
-  integrity sha512-LH03pykcTF8IdmXeBbFSCjZRHBNbFnt23wqlZCfvqntWGYeiPJ8HkyKKGfDg9ASEMqt1X+Yza5SUCreOPO6uvA==
+color-blind-esm@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/color-blind-esm/-/color-blind-esm-0.1.4.tgz#a965319e260ad8966fc86225681ce648328016bc"
+  integrity sha512-K80R5q8T1si24klqvRaHTeAic4VEAWsl1unyvK3AcuRUq4zhJWWio0mNnTG+mVUQ5evfk5FzoX7eSZW6ydReRQ==
   dependencies:
     colorjs.io "^0.5.1"
 
