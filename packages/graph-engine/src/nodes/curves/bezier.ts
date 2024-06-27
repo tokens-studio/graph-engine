@@ -8,19 +8,17 @@ import { ToInput, ToOutput } from "../../programmatic";
 export default class BezierCurveNode extends Node {
   static title = "Bezier Curve";
   static type = "studio.tokens.curve.bezier";
-  static description = "Creates a bezier curve from two control points and provides sampled y-values";
+  static description = "Creates a bezier curve from two control points";
 
   declare inputs: ToInput<{
     x1: number;
     y1: number;
     x2: number;
     y2: number;
-    samples: number;
   }>;
 
   declare outputs: ToOutput<{
     curve: Curve;
-    values: number[];
   }>;
 
   constructor(props: INodeDefinition) {
@@ -58,28 +56,14 @@ export default class BezierCurveNode extends Node {
         maximum: 1,
       },
     });
-    this.addInput("samples", {
-      type: {
-        ...NumberSchema,
-        default: 100,
-        minimum: 2,
-        maximum: 1000,
-      },
-    });
 
     this.addOutput("curve", {
       type: CurveSchema,
     });
-    this.addOutput("values", {
-      type: {
-        type: "array",
-        items: NumberSchema,
-      },
-    });
   }
 
   execute(): void | Promise<void> {
-    const { x1, y1, x2, y2, samples } = this.getAllInputs();
+    const { x1, y1, x2, y2 } = this.getAllInputs();
 
     const curve: Curve = {
       curves: [
@@ -95,37 +79,7 @@ export default class BezierCurveNode extends Node {
       ],
     };
 
-    const values = this.sampleCurve(x1, y1, x2, y2, samples);
-
     this.setOutput("curve", curve);
-    this.setOutput("values", values);
   }
 
-  private sampleCurve(
-    x1: number,
-    y1: number,
-    x2: number,
-    y2: number,
-    samples: number
-  ): number[] {
-    const values: number[] = [];
-    for (let i = 0; i <= samples; i++) {
-      const t = i / samples;
-      values.push(this.bezierY(x1, y1, x2, y2, t));
-    }
-    return values;
-  }
-
-  private bezierY(
-    x1: number,
-    y1: number,
-    x2: number,
-    y2: number,
-    t: number
-  ): number {
-    return Math.pow(1 - t, 3) * 0 +
-           3 * Math.pow(1 - t, 2) * t * y1 +
-           3 * (1 - t) * Math.pow(t, 2) * y2 +
-           Math.pow(t, 3) * 1;
-  }
 }
