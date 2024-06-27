@@ -53,7 +53,7 @@ export const LayoutDropdown = () => {
 
   return (
     <DropdownMenu>
-      <Tooltip label="Window" side="bottom">
+      <Tooltip label="Layout" side="bottom">
         <DropdownMenu.Trigger asChild>
           <Button variant='invisible' style={{ paddingLeft: '0', paddingRight: '0' }}>
             <LayoutLeft />
@@ -62,31 +62,31 @@ export const LayoutDropdown = () => {
       </Tooltip>
       <DropdownMenu.Portal>
         <DropdownMenu.Content css={{ minWidth: '200px' }}>
-          <DropdownMenu.Item onClick={() => onClick('inputs')}>
+          <DropdownMenu.Item onSelect={() => onClick('inputs')}>
             Input
           </DropdownMenu.Item>
-          <DropdownMenu.Item onClick={() => onClick('outputs')}>
+          <DropdownMenu.Item onSelect={() => onClick('outputs')}>
             Output
           </DropdownMenu.Item>
-          <DropdownMenu.Item onClick={() => onClick('nodeSettings')}>
+          <DropdownMenu.Item onSelect={() => onClick('nodeSettings')}>
             Node Settings
           </DropdownMenu.Item>
-          <DropdownMenu.Item onClick={() => onClick('graphSettings')}>
+          <DropdownMenu.Item onSelect={() => onClick('graphSettings')}>
             Graph Settings
           </DropdownMenu.Item>
-          <DropdownMenu.Item onClick={() => onClick('logs')}>
+          <DropdownMenu.Item onSelect={() => onClick('logs')}>
             Logs
           </DropdownMenu.Item>
           {/* <DropdownMenu.Item>
             Play Controls
           </DropdownMenu.Item> */}
-          <DropdownMenu.Item onClick={() => onClick('legend')}>
+          <DropdownMenu.Item onSelect={() => onClick('legend')}>
             Legend
           </DropdownMenu.Item>
-          <DropdownMenu.Item onClick={() => onClick('debugger')}>
+          <DropdownMenu.Item onSelect={() => onClick('debugger')}>
             Debugger
           </DropdownMenu.Item>
-          <DropdownMenu.Item onClick={() => onClick('dropPanel')}>
+          <DropdownMenu.Item onSelect={() => onClick('dropPanel')}>
             Nodes
           </DropdownMenu.Item>
 
@@ -109,10 +109,10 @@ export const LayoutDropdown = () => {
 
           <DropdownMenu.Separator />
 
-          <DropdownMenu.Item onClick={saveLayout}>
+          <DropdownMenu.Item onSelect={saveLayout}>
             Save Layout
           </DropdownMenu.Item>
-          <DropdownMenu.Item onClick={loadLayout}>
+          <DropdownMenu.Item onSelect={loadLayout}>
             Load Layout
           </DropdownMenu.Item>
 

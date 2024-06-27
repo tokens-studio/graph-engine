@@ -66,12 +66,12 @@ const { onClick } = useLayoutButton();
       <ToolbarRoot aria-label="Formatting options">
         <AddDropdown />
 
-        <Button variant='invisible' disabled style={{ paddingRight: '0' }}>
+        {/* <Button variant='invisible' disabled style={{ paddingRight: '0' }}>
           <Sparks />
         </Button>
         <Button variant='invisible' disabled style={{ paddingLeft: '0', paddingRight: '0' }}>
           <ChatBubbleEmpty />
-        </Button>
+        </Button> */}
 
         <ToolbarSeparator />
 
