@@ -1,5 +1,35 @@
 # @tokens-studio/graph-engine
 
+## 2.0.0
+
+### Patch Changes
+
+- 267a9f1: Improve the offset on the bezier in the editor.
+  Fix the typing on the invert node.
+  Remove code for the obscure distance
+- Updated dependencies [d45e99c]
+- Updated dependencies [267a9f1]
+- Updated dependencies [5486cac]
+- Updated dependencies [e09aa3f]
+- Updated dependencies [cd86a3b]
+- Updated dependencies [6321006]
+- Updated dependencies [6321006]
+- Updated dependencies [b3301e0]
+- Updated dependencies [f5a622a]
+- Updated dependencies [8d0f934]
+- Updated dependencies [6321006]
+- Updated dependencies [a6651ac]
+- Updated dependencies [6321006]
+- Updated dependencies [6321006]
+- Updated dependencies [6321006]
+- Updated dependencies [cb050f0]
+- Updated dependencies [addb50d]
+- Updated dependencies [6321006]
+- Updated dependencies [56fb988]
+- Updated dependencies [1e68191]
+  - @tokens-studio/graph-editor@3.1.0
+  - @tokens-studio/graph-engine@2.0.0
+
 ## 1.0.0
 
 ### Patch Changes
