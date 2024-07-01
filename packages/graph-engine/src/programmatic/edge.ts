@@ -1,8 +1,5 @@
 import { SerializedEdge } from '../index.js';
-import {
-	makeObservable,
-	observable
-} from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { v4 as uuid } from 'uuid';
 
 /**

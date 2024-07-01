@@ -12,10 +12,7 @@ import {
 	annotatedVersion
 } from '../annotations/index.js';
 import { compareVersions } from 'compare-versions';
-import {
-	makeObservable,
-	observable
-} from 'mobx';
+import { makeObservable, observable } from 'mobx';
 import { topologicalSort } from './topologicSort.js';
 import { v4 as uuid } from 'uuid';
 import type { NodeFactory, SerializedGraph } from './types.js';
