@@ -16,6 +16,17 @@ export default {
   },
   browsers: [
     playwrightLauncher({
+      createPage :async  ({ context }) =>{
+        const page = await  context.newPage();
+        // Needed to handle the process.env.NODE_ENV call inside of mobx and other libraries as they would normally be transformed by webpack or some other bundler
+        page.addInitScript(()=>{
+          window.process={
+            env:{}
+          }
+        })
+        return page
+
+      },
       product: 'chromium',
     }),
   ],
