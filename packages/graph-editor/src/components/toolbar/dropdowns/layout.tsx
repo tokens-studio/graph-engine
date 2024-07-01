@@ -92,7 +92,7 @@ export const LayoutDropdown = () => {
 
           <DropdownMenu.Separator />
 
-          <DropdownMenu.Sub>
+          {/* <DropdownMenu.Sub>
             <DropdownMenu.SubTrigger>
               Layout Presets
               <DropdownMenu.TrailingVisual>
@@ -107,7 +107,7 @@ export const LayoutDropdown = () => {
             </DropdownMenu.Portal>
           </DropdownMenu.Sub>
 
-          <DropdownMenu.Separator />
+          <DropdownMenu.Separator /> */}
 
           <DropdownMenu.Item onSelect={saveLayout}>
             Save Layout

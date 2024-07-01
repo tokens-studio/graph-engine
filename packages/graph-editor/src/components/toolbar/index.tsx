@@ -75,8 +75,8 @@ const { onClick } = useLayoutButton();
 
         <ToolbarSeparator />
 
-        <ZoomDropdown />
-        <ToolbarSeparator style={{ background: 'transparent' }} />
+        {/* <ZoomDropdown /> */}
+        {/* <ToolbarSeparator style={{ background: 'transparent' }} /> */}
         <AlignDropdown />
 
         <ToolbarSeparator />
