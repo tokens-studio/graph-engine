@@ -10,6 +10,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { edgeType as edgeTypeSelector } from '../../../redux/selectors/settings.js';
 import { EdgeType } from '../../../redux/models/settings.js';
+import { Plus } from 'iconoir-react';
 
 
 interface IArticulatedPath {
@@ -83,6 +84,7 @@ export default function CustomEdge({
   style = {},
   data,
   markerEnd,
+  isConnecting = false,
 }) {
   const edgeType = useSelector(edgeTypeSelector);
 
@@ -139,6 +141,19 @@ export default function CustomEdge({
           {data?.text}
         </textPath>
       </text>
+      {isConnecting && (
+        <foreignObject
+          width={20}
+          height={20}
+          x={targetX - 10}
+          y={targetY - 10}
+          requiredExtensions="http://www.w3.org/1999/xhtml"
+        >
+          <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Plus style={{ color: 'var(--colors-fgDefault)' }} />
+          </div>
+        </foreignObject>
+      )}
     </>
   );
 }

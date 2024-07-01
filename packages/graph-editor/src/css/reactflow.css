@@ -6,18 +6,19 @@
 }
 
 .react-flow__handle {
-    position: relative;
+    position: absolute;
     user-select: none;
     pointer-events: all;
     box-sizing: content-box;
-    padding: 0;
     cursor: grab;
-    width: var(--sizes-7);
-    height: var(--sizes-7);
-    border: 0;
-    border-radius: var(--radii-small, 4px);
+    padding: 0;
+    width: var(--sizes-4);
+    height: var(--sizes-4);
+    border: 4px solid #1a1a1a;
+    border-radius: 9999px;
     box-shadow: var(--shadows-small);
     outline: 2px solid transparent;
+    outline-offset: -4px;
     display: grid;
     place-items: center;
 }
@@ -44,8 +45,8 @@
     --nodeBorderColor: var(--gray-6);
     --nodeBgColor: var(--gray-3);
     --nodeTextColor: var(--gray-12);
-    outline: 5px solid var(--purple-10);
-    outline-offset: 5px;
+    outline: 2px solid var(--gray-11);
+    outline-offset: 0;
     border-radius: var(--radii-medium, 8px);
 }
 
@@ -66,17 +67,11 @@
 }
 
 .react-flow__handle-right {
-    transform: unset;
-    margin-right: unset;
-    top: unset;
-    right: unset;
+    right: -12px;
 }
 
 .react-flow__handle-left {
-    transform: unset;
-    top: unset;
-    left: unset;
-    margin-left: unset;
+    left: -12px;
 }
 .react-flow__edge {
     stroke-width: 1 !important;
@@ -91,13 +86,14 @@
 }
 .react-flow__edge-path,
 .react-flow__connection-path {
-    stroke-width: 2 !important;
+    stroke-width: 4px !important;
+    stroke-linecap: round;
 }
 
 .react-flow__edge.selected .react-flow__edge-path,
 .react-flow__edge:focus .react-flow__edge-path,
 .react-flow__edge:focus-visible .react-flow__edge-path {
-    stroke-width: 2 !important;
+    stroke-width: 4px !important;
     stroke: var(--purple-10);
 }
 
