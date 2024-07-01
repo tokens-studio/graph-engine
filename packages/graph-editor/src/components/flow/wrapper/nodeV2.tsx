@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Handle, HandleContainer, useHandle } from '../handles.js';
-import { COLOR, Input, OBJECT, Port, annotatedNodeRunning } from '@tokens-studio/graph-engine';
+import { COLOR, Input, OBJECT, Port, SchemaObject, annotatedNodeRunning } from '@tokens-studio/graph-engine';
 import { Node as GraphNode } from '@tokens-studio/graph-engine'
 import colors from '@/tokens/colors.js';
 import { useSelector } from 'react-redux';
@@ -144,9 +144,33 @@ const extractTypeIcon = (
   return { isArray, icon, color, backgroundColor };
 };
 
-export const InlineTypeLabel = ({ port }: { port: Port }) => {
-  //TODO add support for specific types through the $id
 
+export const extractType = (schema:SchemaObject)=>{
+
+  if (!schema){
+    return 'any';
+  }
+
+  if (schema.$id){
+    //Assume the id is a url
+    const parts = schema.$id.split('/');
+    //If there was no / then just return the last part
+    const part =  parts[parts.length - 1] || schema.$id;
+    //Remove the .json
+    return part.split('.')[0] || part;
+  }
+
+  if (schema.type === 'array'){
+    return extractType(schema.items) + '[]';
+  }
+  //No idea, default to a structural representation
+  return schema.type;
+}
+
+export const InlineTypeLabel = ({ port }: { port: Port }) => {
+
+  //Try lookup the id if possible 
+  let typeName = extractType(port.type);
   const handleInformation = useHandle();
 
   return (
@@ -163,7 +187,7 @@ export const InlineTypeLabel = ({ port }: { port: Port }) => {
         right: handleInformation.type === 'target' ? 'calc(100% + 16px)' : 'unset',
       }}
     >
-      {port.type.type || 'any'}
+      {typeName}
     </Box>
   );
 };

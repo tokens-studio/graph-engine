@@ -94,7 +94,7 @@
 .react-flow__edge:focus .react-flow__edge-path,
 .react-flow__edge:focus-visible .react-flow__edge-path {
     stroke-width: 4px !important;
-    stroke: var(--purple-10);
+    stroke: var(--purple-10) !important;
 }
 
 .react-flow__handle-connecting:not(.react-flow__handle-valid) {

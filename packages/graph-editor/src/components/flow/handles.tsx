@@ -191,7 +191,6 @@ export const Handle = (props: HandleProps) => {
           id={id}
           shouldHideHandles={shouldHideHandles}
           error={error}
-          left={type === 'target'}
           type={type}
           position={position}
           hide={shouldHide}
