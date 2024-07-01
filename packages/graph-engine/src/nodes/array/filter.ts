@@ -1,10 +1,10 @@
-import { AnyArraySchema, AnySchema, BooleanSchema, NumberSchema, SchemaObject } from "../../schemas/index.js";
+import { AnyArraySchema, AnySchema, BooleanSchema, NumberSchema } from "../../schemas/index.js";
 import { Graph } from "../../graph/graph.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
 import { Input, ToInput, ToOutput } from "../../programmatic/index.js";
 import { annotatedDeleteable, annotatedDynamicInputs, hideFromParentSubgraph } from "../../annotations/index.js";
-import { arrayOf, extractArray } from "../../schemas/utils.js";
 import { autorun } from "mobx";
+import { extractArray } from "../../schemas/utils.js";
 import InputNode from "../generic/input.js";
 import OutputNode from "../generic/output.js";
 
@@ -13,7 +13,7 @@ export interface IArraySubgraph extends INodeDefinition {
     innerGraph?: Graph;
 }
 
-export default class ArraySubgraph<T, V> extends Node {
+export default class ArraySubgraph<T> extends Node {
     static title = "Array filter";
     static type = 'tokens.studio.array.filter';
     static description = "Execute a graph for every item in an Array (list of items). The output is equal to or smaller than the input graph. The inner graph is executed for each item in the array (list). The inner graph automatically has an input node with the name 'value' and an output node with the name 'match' as well. The inner graph also has an input node with the name 'index' and an input node with the name 'length' to get the current index and length of the array.";
@@ -25,7 +25,7 @@ export default class ArraySubgraph<T, V> extends Node {
     }>
 
     declare outputs: ToOutput<{
-        value: V
+        value: T[]
     }>
 
     constructor(props: IArraySubgraph) {
