@@ -107,6 +107,8 @@ export const defaultSpecifics = {
     'studio.tokens.generic.subgraph': SubgraphExplorer,
     'tokens.studio.array.map': SubgraphExplorer,
     'tokens.studio.array.reduce': SubgraphExplorer,
+    'tokens.studio.array.filter': SubgraphExplorer,
+    'tokens.studio.array.find': SubgraphExplorer,
 
     'studio.tokens.preview.colorScale': ColorScalePreview,
     'studio.tokens.preview.colorCompare': ColorComparePreview,
