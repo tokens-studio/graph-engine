@@ -239,7 +239,11 @@ export class Node {
     // Copy input values
     Object.entries(this.inputs).forEach(([key, input]) => {
        if (input.variadic) return;
-       clonedNode.inputs[key] = input.clone();
+       if (clonedNode.inputs[key]) {
+        clonedNode.inputs[key].setValue(input.value)
+       } else {
+        clonedNode.inputs[key] = input.clone()
+       }
     });
 
     Object.entries(this.outputs).forEach(([key, output]) => {
