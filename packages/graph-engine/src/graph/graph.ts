@@ -460,6 +460,7 @@ export class Graph {
 
     serialized.nodes.forEach((node) => {
       const factory = lookup[node.type];
+      console.log(node.type, factory)
       factory.deserialize({
         serialized: node,
         graph: this,

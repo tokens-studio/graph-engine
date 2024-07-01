@@ -46,8 +46,7 @@ export class VignetteNode extends BaseNode {
         await ImageMagick.read(this.cloneImage(image), (image: IMagickImage) => {
             image.vignette(radius, sigma, x, y);
             image.write((data) => this.setOutput('image', {
-                data,
-                settings: image.settings
+                data
             }))
         });
     }

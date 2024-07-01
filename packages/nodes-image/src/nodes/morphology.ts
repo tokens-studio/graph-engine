@@ -120,8 +120,7 @@ export class Morphology extends BaseNode {
         await ImageMagick.read(this.cloneImage(image), (image: IMagickImage) => {
             image.morphology(settings);
             image.write((data) => this.setOutput('image', {
-                data,
-                settings: image.settings
+                data
             }))
         });
     }

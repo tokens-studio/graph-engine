@@ -43,8 +43,7 @@ export class BlurNode extends BaseNode {
         await ImageMagick.read(this.cloneImage(image), (image: IMagickImage) => {
             image.blur(radius, sigma);
             image.write((data) => this.setOutput('image',{
-                data,
-                settings:image.settings
+                data
             }))
         });
     }

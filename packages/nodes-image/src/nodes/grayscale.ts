@@ -35,8 +35,7 @@ export class GrayscaleNode extends BaseNode {
             image.grayscale();
 
             image.write((data) => this.setOutput('image', {
-                data,
-                settings: image.settings
+                data
             }))
         });
     }

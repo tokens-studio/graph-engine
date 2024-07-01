@@ -35,8 +35,7 @@ export class NegateNode extends BaseNode {
         await ImageMagick.read(this.cloneImage(image), (image: IMagickImage) => {
             image.negate();
             image.write((data) => this.setOutput('image',{
-                data,
-                settings:image.settings
+                data
             }))
         });
     }

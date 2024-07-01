@@ -39,8 +39,7 @@ export class Oilpaint extends BaseNode {
         await ImageMagick.read(this.cloneImage(image), (image: IMagickImage) => {
             image.oilPaint(radius);
             image.write((data) => this.setOutput('image', {
-                data,
-                settings: image.settings
+                data
             }))
         });
     }
