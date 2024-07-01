@@ -3,7 +3,7 @@ import { Node } from './node.js';
 import { Port } from './port.js';
 import { SerializedInput } from '../graph/types.js';
 import { TypeDefinition } from './node.js';
-import { action, makeObservable } from 'mobx/dist/mobx.esm.production.min.js';
+import { action, makeObservable } from 'mobx';
 import getDefaults from 'json-schema-defaults-esm';
 
 export interface IInputProps<T = any> {
