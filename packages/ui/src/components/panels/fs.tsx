@@ -160,6 +160,7 @@ const readItemsRecursively = (path: string, parent: string = '') => {
 
 export const FsPanel = () => {
   const [trigger, setTrigger] = React.useState(0);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const tree = useMemo(() => readItemsRecursively('/', ''), [trigger]);
 
   //Note that using the filesystem spy is causing weird errors

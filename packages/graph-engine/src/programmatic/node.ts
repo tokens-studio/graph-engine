@@ -3,12 +3,7 @@ import { GraphSchema } from '../schemas/index.js';
 import { IDeserializeOpts, SerializedNode } from '../graph/types.js';
 import { Input } from './input.js';
 import { Output } from './output.js';
-import {
-	action,
-	computed,
-	makeObservable,
-	observable
-} from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import { annotatedNodeRunning } from '../annotations/index.js';
 import { v4 as uuid } from 'uuid';
 import getDefaults from 'json-schema-defaults-esm';

@@ -1,12 +1,7 @@
 import { AnySchema, GraphSchema } from '../schemas/index.js';
 import { Edge } from './edge.js';
 import { Node } from './node.js';
-import {
-	action,
-	computed,
-	makeObservable,
-	observable
-} from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 
 export interface IPort<T = any> {
 	name: string;
@@ -42,7 +37,7 @@ export class Port<T = any> {
 		this._type = props.type;
 		this._value = props.value;
 		this.annotations = props.annotations || {};
-		
+
 		makeObservable(this, {
 			//@ts-ignore
 			_type: observable.ref,
