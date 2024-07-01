@@ -41,7 +41,7 @@ export class Port<T = any> {
       //@ts-ignore
       _type: observable,
       _dynamicType: observable,
-      _value: observable,
+      _value: observable.ref,
       _edges: observable,
       visible: observable,
       annotations: observable,

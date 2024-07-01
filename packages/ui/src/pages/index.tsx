@@ -23,7 +23,11 @@ import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 import React, { useCallback, useEffect } from 'react';
 import globalState from '@/mobx/index.tsx';
 
+
+
 const Wrapper = observer(() => {
+
+  
   const dispatch = useDispatch();
 
   const router = useRouter();
