@@ -1,14 +1,12 @@
 import React from 'react';
 import {
   Button,
-  DropdownMenu,
-  Text,
   Tooltip
 } from '@tokens-studio/ui';
 import * as Toolbar from '@radix-ui/react-toolbar';
 import { styled } from '@stitches/react';
 import { violet, blackA, mauve } from '@radix-ui/colors';
-import { ChatBubbleEmpty, IconoirProvider, Download, Pause, Play, Settings, Sparks, Square, Upload } from 'iconoir-react';
+import {  IconoirProvider, Download, Settings, Upload } from 'iconoir-react';
 import { AlignDropdown } from './dropdowns/align';
 import { AddDropdown } from './dropdowns/add';
 import { ZoomDropdown } from './dropdowns/zoom';
@@ -65,28 +63,14 @@ const { onClick } = useLayoutButton();
     <IconoirProvider iconProps={{ width: '1.5em', height: '1.5em' }}>
       <ToolbarRoot aria-label="Formatting options">
         <AddDropdown />
-
-        {/* <Button variant='invisible' disabled style={{ paddingRight: '0' }}>
-          <Sparks />
-        </Button>
-        <Button variant='invisible' disabled style={{ paddingLeft: '0', paddingRight: '0' }}>
-          <ChatBubbleEmpty />
-        </Button> */}
-
         <ToolbarSeparator />
-
-        {/* <ZoomDropdown /> */}
-        {/* <ToolbarSeparator style={{ background: 'transparent' }} /> */}
+        <ZoomDropdown />
+        <ToolbarSeparator />
         <AlignDropdown />
-
         <ToolbarSeparator />
-
         <PlayControls />
-
         <ToolbarSeparator />
-
         <LayoutDropdown />
-
         <Tooltip label="Settings" side="bottom">
           <Button variant='invisible' style={{ paddingLeft: '0', paddingRight: '0' }} onClick={() => onClick('settings')}>
             <Settings />
@@ -108,8 +92,6 @@ const { onClick } = useLayoutButton();
         </Tooltip>
 
         <ToolbarSeparator style={{ background: 'transparent' }} />
-
-        {/* <Button variant='primary' disabled>Share</Button> */}
       </ToolbarRoot>
     </IconoirProvider>
   )
@@ -142,40 +124,8 @@ const itemStyles = {
   '&:focus': { position: 'relative', boxShadow: `0 0 0 2px ${violet.violet7}` },
 };
 
-const ToolbarToggleItem = styled(Toolbar.ToggleItem, {
-  ...itemStyles,
-  backgroundColor: 'white',
-  marginLeft: 2,
-  '&:first-child': { marginLeft: 0 },
-  '&[data-state=on]': { backgroundColor: violet.violet5, color: violet.violet11 },
-});
-
 const ToolbarSeparator = styled(Toolbar.Separator, {
   width: 1,
   backgroundColor: '$borderDefault',
   margin: '0 10px',
 });
-
-const ToolbarLink = styled(
-  Toolbar.Link,
-  {
-    ...itemStyles,
-    backgroundColor: 'transparent',
-    color: mauve.mauve11,
-    display: 'none',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  { '&:hover': { backgroundColor: 'transparent', cursor: 'pointer' } },
-  { '@bp1': { display: 'inline-flex' } }
-);
-
-const ToolbarButton = styled(
-  Toolbar.Button,
-  {
-    ...itemStyles,
-    color: 'white',
-    backgroundColor: violet.violet9,
-  },
-  { '&:hover': { backgroundColor: violet.violet10, color: 'white' } }
-);

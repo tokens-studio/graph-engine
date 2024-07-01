@@ -46,7 +46,7 @@ export const PlayControls = () => {
                 disabled={state === PlayState.STOPPED}
                 style={{ paddingLeft: '0', paddingRight: '0' }}
             >
-                <Pause />
+              
             </Button>
             <Button
                 variant='invisible'
