@@ -40,6 +40,12 @@ export default class NodeDefinition extends Node {
         default: "#ffffff"
       },
     });
+    this.addInput("mixColor", {
+      type: {
+        ...ColorSchema,
+        default: "#ffffff"
+      },
+    });
     this.addInput("value", {
       type: {
         ...NumberSchema,
@@ -69,10 +75,11 @@ export default class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
-    const { modifierType, space, value, color } = this.getAllInputs();
+    const { modifierType, space, value, color, mixColor } = this.getAllInputs();
 
     const converted = convertModifiedColorToHex(color, {
       type: modifierType,
+      color:mixColor,
       space,
       value,
     } as ColorModifier);
