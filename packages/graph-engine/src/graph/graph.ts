@@ -546,6 +546,8 @@ export class Graph {
     Object.entries(this.capabilities).forEach(([key, value]) => {
       clonedGraph.capabilities[key] = value;
     });
+
+    clonedGraph.annotations = {...this.annotations}
   
     return clonedGraph;
   }
