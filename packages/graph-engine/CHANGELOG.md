@@ -1,5 +1,27 @@
 # @tokens-studio/graph-engine
 
+## 2.0.0
+
+### Major Changes
+
+- 6321006: Added support for different contrast algorithms Weber, Michelson, APCA, Lstar, DeltaPhi, WCAG21
+  Renamed WCAG Version to algorithm
+  Added validation to distance node
+- f5a622a: Fix contrasting color node
+- 6321006: Remove Join Array from array and add to string nodes
+- 6321006: Move Base Font Size Node to Typography section and add precision.
+  Move Contrast from Accessibility to Color
+
+### Minor Changes
+
+- 6321006: Change output to color for Color Blindness node
+- 8d0f934: Set dynamic types for variadic inputs
+- 6321006: Add Lighte, Darken, Mix nodes to colors
+- 6321006: Remove mixing option from the blend node, you now have a mix node for this
+- 6321006: Add WCAG Version selector for contrast node, you can now select between 2.1 and 3.0 (APCA)
+- addb50d: Add preset bezier curves and a create bezier curve
+- 1e68191: Adds filter , find and flatten to array transformations
+
 ## 1.0.0
 
 ### Major Changes
