@@ -55,6 +55,18 @@ export const TokenBorderSchema: SchemaObject = {
   },
 };
 
+export const TOKEN_COLOR = "https://schemas.tokens.studio/tokenColor.json";
+export const TokenColorSchema: SchemaObject = {
+  $id: TOKEN_BORDER,
+  title: "Color Token",
+  type: "object",
+  properties: {
+    color: StringSchema,
+    width: StringSchema,
+    style: StringSchema,
+  },
+};
+
 
 export const TOKEN_BOX_SHADOW = "https://schemas.tokens.studio/tokenBoxShadow.json";
 export const TokenBoxShadowSchema: SchemaObject = {

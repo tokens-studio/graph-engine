@@ -31,7 +31,14 @@ export const StringSchema: SchemaObject = {
 export const COLOR = "https://schemas.tokens.studio/color.json";
 export const ColorSchema: SchemaObject = {
   $id: COLOR,
-  title: "Color",
+  title: "Color String",
+  type: "string",
+};
+
+export const COLOR_OBJECT = "https://schemas.tokens.studio/colorObject.json";
+export const ColorObjectSchema: SchemaObject = {
+  $id: COLOR,
+  title: "Color Object",
   type: "string",
 };
 
