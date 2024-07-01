@@ -11,7 +11,6 @@ import type { NodeRun } from "../types.js";
 
 export interface INodeDefinition {
   graph: Graph;
-  innerGraph?: Graph;
   id?: string;
   inputs?: Record<string, Input>;
   outputs?: Record<string, Output>;
@@ -59,7 +58,6 @@ export class Node {
   public lastExecutedDuration = 0;
 
   private _graph: Graph;
-  public _innerGraph?: Graph;
 
   public error?: Error;
 
@@ -221,14 +219,6 @@ export class Node {
     return this._graph;
   }
 
-  public getInnerGraph() {
-    return this._innerGraph;
-  }
-
-  public setInnerGraph(graph: Graph) {
-    this._innerGraph = graph;
-  }
-
   public clone(newGraph: Graph): Node {
     // Create a new instance using the constructor
     const clonedNode = new this.factory({
@@ -250,11 +240,13 @@ export class Node {
       clonedNode.outputs[key] = output.clone();
     })
 
-    clonedNode.annotations = this.annotations;
+    clonedNode.annotations = {...this.annotations};
 
     // Clone inner graph if it exists
+    // @ts-expect-error
     if (this._innerGraph) {
-        clonedNode.setInnerGraph(this._innerGraph.clone());
+      // @ts-expect-error
+      clonedNode._innerGraph = this._innerGraph.clone();
     }
 
     return clonedNode;

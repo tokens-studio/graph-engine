@@ -18,6 +18,8 @@ export default class ArraySubgraph<T, V> extends Node {
   static type = 'tokens.studio.array.map';
   static description = "Allows you to map an array of items";
 
+  _innerGraph: Graph;
+
   declare inputs: ToInput<{
     array: T[];
   }>
@@ -186,7 +188,7 @@ export default class ArraySubgraph<T, V> extends Node {
     if (!result.output) throw new Error("No output from subgraph");
     return output.concat([result.output.value]);
     } catch (error) {
-      console.log(error);
+      throw new Error("Error executing array map subgraph");
     }
 
     }, Promise.resolve([]));

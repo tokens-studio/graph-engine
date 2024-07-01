@@ -108,16 +108,13 @@ export class Input<T = any> extends Port<T> {
   
 
   clone(): Input<T> {
-    const serialized = this.serialize()
-
     const clonedInput = new this.factory({
-      ...serialized,
       name: this.name,
       type: this.type,
       visible: this.visible,
       node: this.node,
       variadic: this.variadic,
-      annotations: this.annotations,
+      annotations: {...this.annotations},
       impure: this.impure,
       value: this.value,
     });
