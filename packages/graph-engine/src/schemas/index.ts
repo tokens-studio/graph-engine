@@ -46,6 +46,13 @@ export const ColorSchema: SchemaObject = {
 	required: ['channels', 'space']
 };
 
+export const COLOR_OBJECT = "https://schemas.tokens.studio/colorObject.json";
+export const ColorObjectSchema: SchemaObject = {
+  $id: COLOR,
+  title: "Color Object",
+  type: "string",
+};
+
 export const DIMENSION = "https://schemas.tokens.studio/dimension.json";
 export const DimensionSchema: SchemaObject = {
   $id: DIMENSION,
