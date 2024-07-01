@@ -121,6 +121,7 @@ export const SelectionContextMenu = ({
 
         const { graphNode, flowNode } = nodes;
 
+        //@ts-expect-error
         const internalGraph = graphNode._innerGraph as unknown as Graph;
 
         //Get the graph nodes from the existing graph
