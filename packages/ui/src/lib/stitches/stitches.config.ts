@@ -1,5 +1,5 @@
 import { CSS as StitchesCSS, createStitches } from '@stitches/react';
-import { core, darkTheme, lightTheme } from '@tokens-studio/tokens';
+import { core, darkTheme } from '@tokens-studio/tokens';
 
 export type CSS = StitchesCSS<typeof config>;
 

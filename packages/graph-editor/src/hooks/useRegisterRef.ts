@@ -1,5 +1,5 @@
 import { MutableRefObject, useCallback, useRef } from 'react';
-import { useDispatch } from './useDispatch';
+import { useDispatch } from './useDispatch.js';
 
 export const useRegisterRef = <T>(name: string): ((x: T) => void) => {
   const dispatch = useDispatch();

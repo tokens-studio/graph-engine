@@ -1,14 +1,9 @@
-import { IObservableValue, makeAutoObservable, observable } from 'mobx';
+import {
+  IObservableValue,
+  makeAutoObservable,
+  observable,
+} from 'mobx';
 import { ImperativeEditorRef } from '@tokens-studio/graph-editor';
-import { configure } from 'mobx';
-
-configure({
-  enforceActions: 'never',
-  // computedRequiresReaction: true,
-  // reactionRequiresObservable: true,
-  // observableRequiresReaction: true,
-  // disableErrorBoundaries: true
-});
 
 class UIState {
   theme: IObservableValue<string>;
@@ -27,11 +22,10 @@ class RefState {
   editor: IObservableValue<ImperativeEditorRef | null>;
   rootStore: GlobalState;
   constructor(rootStore: GlobalState) {
-    this.editor = observable.box(null);
+    this.editor = observable(null);
     this.rootStore = rootStore;
   }
 }
-
 
 export class GlobalState {
   refs: RefState;

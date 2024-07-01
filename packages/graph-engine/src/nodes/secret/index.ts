@@ -1,6 +1,3 @@
-import retrieve from "./retrieve.js";
+import retrieve from './retrieve.js';
 
-
-export const nodes = [
-    retrieve
-];
+export const nodes = [retrieve];

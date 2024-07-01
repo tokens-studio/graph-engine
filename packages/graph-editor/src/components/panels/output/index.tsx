@@ -1,12 +1,12 @@
-import React, { useMemo } from 'react';
-import { Box, IconButton, Stack, Heading } from '@tokens-studio/ui';
-import { observer } from 'mobx-react-lite';
-import { currentNode } from '@/redux/selectors/graph';
-import { useSelector } from 'react-redux';
-import { useGraph } from '@/hooks/useGraph';
-import { PortPanel } from '@/components/portPanel';
+import { Box, Heading, IconButton, Stack } from '@tokens-studio/ui';
 import { InfoCircleSolid } from 'iconoir-react';
 import { Node } from '@tokens-studio/graph-engine';
+import { PortPanel } from '@/components/portPanel/index.js';
+import { currentNode } from '@/redux/selectors/graph.js';
+import { observer } from 'mobx-react-lite';
+import { useGraph } from '@/hooks/useGraph.js';
+import { useSelector } from 'react-redux';
+import React, { useMemo } from 'react';
 
 export function OutputSheet() {
   const graph = useGraph();
@@ -17,13 +17,12 @@ export function OutputSheet() {
     return <></>;
   }
   return <OutputSheetObserver node={selectedNode} />;
- 
 }
 
 /**
  * We need to wrap an observer around the component to ensure that it re-renders when the node changes
  */
-const OutputSheetObserver = observer(({node}:{node: Node})=>{
+const OutputSheetObserver = observer(({ node }: { node: Node }) => {
   return (
     <Box
       css={{

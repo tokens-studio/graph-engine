@@ -1,8 +1,8 @@
-import { observer } from 'mobx-react-lite';
+import { IField } from './interface.js';
 import { JSONTree } from 'react-json-tree';
-import React from 'react';
-import { IField } from './interface';
+import { observer } from 'mobx-react-lite';
 import { toJS } from 'mobx';
+import React from 'react';
 
 export const DefaultField = observer(({ port }: IField) => {
   let value = toJS(port.value);

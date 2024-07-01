@@ -1,36 +1,34 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
-import { NumberSchema } from "../../schemas/index.js";
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
+import { NumberSchema } from '../../schemas/index.js';
 
 export default class NodeDefinition extends Node {
-  static title = "Cosine";
-  static type = "studio.tokens.math.cos";
-  static description = "Cos node allows you to get the cosine of a number.";
+	static title = 'Cosine';
+	static type = 'studio.tokens.math.cos';
+	static description = 'Cos node allows you to get the cosine of a number.';
 
+	declare inputs: ToInput<{
+		value: number;
+	}>;
+	declare outputs: ToOutput<{
+		value: number;
+	}>;
 
-  declare inputs: ToInput<{
-    value: number;
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('value', {
+			type: {
+				...NumberSchema,
+				default: 0
+			}
+		});
+		this.addOutput('value', {
+			type: NumberSchema
+		});
+	}
 
-  }>;
-  declare outputs: ToOutput<{
-    value: number;
-  }>;
-
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("value", {
-      type: {
-        ...NumberSchema,
-        default: 0,
-      },
-    });
-    this.addOutput("value", {
-      type: NumberSchema,
-    });
-  }
-
-  execute(): void | Promise<void> {
-    const value = this.getInput("value");
-    this.setOutput("value", Math.cos(value));
-  }
+	execute(): void | Promise<void> {
+		const value = this.getInput('value');
+		this.setOutput('value', Math.cos(value));
+	}
 }

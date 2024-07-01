@@ -1,23 +1,32 @@
-import { Node } from './node.js';
-
-import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
-import { Handle, HandleContainer } from '../handles.js';
-import { COLOR, Input, OBJECT, Port, annotatedNodeRunning } from '@tokens-studio/graph-engine';
-import { Node as GraphNode } from '@tokens-studio/graph-engine'
-import colors from '@/tokens/colors.js';
-import { useSelector } from 'react-redux';
-import { inlineTypes, inlineValues, showTimings } from '@/redux/selectors/settings.js';
-import { icons, nodeSpecifics } from '@/redux/selectors/registry.js';
-import { title, xpos } from '@/annotations/index.js';
-import { useLocalGraph } from '@/context/graph.js';
+import {
+  COLOR,
+  Input,
+  OBJECT,
+  Port,
+  annotatedNodeRunning,
+} from '@tokens-studio/graph-engine';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
+import { Node as GraphNode } from '@tokens-studio/graph-engine';
+import { Handle, HandleContainer } from '../handles.js';
+import { Node } from './node.js';
+import { icons, nodeSpecifics } from '@/redux/selectors/registry.js';
+import {
+  inlineTypes,
+  inlineValues,
+  showTimings,
+} from '@/redux/selectors/settings.js';
+import { observer } from 'mobx-react-lite';
+import { title } from '@/annotations/index.js';
+import { useLocalGraph } from '@/context/graph.js';
+import { useSelector } from 'react-redux';
+import React from 'react';
+import colors from '@/tokens/colors.js';
 
 const isHexColor = (str) => {
   if (typeof str !== 'string') return false;
-  return /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(str);;
+  return /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(str);
 };
 
 export type UiNodeDefinition = {
@@ -31,7 +40,7 @@ export type UiNodeDefinition = {
 
 export type WrappedNodeDefinition = {
   type: string;
-  state: Record<string, any>;
+  state: Record<string, unknown>;
   component: React.ReactNode | React.FC;
 };
 
@@ -50,13 +59,11 @@ export const NodeV2 = (args) => {
     return <Box>Node not found</Box>;
   }
 
-
   return (
     <ErrorBoundary fallback={<ErrorBoundaryContent />}>
-      <NodeWrap node={node}  icon={args?.data?.icon}/>
+      <NodeWrap node={node} icon={args?.data?.icon} />
     </ErrorBoundary>
-  )
-
+  );
 };
 
 export interface INodeWrap {
@@ -68,7 +75,7 @@ export interface INodeWrap {
   icon?: React.ReactNode;
   node: GraphNode;
 }
-const NodeWrap = observer(({ node,icon }: INodeWrap) => {
+const NodeWrap = observer(({ node, icon }: INodeWrap) => {
   const showTimingsValue = useSelector(showTimings);
   const specifics = useSelector(nodeSpecifics);
 
@@ -79,8 +86,10 @@ const NodeWrap = observer(({ node,icon }: INodeWrap) => {
       id={node.id}
       isAsync={node.annotations[annotatedNodeRunning] as boolean}
       icon={icon}
-      title={(node.annotations[title] as string) || node.factory.title || 'Node'}
-      subtitle={node.annotations[title] ? node.factory.title : ""}
+      title={
+        (node.annotations[title] as string) || node.factory.title || 'Node'
+      }
+      subtitle={node.annotations[title] ? node.factory.title : ''}
       error={node.error || null}
       controls={''}
       style={{ minWidth: '350px' }}
@@ -94,10 +103,11 @@ const NodeWrap = observer(({ node,icon }: INodeWrap) => {
             <PortArray ports={node.outputs} />
           </HandleContainer>
         </Stack>
-        {Specific && <Stack direction="column" gap={3} css={{ padding: '$3' }}>
+        {Specific && (
+          <Stack direction="column" gap={3} css={{ padding: '$3' }}>
             <Specific node={node} />
           </Stack>
-        }
+        )}
       </Stack>
       {showTimingsValue && (
         <Box css={{ position: 'absolute', bottom: '-1.5em' }}>
@@ -112,15 +122,17 @@ const NodeWrap = observer(({ node,icon }: INodeWrap) => {
 
 export interface IPortArray {
   ports: Record<string, Port>;
-  hideNames?: boolean
+  hideNames?: boolean;
 }
 export const PortArray = observer(({ ports, hideNames }: IPortArray) => {
   const entries = Object.values(ports).sort();
   return (
     <>
-      {entries.filter(x => x.visible || x.isConnected).map((input) => (
-        <InputHandle port={input} hideName={hideNames} />
-      ))}
+      {entries
+        .filter((x) => x.visible || x.isConnected)
+        .map((input) => (
+          <InputHandle port={input} hideName={hideNames} />
+        ))}
     </>
   );
 });
@@ -136,7 +148,7 @@ const extractTypeIcon = (
     id = port.type.items.$id || '';
   }
 
-  let icon = iconLookup[id] || iconLookup[OBJECT];
+  const icon = iconLookup[id] || iconLookup[OBJECT];
 
   const color = colors[id]?.color || 'black';
   const backgroundColor = colors[id]?.backgroundColor || 'white';
@@ -163,7 +175,16 @@ export const InlineTypeLabel = ({ port }: { port: Port }) => {
 };
 
 const getColorPreview = (color: string, showValue = false) => {
-  const colorSwatch = <Box css={{ width: '16px', height: '16px', borderRadius: '$medium', backgroundColor: color }} />;
+  const colorSwatch = (
+    <Box
+      css={{
+        width: '16px',
+        height: '16px',
+        borderRadius: '$medium',
+        backgroundColor: color,
+      }}
+    />
+  );
 
   if (!showValue) {
     return colorSwatch;
@@ -172,10 +193,14 @@ const getColorPreview = (color: string, showValue = false) => {
   return (
     <Stack direction="row" gap={2}>
       {colorSwatch}
-      {showValue ? <Text css={{ fontSize: '$small', color: '$gray12' }}>{color.toUpperCase()}</Text> : null}
+      {showValue ? (
+        <Text css={{ fontSize: '$small', color: '$gray12' }}>
+          {color.toUpperCase()}
+        </Text>
+      ) : null}
     </Stack>
   );
-}
+};
 
 const getValuePreview = (value, type) => {
   if (value === undefined) {
@@ -186,14 +211,18 @@ const getValuePreview = (value, type) => {
   switch (type.type) {
     case 'array':
       if (type.items?.$id === COLOR) {
-        return (<Stack direction="row" gap={1}>
-          {value.length > 5 ? (
-            <>
-              {value.slice(0, 5).map((val) => getColorPreview(val))}
-              <Text>+{value.length - 5}</Text>
-            </>
-          ) : value.map((val) => getColorPreview(val))}
-        </Stack>)
+        return (
+          <Stack direction="row" gap={1}>
+            {value.length > 5 ? (
+              <>
+                {value.slice(0, 5).map((val) => getColorPreview(val))}
+                <Text>+{value.length - 5}</Text>
+              </>
+            ) : (
+              value.map((val) => getColorPreview(val))
+            )}
+          </Stack>
+        );
       }
       valuePreview = JSON.stringify(value);
       break;
@@ -211,69 +240,98 @@ const getValuePreview = (value, type) => {
       valuePreview = JSON.stringify(value);
   }
 
-  return valuePreview.length > 18 ? `${valuePreview.substring(0, 18)}...` : valuePreview;
-}
+  return valuePreview.length > 18
+    ? `${valuePreview.substring(0, 18)}...`
+    : valuePreview;
+};
 
-const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boolean }) => {
-  const inlineTypesValue = useSelector(inlineTypes);
-  const iconTypeRegistry = useSelector(icons);
-  const inlineValuesValue = useSelector(inlineValues);
-  const typeCol = extractTypeIcon(port, iconTypeRegistry);
-  const input = port as unknown as Input;
+const InputHandle = observer(
+  ({ port, hideName }: { port: Port; hideName?: boolean }) => {
+    const inlineTypesValue = useSelector(inlineTypes);
+    const iconTypeRegistry = useSelector(icons);
+    const inlineValuesValue = useSelector(inlineValues);
+    const typeCol = extractTypeIcon(port, iconTypeRegistry);
+    const input = port as unknown as Input;
 
-  if (input.variadic) {
+    if (input.variadic) {
+      return (
+        <>
+          <Handle
+            {...typeCol}
+            visible={port.visible || port.isConnected}
+            id={port.name}
+            full
+            variadic
+          >
+            {!hideName && <Text>{port.name} + </Text>}
+            {inlineTypesValue && <InlineTypeLabel port={port} />}
+          </Handle>
+          {port._edges.map((edge, i) => {
+            return (
+              <Handle
+                {...typeCol}
+                visible={port.visible || port.isConnected}
+                id={port.name + `[${edge.annotations['engine.index']}]`}
+                key={i}
+                full
+              >
+                {!hideName && (
+                  <Box
+                    css={{
+                      display: 'grid',
+                      justifyContent: 'center',
+                      direction: 'row',
+                    }}
+                  >
+                    {inlineValuesValue && (
+                      <Text css={{ fontSize: 'medium', color: '$gray11' }}>
+                        {getValuePreview(input.value[i], input.type.items)}
+                      </Text>
+                    )}
+
+                    <Text css={{ fontSize: 'small', color: '$gray12' }}>
+                      {input.name} - [{i}]
+                    </Text>
+                  </Box>
+                )}
+                {inlineTypesValue && <InlineTypeLabel port={port} />}
+              </Handle>
+            );
+          })}
+        </>
+      );
+      //We need to render additional handles
+    }
+
     return (
-      <>
-        <Handle
-          {...typeCol}
-          visible={port.visible || port.isConnected}
-          id={port.name}
-          full
-          variadic
-        >
-          {!hideName && <Text>{port.name} + </Text>}
-          {inlineTypesValue && <InlineTypeLabel port={port} />}
-        </Handle>
-        {port._edges.map((edge, i) => {
-
-          return (
-            <Handle
-              {...typeCol}
-              visible={port.visible || port.isConnected}
-              id={port.name + `[${edge.annotations['engine.index']}]`}
-              key={i}
-              full
-            >
-              {!hideName && (
-                <Box css={{ display: 'grid', justifyContent: 'center', direction: 'row' }}>
-                  {inlineValuesValue && <Text css={{ fontSize: 'medium', color: '$gray11' }}>{getValuePreview(input.value[i], input.type.items)}</Text>}
-
-                  <Text css={{ fontSize: 'small', color: '$gray12' }}>{input.name} - [{i}]</Text>
-                </Box>
-              )}
-              {inlineTypesValue && <InlineTypeLabel port={port} />}
-            </Handle>
-          );
-        })}
-      </>
+      <Handle
+        {...typeCol}
+        visible={port.visible || port.isConnected}
+        id={port.name}
+        full
+      >
+        {!hideName && (
+          <Box
+            css={{
+              display: 'grid',
+              justifyContent: 'center',
+              direction: 'row',
+            }}
+          >
+            {inlineValuesValue && (
+              <Text css={{ fontSize: '$small', color: '$gray12' }}>
+                {getValuePreview(input.value, input.type) ?? input.name}
+              </Text>
+            )}
+            {port.value !== undefined ? (
+              <Text css={{ fontSize: '$medium', color: '$gray11' }}>
+                {input.name}
+              </Text>
+            ) : null}
+          </Box>
+        )}
+        {inlineTypesValue && <InlineTypeLabel port={port} />}
+      </Handle>
     );
-    //We need to render additional handles
-  }
-
-  return (
-    <Handle
-      {...typeCol}
-      visible={port.visible || port.isConnected}
-      id={port.name}
-      full
-    >
-      {!hideName && (
-        <Box css={{ display: 'grid', justifyContent: 'center', direction: 'row' }}>
-          {inlineValuesValue && <Text css={{ fontSize: '$small', color: '$gray12' }}>{getValuePreview(input.value, input.type) ?? input.name}</Text>}
-          {port.value !== undefined ? <Text css={{ fontSize: '$medium', color: '$gray11' }}>{input.name}</Text> : null}
-        </Box>
-      )}
-      {inlineTypesValue && <InlineTypeLabel port={port} />}
-    </Handle>
-  );
-});
+  },
+);

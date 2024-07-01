@@ -12,11 +12,12 @@ const withBundleAnalyzer = analyzer({
 
 export default withBundleAnalyzer({
   reactStrictMode: true,
-  transpilePackages: ['@tokens-studio/graph-editor', '@tokens-studio/graph-engine'],
+  transpilePackages: ['@tokens-studio/graph-editor', '@tokens-studio/graph-engine', 'mobx', 'colorjs.io'],
   env: {
     API_PATH: process.env.API_PATH,
   },
   experimental: {
+    esmExternals: true,
     //Terrible hack to fix
     optimizePackageImports: ['iconoir-react', "lodash"],
     // esmExternals: 'loose',
@@ -27,5 +28,5 @@ export default withBundleAnalyzer({
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production'
   },
-  output: "standalone"
+  output: "standalone",
 });

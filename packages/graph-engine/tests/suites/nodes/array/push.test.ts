@@ -1,21 +1,21 @@
-import Node from "../../../../src/nodes/array/push";
-import { Graph } from "../../../../src/graph/graph.js";
+import { Graph } from '../../../../src/graph/graph.js';
+import { expect } from 'chai';
+import Node from '../../../../src/nodes/array/push.js';
 
+describe('array/push', () => {
+	it('does a non mutative push', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-describe("array/push", () => {
-    it("does a non mutative push", async () => {
-        const graph = new Graph();
-        const node = new Node({ graph });
-        
-        const array = [1, 2, 3];
+		const array = [1, 2, 3];
 
-        node.inputs.array.setValue(array);
-        node.inputs.item.setValue(4);
+		node.inputs.array.setValue(array);
+		node.inputs.item.setValue(4);
 
-        await node.execute();
+		await node.execute();
 
-        expect(node.outputs.value.value).toStrictEqual([1,2,3,4]);
-        //don't mutate the original array
-        expect(array).toStrictEqual([1,2,3]);
-    });
+		expect(node.outputs.value.value).to.eql([1, 2, 3, 4]);
+		//don't mutate the original array
+		expect(array).to.eql([1, 2, 3]);
+	});
 });

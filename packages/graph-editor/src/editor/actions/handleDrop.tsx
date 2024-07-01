@@ -1,7 +1,7 @@
 import { processJson, processTokensFile } from '@/utils/tokenFiles.js';
 import JSZip from 'jszip';
 
-import { NodeRequest } from './createNode';
+import { NodeRequest } from './createNode.js';
 
 const INLINE_SET = 'studio.tokens.design.inline';
 
@@ -34,7 +34,7 @@ export const handleDrop = async (event): Promise<NodeRequest[]> => {
                 type: INLINE_SET,
                 data: {
                   value: data.tokens,
-                }
+                },
               },
               { x: 30 * i++, y: 30 * i++ },
             );
@@ -67,7 +67,7 @@ export const handleDrop = async (event): Promise<NodeRequest[]> => {
                     type: INLINE_SET,
                     data: {
                       value: data?.tokens,
-                    }
+                    },
                   },
                   { x: 10 * i++, y: 10 * i++ },
                 );

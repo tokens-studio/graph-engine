@@ -1,5 +1,5 @@
-import { createSelector } from 'reselect';
 import { RootState } from '../store.tsx';
+import { createSelector } from 'reselect';
 
 export const refs = (state: RootState) => state.refs;
 

@@ -1,22 +1,22 @@
 {
-  "colors": {
-    "primary": {
-      "value": "#17D617",
-      "type": "color"
-    },
-    "text": {
-      "value": "#ffffff",
-      "type": "color"
-    },
-    "bg": {
-      "value": "#000000",
-      "type": "color"
-    }
-  },
-  "borderRadius": {
-    "rounded": {
-      "value": "0",
-      "type": "dimension"
-    }
-  }
+	"colors": {
+		"primary": {
+			"value": "#17D617",
+			"type": "color"
+		},
+		"text": {
+			"value": "#ffffff",
+			"type": "color"
+		},
+		"bg": {
+			"value": "#000000",
+			"type": "color"
+		}
+	},
+	"borderRadius": {
+		"rounded": {
+			"value": "0",
+			"type": "dimension"
+		}
+	}
 }

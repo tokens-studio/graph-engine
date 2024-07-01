@@ -1,10 +1,10 @@
+import { GrabberIcon } from '@/components/icons/GrabberIcon.js';
+import { NodeHoverCard } from '@/components/NodeHoverCard.js';
+import { styled } from '@/lib/stitches/index.js';
 import React, { useCallback } from 'react';
-import { styled } from '@/lib/stitches';
-import { NodeHoverCard } from '@/components/NodeHoverCard';
-import { GrabberIcon } from '@/components/icons/GrabberIcon';
 
 type DragItemProps = {
-  data?: any;
+  data?: unknown;
   type: string;
   children: React.ReactNode;
   title?: string;

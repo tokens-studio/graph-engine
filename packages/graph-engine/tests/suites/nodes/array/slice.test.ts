@@ -1,22 +1,22 @@
-import Node from "../../../../src/nodes/array/slice";
-import { Graph } from "../../../../src/graph/graph.js";
+import { Graph } from '../../../../src/graph/graph.js';
+import { expect } from 'chai';
+import Node from '../../../../src/nodes/array/slice.js';
 
+describe('array/slice', () => {
+	it('performs an array slice', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-describe("array/slice", () => {
-    it("performs an array slice", async () => {
-        const graph = new Graph();
-        const node = new Node({ graph });
-        
-        const array = [0, 1, 2, 3, 4];
+		const array = [0, 1, 2, 3, 4];
 
-        node.inputs.array.setValue(array);
-        node.inputs.start.setValue(1);
-        node.inputs.end.setValue(4);
+		node.inputs.array.setValue(array);
+		node.inputs.start.setValue(1);
+		node.inputs.end.setValue(4);
 
-        await node.execute();
+		await node.execute();
 
-        expect(node.outputs.value.value).toStrictEqual([1, 2, 3]);
-        //don't mutate the original array
-        expect(array).toStrictEqual([0, 1, 2, 3, 4]);
-    });
+		expect(node.outputs.value.value).to.eql([1, 2, 3]);
+		//don't mutate the original array
+		expect(array).to.eql([0, 1, 2, 3, 4]);
+	});
 });

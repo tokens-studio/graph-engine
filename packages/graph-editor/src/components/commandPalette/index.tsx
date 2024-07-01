@@ -1,28 +1,30 @@
 import { Box, Heading, Stack, Text } from '@tokens-studio/ui';
 import { Command } from 'cmdk';
-import React from 'react';
 import {
   DropPanelStore,
   PanelGroup,
   PanelItem,
 } from '../panels/dropPanel/index.js';
-import { useDispatch, useSelector } from 'react-redux';
-import { showNodesCmdPaletteSelector } from '@/redux/selectors/ui';
-import { styled } from '@/lib/stitches';
-import { Search } from 'iconoir-react';
-import { observer } from 'mobx-react-lite';
-import { isActiveElementTextEditable } from '@/utils/isActiveElementTextEditable.js';
-import { useReactFlow, Node as FlowNode } from 'reactflow';
 import { Node } from '@tokens-studio/graph-engine';
-import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
 import { NodeRequest } from '@/editor/actions/createNode.js';
+import { Node as ReactFlowNode, useReactFlow } from 'reactflow';
+import { Search } from 'iconoir-react';
+import { isActiveElementTextEditable } from '@/utils/isActiveElementTextEditable.js';
+import { observer } from 'mobx-react-lite';
+import { showNodesCmdPaletteSelector } from '@/redux/selectors/ui.js';
+import { styled } from '@/lib/stitches/index.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
+import React from 'react';
 
 export interface ICommandMenu {
   items: DropPanelStore;
-  handleSelectNewNodeType: (node: NodeRequest) => {
-    graphNode: Node,
-    flowNode: FlowNode
-  } | undefined;
+  handleSelectNewNodeType: (node: NodeRequest) =>
+    | {
+        graphNode: Node;
+        flowNode: ReactFlowNode;
+      }
+    | undefined;
 }
 
 const CommandItem = observer(
@@ -69,7 +71,15 @@ const CommandMenuGroup = observer(
     handleSelectItem: (PanelItem) => void;
   }) => {
     return (
-      <Command.Group key={group.key} heading={<Stack align='center'>{group.icon}{group.title}</Stack>}>
+      <Command.Group
+        key={group.key}
+        heading={
+          <Stack align="center">
+            {group.icon}
+            {group.title}
+          </Stack>
+        }
+      >
         {group.items.map((item) => (
           <CommandItem item={item} handleSelectItem={handleSelectItem} />
         ))}
@@ -78,13 +88,13 @@ const CommandMenuGroup = observer(
   },
 );
 
-const CommandMenu = ({
-  items,
-  handleSelectNewNodeType,
-}: ICommandMenu) => {
+const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
   const showNodesCmdPalette = useSelector(showNodesCmdPaletteSelector);
   const dispatch = useDispatch();
-  const cursorPositionRef = React.useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const cursorPositionRef = React.useRef<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
   const [selectedItem, setSelectedItem] = React.useState('input');
   const reactflow = useReactFlow();
   const selectAddedNodes = useSelectAddedNodes();
@@ -95,7 +105,7 @@ const CommandMenu = ({
       ...item,
     });
     if (newNode) {
-      selectAddedNodes([newNode.flowNode])
+      selectAddedNodes([newNode.flowNode]);
     }
 
     dispatch.ui.setShowNodesCmdPalette(false);
@@ -104,14 +114,11 @@ const CommandMenu = ({
   // Store the mouse cursor position when the mouse is moved
   React.useEffect(() => {
     const move = (e) => {
-
       cursorPositionRef.current = {
         x: e.clientX,
         y: e.clientY,
       };
-
     };
-
 
     document.addEventListener('mousemove', move);
     return () => document.removeEventListener('mousemove', move);
@@ -139,7 +146,7 @@ const CommandMenu = ({
 
       dispatch.ui.setShowNodesCmdPalette(false);
     }
-  }
+  };
 
   return (
     <Command.Dialog
@@ -163,7 +170,10 @@ const CommandMenu = ({
         }}
       >
         <Search />
-        <Command.Input placeholder="Find nodes to add…" onKeyDown={handleKeyDown} />
+        <Command.Input
+          placeholder="Find nodes to add…"
+          onKeyDown={handleKeyDown}
+        />
       </Box>
       <Command.List>
         <Command.Empty>
@@ -171,7 +181,12 @@ const CommandMenu = ({
         </Command.Empty>
         <Stack
           direction="row"
-          css={{ overflowY: 'scroll', maxHeight: '450px', scrollbarColor: 'var(--colors-bgSubtle) transparent', scrollbarWidth: 'thin' }}
+          css={{
+            overflowY: 'scroll',
+            maxHeight: '450px',
+            scrollbarColor: 'var(--colors-bgSubtle) transparent',
+            scrollbarWidth: 'thin',
+          }}
         >
           <Box
             css={{

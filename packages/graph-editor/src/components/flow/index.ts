@@ -1,2 +1,2 @@
-export * from './wrapper/nodeV2';
-export * from './handles';
+export * from './wrapper/nodeV2.js';
+export * from './handles.js';

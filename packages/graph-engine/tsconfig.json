@@ -1,37 +1,25 @@
 {
-  "ts-node": {
-    "esm": true
-  },
-  "compilerOptions": {
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-    "noEmit": true,
-    "jsx": "react",
-    "target": "ESNext",
-    "outDir": "./types",
-    "preserveConstEnums": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "rootDir": ".",
-    "noImplicitAny": false,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "types": [
-      "jest",
-      "node"
-    ],
-    "baseUrl": "."
-  },
-  "include": [
-    "stories/**/*",
-    "src/**/*",
-    "tests/**/*" ],
-  "exclude": [
-    "node_modules",
-    "cypress/**"
-  ]
+	"compilerOptions": {
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true,
+		"noEmit": true,
+		"jsx": "react",
+		"target": "ESNext",
+		"outDir": "./types",
+		"preserveConstEnums": true,
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"rootDir": ".",
+		"noImplicitAny": false,
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
+		"types": ["jest", "node"],
+		"baseUrl": "."
+	},
+	"include": ["stories/**/*", "src/**/*", "tests/**/*"],
+	"exclude": ["node_modules", "cypress/**"]
 }

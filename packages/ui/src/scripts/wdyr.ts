@@ -1,4 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import whyDidYouRender from '@welldone-software/why-did-you-render';
 
 // Uncomment if want to do perf checks

@@ -1,43 +1,32 @@
 {
-  "ts-node": {
-    "esm": true
-  },
-  "compilerOptions": {
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-    "noEmit": true,
-    "emitDecoratorMetadata":true,
-    "jsx": "react",
-    "target": "ESNext",
-    "outDir": "./types",
-    "preserveConstEnums": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "rootDir": ".",
-    "noImplicitAny": false,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "types": [
-      "jest",
-      "node"
-    ],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
-  },
-  "include": [
-    "stories/**/*",
-    "src/**/*",
-    "tests/**/*" ],
-  "exclude": [
-    "node_modules",
-    "cypress/**"
-  ]
+	"ts-node": {
+		"esm": true
+	},
+	"compilerOptions": {
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true,
+		"noEmit": true,
+		"emitDecoratorMetadata": true,
+		"jsx": "react",
+		"target": "ESNext",
+		"outDir": "./types",
+		"preserveConstEnums": true,
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"rootDir": ".",
+		"noImplicitAny": false,
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
+		"types": ["jest", "node"],
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"]
+		}
+	},
+	"include": ["stories/**/*", "src/**/*", "tests/**/*"],
+	"exclude": ["node_modules", "cypress/**"]
 }

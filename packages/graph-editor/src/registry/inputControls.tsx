@@ -1,23 +1,13 @@
-import {
-  StringSchema,
-} from '@tokens-studio/graph-engine';
-import {
-  Button,
-  Heading,
-  Scroll,
-  Select,
-  Stack,
-} from '@tokens-studio/ui';
+import { Button, Heading, Scroll, Select, Stack } from '@tokens-studio/ui';
+import { Node } from '@tokens-studio/graph-engine';
+import { StringSchema } from '@tokens-studio/graph-engine';
+import { deletable } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
 import React, { useMemo } from 'react';
-import { Node } from '@tokens-studio/graph-engine';
-
-import properties from 'mdn-data/css/properties.json';
-import { deletable } from '@/annotations';
+// prettier-ignore
+import properties from 'mdn-data/css/properties.json' with { type: 'json' };
 
 const CSSProperties = Object.keys(properties);
-
-
 
 const CSSMapSpecifics = observer(({ node }: { node: Node }) => {
   const [inputName, setInputName] = React.useState('-');
@@ -63,5 +53,5 @@ const CSSMapSpecifics = observer(({ node }: { node: Node }) => {
 });
 
 export const inputControls = {
-  "studio.tokens.css.map": CSSMapSpecifics,
+  'studio.tokens.css.map': CSSMapSpecifics,
 } as Record<string, React.FC<{ node: Node }>>;

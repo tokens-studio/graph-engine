@@ -1,34 +1,35 @@
 import {
+  ANY,
   BOOLEAN,
   COLOR,
   CURVE,
+  Input,
   NUMBER,
+  Port,
   STRING,
   VEC2,
   VEC3,
-  ANY,
-  Port,
-  Input,
 } from '@tokens-studio/graph-engine';
-import { CurveField } from '@/components/controls/curve';
-import { BooleanField } from '@/components/controls/boolean';
-import { ColorField } from '@/components/controls/color';
-import { NumericField } from '@/components/controls/numeric';
-import { Textfield } from '@/components/controls/string';
-import { EnumeratedTextfield } from '@/components/controls/enumerated';
-import { DefaultField } from '@/components/controls/default';
-import { AnyField } from '@/components/controls/any';
-import { Vec2field } from '@/components/controls/vec2';
-import { Vec3field } from '@/components/controls/vec3';
-import { TextArea } from '@/components/controls/text';
-import { SliderField } from '@/components/controls/slider';
-import { VariadicAny } from '@/components/controls/variadicAny';
-import { VariadicNumber } from '@/components/controls/variadicNumber';
-import { VariadicColor } from '@/components/controls/variadicColor';
+import { AnyField } from '@/components/controls/any.js';
+import { BooleanField } from '@/components/controls/boolean.js';
+import { ColorField } from '@/components/controls/color.js';
+import { CurveField } from '@/components/controls/curve.js';
+import { DefaultField } from '@/components/controls/default.js';
+import { EnumeratedTextfield } from '@/components/controls/enumerated.js';
+import { NumericField } from '@/components/controls/numeric.js';
+import { SliderField } from '@/components/controls/slider.js';
+import { TextArea } from '@/components/controls/text.js';
+import { Textfield } from '@/components/controls/string.js';
+import { VariadicAny } from '@/components/controls/variadicAny.js';
+import { VariadicColor } from '@/components/controls/variadicColor.js';
+import { VariadicNumber } from '@/components/controls/variadicNumber.js';
+import { Vec2field } from '@/components/controls/vec2.js';
+import { Vec3field } from '@/components/controls/vec3.js';
 
-
-export const variadicMatcher = (id) => (port: Port) => port.type.type === 'array' && port.type.items.$id === id && (port as Input).variadic;
-
+export const variadicMatcher = (id) => (port: Port) =>
+  port.type.type === 'array' &&
+  port.type.items.$id === id &&
+  (port as Input).variadic;
 
 /**
  * Default controls for the graph editor
@@ -59,7 +60,8 @@ export const defaultControls = [
     component: EnumeratedTextfield,
   },
   {
-    matcher: (port: Port) => port.type.$id === STRING && port.annotations['ui.control'] === 'textarea',
+    matcher: (port: Port) =>
+      port.type.$id === STRING && port.annotations['ui.control'] === 'textarea',
     component: TextArea,
   },
   {
@@ -96,6 +98,3 @@ export const defaultControls = [
     component: DefaultField,
   },
 ];
-
-
-

@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from '@tokens-studio/ui';
+import { Box, Stack } from '@tokens-studio/ui';
 import { GlobalState } from '@/mobx/index.tsx';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
@@ -18,12 +18,9 @@ const PageLayout = observer(
       }
     }, [theTheme]);
     return (
-      <Stack css={{ height: '100%', width: '100%'}}>
-        <Box>
-        </Box>
-        <Box css={{ flex: '1' }}>
-          {children}
-        </Box>
+      <Stack css={{ height: '100%', width: '100%' }}>
+        <Box></Box>
+        <Box css={{ flex: '1' }}>{children}</Box>
       </Stack>
     );
   },

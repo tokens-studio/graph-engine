@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
-import { useSelector } from 'react-redux';
 import { icons } from '@/redux/selectors/registry.js';
+import { useSelector } from 'react-redux';
+import React, { useMemo } from 'react';
 import colors from '@/tokens/colors.js';
 
 export const Legend = () => {
@@ -13,10 +13,7 @@ export interface ILegendInner {
   iconsRegistry: Record<string, React.ReactNode>;
 }
 
-
-const extractType = (
-  id:string
-) => {
+const extractType = (id: string) => {
   const color = colors[id]?.color || 'black';
   const backgroundColor = colors[id]?.backgroundColor || 'white';
 
@@ -24,18 +21,18 @@ const extractType = (
 };
 
 export const LegendInner = ({ iconsRegistry }: ILegendInner) => {
-
   const iconsElements = useMemo(
     () =>
       Object.entries(iconsRegistry).map(([key, value]) => {
         const parts = key.split('/');
         const name = parts[parts.length - 1].split('.')[0];
-        const cols = extractType(key)
+        const cols = extractType(key);
 
-        
         return (
           <Stack gap={3} align="center" key={key}>
-            <Box css={{...cols, borderRadius:'$small', padding:'$2'}}>{value}</Box>
+            <Box css={{ ...cols, borderRadius: '$small', padding: '$2' }}>
+              {value}
+            </Box>
             <Text>{name}</Text>
           </Stack>
         );
@@ -61,4 +58,4 @@ export const LegendInner = ({ iconsRegistry }: ILegendInner) => {
       </Stack>
     </Box>
   );
-}
+};
