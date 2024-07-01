@@ -15,3 +15,5 @@ export const panelItemsSelector = createSelector(registry, (state) => state.pane
 export const capabilitiesSelector = createSelector(registry, (state) => state.capabilities);
 
 export const nodeTypesSelector = createSelector(registry, (state) => state.nodeTypes);
+
+export const typeColorsSelector = createSelector(registry, (state) => state.typeColors);

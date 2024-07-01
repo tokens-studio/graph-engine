@@ -2,7 +2,7 @@ import { Box, Spinner } from '@tokens-studio/ui';
 import { Editor } from '@tokens-studio/graph-editor';
 import { EmptyStateEditor } from '../EmptyStateEditor.tsx';
 import { ExamplesPicker } from '../ExamplesPicker.tsx';
-import { capabilities, controls, icons, menu, nodeTypes, panelItems, specifics } from './data.ts';
+import { capabilities, controls, icons, menu, nodeTypes, panelItems, specifics, typeColors } from './data.ts';
 import { observer } from 'mobx-react-lite';
 import { useGetEditor } from '@/hooks/useGetEditor.ts';
 import React, { useCallback } from 'react';
@@ -35,6 +35,7 @@ export const EditorTab = observer(({ loading }: { loading?: boolean }, ref) => {
         //@ts-expect-error
         specifics={specifics}
         icons={icons}
+        typeColors={typeColors}
         emptyContent={<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />}
       ></Editor>
       <ExamplesPicker

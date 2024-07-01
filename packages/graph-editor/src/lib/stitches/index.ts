@@ -13,6 +13,9 @@ import {
     blueDark,
     redDark,
     greenDark,
+    tomatoDark,
+    jadeDark,
+    skyDark,
   } from '@radix-ui/colors';
 import { CSS as StitchesCSS, createStitches } from '@stitches/react';
 import { core, darkTheme } from '@tokens-studio/tokens';
@@ -46,6 +49,9 @@ export const {
             ...blueDark,
             ...redDark,
             ...greenDark,
+            ...tomatoDark,
+            ...jadeDark,
+            ...skyDark,
 
         },
         shadows: darkTheme.shadows,

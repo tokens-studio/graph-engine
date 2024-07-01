@@ -1,6 +1,6 @@
 import React from 'react';
-import { ANY, BOOLEAN, COLOR, CURVE, NUMBER, OBJECT, STRING} from '@tokens-studio/graph-engine';
-import { Cube, Droplet, EaseCurveControlPoints, Hashtag, InputOutput, SelectPoint3d, Text } from 'iconoir-react';
+import { ANY, BOOLEAN, COLOR, CURVE, DIMENSION, NUMBER, OBJECT, STRING} from '@tokens-studio/graph-engine';
+import { Cube, Droplet, EaseCurveControlPoints, Hashtag, InputOutput, Ruler, SelectPoint3d, Text } from 'iconoir-react';
 
 /**
  * Default icons for the graph editor
@@ -9,6 +9,7 @@ import { Cube, Droplet, EaseCurveControlPoints, Hashtag, InputOutput, SelectPoin
 export const icons = () => ({
   [COLOR]: <Droplet />,
   [CURVE]: <EaseCurveControlPoints />,
+  [DIMENSION]: <Ruler />,
   [STRING]: <Text />,
   [BOOLEAN]: <InputOutput />,
   [NUMBER]: <Hashtag />,

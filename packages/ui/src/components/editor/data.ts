@@ -1,8 +1,13 @@
 import { CapabilityFactory, Node } from '@tokens-studio/graph-engine';
 import { Volume } from 'memfs';
 import { WebAudioCapability, icons as audioIcons } from '@tokens-studio/graph-engine-nodes-audio';
-import { icons as designIcons, controls as designControls, specifics as designSpecifics } from '@tokens-studio/graph-engine-nodes-design-tokens';
-import {defaultControls, defaultSpecifics} from '@tokens-studio/graph-editor';
+import {defaultControls, defaultSpecifics, defaultTypeColors} from '@tokens-studio/graph-editor';
+import {
+  controls as designControls,
+  icons as designIcons,
+  specifics as designSpecifics,
+  typeColors as designTypeColors,
+} from '@tokens-studio/graph-engine-nodes-design-tokens';
 
 
 
@@ -24,6 +29,11 @@ export const capabilities: CapabilityFactory[] = [WebAudioCapability, {
 export const icons = {
     ...audioIcons,
     ...designIcons
+}
+
+export const typeColors = {
+    ...defaultTypeColors,
+    ...designTypeColors
 }
 
 export const controls = [

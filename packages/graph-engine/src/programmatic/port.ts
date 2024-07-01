@@ -39,9 +39,9 @@ export class Port<T = any> {
 
     makeObservable(this, {
       //@ts-ignore
-      _type: observable,
-      _dynamicType: observable,
-      _value: observable,
+      _type: observable.ref,
+      _dynamicType: observable.ref,
+      _value: observable.ref,
       _edges: observable,
       visible: observable,
       annotations: observable,

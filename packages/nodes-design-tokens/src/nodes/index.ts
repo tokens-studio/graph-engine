@@ -1,3 +1,7 @@
+import { nodes as colorTokens } from "./color/index.js";
+import CreateBorderNode from "./createBorder.js";
+import CreateBoxShadowNode from "./createBoxShadow.js";
+import CreateTypographyNode from "./createTypography.js";
 import ExternalTokensNode from "./externalTokens.js";
 import ExtractTokenNode from "./extractSingleToken.js";
 import FlattenNode from "./flatten.js";
@@ -15,8 +19,13 @@ import UngroupNode from "./ungroup.js";
 import advancedBlend from "./advancedBlend.js";
 import arrayToSet from "./arrayToSet.js";
 import create from "./create.js";
+import type { Node } from "@tokens-studio/graph-engine";
 
-export const nodes = [
+/**
+ * All nodes in the system available as an array
+ */
+export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
+  colorTokens,
   arrayToSet,
   advancedBlend,
   ExtractTokenNode,
@@ -34,4 +43,7 @@ export const nodes = [
   LeonardoColorNode,
   LeonardoThemeNode,
   SetToArrayNode,
-];
+  CreateTypographyNode,
+  CreateBorderNode,
+  CreateBoxShadowNode
+);

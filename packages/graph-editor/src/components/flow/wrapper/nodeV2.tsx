@@ -6,10 +6,9 @@ import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Handle, HandleContainer } from '../handles.js';
 import { COLOR, Input, OBJECT, Port, annotatedNodeRunning } from '@tokens-studio/graph-engine';
 import { Node as GraphNode } from '@tokens-studio/graph-engine'
-import colors from '@/tokens/colors.js';
 import { useSelector } from 'react-redux';
 import { inlineTypes, inlineValues, showTimings } from '@/redux/selectors/settings.js';
-import { icons, nodeSpecifics } from '@/redux/selectors/registry.js';
+import { icons, nodeSpecifics, typeColorsSelector } from '@/redux/selectors/registry.js';
 import { title, xpos } from '@/annotations/index.js';
 import { useLocalGraph } from '@/context/graph.js';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -128,6 +127,7 @@ export const PortArray = observer(({ ports, hideNames }: IPortArray) => {
 const extractTypeIcon = (
   port: Port,
   iconLookup: Record<string, React.ReactNode>,
+  colors: Record<string, { color: string, backgroundColor: string }>
 ) => {
   let id = port.type.$id || '';
   const isArray = Boolean(port.type.type == 'array');
@@ -138,8 +138,8 @@ const extractTypeIcon = (
 
   let icon = iconLookup[id] || iconLookup[OBJECT];
 
-  const color = colors[id]?.color || 'black';
-  const backgroundColor = colors[id]?.backgroundColor || 'white';
+  const color = colors[id]?.color || 'var(--sky-12)';
+  const backgroundColor = colors[id]?.backgroundColor || 'var(--sky-4)';
 
   return { isArray, icon, color, backgroundColor };
 };
@@ -218,7 +218,8 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
   const inlineTypesValue = useSelector(inlineTypes);
   const iconTypeRegistry = useSelector(icons);
   const inlineValuesValue = useSelector(inlineValues);
-  const typeCol = extractTypeIcon(port, iconTypeRegistry);
+  const typeColors = useSelector(typeColorsSelector);
+  const typeCol = extractTypeIcon(port, iconTypeRegistry, typeColors);
   const input = port as unknown as Input;
 
   if (input.variadic) {

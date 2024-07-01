@@ -21,6 +21,8 @@ export * from './components/controls/interface.js'
 export * from './registry/control.js';
 //Default specifics
 export * from './registry/specifics.js';
+// Default colors for types
+export * from './registry/typeColors.js';
 
 
 export * from './types/index.js';
