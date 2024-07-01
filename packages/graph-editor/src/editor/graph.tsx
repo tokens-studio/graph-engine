@@ -53,7 +53,6 @@ import { useSelector } from 'react-redux';
 import { connectOnClickSelector, showGrid, showMinimapSelector, snapGrid } from '@/redux/selectors/settings.js';
 import { NodeV2 } from '@/components/index.js';
 import { CommandMenu } from '@/components/commandPalette/index.js';
-import { GraphToolbar } from '@/components/toolbar/index.js';
 import { clear } from './actions/clear.js';
 import { copyNodeAction } from './actions/copyNodes.js';
 import { deleteNode } from './actions/deleteNode.js';
@@ -825,9 +824,6 @@ export const EditorApp = React.forwardRef<ImperativeEditorRef, GraphEditorProps>
                     handleSelectNewNodeType={handleSelectNewNodeType}
                   />
                 )}
-                <Box css={{ position: 'absolute', top: '$7', left: 0, right: 0, display: 'grid', placeItems: 'center', zIndex: '99' }}>
-                  <GraphToolbar />
-                </Box>
                 {props.children}
               </ReactFlow>
             </HotKeys>

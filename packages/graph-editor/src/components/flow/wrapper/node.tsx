@@ -114,7 +114,6 @@ export const Node = (props: NodeProps) => {
                   <Text
                     css={{
                       fontSize: '$medium',
-                      fontWeight: '$bold',
                       color: 'var(--nodeTextColor, var(--colors-gray12))',
                     }}
                   >

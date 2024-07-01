@@ -142,6 +142,7 @@ export function AlignmentPanel() {
                     <IconButton title="Align Y Middle" onClick={() => updateNodes(align(ALIGNMENT.CENTER, 'y'))} icon={<AlignVerticalCenters />} />
                     <IconButton title="Align Y Bottom" onClick={() => updateNodes(align(ALIGNMENT.END, 'y'))} icon={<CompAlignBottom />} />
 
+
                 </Stack>
                 <Text size='small'>Distribute</Text>
                 <Stack
