@@ -5,8 +5,8 @@ import { ISetValue, Input } from "../programmatic/input.js";
 import { Node } from "../programmatic/node.js";
 import { Output } from "../programmatic/output.js";
 import { VERSION } from "../constants.js";
-import { annotatedCapabilityPrefix, annotatedPlayState, annotatedVariadicIndex, annotatedVersion } from "../annotations/index.js";
-import { makeObservable, observable } from "mobx";
+import { annotatedCapabilityPrefix, annotatedId, annotatedPlayState, annotatedVariadicIndex, annotatedVersion } from "../annotations/index.js";
+import { makeObservable, observable, toJS } from "mobx";
 import { topologicalSort } from "./topologicSort.js";
 import { v4 as uuid } from 'uuid';
 import cmp from "semver-compare";
@@ -171,10 +171,10 @@ export class Graph {
     this.edges = {};
 
     makeObservable(this, {
-      annotations: observable,
+      annotations: observable.shallow,
     });
 
-    this.annotations['engine.id'] || (this.annotations['engine.id'] = uuid());
+    this.annotations[annotatedId] || (this.annotations[annotatedId] = uuid());
   }
 
   /**
@@ -516,7 +516,7 @@ export class Graph {
   clone(): Graph {
     const clonedGraph = new Graph();
     const oldToNewIdMap = new Map<string, string>();
-  
+
     // Clone nodes
     Object.values(this.nodes).forEach((node) => {
       const clonedNode = node.clone(clonedGraph);
@@ -524,12 +524,12 @@ export class Graph {
       clonedNode.setGraph(clonedGraph);
       clonedGraph.addNode(clonedNode);
     });
-  
+
     // Clone edges
     Object.values(this.edges).forEach(edge => {
       const newSourceId = oldToNewIdMap.get(edge.source);
       const newTargetId = oldToNewIdMap.get(edge.target);
-  
+
       if (newSourceId && newTargetId) {
         clonedGraph.createEdge({
           id: uuid(),
@@ -537,18 +537,22 @@ export class Graph {
           target: newTargetId,
           sourceHandle: edge.sourceHandle,
           targetHandle: edge.targetHandle,
-          annotations: { ...edge.annotations },
+          annotations: { ...toJS(edge.annotations) },
         });
       }
     });
-  
+
     // Clone capabilities
     Object.entries(this.capabilities).forEach(([key, value]) => {
       clonedGraph.capabilities[key] = value;
     });
 
-    clonedGraph.annotations = {...this.annotations}
-  
+    clonedGraph.annotations = {
+      ...toJS(this.annotations),
+      //Create a new id to prevent collisions
+      [annotatedId]: uuid()
+    }
+
     return clonedGraph;
   }
 
