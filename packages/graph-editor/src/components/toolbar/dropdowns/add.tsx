@@ -1,10 +1,9 @@
-import React, { RefObject } from 'react';
+import React, { useCallback } from 'react';
 import {
-  Box,
   Button,
   DropdownMenu,
   Stack,
-  Text
+  Tooltip
 } from '@tokens-studio/ui';
 import { Plus, NavArrowRight } from 'iconoir-react';
 import { useSelector } from 'react-redux';
@@ -12,49 +11,50 @@ import { panelItemsSelector } from '@/redux/selectors';
 import { useReactFlow } from 'reactflow';
 import { useAction } from '@/editor/actions/provider';
 import { useDispatch } from '@/hooks';
+import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes';
 
 export const AddDropdown = () => {
   const data = useSelector(panelItemsSelector);
   const createNode = useAction('createNode');
   const reactFlowInstance = useReactFlow();
   const dispatch = useDispatch();
-  const wrapperRef = React.useRef<HTMLDivElement>(null);
+  const mousePositionRef = React.useRef({ x: 0, y: 0 });
+  const selectAddedNodes = useSelectAddedNodes();
 
-  const wrapperRefs = React.useMemo(() => {
-    return data.groups.reduce((acc, group) => {
-      group.items.forEach(item => {
-        acc[item.type] = React.createRef();
-      });
-      return acc;
-    }, {});
-  }, [data.groups]);
+  const onDropdownOpenChange = useCallback((isOpen: boolean) => {
+    if (isOpen) {
+      document.addEventListener('mousemove', handleMouseMove);
+    } else {
+      document.removeEventListener('mousemove', handleMouseMove);
+    }
+  }, []);
 
-  const openQuickSearch = React.useCallback(
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    mousePositionRef.current = { x: e.clientX, y: e.clientY };
+  }, []);
+
+  const openQuickSearch = useCallback(
     () => {
-      dispatch.ui.setShowNodesCmdPalette(true);
+      // Quick search window does not get the focus if open from a dropdown item, hence the setTimeout
+      setTimeout(() => {
+        dispatch.ui.setShowNodesCmdPalette(true);
+      });
     },
     [dispatch.ui],
-  )
+  );
 
-  const addNode = (type: string) => {
-    const position = {
-      x: 0,
-      y: 0,
-    };
-
-    if (wrapperRefs[type].current) {
-      const { x, y } = wrapperRefs[type].current.getBoundingClientRect();
-      position.x = x;
-      position.y = y;
-    }
-
+  const addNode = useCallback((type: string) => {
     const newNode = {
       type,
-      position: reactFlowInstance.screenToFlowPosition(position),
+      position: reactFlowInstance.screenToFlowPosition(mousePositionRef.current),
     };
 
-    createNode(newNode)
-  }
+    const node = createNode(newNode);
+
+    if (node) {
+      selectAddedNodes([node.flowNode]);
+    }
+  }, [reactFlowInstance, createNode]);
 
   const nodes = React.useMemo(() => {
     return data.groups.map(group => {
@@ -73,42 +73,38 @@ export const AddDropdown = () => {
           <DropdownMenu.Portal>
             <DropdownMenu.SubContent sideOffset={2} alignOffset={-5}>
               {group.items.map(item => (
-                <DropdownMenu.Item key={item.type} ref={wrapperRefs[item.type]} onSelect={() => addNode(item.type)}>
+                <DropdownMenu.Item key={item.type} onSelect={() => addNode(item.type)}>
                   {item.text}
                 </DropdownMenu.Item>
               ))}
             </DropdownMenu.SubContent>
           </DropdownMenu.Portal>
         </DropdownMenu.Sub>
-      )
-
+      );
     })
-  }, [data]);
+  }, [data, addNode]);
 
   return (
-    <Box ref={wrapperRef}>
-      <DropdownMenu>
+    <DropdownMenu onOpenChange={onDropdownOpenChange}>
+      <Tooltip label="Add node" side="bottom">
         <DropdownMenu.Trigger asChild>
           <Button variant='primary'>
             <Plus />
           </Button>
         </DropdownMenu.Trigger>
-        <DropdownMenu.Portal>
-          <DropdownMenu.Content css={{ minWidth: '200px' }}>
-            <DropdownMenu.Item onSelect={openQuickSearch}>
-              Quick Search ..
-              <DropdownMenu.TrailingVisual>
-                ⇧K
-              </DropdownMenu.TrailingVisual>
-            </DropdownMenu.Item>
-
-            <DropdownMenu.Separator />
-
-            {nodes}
-
-          </DropdownMenu.Content>
-        </DropdownMenu.Portal>
-      </DropdownMenu>
-    </Box>
+      </Tooltip>
+      <DropdownMenu.Portal>
+        <DropdownMenu.Content css={{ minWidth: '200px' }}>
+          <DropdownMenu.Item onSelect={openQuickSearch}>
+            Quick Search...
+            <DropdownMenu.TrailingVisual>
+              ⇧K
+            </DropdownMenu.TrailingVisual>
+          </DropdownMenu.Item>
+          <DropdownMenu.Separator />
+          {nodes}
+        </DropdownMenu.Content>
+      </DropdownMenu.Portal>
+    </DropdownMenu>
   );
 };
