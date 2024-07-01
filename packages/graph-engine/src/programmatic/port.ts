@@ -6,7 +6,7 @@ import {
 	computed,
 	makeObservable,
 	observable
-} from 'mobx/dist/mobx.esm.production.min.js';
+} from 'mobx';
 
 export interface IPort<T = any> {
 	name: string;
@@ -24,7 +24,8 @@ export class Port<T = any> {
 	public readonly name: string;
 	public visible: boolean = false;
 	public node: Node;
-	protected _dynamicType?: GraphSchema;
+	//Note that we need null values for the observable to work
+	protected _dynamicType?: GraphSchema = null;
 	protected _type: GraphSchema = AnySchema;
 	protected _value: T;
 	// Used to store arbitrary meta data. Most commonly used in the UI
@@ -41,15 +42,15 @@ export class Port<T = any> {
 		this._type = props.type;
 		this._value = props.value;
 		this.annotations = props.annotations || {};
-
+		
 		makeObservable(this, {
 			//@ts-ignore
-			_type: observable,
-			_dynamicType: observable,
-			_value: observable,
-			_edges: observable,
-			visible: observable,
-			annotations: observable,
+			_type: observable.ref,
+			_dynamicType: observable.ref,
+			_value: observable.ref,
+			_edges: observable.shallow,
+			visible: observable.ref,
+			annotations: observable.shallow,
 			type: computed,
 			value: computed,
 			isConnected: computed,

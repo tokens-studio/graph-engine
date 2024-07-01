@@ -24,6 +24,7 @@ const Wrapper = observer(() => {
   const dispatch = useDispatch();
 
   const router = useRouter();
+
   const editor = globalState.refs.editor.get();
 
   const ref = useCallback((editor) => {

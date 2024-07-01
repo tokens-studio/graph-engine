@@ -15,7 +15,7 @@ import { compareVersions } from 'compare-versions';
 import {
 	makeObservable,
 	observable
-} from 'mobx/dist/mobx.esm.production.min.js';
+} from 'mobx';
 import { topologicalSort } from './topologicSort.js';
 import { v4 as uuid } from 'uuid';
 import type { NodeFactory, SerializedGraph } from './types.js';

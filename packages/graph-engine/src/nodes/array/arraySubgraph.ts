@@ -13,7 +13,7 @@ import {
 	hideFromParentSubgraph
 } from '../../annotations/index.js';
 import { arrayOf, extractArray } from '../../schemas/utils.js';
-import { autorun } from 'mobx/dist/mobx.esm.production.min.js';
+import { autorun } from 'mobx';
 import InputNode from '../generic/input.js';
 import OutputNode from '../generic/output.js';
 

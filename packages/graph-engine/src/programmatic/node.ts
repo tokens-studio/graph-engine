@@ -8,7 +8,7 @@ import {
 	computed,
 	makeObservable,
 	observable
-} from 'mobx/dist/mobx.esm.production.min.js';
+} from 'mobx';
 import { annotatedNodeRunning } from '../annotations/index.js';
 import { v4 as uuid } from 'uuid';
 import getDefaults from 'json-schema-defaults-esm';
@@ -62,7 +62,8 @@ export class Node {
 
 	private _graph: Graph;
 
-	public error?: Error;
+	//Note that we need null values for the observable to work
+	public error?: Error = null;
 
 	constructor(props: INodeDefinition) {
 		this.id = props.id || uuid();
@@ -72,9 +73,9 @@ export class Node {
 		}
 
 		makeObservable(this, {
-			inputs: observable,
-			outputs: observable,
-			error: observable,
+			inputs: observable.shallow,
+			outputs: observable.shallow,
+			error: observable.ref,
 			annotations: observable,
 			addInput: action,
 			isRunning: computed,

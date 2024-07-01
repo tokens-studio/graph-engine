@@ -9,7 +9,7 @@ import {
 	annotatedDeleteable,
 	hideFromParentSubgraph
 } from '../../annotations/index.js';
-import { autorun } from 'mobx/dist/mobx.esm.production.min.js';
+import { autorun } from 'mobx';
 import InputNode from './input.js';
 import OutputNode from './output.js';
 
