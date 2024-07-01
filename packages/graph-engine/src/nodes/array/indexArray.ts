@@ -1,6 +1,7 @@
 import { AnyArraySchema, AnySchema, NumberSchema } from "../../schemas/index.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
+import { SchemaObject } from "ajv";
 export default class NodeDefinition<T> extends Node {
   static title = "Index Array";
   static type = "studio.tokens.array.index";
@@ -50,7 +51,12 @@ export default class NodeDefinition<T> extends Node {
     //Extract the type
     //We assume that the array has a single defined item
 
-    const type = array.type.items;
-    this.setOutput("value", calculated, type);
+    // Infer the item type from the array schema
+    let itemType: SchemaObject = AnySchema;
+    if (array.type && array.type.items) {
+      itemType = array.type.items as SchemaObject;
+    }
+
+    this.setOutput("value", calculated, itemType);
   }
 }
