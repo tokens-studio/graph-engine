@@ -9,13 +9,12 @@ import { v4 as uuid } from 'uuid';
 import getDefaults from "json-schema-defaults";
 import type { NodeRun } from "../types.js";
 
-
-
 export interface INodeDefinition {
   graph: Graph;
   id?: string;
   inputs?: Record<string, Input>;
   outputs?: Record<string, Output>;
+  annotations?: Record<string, unknown>
 }
 
 export interface TypeDefinition {
@@ -161,7 +160,7 @@ export class Node {
    * Runs the node. Internally this calls the execute method, but the run entrypoint allows for additional tracking and lifecycle management
    */
   async run(): Promise<NodeRun> {
-
+    
     this.annotations[annotatedNodeRunning] = true;
     const start = performance.now();
     this.getGraph()?.emit("nodeStarted", {
@@ -172,6 +171,7 @@ export class Node {
       await this.execute();
       this.error = undefined;
     } catch (err) {
+      console.log(err)
       this.error = err as Error;
     }
     const end = performance.now();
@@ -219,6 +219,38 @@ export class Node {
     return this._graph;
   }
 
+  public clone(newGraph: Graph): Node {
+    // Create a new instance using the constructor
+    const clonedNode = new this.factory({
+        graph: newGraph,
+        id: uuid(),
+    });
+
+    // Copy input values
+    Object.entries(this.inputs).forEach(([key, input]) => {
+       if (input.variadic) return;
+       if (clonedNode.inputs[key]) {
+        clonedNode.inputs[key].setValue(input.value)
+       } else {
+        clonedNode.inputs[key] = input.clone()
+       }
+    });
+
+    Object.entries(this.outputs).forEach(([key, output]) => {
+      clonedNode.outputs[key] = output.clone();
+    })
+
+    clonedNode.annotations = {...this.annotations};
+
+    // Clone inner graph if it exists
+    // @ts-expect-error
+    if (this._innerGraph) {
+      // @ts-expect-error
+      clonedNode._innerGraph = this._innerGraph.clone();
+    }
+
+    return clonedNode;
+}
   /**
    * Get the type of the nodes
    * @returns
