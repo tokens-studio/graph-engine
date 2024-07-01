@@ -7,33 +7,26 @@ import {
 import { ReferenceSchema, TokenColorSchema } from "../../schemas/index.js";
 
 export default class NodeDefinition extends Node {
-  static title = "Create Color Token";
-  static type = "studio.tokens.design.color.create";
-  static description = "Creates a color token from inputs";
+  static title = "Deconstruct Color Token";
+  static type = "studio.tokens.design.color.deconstruct";
+  static description = "Deconstruct a color token from inputs";
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("token", {
       type: TokenColorSchema,
-      visible: true,
     });
 
     this.addOutput("name", {
       type: StringSchema,
-      visible: true,
     });
     this.addOutput("reference", {
       type: ReferenceSchema,
-      visible: true,
     });
     this.addOutput("value", {
-      type: {
-        ...ColorObjectSchema,
-      },
-      visible: true,
+      type: ColorObjectSchema,
     });
     this.addOutput("description", {
       type: StringSchema,
-      visible: true,
     });
 
   }

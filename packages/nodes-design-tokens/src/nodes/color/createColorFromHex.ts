@@ -1,15 +1,16 @@
 import {
-  ColorObjectSchema,
+  ColorSchema,
   INodeDefinition,
   Node,
   StringSchema,
 } from "@tokens-studio/graph-engine";
 import { ReferenceSchema, TokenColorSchema } from "../../schemas/index.js";
+import Color from "colorjs.io";
 
 export default class NodeDefinition extends Node {
-  static title = "Create Color Token";
-  static type = "studio.tokens.design.color.create";
-  static description = "Creates a color token from inputs";
+  static title = "Create Color Token from HEX";
+  static type = "studio.tokens.design.color.createFromHex";
+  static description = "Creates a color token from a HEX value";
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("name", {
@@ -19,7 +20,7 @@ export default class NodeDefinition extends Node {
       type: ReferenceSchema,
     });
     this.addInput("value", {
-      type: ColorObjectSchema,
+      type: ColorSchema,
     });
     this.addInput("description", {
       type: StringSchema,
@@ -32,6 +33,8 @@ export default class NodeDefinition extends Node {
 
   execute(): void | Promise<void> {
     const props = this.getAllInputs();
+    const colorObject = new Color(props.value);
+    
     this.setOutput("token", props);
   }
 }
