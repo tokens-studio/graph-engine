@@ -161,11 +161,10 @@ const layoutDataFactory = (props, ref): LayoutData => {
                     mode: 'horizontal',
                     children: [
                         {
-                            size: 2,
+                            size: 3,
                             mode: 'vertical',
                             children: [
                                 {
-                                    size: 16,
                                     tabs: [
                                         {
                                             group: 'popout',
@@ -180,23 +179,11 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                         },
                                     ],
                                 },
-                                {
-                                    size: 8,
-                                    tabs: [
-                                        {
-                                            group: 'popout',
-                                            id: 'legend',
-                                            title: 'Legend',
-                                            content: <Legend />,
-                                            closable: true,
-                                        },
-                                    ],
-                                },
                             ],
                         },
                         {
 
-                            size: 18,
+                            size: 17,
                             mode: 'vertical',
                             children: [
                                 {
