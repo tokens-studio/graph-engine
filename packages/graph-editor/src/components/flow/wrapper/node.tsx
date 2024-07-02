@@ -6,6 +6,7 @@ import {
 } from '@tokens-studio/ui';
 import { styled } from '@stitches/react';
 import React, { useMemo } from 'react';
+import { IconoirProvider } from 'iconoir-react';
 
 const CollapserContainer = styled('div', {});
 
@@ -57,7 +58,8 @@ const NodeWrapper = styled('div', {
   position: 'relative',
   boxShadow: '$contextMenu',
   borderRadius: '$medium',
-  background: '$gray6',
+  background: '$gray4',
+  border: '2px solid $gray4',
   flex: 1,
   display: 'flex',
   variants: {
@@ -93,22 +95,16 @@ export const Node = (props: NodeProps) => {
               justify="between"
               align="center"
               css={{
-                padding: '$3',
-                backgroundColor: '$gray4',
+                padding: '$1 $3',
+                backgroundColor: '$gray6',
                 borderRadius: '$medium',
-                borderBottomLeftRadius: 0,
-                borderBottomRightRadius: 0,
               }}
             >
               <Stack direction="row" gap={2} align="center">
                 {icon && (
-                  <Box
-                    css={{
-                      color: 'var(--nodeTextColor, var(--colors-gray12))',
-                    }}
-                  >
+                  <IconoirProvider iconProps={{ width: '0.875em', height: '0.875em'}}>
                     {icon}
-                  </Box>
+                  </IconoirProvider>
                 )}
                 <Stack direction="column">
                   <Text
