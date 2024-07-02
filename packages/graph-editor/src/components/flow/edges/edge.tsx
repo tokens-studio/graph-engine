@@ -10,7 +10,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { edgeType as edgeTypeSelector } from '../../../redux/selectors/settings.js';
 import { EdgeType } from '../../../redux/models/settings.js';
-
+import { useLocalGraph } from '@/context/graph.js';
+import { Port } from '@tokens-studio/graph-engine';
+import colors from '@/tokens/colors.js';
 
 interface IArticulatedPath {
   sourceX: number;
@@ -32,6 +34,7 @@ type IPathOutput = [
 
 const getArticulatedPath = (opts: IArticulatedPath): [IPathOutput] => {
   const { sourceX, sourceY, targetX, targetY } = opts;
+
 
   //Minimum percentage between the two points dedicated to horizontal movement;
 
@@ -72,6 +75,23 @@ const getArticulatedPath = (opts: IArticulatedPath): [IPathOutput] => {
   ];
 };
 
+
+const extractColor = (
+  port: Port,
+) => {
+  let id = port.type.$id || '';
+  const isArray = Boolean(port.type.type == 'array');
+
+  if (!id && isArray) {
+    id = port.type.items.$id || '';
+  }
+
+  const color = colors[id]?.color || 'black';
+  const backgroundColor = colors[id]?.backgroundColor || 'white';
+
+  return { color, backgroundColor };
+};
+
 export default function CustomEdge({
   id,
   sourceX,
@@ -83,8 +103,25 @@ export default function CustomEdge({
   style = {},
   data,
   markerEnd,
+  isConnecting = false,
 }) {
   const edgeType = useSelector(edgeTypeSelector);
+  const graph = useLocalGraph();
+
+  const edge = graph.getEdge(id);
+  let col = undefined;
+
+  if (edge) {
+    const sourceNode = graph.getNode(edge?.source);
+
+    const sourcePort = sourceNode?.outputs[edge?.sourceHandle];
+
+    if (sourcePort) {
+      let { backgroundColor } = extractColor(sourcePort as Port)
+      col = backgroundColor;
+    }
+  }
+
 
   let edgeFn;
   switch (edgeType) {
@@ -113,13 +150,17 @@ export default function CustomEdge({
     targetPosition,
   });
 
+
+
   return (
     <>
       <path
         id={id}
         className="react-flow__edge-path"
         d={edgePath}
-        style={style}
+        style={{...style,
+          stroke:col
+        }}
         markerEnd={markerEnd}
       />
       <path

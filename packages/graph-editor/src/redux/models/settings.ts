@@ -48,7 +48,7 @@ export const settingsState = createModel<RootModel>()({
     showTimings: false,
     showSearch: false,
     inlineTypes: false,
-    inlineValues: true,
+    inlineValues: false,
     snapGrid: false,
     debugMode: false,
     showMinimap: false,

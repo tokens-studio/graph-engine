@@ -3,8 +3,8 @@ import { Node } from './node.js';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
-import { Handle, HandleContainer } from '../handles.js';
-import { COLOR, Input, OBJECT, Port, annotatedNodeRunning } from '@tokens-studio/graph-engine';
+import { Handle, HandleContainer, useHandle } from '../handles.js';
+import { COLOR, Input, OBJECT, Port, SchemaObject, annotatedNodeRunning } from '@tokens-studio/graph-engine';
 import { Node as GraphNode } from '@tokens-studio/graph-engine'
 import colors from '@/tokens/colors.js';
 import { useSelector } from 'react-redux';
@@ -83,15 +83,15 @@ const NodeWrap = observer(({ node,icon }: INodeWrap) => {
       subtitle={node.annotations[title] ? node.factory.title : ""}
       error={node.error || null}
       controls={''}
-      style={{ minWidth: '350px' }}
+      style={{ minWidth: '200px' }}
     >
       <Stack direction="column" gap={2}>
-        <Stack direction="row" gap={3} css={{ padding: '$3' }}>
-          <HandleContainer type="target" className={'target'} full>
-            <PortArray ports={node.inputs} />
-          </HandleContainer>
+        <Stack direction="column" gap={3} css={{ padding: '$3 0 $3 0' }}>
           <HandleContainer type="source" className={'source'} full>
             <PortArray ports={node.outputs} />
+          </HandleContainer>
+          <HandleContainer type="target" className={'target'} full>
+            <PortArray ports={node.inputs} />
           </HandleContainer>
         </Stack>
         {Specific && <Stack direction="column" gap={3} css={{ padding: '$3' }}>
@@ -144,35 +144,65 @@ const extractTypeIcon = (
   return { isArray, icon, color, backgroundColor };
 };
 
+
+export const extractType = (schema:SchemaObject)=>{
+
+  if (!schema){
+    return 'any';
+  }
+
+  if (schema.$id){
+    //Assume the id is a url
+    const parts = schema.$id.split('/');
+    //If there was no / then just return the last part
+    const part =  parts[parts.length - 1] || schema.$id;
+    //Remove the .json
+    return part.split('.')[0] || part;
+  }
+
+  if (schema.type === 'array'){
+    return extractType(schema.items) + '[]';
+  }
+  //No idea, default to a structural representation
+  return schema.type;
+}
+
 export const InlineTypeLabel = ({ port }: { port: Port }) => {
-  //TODO add support for specific types through the $id
+
+  //Try lookup the id if possible 
+  let typeName = extractType(port.type);
+  const handleInformation = useHandle();
+
   return (
     <Box
       css={{
-        background: '$gray1',
-        color: '$fgOnEmphasis',
+        position: 'absolute',
+        background: '$gray4',
+        color: '$fgDefault',
         padding: '$1 $2',
-        fontSize: '$xxsmall',
+        fontSize: '10px',
         borderRadius: '$small',
         textTransform: 'uppercase',
+        left: handleInformation.type === 'source' ? 'calc(100% + 16px)' : 'unset',
+        right: handleInformation.type === 'target' ? 'calc(100% + 16px)' : 'unset',
       }}
     >
-      {port.type.type || 'any'}
+      {typeName}
     </Box>
   );
 };
 
 const getColorPreview = (color: string, showValue = false) => {
-  const colorSwatch = <Box css={{ width: '16px', height: '16px', borderRadius: '$medium', backgroundColor: color }} />;
+  const colorSwatch = <Box css={{ width: '12px', height: '12px', borderRadius: '$small', backgroundColor: color }} />;
 
   if (!showValue) {
     return colorSwatch;
   }
 
   return (
-    <Stack direction="row" gap={2}>
+    <Stack direction="row" gap={2} justify='center' align='center'>
       {colorSwatch}
-      {showValue ? <Text css={{ fontSize: '$small', color: '$gray12' }}>{color.toUpperCase()}</Text> : null}
+      {showValue ? <Text css={{ fontSize: '$xxsmall', color: '$gray10' }}>{color.toUpperCase()}</Text> : null}
     </Stack>
   );
 }
@@ -190,7 +220,7 @@ const getValuePreview = (value, type) => {
           {value.length > 5 ? (
             <>
               {value.slice(0, 5).map((val) => getColorPreview(val))}
-              <Text>+{value.length - 5}</Text>
+              <Text size='xsmall' css={{color: '$gray10'}}>+{value.length - 5}</Text>
             </>
           ) : value.map((val) => getColorPreview(val))}
         </Stack>)
@@ -247,8 +277,6 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
               {!hideName && (
                 <Box css={{ display: 'grid', justifyContent: 'center', direction: 'row' }}>
                   {inlineValuesValue && <Text css={{ fontSize: 'medium', color: '$gray11' }}>{getValuePreview(input.value[i], input.type.items)}</Text>}
-
-                  <Text css={{ fontSize: 'small', color: '$gray12' }}>{input.name} - [{i}]</Text>
                 </Box>
               )}
               {inlineTypesValue && <InlineTypeLabel port={port} />}
@@ -260,20 +288,29 @@ const InputHandle = observer(({ port, hideName }: { port: Port, hideName?: boole
     //We need to render additional handles
   }
 
+
+  const handleInformation = useHandle();
+
   return (
     <Handle
       {...typeCol}
       visible={port.visible || port.isConnected}
       id={port.name}
       full
+      isConnected={port.isConnected}
     >
       {!hideName && (
-        <Box css={{ display: 'grid', justifyContent: 'center', direction: 'row' }}>
-          {inlineValuesValue && <Text css={{ fontSize: '$small', color: '$gray12' }}>{getValuePreview(input.value, input.type) ?? input.name}</Text>}
-          {port.value !== undefined ? <Text css={{ fontSize: '$medium', color: '$gray11' }}>{input.name}</Text> : null}
-        </Box>
+        <Stack
+          justify='between'
+          width='full'
+          align='center'
+          css={{flexDirection: handleInformation.type === 'source' ? 'row-reverse' : 'row'}}
+        >
+          <Text css={{ fontSize: '$small', color: '$gray12' }}>{input.name}</Text>
+          {inlineValuesValue && <Text css={{ fontSize: '$xxsmall', color: '$gray10' }}>{getValuePreview(input.value, input.type)}</Text>}
+        </Stack>
       )}
-      {inlineTypesValue && <InlineTypeLabel port={port} />}
+      {inlineTypesValue && <InlineTypeLabel port={port}/>}
     </Handle>
   );
 });
