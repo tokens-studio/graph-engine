@@ -1,6 +1,7 @@
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import React from 'react';
 import Color from 'colorjs.io';
+import { castToHex } from '@/utils';
 
 function isValidColor(value: string): boolean {
     try {
@@ -37,10 +38,13 @@ export const ColorCompare = ({ colors }) => {
     <>
     {colors && (
         <Stack direction='row' gap={0}>
-            {colors.map(color =>
-                <Box css={{display: 'grid', placeItems: 'center', minHeight: '100px', backgroundColor: color, padding: '$8', width: '100%'}}>
-                    <Text css={{fontFamily: '$mono', fontSize: 'xx-large', color: contrastingColor(color)}}>{color}</Text>
-                </Box>
+            {colors.map(color =>{
+
+              const col = castToHex(color)
+              return <Box css={{ display: 'grid', placeItems: 'center', minHeight: '100px', backgroundColor: col, padding: '$8', width: '100%' }}>
+                <Text css={{ fontFamily: '$mono', fontSize: 'xx-large', color: contrastingColor(col) }}>{col}</Text>
+              </Box> 
+            }
             )}
         </Stack>
     )}

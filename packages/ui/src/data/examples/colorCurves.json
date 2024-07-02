@@ -15,12 +15,12 @@
                                         0
                                     ],
                                     [
-                                        0.4375,
-                                        1
+                                        0.4096254355400697,
+                                        0.528
                                     ],
                                     [
-                                        1,
-                                        0
+                                        0.6724738675958188,
+                                        0.064
                                     ],
                                     [
                                         1,
@@ -160,12 +160,12 @@
                                         0
                                     ],
                                     [
-                                        0.42361145019531254,
+                                        0.08214803556116618,
                                         0.542222412109375
                                     ],
                                     [
                                         1,
-                                        0.24888891601562502
+                                        0.5448889160156251
                                     ],
                                     [
                                         1,
@@ -487,12 +487,12 @@
                                         0
                                     ],
                                     [
-                                        0.4375,
-                                        1
+                                        0.4096254355400697,
+                                        0.528
                                     ],
                                     [
-                                        1,
-                                        0
+                                        0.6724738675958188,
+                                        0.064
                                     ],
                                     [
                                         1,
@@ -616,12 +616,12 @@
                                         0
                                     ],
                                     [
-                                        0.42361145019531254,
+                                        0.08214803556116618,
                                         0.542222412109375
                                     ],
                                     [
                                         1,
-                                        0.24888891601562502
+                                        0.5448889160156251
                                     ],
                                     [
                                         1,
@@ -929,12 +929,12 @@
                                                     0
                                                 ],
                                                 [
-                                                    0.4375,
-                                                    1
+                                                    0.4096254355400697,
+                                                    0.528
                                                 ],
                                                 [
-                                                    1,
-                                                    0
+                                                    0.6724738675958188,
+                                                    0.064
                                                 ],
                                                 [
                                                     1,
@@ -1060,12 +1060,12 @@
                                                     0
                                                 ],
                                                 [
-                                                    0.42361145019531254,
+                                                    0.08214803556116618,
                                                     0.542222412109375
                                                 ],
                                                 [
                                                     1,
-                                                    0.24888891601562502
+                                                    0.5448889160156251
                                                 ],
                                                 [
                                                     1,
@@ -1326,7 +1326,14 @@
                         "inputs": [
                             {
                                 "name": "value",
-                                "value": "#ffffffff",
+                                "value": {
+                                    "space": "srgb",
+                                    "channels": [
+                                        1,
+                                        1,
+                                        1
+                                    ]
+                                },
                                 "type": {
                                     "type": "array",
                                     "items": {
@@ -1337,7 +1344,31 @@
                                 "dynamicType": {
                                     "$id": "https://schemas.tokens.studio/color.json",
                                     "title": "Color",
-                                    "type": "string"
+                                    "type": "object",
+                                    "properties": {
+                                        "channels": {
+                                            "type": "array",
+                                            "items": {
+                                                "$id": "https://schemas.tokens.studio/number.json",
+                                                "title": "Number",
+                                                "type": "number"
+                                            }
+                                        },
+                                        "space": {
+                                            "$id": "https://schemas.tokens.studio/string.json",
+                                            "title": "String",
+                                            "type": "string"
+                                        },
+                                        "alpha": {
+                                            "$id": "https://schemas.tokens.studio/number.json",
+                                            "title": "Number",
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "channels",
+                                        "space"
+                                    ]
                                 },
                                 "visible": true,
                                 "annotations": {
@@ -1358,13 +1389,13 @@
                         "inputs": [
                             {
                                 "name": "space",
-                                "value": "rgb",
+                                "value": "srgb",
                                 "type": {
                                     "$id": "https://schemas.tokens.studio/string.json",
                                     "title": "String",
                                     "type": "string",
                                     "enum": [
-                                        "rgb",
+                                        "srgb",
                                         "lrgb",
                                         "p3",
                                         "prophoto",
@@ -1384,7 +1415,6 @@
                                         "dlch",
                                         "oklab",
                                         "oklch",
-                                        "okhsl",
                                         "okhsv",
                                         "jab",
                                         "jch",
@@ -1395,7 +1425,7 @@
                                         "itp",
                                         "cubehelix"
                                     ],
-                                    "default": "rgb"
+                                    "default": "srgb"
                                 }
                             },
                             {
@@ -1404,7 +1434,8 @@
                                 "type": {
                                     "$id": "https://schemas.tokens.studio/number.json",
                                     "title": "Number",
-                                    "type": "number"
+                                    "type": "number",
+                                    "default": "0"
                                 },
                                 "visible": true
                             },
@@ -1414,7 +1445,8 @@
                                 "type": {
                                     "$id": "https://schemas.tokens.studio/number.json",
                                     "title": "Number",
-                                    "type": "number"
+                                    "type": "number",
+                                    "default": "0"
                                 },
                                 "visible": true
                             },
@@ -1424,7 +1456,8 @@
                                 "type": {
                                     "$id": "https://schemas.tokens.studio/number.json",
                                     "title": "Number",
-                                    "type": "number"
+                                    "type": "number",
+                                    "default": "0"
                                 },
                                 "visible": true
                             },
@@ -1458,12 +1491,12 @@
                                                     0
                                                 ],
                                                 [
-                                                    0.4375,
-                                                    1
+                                                    0.4096254355400697,
+                                                    0.528
                                                 ],
                                                 [
-                                                    1,
-                                                    0
+                                                    0.6724738675958188,
+                                                    0.064
                                                 ],
                                                 [
                                                     1,
@@ -1582,7 +1615,8 @@
                                 "type": {
                                     "$id": "https://schemas.tokens.studio/number.json",
                                     "title": "Number",
-                                    "type": "number"
+                                    "type": "number",
+                                    "default": 0.5
                                 },
                                 "visible": true
                             }
@@ -1607,12 +1641,12 @@
                                                     0
                                                 ],
                                                 [
-                                                    0.42361145019531254,
+                                                    0.08214803556116618,
                                                     0.542222412109375
                                                 ],
                                                 [
                                                     1,
-                                                    0.24888891601562502
+                                                    0.5448889160156251
                                                 ],
                                                 [
                                                     1,
@@ -1731,7 +1765,8 @@
                                 "type": {
                                     "$id": "https://schemas.tokens.studio/number.json",
                                     "title": "Number",
-                                    "type": "number"
+                                    "type": "number",
+                                    "default": 0.5
                                 },
                                 "visible": true
                             }
@@ -1880,7 +1915,8 @@
                                 "type": {
                                     "$id": "https://schemas.tokens.studio/number.json",
                                     "title": "Number",
-                                    "type": "number"
+                                    "type": "number",
+                                    "default": 0.5
                                 },
                                 "visible": true
                             }
@@ -2164,24 +2200,125 @@
                 {
                     "name": "value",
                     "value": [
-                        "#222134ff",
-                        "#454459ff",
-                        "#686771ff",
-                        "#8a8881ff",
-                        "#a9a88cff",
-                        "#c5c496ff",
-                        "#dddca3ff",
-                        "#efefb6ff",
-                        "#fbfbd4ff",
-                        "#ffffffff",
-                        "#ffffffff"
+                        {
+                            "space": "srgb",
+                            "channels": [
+                                0,
+                                0,
+                                0
+                            ]
+                        },
+                        {
+                            "space": "srgb",
+                            "channels": [
+                                0.11869577526132406,
+                                0.047961972641363385,
+                                0.20556234664916997
+                            ]
+                        },
+                        {
+                            "space": "srgb",
+                            "channels": [
+                                0.2298536585365854,
+                                0.13554484565548786,
+                                0.34866640625000006
+                            ]
+                        },
+                        {
+                            "space": "srgb",
+                            "channels": [
+                                0.3347423780487805,
+                                0.25222728368247427,
+                                0.44393717422485335
+                            ]
+                        },
+                        {
+                            "space": "srgb",
+                            "channels": [
+                                0.434630662020906,
+                                0.3874879513624238,
+                                0.5059996459960938
+                            ]
+                        },
+                        {
+                            "space": "srgb",
+                            "channels": [
+                                0.5307872386759582,
+                                0.5308055133354372,
+                                0.549478816986084
+                            ]
+                        },
+                        {
+                            "space": "srgb",
+                            "channels": [
+                                0.6244808362369337,
+                                0.671658634241616,
+                                0.5889996826171872
+                            ]
+                        },
+                        {
+                            "space": "srgb",
+                            "channels": [
+                                0.7169801829268292,
+                                0.7995259787210603,
+                                0.6391872383117674
+                            ]
+                        },
+                        {
+                            "space": "srgb",
+                            "channels": [
+                                0.8095540069686412,
+                                0.9038862114138719,
+                                0.7146664794921876
+                            ]
+                        },
+                        {
+                            "space": "srgb",
+                            "channels": [
+                                0.903471036585366,
+                                0.9742179969601514,
+                                0.8300624015808107
+                            ]
+                        },
+                        {
+                            "space": "srgb",
+                            "channels": [
+                                1,
+                                1,
+                                1
+                            ]
+                        }
                     ],
                     "type": {
                         "type": "array",
                         "items": {
                             "$id": "https://schemas.tokens.studio/color.json",
                             "title": "Color",
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                                "channels": {
+                                    "type": "array",
+                                    "items": {
+                                        "$id": "https://schemas.tokens.studio/number.json",
+                                        "title": "Number",
+                                        "type": "number"
+                                    }
+                                },
+                                "space": {
+                                    "$id": "https://schemas.tokens.studio/string.json",
+                                    "title": "String",
+                                    "type": "string"
+                                },
+                                "alpha": {
+                                    "$id": "https://schemas.tokens.studio/number.json",
+                                    "title": "Number",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "channels",
+                                "space"
+                            ]
                         }
                     },
                     "dynamicType": {
@@ -2190,7 +2327,31 @@
                         "items": {
                             "$id": "https://schemas.tokens.studio/color.json",
                             "title": "Color",
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                                "channels": {
+                                    "type": "array",
+                                    "items": {
+                                        "$id": "https://schemas.tokens.studio/number.json",
+                                        "title": "Number",
+                                        "type": "number"
+                                    }
+                                },
+                                "space": {
+                                    "$id": "https://schemas.tokens.studio/string.json",
+                                    "title": "String",
+                                    "type": "string"
+                                },
+                                "alpha": {
+                                    "$id": "https://schemas.tokens.studio/number.json",
+                                    "title": "Number",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "channels",
+                                "space"
+                            ]
                         }
                     },
                     "visible": true
@@ -2256,10 +2417,21 @@
         "engine.capabilities.fs": "0.0.0",
         "engine.version": "0.12.0",
         "ui.viewport": {
-            "x": -85.31217041286698,
-            "y": -213.6211695772855,
+            "x": -279.3121704128671,
+            "y": -240.62116957728557,
             "zoom": 0.8100447909477646
         },
-        "ui.version": "2.9.4"
+        "ui.version": "3.0.0",
+        "ui.viewports": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ]
     }
 }

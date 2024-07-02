@@ -11,6 +11,7 @@ import { Color as ColorType } from "../../types.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { convertModifiedColorToHex } from "./lib/modifyColor.js";
+import { toColor, toColorObject } from "./lib/utils.js";
 
 export { ColorModifierTypes } from "@tokens-studio/types";
 
@@ -62,11 +63,17 @@ export default class NodeDefinition extends Node {
   execute(): void | Promise<void> {
     const { space, value, color } = this.getAllInputs();
 
-    const converted = convertModifiedColorToHex(color, {
+    const col = toColor(color)
+
+    const converted = convertModifiedColorToHex(col, {
       type: "lighten",
       space,
       value,
     } as ColorModifier);
-    this.setOutput("value", converted);
+
+    const final = toColorObject(converted);
+
+
+    this.setOutput("value", final);
   }
 }

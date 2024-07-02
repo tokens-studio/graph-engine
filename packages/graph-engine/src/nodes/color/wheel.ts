@@ -1,7 +1,9 @@
-import {  ColorSchema, NumberSchema } from "../../schemas/index.js";
+import { ColorSchema, NumberSchema } from "../../schemas/index.js";
+import { Color as ColorType } from "../../types.js";
 import { INodeDefinition } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { arrayOf } from "../../schemas/utils.js";
+import { toColorObject } from "./lib/utils.js";
 import Color from "colorjs.io";
 
 export default class NodeDefinition extends Node {
@@ -51,18 +53,17 @@ export default class NodeDefinition extends Node {
   execute(): void | Promise<void> {
     const { colors, baseHue, angle, saturation, lightness } = this.getAllInputs();
 
-    const colorList: string[] = [];
+    const colorList: ColorType[] = [];
 
     for (let step = 0; step < colors; step++) {
       // Hue Calculation
       const hueIncrement = (colors > 1) ? (angle / (colors - 1)) * step : 0;
       const hue = (baseHue + hueIncrement) % 360;
-      
+
       // Color Generation with colorjs.io
       const color = new Color("hsl", [hue, saturation, lightness]);
-      const srgbColor = color.to("srgb");
 
-      colorList.push(srgbColor.toString({ format: "hex" })); 
+      colorList.push(toColorObject(color));
     }
 
     this.setOutput("value", colorList);

@@ -11,8 +11,8 @@ import {
 import { Color as ColorType } from "../../types.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
+import { White, toColor, toColorObject } from "./lib/utils.js";
 import { convertModifiedColorToHex } from "./lib/modifyColor.js";
-import Color from "colorjs.io";
 
 export { ColorModifierTypes } from "@tokens-studio/types";
 
@@ -37,7 +37,7 @@ export default class NodeDefinition extends Node {
     this.addInput("color", {
       type: { 
         ...ColorSchema,
-        default: "#ffffff"
+        default: White
       },
     });
     this.addInput("value", {
@@ -71,11 +71,12 @@ export default class NodeDefinition extends Node {
   execute(): void | Promise<void> {
     const { modifierType, space, value, color } = this.getAllInputs();
 
-    const converted = convertModifiedColorToHex(color, {
+    const col = toColor(color);
+    const converted = convertModifiedColorToHex(col, {
       type: modifierType,
       space,
       value,
     } as ColorModifier);
-    this.setOutput("value", converted);
+    this.setOutput("value", toColorObject(converted));
   }
 }

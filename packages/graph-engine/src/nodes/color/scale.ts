@@ -1,3 +1,4 @@
+import { Black, toColor, toColorObject } from "./lib/utils.js";
 import { Color } from "../../types.js";
 import {
   ColorSchema,
@@ -6,7 +7,6 @@ import {
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { arrayOf } from "../../schemas/utils.js";
-import chroma from "chroma-js";
 
 export default class NodeDefinition extends Node {
   static title = "Scale colors";
@@ -30,7 +30,7 @@ export default class NodeDefinition extends Node {
     this.addInput("color", {
       type: {
         ...ColorSchema,
-        default: "#7733dd",
+        default:Black,
       },
     });
     this.addInput("stepsUp", {
@@ -53,23 +53,21 @@ export default class NodeDefinition extends Node {
   execute(): void | Promise<void> {
     const { stepsUp, stepsDown, color } = this.getAllInputs();
 
+    const col = toColor(color);
+
     const sUp = Math.max(0, stepsUp) + 2;
     const sDown = Math.max(0, stepsDown) + 2;
 
-    const lighter = chroma
-      .scale(["white", color])
-      .mode("hsl")
-      .colors(sUp)
-      .slice(1, -1);
+    const lighter = col
+      .steps('white', { space: 'hsl', steps: sUp })
+      .slice(1, -1).map(x=> toColorObject(x));
+    const darker = col
+      .steps('black', { space: 'hsl', steps: sDown })
+      .slice(1, -1).map(x => toColorObject(x));
+    //Not need to modify
+    const mid = [color];
 
-    const mid = [chroma(color).hex()];
-
-    const darker = chroma
-      .scale([color, "black"])
-      .mode("hsl")
-      .colors(sDown)
-      .slice(1, -1);
-    const final = ([] as string[]).concat(lighter, mid, darker) as string[];
-    this.setOutput("value", final);
+    const final = ([] as Color[]).concat(lighter, mid, darker) as Color[];
+    this.setOutput('value', final);
   }
 }

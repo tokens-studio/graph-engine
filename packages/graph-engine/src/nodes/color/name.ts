@@ -3,6 +3,7 @@
 import { ColorSchema, StringSchema } from "../../schemas/index.js";
 import { INodeDefinition } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
+import { toColor, toHex } from "./lib/utils.js";
 import namer from "color-namer";
 
 /**
@@ -24,7 +25,12 @@ export default class NodeDefinition extends Node {
 
   execute(): void | Promise<void> {
     const { color } = this.getAllInputs();
-    const names = namer(color, { pick: ["html"] });
+
+    //We need to convert the color to hex
+    const col = toHex(toColor(color));
+
+
+    const names = namer(col, { pick: ["html"] });
     this.setOutput("value", names.html[0].name);
   }
 }

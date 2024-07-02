@@ -1,6 +1,8 @@
 import { Box, Text } from '@tokens-studio/ui';
 import React from 'react';
 import Color from 'colorjs.io';
+import { toColor,  Color as ColorType } from '@tokens-studio/graph-engine';
+import { castToHex } from '@/utils';
 
 function contrastingColor(value: string) {
     let black = new Color("srgb", [0, 0, 0]);
@@ -19,19 +21,23 @@ function contrastingColor(value: string) {
 
 export const ColorScale = ({ scale }) => {
 
-  return (
-    <>
-    {scale && (
+    return (
         <>
-            {scale.map(color =>
-                <Box css={{display: 'grid', placeItems: 'center', width: '100%', minHeight: '100px', backgroundColor: color}}>
-                    <Text css={{fontFamily: '$mono', fontSize: 'xx-large', color: contrastingColor(color)}}>{color}</Text>
-                </Box>
+            {scale && (
+                <>
+                    {scale.map(color => {
+                        const hex = castToHex(color)
+
+                        return <Box css={{ display: 'grid', placeItems: 'center', width: '100%', minHeight: '100px', backgroundColor: hex }}>
+                            <Text css={{ fontFamily: '$mono', fontSize: 'xx-large', color: contrastingColor(hex) }}>{hex}</Text>
+                        </Box>
+                    }
+
+                    )}
+                </>
             )}
         </>
-    )}
-    </>
-  );
+    );
 };
 
 export default ColorScale;

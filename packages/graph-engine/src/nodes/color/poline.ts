@@ -4,11 +4,11 @@ import {
   NumberSchema,
   StringSchema,
 } from "../../schemas/index.js";
-import { Hsl, converter, formatHex } from "culori";
-import { INodeDefinition } from "../../index.js";
+import { Color, INodeDefinition } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 import { Poline, PositionFunction, Vector3, positionFunctions } from "poline";
 import { arrayOf } from "../../schemas/utils.js";
+import { toColor } from "./lib/utils.js";
 
 export type PolineNodeOptions = {
   anchorColors: Vector3[];
@@ -20,14 +20,6 @@ export type PolineNodeOptions = {
 };
 
 const positionFuncs = Object.keys(positionFunctions);
-
-const convertHexToHsl = (hexColor: string): Vector3 => {
-  const hsl = converter("hsl");
-
-  const hslColor = hsl(hexColor) as Hsl;
-
-  return [hslColor.h ?? 0, hslColor.s, hslColor.l];
-};
 
 export default class NodeDefinition extends Node {
   static title = "Poline";
@@ -88,19 +80,17 @@ export default class NodeDefinition extends Node {
     if (!anchorColors || anchorColors.length < 2) {
       throw new Error("Not enough color inputs");
     }
-    anchorColors.forEach((hexColor) => {
-      const hsl = converter("hsl");
 
-      const hslColor = hsl(hexColor) as unknown as Hsl;
-      if (!hslColor || hslColor.h === undefined) {
-        throw new Error("Invalid color input");
-      }
-    });
+    //Poline only deals in hsl
+    const hsl = anchorColors.map(col=> {
+      const hslColor = toColor(col).to('hsl');
+      return [hslColor.h ?? 0, hslColor.s, hslColor.l]
+    })
 
     const polineOptions: PolineNodeOptions = {
       invertedLightness,
       numPoints,
-      anchorColors: anchorColors.map((hexColor) => convertHexToHsl(hexColor)),
+      anchorColors: hsl,
       positionFunctionX:
         positionFunctions[positionFnX ? positionFnX : "sinusoidalPosition"],
       positionFunctionY:
@@ -113,9 +103,15 @@ export default class NodeDefinition extends Node {
     if (hueShift) {
       poline.shiftHue(hueShift);
     }
-    const hexColors: string[] = (poline.colorsCSS as string[]).map(
-      (hslColor) => formatHex(hslColor) as string
+    //Note that we lose the alpha channels here
+    const colors: Color[] = (poline.colors).map(
+      ([h,s,l]) => {
+        return {
+          space: "hsl",
+          channels: [h,s,l]
+        }
+      }
     );
-    this.setOutput("value", hexColors);
+    this.setOutput("value", colors);
   }
 }

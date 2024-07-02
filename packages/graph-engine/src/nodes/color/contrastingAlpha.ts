@@ -3,6 +3,7 @@
  *
  * @packageDocumentation
  */
+import { Black, White, toColor, toColorObject } from "./lib/utils.js";
 import {
   ColorSchema,
   NumberSchema,
@@ -44,13 +45,13 @@ export default class NodeDefinition extends Node {
     this.addInput("foreground", {
       type: {
         ...ColorSchema,
-        default: "#000000"
+        default: Black
       },
     });
     this.addInput("background", {
       type: {
         ...ColorSchema,
-        default: "#ffffff",
+        default: White
       },
     });
     this.addInput("algorithm", {
@@ -99,7 +100,8 @@ export default class NodeDefinition extends Node {
       fg.alpha = mid;
 
       // Convert blended color back to Color object and then to hex string
-      const solidColor = flattenAlpha(fg, bg);
+      const solidColor = flattenAlpha(fg, bg); 
+
 
       currentContrast = contrastCheck(solidColor, bg, algorithm);
       
@@ -110,8 +112,8 @@ export default class NodeDefinition extends Node {
       }
     };
 
-    const foregroundColor = new Color(foreground);
-    const backgroundColor = new Color(background);
+    const foregroundColor = toColor(foreground);
+    const backgroundColor = toColor(background);
     let currentContrast = contrastCheck(foregroundColor, backgroundColor, algorithm);
 
     if (currentContrast <= threshold) {
@@ -128,7 +130,7 @@ export default class NodeDefinition extends Node {
     const finalContrast = Math.abs(finalColor.contrast(backgroundColor, algorithm));
 
     this.setOutput("alpha", finalAlpha);
-    this.setOutput("color", finalColor.to('srgb').toString({ format: 'hex' }));
+    this.setOutput("color", toColorObject(finalColor));
     this.setOutput("contrast", finalContrast);
   }
 }

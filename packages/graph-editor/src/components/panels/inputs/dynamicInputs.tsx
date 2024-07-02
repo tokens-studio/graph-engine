@@ -137,4 +137,4 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
             </Stack>
         </Stack>
     );
-}) as React.FC<{ node: Node }>;
+});

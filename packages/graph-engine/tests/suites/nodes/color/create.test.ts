@@ -1,34 +1,20 @@
-import Node from "../../../../src/nodes/color/create.js";
 import { Graph } from "../../../../src/graph/graph.js";
+import Node from "../../../../src/nodes/color/create.js";
 
 describe("color/create", () => {
-  it("creates the expected color with rgb", async () => {
-    const graph = new Graph();
-    const node = new Node({ graph });
-    
-    node.inputs.space.setValue("rgb");
-    node.inputs.a.setValue(255);
-    node.inputs.b.setValue(255);
-    node.inputs.c.setValue(255);
-
-    await node.execute();
-    const output = node.outputs.value.value;
-
-    expect(output).toStrictEqual("#ffffffff");
-  });
   it("creates the expected color with rgba", async () => {
     const graph = new Graph();
     const node = new Node({ graph });
     
-    node.inputs.space.setValue("rgb");
-    node.inputs.a.setValue(255);
-    node.inputs.b.setValue(255);
-    node.inputs.c.setValue(255);
+    node.inputs.space.setValue("srgb");
+    node.inputs.a.setValue(1);
+    node.inputs.b.setValue(1);
+    node.inputs.c.setValue(1);
     node.inputs.d.setValue(0.5);
 
     await node.execute();
     const output = node.outputs.value.value;
-    expect(output).toStrictEqual("#ffffff80");
+    expect(output).toStrictEqual({ "alpha": 0.5, "channels": [1, 1, 1], "space": "srgb" });
   });
 
   it("creates the expected color with hsl", async () => {
@@ -43,7 +29,7 @@ describe("color/create", () => {
     await node.execute();
     const output = node.outputs.value.value;
 
-    expect(output).toStrictEqual("#ff0000ff");
+    expect(output).toStrictEqual({ "alpha": undefined, "channels": [0, 1, 0.5], "space": "hsl" });
   });
 
   it("creates the expected color with hsv", async () => {
@@ -59,6 +45,6 @@ describe("color/create", () => {
     await node.execute();
     const output = node.outputs.value.value;
 
-    expect(output).toStrictEqual("#00e60080");
+    expect(output).toStrictEqual({ "alpha": 0.5, "channels": [88, 100, 0.9], "space": "hsv" });
   });
 });

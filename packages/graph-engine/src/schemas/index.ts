@@ -1,3 +1,4 @@
+import { arrayOf } from "./utils";
 import type { SchemaObject } from "ajv";
 
 
@@ -32,7 +33,17 @@ export const COLOR = "https://schemas.tokens.studio/color.json";
 export const ColorSchema: SchemaObject = {
   $id: COLOR,
   title: "Color",
-  type: "string",
+  type: "object",
+  properties:{
+    channels:arrayOf(NumberSchema),
+    space:StringSchema,
+    alpha: NumberSchema
+  },
+  default:{
+    channels:[0,0,0],
+    space:"srgb",
+  },
+  required: ["channels", "space"],
 };
 
 
@@ -273,13 +284,6 @@ export const canConvertSchemaTypes = (
   }
 
   switch (src.$id) {
-    case COLOR:
-      switch (target.$id) {
-        case STRING:
-          return true;
-      }
-      break;
-
     case NUMBER:
       switch (target.$id) {
         case STRING:

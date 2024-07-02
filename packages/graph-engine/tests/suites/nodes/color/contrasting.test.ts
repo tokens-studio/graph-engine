@@ -10,9 +10,21 @@ describe("color/contrasting", () => {
     const node = new Node({ graph });
 
 
-    node.inputs.a.setValue("#000000");
-    node.inputs.b.setValue("#ffffff");
-    node.inputs.background.setValue("#ffffff");
+    node.inputs.a.setValue({
+      space: "srgb",
+      channels: [0, 0, 0],
+
+    });
+    node.inputs.b.setValue({
+      space: "srgb",
+      channels: [1, 1, 1],
+
+    });
+    node.inputs.background.setValue({
+      space: "srgb",
+      channels: [1, 1, 1],
+
+    });
     node.inputs.algorithm.setValue(ContrastAlgorithm.APCA);
     node.inputs.threshold.setValue(60);
 
@@ -21,7 +33,11 @@ describe("color/contrasting", () => {
     const output = getAllOutputs(node);
 
     expect(output).toEqual({
-      color: "#000000",
+      color: {
+        space: "srgb",
+        channels: [0, 0, 0],
+
+      },
       sufficient: true, // assuming contrast value is above 60
       contrast: 106.04067321268862,
     });
@@ -32,9 +48,20 @@ describe("color/contrasting", () => {
     const node = new Node({ graph });
 
 
-    node.inputs.a.setValue("#000000");
-    node.inputs.b.setValue("#ffffff");
-    node.inputs.background.setValue("#000000");
+    node.inputs.a.setValue({
+      space: "srgb",
+      channels: [0, 0, 0],
+
+    });
+    node.inputs.b.setValue({
+      space: "srgb",
+      channels: [1, 1, 1],
+
+    });
+    node.inputs.background.setValue({
+      space: "srgb",
+      channels: [0, 0, 0],
+    });
     node.inputs.algorithm.setValue(ContrastAlgorithm.WCAG21);
     node.inputs.threshold.setValue(4.5);
 
@@ -43,7 +70,10 @@ describe("color/contrasting", () => {
     const output = getAllOutputs(node);
 
     expect(output).toEqual({
-      color: "#ffffff",
+      color: {
+        space: "srgb",
+        channels: [1, 1, 1],
+      },
       sufficient: true, // assuming contrast value is above 4.5
       contrast: 21,
     });
@@ -54,9 +84,21 @@ describe("color/contrasting", () => {
     const node = new Node({ graph });
 
 
-    node.inputs.a.setValue("#dddddd");
-    node.inputs.b.setValue("#bbbbbb");
-    node.inputs.background.setValue("#ffffff");
+    node.inputs.a.setValue({
+      space: "srgb",
+      channels: [0.87, 0.87, 0.87],
+
+    });
+    node.inputs.b.setValue({
+      space: "srgb",
+      channels: [0.73, 0.73, 0.73],
+
+    });
+    node.inputs.background.setValue({
+      space: "srgb",
+      channels: [1, 1, 1],
+  
+    });
     node.inputs.algorithm.setValue(ContrastAlgorithm.APCA);
     node.inputs.threshold.setValue(60);
 
@@ -65,9 +107,13 @@ describe("color/contrasting", () => {
     const output = getAllOutputs(node);
 
     expect(output).toEqual({
-      color: "#bbbbbb",
+      color: {
+        space: "srgb",
+        channels: [0.73, 0.73, 0.73],
+
+      },
       sufficient: false, // assuming contrast value is below 60
-      contrast: 36.717456545363994,
+      contrast: 37.180836150040705,
     });
   });
 });
