@@ -10,7 +10,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { edgeType as edgeTypeSelector } from '../../../redux/selectors/settings.js';
 import { EdgeType } from '../../../redux/models/settings.js';
-import { Plus } from 'iconoir-react';
 import { useLocalGraph } from '@/context/graph.js';
 import { Port } from '@tokens-studio/graph-engine';
 import colors from '@/tokens/colors.js';
