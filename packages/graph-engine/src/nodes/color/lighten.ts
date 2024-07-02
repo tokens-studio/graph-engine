@@ -2,13 +2,11 @@ import { Black, toColor, toColorObject } from "./lib/utils.js";
 import {
   ColorSchema,
   NumberSchema,
-  StringSchema,
 } from "../../schemas/index.js";
-import { ColorSpace, colorSpaces } from "./lib/types.js"
+import { ColorSpace } from "./lib/types.js"
 import { Color as ColorType } from "../../types.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
-import Color from "colorjs.io";
 export { ColorModifierTypes } from "@tokens-studio/types";
 
 export default class NodeDefinition extends Node {
@@ -49,7 +47,7 @@ export default class NodeDefinition extends Node {
 
   execute(): void | Promise<void> {
     const { value, color } = this.getAllInputs();
-    
+
     const sourceColor = toColor(color);
     const lightness = sourceColor.oklch.l;
 
