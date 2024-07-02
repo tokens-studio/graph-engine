@@ -2,7 +2,7 @@ app: graph-engine
 env: prod
 namespace: graph-engine
 deploy:
-  branch: master
+  branch: post-joren-branch
   event: push
 chart:
   repository: https://chart.onechart.dev
