@@ -72,8 +72,7 @@ export default class RangeMappingNode extends Node {
 
     // Avoid division by zero
     if (inputMin === inputMax) {
-      this.setOutput("mappedValue", outputMin);
-      return;
+      throw new Error("inputMin and inputMax cannot be the same value");
     }
 
     let mappedValue = ((inputValue - inputMin) / (inputMax - inputMin)) * (outputMax - outputMin) + outputMin;
