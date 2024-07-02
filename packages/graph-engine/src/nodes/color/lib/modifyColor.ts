@@ -6,10 +6,9 @@ import { transparentize } from "./transparentize.js";
 import Color from "colorjs.io";
 
 export function modifyColor(
-  baseColor: string,
+  color: Color,
   modifier: ColorModifier
-): string {
-  const color: Color = new Color(baseColor);
+): Color {
   let returnedColor: Color = color;
   switch (modifier.type) {
     case ColorModifierTypes.LIGHTEN:
@@ -34,12 +33,9 @@ export function modifyColor(
       throw new Error("Unknown color modifier type");
   }
   returnedColor = returnedColor.to(modifier.space);
-  return returnedColor.toString({ inGamut: true, precision: 3 });
+  return returnedColor;
 }
 
-export function convertModifiedColorToHex(baseColor: string, modifier: ColorModifier) {
-  let returnedColor = baseColor;
-  returnedColor = modifyColor(baseColor, modifier);
-  const returnedColorInSpace = new Color(returnedColor);
-  return returnedColorInSpace.to("srgb").toString({ format: "hex" });
+export function convertModifiedColorToHex(baseColor: Color, modifier: ColorModifier):Color {
+  return modifyColor(baseColor, modifier);
 }

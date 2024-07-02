@@ -1,4 +1,5 @@
 
+import { Black, White, toColor } from "./lib/utils.js";
 import { ColorSchema, NumberSchema, StringSchema } from "../../schemas/index.js";
 import { Color as ColorType } from "../../types.js";
 import { INodeDefinition, ToInput, ToOutput} from "../../index.js";
@@ -36,13 +37,13 @@ export default class NodeDefinition extends Node {
     this.addInput("colorA", {
       type: {
         ...ColorSchema,
-        default: "#ffffff",
+        default:White,
       },
     });
     this.addInput("colorB", {
       type: {
         ...ColorSchema,
-        default: "#000000",
+        default: Black,
       },
     });
     this.addInput("precision", {
@@ -67,8 +68,8 @@ export default class NodeDefinition extends Node {
   execute(): void | Promise<void> {
     const { colorA, colorB, space, precision } = this.getAllInputs();
 
-    const a = new Color(colorA);
-    const b = new Color(colorB);
+    const a = toColor(colorA);
+    const b = toColor(colorB);
 
     const distance = a.distance(b, space);
 

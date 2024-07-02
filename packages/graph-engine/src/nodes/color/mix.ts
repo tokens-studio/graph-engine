@@ -1,3 +1,4 @@
+import { Black, White, toColor, toColorObject } from "./lib/utils.js";
 import {
   ColorModifier,
   ColorSpaceTypes,
@@ -34,15 +35,15 @@ export default class NodeDefinition extends Node {
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("colorA", {
-      type: { 
+      type: {
         ...ColorSchema,
-        default: "#ffffff"
+        default: White
       },
     });
     this.addInput("colorB", {
       type: {
         ...ColorSchema,
-        default: "#000000",
+        default: Black,
       },
     });
     this.addInput("value", {
@@ -69,13 +70,19 @@ export default class NodeDefinition extends Node {
   execute(): void | Promise<void> {
     const { colorA, space, value, colorB } = this.getAllInputs();
 
-    const converted = convertModifiedColorToHex(colorA, {
+
+    const colA = toColor(colorA);
+    const colB = toColor(colorB)
+
+
+    const converted = convertModifiedColorToHex(colA, {
       type: "mix",
-      color: colorB,
+      color: colB,
       space,
       value,
     } as ColorModifier);
 
-    this.setOutput("value", converted);
+    const final = toColorObject(converted);
+    this.setOutput("value", final);
   }
 }

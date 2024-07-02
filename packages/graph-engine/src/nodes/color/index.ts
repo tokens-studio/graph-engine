@@ -13,6 +13,7 @@ import mix from "./mix.js";
 import name from "./name.js";
 import poline from "./poline.js";
 import scale from "./scale.js";
+import toHex from './toHex.js';
 import wheel from "./wheel.js";
 
 export const nodes = [
@@ -30,6 +31,7 @@ export const nodes = [
   scale,
   wheel,
   mix,
+  toHex,
   lighten,
   darken
 ];

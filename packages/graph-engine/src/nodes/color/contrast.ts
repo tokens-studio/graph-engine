@@ -2,6 +2,7 @@ import { BooleanSchema, ColorSchema, NumberSchema, StringSchema } from "../../sc
 import { ContrastAlgorithm } from "../../types/index.js";
 import { INodeDefinition } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
+import { toColor } from "./lib/utils.js";
 import Color from "colorjs.io";
 
 
@@ -44,8 +45,8 @@ export default class NodeDefinition extends Node {
 
   execute(): void | Promise<void> {
     const { a, b, algorithm, absolute } = this.getAllInputs();
-    const color = new Color(a);
-    const background = new Color(b);
+    const color = toColor(a);
+    const background = toColor(b);
 
     const calculated = background.contrast(color, algorithm);
     

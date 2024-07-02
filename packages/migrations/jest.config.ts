@@ -29,7 +29,7 @@ export default {
   },
   transformIgnorePatterns: [
     // Change MODULE_NAME_HERE to your module that isn't being compiled
-    "/node_modules/(?!(apca-w3|colorparsley|dot-prop|culori)).+\\.js$",
+    "/node_modules/(?!(apca-w3|colorparsley|dot-prop)).+\\.js$",
   ],
   resolver: "ts-jest-resolver",
   reporters: [
