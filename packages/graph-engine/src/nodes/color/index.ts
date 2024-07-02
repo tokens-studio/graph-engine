@@ -1,4 +1,3 @@
-import blend from "./blend.js";
 import contrast from "./contrast.js";
 import contrasting from "./contrasting.js";
 import contrastingAlpha from "./contrastingAlpha.js";
@@ -17,7 +16,6 @@ import toHex from './toHex.js';
 import wheel from "./wheel.js";
 
 export const nodes = [
-  blend,
   contrast,
   contrasting,
   contrastingAlpha,

@@ -4,13 +4,11 @@ import {
   NumberSchema,
   StringSchema,
 } from "../../schemas/index.js";
+import { ColorSpace, colorSpaces } from "./lib/types.js"
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
-import { colorSpaces } from "./create.js";
 import { toColor, toColorObject } from "./lib/utils.js";
 
-
-export type ColorSpace = typeof colorSpaces[number];
 
 export default class NodeDefinition extends Node {
   static title = "Convert Color";

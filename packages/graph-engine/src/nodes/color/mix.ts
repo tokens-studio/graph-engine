@@ -1,19 +1,14 @@
 import { Black, White, toColor, toColorObject } from "./lib/utils.js";
 import {
-  ColorModifier,
-  ColorSpaceTypes,
-} from "@tokens-studio/types";
-import {
   ColorSchema,
   NumberSchema,
   StringSchema,
 } from "../../schemas/index.js";
+import { ColorSpace, colorSpaces } from "./lib/types.js"
 import { Color as ColorType } from "../../types.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
-import { convertModifiedColorToHex } from "./lib/modifyColor.js";
-
-export { ColorModifierTypes } from "@tokens-studio/types";
+import Color from "colorjs.io";
 
 export default class NodeDefinition extends Node {
   static title = "Mix Colors";
@@ -24,7 +19,7 @@ export default class NodeDefinition extends Node {
     colorA: ColorType;
     colorB: ColorType;
     value: number;
-    space: ColorSpaceTypes;
+    space: ColorSpace;
   }>;
 
   declare outputs: ToOutput<{
@@ -57,7 +52,7 @@ export default class NodeDefinition extends Node {
       type: {
         ...StringSchema,
         default: "srgb",
-        enum: Object.keys(ColorSpaceTypes),
+        enum: Object.keys(colorSpaces),
         description: "The color space we are operating in",
       },
     });
@@ -72,15 +67,14 @@ export default class NodeDefinition extends Node {
 
 
     const colA = toColor(colorA);
-    const colB = toColor(colorB)
+    const colB = toColor(colorB);
 
+    colA.to(space);
+    colB.to(space);
 
-    const converted = convertModifiedColorToHex(colA, {
-      type: "mix",
-      color: colB,
-      space,
-      value,
-    } as ColorModifier);
+    const mixValue = Math.max(0, Math.min(1, Number(value)));
+
+    const converted = Color.mix(colA, colB, mixValue);
 
     const final = toColorObject(converted);
     this.setOutput("value", final);

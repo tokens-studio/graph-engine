@@ -3,59 +3,7 @@ import { ColorSchema, NumberSchema, StringSchema } from "../../schemas/index.js"
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
 export { ColorModifierTypes } from "@tokens-studio/types";
-
-export const colorSpaces = [
-  // RGB
-  "srgb",
-
-  
-
-  //HSL
-  "hsl",
-  "hsv",
-  "hwb",
-  //LAB
-  "lab",
-  "lch",
-  //Luv
-  "luv",
-  "lchuv",
-  //OkLab
-  "oklab",
-  "oklch",
-  "okhsv",
-  //P3
-  "p3",
-  "p3-linear",
-
-  //Rec
-  "rec2020",
-  "rec2020-linear",
-  "rec2100hlg",
-  "rec2100pq",
-
-  //Prophoto
-  "prophoto", 
-  "prophoto-linear",
-
-  //XYZ
-  "xyz",
-  "xyz-d50",
-  "xyz-d65",
-  "xyz-abs-d65",
-
-  //Old
-  "a98rgb",
-
-  //exotic
-  "ictcp",
-  "jzazbz",
-  "jzczhz"
-
-
-] as const;
-
-export type ColorSpace = typeof colorSpaces[number];
+import { ColorSpace, colorSpaces } from "./lib/types.js"
 
 export default class NodeDefinition extends Node {
   static title = "Create Color";
