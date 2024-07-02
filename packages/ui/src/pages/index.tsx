@@ -34,41 +34,55 @@ const Wrapper = observer(() => {
 		}
 	};
 
-	return (
-		<>
-			{/* @ts-ignore */}
-			<Joyride
-				callback={handleJoyrideCallback}
-				continuous
-				hideCloseButton
-				run={showJourney}
-				tooltipComponent={JoyrideTooltip}
-				scrollToFirstStep
-				showProgress
-				showSkipButton
-				steps={steps}
-				styles={{
-					options: {
-						zIndex: 10000
-					}
-				}}
-			/>
-			<Box
-				css={{
-					position: 'relative',
-					display: 'flex',
-					flexDirection: 'row',
-					width: '100%',
-					height: '100%',
-					overflow: 'hidden',
-					background: '$bgCanvas',
-					isolation: 'isolate'
-				}}
-			>
-				<EditorTab ref={ref} />
-			</Box>
-		</>
-	);
+
+
+
+  const [{ steps }] = useJourney();
+  const handleJoyrideCallback = (data: CallBackProps) => {
+    const { status } = data;
+    const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
+
+    if (finishedStatuses.includes(status)) {
+      dispatch.journey.setShowJourney(false);
+    }
+  };
+
+
+  return (
+    <>
+      {/* @ts-ignore */}
+      <Joyride
+        callback={handleJoyrideCallback}
+        continuous
+        hideCloseButton
+        run={showJourney}
+        tooltipComponent={JoyrideTooltip}
+        scrollToFirstStep
+        showProgress
+        showSkipButton
+        steps={steps}
+        styles={{
+          options: {
+            zIndex: 10000,
+          },
+        }}
+      />
+      <Box
+        css={{
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'row',
+          width: '100%',
+          height: '100%',
+          overflow: 'hidden',
+          background: '$bgCanvas',
+          isolation: 'isolate',
+        }}
+      >
+        <EditorTab ref={ref} />
+      </Box>
+    </>
+  );
 });
 
 const Index = () => {

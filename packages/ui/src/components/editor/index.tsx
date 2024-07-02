@@ -82,4 +82,54 @@ export const EditorTab = observer(
 
 EditorTab.displayName = 'EditorTab';
 
+  return (
+    <Box css={{ position: 'relative', width: '100%', height: '100%' }}>
+      <Editor
+        id={""}
+        // @ts-ignore
+        ref={ref}
+        showMenu={false}
+        menuItems={menu}
+        panelItems={panelItems}
+        nodeTypes={nodeTypes}
+        capabilities={capabilities}
+        controls={controls}
+        //@ts-expect-error
+        specifics={specifics}
+        icons={icons}
+        emptyContent={<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />}
+      ></Editor>
+      <ExamplesPicker
+        open={globalState.ui.showExamplePicker.get()}
+        onClose={onCloseExamplePicker}
+        loadExample={loadExample}
+      />
+      {loading && (
+        <Box
+          css={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: '$gray1',
+            opacity: 0.5,
+            zIndex: 1000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Spinner />
+        </Box>
+      )}
+    </Box>
+  );
+},{
+  forwardRef: true
+});
+
+EditorTab.displayName = 'EditorTab';
+
+
 export default EditorTab;
