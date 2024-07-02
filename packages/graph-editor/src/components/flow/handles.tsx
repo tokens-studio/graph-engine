@@ -78,6 +78,13 @@ const StyledRawHandle = styled(RawHandle, {
         background: '#1a1a1a !important',
       },
     },
+    isArray: {
+      true: {
+        borderRadius: '0 !important',
+        width: 'calc($4 - 2px) !important',
+        height: 'calc($4 - 2px) !important',
+      }
+    },
     shouldHideHandles: {
       true: {
         pointerEvents: 'none',
@@ -197,16 +204,8 @@ export const Handle = (props: HandleProps) => {
           variadic={variadic}
           isValidConnection={isValidConnection}
           isConnected={isConnected}
-        >
-
-          <IconoirProvider
-            iconProps={{
-              strokeWidth: 1.5,
-              width: '1em',
-              height: '1em',
-            }}
-          >{icon}</IconoirProvider>
-        </StyledRawHandle>
+          isArray={isArray}
+        ></StyledRawHandle>
 
         <Stack
           gap={1}

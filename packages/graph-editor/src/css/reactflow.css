@@ -15,14 +15,13 @@
     width: var(--sizes-4);
     height: var(--sizes-4);
     border: 4px solid #1a1a1a;
-    border-radius: 9999px;
+    border-radius: 99px;
     box-shadow: var(--shadows-small);
     outline: 2px solid transparent;
     outline-offset: -4px;
     display: grid;
     place-items: center;
 }
-
 .react-flow__handle svg {
     pointer-events: none;
 }
@@ -38,7 +37,7 @@
     stroke: var(--green-10);
 }
 .react-flow__handle-valid	{
-    outline: 1px solid var(--colors-borderDefault);
+    outline-color: var(--colors-borderDefault);
 }
 .react-flow__node.selectable.selected,
 .react-flow__node.selectable:focus {
@@ -118,10 +117,11 @@
     75% { transform: translateX(1px) }
     100% { transform: translateX(0) }
 }
-  
+
+/*
 .react-flow__handle-connecting:not(.react-flow__handle-valid){
     outline: 3px solid var(--red-10);
-    animation: horizontal-shaking 0.35s;
+     animation: horizontal-shaking 0.35s; 
 }
 
 .react-flow__handle.react-flow__handle-valid {
@@ -131,7 +131,7 @@
 .react-flow__handle:not(.react-flow__handle-valid) {
 
 }
-
+*/
 .react-flow__resize-control {
     display: none;
 }
