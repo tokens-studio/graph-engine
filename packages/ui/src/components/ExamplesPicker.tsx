@@ -1,9 +1,9 @@
-import {Search} from 'iconoir-react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Command } from 'cmdk';
-import React from 'react';
-import { examples } from '../data/examples/examples.tsx';
 import { IExample } from '../types/IExample.tsx';
+import {Search} from 'iconoir-react';
+import { examples } from '../data/examples/examples.tsx';
+import React from 'react';
 
 const ExamplesPicker = ({ open, onClose, loadExample }) => {
   const handleSelectItem = (example: IExample) => {
