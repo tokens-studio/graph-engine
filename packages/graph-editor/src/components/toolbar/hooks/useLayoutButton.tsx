@@ -33,10 +33,10 @@ export const useLayoutButton = () => {
         null,
         'float',
         {
-          left: 300,
+          left: 500,
           top: 300,
-          width: 200,
-          height: 200,
+          width: 320,
+          height: 400,
         },
       );
     }
