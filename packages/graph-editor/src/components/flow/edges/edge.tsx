@@ -181,19 +181,6 @@ export default function CustomEdge({
           {data?.text}
         </textPath>
       </text>
-      {isConnecting && (
-        <foreignObject
-          width={20}
-          height={20}
-          x={targetX - 10}
-          y={targetY - 10}
-          requiredExtensions="http://www.w3.org/1999/xhtml"
-        >
-          <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Plus style={{ color: 'var(--colors-fgDefault)' }} />
-          </div>
-        </foreignObject>
-      )}
     </>
   );
 }
