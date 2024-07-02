@@ -61,7 +61,7 @@ export function Inputsheet() {
 
         <Box css={{ padding: '$3' }}>
 
-          {dynamicInputs && <DynamicInputs node={selectedNode} />}
+          {dynamicInputs  && <DynamicInputs node={selectedNode} />}
 
           {SpecificInput ? <SpecificInput node={selectedNode} /> : null}
           <Stack width="full" css={{ paddingTop: '$3', paddingBottom: '$3' }}>
