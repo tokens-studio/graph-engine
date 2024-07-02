@@ -30,7 +30,6 @@ export default class ArraySubgraph<T, V> extends Node {
 
   constructor(props: IArraySubgraph) {
     super(props);
-
     const existing = !!props.innerGraph;
     this._innerGraph = props.innerGraph || new Graph();
 
@@ -96,7 +95,7 @@ export default class ArraySubgraph<T, V> extends Node {
       if (!input) throw new Error("No input node found");
     }
 
-    //Attach listeners 
+  // Attach listeners 
     autorun(() => {
       //Get the existing inputs 
       const existing = this.inputs;
@@ -167,9 +166,8 @@ export default class ArraySubgraph<T, V> extends Node {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const output = await (input.value as any[]).reduce(async (acc, item, i) => {
 
-      const output = await acc;
-
-
+     const output = await acc;
+     try {
       const result = await this._innerGraph.execute({
         //By default this is any so we need to overwrite it with its runtime type
         inputs: {
@@ -187,8 +185,12 @@ export default class ArraySubgraph<T, V> extends Node {
         }
       });
 
-      if (!result.output) throw new Error("No output from subgraph");
-      return output.concat([result.output.value]);
+    if (!result.output) throw new Error("No output from subgraph");
+    return output.concat([result.output.value]);
+    } catch (error) {
+      throw new Error("Error executing array map subgraph");
+    }
+
     }, Promise.resolve([]));
 
     const flattened = output.map(x => x.value);

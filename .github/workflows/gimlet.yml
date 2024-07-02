@@ -2,7 +2,7 @@ name: Gimlet
 
 on:
   push:
-    branches: [ master ]
+    branches: [ post-joren-branch ]
 
 jobs:
   build:
@@ -13,8 +13,6 @@ jobs:
         include:
           - dockerfile: ./packages/ui/Dockerfile
             type: frontend
-          - dockerfile: ./packages/backend/Dockerfile
-            type: backend
           - dockerfile: ./packages/documentation/Dockerfile
             type: docs
     permissions:

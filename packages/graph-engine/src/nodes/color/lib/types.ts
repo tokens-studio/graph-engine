@@ -1,4 +1,5 @@
 import { ColorModifierTypes } from "@tokens-studio/types";
+import Color from 'colorjs.io'
 
 export enum ColorSpaceTypes {
   OKLAB = "oklab",
@@ -28,7 +29,7 @@ export type DarkenModifier = ColorGenericModifier<
 >;
 export interface MixModifier
   extends ColorGenericModifier<ColorModifierTypes.MIX, string> {
-  color: string;
+  color: Color;
 }
 export type AlphaModifier = ColorGenericModifier<
   ColorModifierTypes.ALPHA,

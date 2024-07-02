@@ -198,6 +198,14 @@ export const Handle = (props: HandleProps) => {
           isValidConnection={isValidConnection}
           isConnected={isConnected}
         >
+
+          <IconoirProvider
+            iconProps={{
+              strokeWidth: 1.5,
+              width: '1em',
+              height: '1em',
+            }}
+          >{icon}</IconoirProvider>
         </StyledRawHandle>
 
         <Stack

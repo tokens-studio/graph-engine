@@ -18,6 +18,7 @@ export default class SubgraphNode extends Node {
   static description = "Allows you to run another subgraph internally";
 
   _innerGraph: Graph;
+
   constructor(props: INodeDefinition) {
     super(props);
 

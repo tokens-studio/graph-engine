@@ -1,4 +1,4 @@
-import { AnyArraySchema, GraphSchema } from "../schemas/index.js";
+import { GraphSchema } from "../schemas/index.js";
 import { Node } from "./node.js";
 import { Port } from "./port.js";
 import { SerializedInput } from "../graph/types.js";
@@ -95,6 +95,31 @@ export class Input<T = any> extends Port<T> {
   reset() {
     this._dynamicType = undefined;
     return (this._value = getDefaults(this._type));
+  }
+
+    /**
+   * Returns the underlying class of the input.
+   * @returns
+   */
+    get factory(): typeof Input {
+      //@ts-ignore
+      return this.constructor;
+    }
+  
+
+  clone(): Input<T> {
+    const clonedInput = new this.factory({
+      name: this.name,
+      type: this.type,
+      visible: this.visible,
+      node: this.node,
+      variadic: this.variadic,
+      annotations: {...this.annotations},
+      impure: this.impure,
+      value: this.value,
+    });
+  
+    return clonedInput;
   }
 
   fullType(): TypeDefinition {
