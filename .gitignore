@@ -6,3 +6,4 @@ dist
 docs
 yarn-error.log
 out
+data/postgres

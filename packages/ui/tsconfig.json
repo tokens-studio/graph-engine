@@ -59,15 +59,6 @@
     "paths": {
       "@/*": [
         "src/*"
-      ],
-      "#selectors": [
-        "src/redux/selectors"
-      ],
-      "#vpages": [
-        "src/virtualPages/*"
-      ],
-      "#selectors/*": [
-        "src/redux/selectors/*"
       ]
     },
     "plugins": [

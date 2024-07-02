@@ -73,7 +73,7 @@ const Wrapper = observer(() => {
           isolation: 'isolate',
         }}
       >
-        <EditorTab ref={ref} loading={isLoading} />
+        <EditorTab ref={ref} />
       </Box>
     </>
   );

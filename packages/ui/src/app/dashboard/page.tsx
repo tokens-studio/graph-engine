@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Plus, Search, Upload } from 'iconoir-react';
 
-const Page = () => {
+const Page = async () => {
     const [search, setSearch] = React.useState('');
 
     return (
