@@ -5,7 +5,6 @@ import ceil from "./ceil.js";
 import clamp from "./clamp.js";
 import cos from "./cos.js";
 import count from "./count.js";
-import dataMapping from "./dataMapping.js";
 import divide from "./divide.js";
 import divideVariadic from "./divideVariadic.js";
 import evalNode from "./eval.js";
@@ -18,6 +17,7 @@ import multiply from "./multiply.js";
 import multiplyVariadic from "./multiplyVariadic.js";
 import pow from "./pow.js";
 import random from "./random.js";
+import rangeMapping from "./rangeMapping.js";
 import round from "./round.js";
 import sin from "./sin.js";
 import sqrt from "./sqrt.js";
@@ -33,7 +33,7 @@ export const nodes = [
   clamp,
   cos,
   count,
-  dataMapping,
+  rangeMapping,
   divide,
   divideVariadic,
   evalNode,

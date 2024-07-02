@@ -4,8 +4,8 @@ import { BooleanSchema, NumberSchema } from "../../schemas/index.js";
 import { INodeDefinition, Node } from "../../programmatic/node.js";
 import { ToInput, ToOutput } from "../../programmatic";
 
-export default class DataMappingNode extends Node {
-  static title = "Data Mapping";
+export default class RangeMappingNode extends Node {
+  static title = "Range Mapping";
   static type = "studio.tokens.math.dataMapping";
   static description = "Maps a value from one range to another";
 
