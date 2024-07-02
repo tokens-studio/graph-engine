@@ -2,7 +2,7 @@ name: Gimlet
 
 on:
   push:
-    branches: [ master ]
+    branches: [ post-joren-branch ]
 
 jobs:
   build:
