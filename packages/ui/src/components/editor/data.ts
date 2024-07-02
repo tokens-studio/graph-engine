@@ -10,6 +10,7 @@ import {
 	icons as designIcons,
 	specifics as designSpecifics
 } from '@tokens-studio/graph-engine-nodes-design-tokens';
+import { controls as designControls, icons as designIcons, specifics as designSpecifics } from '@tokens-studio/graph-engine-nodes-design-tokens';
 
 export const fs = Volume.fromJSON({
 	'/files/readme.md': 'Hello World'
