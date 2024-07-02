@@ -43,7 +43,12 @@ const StyledButton = styled('button', {
       opacity: 1,
     },
   },
-  backgroundColor: '$buttonSecondaryBgHover',
+  '&:active': {
+    background: 'var(--blue-7)',
+    [`& ${StyledGrabber}`]: {
+      opacity: 1,
+    },
+  },
 });
 
 export const DragItem = ({

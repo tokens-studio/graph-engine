@@ -22,7 +22,8 @@ export const contrastCheck = (foreground: Color, background: Color, algorithm): 
 export default class NodeDefinition extends Node {
   static title = "Contrasting Alpha";
   static type = "studio.tokens.color.contrastingAlpha";
-  static description = "Reduce alpha until you are close to the threshold.";
+  static description = "Finds the optimal alpha value for a foreground color to meet contrast requirements.\n\nInputs: Foreground Color, Background Color, Target Contrast, Algorithm\nOutputs: Adjusted Color, Alpha Value, Achieved Contrast\n\nUse this node to automatically adjust the opacity of text or UI elements for optimal readability. It finds the minimum alpha needed to meet the specified contrast ratio. Essential for creating accessible designs that maintain visual aesthetics."
+;
 
   declare inputs: {
     a: Input;

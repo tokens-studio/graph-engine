@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static title = "Flatten Alpha";
   static type = "studio.tokens.color.flattenAlpha";
   static description =
-    "Reduces two colors to one by blending them together and removing the alpha channel. Expects a background color without alpha. The foreground color with alpha will be blended on top of the background color. The output is a hex color string.";
+    "Blends a color with alpha over a background, removing transparency.\n\nInputs: Foreground Color (with alpha), Background Color\nOutput: Flattened color without alpha\n\nUse this node to resolve semi-transparent colors against a background. It calculates the resulting opaque color as if the foreground was laid over the background. Useful for converting designs with transparency to flat colors, or for visualizing the final appearance of overlaid elements.";
   constructor(props: INodeDefinition) {
     super(props);
 

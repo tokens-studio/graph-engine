@@ -7,6 +7,7 @@ import { nodes as generic } from "./generic/index.js";
 import { nodes as gradient } from "./gradient/index.js";
 import { nodes as logic } from "./logic/index.js";
 import { nodes as math } from "./math/index.js";
+import { nodes as object1 } from "./object/index.js";
 import { nodes as preview } from "./preview/index.js";
 import { nodes as series } from "./series/index.js";
 import { nodes as string } from "./string/index.js";
@@ -33,7 +34,8 @@ export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
   string,
   typing,
   vector2,
-  typography
+  typography,
+  object1
 );
 
 /**

@@ -4,7 +4,7 @@ import { Node } from "../../programmatic/node.js";
 export default class NodeDefinition<T> extends Node {
   static title = "Arrify";
   static type = "studio.tokens.array.arrify";
-  static description = "Accepts a wide range of input types and formats, ensuring they are converted into a uniform array structure. The output is always an array.";
+  static description = "Converts various input types into a uniform array structure.\n\nInput: Any value or set of values\nOutput: Array\n\nUse this node to ensure consistent array formatting regardless of input type. It can handle single values, multiple values, or existing arrays, outputting a standardized array format. Useful for normalizing data inputs, preparing values for batch processing, or ensuring consistent data structures in your workflows.";
   
   declare inputs: ToInput<{
     items: T[];

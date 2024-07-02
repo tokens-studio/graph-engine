@@ -11,7 +11,7 @@ import {
 import { Color as ColorType } from "../../types.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
-import { convertModifiedColorToHex } from "./lib/modifyColor.js";
+import { modifyColor } from "./lib/modifyColor.js";
 import Color from "colorjs.io";
 
 export { ColorModifierTypes } from "@tokens-studio/types";
@@ -19,7 +19,7 @@ export { ColorModifierTypes } from "@tokens-studio/types";
 export default class NodeDefinition extends Node {
   static title = "Blend Colors";
   static type = "studio.tokens.color.blend";
-  static description = "Blends two colors together based on a specified modifier. The output is a hex color string. The modifier can be used to lighten, darken, saturate, desaturate, or mix the two colors together.";
+  static description = "Blends two colors using various color operations.\n\nInputs: Base color, Blend color, Blend mode, Amount\nOutput: Resulting blended color\n\nUse this node to create color variations or transitions. Select from blend modes like lighten, darken, or mix. Adjust the amount to control the intensity of the blend. Useful for creating color schemes, generating hover states, or producing smooth color transitions in your designs.";
 
   declare inputs: ToInput<{
     color: ColorType;

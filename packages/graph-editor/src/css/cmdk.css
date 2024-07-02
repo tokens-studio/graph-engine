@@ -47,6 +47,7 @@
 [cmdk-item] {
     font-size: var(--fontSizes-small);
     padding: var(--space-3) var(--space-5);
+    /* border-radius: var(--radii-medium); */
     border-radius: 0px
 }
 

@@ -12,6 +12,6 @@ export default class NodeDefinition extends Node {
     static type = "studio.tokens.generic.note";
 
     static description =
-        "A node that can be used to add comments.";
+        "Adds a comment or note to your node graph.\n\nNo inputs or outputs\n\nUse this node to add explanations, reminders, or documentation directly in your node graph. It doesn't affect the data flow but helps in organizing and understanding complex workflows. Essential for collaboration, self-documentation, and maintaining clarity in your projects.";
 
 }

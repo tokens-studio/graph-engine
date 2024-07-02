@@ -13,6 +13,65 @@ export interface IArraySubgraph extends INodeDefinition {
   innerGraph?: Graph;
 }
 
+/**
+ * @description
+ * 
+ * ## Description
+ * The Array Map (Subgraph) node applies a custom operation to each element of an array using a subgraph. It's a powerful tool for performing complex operations on every item in a list, allowing for sophisticated batch processing and data transformations.
+ *
+ * ## Inputs
+ * - **Array**: Array (any type)
+ *   - Description: The input array to be processed
+ *   - Default value: None (required input)
+ *
+ * - **Custom Inputs**: Various (defined in subgraph)
+ *   - Description: Additional inputs defined in the subgraph for processing each element
+ *   - Default value: Varies based on subgraph definition
+ *
+ * ## Outputs
+ * - **Value**: Array
+ *   - Description: The resulting array after applying the subgraph operations to each element
+ *
+ * ## How to Use
+ * 1. Connect your input array to the "Array" input of the node.
+ * 2. Double-click the node to open the subgraph editor.
+ * 3. In the subgraph, you'll find:
+ *    - An "Input" node with a "value" port (representing each array element)
+ *    - An "Input" node with "index" and "length" ports for array metadata
+ *    - An "Output" node where you define the result for each element
+ * 4. Design your subgraph to process each array element as needed.
+ * 5. Connect any additional inputs your subgraph requires to the main node.
+ * 6. The main node's output will be an array containing the results of your subgraph operations.
+ *
+ * ## Examples
+ * 1. **Double each number in an array:**
+ *    - Input: [1, 2, 3, 4, 5]
+ *    - Subgraph: Multiply "value" by 2
+ *    - Output: [2, 4, 6, 8, 10]
+ *
+ * 2. **Convert an array of colors to their HSL representations:**
+ *    - Input: ["#FF0000", "#00FF00", "#0000FF"]
+ *    - Subgraph: Use a "Convert Color" node to transform each color to HSL
+ *    - Output: [{ h: 0, s: 100, l: 50 }, { h: 120, s: 100, l: 50 }, { h: 240, s: 100, l: 50 }]
+ *
+ * ## Tips
+ * - Use the "index" input in your subgraph for operations that depend on the element's position.
+ * - The "length" input can be useful for calculations that need to know the total size of the array.
+ * - You can nest Array Map nodes for working with multi-dimensional arrays or complex data structures.
+ * - Remember that the subgraph runs for each element, so keep it efficient for large arrays.
+ *
+ * ## Related Nodes
+ * - Array Push
+ * - Array Slice
+ * - Array Sort
+ * - Object Path Extractor
+ * 
+ * @example
+ * 
+ * ```json
+ * {"nodes":[{"id":"be2be49c-3c7f-4f6a-a175-d44c7318e7a0","type":"studio.tokens.generic.note","inputs":[],"annotations":{"ui.position.x":-569.453229296693,"ui.position.y":484.6400208706624,"ui.nodeType":"studio.tokens.generic.note","ui.description":"Notes can be used to store arbitrary information in your graph. \n\nNote you can also store information directly in the `ui.description` annotation property of any node"}}],"edges":[],"annotations":{"engine.id":"b320d136-53d8-4683-8d6a-359caa44fdf0","engine.capabilities.web-audio":"0.0.0","engine.capabilities.fs":"0.0.0","engine.version":"0.12.0","ui.viewport":{"x":909.6901824036067,"y":-89.57980497538804,"zoom":0.8587414984357615},"ui.version":"2.9.4"}}
+ * ```
+ */
 export default class ArraySubgraph<T, V> extends Node {
   static title = "Array Map (iterate over list) ";
   static type = 'tokens.studio.array.map';

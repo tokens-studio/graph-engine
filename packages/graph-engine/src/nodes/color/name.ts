@@ -11,7 +11,7 @@ import namer from "color-namer";
 export default class NodeDefinition extends Node {
   static title = "Name Color";
   static type = "studio.tokens.color.name";
-  static description = "Returns the name of the color";
+  static description = "Identifies the nearest named color for a given color value.\n\nInput: Color\nOutput: Color name (string)\n\nUse this node to find human-readable names for colors. It matches the input color to the closest standard color name. Useful for improving accessibility, enhancing user communication, or adding semantic meaning to colors in your designs.";
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("color", {

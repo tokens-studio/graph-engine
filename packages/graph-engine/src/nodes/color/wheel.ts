@@ -8,7 +8,7 @@ export default class NodeDefinition extends Node {
   static title = "Color Wheel";
   static type = "studio.tokens.color.wheel";
   static description =
-    "Generate Color Wheel node allows you to create a color scale based on a base color and rotation in hue. You can use this node to generate a color scale for a specific color property.";
+     "Generates a color scale based on a starting hue and rotation angle, perfect for creating harmonious color palettes.\n\nInputs: Base Hue, Angle, Saturation, Lightness, Number of Colors\nOutput: Array of Colors (hex format)\n\nAdjust the base hue and angle to explore different color relationships (e.g., complementary, triadic, analogous). Fine-tune saturation and lightness to control color intensity and brightness. Increase the number of colors for more gradual transitions or decrease for higher contrast. Ideal for quickly generating cohesive color schemes for your designs."
   constructor(props: INodeDefinition) {
     super(props);
 

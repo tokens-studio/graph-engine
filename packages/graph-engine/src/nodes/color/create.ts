@@ -56,7 +56,8 @@ export type ColorSpace = typeof colorSpaces[number];
 export default class NodeDefinition extends Node {
   static title = "Create Color";
   static type = "studio.tokens.color.create";
-  static description = "Creates a color in a given color space with the specified channel values (using the ports a, b, c, etc) and returns it as a hex color string";
+  static description = "Generates a color from individual channel values in a specified color space.\n\nInputs: Color Space, Channel values (e.g., R, G, B or H, S, L)\nOutput: Resulting color\n\nUse this node to precisely construct colors by defining their components. Choose from various color spaces like RGB, HSL, LAB, etc. Useful for programmatically generating colors, converting between color spaces, or creating colors based on specific color theory principles."
+;
 
   declare inputs: ToInput<{
     /**

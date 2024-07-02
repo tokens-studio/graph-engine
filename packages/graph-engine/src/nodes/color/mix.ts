@@ -17,7 +17,7 @@ export { ColorModifierTypes } from "@tokens-studio/types";
 export default class NodeDefinition extends Node {
   static title = "Mix Colors";
   static type = "studio.tokens.color.mix";
-  static description = "Mixes two colors together";
+  static description = "Blends two colors together in a specified color space.\n\nInputs: Color A, Color B, Mix Percentage, Color Space\nOutput: Resulting mixed color\n\nUse this node to create intermediate colors or transitions. Adjust the mix percentage to control the balance between the two colors. Choose different color spaces for various mixing effects. Useful for creating gradients, color harmonies, or smooth transitions between design elements.";
 
   declare inputs: ToInput<{
     colorA: ColorType;

@@ -11,7 +11,7 @@ import chroma from "chroma-js";
 export default class NodeDefinition extends Node {
   static title = "Scale colors";
   static type = "studio.tokens.color.scale";
-  static description = "Create a scale/ramp of colors based on a given color by specifying the number of steps up and down";
+  static description = "Creates a scale of colors between a start and end color.\n\nInputs: Start Color, End Color, Number of Steps\nOutput: Array of colors\n\nUse this node to generate a smooth gradient between two colors. Specify the number of steps to control the granularity of the scale. Useful for creating color ramps for data visualization, smooth UI transitions, or generating a range of shades for a single hue in your design system.";
 
 
 

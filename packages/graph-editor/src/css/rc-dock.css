@@ -13,6 +13,8 @@
 .dock-tab {
     color: var(--colors-fgDefault);
     background: var(--colors-buttonPrimaryBgHover);
+
+    /* border-bottom-color: var(--colors-borderDefault); */
     border-bottom: none;
 }
 
@@ -20,6 +22,7 @@
     position: relative;
     right: 0;
     top: 0;
+    /* border-radius: var(--radii-small); */
     border-radius: 0px;
     font-family: inherit;
     text-transform: lowercase;

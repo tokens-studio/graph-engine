@@ -17,7 +17,7 @@ import Color from "colorjs.io";
 export default class NodeDefinition extends Node {
   static title = "Contrasting Color";
   static type = "studio.tokens.color.contrasting";
-  static description = "Evaluates the contrast ratio between two colors using the APCA-W3 algorithm, and identifies the color with the higher contrast. Outputs include the color with the highest contrast, the calculated contrast ratio, and a boolean indicating whether this ratio meets a specified sufficiency threshold. Users can adjust the threshold for sufficiency and choose between WCAG 3.0 (default) or other versions for the contrast calculation.";
+  static description = "Determines which of two colors contrasts best with a background.\n\nInputs: Color A, Color B, Background Color, Contrast Algorithm, Threshold\nOutputs: Chosen Color, Contrast Ratio, Sufficiency Boolean\n\nUse this node to automatically select the most readable color for text or UI elements. It compares two options against a background and chooses the one with better contrast. Ideal for ensuring accessibility in dynamic color situations or theming systems."
 
   declare inputs: ToInput<{
     a: ColorType;

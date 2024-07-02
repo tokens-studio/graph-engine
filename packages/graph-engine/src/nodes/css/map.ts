@@ -17,7 +17,7 @@ export default class NodeDefinition extends Node {
 
 
   static description =
-    "Exposes all the css properties. You can link the input of any other node to the any property that is there in the css map node.";
+    "Creates a map of CSS properties and their values.\n\nInputs: Various CSS properties (dynamically added)\nOutput: CSS object\n\nUse this node to collect and organize multiple CSS properties into a single object. Add inputs for each CSS property you want to include. Ideal for creating style objects, preparing data for CSS-in-JS solutions, or bundling multiple style properties for consistent application across your design system.";
   constructor(props: INodeDefinition) {
     super(props);
 

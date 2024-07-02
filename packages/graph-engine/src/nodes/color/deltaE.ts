@@ -20,7 +20,10 @@ export default class NodeDefinition extends Node {
   static title = "Delta E (ΔE)";
   static type = "studio.tokens.color.deltaE";
   static description =
-    "Delta E node allows you to calculate the distance between two colors.";
+    "Computes the Delta E (ΔE) color difference between two colors.\n\nInputs: Color A, Color B, Algorithm, Precision\nOutput: Delta E value\n\nUse this node for precise color difference calculations. Select from various ΔE algorithms for different accuracy needs. Helpful in quality control, ensuring color consistency across different media, or fine-tuning color palettes for optimal distinction. Essential for color-critical design work.";
+
+// Delta E
+
 
 
   constructor(props: INodeDefinition) {

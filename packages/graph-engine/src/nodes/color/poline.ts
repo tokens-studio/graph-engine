@@ -32,7 +32,7 @@ const convertHexToHsl = (hexColor: string): Vector3 => {
 export default class NodeDefinition extends Node {
   static title = "Poline";
   static type = "studio.tokens.color.poline";
-  static description = "";
+  static description = "Generates complex color palettes using the Poline algorithm.\n\nInputs: Anchor Colors, Number of Colors, Various Poline settings\nOutput: Array of colors\n\nUse this advanced node to create sophisticated and harmonious color palettes. Input anchor colors and adjust various parameters to fine-tune the generated palette. Ideal for creating unique, visually appealing color schemes for branding, data visualization, or complex UI designs.";
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("anchorColors", {
