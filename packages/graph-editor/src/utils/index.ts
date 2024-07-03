@@ -1,4 +1,5 @@
 // @ts-ignore
+import { Color, toHex, toColor } from '@tokens-studio/graph-engine';
 import { DeepKeyTokenMap, SingleToken, TokenTypes } from '@tokens-studio/types';
 import { setProperty } from 'dot-prop';
 
@@ -125,3 +126,13 @@ export const convertW3CToStudio = (
     return acc;
   }, {} as DeepKeyTokenMap);
 };
+
+
+export const castToHex =(col: Color)=>{
+  try {
+    return toHex(toColor(col));
+  } catch {
+    return '';
+  }
+  
+}

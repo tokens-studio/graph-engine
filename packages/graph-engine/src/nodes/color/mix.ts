@@ -1,18 +1,14 @@
-import {
-  ColorModifier,
-  ColorSpaceTypes,
-} from "@tokens-studio/types";
+import { Black, White, toColor, toColorObject } from "./lib/utils.js";
 import {
   ColorSchema,
   NumberSchema,
   StringSchema,
 } from "../../schemas/index.js";
+import { ColorSpace, colorSpaces } from "./lib/types.js"
 import { Color as ColorType } from "../../types.js";
 import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
 import { Node } from "../../programmatic/node.js";
-import { convertModifiedColorToHex } from "./lib/modifyColor.js";
-
-export { ColorModifierTypes } from "@tokens-studio/types";
+import Color from "colorjs.io";
 
 export default class NodeDefinition extends Node {
   static title = "Mix Colors";
@@ -23,7 +19,7 @@ export default class NodeDefinition extends Node {
     colorA: ColorType;
     colorB: ColorType;
     value: number;
-    space: ColorSpaceTypes;
+    space: ColorSpace;
   }>;
 
   declare outputs: ToOutput<{
@@ -34,15 +30,15 @@ export default class NodeDefinition extends Node {
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("colorA", {
-      type: { 
+      type: {
         ...ColorSchema,
-        default: "#ffffff"
+        default: White
       },
     });
     this.addInput("colorB", {
       type: {
         ...ColorSchema,
-        default: "#000000",
+        default: Black,
       },
     });
     this.addInput("value", {
@@ -56,7 +52,7 @@ export default class NodeDefinition extends Node {
       type: {
         ...StringSchema,
         default: "srgb",
-        enum: Object.keys(ColorSpaceTypes),
+        enum: Object.keys(colorSpaces),
         description: "The color space we are operating in",
       },
     });
@@ -69,13 +65,18 @@ export default class NodeDefinition extends Node {
   execute(): void | Promise<void> {
     const { colorA, space, value, colorB } = this.getAllInputs();
 
-    const converted = convertModifiedColorToHex(colorA, {
-      type: "mix",
-      color: colorB,
-      space,
-      value,
-    } as ColorModifier);
 
-    this.setOutput("value", converted);
+    const colA = toColor(colorA);
+    const colB = toColor(colorB);
+
+    colA.to(space);
+    colB.to(space);
+
+    const mixValue = Math.max(0, Math.min(1, Number(value)));
+
+    const converted = Color.mix(colA, colB, mixValue);
+
+    const final = toColorObject(converted);
+    this.setOutput("value", final);
   }
 }

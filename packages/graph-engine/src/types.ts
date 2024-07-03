@@ -24,7 +24,11 @@ export type NodeRun = {
 export type Vec2 = [number, number];
 export type Vec3 = [number, number, number];
 //Alias for now, will be replaced with a proper type
-export type Color = string
+export type Color = {
+  space: string;
+  channels: [number,number,number];
+  alpha?: number;
+}
 
 export type Curve = {
   curves: {

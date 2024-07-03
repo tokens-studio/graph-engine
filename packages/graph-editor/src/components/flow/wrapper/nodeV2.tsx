@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Handle, HandleContainer, useHandle } from '../handles.js';
-import { COLOR, Input, OBJECT, Port, SchemaObject, annotatedNodeRunning } from '@tokens-studio/graph-engine';
+import { COLOR, Color, Input, OBJECT, Port,SchemaObject, annotatedNodeRunning, toColor, toHex } from '@tokens-studio/graph-engine';
 import { Node as GraphNode } from '@tokens-studio/graph-engine'
 import colors from '@/tokens/colors.js';
 import { useSelector } from 'react-redux';
@@ -53,7 +53,7 @@ export const NodeV2 = (args) => {
 
   return (
     <ErrorBoundary fallback={<ErrorBoundaryContent />}>
-      <NodeWrap node={node}  icon={args?.data?.icon}/>
+      <NodeWrap node={node} icon={args?.data?.icon} />
     </ErrorBoundary>
   )
 
@@ -68,7 +68,7 @@ export interface INodeWrap {
   icon?: React.ReactNode;
   node: GraphNode;
 }
-const NodeWrap = observer(({ node,icon }: INodeWrap) => {
+const NodeWrap = observer(({ node, icon }: INodeWrap) => {
   const showTimingsValue = useSelector(showTimings);
   const specifics = useSelector(nodeSpecifics);
 
@@ -95,8 +95,8 @@ const NodeWrap = observer(({ node,icon }: INodeWrap) => {
           </HandleContainer>
         </Stack>
         {Specific && <Stack direction="column" gap={3} css={{ padding: '$3' }}>
-            <Specific node={node} />
-          </Stack>
+          <Specific node={node} />
+        </Stack>
         }
       </Stack>
       {showTimingsValue && (
@@ -192,8 +192,16 @@ export const InlineTypeLabel = ({ port }: { port: Port }) => {
   );
 };
 
-const getColorPreview = (color: string, showValue = false) => {
-  const colorSwatch = <Box css={{ width: '12px', height: '12px', borderRadius: '$small', backgroundColor: color }} />;
+const getColorPreview = (color: Color, showValue = false) => {
+
+  let hex = '';
+  //Let's try convert to hex
+  try {
+    hex = toHex(toColor(color));
+  } catch { }
+
+
+  const colorSwatch = <Box css={{ width: '16px', height: '16px', borderRadius: '$medium', backgroundColor: hex }} />;
 
   if (!showValue) {
     return colorSwatch;
@@ -202,7 +210,7 @@ const getColorPreview = (color: string, showValue = false) => {
   return (
     <Stack direction="row" gap={2} justify='center' align='center'>
       {colorSwatch}
-      {showValue ? <Text css={{ fontSize: '$xxsmall', color: '$gray10' }}>{color.toUpperCase()}</Text> : null}
+      {showValue ? <Text css={{ fontSize: '$small', color: '$gray12' }}>{hex.toUpperCase()}</Text> : null}
     </Stack>
   );
 }
@@ -231,12 +239,14 @@ const getValuePreview = (value, type) => {
       valuePreview = value.toString();
       break;
     case 'string':
-      if (type.$id === COLOR && isHexColor(value)) {
-        return getColorPreview(value, true);
-      }
       valuePreview = value;
       break;
     case 'object':
+      if (type.$id === COLOR) {
+        return getColorPreview(value, true);
+      }
+
+
     default:
       valuePreview = JSON.stringify(value);
   }

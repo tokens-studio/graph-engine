@@ -6,7 +6,7 @@ import { toJS } from 'mobx';
 import { Button, IconButton, Select, Stack, TextInput } from '@tokens-studio/ui';
 import { FloppyDisk, Minus, Plus } from 'iconoir-react';
 import { ColorPickerPopover } from '../colorPicker';
-import { ANY, AllSchemas, COLOR, Input, NUMBER, STRING } from '@tokens-studio/graph-engine';
+import { ANY, AllSchemas, COLOR, Input, NUMBER, STRING, hexToColor, toColor, toHex } from '@tokens-studio/graph-engine';
 import { delayedUpdateSelector } from '@/redux/selectors';
 import { useSelector } from 'react-redux';
 
@@ -14,7 +14,10 @@ const inputItemTypes = [STRING, NUMBER, COLOR];
 const NEW_ITEM_DEFAULTS = {
     [STRING]: '',
     [NUMBER]: 0,
-    [COLOR]: '#000000',
+    [COLOR]: {
+        space:'srgb',
+        channels:[1,1,1]
+    },
 };
 
 export const ArrayField = observer(({ port, readOnly }: IField) => {
@@ -50,7 +53,8 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
                 newColor = e.target.value;
             }
 
-            onChange(newColor, index);
+            //We need to convert hex to our format
+            onChange(hexToColor(newColor), index);
         };
 
     const onChange = (newValue: any, index: number) => {
@@ -96,6 +100,7 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
 
     const itemList = React.useMemo(() => {
         return value.map((val: any, index: number) => {
+
             switch (itemsType) {
                 case STRING:
                 case NUMBER:
@@ -109,10 +114,16 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
                         />
                     );
                 case COLOR:
+
+                    let value = '';
+                    try {
+                        value = toHex(toColor(val));
+                    } catch{}
+
                     return (
                         <ColorPickerPopover
                             defaultOpen={autofocusIndex === index}
-                            value={val}
+                            value={value}
                             onChange={(e) => { onColorChange(e, index) }}
                             showRemoveButton
                             onRemove={() => removeItem(index)}

@@ -1,17 +1,20 @@
 import React from 'react';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import withVariadicField from './withVariadicField';
-import { Edge, Port } from '@tokens-studio/graph-engine'
+import { Edge, Port, toHex, toColor } from '@tokens-studio/graph-engine'
 
 const VariadicColorUI = ({ port, edge }: { port: Port, edge: Edge }) => {
   const value = port.value[edge.annotations['engine.index']];
+
+  const hex = toHex(toColor(value));
+
   return (
     <Stack direction="row" justify="between" align="center" gap={2}>
       <Box
         as="button"
         css={{
           all: 'unset',
-          backgroundColor: value,
+          backgroundColor: hex,
           cursor: 'pointer',
           borderRadius: '$small',
           width: 16,
@@ -24,7 +27,7 @@ const VariadicColorUI = ({ port, edge }: { port: Port, edge: Edge }) => {
         }}
         type="button"
       />
-      <Text>{value}</Text>
+      <Text>{hex}</Text>
 
     </Stack>
   )
