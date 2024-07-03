@@ -139,7 +139,7 @@ const extractTypeIcon = (
   let icon = iconLookup[id] || iconLookup[OBJECT];
 
   const color = colors[id]?.color || 'black';
-  const backgroundColor = colors[id]?.backgroundColor || 'white';
+  const backgroundColor = colors[id]?.backgroundColor || 'hsl(60, 80%, 60%)';
 
   return { isArray, icon, color, backgroundColor };
 };

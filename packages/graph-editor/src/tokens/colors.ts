@@ -8,7 +8,7 @@ export default {
   },
   [CURVE]: {
     color: 'var(--gold-12)',
-    backgroundColor: 'var(--gold-8)',
+    backgroundColor: 'hsl(300, 60%, 30%)',
   },
   [BOOLEAN]: {
     color: 'var(--amber-12)',
