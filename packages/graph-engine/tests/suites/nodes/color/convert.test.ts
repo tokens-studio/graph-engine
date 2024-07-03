@@ -117,7 +117,7 @@ describe("color/convert", () => {
       channels: [0.3, 0.4, 0.2],
 
     });
-    node.inputs.space.setValue("xyz");
+    node.inputs.space.setValue("xyz-d65");
 
     await node.execute();
 
