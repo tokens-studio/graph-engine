@@ -130,7 +130,7 @@ const extractTypeIcon = (
   iconLookup: Record<string, React.ReactNode>,
 ) => {
   let id = port.type.$id || '';
-  const isArray = Boolean(port.type.type == 'array');
+  const isArray = Boolean(port.type.type == 'array') && !port.type.$id;
 
   if (!id && isArray) {
     id = port.type.items.$id || '';
