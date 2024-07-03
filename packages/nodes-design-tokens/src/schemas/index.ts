@@ -57,13 +57,15 @@ export const TokenBorderSchema: SchemaObject = {
 
 export const TOKEN_COLOR = "https://schemas.tokens.studio/tokenColor.json";
 export const TokenColorSchema: SchemaObject = {
-  $id: TOKEN_BORDER,
+  $id: TOKEN_COLOR,
   title: "Color Token",
   type: "object",
   properties: {
-    color: StringSchema,
-    width: StringSchema,
-    style: StringSchema,
+    name: StringSchema,
+    description: StringSchema,
+    type: StringSchema,
+    value: ColorSchema,
+    reference: ReferenceSchema,
   },
 };
 

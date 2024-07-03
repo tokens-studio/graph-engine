@@ -1,5 +1,5 @@
 import {
-  ColorObjectSchema,
+  ColorSchema,
   INodeDefinition,
   Node,
   StringSchema,
@@ -15,14 +15,14 @@ export default class NodeDefinition extends Node {
     this.addInput("name", {
       type: StringSchema,
     });
-    this.addInput("reference", {
-      type: ReferenceSchema,
-    });
-    this.addInput("value", {
-      type: ColorObjectSchema,
+    this.addInput("color", {
+      type: ColorSchema,
     });
     this.addInput("description", {
       type: StringSchema,
+    });
+    this.addInput("reference", {
+      type: ReferenceSchema,
     });
 
     this.addOutput("token", {
@@ -31,7 +31,21 @@ export default class NodeDefinition extends Node {
   }
 
   execute(): void | Promise<void> {
-    const props = this.getAllInputs();
-    this.setOutput("token", props);
+    const { name, reference, color, description } = this.getAllInputs();
+
+    const colorToken = {
+      name,
+      description,
+      value: color,
+      type: "color",
+      reference,
+    };
+
+    // Remove undefined properties
+    Object.keys(colorToken).forEach(key => 
+      colorToken[key] === undefined && delete colorToken[key]
+    );
+
+    this.setOutput("token", colorToken);
   }
 }

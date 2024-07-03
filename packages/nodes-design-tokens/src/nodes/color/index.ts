@@ -1,13 +1,9 @@
-// import adjustColorChannel from "./adjustColorChannel.js";
-// import convertColorSpaces from "./convertColorSpaces.js";
+import convertColorSpace from "./convertColorSpace.js";
 import createColor from "./createColor.js";
-import createColorFromHex from "./createColorFromHex.js";
 import deconstructColor from "./deconstructColor.js";
 
 export const nodes = [
-  // adjustColorChannel,
-  // convertColorSpaces,
+  convertColorSpace,
   createColor,
-  createColorFromHex,
   deconstructColor
 ];
