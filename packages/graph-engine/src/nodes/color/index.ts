@@ -11,6 +11,7 @@ import flattenAlpha from "./flattenAlpha.js";
 import lighten from "./lighten.js";
 import mix from "./mix.js";
 import name from "./name.js";
+import nameToColor from "./nameToColor.js";
 import poline from "./poline.js";
 import scale from "./scale.js";
 import wheel from "./wheel.js";
@@ -26,6 +27,7 @@ export const nodes = [
   deltaE,
   flattenAlpha,
   name,
+  nameToColor,
   poline,
   scale,
   wheel,
