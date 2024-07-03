@@ -1,4 +1,3 @@
-import Color from 'colorjs.io'
 export const colorSpaces = [
   "a98rgb",
   "acescc",

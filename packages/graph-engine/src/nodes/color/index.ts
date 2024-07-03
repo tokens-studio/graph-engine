@@ -4,6 +4,7 @@ import contrastingAlpha from "./contrastingAlpha.js";
 import convert from "./convert.js";
 import create from "./create.js";
 import darken from "./darken.js";
+import deconstruct from "./deconstruct.js";
 import deltaE from "./deltaE.js";
 import distance from "./distance.js";
 import flattenAlpha from "./flattenAlpha.js";
@@ -21,6 +22,7 @@ export const nodes = [
   contrastingAlpha,
   create,
   convert,
+  deconstruct,
   distance,
   deltaE,
   flattenAlpha,
