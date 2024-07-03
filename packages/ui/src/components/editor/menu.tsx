@@ -1,25 +1,17 @@
 
-import { Book, FloppyDiskArrowIn } from 'iconoir-react';
+import { Book } from 'iconoir-react';
 import {
-    MenuItemElement,
-    defaultMenuDataFactory,
     MenuItem,
-    SubMenu,
-    windowButton,
+    MenuItemElement,
     Seperator,
-    graphEditorSelector,
-    ImperativeEditorRef,
+    SubMenu,
+    defaultMenuDataFactory,
+
 } from '@tokens-studio/graph-editor';
-import React from 'react';
-import YoutubeIcon from '@/assets/svgs/youtube.svg';
-import SlackIcon from '@/assets/svgs/slack.svg';
-import { FsPanel } from '../panels/fs.tsx';
-import { CodePanel } from '../panels/codeEditor.tsx';
-import { RemoteStoragePanel } from '../panels/remoteStorage.tsx';
-import { GraphService } from '@/api/index.ts';
-import { WebsocketPanel } from '../panels/websocket.tsx';
-import { useSelector } from 'react-redux';
 import Image from 'next/image.js';
+import React from 'react';
+import SlackIcon from '@/assets/svgs/slack.svg';
+import YoutubeIcon from '@/assets/svgs/youtube.svg';
 
 export const menu = defaultMenuDataFactory();
 
@@ -33,79 +25,12 @@ if (!file) {
 file.items.push(
     new Seperator());
 
-file.items.push(
-    new MenuItem({
-        name: 'save',
-        render: function FileLoad(rest) {
-
-            const graphRef = useSelector(
-                graphEditorSelector,
-            ) as (ImperativeEditorRef | undefined);
-
-
-            const onSave = () => {
-                const saved = graphRef!.save();
-
-                const id = saved.annotations['engine.id'];
-                GraphService.updateGraph({
-                    graphId: id,
-                    requestBody: {
-                        graph: saved,
-                        name: saved.annotations['engine.title'],
-                    }
-                });
-            };
-
-            return (
-                <MenuItemElement onClick={onSave} icon={<FloppyDiskArrowIn />} {...rest}>
-                    <u>S</u>ave
-                </MenuItemElement>
-            );
-        },
-    }),
-);
-
 
 const windows = menu.items.find((x) => x.name === 'window');
 
 if (!windows) {
     throw new Error('Window menu not found');
 }
-windows.items.push(
-    windowButton({
-        name: 'files',
-        id: 'files',
-        title: 'Files',
-        content: <FsPanel />,
-    })
-);
-windows.items.push(
-    windowButton({
-        name: 'code',
-        id: 'code',
-        title: 'Code Editor',
-        content: <CodePanel />,
-    })
-);
-windows.items.push(
-    windowButton({
-        name: 'remoteStorage',
-        id: 'remoteStorage',
-        title: 'Remote Storage',
-        content: <RemoteStoragePanel />,
-    })
-);
-
-windows.items.push(
-    windowButton({
-        name: 'websocket',
-        id: 'websocket',
-        title: 'Websocket',
-        content: <WebsocketPanel />,
-    })
-);
-
-
 
 
 

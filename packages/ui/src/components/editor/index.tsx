@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Spinner } from '@tokens-studio/ui';
 import { Editor } from '@tokens-studio/graph-editor';
 import { EmptyStateEditor } from '../EmptyStateEditor.tsx';
@@ -68,3 +70,6 @@ export const EditorTab = observer(({ loading }: { loading?: boolean }, ref) => {
 });
 
 EditorTab.displayName = 'EditorTab';
+
+
+export default EditorTab;

@@ -45,8 +45,7 @@ export const HandleContainer = ({
     <HandleContext.Provider value={{ type, position }}>
       <Stack
         direction="column"
-        gap={2}
-        css={{ flexBasis: full ? '100%' : '50%', position: 'relative', textAlign: type === 'source' ? 'right' : 'left', minWidth: isSmall ? 'auto' : '250px' }}
+        css={{ flexBasis: full ? '100%' : '50%', position: 'relative', textAlign: type === 'source' ? 'right' : 'left', minWidth: isSmall ? 'auto' : '150px' }}
         className={className}
       >
         {children}
@@ -55,7 +54,7 @@ export const HandleContainer = ({
   );
 };
 
-const useHandle = () => {
+export const useHandle = () => {
   return useContext(HandleContext);
 };
 
@@ -75,17 +74,16 @@ const StyledRawHandle = styled(RawHandle, {
       },
     },
     isConnected: {
-      true: {
-        background: 'var(--colors-accentEmphasis) !important',
+      false: {
+        background: '#1a1a1a !important',
       },
     },
-    left: {
+    isArray: {
       true: {
-        marginLeft: '6px',
-      },
-      false: {
-        marginRight: '6px',
-      },
+        borderRadius: '0 !important',
+        width: 'calc($4 - 2px) !important',
+        height: 'calc($4 - 2px) !important',
+      }
     },
     shouldHideHandles: {
       true: {
@@ -114,10 +112,8 @@ const StyledRawHandle = styled(RawHandle, {
 });
 
 export const HandleText = styled(Text, {
-  textTransform: 'uppercase',
-  fontWeight: 'bold',
   fontSize: '$xxsmall',
-  color: '$accentDefault',
+  color: '$fgDefault',
   whiteSpace: 'nowrap',
   variants: {
     secondary: {
@@ -137,6 +133,7 @@ const HandleHolder = styled(Box, {
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
+  padding: '$2 $4',
   variants: {
     collapsed: {
       true: {
@@ -159,6 +156,7 @@ export interface HandleProps {
   shouldHideHandles?: boolean;
   error?: boolean;
   isArray?: boolean;
+  isConnected?: boolean;
   full?: boolean;
   color?: string;
   backgroundColor?: string;
@@ -176,6 +174,7 @@ export const Handle = (props: HandleProps) => {
     full,
     color,
     isArray,
+    isConnected,
     backgroundColor,
     icon,
     variadic,
@@ -195,29 +194,20 @@ export const Handle = (props: HandleProps) => {
       }}
     >
         <StyledRawHandle
-          style={{ color: color, backgroundColor: backgroundColor }}
+          style={{ color: color, backgroundColor: backgroundColor, outlineColor: backgroundColor }}
           id={id}
           shouldHideHandles={shouldHideHandles}
           error={error}
-          left={type === 'target'}
           type={type}
           position={position}
           hide={shouldHide}
           variadic={variadic}
           isValidConnection={isValidConnection}
-        >
-
-          <IconoirProvider
-            iconProps={{
-              strokeWidth: 1.5,
-              width: '1em',
-              height: '1em',
-            }}
-          >{icon}</IconoirProvider>
-        </StyledRawHandle>
+          isConnected={isConnected}
+          isArray={isArray}
+        ></StyledRawHandle>
 
         <Stack
-          direction="row"
           gap={1}
           align="center"
           css={{
@@ -227,6 +217,7 @@ export const Handle = (props: HandleProps) => {
             paddingRight: shouldHideHandles ? 0 : '$2',
             fontFamily: '$mono',
             fontSize: '$xxsmall',
+            flexDirection: type === 'target' ? 'row' : 'row-reverse',
           }}
         >
           {children}

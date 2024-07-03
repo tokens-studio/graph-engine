@@ -56,33 +56,7 @@ const config: Config = {
         },
       } satisfies Preset.Options,
     ],
-    // Redocusaurus config
-    [
-      'redocusaurus',
-      {
-        config: 'redocly.yaml',
-        // Plugin Options for loading OpenAPI files
-        specs: [
-          // Pass it a path to a local OpenAPI YAML file
-          {
-            id: 'graph-engine',
-            // Redocusaurus will automatically bundle your spec into a single file during the build
-            spec: '../backend/generated/swagger.json',
-            route: '/api/',
-          },
-          // You can also pass it a OpenAPI spec URL
-          // {
-          //   spec: 'https://redocly.github.io/redoc/openapi.yaml',
-          //   route: '/openapi/',
-          // },
-        ],
-        // Theme Options for modifying how redoc renders them
-        theme: {
-          // Change with your site colors
-          primaryColor: '#1890ff',
-        },
-      },
-    ] satisfies Redocusaurus.PresetEntry,
+
   ],
   themes: ['@docusaurus/theme-mermaid'],
   themeConfig: {

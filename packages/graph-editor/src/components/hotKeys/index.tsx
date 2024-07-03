@@ -3,7 +3,7 @@ import { useDispatch } from '@/hooks/useDispatch.js';
 import { useMemo } from 'react';
 import copy from 'copy-to-clipboard';
 import { useSelector } from 'react-redux';
-import { showGrid, snapGrid } from '@/redux/selectors/settings';
+import { inlineTypes, inlineValues, showGrid, snapGrid } from '@/redux/selectors/settings';
 import { SerializedNode } from '@/types/serializedNode';
 import { useToast } from '@/hooks/useToast';
 import { useLocalGraph } from '@/hooks';
@@ -42,6 +42,8 @@ export const keyMap = {
     TOGGLE_THEME: 'ctrl+shift+t',
     TOGGLE_SNAP_GRID: ['command+shift+s', 'ctrl+shift+s'],
     TOGGLE_NODES_PANEL: ['n'],
+    TOGGLE_TYPES: ['t'],
+    TOGGLE_VALUES: ['v'],
     SAVE_VIEWPORT: ['command+1', 'command+2', 'command+3', 'command+4', 'command+5', 'command+6', 'command+7', 'command+8', 'command+9', 'ctrl+1', 'ctrl+2', 'ctrl+3', 'ctrl+4', 'ctrl+5', 'ctrl+6', 'ctrl+7', 'ctrl+8', 'ctrl+9'],
     RECALL_VIEWPORT: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
 };
@@ -56,6 +58,8 @@ export const useHotkeys = () => {
 
     const showGridValue = useSelector(showGrid);
     const snapGridValue = useSelector(snapGrid);
+    const inlineTypesValue = useSelector(inlineTypes);
+    const inlineValuesValue = useSelector(inlineValues);
     const duplicateNodes = useAction('duplicateNodes');
     const deleteNode = useAction('deleteNode');
     const copyNodes = useAction('copyNodes');
@@ -203,9 +207,15 @@ export const useHotkeys = () => {
             TOGGLE_SNAP_GRID: () => {
                 dispatch.settings.setSnapGrid(!snapGridValue);
             },
+            TOGGLE_TYPES: () => {
+                dispatch.settings.setInlineTypes(!inlineTypesValue);
+            },
+            TOGGLE_VALUES: () => {
+                dispatch.settings.setInlineValues(!inlineValuesValue);
+            },
         }),
 
-        [copyNodes, deleteNode, dispatch.settings, duplicateNodes, graph, layout, reactFlowInstance, showGridValue, snapGridValue, trigger],
+        [copyNodes, deleteNode, dispatch.settings, duplicateNodes, graph, layout, reactFlowInstance, showGridValue, snapGridValue, inlineTypesValue, inlineValuesValue, trigger],
     );
 
     return handlers;
