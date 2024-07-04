@@ -1,1368 +1,1368 @@
 {
-  "nodes": [
-    {
-      "id": "78a38937-cab2-442d-93cb-ca9b869ac891",
-      "type": "studio.tokens.preview.typography",
-      "inputs": [
-        {
-          "name": "value",
-          "value": [
-            {
-              "name": 0,
-              "type": "fontSizes",
-              "value": 16
-            },
-            {
-              "name": 1,
-              "type": "fontSizes",
-              "value": 20
-            },
-            {
-              "name": 2,
-              "type": "fontSizes",
-              "value": 25
-            },
-            {
-              "name": 3,
-              "type": "fontSizes",
-              "value": 31.25
-            },
-            {
-              "name": 4,
-              "type": "fontSizes",
-              "value": 39.06
-            },
-            {
-              "name": 5,
-              "type": "fontSizes",
-              "value": 48.83
-            },
-            {
-              "name": 6,
-              "type": "fontSizes",
-              "value": 61.04
-            }
-          ],
-          "type": {
-            "type": "array",
-            "items": {
-              "$id": "https://schemas.tokens.studio/token.json",
-              "title": "Token",
-              "type": "object",
-              "properties": {
-                "name": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "value": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "type": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "dynamicType": {
-            "title": "Token",
-            "type": "array",
-            "items": {
-              "$id": "https://schemas.tokens.studio/token.json",
-              "title": "Token",
-              "type": "object",
-              "properties": {
-                "name": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "value": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "type": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "visible": true
-        },
-        {
-          "name": "text",
-          "value": "The quick brown fox jumps over the lazy dog",
-          "type": {
-            "$id": "https://schemas.tokens.studio/string.json",
-            "title": "String",
-            "type": "string",
-            "default": "The quick brown fox jumps over the lazy dog"
-          }
-        }
-      ],
-      "annotations": {
-        "ui.position.x": 1089.2514369257465,
-        "ui.position.y": -1172.7495234364671
-      }
-    },
-    {
-      "id": "7d54e6ae-e74a-41e1-b9b1-ec59c3db14a1",
-      "type": "studio.tokens.series.geometric",
-      "inputs": [
-        {
-          "name": "base",
-          "value": 16,
-          "type": {
-            "$id": "https://schemas.tokens.studio/number.json",
-            "title": "Number",
-            "type": "number",
-            "default": 16
-          },
-          "visible": true
-        },
-        {
-          "name": "stepsDown",
-          "value": 0,
-          "type": {
-            "$id": "https://schemas.tokens.studio/number.json",
-            "title": "Number",
-            "type": "number",
-            "default": 0
-          },
-          "visible": true
-        },
-        {
-          "name": "stepsUp",
-          "value": 6,
-          "type": {
-            "$id": "https://schemas.tokens.studio/number.json",
-            "title": "Number",
-            "type": "number",
-            "default": 1
-          },
-          "visible": true
-        },
-        {
-          "name": "ratio",
-          "value": 1.25,
-          "type": {
-            "$id": "https://schemas.tokens.studio/number.json",
-            "title": "Number",
-            "type": "number",
-            "default": 1.5
-          }
-        },
-        {
-          "name": "precision",
-          "value": 2,
-          "type": {
-            "$id": "https://schemas.tokens.studio/number.json",
-            "title": "Number",
-            "type": "number",
-            "default": 2
-          }
-        }
-      ],
-      "annotations": {
-        "ui.position.x": -193.75971591977867,
-        "ui.position.y": -1172.7495234364671
-      }
-    },
-    {
-      "id": "4b1dd901-a19e-41bc-9044-3df1f38e43f9",
-      "type": "tokens.studio.array.map",
-      "inputs": [
-        {
-          "name": "array",
-          "value": [16, 20, 25, 31.25, 39.06, 48.83, 61.04],
-          "type": {
-            "title": "Any[]",
-            "type": "array",
-            "items": {
-              "$id": "https://schemas.tokens.studio/any.json",
-              "title": "Any"
-            },
-            "default": []
-          },
-          "dynamicType": {
-            "type": "array",
-            "items": {
-              "$id": "https://schemas.tokens.studio/number.json",
-              "title": "Number",
-              "type": "number"
-            }
-          },
-          "visible": true,
-          "annotations": {
-            "ui.editable": false
-          }
-        }
-      ],
-      "annotations": {
-        "ui.position.x": 466.65266564596664,
-        "ui.position.y": -1172.7495234364671
-      },
-      "innergraph": {
-        "nodes": [
-          {
-            "id": "01a06f2e-013d-4fc5-b21a-7513eb4987c2",
-            "type": "studio.tokens.generic.input",
-            "inputs": [
-              {
-                "name": "value",
-                "value": 61.04,
-                "type": {
-                  "$id": "https://schemas.tokens.studio/any.json",
-                  "title": "Any"
-                },
-                "dynamicType": {
-                  "$id": "https://schemas.tokens.studio/number.json",
-                  "title": "Number",
-                  "type": "number"
-                },
-                "annotations": {
-                  "ui.editable": false,
-                  "ui.hidden": true,
-                  "engine.hideFromParentSubgraph": true
-                }
-              },
-              {
-                "name": "index",
-                "value": 6,
-                "type": {
-                  "$id": "https://schemas.tokens.studio/number.json",
-                  "title": "Number",
-                  "type": "number"
-                },
-                "annotations": {
-                  "ui.editable": false,
-                  "engine.hideFromParentSubgraph": true
-                }
-              },
-              {
-                "name": "length",
-                "value": 7,
-                "type": {
-                  "$id": "https://schemas.tokens.studio/number.json",
-                  "title": "Number",
-                  "type": "number"
-                },
-                "annotations": {
-                  "ui.editable": false,
-                  "engine.hideFromParentSubgraph": true
-                }
-              }
-            ],
-            "annotations": {
-              "engine.singleton": true,
-              "engine.dynamicInputs": true,
-              "engine.deletable": false,
-              "ui.position.x": -514.0335039784752,
-              "ui.position.y": 217.89338780967745
-            }
-          },
-          {
-            "id": "4ec57bce-f5d2-4d12-9f23-88ce678d47a9",
-            "type": "studio.tokens.generic.output",
-            "inputs": [
-              {
-                "name": "value",
-                "value": {
-                  "name": 6,
-                  "type": "fontSizes",
-                  "value": 61.04
-                },
-                "type": {
-                  "type": "array",
-                  "items": {
-                    "$id": "https://schemas.tokens.studio/any.json",
-                    "title": "Any"
-                  }
-                },
-                "dynamicType": {
-                  "$id": "https://schemas.tokens.studio/token.json",
-                  "title": "Token",
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "$id": "https://schemas.tokens.studio/string.json",
-                      "title": "String",
-                      "type": "string"
-                    },
-                    "value": {
-                      "$id": "https://schemas.tokens.studio/string.json",
-                      "title": "String",
-                      "type": "string"
-                    },
-                    "type": {
-                      "$id": "https://schemas.tokens.studio/string.json",
-                      "title": "String",
-                      "type": "string"
-                    }
-                  }
-                },
-                "visible": true,
-                "annotations": {
-                  "ui.editable": false
-                }
-              }
-            ],
-            "annotations": {
-              "engine.singleton": true,
-              "engine.deletable": false,
-              "ui.position.x": 550,
-              "ui.position.y": 0
-            }
-          },
-          {
-            "id": "d76449f1-23eb-49fd-90e5-cf4707e562de",
-            "type": "studio.tokens.design.create",
-            "inputs": [
-              {
-                "name": "name",
-                "value": 6,
-                "type": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "dynamicType": {
-                  "$id": "https://schemas.tokens.studio/number.json",
-                  "title": "Number",
-                  "type": "number"
-                },
-                "visible": true
-              },
-              {
-                "name": "type",
-                "value": "fontSizes",
-                "type": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string",
-                  "enum": [
-                    "asset",
-                    "boolean",
-                    "border",
-                    "borderRadius",
-                    "borderWidth",
-                    "boxShadow",
-                    "color",
-                    "composition",
-                    "dimension",
-                    "fontFamilies",
-                    "fontSizes",
-                    "fontWeights",
-                    "letterSpacing",
-                    "lineHeights",
-                    "number",
-                    "opacity",
-                    "other",
-                    "paragraphIndent",
-                    "paragraphSpacing",
-                    "sizing",
-                    "spacing",
-                    "strokeStyle",
-                    "text",
-                    "textCase",
-                    "textDecoration",
-                    "typography"
-                  ]
-                },
-                "visible": true
-              },
-              {
-                "name": "value",
-                "value": 61.04,
-                "type": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "dynamicType": {
-                  "$id": "https://schemas.tokens.studio/number.json",
-                  "title": "Number",
-                  "type": "number"
-                },
-                "visible": true
-              }
-            ],
-            "annotations": {
-              "ui.position.x": 125.47028252129536,
-              "ui.position.y": 210.08414855198748
-            }
-          }
-        ],
-        "edges": [
-          {
-            "id": "c732853d-0e08-491b-b60d-02975ec8e9d6",
-            "source": "01a06f2e-013d-4fc5-b21a-7513eb4987c2",
-            "sourceHandle": "value",
-            "target": "d76449f1-23eb-49fd-90e5-cf4707e562de",
-            "targetHandle": "value"
-          },
-          {
-            "id": "4ae8b196-1c32-432a-98c5-796a54be7938",
-            "source": "01a06f2e-013d-4fc5-b21a-7513eb4987c2",
-            "sourceHandle": "index",
-            "target": "d76449f1-23eb-49fd-90e5-cf4707e562de",
-            "targetHandle": "name"
-          },
-          {
-            "id": "c7b52447-034c-40df-83d6-5242b852c192",
-            "source": "d76449f1-23eb-49fd-90e5-cf4707e562de",
-            "sourceHandle": "token",
-            "target": "4ec57bce-f5d2-4d12-9f23-88ce678d47a9",
-            "targetHandle": "value"
-          }
-        ],
-        "annotations": {
-          "engine.id": "2c8b5cb9-53e9-4ef7-83f6-18b95fb4bad0",
-          "engine.capabilities.web-audio": "0.0.0",
-          "engine.capabilities.fs": "0.0.0",
-          "engine.version": "0.12.0"
-        }
-      }
-    },
-    {
-      "id": "30e978e4-c33e-4ad3-964f-ee7846471585",
-      "type": "studio.tokens.generic.note",
-      "inputs": [],
-      "annotations": {
-        "ui.position.x": -122.5983617892283,
-        "ui.position.y": -1831.5421731053898,
-        "ui.nodeType": "studio.tokens.generic.note",
-        "ui.description": "In this example we are generating typograph scales  dynamically by passing in a few input values\n\nWe offer a comparison here showing that you can create really pleasing typescales through harmonic series"
-      }
-    },
-    {
-      "id": "c9fa4ddb-264c-4f7c-a520-b81cbc654f61",
-      "type": "studio.tokens.series.harmonic",
-      "inputs": [
-        {
-          "name": "base",
-          "value": 16,
-          "type": {
-            "$id": "https://schemas.tokens.studio/number.json",
-            "title": "Number",
-            "type": "number",
-            "default": 16
-          },
-          "visible": true
-        },
-        {
-          "name": "stepsDown",
-          "value": 0,
-          "type": {
-            "$id": "https://schemas.tokens.studio/number.json",
-            "title": "Number",
-            "type": "number",
-            "default": 0
-          },
-          "visible": true
-        },
-        {
-          "name": "stepsUp",
-          "value": 6,
-          "type": {
-            "$id": "https://schemas.tokens.studio/number.json",
-            "title": "Number",
-            "type": "number",
-            "default": 5
-          }
-        },
-        {
-          "name": "notes",
-          "value": 5,
-          "type": {
-            "$id": "https://schemas.tokens.studio/number.json",
-            "title": "Number",
-            "type": "number",
-            "default": 5
-          }
-        },
-        {
-          "name": "ratio",
-          "value": 2,
-          "type": {
-            "$id": "https://schemas.tokens.studio/number.json",
-            "title": "Number",
-            "type": "number",
-            "default": 2
-          }
-        },
-        {
-          "name": "precision",
-          "value": 2,
-          "type": {
-            "$id": "https://schemas.tokens.studio/number.json",
-            "title": "Number",
-            "type": "number",
-            "default": 2
-          }
-        }
-      ],
-      "annotations": {
-        "ui.position.x": -193.75971591977867,
-        "ui.position.y": -564.9184009041625
-      }
-    },
-    {
-      "id": "c3745ab8-59f9-4a5e-a44a-aa3690b5302d",
-      "type": "tokens.studio.array.map",
-      "inputs": [
-        {
-          "name": "array",
-          "value": [16, 18.38, 21.11, 24.25, 27.86, 32, 36.76],
-          "type": {
-            "title": "Any[]",
-            "type": "array",
-            "items": {
-              "$id": "https://schemas.tokens.studio/any.json",
-              "title": "Any"
-            },
-            "default": []
-          },
-          "dynamicType": {
-            "type": "array",
-            "items": {
-              "$id": "https://schemas.tokens.studio/number.json",
-              "title": "Number",
-              "type": "number"
-            }
-          },
-          "visible": true,
-          "annotations": {
-            "ui.editable": false
-          }
-        }
-      ],
-      "annotations": {
-        "ui.position.x": 465.64610523270426,
-        "ui.position.y": -564.9184009041625
-      },
-      "innergraph": {
-        "nodes": [
-          {
-            "id": "ef730531-a5e5-41e2-b9ae-ef14da586ee1",
-            "type": "studio.tokens.generic.input",
-            "inputs": [
-              {
-                "name": "value",
-                "value": 36.76,
-                "type": {
-                  "$id": "https://schemas.tokens.studio/any.json",
-                  "title": "Any"
-                },
-                "dynamicType": {
-                  "$id": "https://schemas.tokens.studio/number.json",
-                  "title": "Number",
-                  "type": "number"
-                },
-                "annotations": {
-                  "ui.editable": false,
-                  "ui.hidden": true,
-                  "engine.hideFromParentSubgraph": true
-                }
-              },
-              {
-                "name": "index",
-                "value": 6,
-                "type": {
-                  "$id": "https://schemas.tokens.studio/number.json",
-                  "title": "Number",
-                  "type": "number"
-                },
-                "annotations": {
-                  "ui.editable": false,
-                  "engine.hideFromParentSubgraph": true
-                }
-              },
-              {
-                "name": "length",
-                "value": 7,
-                "type": {
-                  "$id": "https://schemas.tokens.studio/number.json",
-                  "title": "Number",
-                  "type": "number"
-                },
-                "annotations": {
-                  "ui.editable": false,
-                  "engine.hideFromParentSubgraph": true
-                }
-              }
-            ],
-            "annotations": {
-              "engine.singleton": true,
-              "engine.dynamicInputs": true,
-              "engine.deletable": false,
-              "ui.position.x": -590.8778727213542,
-              "ui.position.y": 139.1472208658854
-            }
-          },
-          {
-            "id": "ee3464ac-5cdd-4059-8bfa-b96415b11b3d",
-            "type": "studio.tokens.generic.output",
-            "inputs": [
-              {
-                "name": "value",
-                "value": {
-                  "name": 6,
-                  "type": "fontSizes",
-                  "value": 36.76
-                },
-                "type": {
-                  "type": "array",
-                  "items": {
-                    "$id": "https://schemas.tokens.studio/any.json",
-                    "title": "Any"
-                  }
-                },
-                "dynamicType": {
-                  "$id": "https://schemas.tokens.studio/token.json",
-                  "title": "Token",
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "$id": "https://schemas.tokens.studio/string.json",
-                      "title": "String",
-                      "type": "string"
-                    },
-                    "value": {
-                      "$id": "https://schemas.tokens.studio/string.json",
-                      "title": "String",
-                      "type": "string"
-                    },
-                    "type": {
-                      "$id": "https://schemas.tokens.studio/string.json",
-                      "title": "String",
-                      "type": "string"
-                    }
-                  }
-                },
-                "visible": true,
-                "annotations": {
-                  "ui.editable": false
-                }
-              }
-            ],
-            "annotations": {
-              "engine.singleton": true,
-              "engine.deletable": false,
-              "ui.position.x": 623.3333333333334,
-              "ui.position.y": 147.3333333333333
-            }
-          },
-          {
-            "id": "2c54e090-67d3-490b-950d-06112de6b000",
-            "type": "studio.tokens.design.create",
-            "inputs": [
-              {
-                "name": "name",
-                "value": 6,
-                "type": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "dynamicType": {
-                  "$id": "https://schemas.tokens.studio/number.json",
-                  "title": "Number",
-                  "type": "number"
-                },
-                "visible": true
-              },
-              {
-                "name": "type",
-                "value": "fontSizes",
-                "type": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string",
-                  "enum": [
-                    "asset",
-                    "boolean",
-                    "border",
-                    "borderRadius",
-                    "borderWidth",
-                    "boxShadow",
-                    "color",
-                    "composition",
-                    "dimension",
-                    "fontFamilies",
-                    "fontSizes",
-                    "fontWeights",
-                    "letterSpacing",
-                    "lineHeights",
-                    "number",
-                    "opacity",
-                    "other",
-                    "paragraphIndent",
-                    "paragraphSpacing",
-                    "sizing",
-                    "spacing",
-                    "strokeStyle",
-                    "text",
-                    "textCase",
-                    "textDecoration",
-                    "typography"
-                  ]
-                },
-                "visible": true
-              },
-              {
-                "name": "value",
-                "value": 36.76,
-                "type": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "dynamicType": {
-                  "$id": "https://schemas.tokens.studio/number.json",
-                  "title": "Number",
-                  "type": "number"
-                },
-                "visible": true
-              }
-            ],
-            "annotations": {
-              "ui.position.x": 21.909224446614644,
-              "ui.position.y": 142.88101603190103
-            }
-          }
-        ],
-        "edges": [
-          {
-            "id": "0aa576bd-9bc0-409f-a711-393d9ff29b70",
-            "source": "ef730531-a5e5-41e2-b9ae-ef14da586ee1",
-            "sourceHandle": "value",
-            "target": "2c54e090-67d3-490b-950d-06112de6b000",
-            "targetHandle": "value"
-          },
-          {
-            "id": "27b40837-dbd9-4e31-ae65-395b39440c10",
-            "source": "ef730531-a5e5-41e2-b9ae-ef14da586ee1",
-            "sourceHandle": "index",
-            "target": "2c54e090-67d3-490b-950d-06112de6b000",
-            "targetHandle": "name"
-          },
-          {
-            "id": "84663101-18df-4209-b37a-1820d27197b4",
-            "source": "2c54e090-67d3-490b-950d-06112de6b000",
-            "sourceHandle": "token",
-            "target": "ee3464ac-5cdd-4059-8bfa-b96415b11b3d",
-            "targetHandle": "value"
-          }
-        ],
-        "annotations": {
-          "engine.id": "5f3bc2c2-8f06-415e-9fb9-78ef605939b5",
-          "engine.capabilities.web-audio": "0.0.0",
-          "engine.capabilities.fs": "0.0.0",
-          "engine.version": "0.12.0"
-        }
-      }
-    },
-    {
-      "id": "b3f40523-6f70-4c6e-b2ee-d4062d040bea",
-      "type": "studio.tokens.preview.typography",
-      "inputs": [
-        {
-          "name": "value",
-          "value": [
-            {
-              "name": 0,
-              "type": "fontSizes",
-              "value": 16
-            },
-            {
-              "name": 1,
-              "type": "fontSizes",
-              "value": 18.38
-            },
-            {
-              "name": 2,
-              "type": "fontSizes",
-              "value": 21.11
-            },
-            {
-              "name": 3,
-              "type": "fontSizes",
-              "value": 24.25
-            },
-            {
-              "name": 4,
-              "type": "fontSizes",
-              "value": 27.86
-            },
-            {
-              "name": 5,
-              "type": "fontSizes",
-              "value": 32
-            },
-            {
-              "name": 6,
-              "type": "fontSizes",
-              "value": 36.76
-            }
-          ],
-          "type": {
-            "type": "array",
-            "items": {
-              "$id": "https://schemas.tokens.studio/token.json",
-              "title": "Token",
-              "type": "object",
-              "properties": {
-                "name": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "value": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "type": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "dynamicType": {
-            "title": "Token",
-            "type": "array",
-            "items": {
-              "$id": "https://schemas.tokens.studio/token.json",
-              "title": "Token",
-              "type": "object",
-              "properties": {
-                "name": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "value": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "type": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "visible": true
-        },
-        {
-          "name": "text",
-          "value": "The quick brown fox jumps over the lazy dog",
-          "type": {
-            "$id": "https://schemas.tokens.studio/string.json",
-            "title": "String",
-            "type": "string",
-            "default": "The quick brown fox jumps over the lazy dog"
-          }
-        }
-      ],
-      "annotations": {
-        "ui.position.x": 1089.2514369257465,
-        "ui.position.y": -564.9184009041625
-      }
-    },
-    {
-      "id": "70e5d564-b8f2-475e-b878-6aa4ff1acd1d",
-      "type": "studio.tokens.series.arithmetic",
-      "inputs": [
-        {
-          "name": "base",
-          "value": 16,
-          "type": {
-            "$id": "https://schemas.tokens.studio/number.json",
-            "title": "Number",
-            "type": "number",
-            "default": 16
-          },
-          "visible": true
-        },
-        {
-          "name": "stepsDown",
-          "value": 0,
-          "type": {
-            "$id": "https://schemas.tokens.studio/number.json",
-            "title": "Number",
-            "type": "number",
-            "default": 0
-          },
-          "visible": true
-        },
-        {
-          "name": "stepsUp",
-          "value": 5,
-          "type": {
-            "$id": "https://schemas.tokens.studio/number.json",
-            "title": "Number",
-            "type": "number",
-            "default": 1
-          },
-          "visible": true
-        },
-        {
-          "name": "increment",
-          "value": 1,
-          "type": {
-            "$id": "https://schemas.tokens.studio/number.json",
-            "title": "Number",
-            "type": "number",
-            "default": 1
-          }
-        },
-        {
-          "name": "precision",
-          "value": 2,
-          "type": {
-            "$id": "https://schemas.tokens.studio/number.json",
-            "title": "Number",
-            "type": "number",
-            "default": 2
-          }
-        }
-      ],
-      "annotations": {
-        "ui.position.x": -193.75971591977867,
-        "ui.position.y": -1495.11163571842
-      }
-    },
-    {
-      "id": "49b0f121-e42a-4ab4-ba25-b2601210f7a4",
-      "type": "tokens.studio.array.map",
-      "inputs": [
-        {
-          "name": "array",
-          "value": [16, 17, 18, 19, 20, 21],
-          "type": {
-            "title": "Any[]",
-            "type": "array",
-            "items": {
-              "$id": "https://schemas.tokens.studio/any.json",
-              "title": "Any"
-            },
-            "default": []
-          },
-          "dynamicType": {
-            "type": "array",
-            "items": {
-              "$id": "https://schemas.tokens.studio/number.json",
-              "title": "Number",
-              "type": "number"
-            }
-          },
-          "visible": true,
-          "annotations": {
-            "ui.editable": false
-          }
-        }
-      ],
-      "annotations": {
-        "ui.position.x": 470.2446340027758,
-        "ui.position.y": -1495.11163571842
-      },
-      "innergraph": {
-        "nodes": [
-          {
-            "id": "cd9e6f65-046b-4c19-ae3d-cb5ca3263539",
-            "type": "studio.tokens.generic.input",
-            "inputs": [
-              {
-                "name": "value",
-                "value": 21,
-                "type": {
-                  "$id": "https://schemas.tokens.studio/any.json",
-                  "title": "Any"
-                },
-                "dynamicType": {
-                  "$id": "https://schemas.tokens.studio/number.json",
-                  "title": "Number",
-                  "type": "number"
-                },
-                "annotations": {
-                  "ui.editable": false,
-                  "ui.hidden": true,
-                  "engine.hideFromParentSubgraph": true
-                }
-              },
-              {
-                "name": "index",
-                "value": 5,
-                "type": {
-                  "$id": "https://schemas.tokens.studio/number.json",
-                  "title": "Number",
-                  "type": "number"
-                },
-                "annotations": {
-                  "ui.editable": false,
-                  "engine.hideFromParentSubgraph": true
-                }
-              },
-              {
-                "name": "length",
-                "value": 6,
-                "type": {
-                  "$id": "https://schemas.tokens.studio/number.json",
-                  "title": "Number",
-                  "type": "number"
-                },
-                "annotations": {
-                  "ui.editable": false,
-                  "engine.hideFromParentSubgraph": true
-                }
-              }
-            ],
-            "annotations": {
-              "engine.singleton": true,
-              "engine.dynamicInputs": true,
-              "engine.deletable": false,
-              "ui.position.x": -273.3333333333333,
-              "ui.position.y": 293.3333333333333
-            }
-          },
-          {
-            "id": "62224acb-cb85-4bc6-b6ad-dfcf433ca861",
-            "type": "studio.tokens.generic.output",
-            "inputs": [
-              {
-                "name": "value",
-                "value": {
-                  "name": 5,
-                  "type": "fontSizes",
-                  "value": 21
-                },
-                "type": {
-                  "type": "array",
-                  "items": {
-                    "$id": "https://schemas.tokens.studio/any.json",
-                    "title": "Any"
-                  }
-                },
-                "dynamicType": {
-                  "$id": "https://schemas.tokens.studio/token.json",
-                  "title": "Token",
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "$id": "https://schemas.tokens.studio/string.json",
-                      "title": "String",
-                      "type": "string"
-                    },
-                    "value": {
-                      "$id": "https://schemas.tokens.studio/string.json",
-                      "title": "String",
-                      "type": "string"
-                    },
-                    "type": {
-                      "$id": "https://schemas.tokens.studio/string.json",
-                      "title": "String",
-                      "type": "string"
-                    }
-                  }
-                },
-                "visible": true,
-                "annotations": {
-                  "ui.editable": false
-                }
-              }
-            ],
-            "annotations": {
-              "engine.singleton": true,
-              "engine.deletable": false,
-              "ui.position.x": 908.0680212288987,
-              "ui.position.y": 299.985626045054
-            }
-          },
-          {
-            "id": "4eb7b9da-b394-43c9-b5a3-e50802cfcee3",
-            "type": "studio.tokens.design.create",
-            "inputs": [
-              {
-                "name": "name",
-                "value": 5,
-                "type": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "dynamicType": {
-                  "$id": "https://schemas.tokens.studio/number.json",
-                  "title": "Number",
-                  "type": "number"
-                },
-                "visible": true
-              },
-              {
-                "name": "type",
-                "value": "fontSizes",
-                "type": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string",
-                  "enum": [
-                    "asset",
-                    "boolean",
-                    "border",
-                    "borderRadius",
-                    "borderWidth",
-                    "boxShadow",
-                    "color",
-                    "composition",
-                    "dimension",
-                    "fontFamilies",
-                    "fontSizes",
-                    "fontWeights",
-                    "letterSpacing",
-                    "lineHeights",
-                    "number",
-                    "opacity",
-                    "other",
-                    "paragraphIndent",
-                    "paragraphSpacing",
-                    "sizing",
-                    "spacing",
-                    "strokeStyle",
-                    "text",
-                    "textCase",
-                    "textDecoration",
-                    "typography"
-                  ]
-                },
-                "visible": true
-              },
-              {
-                "name": "value",
-                "value": 21,
-                "type": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "dynamicType": {
-                  "$id": "https://schemas.tokens.studio/number.json",
-                  "title": "Number",
-                  "type": "number"
-                },
-                "visible": true
-              }
-            ],
-            "annotations": {
-              "ui.position.x": 343.8981323242187,
-              "ui.position.y": 294.24120076497394
-            }
-          }
-        ],
-        "edges": [
-          {
-            "id": "20d06428-4d8c-405b-bb3b-81b6cbb235a1",
-            "source": "cd9e6f65-046b-4c19-ae3d-cb5ca3263539",
-            "sourceHandle": "value",
-            "target": "4eb7b9da-b394-43c9-b5a3-e50802cfcee3",
-            "targetHandle": "value"
-          },
-          {
-            "id": "43a1e690-25e4-48a6-a430-823acfd1ce9a",
-            "source": "cd9e6f65-046b-4c19-ae3d-cb5ca3263539",
-            "sourceHandle": "index",
-            "target": "4eb7b9da-b394-43c9-b5a3-e50802cfcee3",
-            "targetHandle": "name"
-          },
-          {
-            "id": "ec958ecf-ee7b-4377-8cfa-e494dc7f9c39",
-            "source": "4eb7b9da-b394-43c9-b5a3-e50802cfcee3",
-            "sourceHandle": "token",
-            "target": "62224acb-cb85-4bc6-b6ad-dfcf433ca861",
-            "targetHandle": "value"
-          }
-        ],
-        "annotations": {
-          "engine.id": "a0896853-c633-4a6b-84e3-d15778fd7871",
-          "engine.capabilities.web-audio": "0.0.0",
-          "engine.capabilities.fs": "0.0.0",
-          "engine.version": "0.12.0"
-        }
-      }
-    },
-    {
-      "id": "f2ecad06-4f03-4535-82be-e1217d96164a",
-      "type": "studio.tokens.preview.typography",
-      "inputs": [
-        {
-          "name": "value",
-          "value": [
-            {
-              "name": 0,
-              "type": "fontSizes",
-              "value": 16
-            },
-            {
-              "name": 1,
-              "type": "fontSizes",
-              "value": 17
-            },
-            {
-              "name": 2,
-              "type": "fontSizes",
-              "value": 18
-            },
-            {
-              "name": 3,
-              "type": "fontSizes",
-              "value": 19
-            },
-            {
-              "name": 4,
-              "type": "fontSizes",
-              "value": 20
-            },
-            {
-              "name": 5,
-              "type": "fontSizes",
-              "value": 21
-            }
-          ],
-          "type": {
-            "type": "array",
-            "items": {
-              "$id": "https://schemas.tokens.studio/token.json",
-              "title": "Token",
-              "type": "object",
-              "properties": {
-                "name": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "value": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "type": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "dynamicType": {
-            "title": "Token",
-            "type": "array",
-            "items": {
-              "$id": "https://schemas.tokens.studio/token.json",
-              "title": "Token",
-              "type": "object",
-              "properties": {
-                "name": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "value": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                },
-                "type": {
-                  "$id": "https://schemas.tokens.studio/string.json",
-                  "title": "String",
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "visible": true
-        },
-        {
-          "name": "text",
-          "value": "The quick brown fox jumps over the lazy dog",
-          "type": {
-            "$id": "https://schemas.tokens.studio/string.json",
-            "title": "String",
-            "type": "string",
-            "default": "The quick brown fox jumps over the lazy dog"
-          }
-        }
-      ],
-      "annotations": {
-        "ui.position.x": 1089.2514369257465,
-        "ui.position.y": -1495.11163571842
-      }
-    }
-  ],
-  "edges": [
-    {
-      "id": "c5133e85-0d1a-4fab-a90b-8bd3d94353af",
-      "source": "7d54e6ae-e74a-41e1-b9b1-ec59c3db14a1",
-      "sourceHandle": "array",
-      "target": "4b1dd901-a19e-41bc-9044-3df1f38e43f9",
-      "targetHandle": "array"
-    },
-    {
-      "id": "4cdf735f-c7dd-4f78-aabd-32b9e965495c",
-      "source": "4b1dd901-a19e-41bc-9044-3df1f38e43f9",
-      "sourceHandle": "value",
-      "target": "78a38937-cab2-442d-93cb-ca9b869ac891",
-      "targetHandle": "value"
-    },
-    {
-      "id": "c46750e6-e6d9-4891-b42e-5b57aeda2a61",
-      "source": "c9fa4ddb-264c-4f7c-a520-b81cbc654f61",
-      "sourceHandle": "array",
-      "target": "c3745ab8-59f9-4a5e-a44a-aa3690b5302d",
-      "targetHandle": "array"
-    },
-    {
-      "id": "2eb7fcee-f4f7-4747-a562-752d43a2689d",
-      "source": "c3745ab8-59f9-4a5e-a44a-aa3690b5302d",
-      "sourceHandle": "value",
-      "target": "b3f40523-6f70-4c6e-b2ee-d4062d040bea",
-      "targetHandle": "value"
-    },
-    {
-      "id": "f43abfe5-8a96-494c-997c-04b4d29ad427",
-      "source": "70e5d564-b8f2-475e-b878-6aa4ff1acd1d",
-      "sourceHandle": "array",
-      "target": "49b0f121-e42a-4ab4-ba25-b2601210f7a4",
-      "targetHandle": "array"
-    },
-    {
-      "id": "e1293202-374f-4c30-8afe-6037c2106853",
-      "source": "49b0f121-e42a-4ab4-ba25-b2601210f7a4",
-      "sourceHandle": "value",
-      "target": "f2ecad06-4f03-4535-82be-e1217d96164a",
-      "targetHandle": "value"
-    }
-  ],
-  "annotations": {
-    "engine.id": "c5bbd806-2d54-46d8-b2d7-25c44d84ff52",
-    "engine.capabilities.web-audio": "0.0.0",
-    "engine.capabilities.fs": "0.0.0",
-    "engine.version": "0.12.0",
-    "ui.viewport": {
-      "x": 132.47204227549594,
-      "y": 1047.6765118698486,
-      "zoom": 0.5952753799140419
-    },
-    "ui.version": "2.9.4"
-  }
+	"nodes": [
+		{
+			"id": "78a38937-cab2-442d-93cb-ca9b869ac891",
+			"type": "studio.tokens.preview.typography",
+			"inputs": [
+				{
+					"name": "value",
+					"value": [
+						{
+							"name": 0,
+							"type": "fontSizes",
+							"value": 16
+						},
+						{
+							"name": 1,
+							"type": "fontSizes",
+							"value": 20
+						},
+						{
+							"name": 2,
+							"type": "fontSizes",
+							"value": 25
+						},
+						{
+							"name": 3,
+							"type": "fontSizes",
+							"value": 31.25
+						},
+						{
+							"name": 4,
+							"type": "fontSizes",
+							"value": 39.06
+						},
+						{
+							"name": 5,
+							"type": "fontSizes",
+							"value": 48.83
+						},
+						{
+							"name": 6,
+							"type": "fontSizes",
+							"value": 61.04
+						}
+					],
+					"type": {
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/token.json",
+							"title": "Token",
+							"type": "object",
+							"properties": {
+								"name": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"value": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							}
+						}
+					},
+					"dynamicType": {
+						"title": "Token",
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/token.json",
+							"title": "Token",
+							"type": "object",
+							"properties": {
+								"name": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"value": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							}
+						}
+					},
+					"visible": true
+				},
+				{
+					"name": "text",
+					"value": "The quick brown fox jumps over the lazy dog",
+					"type": {
+						"$id": "https://schemas.tokens.studio/string.json",
+						"title": "String",
+						"type": "string",
+						"default": "The quick brown fox jumps over the lazy dog"
+					}
+				}
+			],
+			"annotations": {
+				"ui.position.x": 1089.2514369257465,
+				"ui.position.y": -1172.7495234364671
+			}
+		},
+		{
+			"id": "7d54e6ae-e74a-41e1-b9b1-ec59c3db14a1",
+			"type": "studio.tokens.series.geometric",
+			"inputs": [
+				{
+					"name": "base",
+					"value": 16,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 16
+					},
+					"visible": true
+				},
+				{
+					"name": "stepsDown",
+					"value": 0,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 0
+					},
+					"visible": true
+				},
+				{
+					"name": "stepsUp",
+					"value": 6,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 1
+					},
+					"visible": true
+				},
+				{
+					"name": "ratio",
+					"value": 1.25,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 1.5
+					}
+				},
+				{
+					"name": "precision",
+					"value": 2,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 2
+					}
+				}
+			],
+			"annotations": {
+				"ui.position.x": -193.75971591977867,
+				"ui.position.y": -1172.7495234364671
+			}
+		},
+		{
+			"id": "4b1dd901-a19e-41bc-9044-3df1f38e43f9",
+			"type": "tokens.studio.array.map",
+			"inputs": [
+				{
+					"name": "array",
+					"value": [16, 20, 25, 31.25, 39.06, 48.83, 61.04],
+					"type": {
+						"title": "Any[]",
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/any.json",
+							"title": "Any"
+						},
+						"default": []
+					},
+					"dynamicType": {
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/number.json",
+							"title": "Number",
+							"type": "number"
+						}
+					},
+					"visible": true,
+					"annotations": {
+						"ui.editable": false
+					}
+				}
+			],
+			"annotations": {
+				"ui.position.x": 466.65266564596664,
+				"ui.position.y": -1172.7495234364671
+			},
+			"innergraph": {
+				"nodes": [
+					{
+						"id": "01a06f2e-013d-4fc5-b21a-7513eb4987c2",
+						"type": "studio.tokens.generic.input",
+						"inputs": [
+							{
+								"name": "value",
+								"value": 61.04,
+								"type": {
+									"$id": "https://schemas.tokens.studio/any.json",
+									"title": "Any"
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"annotations": {
+									"ui.editable": false,
+									"ui.hidden": true,
+									"engine.hideFromParentSubgraph": true
+								}
+							},
+							{
+								"name": "index",
+								"value": 6,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"annotations": {
+									"ui.editable": false,
+									"engine.hideFromParentSubgraph": true
+								}
+							},
+							{
+								"name": "length",
+								"value": 7,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"annotations": {
+									"ui.editable": false,
+									"engine.hideFromParentSubgraph": true
+								}
+							}
+						],
+						"annotations": {
+							"engine.singleton": true,
+							"engine.dynamicInputs": true,
+							"engine.deletable": false,
+							"ui.position.x": -514.0335039784752,
+							"ui.position.y": 217.89338780967745
+						}
+					},
+					{
+						"id": "4ec57bce-f5d2-4d12-9f23-88ce678d47a9",
+						"type": "studio.tokens.generic.output",
+						"inputs": [
+							{
+								"name": "value",
+								"value": {
+									"name": 6,
+									"type": "fontSizes",
+									"value": 61.04
+								},
+								"type": {
+									"type": "array",
+									"items": {
+										"$id": "https://schemas.tokens.studio/any.json",
+										"title": "Any"
+									}
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/token.json",
+									"title": "Token",
+									"type": "object",
+									"properties": {
+										"name": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"value": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"type": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										}
+									}
+								},
+								"visible": true,
+								"annotations": {
+									"ui.editable": false
+								}
+							}
+						],
+						"annotations": {
+							"engine.singleton": true,
+							"engine.deletable": false,
+							"ui.position.x": 550,
+							"ui.position.y": 0
+						}
+					},
+					{
+						"id": "d76449f1-23eb-49fd-90e5-cf4707e562de",
+						"type": "studio.tokens.design.create",
+						"inputs": [
+							{
+								"name": "name",
+								"value": 6,
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"visible": true
+							},
+							{
+								"name": "type",
+								"value": "fontSizes",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string",
+									"enum": [
+										"asset",
+										"boolean",
+										"border",
+										"borderRadius",
+										"borderWidth",
+										"boxShadow",
+										"color",
+										"composition",
+										"dimension",
+										"fontFamilies",
+										"fontSizes",
+										"fontWeights",
+										"letterSpacing",
+										"lineHeights",
+										"number",
+										"opacity",
+										"other",
+										"paragraphIndent",
+										"paragraphSpacing",
+										"sizing",
+										"spacing",
+										"strokeStyle",
+										"text",
+										"textCase",
+										"textDecoration",
+										"typography"
+									]
+								},
+								"visible": true
+							},
+							{
+								"name": "value",
+								"value": 61.04,
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"visible": true
+							}
+						],
+						"annotations": {
+							"ui.position.x": 125.47028252129536,
+							"ui.position.y": 210.08414855198748
+						}
+					}
+				],
+				"edges": [
+					{
+						"id": "c732853d-0e08-491b-b60d-02975ec8e9d6",
+						"source": "01a06f2e-013d-4fc5-b21a-7513eb4987c2",
+						"sourceHandle": "value",
+						"target": "d76449f1-23eb-49fd-90e5-cf4707e562de",
+						"targetHandle": "value"
+					},
+					{
+						"id": "4ae8b196-1c32-432a-98c5-796a54be7938",
+						"source": "01a06f2e-013d-4fc5-b21a-7513eb4987c2",
+						"sourceHandle": "index",
+						"target": "d76449f1-23eb-49fd-90e5-cf4707e562de",
+						"targetHandle": "name"
+					},
+					{
+						"id": "c7b52447-034c-40df-83d6-5242b852c192",
+						"source": "d76449f1-23eb-49fd-90e5-cf4707e562de",
+						"sourceHandle": "token",
+						"target": "4ec57bce-f5d2-4d12-9f23-88ce678d47a9",
+						"targetHandle": "value"
+					}
+				],
+				"annotations": {
+					"engine.id": "2c8b5cb9-53e9-4ef7-83f6-18b95fb4bad0",
+					"engine.capabilities.web-audio": "0.0.0",
+					"engine.capabilities.fs": "0.0.0",
+					"engine.version": "0.12.0"
+				}
+			}
+		},
+		{
+			"id": "30e978e4-c33e-4ad3-964f-ee7846471585",
+			"type": "studio.tokens.generic.note",
+			"inputs": [],
+			"annotations": {
+				"ui.position.x": -122.5983617892283,
+				"ui.position.y": -1831.5421731053898,
+				"ui.nodeType": "studio.tokens.generic.note",
+				"ui.description": "In this example we are generating typograph scales  dynamically by passing in a few input values\n\nWe offer a comparison here showing that you can create really pleasing typescales through harmonic series"
+			}
+		},
+		{
+			"id": "c9fa4ddb-264c-4f7c-a520-b81cbc654f61",
+			"type": "studio.tokens.series.harmonic",
+			"inputs": [
+				{
+					"name": "base",
+					"value": 16,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 16
+					},
+					"visible": true
+				},
+				{
+					"name": "stepsDown",
+					"value": 0,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 0
+					},
+					"visible": true
+				},
+				{
+					"name": "stepsUp",
+					"value": 6,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 5
+					}
+				},
+				{
+					"name": "notes",
+					"value": 5,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 5
+					}
+				},
+				{
+					"name": "ratio",
+					"value": 2,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 2
+					}
+				},
+				{
+					"name": "precision",
+					"value": 2,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 2
+					}
+				}
+			],
+			"annotations": {
+				"ui.position.x": -193.75971591977867,
+				"ui.position.y": -564.9184009041625
+			}
+		},
+		{
+			"id": "c3745ab8-59f9-4a5e-a44a-aa3690b5302d",
+			"type": "tokens.studio.array.map",
+			"inputs": [
+				{
+					"name": "array",
+					"value": [16, 18.38, 21.11, 24.25, 27.86, 32, 36.76],
+					"type": {
+						"title": "Any[]",
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/any.json",
+							"title": "Any"
+						},
+						"default": []
+					},
+					"dynamicType": {
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/number.json",
+							"title": "Number",
+							"type": "number"
+						}
+					},
+					"visible": true,
+					"annotations": {
+						"ui.editable": false
+					}
+				}
+			],
+			"annotations": {
+				"ui.position.x": 465.64610523270426,
+				"ui.position.y": -564.9184009041625
+			},
+			"innergraph": {
+				"nodes": [
+					{
+						"id": "ef730531-a5e5-41e2-b9ae-ef14da586ee1",
+						"type": "studio.tokens.generic.input",
+						"inputs": [
+							{
+								"name": "value",
+								"value": 36.76,
+								"type": {
+									"$id": "https://schemas.tokens.studio/any.json",
+									"title": "Any"
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"annotations": {
+									"ui.editable": false,
+									"ui.hidden": true,
+									"engine.hideFromParentSubgraph": true
+								}
+							},
+							{
+								"name": "index",
+								"value": 6,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"annotations": {
+									"ui.editable": false,
+									"engine.hideFromParentSubgraph": true
+								}
+							},
+							{
+								"name": "length",
+								"value": 7,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"annotations": {
+									"ui.editable": false,
+									"engine.hideFromParentSubgraph": true
+								}
+							}
+						],
+						"annotations": {
+							"engine.singleton": true,
+							"engine.dynamicInputs": true,
+							"engine.deletable": false,
+							"ui.position.x": -590.8778727213542,
+							"ui.position.y": 139.1472208658854
+						}
+					},
+					{
+						"id": "ee3464ac-5cdd-4059-8bfa-b96415b11b3d",
+						"type": "studio.tokens.generic.output",
+						"inputs": [
+							{
+								"name": "value",
+								"value": {
+									"name": 6,
+									"type": "fontSizes",
+									"value": 36.76
+								},
+								"type": {
+									"type": "array",
+									"items": {
+										"$id": "https://schemas.tokens.studio/any.json",
+										"title": "Any"
+									}
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/token.json",
+									"title": "Token",
+									"type": "object",
+									"properties": {
+										"name": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"value": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"type": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										}
+									}
+								},
+								"visible": true,
+								"annotations": {
+									"ui.editable": false
+								}
+							}
+						],
+						"annotations": {
+							"engine.singleton": true,
+							"engine.deletable": false,
+							"ui.position.x": 623.3333333333334,
+							"ui.position.y": 147.3333333333333
+						}
+					},
+					{
+						"id": "2c54e090-67d3-490b-950d-06112de6b000",
+						"type": "studio.tokens.design.create",
+						"inputs": [
+							{
+								"name": "name",
+								"value": 6,
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"visible": true
+							},
+							{
+								"name": "type",
+								"value": "fontSizes",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string",
+									"enum": [
+										"asset",
+										"boolean",
+										"border",
+										"borderRadius",
+										"borderWidth",
+										"boxShadow",
+										"color",
+										"composition",
+										"dimension",
+										"fontFamilies",
+										"fontSizes",
+										"fontWeights",
+										"letterSpacing",
+										"lineHeights",
+										"number",
+										"opacity",
+										"other",
+										"paragraphIndent",
+										"paragraphSpacing",
+										"sizing",
+										"spacing",
+										"strokeStyle",
+										"text",
+										"textCase",
+										"textDecoration",
+										"typography"
+									]
+								},
+								"visible": true
+							},
+							{
+								"name": "value",
+								"value": 36.76,
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"visible": true
+							}
+						],
+						"annotations": {
+							"ui.position.x": 21.909224446614644,
+							"ui.position.y": 142.88101603190103
+						}
+					}
+				],
+				"edges": [
+					{
+						"id": "0aa576bd-9bc0-409f-a711-393d9ff29b70",
+						"source": "ef730531-a5e5-41e2-b9ae-ef14da586ee1",
+						"sourceHandle": "value",
+						"target": "2c54e090-67d3-490b-950d-06112de6b000",
+						"targetHandle": "value"
+					},
+					{
+						"id": "27b40837-dbd9-4e31-ae65-395b39440c10",
+						"source": "ef730531-a5e5-41e2-b9ae-ef14da586ee1",
+						"sourceHandle": "index",
+						"target": "2c54e090-67d3-490b-950d-06112de6b000",
+						"targetHandle": "name"
+					},
+					{
+						"id": "84663101-18df-4209-b37a-1820d27197b4",
+						"source": "2c54e090-67d3-490b-950d-06112de6b000",
+						"sourceHandle": "token",
+						"target": "ee3464ac-5cdd-4059-8bfa-b96415b11b3d",
+						"targetHandle": "value"
+					}
+				],
+				"annotations": {
+					"engine.id": "5f3bc2c2-8f06-415e-9fb9-78ef605939b5",
+					"engine.capabilities.web-audio": "0.0.0",
+					"engine.capabilities.fs": "0.0.0",
+					"engine.version": "0.12.0"
+				}
+			}
+		},
+		{
+			"id": "b3f40523-6f70-4c6e-b2ee-d4062d040bea",
+			"type": "studio.tokens.preview.typography",
+			"inputs": [
+				{
+					"name": "value",
+					"value": [
+						{
+							"name": 0,
+							"type": "fontSizes",
+							"value": 16
+						},
+						{
+							"name": 1,
+							"type": "fontSizes",
+							"value": 18.38
+						},
+						{
+							"name": 2,
+							"type": "fontSizes",
+							"value": 21.11
+						},
+						{
+							"name": 3,
+							"type": "fontSizes",
+							"value": 24.25
+						},
+						{
+							"name": 4,
+							"type": "fontSizes",
+							"value": 27.86
+						},
+						{
+							"name": 5,
+							"type": "fontSizes",
+							"value": 32
+						},
+						{
+							"name": 6,
+							"type": "fontSizes",
+							"value": 36.76
+						}
+					],
+					"type": {
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/token.json",
+							"title": "Token",
+							"type": "object",
+							"properties": {
+								"name": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"value": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							}
+						}
+					},
+					"dynamicType": {
+						"title": "Token",
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/token.json",
+							"title": "Token",
+							"type": "object",
+							"properties": {
+								"name": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"value": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							}
+						}
+					},
+					"visible": true
+				},
+				{
+					"name": "text",
+					"value": "The quick brown fox jumps over the lazy dog",
+					"type": {
+						"$id": "https://schemas.tokens.studio/string.json",
+						"title": "String",
+						"type": "string",
+						"default": "The quick brown fox jumps over the lazy dog"
+					}
+				}
+			],
+			"annotations": {
+				"ui.position.x": 1089.2514369257465,
+				"ui.position.y": -564.9184009041625
+			}
+		},
+		{
+			"id": "70e5d564-b8f2-475e-b878-6aa4ff1acd1d",
+			"type": "studio.tokens.series.arithmetic",
+			"inputs": [
+				{
+					"name": "base",
+					"value": 16,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 16
+					},
+					"visible": true
+				},
+				{
+					"name": "stepsDown",
+					"value": 0,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 0
+					},
+					"visible": true
+				},
+				{
+					"name": "stepsUp",
+					"value": 5,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 1
+					},
+					"visible": true
+				},
+				{
+					"name": "increment",
+					"value": 1,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 1
+					}
+				},
+				{
+					"name": "precision",
+					"value": 2,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 2
+					}
+				}
+			],
+			"annotations": {
+				"ui.position.x": -193.75971591977867,
+				"ui.position.y": -1495.11163571842
+			}
+		},
+		{
+			"id": "49b0f121-e42a-4ab4-ba25-b2601210f7a4",
+			"type": "tokens.studio.array.map",
+			"inputs": [
+				{
+					"name": "array",
+					"value": [16, 17, 18, 19, 20, 21],
+					"type": {
+						"title": "Any[]",
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/any.json",
+							"title": "Any"
+						},
+						"default": []
+					},
+					"dynamicType": {
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/number.json",
+							"title": "Number",
+							"type": "number"
+						}
+					},
+					"visible": true,
+					"annotations": {
+						"ui.editable": false
+					}
+				}
+			],
+			"annotations": {
+				"ui.position.x": 470.2446340027758,
+				"ui.position.y": -1495.11163571842
+			},
+			"innergraph": {
+				"nodes": [
+					{
+						"id": "cd9e6f65-046b-4c19-ae3d-cb5ca3263539",
+						"type": "studio.tokens.generic.input",
+						"inputs": [
+							{
+								"name": "value",
+								"value": 21,
+								"type": {
+									"$id": "https://schemas.tokens.studio/any.json",
+									"title": "Any"
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"annotations": {
+									"ui.editable": false,
+									"ui.hidden": true,
+									"engine.hideFromParentSubgraph": true
+								}
+							},
+							{
+								"name": "index",
+								"value": 5,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"annotations": {
+									"ui.editable": false,
+									"engine.hideFromParentSubgraph": true
+								}
+							},
+							{
+								"name": "length",
+								"value": 6,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"annotations": {
+									"ui.editable": false,
+									"engine.hideFromParentSubgraph": true
+								}
+							}
+						],
+						"annotations": {
+							"engine.singleton": true,
+							"engine.dynamicInputs": true,
+							"engine.deletable": false,
+							"ui.position.x": -273.3333333333333,
+							"ui.position.y": 293.3333333333333
+						}
+					},
+					{
+						"id": "62224acb-cb85-4bc6-b6ad-dfcf433ca861",
+						"type": "studio.tokens.generic.output",
+						"inputs": [
+							{
+								"name": "value",
+								"value": {
+									"name": 5,
+									"type": "fontSizes",
+									"value": 21
+								},
+								"type": {
+									"type": "array",
+									"items": {
+										"$id": "https://schemas.tokens.studio/any.json",
+										"title": "Any"
+									}
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/token.json",
+									"title": "Token",
+									"type": "object",
+									"properties": {
+										"name": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"value": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"type": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										}
+									}
+								},
+								"visible": true,
+								"annotations": {
+									"ui.editable": false
+								}
+							}
+						],
+						"annotations": {
+							"engine.singleton": true,
+							"engine.deletable": false,
+							"ui.position.x": 908.0680212288987,
+							"ui.position.y": 299.985626045054
+						}
+					},
+					{
+						"id": "4eb7b9da-b394-43c9-b5a3-e50802cfcee3",
+						"type": "studio.tokens.design.create",
+						"inputs": [
+							{
+								"name": "name",
+								"value": 5,
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"visible": true
+							},
+							{
+								"name": "type",
+								"value": "fontSizes",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string",
+									"enum": [
+										"asset",
+										"boolean",
+										"border",
+										"borderRadius",
+										"borderWidth",
+										"boxShadow",
+										"color",
+										"composition",
+										"dimension",
+										"fontFamilies",
+										"fontSizes",
+										"fontWeights",
+										"letterSpacing",
+										"lineHeights",
+										"number",
+										"opacity",
+										"other",
+										"paragraphIndent",
+										"paragraphSpacing",
+										"sizing",
+										"spacing",
+										"strokeStyle",
+										"text",
+										"textCase",
+										"textDecoration",
+										"typography"
+									]
+								},
+								"visible": true
+							},
+							{
+								"name": "value",
+								"value": 21,
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"visible": true
+							}
+						],
+						"annotations": {
+							"ui.position.x": 343.8981323242187,
+							"ui.position.y": 294.24120076497394
+						}
+					}
+				],
+				"edges": [
+					{
+						"id": "20d06428-4d8c-405b-bb3b-81b6cbb235a1",
+						"source": "cd9e6f65-046b-4c19-ae3d-cb5ca3263539",
+						"sourceHandle": "value",
+						"target": "4eb7b9da-b394-43c9-b5a3-e50802cfcee3",
+						"targetHandle": "value"
+					},
+					{
+						"id": "43a1e690-25e4-48a6-a430-823acfd1ce9a",
+						"source": "cd9e6f65-046b-4c19-ae3d-cb5ca3263539",
+						"sourceHandle": "index",
+						"target": "4eb7b9da-b394-43c9-b5a3-e50802cfcee3",
+						"targetHandle": "name"
+					},
+					{
+						"id": "ec958ecf-ee7b-4377-8cfa-e494dc7f9c39",
+						"source": "4eb7b9da-b394-43c9-b5a3-e50802cfcee3",
+						"sourceHandle": "token",
+						"target": "62224acb-cb85-4bc6-b6ad-dfcf433ca861",
+						"targetHandle": "value"
+					}
+				],
+				"annotations": {
+					"engine.id": "a0896853-c633-4a6b-84e3-d15778fd7871",
+					"engine.capabilities.web-audio": "0.0.0",
+					"engine.capabilities.fs": "0.0.0",
+					"engine.version": "0.12.0"
+				}
+			}
+		},
+		{
+			"id": "f2ecad06-4f03-4535-82be-e1217d96164a",
+			"type": "studio.tokens.preview.typography",
+			"inputs": [
+				{
+					"name": "value",
+					"value": [
+						{
+							"name": 0,
+							"type": "fontSizes",
+							"value": 16
+						},
+						{
+							"name": 1,
+							"type": "fontSizes",
+							"value": 17
+						},
+						{
+							"name": 2,
+							"type": "fontSizes",
+							"value": 18
+						},
+						{
+							"name": 3,
+							"type": "fontSizes",
+							"value": 19
+						},
+						{
+							"name": 4,
+							"type": "fontSizes",
+							"value": 20
+						},
+						{
+							"name": 5,
+							"type": "fontSizes",
+							"value": 21
+						}
+					],
+					"type": {
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/token.json",
+							"title": "Token",
+							"type": "object",
+							"properties": {
+								"name": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"value": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							}
+						}
+					},
+					"dynamicType": {
+						"title": "Token",
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/token.json",
+							"title": "Token",
+							"type": "object",
+							"properties": {
+								"name": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"value": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							}
+						}
+					},
+					"visible": true
+				},
+				{
+					"name": "text",
+					"value": "The quick brown fox jumps over the lazy dog",
+					"type": {
+						"$id": "https://schemas.tokens.studio/string.json",
+						"title": "String",
+						"type": "string",
+						"default": "The quick brown fox jumps over the lazy dog"
+					}
+				}
+			],
+			"annotations": {
+				"ui.position.x": 1089.2514369257465,
+				"ui.position.y": -1495.11163571842
+			}
+		}
+	],
+	"edges": [
+		{
+			"id": "c5133e85-0d1a-4fab-a90b-8bd3d94353af",
+			"source": "7d54e6ae-e74a-41e1-b9b1-ec59c3db14a1",
+			"sourceHandle": "array",
+			"target": "4b1dd901-a19e-41bc-9044-3df1f38e43f9",
+			"targetHandle": "array"
+		},
+		{
+			"id": "4cdf735f-c7dd-4f78-aabd-32b9e965495c",
+			"source": "4b1dd901-a19e-41bc-9044-3df1f38e43f9",
+			"sourceHandle": "value",
+			"target": "78a38937-cab2-442d-93cb-ca9b869ac891",
+			"targetHandle": "value"
+		},
+		{
+			"id": "c46750e6-e6d9-4891-b42e-5b57aeda2a61",
+			"source": "c9fa4ddb-264c-4f7c-a520-b81cbc654f61",
+			"sourceHandle": "array",
+			"target": "c3745ab8-59f9-4a5e-a44a-aa3690b5302d",
+			"targetHandle": "array"
+		},
+		{
+			"id": "2eb7fcee-f4f7-4747-a562-752d43a2689d",
+			"source": "c3745ab8-59f9-4a5e-a44a-aa3690b5302d",
+			"sourceHandle": "value",
+			"target": "b3f40523-6f70-4c6e-b2ee-d4062d040bea",
+			"targetHandle": "value"
+		},
+		{
+			"id": "f43abfe5-8a96-494c-997c-04b4d29ad427",
+			"source": "70e5d564-b8f2-475e-b878-6aa4ff1acd1d",
+			"sourceHandle": "array",
+			"target": "49b0f121-e42a-4ab4-ba25-b2601210f7a4",
+			"targetHandle": "array"
+		},
+		{
+			"id": "e1293202-374f-4c30-8afe-6037c2106853",
+			"source": "49b0f121-e42a-4ab4-ba25-b2601210f7a4",
+			"sourceHandle": "value",
+			"target": "f2ecad06-4f03-4535-82be-e1217d96164a",
+			"targetHandle": "value"
+		}
+	],
+	"annotations": {
+		"engine.id": "c5bbd806-2d54-46d8-b2d7-25c44d84ff52",
+		"engine.capabilities.web-audio": "0.0.0",
+		"engine.capabilities.fs": "0.0.0",
+		"engine.version": "0.12.0",
+		"ui.viewport": {
+			"x": 132.47204227549594,
+			"y": 1047.6765118698486,
+			"zoom": 0.5952753799140419
+		},
+		"ui.version": "2.9.4"
+	}
 }

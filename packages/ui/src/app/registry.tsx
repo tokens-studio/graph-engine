@@ -5,13 +5,13 @@ import { useServerInsertedHTML } from 'next/navigation.js';
 import React from 'react';
 
 export default function StitchesProvider({
-  children,
+	children
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  useServerInsertedHTML(() => {
-    return <style id="stitches">{getCssText()}</style>;
-  });
+	useServerInsertedHTML(() => {
+		return <style id='stitches'>{getCssText()}</style>;
+	});
 
-  return <>{children}</>;
+	return <>{children}</>;
 }

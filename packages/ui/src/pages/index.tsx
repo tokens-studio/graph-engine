@@ -21,84 +21,84 @@ import React, { useCallback, useEffect } from 'react';
 import globalState from '@/mobx/index.tsx';
 
 const Wrapper = observer(() => {
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-  const router = useRouter();
+	const router = useRouter();
 
-  const editor = globalState.refs.editor.get();
+	const editor = globalState.refs.editor.get();
 
-  const ref = useCallback((editor) => {
-    globalState.refs.editor.set(editor);
-  }, []);
+	const ref = useCallback(editor => {
+		globalState.refs.editor.set(editor);
+	}, []);
 
-  const showJourney = useSelector(showJourneySelector);
+	const showJourney = useSelector(showJourneySelector);
 
-  const { isLoading, data, error } = useQuery({
-    queryKey: ['graph', router.query.id],
-    queryFn: () =>
-      GraphService.getGraph({
-        graphId: router.query.id as string,
-      }),
-    enabled: !!router.query.id,
-  });
+	const { isLoading, data, error } = useQuery({
+		queryKey: ['graph', router.query.id],
+		queryFn: () =>
+			GraphService.getGraph({
+				graphId: router.query.id as string
+			}),
+		enabled: !!router.query.id
+	});
 
-  useErrorToast(error);
+	useErrorToast(error);
 
-  useEffect(() => {
-    if (editor && data?.graph) {
-      editor.loadRaw(data?.graph as SerializedGraph);
-    }
-  }, [data, editor]);
+	useEffect(() => {
+		if (editor && data?.graph) {
+			editor.loadRaw(data?.graph as SerializedGraph);
+		}
+	}, [data, editor]);
 
-  const [{ steps }] = useJourney();
-  const handleJoyrideCallback = (data: CallBackProps) => {
-    const { status } = data;
-    const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
+	const [{ steps }] = useJourney();
+	const handleJoyrideCallback = (data: CallBackProps) => {
+		const { status } = data;
+		const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
 
-    if (finishedStatuses.includes(status)) {
-      dispatch.journey.setShowJourney(false);
-    }
-  };
+		if (finishedStatuses.includes(status)) {
+			dispatch.journey.setShowJourney(false);
+		}
+	};
 
-  return (
-    <>
-      {/* @ts-ignore */}
-      <Joyride
-        callback={handleJoyrideCallback}
-        continuous
-        hideCloseButton
-        run={showJourney}
-        tooltipComponent={JoyrideTooltip}
-        scrollToFirstStep
-        showProgress
-        showSkipButton
-        steps={steps}
-        styles={{
-          options: {
-            zIndex: 10000,
-          },
-        }}
-      />
-      <Box
-        css={{
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'row',
-          width: '100%',
-          height: '100%',
-          overflow: 'hidden',
-          background: '$bgCanvas',
-          isolation: 'isolate',
-        }}
-      >
-        <EditorTab ref={ref} loading={isLoading} />
-      </Box>
-    </>
-  );
+	return (
+		<>
+			{/* @ts-ignore */}
+			<Joyride
+				callback={handleJoyrideCallback}
+				continuous
+				hideCloseButton
+				run={showJourney}
+				tooltipComponent={JoyrideTooltip}
+				scrollToFirstStep
+				showProgress
+				showSkipButton
+				steps={steps}
+				styles={{
+					options: {
+						zIndex: 10000
+					}
+				}}
+			/>
+			<Box
+				css={{
+					position: 'relative',
+					display: 'flex',
+					flexDirection: 'row',
+					width: '100%',
+					height: '100%',
+					overflow: 'hidden',
+					background: '$bgCanvas',
+					isolation: 'isolate'
+				}}
+			>
+				<EditorTab ref={ref} loading={isLoading} />
+			</Box>
+		</>
+	);
 });
 
 const Index = () => {
-  return <Wrapper />;
+	return <Wrapper />;
 };
 
 export default Index;

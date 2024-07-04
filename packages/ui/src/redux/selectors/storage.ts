@@ -4,11 +4,11 @@ import { createSelector } from 'reselect';
 export const storage = (state: RootState) => state.storage;
 
 export const storageProviderSelector = createSelector(
-  storage,
-  (state) => state.storage,
+	storage,
+	state => state.storage
 );
 
 export const providersSelector = createSelector(
-  storage,
-  (state) => state.providers,
+	storage,
+	state => state.providers
 );

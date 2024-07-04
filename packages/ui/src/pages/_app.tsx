@@ -23,29 +23,29 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ToastProvider } from '@/hooks/useToast.tsx';
 
 export default function App(props: AppProps) {
-  const { Component, pageProps } = props;
-  const queryClient = new QueryClient();
-  return (
-    <Head
-      as={ThemeProvider}
-      attribute="class"
-      enableSystem={false}
-      value={{ 'light-theme': light, 'dark-theme': dark }}
-      body={
-        <NoSSR>
-          <ToastProvider>
-            <QueryClientProvider client={queryClient}>
-              <Tooltip.Provider>
-                <Store>
-                  <PageLayout theme={globalState.ui.theme}>
-                    <Component {...pageProps} />
-                  </PageLayout>
-                </Store>
-              </Tooltip.Provider>
-            </QueryClientProvider>
-          </ToastProvider>
-        </NoSSR>
-      }
-    />
-  );
+	const { Component, pageProps } = props;
+	const queryClient = new QueryClient();
+	return (
+		<Head
+			as={ThemeProvider}
+			attribute='class'
+			enableSystem={false}
+			value={{ 'light-theme': light, 'dark-theme': dark }}
+			body={
+				<NoSSR>
+					<ToastProvider>
+						<QueryClientProvider client={queryClient}>
+							<Tooltip.Provider>
+								<Store>
+									<PageLayout theme={globalState.ui.theme}>
+										<Component {...pageProps} />
+									</PageLayout>
+								</Store>
+							</Tooltip.Provider>
+						</QueryClientProvider>
+					</ToastProvider>
+				</NoSSR>
+			}
+		/>
+	);
 }
