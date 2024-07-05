@@ -1,7 +1,6 @@
 {
   "name": "@tokens-studio/react-storybook-graph-engine",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "author": "andrew@hyma.io",
   "private": true,

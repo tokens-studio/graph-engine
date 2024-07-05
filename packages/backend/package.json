@@ -72,6 +72,5 @@
     "tokens",
     "graph",
     "backend"
-  ],
-  "jsnext:main": "./dist/esm/index.js"
+  ]
 }

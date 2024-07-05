@@ -8,12 +8,10 @@
   "exports": {
     "./*": {
       "import": "./dist/*",
-      "require": "./dist/*",
       "types": "./dist/*"
     },
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
       "types": "./dist/index.d.ts"
     }
   },
@@ -62,6 +60,5 @@
     "studio",
     "tokens",
     "ui"
-  ],
-  "jsnext:main": "./dist/index.js"
+  ]
 }

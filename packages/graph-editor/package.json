@@ -116,6 +116,5 @@
     "vite": "^5.2.10",
     "vite-plugin-babel": "^1.2.0",
     "vite-tsconfig-paths": "^4.2.2"
-  },
-  "jsnext:main": "./dist/index.js"
+  }
 }
