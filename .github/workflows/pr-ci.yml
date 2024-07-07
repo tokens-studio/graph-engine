@@ -55,5 +55,15 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile --immutable
 
+      - name: Linting
+        run: yarn lint
+
+      - name: Install playwright
+        run: yarn playwright install
+
+      # verify that build scripts function correctly
+      - name: Build
+        run: yarn build
+
       - name: Test
         run: yarn run test

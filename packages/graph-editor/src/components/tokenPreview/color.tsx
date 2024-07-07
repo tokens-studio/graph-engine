@@ -31,7 +31,6 @@ export const PreviewColor = ({ value }) => {
     return <Text>Missing</Text>;
   }
 
-
   return (
     <StyledInputWrapper>
       <StyledDiv

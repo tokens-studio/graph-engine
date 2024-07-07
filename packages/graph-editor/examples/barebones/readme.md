@@ -2,7 +2,7 @@
 
 In this example we show the bare minimum of having an editable graph. No menu is shown, or any other controls exposed.
 
-The basics of the layout is provided by selecting an initial layout and passing it through. 
+The basics of the layout is provided by selecting an initial layout and passing it through.
 
 We override the default set of nodes exposed from the engine to pass in our own.
 

@@ -5,7 +5,7 @@ export enum EdgeType {
   bezier = 'Bezier',
   smoothStep = 'Smooth step',
   straight = 'Straight',
-  simpleBezier = 'Simple Bezier'
+  simpleBezier = 'Simple Bezier',
 }
 export enum LayoutType {
   dagre = 'Dagre',
@@ -26,7 +26,7 @@ export interface SettingsState {
   /**
    * Whether to delay the update of a node when a value is changed
    */
-  delayedUpdate: boolean
+  delayedUpdate: boolean;
   /**
    * Whether to show the types inline with the nodes
    */
@@ -52,10 +52,9 @@ export const settingsState = createModel<RootModel>()({
     snapGrid: false,
     debugMode: false,
     showMinimap: false,
-    delayedUpdate: false
+    delayedUpdate: false,
   } as SettingsState,
   reducers: {
-
     setConnectOnClick(state, connectOnClick: boolean) {
       return {
         ...state,

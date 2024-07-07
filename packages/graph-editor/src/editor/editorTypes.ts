@@ -1,24 +1,23 @@
-import { Menu } from '@/components/menubar/data';
-import { DropPanelStore } from '@/components/panels/dropPanel/index.js';
 import {
-  ExternalLoadOptions,
-  SerializedGraph,
-  Node as GraphNode,
   CapabilityFactory,
+  ExternalLoadOptions,
   Graph,
+  Node as GraphNode,
+  SerializedGraph,
 } from '@tokens-studio/graph-engine';
-import { Edge, Node, ReactFlowInstance } from 'reactflow';
 import { Control } from '../types/controls.js';
+import { DropPanelStore } from '@/components/panels/dropPanel/index.js';
+import { Edge, Node, ReactFlowInstance } from 'reactflow';
 import { LayoutBase } from 'rc-dock';
+import { Menu } from '@/components/menubar/data.js';
 
 export interface EditorProps {
   id: string;
 
-
   /**
    * A lookup of the custom node types to display in the editor.
    * Not populating this will result in the default items being displayed.
-   * 
+   *
    * This replaces all of the node types, so you will be responsible for loading them all
    */
   nodeTypes?: Record<string, typeof GraphNode>;
@@ -29,7 +28,7 @@ export interface EditorProps {
   emptyContent?: React.ReactNode;
   children?: React.ReactNode;
   onOutputChange?: (output: Record<string, unknown>) => void;
-  externalLoader?: (opts: ExternalLoadOptions) => Promise<any> | any;
+  externalLoader?: (opts: ExternalLoadOptions) => Promise<unknown> | unknown;
   /**
    * Whether or not to show the menu
    */
@@ -43,11 +42,11 @@ export interface EditorProps {
   /**
    * Capabilities to load into the graphs. Each factory is loaded into each graph individually
    */
-  capabilities?: CapabilityFactory[]
+  capabilities?: CapabilityFactory[];
   /**
- * Items to display in the drop panel.
-  * Not populating this will result in the default items being displayed.
- */
+   * Items to display in the drop panel.
+   * Not populating this will result in the default items being displayed.
+   */
   panelItems: DropPanelStore;
 
   /**
@@ -68,7 +67,7 @@ export interface EditorProps {
   /**
    * An initial layout to use
    */
-  initialLayout?: LayoutBase
+  initialLayout?: LayoutBase;
 
   /**
    * Additional icons to display in the editor for custom types
@@ -82,21 +81,19 @@ export interface GraphEditorProps {
   id: string;
   emptyContent?: React.ReactNode;
   /**
- * A lookup of the custom node uiS types to display in the editor.
- */
+   * A lookup of the custom node uiS types to display in the editor.
+   */
   customNodeUI?: Record<string, React.ReactElement>;
   /**
    * A lookup of the custom node types to display in the editor.
    * Not populating this will result in the default items being displayed.
-   * 
+   *
    * This replaces all of the node types, so you will be responsible for loading them all
    */
   nodeTypes?: Record<string, typeof GraphNode>;
   children?: React.ReactNode;
   initialGraph?: SerializedGraph;
 }
-
-
 
 export type ImperativeEditorRef = {
   /**

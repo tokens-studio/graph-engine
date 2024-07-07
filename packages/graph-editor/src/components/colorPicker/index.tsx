@@ -1,9 +1,9 @@
-import { HexColorPicker } from 'react-colorful';
-import React from 'react';
 import { Box, Button, TextInput } from '@tokens-studio/ui';
-import InputPopover from './InputPopover';
+import { HexColorPicker } from 'react-colorful';
 import { PopoverClose } from '@radix-ui/react-popover';
 import { styled } from '@/lib/stitches/index.js';
+import InputPopover from './InputPopover.js';
+import React from 'react';
 
 export function ColorPicker({ value, onChange }) {
   return (
@@ -18,7 +18,7 @@ export function ColorPicker({ value, onChange }) {
 type ColorPickerPopoverProps = {
   value: string;
   defaultOpen?: boolean;
-  onChange: (value: any) => void;
+  onChange: (value: string) => void;
   showRemoveButton?: boolean;
   onRemove?: () => void;
 };
@@ -28,7 +28,7 @@ export function ColorPickerPopover({
   defaultOpen = false,
   onChange,
   showRemoveButton = false,
-  onRemove
+  onRemove,
 }: ColorPickerPopoverProps) {
   return (
     <InputPopover
@@ -36,7 +36,7 @@ export function ColorPickerPopover({
       trigger={
         <Box
           as="button"
-          style={{ background: value, }}
+          style={{ background: value }}
           css={{
             all: 'unset',
             cursor: 'pointer',
@@ -54,9 +54,16 @@ export function ColorPickerPopover({
       }
     >
       <ColorPicker value={value} onChange={onChange} />
-      <TextInput value={value} onChange={onChange} />
+      <TextInput
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+      />
       {showRemoveButton && (
-        <PopoverCloseRemoveButton><Button onClick={onRemove} variant="danger">Remove color</Button></PopoverCloseRemoveButton>
+        <PopoverCloseRemoveButton>
+          <Button onClick={onRemove} variant="danger">
+            Remove color
+          </Button>
+        </PopoverCloseRemoveButton>
       )}
     </InputPopover>
   );

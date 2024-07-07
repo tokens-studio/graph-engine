@@ -1,15 +1,14 @@
-import { observer } from 'mobx-react-lite';
-import { IField } from './interface';
-import React, { useCallback } from 'react';
-import { Input, hexToColor, toColor, toHex } from '@tokens-studio/graph-engine';
 import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
-import { ColorPickerPopover } from '../colorPicker';
-import { useSelector } from 'react-redux';
-import { delayedUpdateSelector } from '@/redux/selectors';
+import { ColorPickerPopover } from '../colorPicker/index.js';
 import { FloppyDisk } from 'iconoir-react';
+import { IField } from './interface.js';
+import { Input, hexToColor, toColor, toHex } from '@tokens-studio/graph-engine';
+import { delayedUpdateSelector } from '@/redux/selectors/index.js';
+import { observer } from 'mobx-react-lite';
+import { useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
 
 export const ColorField = observer(({ port, readOnly }: IField) => {
-
   const useDelayed = useSelector(delayedUpdateSelector);
   const [val, setVal] = React.useState('');
 
@@ -18,18 +17,17 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
     try {
       const hex = toHex(toColor(port.value));
       setVal(hex);
-    } catch { }
+    } catch {
+      //Ignore
+    }
   }, [port.value]);
-
-
 
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-
       let col;
       //Weird  problem with the color picker if the user decides to use the text input
       if (typeof e === 'string') {
-        col = e
+        col = e;
       } else {
         col = e.target.value;
       }
@@ -38,15 +36,13 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
         return;
       }
 
-      //We need to convert from hex 
+      //We need to convert from hex
       (port as Input).setValue(hexToColor(col));
     },
     [port, useDelayed],
   );
 
   if (readOnly) {
-
-
     const hex = toHex(toColor(port.value));
 
     return (
@@ -69,7 +65,6 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
           type="button"
         />
         <Text>{hex}</Text>
-
       </Stack>
     );
   }
@@ -78,7 +73,12 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
     <Stack direction="row" justify="between" align="center" gap={2}>
       <ColorPickerPopover value={val} onChange={onChange} />
       <Text muted>{val}</Text>
-      {useDelayed && <IconButton icon={<FloppyDisk />} onClick={() => (port as Input).setValue(val)} />}
+      {useDelayed && (
+        <IconButton
+          icon={<FloppyDisk />}
+          onClick={() => (port as Input).setValue(val)}
+        />
+      )}
     </Stack>
   );
 });

@@ -1,16 +1,16 @@
 {
-    "name": "Tokens Studio Graph",
-    "short_name": "Graph Editor",
-    "description": "Tokens Studio Graph Editor as a standalone app",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#fff",
-    "theme_color": "#fff",
-    "icons": [
-        {
-            "src": "/favicon.ico",
-            "sizes": "any",
-            "type": "image/x-icon"
-        }
-    ]
+	"name": "Tokens Studio Graph",
+	"short_name": "Graph Editor",
+	"description": "Tokens Studio Graph Editor as a standalone app",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#fff",
+	"theme_color": "#fff",
+	"icons": [
+		{
+			"src": "/favicon.ico",
+			"sizes": "any",
+			"type": "image/x-icon"
+		}
+	]
 }

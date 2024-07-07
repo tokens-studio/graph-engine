@@ -1,20 +1,13 @@
-import React, { MutableRefObject } from 'react';
-import {
-  Button,
-  DropdownMenu,
-  Text,
-  Tooltip
-} from '@tokens-studio/ui';
-import { LayoutLeft, Plus, NavArrowRight } from 'iconoir-react';
-import { useLayoutButton } from '../hooks/useLayoutButton';
+import { Button, DropdownMenu, Tooltip } from '@tokens-studio/ui';
+import { LayoutLeft } from 'iconoir-react';
+import { dockerSelector } from '@/redux/selectors/index.js';
+import { useLayoutButton } from '../hooks/useLayoutButton.js';
 import { useSelector } from 'react-redux';
-import { dockerSelector } from '@/redux/selectors';
-import DockLayout from 'rc-dock';
+import React, { MutableRefObject } from 'react';
+import type { DockLayout } from 'rc-dock';
 
 export const LayoutDropdown = () => {
-  const dockerRef = useSelector(
-    dockerSelector,
-  ) as MutableRefObject<DockLayout>;
+  const dockerRef = useSelector(dockerSelector) as MutableRefObject<DockLayout>;
 
   const { onClick } = useLayoutButton();
 
@@ -41,8 +34,8 @@ export const LayoutDropdown = () => {
       const file = e.target.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = (e) => {
-        const text = (e.target as any).result;
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        const text = e.target?.result as string;
         const data = JSON.parse(text);
         dockerRef.current.loadLayout(data);
       };
@@ -55,7 +48,10 @@ export const LayoutDropdown = () => {
     <DropdownMenu>
       <Tooltip label="Layout" side="bottom">
         <DropdownMenu.Trigger asChild>
-          <Button variant='invisible' style={{ paddingLeft: '0', paddingRight: '0' }}>
+          <Button
+            variant="invisible"
+            style={{ paddingLeft: '0', paddingRight: '0' }}
+          >
             <LayoutLeft />
           </Button>
         </DropdownMenu.Trigger>
@@ -115,7 +111,6 @@ export const LayoutDropdown = () => {
           <DropdownMenu.Item onSelect={loadLayout}>
             Load Layout
           </DropdownMenu.Item>
-
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </DropdownMenu>

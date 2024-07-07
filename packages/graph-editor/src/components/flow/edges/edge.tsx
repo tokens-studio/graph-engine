@@ -1,17 +1,16 @@
+import { EdgeType } from '../../../redux/models/settings.js';
+import { Port } from '@tokens-studio/graph-engine';
 import {
-  getBezierPath,
+  Position,
   getSimpleBezierPath,
   getSmoothStepPath,
   getStraightPath,
-  Position,
 } from 'reactflow';
-import { getBetterBezierPath } from "./offsetBezier.js";
-import React from 'react';
-import { useSelector } from 'react-redux';
 import { edgeType as edgeTypeSelector } from '../../../redux/selectors/settings.js';
-import { EdgeType } from '../../../redux/models/settings.js';
+import { getBetterBezierPath } from './offsetBezier.js';
 import { useLocalGraph } from '@/context/graph.js';
-import { Port } from '@tokens-studio/graph-engine';
+import { useSelector } from 'react-redux';
+import React from 'react';
 import colors from '@/tokens/colors.js';
 
 interface IArticulatedPath {
@@ -32,15 +31,13 @@ type IPathOutput = [
   offsetY: number,
 ];
 
-const getArticulatedPath = (opts: IArticulatedPath): [IPathOutput] => {
+const getArticulatedPath = (opts: IArticulatedPath): IPathOutput => {
   const { sourceX, sourceY, targetX, targetY } = opts;
-
 
   //Minimum percentage between the two points dedicated to horizontal movement;
 
   const deltaX = targetX - sourceX;
   const deltaY = targetY - sourceY;
-
 
   let arc = '';
 
@@ -52,8 +49,9 @@ const getArticulatedPath = (opts: IArticulatedPath): [IPathOutput] => {
     const paddingX = (deltaX - dist) / 2;
 
     //Create the svg path
-    arc = `M ${sourceX} ${sourceY} C ${sourceX + paddingX} ${sourceY} ${targetX - paddingX
-      } ${targetY} ${targetX} ${targetY}`;
+    arc = `M ${sourceX} ${sourceY} C ${sourceX + paddingX} ${sourceY} ${
+      targetX - paddingX
+    } ${targetY} ${targetX} ${targetY}`;
   } else {
     const dist = deltaX;
 
@@ -61,24 +59,15 @@ const getArticulatedPath = (opts: IArticulatedPath): [IPathOutput] => {
     const paddingY = (deltaY - dist) / 2;
 
     //Create the svg path
-    arc = `M ${sourceX} ${sourceY} C ${sourceX} ${sourceY + paddingY
-      } ${targetX} ${targetY - paddingY} ${targetX} ${targetY}`;
+    arc = `M ${sourceX} ${sourceY} C ${sourceX} ${
+      sourceY + paddingY
+    } ${targetX} ${targetY - paddingY} ${targetX} ${targetY}`;
   }
 
-
-  return [
-    arc,
-    targetX,
-    targetY,
-    0,
-    0,
-  ];
+  return [arc, targetX, targetY, 0, 0];
 };
 
-
-const extractColor = (
-  port: Port,
-) => {
+const extractColor = (port: Port) => {
   let id = port.type.$id || '';
   const isArray = Boolean(port.type.type == 'array');
 
@@ -103,7 +92,6 @@ export default function CustomEdge({
   style = {},
   data,
   markerEnd,
-  isConnecting = false,
 }) {
   const edgeType = useSelector(edgeTypeSelector);
   const graph = useLocalGraph();
@@ -117,11 +105,10 @@ export default function CustomEdge({
     const sourcePort = sourceNode?.outputs[edge?.sourceHandle];
 
     if (sourcePort) {
-      let { backgroundColor } = extractColor(sourcePort as Port)
+      const { backgroundColor } = extractColor(sourcePort as Port);
       col = backgroundColor;
     }
   }
-
 
   let edgeFn;
   switch (edgeType) {
@@ -150,17 +137,13 @@ export default function CustomEdge({
     targetPosition,
   });
 
-
-
   return (
     <>
       <path
         id={id}
         className="react-flow__edge-path"
         d={edgePath}
-        style={{...style,
-          stroke:col
-        }}
+        style={{ ...style, stroke: col }}
         markerEnd={markerEnd}
       />
       <path

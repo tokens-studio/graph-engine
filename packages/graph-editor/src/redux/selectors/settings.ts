@@ -5,7 +5,6 @@ export const edgeType = createSelector(settings, (state) => state.edgeType);
 
 export const layoutType = createSelector(settings, (state) => state.layoutType);
 
-
 export const debugMode = createSelector(settings, (state) => state.debugMode);
 export const inlineTypes = createSelector(
   settings,
@@ -24,8 +23,20 @@ export const showTimings = createSelector(
   (state) => state.showTimings,
 );
 
-export const showMinimapSelector = createSelector(settings, (state) => state.showMinimap);
+export const showMinimapSelector = createSelector(
+  settings,
+  (state) => state.showMinimap,
+);
 
-export const delayedUpdateSelector = createSelector(settings, (state) => state.delayedUpdate);
-export const showSearchSelector = createSelector(settings, (state) => state.showSearch);
-export const connectOnClickSelector = createSelector(settings, (state) => state.connectOnClick);
+export const delayedUpdateSelector = createSelector(
+  settings,
+  (state) => state.delayedUpdate,
+);
+export const showSearchSelector = createSelector(
+  settings,
+  (state) => state.showSearch,
+);
+export const connectOnClickSelector = createSelector(
+  settings,
+  (state) => state.connectOnClick,
+);

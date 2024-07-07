@@ -1,23 +1,23 @@
-import { DeepKeyTokenMap, SingleToken, TokenTypes } from "@tokens-studio/types";
-import { setProperty } from "dot-prop";
+import { DeepKeyTokenMap, SingleToken, TokenTypes } from '@tokens-studio/types';
+import { setProperty } from 'dot-prop';
 
 export interface IResolvedToken {
-  /**
-   * Name of the token
-   */
-  name: string;
-  /**
-   * Expression that represents the value of the token, botentially jsons stringified
-   */
-  value: SingleToken["value"];
-  /**
-   * The type of the token
-   */
-  type: TokenTypes;
-  /**
-   * Optional description of the token
-   */
-  description?: string;
+	/**
+	 * Name of the token
+	 */
+	name: string;
+	/**
+	 * Expression that represents the value of the token, botentially jsons stringified
+	 */
+	value: SingleToken['value'];
+	/**
+	 * The type of the token
+	 */
+	type: TokenTypes;
+	/**
+	 * Optional description of the token
+	 */
+	description?: string;
 }
 
 /**
@@ -27,28 +27,28 @@ export interface IResolvedToken {
  * @returns
  */
 export const flatten = (
-  nested: DeepKeyTokenMap,
-  keyPath: string[] = []
+	nested: DeepKeyTokenMap,
+	keyPath: string[] = []
 ): IResolvedToken[] => {
-  return Object.entries(nested).reduce((acc, [key, val]) => {
-    //Check if leaf node
-    if (val && typeof val.value !== "undefined") {
-      const leaf = val as SingleToken;
-      acc.push({
-        name: [...keyPath, key].join("."),
-        value: leaf.value,
-        type: leaf.type,
-        description: leaf.description,
-      });
-      return acc;
-    }
+	return Object.entries(nested).reduce((acc, [key, val]) => {
+		//Check if leaf node
+		if (val && typeof val.value !== 'undefined') {
+			const leaf = val as SingleToken;
+			acc.push({
+				name: [...keyPath, key].join('.'),
+				value: leaf.value,
+				type: leaf.type,
+				description: leaf.description
+			});
+			return acc;
+		}
 
-    //else continue recursing
-    const flattened = flatten(val as DeepKeyTokenMap, [...keyPath, key]);
-    acc = acc.concat(flattened);
+		//else continue recursing
+		const flattened = flatten(val as DeepKeyTokenMap, [...keyPath, key]);
+		acc = acc.concat(flattened);
 
-    return acc;
-  }, [] as IResolvedToken[]);
+		return acc;
+	}, [] as IResolvedToken[]);
 };
 
 /**
@@ -58,10 +58,13 @@ export const flatten = (
  * @returns
  */
 export const flatTokensToMap = (tokens: IResolvedToken[]) => {
-  return tokens.reduce((acc, token) => {
-    acc[token.name] = token;
-    return acc;
-  }, {} as Record<string, IResolvedToken>);
+	return tokens.reduce(
+		(acc, token) => {
+			acc[token.name] = token;
+			return acc;
+		},
+		{} as Record<string, IResolvedToken>
+	);
 };
 
 /**
@@ -70,14 +73,12 @@ export const flatTokensToMap = (tokens: IResolvedToken[]) => {
  * @returns
  */
 export const flatTokensRestoreToMap = (tokens: IResolvedToken[]) => {
-  const returning = {};
-  tokens.forEach((token) => {
-    const { name, ...rest } = token;
-    setProperty(returning, name, {
-      ...rest,
-    });
-  });
-  return returning;
+	const returning = {};
+	tokens.forEach(token => {
+		const { name, ...rest } = token;
+		setProperty(returning, name, {
+			...rest
+		});
+	});
+	return returning;
 };
-
-

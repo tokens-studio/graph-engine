@@ -1,21 +1,21 @@
+import { ContextMenuItem } from './ContextMenuStyles.js';
 import { Menu, Separator } from 'react-contexify';
-import React, { useCallback } from 'react';
+import { clear } from '../../editor/actions/clear.js';
+import { showGrid, snapGrid } from '@/redux/selectors/settings.js';
+import { useAction } from '@/editor/actions/provider.js';
+import { useAutoLayout } from '../../editor/hooks/useAutolayout.js';
+import { useDispatch } from '@/hooks/index.js';
+import { useLocalGraph } from '@/context/graph.js';
 import { useReactFlow } from 'reactflow';
-import { useAutoLayout } from '../../editor/hooks/useAutolayout';
 import { useSelector } from 'react-redux';
-import { showGrid, snapGrid } from '@/redux/selectors/settings';
-import { useDispatch } from '@/hooks';
-import { ContextMenuItem } from './ContextMenuStyles';
-import { clear } from '../../editor/actions/clear';
-import { useLocalGraph } from '@/context/graph';
-import { useAction } from '@/editor/actions/provider';
+import React, { useCallback } from 'react';
 
-export interface IPaneContextMenu {
+export interface IPaneContextMenu<T = unknown> {
   id: string;
-  onSelectItem: (item: any) => void;
+  onSelectItem: (item: T) => void;
 }
 
-export const PaneContextMenu = ({ id }: IPaneContextMenu) => {
+export const PaneContextMenu = <T = unknown,>({ id }: IPaneContextMenu<T>) => {
   const reactFlowInstance = useReactFlow();
   const showGridValue = useSelector(showGrid);
   const snapGridValue = useSelector(snapGrid);
@@ -23,12 +23,9 @@ export const PaneContextMenu = ({ id }: IPaneContextMenu) => {
   const graph = useLocalGraph();
   const createNode = useAction('createNode');
 
-  const handleTriggerAddNode = useCallback(
-    (e) => {
-      dispatch.ui.setShowNodesCmdPalette(true);
-    },
-    [dispatch.ui],
-  );
+  const handleTriggerAddNode = useCallback(() => {
+    dispatch.ui.setShowNodesCmdPalette(true);
+  }, [dispatch.ui]);
 
   const handleAddNote = useCallback(
     (e) => {
@@ -45,7 +42,6 @@ export const PaneContextMenu = ({ id }: IPaneContextMenu) => {
         },
       };
       createNode(noteNode);
-
     },
     [reactFlowInstance, createNode],
   );

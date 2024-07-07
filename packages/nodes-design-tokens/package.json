@@ -6,36 +6,27 @@
   "author": "andrew@hyma.io",
   "type": "module",
   "exports": {
-    "./*": {
-      "import": "./dist/*",
-      "require": "./dist/*",
-      "types": "./dist/*"
-    },
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
       "types": "./dist/index.d.ts"
     }
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsc -p tsconfig.prod.json",
     "dev": "tsup --watch",
     "docs": "typedoc",
     "format": "npm run format:eslint && npm run format:prettier",
-    "format:eslint": "eslint --ext .tsx,.ts,.js,.html . --fix",
-    "format:prettier": "prettier \"**/*.{ts,js,md,json}\" --write",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
+    "format:eslint": "eslint . --fix",
+    "format:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --write",
+    "lint": "npm run lint:prettier && npm run lint:eslint",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --check",
     "release": "npm run build && changeset publish",
-    "test": "jest --passWithNoTests"
+    "test": "vitest run"
   },
-  "sideEffects": false,
-  "types": "./dist/index.d.ts",
   "dependencies": {
     "@adobe/leonardo-contrast-colors": "^1.0.0",
     "@tokens-studio/types": "^0.4.0",
@@ -52,28 +43,22 @@
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "eslint": "8.57.0",
     "@babel/preset-env": "^7.21.5",
-    "@changesets/cli": "2.26.0",
-    "@jest/globals": "^29.5.0",
-    "@tokens-studio/eslint-custom-config": "*",
+    "@changesets/cli": "^2.26.0",
+    "@tokens-studio/eslint-config-custom": "*",
+    "@tokens-studio/prettier-config-custom": "*",
     "@tokens-studio/graph-editor": "*",
     "@tokens-studio/graph-engine": "*",
-    "@types/jest": "28.1.0",
     "@types/node": "^18.15.11",
-    "jest": "28.1.0",
-    "jest-junit": "^15.0.0",
-    "ts-jest": "28.0.3",
-    "ts-jest-resolver": "^2.0.1",
     "ts-node": "^10.9.1",
-    "tsup": "^8.0.2",
+    "tsup": "^8.1.0",
     "typedoc": "^0.24.7",
-    "typescript": "4.8.4"
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
   },
   "keywords": [
     "studio",
     "tokens",
     "ui"
-  ],
-  "jsnext:main": "./dist/index.js"
+  ]
 }

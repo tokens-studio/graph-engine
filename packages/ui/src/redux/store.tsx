@@ -7,28 +7,27 @@ import persistPlugin from '@rematch/persist';
 import storage from 'redux-persist/lib/storage';
 
 const persistConfig = {
-  key: 'root',
-  storage,
-  whitelist: ['journey', 'settings', 'storage'],
-  transforms: [],
+	key: 'root',
+	storage,
+	whitelist: ['journey', 'settings', 'storage'],
+	transforms: []
 };
 
-
 export const store = init({
-  models,
-  //@ts-ignore
-  plugins: [persistPlugin(persistConfig)],
-  redux: {
-    devtoolOptions: {},
-    rootReducers: {
-      RESET_APP: () => undefined,
-    },
-  },
+	models,
+	//@ts-ignore
+	plugins: [persistPlugin(persistConfig)],
+	redux: {
+		devtoolOptions: {},
+		rootReducers: {
+			RESET_APP: () => undefined
+		}
+	}
 });
 
 export type Dispatch = RematchDispatch<RootModel>;
 export type RootState = {
-  ui: UIState;
-  journey: JourneyState;
-  refs: RefState;
+	ui: UIState;
+	journey: JourneyState;
+	refs: RefState;
 };

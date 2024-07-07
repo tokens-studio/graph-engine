@@ -1,13 +1,11 @@
-import { dockerSelector } from "@/redux/selectors";
-import DockLayout, { TabData } from "rc-dock";
-import { MutableRefObject } from "react";
-import { useSelector } from "react-redux";
-import { LayoutButtons, layoutButtons } from "../layoutButtons";
+import { LayoutButtons, layoutButtons } from '../layoutButtons';
+import { MutableRefObject } from 'react';
+import { dockerSelector } from '@/redux/selectors';
+import { useSelector } from 'react-redux';
+import DockLayout, { TabData } from 'rc-dock';
 
 export const useLayoutButton = () => {
-  const dockerRef = useSelector(
-    dockerSelector,
-  ) as MutableRefObject<DockLayout>;
+  const dockerRef = useSelector(dockerSelector) as MutableRefObject<DockLayout>;
 
   const onClick = (id: LayoutButtons) => {
     const existing = dockerRef.current.find(id) as TabData;
@@ -43,6 +41,6 @@ export const useLayoutButton = () => {
   };
 
   return {
-    onClick
-  }
-}
+    onClick,
+  };
+};

@@ -2,7 +2,7 @@ import { ExternalLoadOptions } from '@tokens-studio/graph-engine';
 import React, { createContext, useContext, useMemo } from 'react';
 
 type ExternalLoaderType = {
-  externalLoader?: (opts: ExternalLoadOptions) => Promise<any> | any;
+  externalLoader?: (opts: ExternalLoadOptions) => Promise<unknown> | unknown;
 };
 
 const ExternalLoaderContext = createContext<ExternalLoaderType | undefined>(
@@ -14,7 +14,7 @@ function ExternalLoaderProvider({
   externalLoader,
 }: {
   children: React.ReactNode;
-  externalLoader?: (opts: ExternalLoadOptions) => Promise<any> | any;
+  externalLoader?: (opts: ExternalLoadOptions) => Promise<unknown> | unknown;
 }) {
   const providerValue = useMemo(() => ({ externalLoader }), [externalLoader]);
 

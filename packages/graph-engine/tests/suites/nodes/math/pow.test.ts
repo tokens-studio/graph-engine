@@ -1,13 +1,14 @@
-import Node from "../../../../src/nodes/math/pow";
-import { Graph } from "../../../../src/graph/graph.js";
+import { Graph } from '../../../../src/graph/graph.js';
+import { expect } from 'chai';
+import Node from '../../../../src/nodes/math/pow.js';
 
-describe("math/pow", () => {
-  it("powers two numbers", async () => {
-    const graph = new Graph();
-    const node = new Node({ graph });
-    node.inputs.base.setValue(2);
-    node.inputs.exponent.setValue(2);
-    await node.execute();
-    expect(node.outputs.value.value).toStrictEqual(4);
-  });
+describe('math/pow', () => {
+	it('powers two numbers', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
+		node.inputs.base.setValue(2);
+		node.inputs.exponent.setValue(2);
+		await node.execute();
+		expect(node.outputs.value.value).to.equal(4);
+	});
 });

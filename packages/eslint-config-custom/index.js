@@ -1,13 +1,9 @@
 const { resolve } = require("node:path");
 const project = resolve(process.cwd(), "tsconfig.json");
 
-
-
-// Eslint does not support module exports, so we need to use CommonJS syntax
-
-
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
+  ignorePatterns: ['**/dist/**/*'],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -41,4 +37,7 @@ module.exports = {
       },
     ],
   },
+  env: {
+    browser: true
+  }
 };

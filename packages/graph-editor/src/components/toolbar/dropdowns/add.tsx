@@ -1,17 +1,12 @@
-import React, { useCallback } from 'react';
-import {
-  Button,
-  DropdownMenu,
-  Stack,
-  Tooltip
-} from '@tokens-studio/ui';
-import { Plus, NavArrowRight } from 'iconoir-react';
-import { useSelector } from 'react-redux';
-import { panelItemsSelector } from '@/redux/selectors';
+import { Button, DropdownMenu, Stack, Tooltip } from '@tokens-studio/ui';
+import { NavArrowRight, Plus } from 'iconoir-react';
+import { panelItemsSelector } from '@/redux/selectors/index.js';
+import { useAction } from '@/editor/actions/provider.js';
+import { useDispatch } from '@/hooks/index.js';
 import { useReactFlow } from 'reactflow';
-import { useAction } from '@/editor/actions/provider';
-import { useDispatch } from '@/hooks';
-import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes';
+import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
+import { useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
 
 export const AddDropdown = () => {
   const data = useSelector(panelItemsSelector);
@@ -33,36 +28,37 @@ export const AddDropdown = () => {
     mousePositionRef.current = { x: e.clientX, y: e.clientY };
   }, []);
 
-  const openQuickSearch = useCallback(
-    () => {
-      // Quick search window does not get the focus if open from a dropdown item, hence the setTimeout
-      setTimeout(() => {
-        dispatch.ui.setShowNodesCmdPalette(true);
-      });
+  const openQuickSearch = useCallback(() => {
+    // Quick search window does not get the focus if open from a dropdown item, hence the setTimeout
+    setTimeout(() => {
+      dispatch.ui.setShowNodesCmdPalette(true);
+    });
+  }, [dispatch.ui]);
+
+  const addNode = useCallback(
+    (type: string) => {
+      const newNode = {
+        type,
+        position: reactFlowInstance.screenToFlowPosition(
+          mousePositionRef.current,
+        ),
+      };
+
+      const node = createNode(newNode);
+
+      if (node) {
+        selectAddedNodes([node.flowNode]);
+      }
     },
-    [dispatch.ui],
+    [reactFlowInstance, createNode, selectAddedNodes],
   );
 
-  const addNode = useCallback((type: string) => {
-    const newNode = {
-      type,
-      position: reactFlowInstance.screenToFlowPosition(mousePositionRef.current),
-    };
-
-    const node = createNode(newNode);
-
-    if (node) {
-      selectAddedNodes([node.flowNode]);
-    }
-  }, [reactFlowInstance, createNode]);
-
   const nodes = React.useMemo(() => {
-    return data.groups.map(group => {
-
+    return data.groups.map((group) => {
       return (
         <DropdownMenu.Sub key={group.key}>
           <DropdownMenu.SubTrigger>
-            <Stack gap={3} align='center'>
+            <Stack gap={3} align="center">
               {group.icon}
               {group.title}
             </Stack>
@@ -72,8 +68,11 @@ export const AddDropdown = () => {
           </DropdownMenu.SubTrigger>
           <DropdownMenu.Portal>
             <DropdownMenu.SubContent sideOffset={2} alignOffset={-5}>
-              {group.items.map(item => (
-                <DropdownMenu.Item key={item.type} onSelect={() => addNode(item.type)}>
+              {group.items.map((item) => (
+                <DropdownMenu.Item
+                  key={item.type}
+                  onSelect={() => addNode(item.type)}
+                >
                   {item.text}
                 </DropdownMenu.Item>
               ))}
@@ -81,14 +80,14 @@ export const AddDropdown = () => {
           </DropdownMenu.Portal>
         </DropdownMenu.Sub>
       );
-    })
+    });
   }, [data, addNode]);
 
   return (
     <DropdownMenu onOpenChange={onDropdownOpenChange}>
       <Tooltip label="Add node" side="bottom">
         <DropdownMenu.Trigger asChild>
-          <Button variant='primary'>
+          <Button variant="primary">
             <Plus />
           </Button>
         </DropdownMenu.Trigger>
@@ -97,9 +96,7 @@ export const AddDropdown = () => {
         <DropdownMenu.Content css={{ minWidth: '200px' }}>
           <DropdownMenu.Item onSelect={openQuickSearch}>
             Quick Search...
-            <DropdownMenu.TrailingVisual>
-              ⇧K
-            </DropdownMenu.TrailingVisual>
+            <DropdownMenu.TrailingVisual>⇧K</DropdownMenu.TrailingVisual>
           </DropdownMenu.Item>
           <DropdownMenu.Separator />
           {nodes}

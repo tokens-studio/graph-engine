@@ -1,18 +1,9 @@
-import {
-  Box,
-  Spinner,
-  Stack,
-  Text,
-} from '@tokens-studio/ui';
+import { Box, Spinner, Stack, Text } from '@tokens-studio/ui';
+import { IconoirProvider } from 'iconoir-react';
 import { styled } from '@stitches/react';
 import React, { useMemo } from 'react';
-import { IconoirProvider } from 'iconoir-react';
 
 const CollapserContainer = styled('div', {});
-
-interface Stats {
-  executionTime: number;
-}
 
 interface NodeProps {
   id: string;
@@ -74,14 +65,13 @@ const NodeWrapper = styled('div', {
 });
 
 export const Node = (props: NodeProps) => {
-  const { id, icon, title, subtitle, error, isAsync, children, controls, ...rest } =
+  const { icon, title, subtitle, error, isAsync, children, controls, ...rest } =
     props;
-
 
   return (
     <NodeWrapper error={Boolean(error)} className={error ? 'error' : ''}>
       <Stack
-        className='reactflow-draggable-handle'
+        className="reactflow-draggable-handle"
         direction="column"
         gap={0}
         css={{ flex: 1 }}
@@ -90,7 +80,6 @@ export const Node = (props: NodeProps) => {
         {title && (
           <>
             <Stack
-
               direction="row"
               justify="between"
               align="center"
@@ -102,7 +91,9 @@ export const Node = (props: NodeProps) => {
             >
               <Stack direction="row" gap={2} align="center">
                 {icon && (
-                  <IconoirProvider iconProps={{ width: '0.875em', height: '0.875em'}}>
+                  <IconoirProvider
+                    iconProps={{ width: '0.875em', height: '0.875em' }}
+                  >
                     {icon}
                   </IconoirProvider>
                 )}

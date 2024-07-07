@@ -4,7 +4,7 @@ import { refState } from './refs.ts';
 import { uiState } from './ui.ts';
 
 export interface RootModel extends Models<RootModel> {
-  ui: typeof uiState;
-  journey: typeof journeyState;
-  refs: typeof refState;
+	ui: typeof uiState;
+	journey: typeof journeyState;
+	refs: typeof refState;
 }
