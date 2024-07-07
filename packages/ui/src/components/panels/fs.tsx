@@ -1,168 +1,194 @@
 import { Box, Button, Stack, Text } from '@tokens-studio/ui';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import { EmptyPage, NavArrowDown } from 'iconoir-react';
 import { fs } from '../editor/data.ts';
-import { NavArrowDown, Folder, EmptyPage} from 'iconoir-react';
-import { styled } from '@/lib/stitches/stitches.config.ts';
 import { join } from 'path';
-
+import { styled } from '@/lib/stitches/stitches.config.ts';
+import React, { useCallback, useEffect, useMemo } from 'react';
 
 type DirectoryProps = {
-    name: string,
-    parentPath: string,
-    type: 'directory' | 'file',
-    items: DirectoryProps[]
-}
+	name: string;
+	parentPath: string;
+	type: 'directory' | 'file';
+	items: DirectoryProps[];
+};
 
 const File = styled(Box, {
-    cursor: 'pointer',
-    userSelect: 'none',
-    ':hover,[data-hovering]': {
-        backgroundColor: '$bgSubtle'
-    }
+	cursor: 'pointer',
+	userSelect: 'none',
+	':hover,[data-hovering]': {
+		backgroundColor: '$bgSubtle'
+	}
 });
 
 const Dir = styled('div', {
-    cursor: 'pointer',
-    userSelect: 'none',
-    ':hover,[data-hovering]': {
-        backgroundColor: '$bgSubtle'
-    }
+	cursor: 'pointer',
+	userSelect: 'none',
+	':hover,[data-hovering]': {
+		backgroundColor: '$bgSubtle'
+	}
 });
 
 function readFileAsBuffer(file): Promise<Buffer> {
-    return new Promise((resolve, reject) => {
-        const fileReader = new FileReader();
+	return new Promise((resolve, reject) => {
+		const fileReader = new FileReader();
 
-        fileReader.onload = () => {
-            const buffer = fileReader.result;
-            resolve(Buffer.from(buffer as ArrayBuffer));
-        };
+		fileReader.onload = () => {
+			const buffer = fileReader.result;
+			resolve(Buffer.from(buffer as ArrayBuffer));
+		};
 
-        fileReader.onerror = () => {
-            reject(fileReader.error);
-        };
+		fileReader.onerror = () => {
+			reject(fileReader.error);
+		};
 
-        fileReader.onabort = () => {
-            reject(new Error("File reading aborted"));
-        };
+		fileReader.onabort = () => {
+			reject(new Error('File reading aborted'));
+		};
 
-        if (file.size > 20 * 1024 * 1024) {
-            reject(new Error("File size exceeds 20MB limit"));
-        } else {
-            fileReader.readAsArrayBuffer(file);
-        }
-    });
+		if (file.size > 20 * 1024 * 1024) {
+			reject(new Error('File size exceeds 20MB limit'));
+		} else {
+			fileReader.readAsArrayBuffer(file);
+		}
+	});
 }
 
-export const Directory = ({ files, indent = 0 }: { files: DirectoryProps, indent: number }) => {
+export const Directory = ({
+	files,
+	indent = 0
+}: {
+	files: DirectoryProps;
+	indent: number;
+}) => {
+	const [isExpanded, setIsExpanded] = React.useState(true);
 
-    const [isExpanded, setIsExpanded] = React.useState(true);
+	const [hovering, setHovering] = React.useState(false);
 
-    const [hovering, setHovering] = React.useState(false);
+	const handleDragOver = useCallback(e => {
+		e.preventDefault();
+		e.stopPropagation();
+		e.dataTransfer.dropEffect = 'copy';
+		setHovering(true);
+	}, []);
 
-    const handleDragOver = useCallback((e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        e.dataTransfer.dropEffect = 'copy';
-        setHovering(true);
-    }, []);
+	const handleDrop = useCallback(
+		async e => {
+			e.preventDefault();
+			e.stopPropagation();
+			const dt = e.dataTransfer;
 
+			//Change fileList to array
+			const rawfiles = [...dt.files];
 
-    const handleDrop = useCallback(async (e) => {
+			rawfiles.map(async file => {
+				const buffer = await readFileAsBuffer(file);
+				const filePath = join(files.parentPath, files.name, file.name);
+				console.log(filePath);
+				fs.writeFileSync(filePath, buffer);
+			});
+		},
+		[files.name, files.parentPath]
+	);
 
-        e.preventDefault();
-        e.stopPropagation();
-        let dt = e.dataTransfer;
+	//Handle simple file
+	if (files.type === 'file') {
+		return (
+			<File>
+				<Stack
+					direction='row'
+					gap={2}
+					css={{ paddingLeft: indent * 10 + 'px' }}
+				>
+					<EmptyPage />
+					<Text>{files.name}</Text>
+				</Stack>
+			</File>
+		);
+	}
 
-        //Change fileList to array
-        let rawfiles = [...dt.files];
-
-        rawfiles.map(async (file) => {
-
-            const buffer = await readFileAsBuffer(file);
-            const filePath = join(files.parentPath, files.name, file.name);
-            console.log(filePath)
-            fs.writeFileSync(filePath, buffer)
-        });
-    }, [files.name, files.parentPath])
-
-    //Handle simple file
-    if (files.type === 'file') {
-        return <File>
-            <Stack direction='row' gap={2} css={{ paddingLeft: indent * 10 + 'px' }}>
-                <EmptyPage />
-                <Text >{files.name}</Text>
-            </Stack>
-        </File >
-    }
-
-    return (
-        <Stack direction='column' css={{ paddingLeft: indent * 10 + 'px' }}>
-            <Dir onClick={() => setIsExpanded(!isExpanded)} css={{ padding: '$1', cursor: 'pointer', background: hovering ? '$bgSubtle' : 'transparent' }}
-                onDragEnter={handleDragOver}
-                onDragOver={handleDragOver}
-                onDragLeave={() => setHovering(false)}
-                onDrop={handleDrop} data-hovering={hovering}>
-                <Stack direction='row' gap={2}>
-                    <NavArrowDown style={{ transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)' }} />
-                    <Text>
-                        {files.name}
-                    </Text>
-                </Stack>
-
-            </Dir>
-            <>
-                {isExpanded && files.items.map(x => <Directory files={x} indent={indent + 1} />)}
-            </>
-        </Stack>
-    )
-
-}
+	return (
+		<Stack direction='column' css={{ paddingLeft: indent * 10 + 'px' }}>
+			<Dir
+				onClick={() => setIsExpanded(!isExpanded)}
+				css={{
+					padding: '$1',
+					cursor: 'pointer',
+					background: hovering ? '$bgSubtle' : 'transparent'
+				}}
+				onDragEnter={handleDragOver}
+				onDragOver={handleDragOver}
+				onDragLeave={() => setHovering(false)}
+				onDrop={handleDrop}
+				data-hovering={hovering}
+			>
+				<Stack direction='row' gap={2}>
+					<NavArrowDown
+						style={{
+							transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)'
+						}}
+					/>
+					<Text>{files.name}</Text>
+				</Stack>
+			</Dir>
+			<>
+				{isExpanded &&
+					files.items.map(x => <Directory files={x} indent={indent + 1} />)}
+			</>
+		</Stack>
+	);
+};
 const readItemsRecursively = (path: string, parent: string = '') => {
-    const items = fs.readdirSync(path
-        , { withFileTypes: true }).map(x => {
-            if (x.isDirectory()) {
-                return {
-                    parentPath: parent,
-                    name: x.name,
-                    type: 'directory',
-                    items: readItemsRecursively(x.name, parent + x.name + '/')
-                }
-            } else {
-                return {
-                    parentPath: parent,
-                    name: x.name,
-                    type: 'file',
-                    items: []
-                }
-            }
-        }) as DirectoryProps[]
-    return items;
-}
+	const items = fs.readdirSync(path, { withFileTypes: true }).map(x => {
+		if (x.isDirectory()) {
+			return {
+				parentPath: parent,
+				name: x.name,
+				type: 'directory',
+				items: readItemsRecursively(x.name, parent + x.name + '/')
+			};
+		} else {
+			return {
+				parentPath: parent,
+				name: x.name,
+				type: 'file',
+				items: []
+			};
+		}
+	}) as DirectoryProps[];
+	return items;
+};
 
 export const FsPanel = () => {
-    const [trigger, setTrigger] = React.useState(0);
-    const tree = useMemo(() => readItemsRecursively('/', ''), [trigger]);
+	const [trigger, setTrigger] = React.useState(0);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const tree = useMemo(() => readItemsRecursively('/', ''), [trigger]);
 
-    //Note that using the filesystem spy is causing weird errors
-    useEffect(() => {
-        const watcher = fs.watch('/', { recursive: true }, (eventType, filename) => {
-            console.log(eventType, filename)
-            setTrigger(Math.random());
-        })
-        return () => watcher.close();
-    }, []);
+	//Note that using the filesystem spy is causing weird errors
+	useEffect(() => {
+		const watcher = fs.watch(
+			'/',
+			{ recursive: true },
+			(eventType, filename) => {
+				console.log(eventType, filename);
+				setTrigger(Math.random());
+			}
+		);
+		return () => watcher.close();
+	}, []);
 
+	const synchronize = useCallback(() => {
+		setTrigger(Math.random());
+	}, []);
 
-    const synchronize = useCallback(() => {
-        setTrigger(Math.random());
-    }, []);
-
-    return <Box css={{ padding: '$2' }}>
-        <Stack direction='column'>
-            <Directory files={{ name: '/', type: 'directory', items: tree, parentPath: '' }} indent={0} />
-            <Button onClick={synchronize}>Synchronize</Button>
-        </Stack>
-    </Box>
-
+	return (
+		<Box css={{ padding: '$2' }}>
+			<Stack direction='column'>
+				<Directory
+					files={{ name: '/', type: 'directory', items: tree, parentPath: '' }}
+					indent={0}
+				/>
+				<Button onClick={synchronize}>Synchronize</Button>
+			</Stack>
+		</Box>
+	);
 };

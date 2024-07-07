@@ -1,1 +1,1 @@
-export { useLocalGraph } from '../context/graph';
+export { useLocalGraph } from '../context/graph.js';

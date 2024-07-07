@@ -1,4 +1,4 @@
 export enum StorageProviderType {
-    LOCAL = 'local',
-    GITHUB = 'github'
-};
+	LOCAL = 'local',
+	GITHUB = 'github'
+}

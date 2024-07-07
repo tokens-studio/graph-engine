@@ -1,16 +1,15 @@
-import React from 'react';
 import {
   Box,
   Button,
+  Checkbox,
   DropdownMenu,
   Label,
   Stack,
-  TextInput,
-  Tooltip,
   Text,
-  Checkbox,
+  Tooltip,
 } from '@tokens-studio/ui';
-import { useSelector } from 'react-redux';
+import { EdgeType, LayoutType } from '@/redux/models/settings.js';
+import { InfoCircleSolid } from 'iconoir-react';
 import {
   connectOnClickSelector,
   delayedUpdateSelector,
@@ -20,11 +19,11 @@ import {
   layoutType,
   showMinimapSelector,
   showTimings,
-} from '@/redux/selectors/settings';
+} from '@/redux/selectors/settings.js';
+import { contextMenuSelector } from '@/redux/selectors/ui.js';
 import { useDispatch } from '@/hooks/useDispatch.js';
-import { EdgeType, LayoutType } from '@/redux/models/settings.js';
-import { InfoCircleSolid } from 'iconoir-react';
-import { contextMenuSelector } from '@/redux/selectors/ui';
+import { useSelector } from 'react-redux';
+import React from 'react';
 
 const EdgeValues = Object.values(EdgeType);
 const LayoutValues = Object.values(LayoutType);
@@ -40,7 +39,6 @@ export const Settings = () => {
   const contextMenus = useSelector(contextMenuSelector);
   const showMinimap = useSelector(showMinimapSelector);
   const dispatch = useDispatch();
-
 
   return (
     <Box
@@ -102,11 +100,7 @@ export const Settings = () => {
         <Stack direction="column" gap={2} justify="between">
           <Stack direction="row" gap={2} justify="between">
             <Label>Use delayed interaction</Label>
-            <Tooltip
-              label={
-                'Forces a user to click save to update port '
-              }
-            >
+            <Tooltip label={'Forces a user to click save to update port '}>
               <Box>
                 <Text>
                   <InfoCircleSolid />

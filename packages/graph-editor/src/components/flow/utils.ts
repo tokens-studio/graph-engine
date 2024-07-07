@@ -1,6 +1,5 @@
-import { Edge, Node } from 'reactflow';
+import { Node } from 'reactflow';
 import { NodeTypes } from './types.js';
-import React from 'react';
 
 // we have to make sure that parent nodes are rendered before their children
 export const sortNodes = (a: Node, b: Node): number => {

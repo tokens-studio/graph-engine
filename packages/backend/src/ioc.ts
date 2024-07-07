@@ -1,10 +1,10 @@
-import { Container, decorate, injectable } from "inversify";
-import { buildProviderModule } from "inversify-binding-decorators";
-import { Controller } from "@tsoa/runtime";
-import { logger } from '@/utils/logging';
-import winston from 'winston';
+import { Container, decorate, injectable } from 'inversify';
+import { Controller } from '@tsoa/runtime';
 import { PrismaClient } from '@prisma/client';
+import { buildProviderModule } from 'inversify-binding-decorators';
+import { logger } from '@/utils/logging';
 import { prisma } from '@/db';
+import winston from 'winston';
 
 // Create a new container tsoa can use
 const iocContainer = new Container();

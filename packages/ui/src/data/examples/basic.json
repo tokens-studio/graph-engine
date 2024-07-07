@@ -1,70 +1,70 @@
 {
-    "nodes": [
-        {
-            "id": "7ad87b26-59a2-4c91-9108-e53a6ed04bf5",
-            "type": "studio.tokens.generic.output",
-            "inputs": [
-                {
-                    "name": "input",
-                    "value": "foo",
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/any.json",
-                        "title": "Any"
-                    },
-                    "dynamicType": {
-                        "$id": "https://schemas.tokens.studio/string.json",
-                        "title": "String",
-                        "type": "string"
-                    },
-                    "visible": true
-                }
-            ],
-            "annotations": {
-                "ui.position.x": 616.4513753255208,
-                "ui.position.y": 229.8032379150391
-            }
-        },
-        {
-            "id": "f27042c0-c60f-443b-ad66-8c0cd089927e",
-            "type": "studio.tokens.generic.input",
-            "inputs": [
-                {
-                    "name": "value",
-                    "value": "foo",
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/string.json",
-                        "title": "String",
-                        "type": "string"
-                    },
-                    "annotations": {
-                        "ui.deletable": true
-                    }
-                }
-            ],
-            "annotations": {
-                "engine.singleton": true,
-                "engine.dynamicInputs": true,
-                "ui.position.x": 1.1851806640626137,
-                "ui.position.y": 230.4004618326823
-            }
-        }
-    ],
-    "edges": [
-        {
-            "id": "028d604c-175c-41bc-b907-843d89ff7767",
-            "source": "f27042c0-c60f-443b-ad66-8c0cd089927e",
-            "sourceHandle": "value",
-            "target": "7ad87b26-59a2-4c91-9108-e53a6ed04bf5",
-            "targetHandle": "input"
-        }
-    ],
-    "annotations": {
-        "engine.version": "0.12.0",
-        "ui.viewport": {
-            "x": 0,
-            "y": 0,
-            "zoom": 1.5
-        },
-        "ui.version": "2.9.4"
-    }
+	"nodes": [
+		{
+			"id": "7ad87b26-59a2-4c91-9108-e53a6ed04bf5",
+			"type": "studio.tokens.generic.output",
+			"inputs": [
+				{
+					"name": "input",
+					"value": "foo",
+					"type": {
+						"$id": "https://schemas.tokens.studio/any.json",
+						"title": "Any"
+					},
+					"dynamicType": {
+						"$id": "https://schemas.tokens.studio/string.json",
+						"title": "String",
+						"type": "string"
+					},
+					"visible": true
+				}
+			],
+			"annotations": {
+				"ui.position.x": 616.4513753255208,
+				"ui.position.y": 229.8032379150391
+			}
+		},
+		{
+			"id": "f27042c0-c60f-443b-ad66-8c0cd089927e",
+			"type": "studio.tokens.generic.input",
+			"inputs": [
+				{
+					"name": "value",
+					"value": "foo",
+					"type": {
+						"$id": "https://schemas.tokens.studio/string.json",
+						"title": "String",
+						"type": "string"
+					},
+					"annotations": {
+						"ui.deletable": true
+					}
+				}
+			],
+			"annotations": {
+				"engine.singleton": true,
+				"engine.dynamicInputs": true,
+				"ui.position.x": 1.1851806640626137,
+				"ui.position.y": 230.4004618326823
+			}
+		}
+	],
+	"edges": [
+		{
+			"id": "028d604c-175c-41bc-b907-843d89ff7767",
+			"source": "f27042c0-c60f-443b-ad66-8c0cd089927e",
+			"sourceHandle": "value",
+			"target": "7ad87b26-59a2-4c91-9108-e53a6ed04bf5",
+			"targetHandle": "input"
+		}
+	],
+	"annotations": {
+		"engine.version": "0.12.0",
+		"ui.viewport": {
+			"x": 0,
+			"y": 0,
+			"zoom": 1.5
+		},
+		"ui.version": "2.9.4"
+	}
 }

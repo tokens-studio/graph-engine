@@ -1,11 +1,11 @@
-import { observer } from 'mobx-react-lite';
-import React from 'react';
-import { DndItem, DndList, DndTrigger } from '../DndList';
-import { arrayMoveImmutable } from 'array-move';
-import { useGraph } from '@/hooks';
-import { GrabberIcon } from '../icons';
-import { IField } from './interface';
+import { DndItem, DndList, DndTrigger } from '../DndList.js';
+import { GrabberIcon } from '../icons/index.js';
+import { IField } from './interface.js';
 import { Input } from '@tokens-studio/graph-engine';
+import { arrayMoveImmutable } from 'array-move';
+import { observer } from 'mobx-react-lite';
+import { useGraph } from '@/hooks/index.js';
+import React from 'react';
 
 export const withVariadicField = (WrappedComponent) => {
   return observer(({ port }: IField) => {
@@ -14,10 +14,12 @@ export const withVariadicField = (WrappedComponent) => {
 
     const onSortEnd = ({ oldIndex, newIndex }) => {
       const newValue = arrayMoveImmutable(input.value, oldIndex, newIndex);
-      const newEdges = arrayMoveImmutable(port._edges, oldIndex, newIndex).map((edge, i) => {
-        edge.annotations['engine.index'] = i;
-        return edge;
-      });
+      const newEdges = arrayMoveImmutable(port._edges, oldIndex, newIndex).map(
+        (edge, i) => {
+          edge.annotations['engine.index'] = i;
+          return edge;
+        },
+      );
       // update edges property
       port._edges = newEdges;
       // update the value array
@@ -29,9 +31,17 @@ export const withVariadicField = (WrappedComponent) => {
     };
 
     return (
-      <DndList lockAxis='y' onSortEnd={onSortEnd} css={{ display: 'flex', flexDirection: 'column', gap: '$3' }}>
+      <DndList
+        lockAxis="y"
+        onSortEnd={onSortEnd}
+        css={{ display: 'flex', flexDirection: 'column', gap: '$3' }}
+      >
         {port._edges.map((edge, i) => (
-          <DndItem key={`input-${i}`} index={i} css={{ display: 'flex', gap: '$2', alignItems: 'center' }}>
+          <DndItem
+            key={`input-${i}`}
+            index={i}
+            css={{ display: 'flex', gap: '$2', alignItems: 'center' }}
+          >
             <DndTrigger>
               <GrabberIcon />
             </DndTrigger>

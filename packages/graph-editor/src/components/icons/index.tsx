@@ -1,3 +1,3 @@
-export * from './AppsIcon';
-export * from './BezierIcon';
-export * from './GrabberIcon';
+export * from './AppsIcon.js';
+export * from './BezierIcon.js';
+export * from './GrabberIcon.js';

@@ -1,13 +1,15 @@
+import { CapabilityFactory, Node } from '@tokens-studio/graph-engine';
+import { Control } from '@/types/controls.js';
+import {
+  DropPanelStore,
+  defaultPanelGroupsFactory,
+} from '@/components/panels/dropPanel/index.js';
 import { RootModel } from './root.js';
 import { createModel } from '@rematch/core';
-import { icons } from '@/registry/icon.js';
-import { CapabilityFactory, Node } from '@tokens-studio/graph-engine';
-import { inputControls } from '@/registry/inputControls.js';
 import { defaultControls } from '@/registry/control.js';
 import { defaultSpecifics } from '@/registry/specifics.js';
-import { DropPanelStore, defaultPanelGroupsFactory } from '@/components/panels/dropPanel/index.js';
-import { Control } from '@/types/controls.js';
-
+import { icons } from '@/registry/icon.js';
+import { inputControls } from '@/registry/inputControls.js';
 
 export interface RegistryState {
   //Additional specific controls for nodes. Appended to the end of the default controls
@@ -15,9 +17,9 @@ export interface RegistryState {
   icons: Record<string, React.ReactNode>;
   inputControls: Record<string, React.FC<{ node: Node }>>;
   controls: Control[];
-  nodeTypes: Record<string, typeof Node>
+  nodeTypes: Record<string, typeof Node>;
   panelItems: DropPanelStore;
-  capabilities: CapabilityFactory[]
+  capabilities: CapabilityFactory[];
 }
 
 export const registryState = createModel<RootModel>()({
@@ -43,7 +45,10 @@ export const registryState = createModel<RootModel>()({
         nodeTypes: payload,
       };
     },
-    setSpecifics: (state, payload: Record<string, React.FC<{ node: Node }>>) => {
+    setSpecifics: (
+      state,
+      payload: Record<string, React.FC<{ node: Node }>>,
+    ) => {
       return {
         ...state,
         nodeSpecifics: payload,
@@ -60,7 +65,7 @@ export const registryState = createModel<RootModel>()({
         ...state,
         icons: {
           ...state.icons,
-          ...payload
+          ...payload,
         },
       };
     },
@@ -81,6 +86,6 @@ export const registryState = createModel<RootModel>()({
         ...state,
         panelItems: payload,
       };
-    }
+    },
   },
 });

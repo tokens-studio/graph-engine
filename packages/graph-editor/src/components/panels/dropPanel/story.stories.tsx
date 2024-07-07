@@ -1,7 +1,10 @@
-import { DropPanel, DropPanelInner } from './index';
+import {
+  DropPanel,
+  DropPanelInner,
+  defaultPanelGroupsFactory,
+} from './index.js';
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { defaultPanelGroupsFactory } from './index';
 
 const meta: Meta<typeof DropPanel> = {
   title: 'Panels/DropPanel',
@@ -13,6 +16,6 @@ const defaultPanelItems = defaultPanelGroupsFactory();
 export default meta;
 type Story = StoryObj<typeof DropPanel>;
 export const Default: Story = {
-  render: (args) => <DropPanelInner  data={defaultPanelItems} />,
+  render: () => <DropPanelInner data={defaultPanelItems} />,
   args: {},
 };

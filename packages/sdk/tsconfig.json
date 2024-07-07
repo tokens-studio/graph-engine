@@ -12,7 +12,7 @@
     "outDir": "./types",
     "preserveConstEnums": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "rootDir": ".",
     "noImplicitAny": false,
     "esModuleInterop": true,

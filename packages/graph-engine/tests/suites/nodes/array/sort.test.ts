@@ -1,33 +1,34 @@
-import Node, { Order } from "../../../../src/nodes/array/sort.js";
-import { Graph } from "../../../../src/graph/graph.js";
+import { Graph } from '../../../../src/graph/graph.js';
+import { expect } from 'chai';
+import Node, { Order } from '../../../../src/nodes/array/sort.js';
 
-describe("array/sort", () => {
-  it("sorts the values as expected", async () => {
-    const graph = new Graph();
-    const node = new Node({ graph });
-    
-    node.inputs.array.setValue([1, 2, 3, 4]);
-    node.inputs.order.setValue(Order.DESC);
+describe('array/sort', () => {
+	it('sorts the values as expected', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-    await node.execute();
+		node.inputs.array.setValue([1, 2, 3, 4]);
+		node.inputs.order.setValue(Order.DESC);
 
-    const output = node.outputs.value.value;
+		await node.execute();
 
-    expect(output).toEqual([4, 3, 2, 1]);
-  });
+		const output = node.outputs.value.value;
 
-  it("sorts the values as expected", async () => {
-    const graph = new Graph();
-    const node = new Node({graph});
-    
-    node.inputs.array.setValue([{ a: 3 }, { a: 2 }, { a: 4 }]);
-    node.inputs.order.setValue(Order.ASC);
-    node.inputs.sortBy.setValue("a");
+		expect(output).to.eql([4, 3, 2, 1]);
+	});
 
-    await node.execute();
+	it('sorts the values as expected', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-    const output = node.outputs.value.value;
+		node.inputs.array.setValue([{ a: 3 }, { a: 2 }, { a: 4 }]);
+		node.inputs.order.setValue(Order.ASC);
+		node.inputs.sortBy.setValue('a');
 
-    expect(output).toEqual([{ a: 2 }, { a: 3 }, { a: 4 }]);
-  });
+		await node.execute();
+
+		const output = node.outputs.value.value;
+
+		expect(output).to.eql([{ a: 2 }, { a: 3 }, { a: 4 }]);
+	});
 });

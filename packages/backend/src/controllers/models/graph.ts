@@ -1,11 +1,10 @@
 export interface Graph {
+	/**
+	 * The email the user used to register his account
+	 */
+	email?: string;
 
-    /**
-     * The email the user used to register his account
-     */
-    email?: string;
-
-    name: string;
-    status?: "Happy" | "Sad";
-    phoneNumbers: string[];
+	name: string;
+	status?: 'Happy' | 'Sad';
+	phoneNumbers: string[];
 }

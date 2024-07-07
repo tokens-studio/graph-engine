@@ -1,7 +1,7 @@
 module.exports = {
 	root: true,
-	// This tells ESLint to load the config from the package `@tokens-studio/eslint-custom-config`
-	extends: ['@tokens-studio/eslint-custom-config'],
+	// This tells ESLint to load the config from the package `@tokens-studio/eslint-config-custom`
+	extends: ['@tokens-studio/eslint-config-custom'],
 	settings: {
 		next: {
 			rootDir: ['packages/*/']

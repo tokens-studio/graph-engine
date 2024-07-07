@@ -1,4 +1,4 @@
-import React from 'react';
+import { Button, Stack } from '@tokens-studio/ui';
 import {
   NodeProps,
   NodeToolbar,
@@ -9,8 +9,8 @@ import {
 } from 'reactflow';
 import { NodeResizer } from '@reactflow/node-resizer';
 import { useCallback } from 'react';
+import React from 'react';
 import useDetachNodes from '../../../hooks/useDetachNodes.js';
-import { Button, Stack } from '@tokens-studio/ui';
 
 const lineStyle = { borderColor: 'white' };
 const padding = 25;

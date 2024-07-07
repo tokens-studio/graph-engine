@@ -7,33 +7,29 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/esm/index.d.ts"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     }
   },
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm.js",
   "files": [
     "dist"
   ],
   "scripts": {
     "routes": "tsoa spec-and-routes",
-    "build": "npm run routes &&  tsup",
+    "build": "npm run routes && tsup",
     "live": "concurrently \"nodemon -x tsoa spec-and-routes\" \"nodemon\"",
     "dev": "npm run routes && nodemon",
     "docs": "typedoc",
     "start": "node ./dist/index.js",
     "format": "npm run format:eslint && npm run format:prettier",
-    "format:eslint": "eslint --ext .tsx,.ts,.js,.html . --fix",
-    "format:prettier": "prettier \"**/*.{ts,js,md,json}\" --write",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
+    "format:eslint": "eslint . --fix",
+    "format:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --write",
+    "lint": "npm run lint:prettier && npm run lint:eslint",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --check",
     "release": "npm run build && changeset publish",
     "test": "jest --passWithNoTests"
   },
-  "sideEffects": true,
-  "types": "./dist/esm/index.d.ts",
   "dependencies": {
     "@grpc/grpc-js": "^1.10.6",
     "@opentelemetry/api": "^1.8.0",
@@ -58,15 +54,16 @@
     "@opentelemetry/auto-instrumentations-node": "^0.44.0",
     "@ory/kratos-client": "^1.1.0",
     "@tokens-studio/graph-engine": "*",
+    "@tokens-studio/eslint-config-custom": "*",
+    "@tokens-studio/prettier-config-custom": "*",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.7",
     "@types/swagger-ui-express": "^4.1.6",
     "nodemon": "^3.1.0",
-    "eslint": "8.57.0",
     "prisma": "^5.13.0",
     "supertest": "^6.3.4",
-    "tsup": "^8.0.2",
+    "tsup": "^8.1.0",
     "tsx": "^4.7.2",
     "typescript": "^5.4.5"
   },
@@ -75,6 +72,5 @@
     "tokens",
     "graph",
     "backend"
-  ],
-  "jsnext:main": "./dist/esm/index.js"
+  ]
 }

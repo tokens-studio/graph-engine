@@ -3,16 +3,16 @@ import { createSelector } from 'reselect';
 import { ui } from './roots.ts';
 
 export const previewCodeSelector = createSelector(
-  ui,
-  (state) => state.previewCode,
+	ui,
+	state => state.previewCode
 );
 export const showNodesPanelSelector = createSelector(
-  ui,
-  (state) => state.showNodesPanel,
+	ui,
+	state => state.showNodesPanel
 );
 
 export const showJourneySelector = (state: RootState) =>
-  state.journey.showJourney;
+	state.journey.showJourney;
 
 export const showExamplePickerSelector = (state: RootState) =>
-  state.ui.showExamplePicker;
+	state.ui.showExamplePicker;

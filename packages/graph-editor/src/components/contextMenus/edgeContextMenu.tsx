@@ -1,10 +1,6 @@
-import {
-  Menu,
-  Item,
-  Separator,
-} from 'react-contexify';
+import { Edge, useReactFlow } from 'reactflow';
+import { Item, Menu, Separator } from 'react-contexify';
 import React, { useCallback } from 'react';
-import { useReactFlow, Edge } from 'reactflow';
 
 export interface IEdgeContextMenuProps {
   id: string;
@@ -15,7 +11,7 @@ export const EdgeContextMenu = ({ id, edge }: IEdgeContextMenuProps) => {
   const reactFlowInstance = useReactFlow();
 
   const findOrigin = useCallback(() => {
-    const node = reactFlowInstance.getNode(edge?.source!);
+    const node = reactFlowInstance.getNode(edge?.source as string);
     if (node) {
       reactFlowInstance?.setCenter(
         node.position.x + (node.width || 0) / 2,
@@ -29,7 +25,7 @@ export const EdgeContextMenu = ({ id, edge }: IEdgeContextMenuProps) => {
   }, [edge, reactFlowInstance]);
 
   const findTarget = useCallback(() => {
-    const node = reactFlowInstance.getNode(edge?.target!);
+    const node = reactFlowInstance.getNode(edge?.target as string);
     if (node) {
       reactFlowInstance?.setCenter(
         node.position.x + (node.width || 0) / 2,
