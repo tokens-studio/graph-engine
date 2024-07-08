@@ -1,7 +1,7 @@
 {
   "name": "@tokens-studio/lit-storybook",
   "version": "1.0.0",
-  "license": "MIT",
+  "license": "MPL-2.0",
   "author": "andrew@hyma.io",
   "private": true,
   "dependencies": {

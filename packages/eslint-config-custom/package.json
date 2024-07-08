@@ -2,7 +2,7 @@
   "private": true,
   "name": "@tokens-studio/eslint-config-custom",
   "version": "0.0.0",
-  "license": "MIT",
+  "license": "MPL-2.0",
   "exports": {
     ".": "./index.js"
   },
