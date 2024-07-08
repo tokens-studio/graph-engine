@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/string/uppercase.js';
 
 describe('string/uppercase', () => {
-	it('uppercases all characters', async () => {
+	test('uppercases all characters', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/color/create.js';
 
 describe('color/create', () => {
-	it('creates the expected color with rgba', async () => {
+	test('creates the expected color with rgba', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -22,7 +22,7 @@ describe('color/create', () => {
 		});
 	});
 
-	it('creates the expected color with hsl', async () => {
+	test('creates the expected color with hsl', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -41,7 +41,7 @@ describe('color/create', () => {
 		});
 	});
 
-	it('creates the expected color with hsv', async () => {
+	test('creates the expected color with hsv', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

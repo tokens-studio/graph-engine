@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/array/concat.js';
 
 describe('array/concat', () => {
-	it('concats the expected nodes', async () => {
+	test('concats the expected nodes', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

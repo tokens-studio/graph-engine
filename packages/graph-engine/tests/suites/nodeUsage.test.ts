@@ -1,11 +1,11 @@
 import { Edge, Graph, nodeLookup } from '../../src/index.js';
 import { StringSchema } from '../../src/schemas/index.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import InputNode from '../../src/nodes/generic/input.js';
 import OutputNode from '../../src/nodes/generic/output.js';
 
 describe('nodeUsage', () => {
-	it('performs basic passthrough calculations', async () => {
+	test('performs basic passthrough calculations', async () => {
 		const graph = new Graph();
 
 		const input = new InputNode({

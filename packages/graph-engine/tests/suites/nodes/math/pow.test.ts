@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/math/pow.js';
 
 describe('math/pow', () => {
-	it('powers two numbers', async () => {
+	test('powers two numbers', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 		node.inputs.base.setValue(2);

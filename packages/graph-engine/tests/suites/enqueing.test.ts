@@ -1,12 +1,12 @@
 import { Graph } from '../../src/index.js';
 import { NumberSchema } from '../../src/schemas/index.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import ConstantNode from '../../src/nodes/generic/constant.js';
 import OutputNode from '../../src/nodes/generic/output.js';
 import SubtractNode from '../../src/nodes/math/subtractVariadic.js';
 
 describe('enqueing', () => {
-	it('automatically enqueues when using variadic types', async () => {
+	test('automatically enqueues when using variadic types', async () => {
 		const graph = new Graph();
 
 		const input1 = new ConstantNode({ id: '1', graph });
