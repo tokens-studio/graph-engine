@@ -14,6 +14,7 @@ COPY . .
 RUN turbo telemetry disable
 RUN turbo prune --scope @tokens-studio/graph-engine-ui --docker
 
+
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
 RUN apk add --no-cache libc6-compat
@@ -25,11 +26,13 @@ RUN yarn global add turbo
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/full/ .
 COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/patches ./patches 
 COPY --from=builder /app/out/yarn.lock ./yarn.lock
 # Build the project
 
 COPY ../turbo.json turbo.json
 RUN yarn install
+RUN yarn run postinstall
 
 # Uncomment and use build args to enable remote caching
 # ARG TURBO_TEAM
