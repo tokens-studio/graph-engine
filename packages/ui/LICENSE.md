@@ -361,7 +361,7 @@ Exhibit A - Source Code Form License Notice
 
 If it is not possible or desirable to put the notice in a particular
 file, then You may include the notice in a location (such as a LICENSE
-file in a relevant directory) where a recipient would be likely to look
+file in a relevant directory) wwhere a recipient would be likely to look
 for such a notice.
 
 You may add additional accurate notices of copyright ownership.

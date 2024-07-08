@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/array/slice.js';
 
 describe('array/slice', () => {
-	it('performs an array slice', async () => {
+	test('performs an array slice', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

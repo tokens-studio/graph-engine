@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/series/arithmetic.js';
 
 describe('series/arithmetic', () => {
-	it('generates the expected series', async () => {
+	test('generates the expected series', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

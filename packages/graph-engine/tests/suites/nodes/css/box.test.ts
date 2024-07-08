@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/css/box.js';
 
 describe('css/box', () => {
-	it('produces the css box descriptionbs', async () => {
+	test('produces the css box descriptionbs', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

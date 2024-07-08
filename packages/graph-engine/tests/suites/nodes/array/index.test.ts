@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/array/indexArray.js';
 
 describe('array/indexArray', () => {
-	it('returns the expected value', async () => {
+	test('returns the expected value', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -16,7 +16,7 @@ describe('array/indexArray', () => {
 		expect(output).to.eql(1);
 	});
 
-	it('returns undefined when out of bounds', async () => {
+	test('returns undefined when out of bounds', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

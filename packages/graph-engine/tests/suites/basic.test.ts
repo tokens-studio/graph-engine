@@ -4,11 +4,11 @@ import {
 	SerializedGraph,
 	nodeLookup
 } from '../../src/index.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import basic from '../data/processed/basic.js';
 
 describe('basic', () => {
-	it('performs basic passthrough calculations', async () => {
+	test('performs basic passthrough calculations', async () => {
 		const graph = new Graph().deserialize(
 			basic as unknown as SerializedGraph,
 			nodeLookup as Record<string, NodeFactory>

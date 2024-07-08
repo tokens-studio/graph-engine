@@ -1,11 +1,11 @@
 import { ContrastAlgorithm } from '../../../../src/types/index.js';
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import { getAllOutputs } from '../utils.js';
 import Node from '../../../../src/nodes/color/contrasting.js';
 
 describe('color/contrasting', () => {
-	it('should return the more contrasting color correctly with WCAG 3', async () => {
+	test('should return the more contrasting color correctly with WCAG 3', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -38,7 +38,7 @@ describe('color/contrasting', () => {
 		});
 	});
 
-	it('should return the more contrasting color correctly with WCAG 2', async () => {
+	test('should return the more contrasting color correctly with WCAG 2', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -71,7 +71,7 @@ describe('color/contrasting', () => {
 		});
 	});
 
-	it('should return false for sufficient contrast if below threshold', async () => {
+	test('should return false for sufficient contrast if below threshold', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

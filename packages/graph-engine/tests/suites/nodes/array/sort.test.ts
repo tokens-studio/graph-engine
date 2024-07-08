@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node, { Order } from '../../../../src/nodes/array/sort.js';
 
 describe('array/sort', () => {
-	it('sorts the values as expected', async () => {
+	test('sorts the values as expected', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -17,7 +17,7 @@ describe('array/sort', () => {
 		expect(output).to.eql([4, 3, 2, 1]);
 	});
 
-	it('sorts the values as expected', async () => {
+	test('sorts the values as expected', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

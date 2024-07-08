@@ -1,10 +1,10 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import { getAllOutputs } from '../utils.js';
 import Node from '../../../../src/nodes/color/convert.js';
 
 describe('color/convert', () => {
-	it('converts csslike colors to rgb', async () => {
+	test('converts csslike colors to rgb', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -25,7 +25,7 @@ describe('color/convert', () => {
 		});
 	});
 
-	it('converts csslike colors to a98rgb', async () => {
+	test('converts csslike colors to a98rgb', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -46,7 +46,7 @@ describe('color/convert', () => {
 		});
 	});
 
-	it('converts to p3 from hex', async () => {
+	test('converts to p3 from hex', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -69,7 +69,7 @@ describe('color/convert', () => {
 		});
 	});
 
-	it('converts to oklab from hex', async () => {
+	test('converts to oklab from hex', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -91,7 +91,7 @@ describe('color/convert', () => {
 		});
 	});
 
-	it('converts to oklab from xyz', async () => {
+	test('converts to oklab from xyz', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

@@ -1,9 +1,10 @@
 import { Graph } from '../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Passthrough from '../../../src/nodes/generic/passthrough.js';
 
+
 describe('Graph/topologic', () => {
-	it('should throw an error if a connection would result in multiple connections', async () => {
+	test('should throw an error if a connection would result in multiple connections', async () => {
 		const graph = new Graph();
 
 		const a = new Passthrough({ id: 'a', graph });
