@@ -13,3 +13,4 @@ build
 storybook-static
 .docusaurus
 cypress
+.next
