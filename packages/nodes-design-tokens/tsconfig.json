@@ -21,7 +21,7 @@
 		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
-		"types": ["jest", "node"],
+		"types": ["node"],
 		"baseUrl": "."
 	},
 	"include": ["stories/**/*", "src/**/*", "tests/**/*"],

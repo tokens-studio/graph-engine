@@ -28,8 +28,7 @@
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --check",
     "release": "npm run build && changeset publish",
-    "storybook": "storybook dev -p 6006",
-    "test": "jest --passWithNoTests"
+    "storybook": "storybook dev -p 6006"
   },
   "dependencies": {
     "@dagrejs/graphlib": "^2.2.2",

@@ -66,7 +66,7 @@ Add a testing file. The following is a basic test of the logic of the above math
 //This will depend on where you created your node file in step 2
 import Node from "@/nodes/math/add";
 import { Graph } from "@tokens-studio/graph-engine";
-import { describe, it, expect } from "@jest/globals";
+import { expect } from "chai";
 
 describe("math/add", () => {
   it("adds two numbers", async () => {

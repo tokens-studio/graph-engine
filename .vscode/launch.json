@@ -19,18 +19,7 @@
       "cwd": "${workspaceFolder}",
       "internalConsoleOptions": "neverOpen"
     },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Test current file",
-      "program": "${workspaceRoot}/node_modules/jest/bin/jest",
-      "args": [
-        "--config=./jest.config.ts",
-        "--coverage=false",
-        "--testPathPattern=${fileBasenameNoExtension}"
-      ],
-      "console": "integratedTerminal"
-    },
+
     {
       "name": "Next.js: debug server-side",
       "type": "node-terminal",

@@ -4,8 +4,6 @@
 "@tokens-studio/graph-engine": major
 "@tokens-studio/graph-engine-nodes-audio": major
 "@tokens-studio/graph-engine-migration": minor
-"@tokens-studio/graph-engine-backend": patch
-"@tokens-studio/graph-engine-sdk": patch
 "@tokens-studio/graph-engine-ui": major
 ---
 
