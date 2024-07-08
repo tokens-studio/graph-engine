@@ -6,10 +6,15 @@ import React from 'react';
 interface IInputPopover {
   children: React.ReactNode;
   trigger: React.ReactNode;
+  defaultOpen?: boolean;
 }
 
-const InputPopover = ({ children, trigger }: IInputPopover) => (
-  <Popover.Root>
+const InputPopover = ({
+  defaultOpen = false,
+  children,
+  trigger,
+}: IInputPopover) => (
+  <Popover.Root defaultOpen={defaultOpen}>
     <Popover.Trigger asChild>{trigger}</Popover.Trigger>
     <Popover.Portal>
       <PopoverContent sideOffset={5}>

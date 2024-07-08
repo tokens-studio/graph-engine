@@ -37,7 +37,6 @@
   },
   "devDependencies": {
     "@babel/plugin-syntax-import-attributes": "^7.24.7",
-    "@tokens-studio/graph-engine-backend": "*",
     "@tokens-studio/prettier-config-custom": "*",
     "@docusaurus/module-type-aliases": "^3.2.1",
     "@docusaurus/tsconfig": "^3.2.1",

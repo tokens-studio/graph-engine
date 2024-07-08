@@ -1,3 +1,4 @@
+import { Black, White, toColor } from './lib/utils.js';
 import {
 	ColorSchema,
 	NumberSchema,
@@ -6,7 +7,7 @@ import {
 import { Color as ColorType } from '../../types.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
-import Color from 'colorjs.io';
+import { setToPrecision } from '../../utils/precision.js';
 
 export const colorSpaces = ['Lab', 'ICtCp', 'Jzazbz'] as const;
 
@@ -33,13 +34,13 @@ export default class NodeDefinition extends Node {
 		this.addInput('colorA', {
 			type: {
 				...ColorSchema,
-				default: '#ffffff'
+				default: White
 			}
 		});
 		this.addInput('colorB', {
 			type: {
 				...ColorSchema,
-				default: '#000000'
+				default: Black
 			}
 		});
 		this.addInput('precision', {
@@ -62,19 +63,13 @@ export default class NodeDefinition extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const { color1, color2 } = this.getAllInputs();
+		const { colorA, colorB, space, precision } = this.getAllInputs();
 
-		let c1;
-		let c2;
-		try {
-			c1 = new Color(color1);
-			c2 = new Color(color2);
-		} catch (e) {
-			throw new Error('Invalid color inputs');
-		}
+		const a = toColor(colorA);
+		const b = toColor(colorB);
 
-		const distance = Color.deltaE(c1, c2, 'CMC');
+		const distance = a.distance(b, space);
 
-		this.setOutput('value', distance);
+		this.setOutput('value', setToPrecision(distance, precision));
 	}
 }

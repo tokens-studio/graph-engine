@@ -2,7 +2,7 @@ import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
 import { ColorPickerPopover } from '../colorPicker/index.js';
 import { FloppyDisk } from 'iconoir-react';
 import { IField } from './interface.js';
-import { Input } from '@tokens-studio/graph-engine';
+import { Input, hexToColor, toColor, toHex } from '@tokens-studio/graph-engine';
 import { delayedUpdateSelector } from '@/redux/selectors/index.js';
 import { observer } from 'mobx-react-lite';
 import { useSelector } from 'react-redux';
@@ -10,10 +10,16 @@ import React, { useCallback } from 'react';
 
 export const ColorField = observer(({ port, readOnly }: IField) => {
   const useDelayed = useSelector(delayedUpdateSelector);
-  const [val, setVal] = React.useState(port.value);
+  const [val, setVal] = React.useState('');
 
   React.useEffect(() => {
-    setVal(port.value);
+    //Convert to hex
+    try {
+      const hex = toHex(toColor(port.value));
+      setVal(hex);
+    } catch {
+      //Ignore
+    }
   }, [port.value]);
 
   const onChange = useCallback(
@@ -29,19 +35,23 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
       if (useDelayed) {
         return;
       }
-      (port as Input).setValue(col);
+
+      //We need to convert from hex
+      (port as Input).setValue(hexToColor(col));
     },
     [port, useDelayed],
   );
 
   if (readOnly) {
+    const hex = toHex(toColor(port.value));
+
     return (
       <Stack direction="row" justify="between" align="center">
         <Box
           as="button"
           css={{
             all: 'unset',
-            backgroundColor: port.value,
+            backgroundColor: hex,
             cursor: 'pointer',
             borderRadius: '$small',
             width: 26,
@@ -54,7 +64,7 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
           }}
           type="button"
         />
-        <Text>{port.value}</Text>
+        <Text>{hex}</Text>
       </Stack>
     );
   }

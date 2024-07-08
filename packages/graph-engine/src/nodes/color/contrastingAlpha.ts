@@ -3,6 +3,7 @@
  *
  * @packageDocumentation
  */
+import { Black, White, toColor, toColorObject } from './lib/utils.js';
 import {
 	ColorSchema,
 	NumberSchema,
@@ -10,7 +11,7 @@ import {
 } from '../../schemas/index.js';
 import { ContrastAlgorithm } from '../../types/index.js';
 import { INodeDefinition, Node } from '../../programmatic/node.js';
-import { Input, Output } from '../../programmatic/index.js';
+import { Input, Output } from '../../programmatic';
 import { flattenAlpha } from './lib/flattenAlpha.js';
 import Color from 'colorjs.io';
 
@@ -47,13 +48,13 @@ export default class NodeDefinition extends Node {
 		this.addInput('foreground', {
 			type: {
 				...ColorSchema,
-				default: '#000000'
+				default: Black
 			}
 		});
 		this.addInput('background', {
 			type: {
 				...ColorSchema,
-				default: '#ffffff'
+				default: White
 			}
 		});
 		this.addInput('algorithm', {
@@ -135,8 +136,8 @@ export default class NodeDefinition extends Node {
 			}
 		};
 
-		const foregroundColor = new Color(foreground);
-		const backgroundColor = new Color(background);
+		const foregroundColor = toColor(foreground);
+		const backgroundColor = toColor(background);
 		let currentContrast = contrastCheck(
 			foregroundColor,
 			backgroundColor,
@@ -169,7 +170,7 @@ export default class NodeDefinition extends Node {
 		);
 
 		this.setOutput('alpha', finalAlpha);
-		this.setOutput('color', finalColor.to('srgb').toString({ format: 'hex' }));
+		this.setOutput('color', toColorObject(finalColor));
 		this.setOutput('contrast', finalContrast);
 	}
 }

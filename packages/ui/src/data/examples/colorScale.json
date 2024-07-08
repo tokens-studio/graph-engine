@@ -6,11 +6,42 @@
 			"inputs": [
 				{
 					"name": "color",
-					"value": "#03ff09",
+					"value": {
+						"space": "sRGB",
+						"channels": [
+							0.8274509803921568, 0.23529411764705882, 0.23529411764705882
+						],
+						"alpha": 1
+					},
 					"type": {
 						"$id": "https://schemas.tokens.studio/color.json",
 						"title": "Color",
-						"type": "string"
+						"type": "object",
+						"properties": {
+							"channels": {
+								"type": "array",
+								"items": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								}
+							},
+							"space": {
+								"$id": "https://schemas.tokens.studio/string.json",
+								"title": "String",
+								"type": "string"
+							},
+							"alpha": {
+								"$id": "https://schemas.tokens.studio/number.json",
+								"title": "Number",
+								"type": "number"
+							}
+						},
+						"default": {
+							"space": "srgb",
+							"channels": [0, 0, 0]
+						},
+						"required": ["channels", "space"]
 					},
 					"visible": true
 				},
@@ -20,7 +51,8 @@
 					"type": {
 						"$id": "https://schemas.tokens.studio/number.json",
 						"title": "Number",
-						"type": "number"
+						"type": "number",
+						"default": 5
 					}
 				},
 				{
@@ -29,7 +61,8 @@
 					"type": {
 						"$id": "https://schemas.tokens.studio/number.json",
 						"title": "Number",
-						"type": "number"
+						"type": "number",
+						"default": 5
 					}
 				}
 			],
@@ -45,13 +78,43 @@
 				{
 					"name": "array",
 					"value": [
-						"#c0ffc2",
-						"#81ff84",
-						"#42ff46",
-						"#03ff09",
-						"#00c205",
-						"#008103",
-						"#004102"
+						{
+							"space": "HSL",
+							"channels": [0, 47.38493723849372, 64.8529411764706],
+							"alpha": 1
+						},
+						{
+							"space": "HSL",
+							"channels": [0, 31.589958158995813, 76.56862745098039],
+							"alpha": 1
+						},
+						{
+							"space": "HSL",
+							"channels": [0, 15.794979079497907, 88.2843137254902],
+							"alpha": 1
+						},
+						{
+							"space": "sRGB",
+							"channels": [
+								0.8274509803921568, 0.23529411764705882, 0.23529411764705882
+							],
+							"alpha": 1
+						},
+						{
+							"space": "HSL",
+							"channels": [0, 47.38493723849372, 39.852941176470594],
+							"alpha": 1
+						},
+						{
+							"space": "HSL",
+							"channels": [0, 31.589958158995813, 26.568627450980394],
+							"alpha": 1
+						},
+						{
+							"space": "HSL",
+							"channels": [0, 15.794979079497907, 13.284313725490193],
+							"alpha": 1
+						}
 					],
 					"type": {
 						"title": "Any[]",
@@ -67,7 +130,32 @@
 						"items": {
 							"$id": "https://schemas.tokens.studio/color.json",
 							"title": "Color",
-							"type": "string"
+							"type": "object",
+							"properties": {
+								"channels": {
+									"type": "array",
+									"items": {
+										"$id": "https://schemas.tokens.studio/number.json",
+										"title": "Number",
+										"type": "number"
+									}
+								},
+								"space": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"alpha": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								}
+							},
+							"default": {
+								"channels": [0, 0, 0],
+								"space": "srgb"
+							},
+							"required": ["channels", "space"]
 						}
 					},
 					"visible": true,
@@ -98,7 +186,11 @@
 						"inputs": [
 							{
 								"name": "value",
-								"value": "#004102",
+								"value": {
+									"space": "HSL",
+									"channels": [0, 15.794979079497907, 13.284313725490193],
+									"alpha": 1
+								},
 								"type": {
 									"$id": "https://schemas.tokens.studio/any.json",
 									"title": "Any"
@@ -106,7 +198,32 @@
 								"dynamicType": {
 									"$id": "https://schemas.tokens.studio/color.json",
 									"title": "Color",
-									"type": "string"
+									"type": "object",
+									"properties": {
+										"channels": {
+											"type": "array",
+											"items": {
+												"$id": "https://schemas.tokens.studio/number.json",
+												"title": "Number",
+												"type": "number"
+											}
+										},
+										"space": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"alpha": {
+											"$id": "https://schemas.tokens.studio/number.json",
+											"title": "Number",
+											"type": "number"
+										}
+									},
+									"default": {
+										"channels": [0, 0, 0],
+										"space": "srgb"
+									},
+									"required": ["channels", "space"]
 								},
 								"annotations": {
 									"ui.editable": false,
@@ -170,7 +287,7 @@
 								"value": {
 									"name": "primary-600",
 									"type": "color",
-									"value": "#004102"
+									"value": "[object Object]"
 								},
 								"type": {
 									"type": "array",
@@ -268,7 +385,7 @@
 							},
 							{
 								"name": "value",
-								"value": "#004102",
+								"value": "[object Object]",
 								"type": {
 									"$id": "https://schemas.tokens.studio/string.json",
 									"title": "String",
@@ -288,7 +405,11 @@
 						"inputs": [
 							{
 								"name": "value",
-								"value": "#004102",
+								"value": {
+									"space": "HSL",
+									"channels": [0, 15.794979079497907, 13.284313725490193],
+									"alpha": 1
+								},
 								"type": {
 									"$id": "https://schemas.tokens.studio/any.json",
 									"title": "Any"
@@ -296,7 +417,32 @@
 								"dynamicType": {
 									"$id": "https://schemas.tokens.studio/color.json",
 									"title": "Color",
-									"type": "string"
+									"type": "object",
+									"properties": {
+										"channels": {
+											"type": "array",
+											"items": {
+												"$id": "https://schemas.tokens.studio/number.json",
+												"title": "Number",
+												"type": "number"
+											}
+										},
+										"space": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"alpha": {
+											"$id": "https://schemas.tokens.studio/number.json",
+											"title": "Number",
+											"type": "number"
+										}
+									},
+									"default": {
+										"channels": [0, 0, 0],
+										"space": "srgb"
+									},
+									"required": ["channels", "space"]
 								},
 								"visible": true
 							}
@@ -314,12 +460,32 @@
 								"name": "array",
 								"value": ["primary", "600"],
 								"type": {
+									"title": "Any[]",
+									"type": "array",
+									"items": {
+										"$id": "https://schemas.tokens.studio/any.json",
+										"title": "Any"
+									},
+									"default": []
+								},
+								"dynamicType": {
 									"type": "array",
 									"items": {
 										"$id": "https://schemas.tokens.studio/string.json",
 										"title": "String",
 										"type": "string"
 									}
+								},
+								"visible": true
+							},
+							{
+								"name": "delimiter",
+								"value": "-",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string",
+									"default": "-"
 								},
 								"visible": true
 							},
@@ -516,37 +682,37 @@
 						{
 							"name": "primary-0",
 							"type": "color",
-							"value": "#c0ffc2"
+							"value": "[object Object]"
 						},
 						{
 							"name": "primary-100",
 							"type": "color",
-							"value": "#81ff84"
+							"value": "[object Object]"
 						},
 						{
 							"name": "primary-200",
 							"type": "color",
-							"value": "#42ff46"
+							"value": "[object Object]"
 						},
 						{
 							"name": "primary-300",
 							"type": "color",
-							"value": "#03ff09"
+							"value": "[object Object]"
 						},
 						{
 							"name": "primary-400",
 							"type": "color",
-							"value": "#00c205"
+							"value": "[object Object]"
 						},
 						{
 							"name": "primary-500",
 							"type": "color",
-							"value": "#008103"
+							"value": "[object Object]"
 						},
 						{
 							"name": "primary-600",
 							"type": "color",
-							"value": "#004102"
+							"value": "[object Object]"
 						}
 					],
 					"type": {
@@ -618,37 +784,37 @@
 						"primary-0": {
 							"name": "primary-0",
 							"type": "color",
-							"value": "#c0ffc2"
+							"value": "[object Object]"
 						},
 						"primary-100": {
 							"name": "primary-100",
 							"type": "color",
-							"value": "#81ff84"
+							"value": "[object Object]"
 						},
 						"primary-200": {
 							"name": "primary-200",
 							"type": "color",
-							"value": "#42ff46"
+							"value": "[object Object]"
 						},
 						"primary-300": {
 							"name": "primary-300",
 							"type": "color",
-							"value": "#03ff09"
+							"value": "[object Object]"
 						},
 						"primary-400": {
 							"name": "primary-400",
 							"type": "color",
-							"value": "#00c205"
+							"value": "[object Object]"
 						},
 						"primary-500": {
 							"name": "primary-500",
 							"type": "color",
-							"value": "#008103"
+							"value": "[object Object]"
 						},
 						"primary-600": {
 							"name": "primary-600",
 							"type": "color",
-							"value": "#004102"
+							"value": "[object Object]"
 						}
 					},
 					"type": {
@@ -686,16 +852,47 @@
 			}
 		},
 		{
-			"id": "aae2b26b-1334-49b4-a009-1c8cdd52aab6",
+			"id": "90f5ae8a-9dcd-4909-9a78-4f2a371b6388",
 			"type": "studio.tokens.generic.input",
 			"inputs": [
 				{
-					"name": "color",
-					"value": "#03ff09",
+					"name": "base",
+					"value": {
+						"space": "sRGB",
+						"channels": [
+							0.8274509803921568, 0.23529411764705882, 0.23529411764705882
+						],
+						"alpha": 1
+					},
 					"type": {
 						"$id": "https://schemas.tokens.studio/color.json",
 						"title": "Color",
-						"type": "string"
+						"type": "object",
+						"properties": {
+							"channels": {
+								"type": "array",
+								"items": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								}
+							},
+							"space": {
+								"$id": "https://schemas.tokens.studio/string.json",
+								"title": "String",
+								"type": "string"
+							},
+							"alpha": {
+								"$id": "https://schemas.tokens.studio/number.json",
+								"title": "Number",
+								"type": "number"
+							}
+						},
+						"default": {
+							"channels": [0, 0, 0],
+							"space": "srgb"
+						},
+						"required": ["channels", "space"]
 					},
 					"annotations": {
 						"ui.deletable": true
@@ -705,8 +902,8 @@
 			"annotations": {
 				"engine.singleton": true,
 				"engine.dynamicInputs": true,
-				"ui.position.x": 262,
-				"ui.position.y": 391.5
+				"ui.position.x": 221.6322254725569,
+				"ui.position.y": 394.8674031741904
 			}
 		}
 	],
@@ -733,9 +930,9 @@
 			"targetHandle": "tokens"
 		},
 		{
-			"id": "f8549e86-d482-437d-a459-426172430c82",
-			"source": "aae2b26b-1334-49b4-a009-1c8cdd52aab6",
-			"sourceHandle": "color",
+			"id": "3735a1be-9f98-4a03-a7b4-7ca186f55fe4",
+			"source": "90f5ae8a-9dcd-4909-9a78-4f2a371b6388",
+			"sourceHandle": "base",
 			"target": "30204297-03c6-480b-82c8-5ba44bdbf06d",
 			"targetHandle": "color"
 		}
@@ -746,10 +943,11 @@
 		"engine.capabilities.fs": "0.0.0",
 		"engine.version": "0.12.0",
 		"ui.viewport": {
-			"x": 413.7386882299273,
-			"y": 308.32375172974776,
-			"zoom": 0.37499998622840286
+			"x": -353.27684793932497,
+			"y": 130.38463193772827,
+			"zoom": 0.5683936915675616
 		},
-		"ui.version": "2.9.4"
+		"ui.version": "3.0.0",
+		"ui.viewports": [null, null, null, null, null, null, null, null, null]
 	}
 }

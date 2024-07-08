@@ -17,6 +17,7 @@ import multiply from './multiply.js';
 import multiplyVariadic from './multiplyVariadic.js';
 import pow from './pow.js';
 import random from './random.js';
+import rangeMapping from './rangeMapping.js';
 import round from './round.js';
 import sin from './sin.js';
 import sqrt from './sqrt.js';
@@ -32,6 +33,7 @@ export const nodes = [
 	clamp,
 	cos,
 	count,
+	rangeMapping,
 	divide,
 	divideVariadic,
 	evalNode,

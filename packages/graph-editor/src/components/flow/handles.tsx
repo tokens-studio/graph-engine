@@ -1,5 +1,4 @@
 import { Box, Stack, Text } from '@tokens-studio/ui';
-import { IconoirProvider } from 'iconoir-react';
 import { Position, Handle as RawHandle } from 'reactflow';
 import { styled } from '@/lib/stitches/index.js';
 import { useIsValidConnection } from '../../hooks/useIsValidConnection.js';
@@ -45,12 +44,11 @@ export const HandleContainer = ({
     <HandleContext.Provider value={{ type, position }}>
       <Stack
         direction="column"
-        gap={2}
         css={{
           flexBasis: full ? '100%' : '50%',
           position: 'relative',
           textAlign: type === 'source' ? 'right' : 'left',
-          minWidth: isSmall ? 'auto' : '250px',
+          minWidth: isSmall ? 'auto' : '150px',
         }}
         className={className}
       >
@@ -60,7 +58,7 @@ export const HandleContainer = ({
   );
 };
 
-const useHandle = () => {
+export const useHandle = () => {
   return useContext(HandleContext);
 };
 
@@ -80,16 +78,15 @@ const StyledRawHandle = styled(RawHandle, {
       },
     },
     isConnected: {
-      true: {
-        background: 'var(--colors-accentEmphasis) !important',
+      false: {
+        background: '#1a1a1a !important',
       },
     },
-    left: {
+    isArray: {
       true: {
-        marginLeft: '6px',
-      },
-      false: {
-        marginRight: '6px',
+        borderRadius: '0 !important',
+        width: 'calc($4 - 2px) !important',
+        height: 'calc($4 - 2px) !important',
       },
     },
     shouldHideHandles: {
@@ -119,10 +116,8 @@ const StyledRawHandle = styled(RawHandle, {
 });
 
 export const HandleText = styled(Text, {
-  textTransform: 'uppercase',
-  fontWeight: 'bold',
   fontSize: '$xxsmall',
-  color: '$accentDefault',
+  color: '$fgDefault',
   whiteSpace: 'nowrap',
   variants: {
     secondary: {
@@ -142,6 +137,7 @@ const HandleHolder = styled(Box, {
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
+  padding: '$2 $4',
   variants: {
     collapsed: {
       true: {
@@ -164,7 +160,7 @@ export interface HandleProps {
   shouldHideHandles?: boolean;
   error?: boolean;
   isArray?: boolean;
-  full?: boolean;
+  isConnected?: boolean;
   color?: string;
   backgroundColor?: string;
   icon: React.ReactNode;
@@ -179,8 +175,9 @@ export const Handle = (props: HandleProps) => {
     shouldHideHandles = false,
     error,
     color,
+    isArray,
+    isConnected,
     backgroundColor,
-    icon,
     variadic,
   } = props;
   const { position, type } = useHandle();
@@ -197,30 +194,24 @@ export const Handle = (props: HandleProps) => {
       }}
     >
       <StyledRawHandle
-        style={{ color: color, backgroundColor: backgroundColor }}
+        style={{
+          color: color,
+          backgroundColor: backgroundColor,
+          outlineColor: backgroundColor,
+        }}
         id={id}
         shouldHideHandles={shouldHideHandles}
         error={error}
-        left={type === 'target'}
         type={type}
         position={position}
         hide={shouldHide}
         variadic={variadic}
         isValidConnection={isValidConnection}
-      >
-        <IconoirProvider
-          iconProps={{
-            strokeWidth: 1.5,
-            width: '1.5em',
-            height: '1.5em',
-          }}
-        >
-          {icon}
-        </IconoirProvider>
-      </StyledRawHandle>
+        isConnected={isConnected}
+        isArray={isArray}
+      ></StyledRawHandle>
 
       <Stack
-        direction="row"
         gap={1}
         align="center"
         css={{
@@ -230,6 +221,7 @@ export const Handle = (props: HandleProps) => {
           paddingRight: shouldHideHandles ? 0 : '$2',
           fontFamily: '$mono',
           fontSize: '$xxsmall',
+          flexDirection: type === 'target' ? 'row' : 'row-reverse',
         }}
       >
         {children}

@@ -1,15 +1,9 @@
-import { ColorModifier, ColorSpaceTypes } from '@tokens-studio/types';
-import {
-	ColorSchema,
-	NumberSchema,
-	StringSchema
-} from '../../schemas/index.js';
+import { ColorSchema, NumberSchema } from '../../schemas/index.js';
+import { ColorSpace } from './lib/types.js';
 import { Color as ColorType } from '../../types.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
-import { convertModifiedColorToHex } from './lib/modifyColor.js';
-
-export { ColorModifierTypes } from '@tokens-studio/types';
+import { White, toColor, toColorObject } from './lib/utils.js';
 
 export default class NodeDefinition extends Node {
 	static title = 'Darken Color';
@@ -19,7 +13,7 @@ export default class NodeDefinition extends Node {
 	declare inputs: ToInput<{
 		color: ColorType;
 		value: number;
-		space: ColorSpaceTypes;
+		space: ColorSpace;
 	}>;
 
 	declare outputs: ToOutput<{
@@ -31,7 +25,7 @@ export default class NodeDefinition extends Node {
 		this.addInput('color', {
 			type: {
 				...ColorSchema,
-				default: '#ffffff'
+				default: White
 			}
 		});
 		this.addInput('value', {
@@ -41,14 +35,6 @@ export default class NodeDefinition extends Node {
 				description: 'Value to apply to the modifier'
 			}
 		});
-		this.addInput('space', {
-			type: {
-				...StringSchema,
-				default: 'srgb',
-				enum: Object.keys(ColorSpaceTypes),
-				description: 'The color space we are operating in'
-			}
-		});
 
 		this.addOutput('value', {
 			type: ColorSchema
@@ -56,13 +42,15 @@ export default class NodeDefinition extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const { space, value, color } = this.getAllInputs();
+		const { value, color } = this.getAllInputs();
 
-		const converted = convertModifiedColorToHex(color, {
-			type: 'darken',
-			space,
-			value
-		} as ColorModifier);
-		this.setOutput('value', converted);
+		const sourceColor = toColor(color);
+		const lightness = sourceColor.oklch.l;
+
+		const newLightness = lightness * (1 - value);
+		sourceColor.oklch.l = newLightness;
+		const final = toColorObject(sourceColor);
+
+		this.setOutput('value', final);
 	}
 }

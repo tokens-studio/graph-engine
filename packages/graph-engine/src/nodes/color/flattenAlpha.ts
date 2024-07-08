@@ -2,7 +2,7 @@ import { ColorSchema } from '../../schemas/index.js';
 import { INodeDefinition } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 import { flattenAlpha } from './lib/flattenAlpha.js';
-import Color from 'colorjs.io';
+import { toColor, toColorObject } from './lib/utils.js';
 
 export default class NodeDefinition extends Node {
 	static title = 'Flatten Alpha';
@@ -32,10 +32,10 @@ export default class NodeDefinition extends Node {
 		const { foreground, background } = this.getAllInputs();
 
 		// Create color objects from strings
-		const bg = new Color(background);
-		const fg = new Color(foreground);
+		const bg = toColor(background);
+		const fg = toColor(foreground);
 
 		const resultColor = flattenAlpha(fg, bg);
-		this.setOutput('value', resultColor.to('srgb').toString({ format: 'hex' }));
+		this.setOutput('value', toColorObject(resultColor));
 	}
 }

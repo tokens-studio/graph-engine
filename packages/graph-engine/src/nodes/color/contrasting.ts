@@ -1,3 +1,4 @@
+import { Black, White, toColor } from './lib/utils.js';
 import {
 	BooleanSchema,
 	ColorSchema,
@@ -8,7 +9,6 @@ import { Color as ColorType } from '../../types.js';
 import { ContrastAlgorithm } from '../../types/index.js';
 import { INodeDefinition, Node } from '../../programmatic/node.js';
 import { Output, ToInput, ToOutput } from '../../programmatic/index.js';
-import Color from 'colorjs.io';
 
 /**
  * Performs a contrast calculation between two colors using APCA-W3 calcs
@@ -37,19 +37,19 @@ export default class NodeDefinition extends Node {
 		this.addInput('a', {
 			type: {
 				...ColorSchema,
-				default: '#ffffff'
+				default: White
 			}
 		});
 		this.addInput('b', {
 			type: {
 				...ColorSchema,
-				default: '#000000'
+				default: Black
 			}
 		});
 		this.addInput('background', {
 			type: {
 				...ColorSchema,
-				default: '#fd0000'
+				default: White
 			}
 		});
 
@@ -81,9 +81,9 @@ export default class NodeDefinition extends Node {
 	execute(): void | Promise<void> {
 		const { algorithm, a, b, background, threshold } = this.getAllInputs();
 
-		const colorA = new Color(a);
-		const colorB = new Color(b);
-		const backgroundCol = new Color(background);
+		const colorA = toColor(a);
+		const colorB = toColor(b);
+		const backgroundCol = toColor(background);
 
 		const contrastA = Math.abs(backgroundCol.contrast(colorA, algorithm));
 		const contrastB = Math.abs(backgroundCol.contrast(colorB, algorithm));

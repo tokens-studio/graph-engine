@@ -10,10 +10,9 @@ import {
   TextInput,
 } from '@tokens-studio/ui';
 import { Node } from '@tokens-studio/graph-engine';
+import { deletable } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
 import React, { useMemo } from 'react';
-
-import { deletable } from '@/annotations/index.js';
 
 export const DynamicInputs = observer(({ node }: { node: Node }) => {
   const [inputName, setInputName] = React.useState('');
@@ -60,69 +59,7 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
 
   const isDisabled = useMemo(() => {
     return (
-      <Stack direction="column" gap={4}>
-        <Heading size="small">Add Input</Heading>
-        <Stack direction="row" gap={3}>
-          <TextInput
-            onChange={onNameChange}
-            placeholder={'Input name'}
-            value={inputName}
-          />
-        </Stack>
-        {/* @ts-ignore */}
-        <Select
-          value={inputType}
-          onValueChange={setInputType}
-          style={{ background: 'red' }}
-        >
-          <Select.Trigger label="Type" value={inputType} />
-          {/* @ts-expect-error */}
-          <Select.Content css={{ maxHeight: '200px' }} position="popper">
-            <Scroll height="200">
-              {AllSchemas.map((x, i) => (
-                <Select.Item value={x.$id!} key={i}>
-                  {x.title || x.$id}
-                </Select.Item>
-              ))}
-            </Scroll>
-          </Select.Content>
-        </Select>
-
-        <Stack gap={3} align="center">
-          <Label>Is an array?</Label>
-          <Checkbox
-            onCheckedChange={(v) => setAsArray(Boolean(v))}
-            checked={asArray}
-          />
-        </Stack>
-
-        {inputType === STRING && (
-          <Stack gap={3} align="center">
-            <Label>Is enumerated?</Label>
-            <Checkbox
-              onCheckedChange={(v) => setEnumerated(Boolean(v))}
-              checked={enumerated}
-            />
-          </Stack>
-        )}
-
-        {enumerated && (
-          <Stack gap={3}>
-            <Label>Enumerated Values</Label>
-            <TextInput
-              value={enumeratedValues}
-              onChange={(e) => setEnumeratedValues(e.target.value)}
-              placeholder={'Comma separated values'}
-            />
-          </Stack>
-        )}
-
-        <Stack justify="end">
-          <Button variant="primary" disabled={isDisabled} onClick={onClick}>
-            Add Input
-          </Button>
-        </Stack>
-      </Stack>
+      inputName === '' || inputType === '-' || Boolean(node.inputs[inputName])
     );
   }, [inputName, inputType, node.inputs]);
 
@@ -145,7 +82,12 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
           value={inputName}
         />
       </Stack>
-      <Select value={inputType} onValueChange={setInputType}>
+      {/* @ts-ignore */}
+      <Select
+        value={inputType}
+        onValueChange={setInputType}
+        style={{ background: 'red' }}
+      >
         <Select.Trigger label="Type" value={inputType} />
         {/* @ts-expect-error */}
         <Select.Content css={{ maxHeight: '200px' }} position="popper">
@@ -195,4 +137,4 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
       </Stack>
     </Stack>
   );
-}) as React.FC<{ node: Node }>;
+});

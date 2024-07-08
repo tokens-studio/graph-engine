@@ -58,7 +58,7 @@ const SubgraphExplorer = ({ node }) => {
     } else {
       dockerRef.current.updateTab(graphId, null, true);
     }
-  }, [dockerRef, node._innerGraph]);
+  }, [dockerRef, node._innerGraph, node.annotations]);
 
   return (
     <Button variant="primary" icon={<EyeSolid />} onClick={onToggle}>

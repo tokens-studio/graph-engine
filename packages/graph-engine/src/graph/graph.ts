@@ -7,12 +7,13 @@ import { Output } from '../programmatic/output.js';
 import { VERSION } from '../constants.js';
 import {
 	annotatedCapabilityPrefix,
+	annotatedId,
 	annotatedPlayState,
 	annotatedVariadicIndex,
 	annotatedVersion
 } from '../annotations/index.js';
 import { compareVersions } from 'compare-versions';
-import { makeObservable, observable } from 'mobx';
+import { makeObservable, observable, toJS } from 'mobx';
 import { topologicalSort } from './topologicSort.js';
 import { v4 as uuid } from 'uuid';
 import type { NodeFactory, SerializedGraph } from './types.js';
@@ -181,10 +182,10 @@ export class Graph {
 		this.edges = {};
 
 		makeObservable(this, {
-			annotations: observable
+			annotations: observable.shallow
 		});
 
-		this.annotations['engine.id'] || (this.annotations['engine.id'] = uuid());
+		this.annotations[annotatedId] || (this.annotations[annotatedId] = uuid());
 	}
 
 	/**
@@ -527,6 +528,50 @@ export class Graph {
 		this.annotations['engine.capabilities.' + factory.name] =
 			factory.version || '0.0.0';
 	}
+
+	clone(): Graph {
+		const clonedGraph = new Graph();
+		const oldToNewIdMap = new Map<string, string>();
+
+		// Clone nodes
+		Object.values(this.nodes).forEach(node => {
+			const clonedNode = node.clone(clonedGraph);
+			oldToNewIdMap.set(node.id, clonedNode.id);
+			clonedNode.setGraph(clonedGraph);
+			clonedGraph.addNode(clonedNode);
+		});
+
+		// Clone edges
+		Object.values(this.edges).forEach(edge => {
+			const newSourceId = oldToNewIdMap.get(edge.source);
+			const newTargetId = oldToNewIdMap.get(edge.target);
+
+			if (newSourceId && newTargetId) {
+				clonedGraph.createEdge({
+					id: uuid(),
+					source: newSourceId,
+					target: newTargetId,
+					sourceHandle: edge.sourceHandle,
+					targetHandle: edge.targetHandle,
+					annotations: { ...toJS(edge.annotations) }
+				});
+			}
+		});
+
+		// Clone capabilities
+		Object.entries(this.capabilities).forEach(([key, value]) => {
+			clonedGraph.capabilities[key] = value;
+		});
+
+		clonedGraph.annotations = {
+			...toJS(this.annotations),
+			//Create a new id to prevent collisions
+			[annotatedId]: uuid()
+		};
+
+		return clonedGraph;
+	}
+
 	/**
 	 * Starts the graph in network mode
 	 * TODO Complete
@@ -718,7 +763,7 @@ export class Graph {
 		const targets = edges.reduce((acc, edge) => {
 			const target = this.getNode(edge.target);
 			if (!target) {
-				return;
+				return acc;
 			}
 			//Get the input
 			const input = target.inputs[edge.targetHandle];
@@ -871,7 +916,7 @@ export class Graph {
 			});
 		}
 
-		sourcePort._edges.push(edge);
+		sourcePort?._edges.push(edge);
 		this.emit('edgeAdded', edge);
 		this.propagate(source);
 		return edge;

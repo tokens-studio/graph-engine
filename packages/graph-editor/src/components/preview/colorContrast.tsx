@@ -1,30 +1,27 @@
 import { Box, Text } from '@tokens-studio/ui';
+import { castToHex } from '@/utils/index.js';
 import Color from 'colorjs.io';
 import React from 'react';
 
 function contrastingColor(
-  text: string,
-  background: string,
-  contrastAlgorithm = 'APCA',
+  background: Color,
+  contrastAlgorithm: string = 'APCA',
 ) {
-  const textColor = new Color(text);
-
-  const backgroundColor = new Color(background);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const contrastBlack = Math.abs(
-    backgroundColor.contrast(textColor, contrastAlgorithm),
+    background.contrast(new Color('#ffffff'), contrastAlgorithm),
+  );
+  const contrastWhite = Math.abs(
+    background.contrast(new Color('#000000'), contrastAlgorithm),
   );
 
-  // FIXME: contrastWhite is undefined???
-  // if (contrastBlack > contrastWhite) {
-  return '#000000';
-  // } else {
-  //  return '#ffffff';
-  // }
+  if (contrastBlack > contrastWhite) {
+    return '#000000';
+  } else {
+    return '#ffffff';
+  }
 }
-
 export const ColorContrast = ({ value }) => {
+  const col = castToHex(value);
   return (
     <>
       {value && (
@@ -35,18 +32,17 @@ export const ColorContrast = ({ value }) => {
               placeItems: 'center',
               width: '100%',
               minHeight: '100px',
-              backgroundColor: value,
+              backgroundColor: col,
             }}
           >
             <Text
               css={{
                 fontFamily: '$mono',
                 fontSize: 'xx-large',
-                // FIXME: this isn't right either, 2nd argument was missing so I just prefilled with black to make lint/types happy
-                color: contrastingColor(value, '#000000'),
+                color: contrastingColor(value),
               }}
             >
-              {value}
+              {col}
             </Text>
           </Box>
         </>

@@ -1,3 +1,5 @@
+import { arrayOf } from './utils.js';
+
 export const variadicId = (id: string) => id.replace('.json', '-variadic.json');
 
 export type SchemaObject = {
@@ -31,7 +33,17 @@ export const COLOR = 'https://schemas.tokens.studio/color.json';
 export const ColorSchema: SchemaObject = {
 	$id: COLOR,
 	title: 'Color',
-	type: 'string'
+	type: 'object',
+	properties: {
+		channels: arrayOf(NumberSchema),
+		space: StringSchema,
+		alpha: NumberSchema
+	},
+	default: {
+		channels: [0, 0, 0],
+		space: 'srgb'
+	},
+	required: ['channels', 'space']
 };
 
 export const ANY = 'https://schemas.tokens.studio/any.json';
@@ -266,13 +278,6 @@ export const canConvertSchemaTypes = (
 	}
 
 	switch (src.$id) {
-		case COLOR:
-			switch (target.$id) {
-				case STRING:
-					return true;
-			}
-			break;
-
 		case NUMBER:
 			switch (target.$id) {
 				case STRING:

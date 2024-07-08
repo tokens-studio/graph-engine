@@ -1,7 +1,5 @@
 import { themes as prismThemes } from 'prism-react-renderer';
-import webpack from 'webpack';
 import type * as Preset from '@docusaurus/preset-classic';
-import type * as Redocusaurus from 'redocusaurus';
 import type { Config } from '@docusaurus/types';
 
 const config: Config = {
@@ -56,34 +54,7 @@ const config: Config = {
 					customCss: './src/css/custom.css'
 				}
 			} satisfies Preset.Options
-		],
-		// Redocusaurus config
-		[
-			'redocusaurus',
-			{
-				config: 'redocly.yaml',
-				// Plugin Options for loading OpenAPI files
-				specs: [
-					// Pass it a path to a local OpenAPI YAML file
-					{
-						id: 'graph-engine',
-						// Redocusaurus will automatically bundle your spec into a single file during the build
-						spec: '../backend/generated/swagger.json',
-						route: '/api/'
-					}
-					// You can also pass it a OpenAPI spec URL
-					// {
-					//   spec: 'https://redocly.github.io/redoc/openapi.yaml',
-					//   route: '/openapi/',
-					// },
-				],
-				// Theme Options for modifying how redoc renders them
-				theme: {
-					// Change with your site colors
-					primaryColor: '#1890ff'
-				}
-			}
-		] satisfies Redocusaurus.PresetEntry
+		]
 	],
 	themes: ['@docusaurus/theme-mermaid'],
 	themeConfig: {
@@ -153,28 +124,7 @@ const config: Config = {
 			theme: prismThemes.github,
 			darkTheme: prismThemes.dracula
 		}
-	} satisfies Preset.ThemeConfig,
-	plugins: [
-		async function customPlugin() {
-			return {
-				name: 'custom-plugin',
-				configureWebpack() {
-					// Modify internal webpack config. If returned value is an Object, it
-					// will be merged into the final config using webpack-merge;
-					// If the returned value is a function, it will receive the config as the 1st argument and an isServer flag as the 2nd argument.
-					return {
-						plugins: [
-							new webpack.DefinePlugin({
-								// IMPORTANT: To fix debug library‘s bug
-								// {}.DEBUG = namespaces; // SyntaxError: Unexpected token '.'
-								'process.env.DEBUG': 'process.env.DEBUG'
-							})
-						]
-					};
-				}
-			};
-		}
-	]
+	} satisfies Preset.ThemeConfig
 };
 
 export default config;

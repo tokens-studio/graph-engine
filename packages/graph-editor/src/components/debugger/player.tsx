@@ -55,10 +55,11 @@ const TimelinePlayer = (props: TimelinePlayerProps) => {
     }
   };
 
-  const handleRateChange = (rate: number) => {
+  const handleRateChange = (rate: string) => {
     if (!timelineState?.current) return;
-    setRate(rate);
-    timelineState.current.setPlayRate(rate);
+    const asNum = parseFloat(rate);
+    setRate(asNum);
+    timelineState.current.setPlayRate(asNum);
   };
 
   const timeRender = (time: number) => {
@@ -94,7 +95,7 @@ const TimelinePlayer = (props: TimelinePlayerProps) => {
         <Select.Content>
           {Rates.map((rate) => {
             return (
-              <Select.Item key={rate} value={rate}>
+              <Select.Item key={rate} value={'' + rate}>
                 {rate}x
               </Select.Item>
             );

@@ -12,13 +12,11 @@ import PreviewTypography from './previewTypography.js';
 import ResolveNode from './resolve.js';
 import SetToArrayNode from './setToArray.js';
 import UngroupNode from './ungroup.js';
-import advancedBlend from './advancedBlend.js';
 import arrayToSet from './arrayToSet.js';
 import create from './create.js';
 
 export const nodes = [
 	arrayToSet,
-	advancedBlend,
 	ExtractTokenNode,
 	create,
 	InlineTokenNode,

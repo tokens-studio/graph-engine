@@ -1,4 +1,5 @@
 import { Box, Text } from '@tokens-studio/ui';
+import { castToHex } from '@/utils/index.js';
 import Color from 'colorjs.io';
 import React, { useMemo } from 'react';
 
@@ -20,12 +21,13 @@ function contrastingColor(value: string) {
 export const ColorSwatch = ({ value }) => {
   const color = useMemo(() => {
     try {
-      return contrastingColor(value);
+      return contrastingColor(castToHex(value));
     } catch (error) {
       console.log(error);
       return '';
     }
   }, [value]);
+  const hex = useMemo(() => castToHex(value), [value]);
 
   return (
     <>
@@ -37,12 +39,12 @@ export const ColorSwatch = ({ value }) => {
               placeItems: 'center',
               width: '100%',
               minHeight: '100px',
-              backgroundColor: value,
+              backgroundColor: hex,
               padding: '$5',
             }}
           >
             <Text css={{ fontFamily: '$mono', fontSize: '64px', color }}>
-              {typeof value === 'string' ? value : JSON.stringify(value)}
+              {hex}
             </Text>
           </Box>
         </>

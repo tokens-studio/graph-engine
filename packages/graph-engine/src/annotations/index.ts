@@ -37,3 +37,8 @@ export const annotatedDeleteable = 'engine.deletable';
  * Indicates that a node is currently running
  */
 export const annotatedNodeRunning = 'engine.nodeRunning';
+
+/**
+ * Unique id of the entity
+ */
+export const annotatedId = 'engine.id';

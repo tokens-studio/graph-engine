@@ -87,7 +87,7 @@ export const NodeContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
     if (nodes) {
       reactFlowInstance.deleteElements({ nodes });
     }
-  }, [nodes, reactFlowInstance]);
+  }, [isDeletable, nodes, reactFlowInstance, trigger]);
 
   const focus = useCallback(() => {
     if (nodes) {

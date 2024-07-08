@@ -11,6 +11,7 @@ import {
   VEC3,
 } from '@tokens-studio/graph-engine';
 import { AnyField } from '@/components/controls/any.js';
+import { ArrayField } from '@/components/controls/array.js';
 import { BooleanField } from '@/components/controls/boolean.js';
 import { ColorField } from '@/components/controls/color.js';
 import { CurveField } from '@/components/controls/curve.js';
@@ -80,7 +81,11 @@ export const defaultControls = [
     matcher: (port: Port) => port.type.$id === ANY,
     component: AnyField,
   },
-
+  {
+    matcher: (port: Port) =>
+      port.type.type === 'array' && !(port as Input).variadic,
+    component: ArrayField,
+  },
   {
     matcher: variadicMatcher(NUMBER),
     component: VariadicNumber,

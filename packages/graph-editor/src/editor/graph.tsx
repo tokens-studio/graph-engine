@@ -5,9 +5,9 @@ import {
   EdgeChange,
   EdgeTypes,
   MiniMap,
+  Node,
   NodeChange,
   NodePositionChange,
-  Node as ReactFlowNode,
   SelectionMode,
   SnapGrid,
   XYPosition,
@@ -47,6 +47,7 @@ import { CommandMenu } from '@/components/commandPalette/index.js';
 import { EdgeContextMenu } from '../components/contextMenus/edgeContextMenu.js';
 import { GraphContextProvider } from '@/context/graph.js';
 import { GraphEditorProps, ImperativeEditorRef } from './editorTypes.js';
+import { GraphToolbar } from '@/components/toolbar/index.js';
 import { HotKeys } from '@/components/hotKeys/index.js';
 import { NOTE, PASSTHROUGH } from '@/ids.js';
 import { NodeContextMenu } from '../components/contextMenus/nodeContextMenu.js';
@@ -70,6 +71,7 @@ import {
 import { contextMenuSelector } from '@/redux/selectors/ui.js';
 import { copyNodeAction } from './actions/copyNodes.js';
 import { currentPanelIdSelector } from '@/redux/selectors/graph.js';
+import { debugInfo } from '@/components/debugger/data.js';
 import { deleteNode } from './actions/deleteNode.js';
 import { duplicateNodes } from './actions/duplicate.js';
 import {
@@ -169,7 +171,7 @@ export const EditorApp = React.forwardRef<
           acc[node.id] = node;
           return acc;
         },
-        {} as Record<string, ReactFlowNode>,
+        {} as Record<string, Node>,
       );
 
       serialized.nodes.forEach((node) => {
@@ -244,21 +246,40 @@ export const EditorApp = React.forwardRef<
       });
     });
 
+    const NodeStartListener = graph.on('nodeExecuted', (run) => {
+      const existing = debugInfo.rows.find((x) => x.id == run.node.id);
+
+      if (!existing) {
+        debugInfo.addRow({
+          id: run.node.id,
+          name: run.node.factory.type,
+          actions: [],
+        });
+      }
+
+      //Now we need to add the actions
+      debugInfo.addAction(run.node.id, {
+        id: `${run.node.id}-${Date.now()}`,
+        start: run.start,
+        end: run.end,
+        effectId: 'effect0',
+      });
+    });
+
     return () => {
       valueDetecterDisposer();
       EdgeUpdaterDisposer();
+      NodeStartListener();
     };
   }, [graph]);
 
-  const [contextNode, setContextNode] = React.useState<ReactFlowNode[]>([]);
+  const [contextNode, setContextNode] = React.useState<Node[]>([]);
   const [contextEdge, setContextEdge] = React.useState<Edge | null>(null);
   const [dropPanelPosition, setDropPanelPosition] = React.useState<XYPosition>({
     x: 0,
     y: 0,
   });
-  const [contextSelection, setContextSelection] = React.useState<
-    ReactFlowNode[]
-  >([]);
+  const [contextSelection, setContextSelection] = React.useState<Node[]>([]);
 
   const { show: showPane } = useContextMenu({
     id: props.id + '_pane',
@@ -330,7 +351,7 @@ export const EditorApp = React.forwardRef<
   );
 
   const handleSelectionContextMenu = useCallback(
-    (event, nodes: ReactFlowNode[]) => {
+    (event, nodes: Node[]) => {
       setContextSelection(nodes);
       showSelection({ event });
     },
@@ -438,6 +459,7 @@ export const EditorApp = React.forwardRef<
       reactFlowInstance,
       graph,
       fullNodeLookup,
+      iconLookup,
       customNodeMap,
       dropPanelPosition,
       dispatch,
@@ -475,7 +497,8 @@ export const EditorApp = React.forwardRef<
           reactFlowInstance.setViewport(viewport);
         }
         let offset = -550;
-        const nodes = Object.entries(loadedGraph.nodes).map(([, node]) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const nodes = Object.entries(loadedGraph.nodes).map(([_, node]) => {
           //Generate the react flow nodes
           return {
             id: node.id,
@@ -487,7 +510,7 @@ export const EditorApp = React.forwardRef<
               x: node.annotations[xpos] || (offset += 550),
               y: node.annotations[ypos] || 0,
             },
-          } as ReactFlowNode;
+          } as Node;
         });
         const edges = Object.values(loadedGraph.edges).map((edge) => {
           //This is the only point of difference for the edges
@@ -541,11 +564,12 @@ export const EditorApp = React.forwardRef<
     }),
     [
       reactFlowInstance,
-      fullNodeLookup,
-      dispatch.graph,
       graph,
+      fullNodeLookup,
       setNodes,
       setEdges,
+      dispatch.graph,
+      iconLookup,
     ],
   );
 
@@ -563,7 +587,7 @@ export const EditorApp = React.forwardRef<
   );
 
   const onNodeDragStop = useCallback(
-    (_: MouseEvent, node: ReactFlowNode) => {
+    (_: MouseEvent, node: Node) => {
       if (!node.parentNode) {
         return;
       }
@@ -575,7 +599,7 @@ export const EditorApp = React.forwardRef<
 
       // when there is an intersection on drag stop, we want to attach the node to its new parent
       if (intersections.length && node.parentNode !== groupNode?.id) {
-        const nextNodes: ReactFlowNode[] = store
+        const nextNodes: Node[] = store
           .getState()
           .getNodes()
           .map((n) => {
@@ -640,7 +664,7 @@ export const EditorApp = React.forwardRef<
         type: PASSTHROUGH,
         data: {},
         position: position || { x: 0, y: 0 },
-      } as ReactFlowNode;
+      } as Node;
 
       //We need to remove the existing edge
       graph.removeEdge(clickedEdge.id);
@@ -688,11 +712,11 @@ export const EditorApp = React.forwardRef<
         return [...filtered, newEdge, newEdge2];
       });
     },
-    [graph, reactFlowInstance, setEdges, setNodes],
+    [fullNodeLookup, graph, reactFlowInstance, setEdges, setNodes],
   );
 
   const onNodeDrag = useCallback(
-    (_: MouseEvent, node: ReactFlowNode) => {
+    (_: MouseEvent, node: Node) => {
       if (!node.parentNode) {
         return;
       }
@@ -783,7 +807,7 @@ export const EditorApp = React.forwardRef<
           }}
         >
           <HotKeys>
-            {/* @ts-expect-error ReactFlow is apparently not a valid JSX element */}
+            {/* @ts-expect-error Weird typing from Reactflow  */}
             <ReactFlow
               ref={reactFlowWrapper}
               elevateEdgesOnSelect={true}
@@ -844,6 +868,19 @@ export const EditorApp = React.forwardRef<
                   handleSelectNewNodeType={handleSelectNewNodeType}
                 />
               )}
+              <Box
+                css={{
+                  position: 'absolute',
+                  top: '$7',
+                  left: 0,
+                  right: 0,
+                  display: 'grid',
+                  placeItems: 'center',
+                  zIndex: '99',
+                }}
+              >
+                <GraphToolbar />
+              </Box>
               {props.children}
             </ReactFlow>
           </HotKeys>

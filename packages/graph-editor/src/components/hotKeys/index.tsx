@@ -1,8 +1,13 @@
 import { HotKeys as HotKeysComp } from 'react-hotkeys';
 import { SerializedNode } from '@/types/serializedNode.js';
 import { annotatedDeleteable } from '@tokens-studio/graph-engine';
+import {
+  inlineTypes,
+  inlineValues,
+  showGrid,
+  snapGrid,
+} from '@/redux/selectors/settings.js';
 import { savedViewports } from '@/annotations/index.js';
-import { showGrid, snapGrid } from '@/redux/selectors/settings.js';
 import { useAction } from '@/editor/actions/provider.js';
 import { useAutoLayout } from '@/editor/hooks/useAutolayout.js';
 import { useDispatch } from '@/hooks/useDispatch.js';
@@ -42,6 +47,8 @@ export const keyMap = {
   TOGGLE_THEME: 'ctrl+shift+t',
   TOGGLE_SNAP_GRID: ['command+shift+s', 'ctrl+shift+s'],
   TOGGLE_NODES_PANEL: ['n'],
+  TOGGLE_TYPES: ['t'],
+  TOGGLE_VALUES: ['v'],
   SAVE_VIEWPORT: [
     'command+1',
     'command+2',
@@ -74,6 +81,8 @@ export const getViewports = (graph) => {
 export const useHotkeys = () => {
   const showGridValue = useSelector(showGrid);
   const snapGridValue = useSelector(snapGrid);
+  const inlineTypesValue = useSelector(inlineTypes);
+  const inlineValuesValue = useSelector(inlineValues);
   const duplicateNodes = useAction('duplicateNodes');
   const deleteNode = useAction('deleteNode');
   const copyNodes = useAction('copyNodes');
@@ -231,6 +240,12 @@ export const useHotkeys = () => {
       TOGGLE_SNAP_GRID: () => {
         dispatch.settings.setSnapGrid(!snapGridValue);
       },
+      TOGGLE_TYPES: () => {
+        dispatch.settings.setInlineTypes(!inlineTypesValue);
+      },
+      TOGGLE_VALUES: () => {
+        dispatch.settings.setInlineValues(!inlineValuesValue);
+      },
     }),
 
     [
@@ -243,6 +258,8 @@ export const useHotkeys = () => {
       reactFlowInstance,
       showGridValue,
       snapGridValue,
+      inlineTypesValue,
+      inlineValuesValue,
       trigger,
     ],
   );

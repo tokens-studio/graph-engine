@@ -1,4 +1,5 @@
 import { Box, Text } from '@tokens-studio/ui';
+import { castToHex } from '@/utils/index.js';
 import Color from 'colorjs.io';
 import React from 'react';
 
@@ -22,27 +23,31 @@ export const ColorScale = ({ scale }) => {
     <>
       {scale && (
         <>
-          {scale.map((color) => (
-            <Box
-              css={{
-                display: 'grid',
-                placeItems: 'center',
-                width: '100%',
-                minHeight: '100px',
-                backgroundColor: color,
-              }}
-            >
-              <Text
+          {scale.map((color) => {
+            const hex = castToHex(color);
+
+            return (
+              <Box
                 css={{
-                  fontFamily: '$mono',
-                  fontSize: 'xx-large',
-                  color: contrastingColor(color),
+                  display: 'grid',
+                  placeItems: 'center',
+                  width: '100%',
+                  minHeight: '100px',
+                  backgroundColor: hex,
                 }}
               >
-                {color}
-              </Text>
-            </Box>
-          ))}
+                <Text
+                  css={{
+                    fontFamily: '$mono',
+                    fontSize: 'xx-large',
+                    color: contrastingColor(hex),
+                  }}
+                >
+                  {hex}
+                </Text>
+              </Box>
+            );
+          })}
         </>
       )}
     </>

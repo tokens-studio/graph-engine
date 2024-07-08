@@ -1,3 +1,4 @@
+import { Black, White, toColor } from './lib/utils.js';
 import {
 	ColorSchema,
 	NumberSchema,
@@ -6,7 +7,6 @@ import {
 import { INodeDefinition } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 import { setToPrecision } from '../../utils/precision.js';
-import Color from 'colorjs.io';
 
 export const algorithms = ['76', 'CMC', '2000', 'Jz', 'ITP', 'OK'] as const;
 
@@ -23,13 +23,13 @@ export default class NodeDefinition extends Node {
 		this.addInput('colorA', {
 			type: {
 				...ColorSchema,
-				default: '#ffffff'
+				default: White
 			}
 		});
 		this.addInput('colorB', {
 			type: {
 				...ColorSchema,
-				default: '#000000'
+				default: Black
 			}
 		});
 		this.addInput('precision', {
@@ -54,8 +54,8 @@ export default class NodeDefinition extends Node {
 	execute(): void | Promise<void> {
 		const { colorA, colorB, algorithm, precision } = this.getAllInputs();
 
-		const a = new Color(colorA);
-		const b = new Color(colorB);
+		const a = toColor(colorA);
+		const b = toColor(colorB);
 
 		const distance = a.deltaE(b, algorithm);
 

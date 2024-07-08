@@ -9,7 +9,6 @@ import {
 import { ExternalLoaderProvider } from '@/context/ExternalLoaderContext.js';
 import { GraphEditor } from './graphEditor.js';
 import { Inputsheet } from '@/components/panels/inputs/index.js';
-import { Legend } from '@/components/panels/legend/index.js';
 import { MenuBar, defaultMenuDataFactory } from '@/components/menubar/index.js';
 import { dockerSelector } from '@/redux/selectors/refs.js';
 import { useDispatch } from '@/hooks/useDispatch.js';
@@ -162,101 +161,107 @@ const layoutDataFactory = (props, ref): LayoutData => {
               mode: 'vertical',
               children: [
                 {
-                  size: 16,
-                  tabs: [
+                  mode: 'horizontal',
+                  children: [
                     {
-                      group: 'popout',
-                      id: 'dropPanel',
-                      title: 'Nodes',
-                      content: (
-                        <ErrorBoundary fallback={<ErrorBoundaryContent />}>
-                          <DropPanel />
-                        </ErrorBoundary>
-                      ),
-                      closable: true,
+                      size: 3,
+                      mode: 'vertical',
+                      children: [
+                        {
+                          tabs: [
+                            {
+                              group: 'popout',
+                              id: 'dropPanel',
+                              title: 'Nodes',
+                              content: (
+                                <ErrorBoundary
+                                  fallback={<ErrorBoundaryContent />}
+                                >
+                                  <DropPanel />
+                                </ErrorBoundary>
+                              ),
+                              closable: true,
+                            },
+                          ],
+                        },
+                      ],
                     },
-                  ],
-                },
-                {
-                  size: 8,
-                  tabs: [
                     {
-                      group: 'popout',
-                      id: 'legend',
-                      title: 'Legend',
-                      content: <Legend />,
-                      closable: true,
+                      size: 17,
+                      mode: 'vertical',
+                      children: [
+                        {
+                          id: 'graphs',
+                          size: 700,
+                          group: 'graph',
+                          panelLock: { panelStyle: 'graph' },
+                          tabs: [
+                            {
+                              closable: true,
+                              cached: true,
+                              id: MAIN_GRAPH_ID,
+                              group: 'graph',
+                              title: 'Graph',
+                              content: (
+                                <ErrorBoundary
+                                  fallback={<ErrorBoundaryContent />}
+                                >
+                                  <GraphEditor
+                                    {...props}
+                                    id={MAIN_GRAPH_ID}
+                                    ref={ref}
+                                  />
+                                </ErrorBoundary>
+                              ),
+                            },
+                          ],
+                        },
+                      ],
                     },
-                  ],
-                },
-              ],
-            },
-            {
-              size: 18,
-              mode: 'vertical',
-              children: [
-                {
-                  id: 'graphs',
-                  size: 700,
-                  group: 'graph',
-                  panelLock: { panelStyle: 'graph' },
-                  tabs: [
-                    {
-                      closable: true,
-                      cached: true,
-                      id: MAIN_GRAPH_ID,
-                      group: 'graph',
-                      title: 'Graph',
-                      content: (
-                        <ErrorBoundary fallback={<ErrorBoundaryContent />}>
-                          <GraphEditor
-                            {...props}
-                            id={MAIN_GRAPH_ID}
-                            ref={ref}
-                          />
-                        </ErrorBoundary>
-                      ),
-                    },
-                  ],
-                },
-              ],
-            },
 
-            {
-              size: 4,
-              mode: 'vertical',
-              children: [
-                {
-                  size: 12,
-                  tabs: [
                     {
-                      closable: true,
-                      cached: true,
-                      group: 'popout',
-                      id: 'input',
-                      title: 'Inputs',
-                      content: (
-                        <ErrorBoundary fallback={<ErrorBoundaryContent />}>
-                          <Inputsheet />
-                        </ErrorBoundary>
-                      ),
-                    },
-                  ],
-                },
-                {
-                  size: 12,
-                  tabs: [
-                    {
-                      closable: true,
-                      cached: true,
-                      group: 'popout',
-                      id: 'outputs',
-                      title: 'Outputs',
-                      content: (
-                        <ErrorBoundary fallback={<ErrorBoundaryContent />}>
-                          <OutputSheet />
-                        </ErrorBoundary>
-                      ),
+                      size: 4,
+                      mode: 'vertical',
+                      children: [
+                        {
+                          size: 12,
+                          tabs: [
+                            {
+                              closable: true,
+                              cached: true,
+                              group: 'popout',
+                              id: 'input',
+                              title: 'Inputs',
+                              content: (
+                                <ErrorBoundary
+                                  fallback={<ErrorBoundaryContent />}
+                                >
+                                  <Inputsheet />
+                                </ErrorBoundary>
+                              ),
+                            },
+                          ],
+                        },
+                        {
+                          size: 12,
+                          tabs: [
+                            {
+                              closable: true,
+                              cached: true,
+                              group: 'popout',
+                              id: 'outputs',
+                              title: 'Outputs',
+                              content: (
+                                <ErrorBoundary
+                                  fallback={<ErrorBoundaryContent />}
+                                >
+                                  <OutputSheet />
+                                </ErrorBoundary>
+                              ),
+                            },
+                          ],
+                        },
+                      ],
                     },
                   ],
                 },

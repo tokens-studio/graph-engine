@@ -1,19 +1,34 @@
 import { Box, Stack, Text } from '@tokens-studio/ui';
+import { castToHex } from '@/utils/index.js';
 import Color from 'colorjs.io';
 import React from 'react';
 
+function isValidColor(value: string): boolean {
+  try {
+    new Color(value);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function contrastingColor(value: string) {
-  const black = new Color('srgb', [0, 0, 0]);
-  const white = new Color('srgb', [1, 1, 1]);
+  if (!isValidColor(value)) {
+    return '#000000'; // Default to black text if color is invalid
+  }
 
-  const background = new Color(value);
-  const contrastBlack = Math.abs(background.contrast(black, 'APCA'));
-  const contrastWhite = Math.abs(background.contrast(white, 'APCA'));
+  try {
+    const black = new Color('srgb', [0, 0, 0]);
+    const white = new Color('srgb', [1, 1, 1]);
 
-  if (contrastBlack > contrastWhite) {
-    return '#000000';
-  } else {
-    return '#ffffff';
+    const background = new Color(value);
+    const contrastBlack = Math.abs(background.contrast(black, 'APCA'));
+    const contrastWhite = Math.abs(background.contrast(white, 'APCA'));
+
+    return contrastBlack > contrastWhite ? '#000000' : '#ffffff';
+  } catch (error) {
+    console.error('Error calculating contrasting color:', error);
+    return '#000000'; // Default to black text if there's an error
   }
 }
 
@@ -22,28 +37,31 @@ export const ColorCompare = ({ colors }) => {
     <>
       {colors && (
         <Stack direction="row" gap={0}>
-          {colors.map((color) => (
-            <Box
-              css={{
-                display: 'grid',
-                placeItems: 'center',
-                minHeight: '100px',
-                backgroundColor: color,
-                padding: '$8',
-                width: '100%',
-              }}
-            >
-              <Text
+          {colors.map((color) => {
+            const col = castToHex(color);
+            return (
+              <Box
                 css={{
-                  fontFamily: '$mono',
-                  fontSize: 'xx-large',
-                  color: contrastingColor(color),
+                  display: 'grid',
+                  placeItems: 'center',
+                  minHeight: '100px',
+                  backgroundColor: col,
+                  padding: '$8',
+                  width: '100%',
                 }}
               >
-                {color}
-              </Text>
-            </Box>
-          ))}
+                <Text
+                  css={{
+                    fontFamily: '$mono',
+                    fontSize: 'xx-large',
+                    color: contrastingColor(col),
+                  }}
+                >
+                  {col}
+                </Text>
+              </Box>
+            );
+          })}
         </Stack>
       )}
     </>

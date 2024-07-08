@@ -1,5 +1,6 @@
 import { ColorSchema, StringSchema } from '../../schemas/index.js';
-import { INodeDefinition } from '../../index.js';
+import { Color as ColorType } from '../../types.js';
+import { INodeDefinition, ToInput, ToOutput, toColor } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 import Color from 'colorjs.io';
 
@@ -163,6 +164,15 @@ export default class NodeDefinition extends Node {
 	static title = 'Name Color';
 	static type = 'studio.tokens.color.name';
 	static description = 'Returns the name of the color';
+
+	declare inputs: ToInput<{
+		color: ColorType;
+	}>;
+
+	declare outputs: ToOutput<{
+		value: string;
+	}>;
+
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('color', {
@@ -175,7 +185,7 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { color } = this.getAllInputs();
-		const clr = new Color(color);
+		const clr = toColor(color);
 		let closestName;
 		Object.entries(colorMap).forEach(([key, hex]) => {
 			const distance = Color.deltaE(clr, new Color(hex), 'CMC');

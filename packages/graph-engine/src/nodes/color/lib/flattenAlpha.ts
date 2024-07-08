@@ -1,13 +1,12 @@
 import Color from 'colorjs.io';
 
-export function flattenAlpha(foreground: Color, background: Color) {
+export function flattenAlpha(foreground: Color, background: Color): Color {
 	// Decompose the foreground color to RGBA
 	const [r1, g1, b1] = foreground.to('srgb').coords; // Default alpha to 1 if undefined
 	const a1 = foreground.alpha || 1;
 
 	if (a1 === 1) {
-		// If alpha is 1, output the foreground color directly
-		this.setOutput('value', foreground.toString({ format: 'hex' }));
+		return foreground;
 	} else {
 		// Decompose the background color to RGB (assume opaque)
 		const [r2, g2, b2] = background.to('srgb').coords;

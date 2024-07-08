@@ -1,5 +1,0 @@
-*.log
-# Using a temporary sqlite db
-prisma/*.db
-prisma/*.db-journal
-generated

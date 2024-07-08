@@ -37,7 +37,7 @@ export class Edge {
 		this.annotations = props.annotations || {};
 
 		makeObservable(this, {
-			annotations: observable
+			annotations: observable.shallow
 		});
 	}
 

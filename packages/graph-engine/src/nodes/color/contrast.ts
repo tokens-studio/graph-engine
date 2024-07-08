@@ -7,7 +7,7 @@ import {
 import { ContrastAlgorithm } from '../../types/index.js';
 import { INodeDefinition } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
-import Color from 'colorjs.io';
+import { toColor } from './lib/utils.js';
 
 export default class NodeDefinition extends Node {
 	static title = 'Contrast';
@@ -49,8 +49,8 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { a, b, algorithm, absolute } = this.getAllInputs();
-		const color = new Color(a);
-		const background = new Color(b);
+		const color = toColor(a);
+		const background = toColor(b);
 
 		const calculated = background.contrast(color, algorithm);
 

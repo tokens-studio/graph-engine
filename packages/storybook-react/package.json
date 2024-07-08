@@ -39,7 +39,6 @@
     "fbp-client": "^0.4.3",
     "fs-extra": "^11.2.0",
     "storybook": "^8.0.10",
-    "style-dictionary": "^4.0.0-prerelease.38",
-    "ws": "^8.17.0"
+    "style-dictionary": "^4.0.0-prerelease.38"
   }
 }

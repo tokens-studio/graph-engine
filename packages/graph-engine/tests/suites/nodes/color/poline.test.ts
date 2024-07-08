@@ -7,7 +7,16 @@ describe('color/poline', () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		node.inputs.anchorColors.setValue(['#ff0000', '#00ff00']);
+		node.inputs.anchorColors.setValue([
+			{
+				space: 'srgb',
+				channels: [1, 0, 0]
+			},
+			{
+				space: 'srgb',
+				channels: [0, 1, 0]
+			}
+		]);
 		node.inputs.numPoints.setValue(2);
 		node.inputs.hueShift.setValue(20);
 		node.inputs.positionFnX.setValue('linearPosition');
@@ -15,14 +24,40 @@ describe('color/poline', () => {
 
 		const output = node.outputs.value.value;
 
-		expect(output).to.eql(['#ff5500', '#9d8b00', '#20a200', '#00ff55']);
+		expect(output).to.deep.equal([
+			{
+				channels: [20, 100, 50],
+				space: 'hsl'
+			},
+			{
+				channels: [52.99549801404953, 100, 30.829648121589752],
+				space: 'hsl'
+			},
+			{
+				channels: [108.14643105799234, 100, 31.701328706835056],
+				space: 'hsl'
+			},
+			{
+				channels: [140, 100, 50],
+				space: 'hsl'
+			}
+		]);
 	});
 
 	it('creates the expected color palette with these inputs 2', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		node.inputs.anchorColors.setValue(['#ff0000', '#00ff00']);
+		node.inputs.anchorColors.setValue([
+			{
+				space: 'srgb',
+				channels: [1, 0, 0]
+			},
+			{
+				space: 'srgb',
+				channels: [0, 1, 0]
+			}
+		]);
 		node.inputs.numPoints.setValue(6);
 		node.inputs.invertedLightness.setValue(true);
 		node.inputs.hueShift.setValue(20);
@@ -31,15 +66,39 @@ describe('color/poline', () => {
 
 		const output = node.outputs.value.value;
 
-		expect(output).to.eql([
-			'#ff5500',
-			'#ffb255',
-			'#faff90',
-			'#a9ff90',
-			'#67ff84',
-			'#3bff80',
-			'#1aff75',
-			'#00ff55'
+		expect(output).to.deep.equal([
+			{
+				channels: [200, 100, -48],
+				space: 'hsl'
+			},
+			{
+				channels: [213.0415731895488, 100, -31.741504942736952],
+				space: 'hsl'
+			},
+			{
+				channels: [242.812654059009, 100, -20.406039545087694],
+				space: 'hsl'
+			},
+			{
+				channels: [286.5964972422866, 100, -20.240905322057483],
+				space: 'hsl'
+			},
+			{
+				channels: [311.4579492123546, 100, -28.15311658105302],
+				space: 'hsl'
+			},
+			{
+				channels: [321.0882152758742, 100, -36.6025187088609],
+				space: 'hsl'
+			},
+			{
+				channels: [323.8129664436686, 100, -42.91139921197519],
+				space: 'hsl'
+			},
+			{
+				channels: [320, 100, -48],
+				space: 'hsl'
+			}
 		]);
 	});
 
@@ -47,7 +106,16 @@ describe('color/poline', () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		node.inputs.anchorColors.setValue(['#ff0000', '#00ff00']);
+		node.inputs.anchorColors.setValue([
+			{
+				space: 'srgb',
+				channels: [1, 0, 0]
+			},
+			{
+				space: 'srgb',
+				channels: [0, 1, 0]
+			}
+		]);
 		node.inputs.numPoints.setValue(2);
 		node.inputs.hueShift.setValue(20);
 		node.inputs.positionFnX.setValue('linearPosition');
@@ -55,6 +123,23 @@ describe('color/poline', () => {
 
 		const output = node.outputs.value.value;
 
-		expect(output).to.eql(['#ff5500', '#9d8b00', '#20a200', '#00ff55']);
+		expect(output).to.deep.equal([
+			{
+				channels: [20, 100, 50],
+				space: 'hsl'
+			},
+			{
+				channels: [52.99549801404953, 100, 30.829648121589752],
+				space: 'hsl'
+			},
+			{
+				channels: [108.14643105799234, 100, 31.701328706835056],
+				space: 'hsl'
+			},
+			{
+				channels: [140, 100, 50],
+				space: 'hsl'
+			}
+		]);
 	});
 });

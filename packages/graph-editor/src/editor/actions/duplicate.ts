@@ -18,7 +18,7 @@ export interface IDuplicate {
  * @returns
  */
 export const duplicateNodes =
-  ({ graph, reactFlowInstance, nodeLookup }: IDuplicate) =>
+  ({ graph, reactFlowInstance }: IDuplicate) =>
   (nodeIds: string[]) => {
     const { addNodes, addEdges } = nodeIds.reduce(
       (acc, nodeId) => {
@@ -34,28 +34,18 @@ export const duplicateNodes =
         if (!graphNode || graphNode?.annotations[annotatedSingleton]) {
           return acc;
         }
-        const newID = uuidv4();
-        const saved = graphNode.serialize();
+
+        const clonedNode = graphNode.clone(graph);
+
         const newPosition = {
           x: node.position.x + 20,
           y: node.position.y + 100,
         };
 
-        const newGraphNode = graphNode?.factory.deserialize({
-          serialized: {
-            ...saved,
-            id: newID,
-            annotations: {
-              ...saved.annotations,
-              'ui.position.x': newPosition.x,
-              'ui.position.y': newPosition.y,
-            },
-          },
-          graph,
-          lookup: nodeLookup,
-        });
+        clonedNode.annotations['ui.position.x'] = newPosition.x;
+        clonedNode.annotations['ui.position.y'] = newPosition.y;
 
-        graph.addNode(newGraphNode);
+        graph.addNode(clonedNode);
 
         const newEdges = Object.entries(graphNode.inputs)
           .map(([key, value]) => {
@@ -65,7 +55,7 @@ export const duplicateNodes =
 
               const vals = {
                 id: newEdgeId,
-                target: newID,
+                target: clonedNode.id,
                 targetHandle: key,
                 source: edge.source,
                 sourceHandle: edge.sourceHandle,
@@ -83,7 +73,7 @@ export const duplicateNodes =
         const newNodes = [
           {
             ...node,
-            id: newID,
+            id: clonedNode.id,
             selected: true,
             position: newPosition,
           },
