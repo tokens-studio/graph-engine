@@ -47,7 +47,7 @@
     "@tokens-studio/graph-engine": "*",
     "@tokens-studio/tokens": "^0.0.24",
     "@tokens-studio/types": "^0.2.3",
-    "@tokens-studio/ui": "^0.5.5",
+    "@tokens-studio/ui": "^0.6.9",
     "@xzdarcy/react-timeline-editor": "^0.1.9",
     "array-move": "^4.0.0",
     "better-react-mathjax": "^2.0.3",

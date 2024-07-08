@@ -10,6 +10,7 @@
     "url": "https://github.com/tokens-studio/graph-engine"
   },
   "scripts": {
+    "zod": "ts-to-zod --watch",
     "build": "cross-env NODE_ENV=development next build --experimental-build-mode compile",
     "dev": "next",
     "format": "npm run format:eslint && npm run format:prettier",
@@ -29,14 +30,18 @@
     "@rematch/core": "2.2.0",
     "@rematch/persist": "2.1.2",
     "@stitches/react": "1.2.8",
-    "@tanstack/react-query": "5.32.0",
+    "@tanstack/react-query": "5.50.1",
+    "@tanstack/react-query-devtools": "5.50.1",
     "@tanstack/react-table": "8.9.3",
     "@tokens-studio/graph-editor": "*",
     "@tokens-studio/graph-engine": "*",
     "@tokens-studio/graph-engine-nodes-audio": "*",
     "@tokens-studio/graph-engine-nodes-design-tokens": "*",
     "@tokens-studio/tokens": "0.0.24",
-    "@tokens-studio/ui": "0.5.5",
+    "@tokens-studio/ui": "0.6.9",
+    "@ts-rest/open-api": "3.45.2",
+    "@ts-rest/react-query": "3.45.2",
+    "@ts-rest/serverless": "3.45.2",
     "@vercel/otel": "1.8.1",
     "classnames": "2.3.2",
     "copy-to-clipboard": "3.3.3",
@@ -71,7 +76,9 @@
     "s-ago": "2.2.0",
     "sanitize.css": "13.0.0",
     "sass": "1.62.1",
-    "uuid": "9.0.0"
+    "swagger-ui-react": "5.17.14",
+    "uuid": "9.0.0",
+    "zod": "3.23.8"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^14.2.3",

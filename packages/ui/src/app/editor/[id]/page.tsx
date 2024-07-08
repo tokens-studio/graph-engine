@@ -1,15 +1,17 @@
-import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import { client } from '@/api/sdk/index.ts';
 import { getServerClient } from '@/api/sdk/getServerClient.ts';
 import Inner from './clientPage.tsx';
 import React from 'react';
 
-const Page = async () => {
+const Page = async ({ params }) => {
 
+    
+    const { id } = params;
     const serverClient = getServerClient();
-    await client.graph.listGraphs.prefetchQuery(
+    await client.graph.getGraph.prefetchQuery(
         serverClient,
-        ['listGraphs'],
+        ['getGraph', id],
         {
         },
         {
@@ -20,9 +22,11 @@ const Page = async () => {
 
     return (
         <HydrationBoundary state={dehydrate(serverClient)}>
-            <Inner />
+            <Inner id={params.id} />
         </HydrationBoundary>
     );
-};
 
+
+
+};
 export default Page;

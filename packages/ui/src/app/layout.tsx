@@ -1,14 +1,16 @@
+import '@/styles/styles.scss';
+import '@tokens-studio/graph-editor/index.css';
 import 'sanitize.css';
 import 'sanitize.css/assets.css';
 import 'sanitize.css/forms.css';
 import 'sanitize.css/system-ui.css';
 import 'sanitize.css/typography.css';
 import 'sanitize.css/ui-monospace.css';
-import { Metadata } from 'next';
+
+import { Metadata } from 'next'
 import StitchesProvider from './registry.tsx';
 import type { Viewport } from 'next';
 
-import '@/styles/styles.scss';
 
 export const viewport: Viewport = {
 	themeColor: '#408ECF'
