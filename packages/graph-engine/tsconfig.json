@@ -17,7 +17,7 @@
 		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
-		"types": [ "node"],
+		"types": ["node"],
 		"baseUrl": "."
 	},
 	"include": ["stories/**/*", "src/**/*", "tests/**/*"],

@@ -20,7 +20,7 @@
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
 		"isolatedModules": true,
-		"types": [ "node"],
+		"types": ["node"],
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["src/*"]
