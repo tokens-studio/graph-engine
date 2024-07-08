@@ -25,11 +25,13 @@ RUN yarn global add turbo
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/full/ .
 COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/patches ./patches 
 COPY --from=builder /app/out/yarn.lock ./yarn.lock
 # Build the project
 
 COPY ../turbo.json turbo.json
 RUN yarn install
+RUN yarn run postinstall
 
 # Uncomment and use build args to enable remote caching
 # ARG TURBO_TEAM
