@@ -4,6 +4,7 @@
   "description": "UI for the graph engine",
   "author": "andrew@hyma.io",
   "type": "module",
+  "license":"MPL-2.0",
   "exports": {
     ".": {
       "import": "./dist/index.js",
