@@ -2,7 +2,7 @@ import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
 import { ColorPickerPopover } from '../colorPicker/index.js';
 import { FloppyDisk } from 'iconoir-react';
 import { IField } from './interface.js';
-import { Input, hexToColor, toColor, toHex } from '@tokens-studio/graph-engine';
+import { Input, toColor, toColorObject, toHex } from '@tokens-studio/graph-engine';
 import { delayedUpdateSelector } from '@/redux/selectors/index.js';
 import { observer } from 'mobx-react-lite';
 import { useSelector } from 'react-redux';
@@ -25,19 +25,9 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       let col;
-      //Weird  problem with the color picker if the user decides to use the text input
-      if (typeof e === 'string') {
-        col = e;
-      } else {
-        col = e.target.value;
-      }
-      setVal(col);
-      if (useDelayed) {
-        return;
-      }
-
-      //We need to convert from hex
-      (port as Input).setValue(hexToColor(col));
+      console.log(e);
+      
+      (port as Input).setValue(col);
     },
     [port, useDelayed],
   );
@@ -71,7 +61,7 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
 
   return (
     <Stack direction="row" justify="between" align="center" gap={2}>
-      <ColorPickerPopover value={val} onChange={onChange} />
+      <ColorPickerPopover value={port.value} onChange={onChange} />
       <Text muted>{val}</Text>
       {useDelayed && (
         <IconButton
