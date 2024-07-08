@@ -40,13 +40,13 @@ export default class NodeDefinition<T> extends Node {
 		super(props);
 
 		this.annotations[annotatedDynamicInputs] = true;
+		
+		this.addInput('condition', {
+			type: StringSchema
+		});
 
 		this.addInput('default', {
 			type: AnySchema
-		});
-
-		this.addInput('condition', {
-			type: StringSchema
 		});
 
 		this.addOutput('value', {
