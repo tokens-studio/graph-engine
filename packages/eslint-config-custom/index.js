@@ -11,7 +11,7 @@ module.exports = {
     "prettier",
   ],
   parser: "@typescript-eslint/parser",
-  plugins: ["sort-imports-es6-autofix", "jest", "@typescript-eslint"],
+  plugins: ["sort-imports-es6-autofix",  "@typescript-eslint"],
   settings: {
     "import/resolver": {
       typescript: {

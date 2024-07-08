@@ -14,11 +14,6 @@
         }
     ],
     "settings": {
-        "jest.jestCommandLine": "yarn run test --",
-        "jest.autoRun": "off",
-        "jest.disabledWorkspaceFolders": [
-            "ROOT"
-        ],
         "files.exclude": {
             "node_modules/": true,
             "packages/": true
