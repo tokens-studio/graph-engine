@@ -11,7 +11,7 @@ describe('color/create', () => {
 		node.inputs.a.setValue(1);
 		node.inputs.b.setValue(1);
 		node.inputs.c.setValue(1);
-		node.inputs.d.setValue(0.5);
+		node.inputs.alpha.setValue(0.5);
 
 		await node.execute();
 		const output = node.outputs.value.value;
@@ -49,7 +49,7 @@ describe('color/create', () => {
 		node.inputs.a.setValue(88);
 		node.inputs.b.setValue(100);
 		node.inputs.c.setValue(0.9);
-		node.inputs.d.setValue(0.5);
+		node.inputs.alpha.setValue(0.5);
 
 		await node.execute();
 		const output = node.outputs.value.value;
