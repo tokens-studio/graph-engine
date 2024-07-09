@@ -10,7 +10,14 @@ export const ReduxProvider = ({
   icons,
   controls,
   specifics,
+  toolbarButtons,
 }) => {
+  useEffect(() => {
+    if (toolbarButtons) {
+      store.dispatch.registry.setToolbarButtons(toolbarButtons);
+    }
+  }, [toolbarButtons]);
+
   useEffect(() => {
     store.dispatch.registry.registerIcons(icons || {});
   }, [icons]);

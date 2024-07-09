@@ -2,28 +2,38 @@ app: graph-engine-beta
 env: prod
 namespace: graph-engine
 chart:
-  repository: https://chart.onechart.dev
-  name: onechart
-  version: 0.64.0
+  name: https://github.com/tokens-studio/graph-engine.git?branch={{ .BRANCH }}&path=/.gimlet/k8s/graph-engine/
 values:
-  containerPort: 3000
-  gitRepository: tokens-studio/graph-engine
-  gitSha: '{{ .SHA }}'
-  image:
-    repository: ghcr.io/tokens-studio/graph-engine
-    tag: frontend-{{ .SHA }}
-  imagePullSecrets:
-    - ghcr-login-secret
-  ingress:
-    ingressClassName: traefik
-    annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-prod
-    host: graph.beta.tokens.studio
-    path: /
-    tlsEnabled: true
-  replicas: 1
-  resources:
-    ignoreLimits: true
-  vars:
-    TS_DEMO_MODE: true
-    HOSTNAME: 0.0.0.0
+  postgresql:
+    enabled: true
+    secret: db-graph-engine-beta-secrets
+    owner: nextjs
+    database: graphengine
+    superUser: graph-engine-beta-superuser-secret
+    cluster: graph-engine-beta-db
+
+  onechart: 
+    vars:
+      HOSTNAME: 0.0.0.0
+      NEXT_HOST_NAME: https://graph.beta.tokens.studio
+      DATABASE_URL: postgres://$username:$password@graph-engine-beta-db-rw:5432/graphengine
+    # Reference the created secrets file
+    secretName: db-graph-engine-beta-secrets
+    sealedSecrets:
+      AUTH_SECRET: AgC/xh+n0vQOEoXDajE9GwR7koSo+C67Nw/5pS38QzOiQoR+157B+3SyP+OIN8/lOuusJl7PR7layXPiJcRB1gvBH2htJzIQkCxldlZDMgVFdVz7NrwwondW03Z0zRVFB4fuTP89YlAokaaHDR3nKpcaiLv+cDflZPT0VBEv9zLx7SjuNBlfnNdnDdNFWlU5AYTwDQzMk/cUw5izbHIi1eWRGJv6UbWaTMZCcD4NLhPIzJ6C/koey0KttfyNF21/ppixhfyNHh6kmaC+wjaISyvHMRUniGRp6oGKD5cqCLLsCXK9nJ98Jb5/0bjnXW2bB7bBPOw1XCNm05w6HLJpPY88StFf3NIH6i4BhwGFn/Ud7RGp7dJRlYdhWFs/bMe0IQpWhgahTpkhF2HsZCqbylUHPxzyatKcdP9e+8Z2SQnJfQ+tHlyLhzTS2t+ZltKk1NlrQdCNxQminKzgM0q6AcqdsnsqtmMpsJyjmeHSjaws247N1S3QXWPOreK1qGa1KufvyPc7FPCRjVVp8E/FGFlaj33xv6CLOdQKk6RChLWC9oMRppf2K/e5BYkjoDFwRipz2p60P7y7nGIsU23mUuG1sraM2y7Qvs2KNofED0oU3rKV1XkrVYlPROVyVvarqyIvdt05oI1bGNcAMMiEyVZ2hCSLqe45a/1LAMNX6hGn0raMkjkNOLHZstttI73dG6HUSR2fQ92n349cWDyKYjkJt+JGNV9fsgLfaISWlNLRq5GzghyvbQU1vvJsfQ==
+      AUTH_GITHUB_ID: AgBpa7PO2RC+tPPHjBtzyuYdVGpWPnYwc0nz/RmTatLcTDFC+yQYbT1RkWB9lkiPfmPkV3kAQOQClY+FHRiukIuLwae4qZr0lixQgs5aoxn1B66IgYdBWxfX2/KkJl1f/mEP+GIQ2lvA9rRJobL7TJpfAwVzY3f9l4wxVPkBzHxYSNowmi+wAJGdhNg072jXQVIlvHh9WYKCG8OyyIBEYP3C5A7juoE4nR0upzNznkTbDHmG8KyJ5byrtFE8b7lTgV2VTevl9oP/6bPmqVZH4rD9hs+sly/8tn+LABm75WLebTWgZexfWlxmqYZjInAKzDXCew3kXC78/RBhwtAI8+bIt+XyJcqjvvLjK+Fq/K5cFxGvyT4K9LNIyDaIw4SdEfBsSpZcfjSmsp/xvRh1n409sjx2UIVvchUSD8dmxz9QQuTocF/HFzuxrud0gk1zl0PcxtSKh+Ald5pqlekd2FCsJv3XLXT8konUYGV+7vyLtIiCuD3QwKsPBXEc0TE5572pHF/TD096b9mY7vmBqF1TmSMym0ovSLrjryRrTErNrTf6Q81FyclZv2sWDi1jjBkmqwpzf7Ua7HfqNH4Ktqqb91Kk5q9m8aWOOwiMjYlhhD8Hro+KBcyB1ho/sh/FhxCqTOarAYCOWqBU0ElXgT9kBVH9AZdE++o/q1ilYTvLBx14G48qaTovTNNY8T//Rh5dSKZF4Y8xssiYwEWLBtxbfvPMfefQfqAdJuDcCQ0JSReO/22UWTw5JkQF8Q==
+      AUTH_GITHUB_SECRET: AgA/Pu4Hn3gXzATZW/n75D10oerHCT5p1XoVewlXMbU3/JlvL48GZYSQNXPGvHKtY7lcYcF0v/aEgBIpGw/R3nMEfCUV8RnDMKgLpY23ifdd+BJtngoFBEXQJp5uwE0i0ej8j01y5zqhQaayXaHwY+HqjYwn2rsBPOQi1Z/BvEOTRYf4NCmmvEy2rPYT134JLiZf0p5yeJ3/Pd9eEMgJmEWz+5U2+UR/xyu5e0o+bCn4MfYBxEMlbodvJao1bONMIRLICQAhFF4vmhwO874NfrUr/YDQL3GSAstbbFZqMynk4HvGpUcDJU129uNajiEIb0T0sv3IqpF6XwHEZMv6AwKTfK+S9zcjXQqq2forIP9jhDhC/e6GiSvEk3JTXXVYgiDTgL4wReIOn0dBjtbIatuhtpCFrZlKVb7C4v6ODPeWSGQilL4dRFqjYNRh16AF1u8UL1iWP01sqh2BhPurlyrJmCXfpeSyLGgrqalp4FC1UbXxiaMQCMAT1efJPYki2zgfOQcHslrhxFZBlVnjXashB16tSyelPCbCfMMykrcRRbpuNDuX75hSlkJJbwEQZmU4hE3C7X0il5I7x+eez505c3isrxbMA/TEYA4G2T/TlEcyxt65p+4sxycPqgn5YXWjomSY7OUwiStnkjV1B1WyyR+mJDTbADlvNNIWLvv16U041JERRKhZcCN8ldCaIHqYd0XRRUGVdb26JAwQBYaFsB1AClJ88/h/eGTc3MUfKBEKi2Y9KMIShAS9gQ==
+    gitRepository: tokens-studio/graph-engine
+    gitSha: '{{ .SHA }}'
+    image:
+      repository: ghcr.io/tokens-studio/graph-engine
+      tag: frontend-{{ .SHA }}
+    imagePullSecrets:
+      - ghcr-login-secret
+    ingress:
+      ingressClassName: traefik
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      host: graph.alpha.tokens.studio
+      path: /
+      tlsEnabled: true

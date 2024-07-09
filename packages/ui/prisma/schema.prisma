@@ -17,37 +17,13 @@ model Graph {
   // Effectively Json
   graph    String
   description String?
-  // Effectively String[], just serialized as a json string for sqlite
-  tags      String?
-  // Currently stored just as the user id to the kratos identity
+  public    Boolean @default(false)
+
   owner    String
-  invocations Invocation[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Invocation{
-  id       String   @id @default(cuid())
-  graph    Graph    @relation(fields: [graphId], references: [id])
-  graphId  String
-  // Effectively Json
-  input    String
-  artifacts Artifact[]
-  // Sqlite doesn't support enums, so we'll just use an int
-  status Int
-  startedAt DateTime @default(now())
-  endedAt DateTime @updatedAt
-}
-
-model Artifact{
-  id       String   @id @default(cuid())
-  invocation    Invocation    @relation(fields: [invocationId], references: [id])
-  invocationId  String
-  // Effectively Json
-  artifact    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
 
 model User {
   id            String          @id @default(cuid())

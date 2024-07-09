@@ -15,18 +15,24 @@ import {
 } from './data.ts';
 import { observer } from 'mobx-react-lite';
 import { useGetEditor } from '@/hooks/useGetEditor.ts';
-import React, { useCallback } from 'react';
+import React, { ReactElement, useCallback } from 'react';
 import globalState from '@/mobx/index.tsx';
 
 export const EditorTab = observer(
-	({ loading }: { loading?: boolean }, ref) => {
+	(
+		{
+			loading,
+			toolbarButtons
+		}: { loading?: boolean; toolbarButtons?: ReactElement[] },
+		ref
+	) => {
 		const { loadExample } = useGetEditor();
 		const onCloseExamplePicker = useCallback(() => {
-			globalState.ui.showExamplePicker.set(false);
+			globalState.ui.showExamplePicker = false;
 		}, []);
 
 		const onOpenExamplePicker = useCallback(() => {
-			globalState.ui.showExamplePicker.set(true);
+			globalState.ui.showExamplePicker = true;
 		}, []);
 
 		return (
@@ -35,24 +41,26 @@ export const EditorTab = observer(
 					id={''}
 					// @ts-ignore
 					ref={ref}
-					showMenu
+					showMenu={false}
 					menuItems={menu}
 					panelItems={panelItems}
 					nodeTypes={nodeTypes}
 					capabilities={capabilities}
 					controls={controls}
-					//@ts-expect-error
 					specifics={specifics}
 					icons={icons}
+					toolbarButtons={toolbarButtons}
 					emptyContent={
 						<EmptyStateEditor onLoadExamples={onOpenExamplePicker} />
 					}
 				></Editor>
-				<ExamplesPicker
-					open={globalState.ui.showExamplePicker.get()}
-					onClose={onCloseExamplePicker}
-					loadExample={loadExample}
-				/>
+				{
+					<ExamplesPicker
+						open={globalState.ui.showExamplePicker}
+						onClose={onCloseExamplePicker}
+						loadExample={loadExample}
+					/>
+				}
 				{loading && (
 					<Box
 						css={{

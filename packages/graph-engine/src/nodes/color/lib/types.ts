@@ -35,5 +35,4 @@ export const colorSpaces = [
 	'xyz-d50',
 	'xyz-d65'
 ] as const;
-
 export type ColorSpace = (typeof colorSpaces)[number];

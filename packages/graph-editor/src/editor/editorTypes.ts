@@ -73,6 +73,10 @@ export interface EditorProps {
    * Additional icons to display in the editor for custom types
    */
   icons?: Record<string, React.ReactNode>;
+  /**
+   * Additional buttons to display in the toolbar
+   */
+  toolbarButtons?: React.ReactElement[];
 
   initialGraph?: Graph;
 }

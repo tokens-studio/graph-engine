@@ -1,17 +1,20 @@
 'use client';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryProvider } from '@/api/sdk/provider.tsx';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ToastProvider } from '@/hooks/useToast.tsx';
+import { Tooltip } from '@tokens-studio/ui';
 import React from 'react';
-import Store from '@/redux/index.tsx';
+
+const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
 
 export default function Contexts({ children }) {
-	const queryClient = new QueryClient();
 	return (
-		<QueryClientProvider client={queryClient}>
+		<QueryProvider>
 			<ToastProvider>
-				<Store>{children}</Store>
+				<Tooltip.Provider>{children}</Tooltip.Provider>
 			</ToastProvider>
-		</QueryClientProvider>
+			{inDevEnvironment && <ReactQueryDevtools />}
+		</QueryProvider>
 	);
 }

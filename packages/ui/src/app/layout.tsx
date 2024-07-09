@@ -1,18 +1,21 @@
+import '@/styles/styles.scss';
+import '@tokens-studio/graph-editor/index.css';
 import 'sanitize.css';
 import 'sanitize.css/assets.css';
 import 'sanitize.css/forms.css';
 import 'sanitize.css/system-ui.css';
 import 'sanitize.css/typography.css';
 import 'sanitize.css/ui-monospace.css';
+
 import { Metadata } from 'next';
 import StitchesProvider from './registry.tsx';
 import type { Viewport } from 'next';
 
-import '@/styles/styles.scss';
-
 export const viewport: Viewport = {
 	themeColor: '#408ECF'
 };
+
+const HOST = process.env.NEXT_HOST_NAME;
 
 export const metadata: Metadata = {
 	title: 'Home',
@@ -41,11 +44,11 @@ export const metadata: Metadata = {
 	twitter: {
 		title: 'Resolver playground | Tokens Studio',
 		card: 'summary_large_image',
-		site: 'https://resolver.dev.tokens.studio',
+		site: HOST,
 		creator: '@AndrewAtTokens',
 		images: [
 			{
-				url: 'https://resolver.dev.tokens.studio/thumbnail.png',
+				url: `${HOST}/thumbnail.png`,
 				alt: 'Display picture of Token Studio Resolver Sandbox'
 			}
 		]
@@ -56,13 +59,13 @@ export const metadata: Metadata = {
 	openGraph: {
 		type: 'website',
 		locale: 'en_US',
-		url: 'https://resolver.dev.tokens.studio',
+		url: HOST,
 		title: 'Resolver playground | Tokens Studio',
 		description:
 			'Tokens studio alpha playground to test new resolver / generation functionality',
 		images: [
 			{
-				url: 'https://resolver.dev.tokens.studio/thumbnail.png',
+				url: `${HOST}/thumbnail.png`,
 				alt: 'Display picture of Token Studio Resolver Sandbox'
 			}
 		]

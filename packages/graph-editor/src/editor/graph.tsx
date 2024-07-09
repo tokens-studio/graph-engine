@@ -71,16 +71,17 @@ import {
 import { contextMenuSelector } from '@/redux/selectors/ui.js';
 import { copyNodeAction } from './actions/copyNodes.js';
 import { currentPanelIdSelector } from '@/redux/selectors/graph.js';
-import { debugInfo } from '@/components/debugger/data.js';
 import { deleteNode } from './actions/deleteNode.js';
-import { duplicateNodes } from './actions/duplicate.js';
 import {
+  description,
+  title,
   uiNodeType,
   uiVersion,
   uiViewport,
   xpos,
   ypos,
 } from '@/annotations/index.js';
+import { duplicateNodes } from './actions/duplicate.js';
 import { useContextMenu } from 'react-contexify';
 import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
 import { useSelector } from 'react-redux';
@@ -123,8 +124,13 @@ export const EditorApp = React.forwardRef<
   const dispatch = useDispatch();
   const { getIntersectingNodes } = reactFlowInstance;
   const store = useStoreApi();
-
-  const initialGraph: Graph = useMemo(() => new Graph(), []);
+  const initialGraph: Graph = useMemo(() => {
+    //Set defaults
+    const graph = new Graph();
+    graph.annotations[title] = 'Untitled Graph';
+    graph.annotations[description] = '';
+    return graph;
+  }, []);
 
   const [graph, setTheGraph] = useState(initialGraph);
 
@@ -246,30 +252,9 @@ export const EditorApp = React.forwardRef<
       });
     });
 
-    const NodeStartListener = graph.on('nodeExecuted', (run) => {
-      const existing = debugInfo.rows.find((x) => x.id == run.node.id);
-
-      if (!existing) {
-        debugInfo.addRow({
-          id: run.node.id,
-          name: run.node.factory.type,
-          actions: [],
-        });
-      }
-
-      //Now we need to add the actions
-      debugInfo.addAction(run.node.id, {
-        id: `${run.node.id}-${Date.now()}`,
-        start: run.start,
-        end: run.end,
-        effectId: 'effect0',
-      });
-    });
-
     return () => {
       valueDetecterDisposer();
       EdgeUpdaterDisposer();
-      NodeStartListener();
     };
   }, [graph]);
 

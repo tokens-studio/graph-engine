@@ -1,7 +1,7 @@
 'use client';
-
 import { Avatar, Box, Separator, Stack, Tooltip } from '@tokens-studio/ui';
-import { GitMerge, Home } from 'iconoir-react';
+import { GitMerge, Home, Settings } from 'iconoir-react';
+import { client } from '@/api/sdk/index.ts';
 import Image from 'next/image.js';
 import Link from 'next/link.js';
 import React from 'react';
@@ -15,12 +15,12 @@ interface RailItem {
 
 const railItemsStart: RailItem[] = [
 	{ icon: <Home />, label: 'Home', link: '/dashboard' },
-	{ icon: <GitMerge />, label: 'Editor', link: '/dashboard/editor' }
+	{ icon: <GitMerge />, label: 'Editor', link: '/editor' }
 	// { icon: <ShoppingBag />, label: 'Marketplace', link: '/dashboard/marketplace' }
 ];
 
 const railItemsEnd: RailItem[] = [
-	// { icon: <Settings />, label: 'Settings', link: '/dashboard/settings' },
+	{ icon: <Settings />, label: 'Settings', link: '/dashboard/settings' }
 	// { icon: <HeadsetHelp />, label: 'Help', link: '/dashboard/help' },
 ];
 
@@ -38,50 +38,53 @@ export interface RailProps {
 	avatar?: string;
 }
 
-export const Rail = ({ avatar }) => {
-	return (
-		<Tooltip.Provider>
-			<Stack
-				justify='between'
-				direction='column'
-				css={{
-					background: '$gray2',
-					borderRight: '1px solid $gray6',
-					color: '$gray11',
-					height: '100%',
-					padding: '$5 $3 $3'
-				}}
-			>
-				<Stack gap={3} direction='column' align='center'>
-					<Tooltip label={'Tokens Studio'}>
-						<Link href='https://tokens.studio'>
-							<Image src={TokensStudio} alt='logo' />
-						</Link>
-					</Tooltip>
-					{railItemsStart.map(item => (
-						<RailItem
-							key={item.label}
-							icon={item.icon}
-							label={item.label}
-							link={item.link}
-						/>
-					))}
-				</Stack>
+export interface RailProps {
+	avatar?: string;
+}
 
-				<Stack gap={3} direction='column' align='center'>
-					{railItemsEnd.map(item => (
-						<RailItem
-							key={item.label}
-							icon={item.icon}
-							label={item.label}
-							link={item.link}
-						/>
-					))}
-					<Separator orientation='horizontal' />
-					<Avatar src={avatar} />
-				</Stack>
+export const Rail = () => {
+	const { data } = client.auth.getWhoAmI.useQuery(['getWhoAmI']);
+	return (
+		<Stack
+			justify='between'
+			direction='column'
+			css={{
+				background: '$gray2',
+				borderRight: '1px solid $gray6',
+				color: '$gray11',
+				height: '100%',
+				padding: '$5 $3 $3'
+			}}
+		>
+			<Stack gap={3} direction='column' align='center'>
+				<Tooltip label={'Tokens Studio'}>
+					<Link href='https://tokens.studio'>
+						<Image src={TokensStudio} alt='logo' />
+					</Link>
+				</Tooltip>
+				{railItemsStart.map(item => (
+					<RailItem
+						key={item.label}
+						icon={item.icon}
+						label={item.label}
+						link={item.link}
+					/>
+				))}
 			</Stack>
-		</Tooltip.Provider>
+
+			<Stack gap={3} direction='column' align='center'>
+				{railItemsEnd.map(item => (
+					<RailItem
+						key={item.label}
+						icon={item.icon}
+						label={item.label}
+						link={item.link}
+					/>
+				))}
+				<Separator orientation='horizontal' />
+				<Avatar src={data?.body?.user?.image ?? ''} />
+			</Stack>
+		</Stack>
 	);
 };
 

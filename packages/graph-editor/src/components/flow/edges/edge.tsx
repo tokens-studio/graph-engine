@@ -1,71 +1,16 @@
 import { EdgeType } from '../../../redux/models/settings.js';
 import { Port } from '@tokens-studio/graph-engine';
+import { edgeType as edgeTypeSelector } from '../../../redux/selectors/settings.js';
+import { getBetterBezierPath } from './offsetBezier.js';
 import {
-  Position,
   getSimpleBezierPath,
   getSmoothStepPath,
   getStraightPath,
 } from 'reactflow';
-import { edgeType as edgeTypeSelector } from '../../../redux/selectors/settings.js';
-import { getBetterBezierPath } from './offsetBezier.js';
 import { useLocalGraph } from '@/context/graph.js';
 import { useSelector } from 'react-redux';
 import React from 'react';
 import colors from '@/tokens/colors.js';
-
-interface IArticulatedPath {
-  sourceX: number;
-  sourceY: number;
-  sourcePosition?: Position;
-  targetX: number;
-  targetY: number;
-  targetPosition?: Position;
-  curvature?: number;
-}
-
-type IPathOutput = [
-  path: string,
-  labelX: number,
-  labelY: number,
-  offsetX: number,
-  offsetY: number,
-];
-
-const getArticulatedPath = (opts: IArticulatedPath): IPathOutput => {
-  const { sourceX, sourceY, targetX, targetY } = opts;
-
-  //Minimum percentage between the two points dedicated to horizontal movement;
-
-  const deltaX = targetX - sourceX;
-  const deltaY = targetY - sourceY;
-
-  let arc = '';
-
-  //Get the smaller of the two distances
-  if (deltaY < deltaX) {
-    const dist = deltaY;
-
-    //Find the distance on either side
-    const paddingX = (deltaX - dist) / 2;
-
-    //Create the svg path
-    arc = `M ${sourceX} ${sourceY} C ${sourceX + paddingX} ${sourceY} ${
-      targetX - paddingX
-    } ${targetY} ${targetX} ${targetY}`;
-  } else {
-    const dist = deltaX;
-
-    //Find the distance on either side
-    const paddingY = (deltaY - dist) / 2;
-
-    //Create the svg path
-    arc = `M ${sourceX} ${sourceY} C ${sourceX} ${
-      sourceY + paddingY
-    } ${targetX} ${targetY - paddingY} ${targetX} ${targetY}`;
-  }
-
-  return [arc, targetX, targetY, 0, 0];
-};
 
 const extractColor = (port: Port) => {
   let id = port.type.$id || '';
@@ -125,7 +70,7 @@ export default function CustomEdge({
       edgeFn = getStraightPath;
       break;
     default:
-      edgeFn = getArticulatedPath;
+      edgeFn = getBetterBezierPath;
   }
 
   const [edgePath] = edgeFn({
