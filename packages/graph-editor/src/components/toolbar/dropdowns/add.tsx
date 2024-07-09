@@ -1,4 +1,4 @@
-import { Button, DropdownMenu, Stack, Tooltip } from '@tokens-studio/ui';
+import { Button, DropdownMenu, Scroll, Stack, Tooltip } from '@tokens-studio/ui';
 import { NavArrowRight, Plus } from 'iconoir-react';
 import { panelItemsSelector } from '@/redux/selectors/index.js';
 import { useAction } from '@/editor/actions/provider.js';
@@ -53,6 +53,12 @@ export const AddDropdown = () => {
     [reactFlowInstance, createNode, selectAddedNodes],
   );
 
+  const scrollbarStyle = React.useMemo(() => ({
+    overflowY: 'auto',
+    scrollbarColor: 'var(--colors-bgSubtle) transparent',
+    scrollbarWidth: 'thin',
+  }), []);
+
   const nodes = React.useMemo(() => {
     return data.groups.map((group) => {
       return (
@@ -67,7 +73,7 @@ export const AddDropdown = () => {
             </DropdownMenu.TrailingVisual>
           </DropdownMenu.SubTrigger>
           <DropdownMenu.Portal>
-            <DropdownMenu.SubContent sideOffset={2} alignOffset={-5}>
+            <DropdownMenu.SubContent sideOffset={2} alignOffset={-5} css={{ ...scrollbarStyle, maxHeight: '300px' }}>
               {group.items.map((item) => (
                 <DropdownMenu.Item
                   key={item.type}
@@ -81,7 +87,7 @@ export const AddDropdown = () => {
         </DropdownMenu.Sub>
       );
     });
-  }, [data, addNode]);
+  }, [data.groups, scrollbarStyle, addNode]);
 
   return (
     <DropdownMenu onOpenChange={onDropdownOpenChange}>
@@ -93,7 +99,11 @@ export const AddDropdown = () => {
         </DropdownMenu.Trigger>
       </Tooltip>
       <DropdownMenu.Portal>
-        <DropdownMenu.Content css={{ minWidth: '200px' }}>
+        <DropdownMenu.Content css={{
+          minWidth: '200px',
+          maxHeight: '500px',
+          ...scrollbarStyle
+        }}>
           <DropdownMenu.Item onSelect={openQuickSearch}>
             Quick Search...
             <DropdownMenu.TrailingVisual>⇧K</DropdownMenu.TrailingVisual>
@@ -102,6 +112,6 @@ export const AddDropdown = () => {
           {nodes}
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
-    </DropdownMenu>
+    </DropdownMenu >
   );
 };

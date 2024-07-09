@@ -28,8 +28,6 @@ export const keyMap = {
   REDO: ['command+shift+z', 'ctrl+shift+z'],
   SELECT_ALL: 'ctrl+a',
   DUPLICATE: ['command+d', 'ctrl+d'],
-  GROUP: 'ctrl+g',
-  UNGROUP: 'ctrl+shift+g',
   SAVE: 'ctrl+s',
   LOAD: 'ctrl+o',
   FIND: 'ctrl+f',
