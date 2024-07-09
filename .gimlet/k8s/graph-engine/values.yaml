@@ -11,8 +11,8 @@ onechart:
 ##
 postgresql:
   enabled: false
-  secret: db-graph-engine-secrets
+  # secret: db-graph-engine-secrets
   owner: nextjs
   database: graphengine
   cluster: graphengine
-  superUser: superuser-secret
+  # superUser: superuser-secret
