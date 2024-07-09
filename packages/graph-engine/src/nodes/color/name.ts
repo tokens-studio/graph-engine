@@ -157,9 +157,6 @@ const colorMap = {
 	yellowgreen: '#9acd32'
 };
 
-/**
- * Return the name of the color using the `color-namer` library.
- */
 export default class NodeDefinition extends Node {
 	static title = 'Name Color';
 	static type = 'studio.tokens.color.name';

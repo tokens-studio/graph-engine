@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/typing/passUnit.js';
 
 describe('typing/passUnit', () => {
-	it('adds unit if falsey value', async () => {
+	test('adds unit if falsey value', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -16,7 +16,7 @@ describe('typing/passUnit', () => {
 		expect(output).to.equal('0px');
 	});
 
-	it('adds unit if not detected', async () => {
+	test('adds unit if not detected', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -29,7 +29,7 @@ describe('typing/passUnit', () => {
 		expect(output).to.equal('3px');
 	});
 
-	it('does not add unit if  detected', async () => {
+	test('does not add unit if  detected', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

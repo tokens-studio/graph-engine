@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/color/create.js';
 
 describe('color/create', () => {
-	it('creates the expected color with rgba', async () => {
+	test('creates the expected color with rgba', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -11,7 +11,7 @@ describe('color/create', () => {
 		node.inputs.a.setValue(1);
 		node.inputs.b.setValue(1);
 		node.inputs.c.setValue(1);
-		node.inputs.d.setValue(0.5);
+		node.inputs.alpha.setValue(0.5);
 
 		await node.execute();
 		const output = node.outputs.value.value;
@@ -22,7 +22,7 @@ describe('color/create', () => {
 		});
 	});
 
-	it('creates the expected color with hsl', async () => {
+	test('creates the expected color with hsl', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -41,7 +41,7 @@ describe('color/create', () => {
 		});
 	});
 
-	it('creates the expected color with hsv', async () => {
+	test('creates the expected color with hsv', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -49,7 +49,7 @@ describe('color/create', () => {
 		node.inputs.a.setValue(88);
 		node.inputs.b.setValue(100);
 		node.inputs.c.setValue(0.9);
-		node.inputs.d.setValue(0.5);
+		node.inputs.alpha.setValue(0.5);
 
 		await node.execute();
 		const output = node.outputs.value.value;

@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/math/multiplyVariadic.js';
 
 describe('math/mul', () => {
-	it('multiplies two numbers', async () => {
+	test('multiplies two numbers', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -11,7 +11,7 @@ describe('math/mul', () => {
 		await node.execute();
 		expect(node.outputs.value.value).to.equal(2);
 	});
-	it('multiplies multiple numbers', async () => {
+	test('multiplies multiple numbers', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

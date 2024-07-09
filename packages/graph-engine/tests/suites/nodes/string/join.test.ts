@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/string/join.js';
 
 describe('string/join', () => {
-	it('should join the string array correctly', async () => {
+	test('should join the string array correctly', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

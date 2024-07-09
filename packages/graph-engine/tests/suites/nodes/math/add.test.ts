@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/math/add.js';
 
 describe('math/add', () => {
-	it('adds two numbers', async () => {
+	test('adds two numbers', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

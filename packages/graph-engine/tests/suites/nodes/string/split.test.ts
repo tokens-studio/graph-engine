@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/string/split.js';
 
 describe('string/split', () => {
-	it('splits a string as expected', async () => {
+	test('splits a string as expected', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

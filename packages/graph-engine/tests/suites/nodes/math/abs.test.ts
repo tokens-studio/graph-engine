@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/math/abs.js';
 
 describe('math/abs', () => {
-	it('absolutes the input', async () => {
+	test('absolutes the input', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

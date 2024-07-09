@@ -1,10 +1,10 @@
 import { Graph } from '../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import { topologicalSort } from '../../../src/graph/index.js';
 import Passthrough from '../../../src/nodes/generic/passthrough.js';
 
 describe('Graph/topologic', () => {
-	it('Creates the expected topologic output ', async () => {
+	test('Creates the expected topologic output ', async () => {
 		const graph = new Graph();
 
 		graph.addNode(new Passthrough({ id: 'a', graph }));

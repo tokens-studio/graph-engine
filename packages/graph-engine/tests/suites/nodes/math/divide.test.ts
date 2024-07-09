@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/math/divideVariadic.js';
 
 describe('math/div', () => {
-	it('divides two numbers', async () => {
+	test('divides two numbers', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -11,7 +11,7 @@ describe('math/div', () => {
 		await node.execute();
 		expect(node.outputs.value.value).to.equal(0.5);
 	});
-	it('divides multiple numbers', async () => {
+	test('divides multiple numbers', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -20,7 +20,7 @@ describe('math/div', () => {
 		expect(node.outputs.value.value).to.equal(2);
 	});
 
-	it('returns infinity when dividing by zero', async () => {
+	test('returns infinity when dividing by zero', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

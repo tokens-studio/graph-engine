@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/array/push.js';
 
 describe('array/push', () => {
-	it('does a non mutative push', async () => {
+	test('does a non mutative push', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
