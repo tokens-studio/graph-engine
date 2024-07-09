@@ -1,6 +1,6 @@
 'use client';
 
-import { getCssText } from '@/lib/stitches/index.ts';
+import { getCssText } from '@tokens-studio/graph-editor';
 import { useServerInsertedHTML } from 'next/navigation.js';
 import React from 'react';
 

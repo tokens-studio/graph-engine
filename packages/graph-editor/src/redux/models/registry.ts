@@ -1,9 +1,11 @@
 import { CapabilityFactory, Node } from '@tokens-studio/graph-engine';
 import { Control } from '@/types/controls.js';
+import { DefaultToolbarButtons } from '@/registry/toolbar.js';
 import {
   DropPanelStore,
   defaultPanelGroupsFactory,
 } from '@/components/panels/dropPanel/index.js';
+import { ReactElement } from 'react';
 import { RootModel } from './root.js';
 import { createModel } from '@rematch/core';
 import { defaultControls } from '@/registry/control.js';
@@ -20,6 +22,7 @@ export interface RegistryState {
   nodeTypes: Record<string, typeof Node>;
   panelItems: DropPanelStore;
   capabilities: CapabilityFactory[];
+  toolbarButtons: ReactElement[];
 }
 
 export const registryState = createModel<RootModel>()({
@@ -31,8 +34,15 @@ export const registryState = createModel<RootModel>()({
     panelItems: defaultPanelGroupsFactory(),
     nodeTypes: {},
     capabilities: [],
+    toolbarButtons: DefaultToolbarButtons,
   } as RegistryState,
   reducers: {
+    setToolbarButtons(state, toolbarButtons: ReactElement[]) {
+      return {
+        ...state,
+        toolbarButtons,
+      };
+    },
     setCapabilities(state, payload: CapabilityFactory[]) {
       return {
         ...state,

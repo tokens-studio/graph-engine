@@ -20,6 +20,7 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const {
       panelItems = defaultPanelGroupsFactory(),
       capabilities,
+      toolbarButtons,
       nodeTypes = defaultNodeLookup,
       controls = [...defaultControls],
       specifics = defaultSpecifics,
@@ -36,6 +37,7 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
           nodeTypes={nodeTypes}
           specifics={specifics}
           capabilities={capabilities}
+          toolbarButtons={toolbarButtons}
         >
           <LayoutController {...props} ref={ref} />
         </ReduxProvider>

@@ -187,6 +187,7 @@ export default class NodeDefinition extends Node {
 		const { color } = this.getAllInputs();
 		const clr = toColor(color);
 		let closestName;
+
 		Object.entries(colorMap).forEach(([key, hex]) => {
 			const distance = Color.deltaE(clr, new Color(hex), 'CMC');
 			if (closestName === undefined || distance < closestName.distance) {
@@ -196,6 +197,6 @@ export default class NodeDefinition extends Node {
 				};
 			}
 		});
-		this.setOutput('value', closestName);
+		this.setOutput('value', closestName.key);
 	}
 }

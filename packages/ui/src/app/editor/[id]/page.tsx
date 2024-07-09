@@ -5,28 +5,21 @@ import Inner from './clientPage.tsx';
 import React from 'react';
 
 const Page = async ({ params }) => {
+	const { id } = params;
+	const serverClient = getServerClient();
+	await client.graph.getGraph.prefetchQuery(
+		serverClient,
+		['getGraph', id],
+		{},
+		{
+			staleTime: 5000
+		}
+	);
 
-    
-    const { id } = params;
-    const serverClient = getServerClient();
-    await client.graph.getGraph.prefetchQuery(
-        serverClient,
-        ['getGraph', id],
-        {
-        },
-        {
-            staleTime: 5000,
-        },
-    );
-
-
-    return (
-        <HydrationBoundary state={dehydrate(serverClient)}>
-            <Inner id={params.id} />
-        </HydrationBoundary>
-    );
-
-
-
+	return (
+		<HydrationBoundary state={dehydrate(serverClient)}>
+			<Inner id={params.id} />
+		</HydrationBoundary>
+	);
 };
 export default Page;

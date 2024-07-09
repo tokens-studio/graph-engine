@@ -35,6 +35,4 @@ export const colorSpaces = [
 	'xyz-d50',
 	'xyz-d65'
 ] as const;
-import Color from 'colorjs.io'
-
 export type ColorSpace = (typeof colorSpaces)[number];

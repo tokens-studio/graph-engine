@@ -1,6 +1,6 @@
 import './debugger.scss';
 import { Box, Stack, Text } from '@tokens-studio/ui';
-import { DebugInfo } from './data.js';
+import { DebugInfo, debugInfo } from './data.js';
 import {
   Timeline,
   TimelineAction,
@@ -9,7 +9,8 @@ import {
   TimelineState,
 } from '@xzdarcy/react-timeline-editor';
 import { observer } from 'mobx-react-lite';
-import React, { MutableRefObject, useRef, useState } from 'react';
+import { useGraph } from '@/hooks/useGraph.js';
+import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
 import TimelinePlayer from './player.js';
 
 export interface CustomTimelineRow extends TimelineRow {
@@ -91,6 +92,38 @@ export const Debugger = ({ data }: DebuggerProps) => {
     useRef<TimelineState>() as MutableRefObject<TimelineState>;
   const autoScrollWhenPlay = useRef<boolean>(true);
   const domRef = useRef<HTMLDivElement>();
+
+  const graph = useGraph();
+
+  useEffect(() => {
+    if (!graph) {
+      return;
+    }
+
+    const NodeStartListener = graph.on('nodeExecuted', (run) => {
+      const existing = debugInfo.rows.find((x) => x.id == run.node.id);
+
+      if (!existing) {
+        debugInfo.addRow({
+          id: run.node.id,
+          name: run.node.factory.type,
+          actions: [],
+        });
+      }
+
+      //Now we need to add the actions
+      debugInfo.addAction(run.node.id, {
+        id: `${run.node.id}-${Date.now()}`,
+        start: run.start,
+        end: run.end,
+        effectId: 'effect0',
+      });
+    });
+
+    return () => {
+      NodeStartListener();
+    };
+  }, [graph]);
 
   const [scale, setScale] = useState(100);
 

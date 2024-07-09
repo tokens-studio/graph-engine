@@ -1,6 +1,8 @@
-import { Box, Label, Stack, TextInput } from '@tokens-studio/ui';
-import React from 'react';
+import { Box, IconButton, Label, Stack, TextInput } from '@tokens-studio/ui';
+import React, { useState } from 'react';
 
+import { FloppyDisk } from 'iconoir-react';
+import { JSONTree } from 'react-json-tree';
 import { description, title } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
 import { useGraph } from '@/hooks/useGraph.js';
@@ -42,20 +44,53 @@ const easyNameLookup = (name) => {
   }
 };
 
+const SettingsField = observer(
+  ({
+    name,
+    val,
+    onSave,
+  }: {
+    name: string;
+    val: unknown;
+    onSave: (string, unknown) => void;
+  }) => {
+    const [value, setValue] = useState(val);
+
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(e.target.value);
+    };
+
+    const onClick = () => onSave(name, value);
+
+    return (
+      <Stack direction="column" gap={2}>
+        <Label>{easyNameLookup(name)}</Label>
+        <Stack direction="row" gap={2}>
+          {typeof val === 'object' ? (
+            <JSONTree data={val} />
+          ) : (
+            <>
+              <TextInput value={val as string} onChange={onChange} />
+              <IconButton onClick={onClick} icon={<FloppyDisk />} />
+            </>
+          )}
+        </Stack>
+      </Stack>
+    );
+  },
+);
+
 const Settings = observer(({ annotations }: IAnnotation) => {
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const key = e.target.getAttribute('data-key') as string;
-    annotations[key] = e.target.value;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onChange = (key: string, val: any) => {
+    annotations[key] = val;
   };
 
   return (
     <Stack direction="column" gap={2}>
-      {Object.entries(annotations).map(([key, val]) => (
-        <Stack direction="column" gap={2}>
-          <Label>{easyNameLookup(key)}</Label>
-          <TextInput data-key={key} value={val} onChange={onChange} />
-        </Stack>
-      ))}
+      {Object.entries(annotations).map(([key, val]) => {
+        return <SettingsField name={key} val={val} onSave={onChange} />;
+      })}
     </Stack>
   );
 });

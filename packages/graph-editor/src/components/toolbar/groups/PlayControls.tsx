@@ -1,5 +1,5 @@
 import { Button } from '@tokens-studio/ui';
-import { Play, Square } from 'iconoir-react';
+import { Pause, Play, Square } from 'iconoir-react';
 import { playStateSelector } from '@/redux/selectors/index.js';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
@@ -45,7 +45,9 @@ export const PlayControls = () => {
         onClick={onPause}
         disabled={state === PlayState.STOPPED}
         style={{ paddingLeft: '0', paddingRight: '0' }}
-      ></Button>
+      >
+        <Pause />
+      </Button>
       <Button
         variant="invisible"
         onClick={onStop}

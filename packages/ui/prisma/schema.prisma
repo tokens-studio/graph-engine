@@ -19,9 +19,6 @@ model Graph {
   description String?
   public    Boolean @default(false)
 
-  // Effectively String[], just serialized as a json string for sqlite
-  tags      String?
-  // Currently stored just as the user id to the kratos identity
   owner    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

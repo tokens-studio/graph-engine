@@ -1,5 +1,5 @@
-import {z} from 'zod';
+import { z } from 'zod';
 
 export const ErrorResponse = z.object({
-    message: z.string(),
+	message: z.string()
 });

@@ -45,7 +45,7 @@
     --nodeBgColor: var(--gray-3);
     --nodeTextColor: var(--gray-12);
     outline: 2px solid var(--gray-11);
-    outline-offset: 0;
+    outline-offset: 5px;
     border-radius: var(--radii-medium, 8px);
 }
 
@@ -93,7 +93,7 @@
 .react-flow__edge:focus .react-flow__edge-path,
 .react-flow__edge:focus-visible .react-flow__edge-path {
     stroke-width: 4px !important;
-    stroke: var(--gray-12) !important;
+    stroke: white !important;
 }
 
 .react-flow__handle-connecting:not(.react-flow__handle-valid) {
@@ -117,21 +117,8 @@
     75% { transform: translateX(1px) }
     100% { transform: translateX(0) }
 }
+  
 
-/*
-.react-flow__handle-connecting:not(.react-flow__handle-valid){
-    outline: 3px solid var(--red-10);
-     animation: horizontal-shaking 0.35s; 
-}
-
-.react-flow__handle.react-flow__handle-valid {
-    outline: 3px solid var(--green-10);
-    transform: scale(0.85);
-}
-.react-flow__handle:not(.react-flow__handle-valid) {
-
-}
-*/
 .react-flow__resize-control {
     display: none;
 }

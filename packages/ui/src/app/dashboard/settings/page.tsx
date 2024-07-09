@@ -1,21 +1,25 @@
 'use client';
 
-import { Box } from '@tokens-studio/ui';
+import { Box, Stack } from '@tokens-studio/ui';
+import Inner from './clientPage.tsx';
 
 const Page = () => {
 	return (
-		<Box
+		<Stack
 			css={{
 				position: 'relative',
-				display: 'flex',
-				flexDirection: 'row',
 				width: '100%',
 				height: '100%',
-				overflow: 'hidden',
-				background: '$bgDefault',
-				isolation: 'isolate'
+				overflow: 'auto',
+				background: '$gray1',
+				paddingTop: '$6'
 			}}
-		/>
+			justify='center'
+		>
+			<Box css={{ padding: '$5', width: '80%' }}>
+				<Inner />
+			</Box>
+		</Stack>
 	);
 };
 

@@ -27,3 +27,8 @@ export const nodeTypesSelector = createSelector(
   registry,
   (state) => state.nodeTypes,
 );
+
+export const ToolBarButtonsSelector = createSelector(
+  registry,
+  (state) => state.toolbarButtons,
+);

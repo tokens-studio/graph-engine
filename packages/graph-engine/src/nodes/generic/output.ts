@@ -36,6 +36,7 @@ export default class NodeDefinition<T> extends Node {
 		Object.keys(node.inputs).forEach(input => {
 			const rawInput = node.getRawInput(input);
 			node.addOutput(input, {
+				visible: false,
 				type: rawInput.type
 			});
 		});
@@ -53,7 +54,8 @@ export default class NodeDefinition<T> extends Node {
 
 			if (!(input in outputs)) {
 				this.addOutput(input, {
-					type: rawInput.type
+					type: rawInput.type,
+					visible: false
 				});
 			}
 

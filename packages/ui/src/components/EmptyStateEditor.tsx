@@ -1,25 +1,30 @@
 import { BatteryCharging, JournalPage, PagePlus } from 'iconoir-react';
 import { Box, Button, EmptyState, Stack } from '@tokens-studio/ui';
-import { showNodesPanelSelector } from '@/redux/selectors/index.ts';
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from '@tokens-studio/graph-editor';
 import React from 'react';
+import globalState from '@/mobx/index.tsx';
 
 interface IEmptyStateProps {
 	onLoadExamples: () => void;
+	showNodesPanel: boolean;
 }
 
-export function EmptyStateEditor({ onLoadExamples }: IEmptyStateProps) {
+export function EmptyStateEditor({ onLoadExamples }) {
+	return (
+		<EmptyStateInner
+			onLoadExamples={onLoadExamples}
+			showNodesPanel={globalState.ui.showNodesPanel}
+		/>
+	);
+}
+
+function EmptyStateInner({ onLoadExamples, showNodesPanel }: IEmptyStateProps) {
 	const dispatch = useDispatch();
-	const showNodesPanel = useSelector(showNodesPanelSelector);
 
 	const handleTriggerAddNode = useCallback(() => {
 		dispatch.ui.setShowNodesCmdPalette(true);
-	}, [dispatch.ui]);
-
-	const handleTriggerShowExamples = useCallback(() => {
-		onLoadExamples();
-	}, [onLoadExamples]);
+	}, []);
 
 	return (
 		<Box
@@ -41,7 +46,7 @@ export function EmptyStateEditor({ onLoadExamples }: IEmptyStateProps) {
 				description='Add your first node to get started or load an example'
 			>
 				<Stack direction='row' gap={3} css={{ pointerEvents: 'all' }}>
-					<Button onClick={handleTriggerShowExamples} icon={<PagePlus />}>
+					<Button onClick={onLoadExamples} icon={<PagePlus />}>
 						Load example
 					</Button>
 					<Button
