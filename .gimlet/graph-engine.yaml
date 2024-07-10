@@ -18,8 +18,6 @@ values:
     gitSha: '{{ .SHA }}'
     vars:
       HOSTNAME: 0.0.0.0
-      AUTH_URL: https://graph.alpha.tokens.studio
-      NEXT_HOST_NAME: https://graph.alpha.tokens.studio
       DATABASE_URL: postgres://$username:$password@graph-engine-db-rw:5432/graphengine
     # Reference the created secrets file
     secretName: graph-engine-db-app

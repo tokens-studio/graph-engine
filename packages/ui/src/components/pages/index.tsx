@@ -6,7 +6,7 @@ import Logo from '@/assets/svgs/tokensstudio-logo.svg';
 
 export default function Index() {
 	return (
-		<Stack direction='row' align='center'>
+		<Stack direction='row' align='center'css={{height:'100%',width:'100%'}} justify='center'>
 			<Box
 				css={{ background: '$bgCanvas', padding: '$5', borderRadius: '$small' }}
 			>

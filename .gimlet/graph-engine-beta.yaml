@@ -15,8 +15,6 @@ values:
   onechart: 
     vars:
       HOSTNAME: 0.0.0.0
-      AUTH_URL: https://graph.beta.tokens.studio
-      NEXT_HOST_NAME: https://graph.beta.tokens.studio
       DATABASE_URL: postgres://$username:$password@graph-engine-beta-db-rw:5432/graphengine
     # Reference the created secrets file
     secretName: graph-engine-beta-db-app

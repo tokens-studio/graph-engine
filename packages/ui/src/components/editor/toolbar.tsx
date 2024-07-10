@@ -11,7 +11,11 @@ import { useErrorToast } from '@/hooks/useToast.tsx';
 import { useSelector } from 'react-redux';
 import React from 'react';
 
-const HOST_NAME = process.env.NEXT_HOST_NAME;
+
+let hostname = ''
+if (typeof window !== 'undefined') {
+    hostname = window.location.hostname;
+}
 
 export const SaveButton = ({ id }) => {
 	const mainGraph = useSelector(mainGraphSelector);
@@ -82,7 +86,7 @@ export const ShareButton = ({ id }) => {
 		<SharePopover
 			open={shareOpen}
 			onClose={onClose}
-			link={`${HOST_NAME}/editor/${id}`}
+            link={`${hostname}/editor/${id}`}
 		>
 			<Tooltip label='Share' side='bottom'>
 				<IconButton

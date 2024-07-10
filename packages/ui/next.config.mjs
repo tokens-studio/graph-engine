@@ -13,10 +13,6 @@ const withBundleAnalyzer = analyzer({
 export default withBundleAnalyzer({
   reactStrictMode: true,
   transpilePackages: ['@tokens-studio/graph-editor', '@tokens-studio/graph-engine', 'mobx', 'colorjs.io'],
-  env: {
-    AUTH_URL: process.env.AUTH_URL,
-    NEXT_HOST_NAME: process.env.NEXT_HOST_NAME,
-  },
   experimental: {
     esmExternals: true,
     //Terrible hack to fix

@@ -10,14 +10,16 @@ import 'sanitize.css/ui-monospace.css';
 import { Metadata } from 'next';
 import StitchesProvider from './registry.tsx';
 import type { Viewport } from 'next';
+import { headers } from 'next/headers.js';
 
 export const viewport: Viewport = {
 	themeColor: '#408ECF'
 };
 
-const HOST = process.env.NEXT_HOST_NAME;
+const HOST = headers().get('host');
 
 export const metadata: Metadata = {
+	metadataBase: new URL(HOST!),
 	title: 'Home',
 	description: 'Tokens Studio design tokens playground.',
 	authors: [
