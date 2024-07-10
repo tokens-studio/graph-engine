@@ -6,6 +6,24 @@ deploy:
   event: push
 chart:
   name: https://github.com/tokens-studio/graph-engine.git?branch={{ .BRANCH }}&path=/.gimlet/k8s/graph-engine/
+
+# Add a patch to inject the database generated secret
+json6902Patches:
+- target:
+    group: "apps"
+    version: "v1"
+    kind: "Deployment"
+    name: "graph-engine"
+  patch: |
+    ---
+    - op: add
+      path: /spec/template/spec/containers/0/env
+      value: 
+        - name: DATABASE_URL 
+          valueFrom:
+              secretKeyRef:
+                name: graph-engine-db-app
+                key: uri
 values:
   postgresql:
     enabled: true
@@ -18,7 +36,6 @@ values:
     gitSha: '{{ .SHA }}'
     vars:
       HOSTNAME: 0.0.0.0
-      DATABASE_URL: postgres://$username:$password@graph-engine-db-rw:5432/graphengine
     # Reference the created secrets file
     secretName: graph-engine-db-app
     sealedSecrets:

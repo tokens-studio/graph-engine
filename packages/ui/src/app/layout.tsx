@@ -7,71 +7,72 @@ import 'sanitize.css/system-ui.css';
 import 'sanitize.css/typography.css';
 import 'sanitize.css/ui-monospace.css';
 
-import { Metadata } from 'next';
+import { headers } from 'next/headers.js';
 import StitchesProvider from './registry.tsx';
 import type { Viewport } from 'next';
-import { headers } from 'next/headers.js';
 
 export const viewport: Viewport = {
 	themeColor: '#408ECF'
 };
 
-const origin = headers().get('host') || 'localhost:3000';
-const protocol = headers().get('x-forwarded-proto') || 'http';
+export async function generateMetadata() {
+	const origin = headers().get('host') || 'localhost:3000';
+	const protocol = headers().get('x-forwarded-proto') || 'http';
 
-export const metadata: Metadata = {
-	metadataBase: new URL(`${protocol}://${origin}`),
-	title: 'Home',
-	description: 'Tokens Studio design tokens playground.',
-	authors: [
-		{
-			name: 'Tokens Studio',
-			url: 'https://tokens.studio'
+	return {
+		metadataBase: new URL(`${protocol}://${origin}`),
+		title: 'Home',
+		description: 'Tokens Studio design tokens playground.',
+		authors: [
+			{
+				name: 'Tokens Studio',
+				url: 'https://tokens.studio'
+			}
+		],
+		keywords: [
+			'Graph',
+			'resolvers',
+			'generator',
+			'design',
+			'tokens',
+			'studio',
+			'figma'
+		],
+
+		icons: {
+			icon: '/favicon.ico',
+			apple: '/apple-icon-180x180.png'
+		},
+		manifest: '/manifest.json',
+		twitter: {
+			title: 'Resolver playground | Tokens Studio',
+			card: 'summary_large_image',
+			creator: '@AndrewAtTokens',
+			images: [
+				{
+					url: `/thumbnail.png`,
+					alt: 'Display picture of Token Studio Resolver Sandbox'
+				}
+			]
+		},
+		applicationName: 'Tokens Studio generator playground',
+		referrer: 'origin-when-cross-origin',
+		creator: 'SorsOps',
+		openGraph: {
+			type: 'website',
+			locale: 'en_US',
+			title: 'Resolver playground | Tokens Studio',
+			description:
+				'Tokens studio alpha playground to test new resolver / generation functionality',
+			images: [
+				{
+					url: `/thumbnail.png`,
+					alt: 'Display picture of Token Studio Resolver Sandbox'
+				}
+			]
 		}
-	],
-	keywords: [
-		'Graph',
-		'resolvers',
-		'generator',
-		'design',
-		'tokens',
-		'studio',
-		'figma'
-	],
-
-	icons: {
-		icon: '/favicon.ico',
-		apple: '/apple-icon-180x180.png'
-	},
-	manifest: '/manifest.json',
-	twitter: {
-		title: 'Resolver playground | Tokens Studio',
-		card: 'summary_large_image',
-		creator: '@AndrewAtTokens',
-		images: [
-			{
-				url: `/thumbnail.png`,
-				alt: 'Display picture of Token Studio Resolver Sandbox'
-			}
-		]
-	},
-	applicationName: 'Tokens Studio generator playground',
-	referrer: 'origin-when-cross-origin',
-	creator: 'SorsOps',
-	openGraph: {
-		type: 'website',
-		locale: 'en_US',
-		title: 'Resolver playground | Tokens Studio',
-		description:
-			'Tokens studio alpha playground to test new resolver / generation functionality',
-		images: [
-			{
-				url: `/thumbnail.png`,
-				alt: 'Display picture of Token Studio Resolver Sandbox'
-			}
-		]
-	}
-};
+	};
+}
 
 export default function RootLayout({
 	// Layouts must accept a children prop.

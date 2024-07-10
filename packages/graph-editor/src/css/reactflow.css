@@ -49,10 +49,6 @@
     border-radius: var(--radii-medium, 8px);
 }
 
-.react-flow__node.selectable.selected .group-color-picker {
-    display: block;
-}
-
 .react-flow__node-studio_tokens_group {
     background: transparent;
 }

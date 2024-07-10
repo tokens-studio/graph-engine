@@ -1,11 +1,12 @@
 @import url("mafs/core.css");
-@import url('react-contexify/ReactContexify.css');
+
 @import url('rc-dock/dist/rc-dock.css');
 @import url('./css/rc-dock.css');
 @import url('rc-menu/assets/index.css');
 @import url('./components/menubar/menubar.css');
 @import url('./css/reactflow.css');
 @import url('./css/cmdk.css');
+@import url('./css/contextify.css');
 @import url('./components/curveEditor/override.css');
 @import '@radix-ui/colors/gray-dark.css';
 @import '@radix-ui/colors/sand-dark.css';
@@ -27,54 +28,75 @@
 
 :root {
     --globals-drop-panel-width: 240px;
-    --colors-bgCanvas: #292929;
-    --colors-bgDefault: #2d2d2d;
-    --colors-bgEmphasis: #2b2b2b;
-    --colors-bgSubtle: #373737;
-    --colors-bgSurface: #292929;
-
-    /* Desaturated colors */
-    --colors-borderDefault: #636363;
-    /* Desaturated from #4F6978 */
-    --colors-borderMuted: #2e2e2e;
-    /* Desaturated from #1F2B32 */
-    --colors-borderSubtle: #454545;
-
-    --colors-fgSubtle: #8a8a8a;
-    /* Desaturated from #92B2C4 */
-    //
-
-    --colors-inputBg: #202020;
-    --colors-inputBorderRest: #454545;
+  
 }
 
-.dock-panel {
-    color: inherit
-}
-
-.group-color-picker {
-    display: none;
-    position: absolute;
-    top: 100%;
-    margin-top: 1em;
-}
 
 #drop-panel {
     margin: 0;
 }
 
-.contexify {
-    --contexify-menu-bgColor: var(--colors-contextMenuBg);
-    --contexify-separator-color: var(--colors-contextMenuSeparator);
-    --contexify-item-color: var(--colors-contextMenuFg);
-    --contexify-activeItem-color: var(--colors-contextMenuFg);
-    --contexify-activeItem-bgColor: var(--colors-contextMenuBgHover);
-    --contexify-rightSlot-color: var(--colors-contextMenuFgMuted);
-    --contexify-activeRightSlot-color: var(--colors-contextMenuFg);
-    --contexify-arrow-color: var(--colors-contextMenuFgMuted);
-    --contexify-activeArrow-color: var(--colors-contextMenuFgMuted);
-    --contexify-menu-shadow: var(--shadows-contextMenu);
+
+.dock-panel {
+    color: inherit;
+    border-color: transparent;
 }
+
+.dock-top .dock-bar {
+    border-bottom: none;
+}
+
+.dock-tab {
+    color: var(--gray-12);
+    border-bottom: none;
+    z-index: 10;
+}
+
+.dock-tab>div {
+    padding: var(--space-2) var(--space-3);
+}
+
+.dock-nav-wrap {
+    cursor: move;
+}
+
+.dock-panel.dock-style-main .dock-tab,
+.dock-tab {
+    background: transparent;
+}
+
+
+
+.dock-panel {
+    background: var(--gray-1);
+}
+
+.dock-fbox>.dock-panel {
+    box-shadow: 0 0 0.25rem var(--gray-3);
+}
+
+.dock-top .dock-bar,
+.dock-tab {
+    background: transparent;
+}
+
+.dock-panel.dock-style-main .dock-bar {
+    border-bottom-color: var(--gray-6);
+}
+
+.dock-content-holder {
+    scrollbar-color: var(--colors-bgSubtle) transparent;
+    scrollbar-width: thin;
+    border-bottom: 1px solid var(--gray-6);
+}
+
+.dock-top .dock-ink-bar {
+    background: var(--gray-3);
+    z-index: 0;
+    height: 100%;
+    border-radius: var(--radii-small);
+}
+
 
 .DropdownMenuContent {
     width: var(--radix-dropdown-menu-trigger-width);
