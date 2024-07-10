@@ -16,10 +16,11 @@ export const viewport: Viewport = {
 	themeColor: '#408ECF'
 };
 
-const HOST = headers().get('host');
+const origin = headers().get('host') || 'localhost:3000';
+const protocol = headers().get('x-forwarded-proto') || 'http';
 
 export const metadata: Metadata = {
-	metadataBase: new URL(HOST!),
+	metadataBase: new URL(`${protocol}://${origin}`),
 	title: 'Home',
 	description: 'Tokens Studio design tokens playground.',
 	authors: [
@@ -46,11 +47,10 @@ export const metadata: Metadata = {
 	twitter: {
 		title: 'Resolver playground | Tokens Studio',
 		card: 'summary_large_image',
-		site: HOST,
 		creator: '@AndrewAtTokens',
 		images: [
 			{
-				url: `${HOST}/thumbnail.png`,
+				url: `/thumbnail.png`,
 				alt: 'Display picture of Token Studio Resolver Sandbox'
 			}
 		]
@@ -61,13 +61,12 @@ export const metadata: Metadata = {
 	openGraph: {
 		type: 'website',
 		locale: 'en_US',
-		url: HOST,
 		title: 'Resolver playground | Tokens Studio',
 		description:
 			'Tokens studio alpha playground to test new resolver / generation functionality',
 		images: [
 			{
-				url: `${HOST}/thumbnail.png`,
+				url: `/thumbnail.png`,
 				alt: 'Display picture of Token Studio Resolver Sandbox'
 			}
 		]
