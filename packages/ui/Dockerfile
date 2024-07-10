@@ -54,8 +54,11 @@ USER nextuser
 
 # Weird that it keeps the total directory structure
 COPY --from=installer --chown=nextuser:nextuser  /app/packages/ui/.next/standalone ./
+# Add prisma so we can trigger the migrate
+COPY --from=installer --chown=nextuser:nextuser  /app/packages/ui/prisma ./packages/ui/prisma
 COPY --from=installer --chown=nextuser:nextuser  /app/packages/ui/public/ ./packages/ui/public
 COPY --from=installer --chown=nextuser:nextuser  /app/packages/ui/.next/static ./packages/ui/.next/static
 
+WORKDIR /app/packages/ui
 EXPOSE 3000
-ENTRYPOINT ["dumb-init","node","./packages/ui/server.js"]
+ENTRYPOINT ["/bin/sh", "-c" , "npx -y prisma@5.16.2 migrate deploy && dumb-init node server.js"]

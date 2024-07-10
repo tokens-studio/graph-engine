@@ -20,12 +20,14 @@
     "lint:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --check",
     "start": "next start",
     "type-check": "tsc --noEmit",
-    "migrate": "prisma migrate dev"
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy"
   },
   "dependencies": {
     "@auth/prisma-adapter": "2.4.1",
     "@opentelemetry/api-logs": "0.50.0",
     "@prisma/client": "5.16.1",
+    "@radix-ui/react-popover": "^1.0.7",
     "@stitches/react": "1.2.8",
     "@tanstack/react-query": "5.50.1",
     "@tanstack/react-query-devtools": "5.50.1",
@@ -57,9 +59,8 @@
     "next": "14.2.3",
     "next-auth": "5.0.0-beta.19",
     "next-themes": "0.2.1",
-    "prisma": "5.16.1",
+    "prisma": "5.16.2",
     "react": "18.2.0",
-    "@radix-ui/react-popover": "^1.0.7",
     "react-dom": "18.2.0",
     "react-error-boundary": "4.0.11",
     "react-joyride": "2.8.1",
