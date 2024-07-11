@@ -1,5 +1,35 @@
 # @tokens-studio/graph-engine
 
+## 2.0.0
+
+### Major Changes
+
+- 7a7bb9e: BREAKING: Clean up publishing standards, ESM-only, no legacy fields.
+
+### Patch Changes
+
+- Updated dependencies [11dc900]
+- Updated dependencies [787af7d]
+- Updated dependencies [6321006]
+- Updated dependencies [921f878]
+- Updated dependencies [6321006]
+- Updated dependencies [f5a622a]
+- Updated dependencies [8d0f934]
+- Updated dependencies [7a7bb9e]
+- Updated dependencies [6321006]
+- Updated dependencies [921f878]
+- Updated dependencies [921f878]
+- Updated dependencies [921f878]
+- Updated dependencies [6321006]
+- Updated dependencies [921f878]
+- Updated dependencies [6321006]
+- Updated dependencies [6321006]
+- Updated dependencies [addb50d]
+- Updated dependencies [921f878]
+- Updated dependencies [6321006]
+- Updated dependencies [1e68191]
+  - @tokens-studio/graph-engine@2.0.0
+
 ## 1.0.0
 
 ### Patch Changes

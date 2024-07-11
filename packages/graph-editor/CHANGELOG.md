@@ -1,5 +1,57 @@
 # @tokens-studio/graph-editor
 
+## 4.0.0
+
+### Major Changes
+
+- 7a7bb9e: BREAKING: Clean up publishing standards, ESM-only, no legacy fields.
+- 921f878: Changed how color was represented to better support more exotic color spaces. Also removed the advanced blend node as culori is an unnecessary complication
+
+### Minor Changes
+
+- 921f878: Add keyboard shortcut to show/hide values inside the node
+- b3301e0: Add better support for icons in the editor with both group and specific icons
+- a6651ac: - Use ReactFlow selection state as source of truth
+  - Elevate nodes on selection
+  - Auto select nodes when added to the stage
+  - Clear nodes selection when swithing graph tabs
+- 1e68191: Adds filter , find and flatten to array transformations
+
+### Patch Changes
+
+- d45e99c: Add error boundaries to the graph editor panels
+- 267a9f1: Improve the offset on the bezier in the editor.
+  Fix the typing on the invert node.
+  Remove code for the obscure distance
+- 5486cac: Fix CSS properties import for CSS map node
+- e09aa3f: Fix the center alignment of handles on a node
+- cd86a3b: Add error boundary to nodes & fix color swatch error
+- 921f878: Fixes color compare preview node to crash when entering a non valid color string
+- cb050f0: Fixed an issue on input that was throwing an error if you create both an array and enumerated value
+- 921f878: Add ability to update array inputs
+- 56fb988: Fix the width of the color swatch on color compare node.
+- Updated dependencies [11dc900]
+- Updated dependencies [787af7d]
+- Updated dependencies [6321006]
+- Updated dependencies [921f878]
+- Updated dependencies [6321006]
+- Updated dependencies [f5a622a]
+- Updated dependencies [8d0f934]
+- Updated dependencies [7a7bb9e]
+- Updated dependencies [6321006]
+- Updated dependencies [921f878]
+- Updated dependencies [921f878]
+- Updated dependencies [921f878]
+- Updated dependencies [6321006]
+- Updated dependencies [921f878]
+- Updated dependencies [6321006]
+- Updated dependencies [6321006]
+- Updated dependencies [addb50d]
+- Updated dependencies [921f878]
+- Updated dependencies [6321006]
+- Updated dependencies [1e68191]
+  - @tokens-studio/graph-engine@2.0.0
+
 ## 3.0.0
 
 ### Major Changes

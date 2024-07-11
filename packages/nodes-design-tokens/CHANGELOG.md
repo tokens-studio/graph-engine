@@ -1,5 +1,51 @@
 # @tokens-studio/graph-engine
 
+## 2.0.0
+
+### Major Changes
+
+- 7a7bb9e: BREAKING: Clean up publishing standards, ESM-only, no legacy fields.
+- 921f878: Changed how color was represented to better support more exotic color spaces. Also removed the advanced blend node as culori is an unnecessary complication
+
+### Patch Changes
+
+- 267a9f1: Improve the offset on the bezier in the editor.
+  Fix the typing on the invert node.
+  Remove code for the obscure distance
+- Updated dependencies [d45e99c]
+- Updated dependencies [267a9f1]
+- Updated dependencies [11dc900]
+- Updated dependencies [5486cac]
+- Updated dependencies [e09aa3f]
+- Updated dependencies [787af7d]
+- Updated dependencies [cd86a3b]
+- Updated dependencies [6321006]
+- Updated dependencies [921f878]
+- Updated dependencies [921f878]
+- Updated dependencies [6321006]
+- Updated dependencies [b3301e0]
+- Updated dependencies [f5a622a]
+- Updated dependencies [8d0f934]
+- Updated dependencies [7a7bb9e]
+- Updated dependencies [6321006]
+- Updated dependencies [921f878]
+- Updated dependencies [a6651ac]
+- Updated dependencies [921f878]
+- Updated dependencies [921f878]
+- Updated dependencies [6321006]
+- Updated dependencies [921f878]
+- Updated dependencies [6321006]
+- Updated dependencies [6321006]
+- Updated dependencies [cb050f0]
+- Updated dependencies [addb50d]
+- Updated dependencies [921f878]
+- Updated dependencies [921f878]
+- Updated dependencies [6321006]
+- Updated dependencies [56fb988]
+- Updated dependencies [1e68191]
+  - @tokens-studio/graph-editor@4.0.0
+  - @tokens-studio/graph-engine@2.0.0
+
 ## 1.0.0
 
 ### Patch Changes
