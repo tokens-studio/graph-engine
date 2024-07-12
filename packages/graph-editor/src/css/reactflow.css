@@ -2,7 +2,7 @@
 
 
 .react-flow {
-    background: #191919;
+    background: var(--colors-graphBg);
 }
 
 .react-flow__handle {
@@ -14,7 +14,7 @@
     padding: 0;
     width: var(--sizes-4);
     height: var(--sizes-4);
-    border: 4px solid #1a1a1a;
+    border: 4px solid var(--colors-graphBg);
     border-radius: 99px;
     box-shadow: var(--shadows-small);
     outline: 2px solid transparent;
@@ -34,17 +34,17 @@
     display: flex;
 }
 .react-flow__edge.updating {
-    stroke: var(--green-10);
+    stroke: var(--colors-graphBg);
 }
 .react-flow__handle-valid	{
     outline-color: var(--colors-borderDefault);
 }
 .react-flow__node.selectable.selected,
 .react-flow__node.selectable:focus {
-    --nodeBorderColor: var(--gray-6);
-    --nodeBgColor: var(--gray-3);
-    --nodeTextColor: var(--gray-12);
-    outline: 2px solid var(--gray-11);
+    --nodeBorderColor: var(--colors-borderDefault);
+    --nodeBgColor: var(--colors-nodeBg);
+    --nodeTextColor: var(--colors-fgDefault);
+    outline: 2px solid var(--colors-fgDefault);
     outline-offset: 5px;
     border-radius: var(--radii-medium, 8px);
 }
@@ -54,11 +54,11 @@
 }
 
 .react-flow__minimap {
-    background: var(--gray-3);
+    background: var(--colors-bgSubtle);
 }
 
 .react-flow__minimap-mask {
-    fill: var(--gray-12) !important;
+    fill: var(--colors-bgDefault) !important;
 }
 
 .react-flow__handle-right {

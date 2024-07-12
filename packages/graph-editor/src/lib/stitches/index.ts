@@ -30,8 +30,8 @@ export const {
   createTheme,
 } = createStitches({
   theme: {
+    ...core,
     colors: {
-      ...core,
       ...darkTheme.colors,
       ...{
         /* Desaturated colors */
@@ -46,6 +46,13 @@ export const {
         fgSubtle: '#8a8a8a',
         inputBg: '#202020',
         inputBorderRest: '#454545',
+
+        /* Graph Styles */
+        pageBg: '#111111',
+        nodeBg: '$bgDefault',
+        nodeBorder: '#454545',
+        graphBg: '#191919',
+        panelBg: '$bgDefault'
       },
       ...grayDark,
       ...sandDark,

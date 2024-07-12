@@ -79,7 +79,7 @@ const StyledRawHandle = styled(RawHandle, {
     },
     isConnected: {
       false: {
-        background: '#1a1a1a !important',
+        background: 'var(--colors-graphBg) !important',
       },
     },
     isArray: {
