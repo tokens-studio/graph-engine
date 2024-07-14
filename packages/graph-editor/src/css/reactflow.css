@@ -74,7 +74,7 @@
 
 }
 .react-flow__edges {
-    stroke: var(--green-10) !important;
+    stroke: #33b074 !important;
     stroke-width: 1 !important;
     stroke-opacity: 0.5;
 
