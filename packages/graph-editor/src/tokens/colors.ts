@@ -14,27 +14,27 @@ export default {
     backgroundColor: 'hsl(3, 60%, 60%)',
   },
   [CURVE]: {
-    color: 'var(--gold-12)',
+    color: '#e8e2d9',
     backgroundColor: 'hsl(300, 60%, 30%)',
   },
   [BOOLEAN]: {
-    color: 'var(--amber-12)',
+    color: '#ffe7b3',
     backgroundColor: 'hsl(30, 60%, 60%)',
   },
   [NUMBER]: {
-    color: 'var(--blue-12)',
+    color: '#c2e6ff',
     backgroundColor: 'hsl(210, 60%, 60%)',
   },
   [STRING]: {
-    color: 'var(--lime-12)',
+    color: '#e3f7ba',
     backgroundColor: 'hsl(90, 60%, 60%)',
   },
   [ANY]: {
-    color: 'var(--pink-12)',
+    color: '#fdd1ea',
     backgroundColor: 'hsl(250, 60%, 60%)',
   },
   [OBJECT]: {
-    color: 'var(--teal-12)',
+    color: '#adf0dd',
     backgroundColor: 'hsl(170, 60%, 60%)',
   },
 };
