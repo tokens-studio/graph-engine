@@ -1,5 +1,12 @@
 import { ColorSchema, StringSchema } from '../../schemas/index.js';
-import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import {
+	INodeDefinition,
+	ToInput,
+	ToOutput,
+	hexToColor,
+	toColor,
+	toHex
+} from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 import blinder from 'color-blind-esm';
 
@@ -40,7 +47,10 @@ export default class NodeDefinition extends Node {
 		this.addInput('color', {
 			type: {
 				...ColorSchema,
-				default: '#fd0000'
+				default: {
+					space: 'srgb',
+					channels: [0, 0, 0]
+				}
 			}
 		});
 		this.addInput('type', {
@@ -60,7 +70,7 @@ export default class NodeDefinition extends Node {
 	execute(): void | Promise<void> {
 		const { type, color } = this.getAllInputs();
 
-		let processed = color;
+		let processed = toHex(toColor(color));
 
 		switch (type) {
 			case ColorBlindnessTypes.TRITANOPIA:
@@ -90,6 +100,8 @@ export default class NodeDefinition extends Node {
 				break;
 		}
 
-		this.setOutput('value', processed);
+		const asCol = hexToColor(processed);
+
+		this.setOutput('value', asCol);
 	}
 }

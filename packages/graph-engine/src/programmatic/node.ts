@@ -288,7 +288,7 @@ export class Node {
 	 * @param serialized
 	 * @returns
 	 */
-	public static deserialize(opts: IDeserializeOpts): Node {
+	public static async deserialize(opts: IDeserializeOpts): Promise<Node> {
 		const newNode = new this({
 			id: opts.serialized.id,
 			...opts

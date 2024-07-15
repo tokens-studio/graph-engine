@@ -187,7 +187,7 @@ export const useHotkeys = () => {
           const values = JSON.parse(text);
           const nodes = values.nodes as SerializedNode[];
 
-          copyNodes(nodes);
+          await copyNodes(nodes);
         } catch (e) {
           console.error(e);
         }

@@ -44,5 +44,8 @@
     "studio",
     "tokens",
     "ui"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }

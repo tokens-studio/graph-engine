@@ -1,5 +1,6 @@
 import { Box, Text } from '@tokens-studio/ui';
 import { castToHex } from '@/utils/index.js';
+import { toColor } from '@tokens-studio/graph-engine';
 import Color from 'colorjs.io';
 import React from 'react';
 
@@ -39,7 +40,7 @@ export const ColorContrast = ({ value }) => {
               css={{
                 fontFamily: '$mono',
                 fontSize: 'xx-large',
-                color: contrastingColor(value),
+                color: contrastingColor(toColor(value)),
               }}
             >
               {col}

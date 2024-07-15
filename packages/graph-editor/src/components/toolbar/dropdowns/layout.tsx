@@ -1,7 +1,7 @@
-import { Button, DropdownMenu, Tooltip } from '@tokens-studio/ui';
+import { DropdownMenu, IconButton, Tooltip } from '@tokens-studio/ui';
 import { LayoutLeft } from 'iconoir-react';
 import { dockerSelector } from '@/redux/selectors/index.js';
-import { useLayoutButton } from '../hooks/useLayoutButton.js';
+import { useLayoutButton } from '../../../hooks/useLayoutButton.js';
 import { useSelector } from 'react-redux';
 import React, { MutableRefObject } from 'react';
 import type { DockLayout } from 'rc-dock';
@@ -9,7 +9,7 @@ import type { DockLayout } from 'rc-dock';
 export const LayoutDropdown = () => {
   const dockerRef = useSelector(dockerSelector) as MutableRefObject<DockLayout>;
 
-  const { onClick } = useLayoutButton();
+  const onClick = useLayoutButton();
 
   const saveLayout = React.useCallback(() => {
     const saved = dockerRef.current.saveLayout();
@@ -48,12 +48,7 @@ export const LayoutDropdown = () => {
     <DropdownMenu>
       <Tooltip label="Layout" side="bottom">
         <DropdownMenu.Trigger asChild>
-          <Button
-            variant="invisible"
-            style={{ paddingLeft: '0', paddingRight: '0' }}
-          >
-            <LayoutLeft />
-          </Button>
+          <IconButton variant="invisible" icon={<LayoutLeft />} />
         </DropdownMenu.Trigger>
       </Tooltip>
       <DropdownMenu.Portal>
@@ -73,9 +68,6 @@ export const LayoutDropdown = () => {
           <DropdownMenu.Item onSelect={() => onClick('logs')}>
             Logs
           </DropdownMenu.Item>
-          {/* <DropdownMenu.Item>
-            Play Controls
-          </DropdownMenu.Item> */}
           <DropdownMenu.Item onSelect={() => onClick('legend')}>
             Legend
           </DropdownMenu.Item>
@@ -87,24 +79,6 @@ export const LayoutDropdown = () => {
           </DropdownMenu.Item>
 
           <DropdownMenu.Separator />
-
-          {/* <DropdownMenu.Sub>
-            <DropdownMenu.SubTrigger>
-              Layout Presets
-              <DropdownMenu.TrailingVisual>
-                <NavArrowRight />
-              </DropdownMenu.TrailingVisual>
-            </DropdownMenu.SubTrigger>
-            <DropdownMenu.Portal>
-              <DropdownMenu.SubContent sideOffset={2} alignOffset={-5}>
-                <DropdownMenu.Item>Minimal</DropdownMenu.Item>
-                <DropdownMenu.Item>Exploration</DropdownMenu.Item>
-              </DropdownMenu.SubContent>
-            </DropdownMenu.Portal>
-          </DropdownMenu.Sub>
-
-          <DropdownMenu.Separator /> */}
-
           <DropdownMenu.Item onSelect={saveLayout}>
             Save Layout
           </DropdownMenu.Item>

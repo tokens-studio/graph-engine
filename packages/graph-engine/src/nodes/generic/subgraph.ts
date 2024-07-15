@@ -102,11 +102,11 @@ export default class SubgraphNode extends Node {
 		};
 	}
 
-	static override deserialize(opts: IDeserializeOpts) {
-		const node = super.deserialize(opts) as SubgraphNode;
+	static override async deserialize(opts: IDeserializeOpts) {
+		const node = (await super.deserialize(opts)) as SubgraphNode;
 		const innerGraph = new Graph();
 
-		node._innerGraph = innerGraph.deserialize(
+		node._innerGraph = await innerGraph.deserialize(
 			(opts.serialized as SerializedSubgraphNode).innergraph,
 			opts.lookup
 		);

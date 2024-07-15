@@ -3,7 +3,7 @@ import globalState from '@/mobx/index.tsx';
 
 export function useGetEditor() {
 	async function loadExample(file) {
-		const editor = globalState.refs.editor.get();
+		const editor = globalState.refs.editor;
 		if (!editor) {
 			return;
 		}

@@ -1,4 +1,3 @@
-export * from './breadcrumb/index.js';
 export * from './colorPicker/index.js';
 export * from './commandPalette/index.js';
 export * from './contextMenus/index.js';
@@ -14,4 +13,4 @@ export * from './panels/index.js';
 export * from './portPanel/index.js';
 export * from './preview/index.js';
 export * from './slider/index.js';
-export * from './tokenPreview/color.js';
+export * from './toolbar/index.js';

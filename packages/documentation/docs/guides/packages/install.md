@@ -11,7 +11,8 @@ npm install @tokens-studio/graph-engine
 ```ts
 import { Graph, NumberSchema, nodeLookup } from "@tokens-studio/graph-engine";
 
-const graph = new Graph.deserialize(mySerializedGraph, nodeLookup);
+//We assume this is allowed to be in a top level await
+const graph = await  Graph.deserialize(mySerializedGraph, nodeLookup);
 
 const result = await graph.execute({
   inputs: {

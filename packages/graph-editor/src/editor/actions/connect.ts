@@ -19,17 +19,38 @@ export const connectNodes =
     let parameters = params;
     const sourceNode = graph.getNode(params.source!);
     const targetNode = graph.getNode(params.target!);
+
     const variadicIndex = getVariadicIndex(params.targetHandle!);
 
     if (!sourceNode || !targetNode) {
       throw new Error('Could not find node');
     }
-    const sourcePort = sourceNode.outputs[stripVariadic(params.sourceHandle!)];
-    const targetPort = targetNode.inputs[stripVariadic(params.targetHandle!)];
+
+    const strippedTargetHandle = stripVariadic(params.targetHandle!);
+    let sourcePort = sourceNode.outputs[stripVariadic(params.sourceHandle!)];
+    const targetPort = targetNode.inputs[strippedTargetHandle];
+
+    if (params.sourceHandle === '[dynamic]') {
+      let candidateName = strippedTargetHandle;
+      let counter = 0;
+
+      while (sourceNode.inputs[candidateName]) {
+        candidateName = strippedTargetHandle + counter++;
+      }
+
+      //The user is trying to create a dynamic input
+      sourceNode.addInput(candidateName, {
+        type: targetPort.type,
+        visible: false,
+      });
+      sourceNode.inputs[candidateName].setValue(targetPort.value);
+      //Change the handle to the newly created handle
+      sourcePort = sourceNode.outputs[candidateName];
+      params.sourceHandle = candidateName;
+    }
 
     //If the source port is variadic, check to see if there is already a connection
-
-    if (targetPort.variadic) {
+    else if (targetPort.variadic) {
       const alreadyConnected = targetPort._edges.some((edge) => {
         const index = edge.annotations['engine.index'] as number;
         return index === variadicIndex;

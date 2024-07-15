@@ -1,10 +1,10 @@
 'use client';
 
 import { Box, Stack } from '@tokens-studio/ui';
-import Contexts from './contexts.tsx';
+import Contexts from '../contexts.tsx';
 import Rail from '@/components/rail.tsx';
 
-export default async function Layout({ children }) {
+export default function Layout({ children }) {
 	return (
 		<Stack css={{ height: '100%', width: '100%' }}>
 			<Contexts>

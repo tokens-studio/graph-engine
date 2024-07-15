@@ -45,3 +45,5 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
     );
   },
 );
+
+Editor.displayName = 'Editor';

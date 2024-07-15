@@ -37,6 +37,15 @@ export const useIsValidConnection = ({
       const strippedVariadic = stripVariadic(connection.targetHandle!);
 
       let targetType = target?.inputs[strippedVariadic].type;
+
+      //They are trying to create a dynamic input. Allow non dynamic sets to connect
+      if (
+        connection.sourceHandle === '[dynamic]' &&
+        !target?.inputs[strippedVariadic].variadic
+      ) {
+        return !target.inputs[strippedVariadic]?.isConnected;
+      }
+
       let sourceType = connection.sourceHandle
         ? source?.outputs[connection.sourceHandle].type
         : null;

@@ -1,6 +1,17 @@
 'use client';
 
 import {
+	Book,
+	Download,
+	EditPencil,
+	GraphUp,
+	MoreVert,
+	Plus,
+	Search,
+	Upload,
+	Xmark
+} from 'iconoir-react';
+import {
 	Box,
 	Button,
 	DropdownMenu,
@@ -11,15 +22,6 @@ import {
 	Text,
 	TextInput
 } from '@tokens-studio/ui';
-import {
-	Download,
-	GraphUp,
-	MoreVert,
-	Plus,
-	Search,
-	Upload,
-	Xmark
-} from 'iconoir-react';
 import { Graph } from '@tokens-studio/graph-engine';
 import { ShareButton } from '@/components/editor/toolbar.tsx';
 import { client } from '@/api/sdk/index.ts';
@@ -33,6 +35,8 @@ import ago from 's-ago';
 const GraphItem = ({ id, name, updatedAt }) => {
 	const { mutateAsync: deleteGraph, isPending } =
 		client.graph.deleteGraph.useMutation();
+
+	const router = useRouter();
 
 	const [loading, setIsLoading] = useState(false);
 
@@ -54,6 +58,11 @@ const GraphItem = ({ id, name, updatedAt }) => {
 	useEffect(() => {
 		setIsLoading(isPending);
 	}, [isPending]);
+
+	const onPublish = useCallback(async () => {
+		setIsLoading(true);
+		return router.push(`/marketplace/publish/${id}/`);
+	}, [id, router]);
 
 	const onDownload = useCallback(async () => {
 		setIsLoading(true);
@@ -114,6 +123,9 @@ const GraphItem = ({ id, name, updatedAt }) => {
 				</Stack>
 			</Stack>
 			<Stack gap={2}>
+				<Link href={`/dashboard/graph/edit/${id}`}>
+					<IconButton icon={<EditPencil />} variant='invisible' />
+				</Link>
 				<ShareButton id={id} />
 				{loading && <IconButton variant='invisible' icon={<Spinner />} />}
 				{!loading && (
@@ -134,6 +146,12 @@ const GraphItem = ({ id, name, updatedAt }) => {
 										<Download />
 									</DropdownMenu.LeadingVisual>
 									Download
+								</DropdownMenu.Item>
+								<DropdownMenu.Item onClick={onPublish}>
+									<DropdownMenu.LeadingVisual>
+										<Book />
+									</DropdownMenu.LeadingVisual>
+									Publish
 								</DropdownMenu.Item>
 							</DropdownMenu.Content>
 						</DropdownMenu.Portal>
@@ -206,6 +224,7 @@ const Page = () => {
 	const { isLoading, data, error } = client.graph.listGraphs.useQuery([
 		'listGraphs'
 	]);
+
 	useErrorToast(MutateError);
 	useErrorToast(error);
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Stack } from '@tokens-studio/ui';
-import Contexts from '../dashboard/contexts.tsx';
+import Contexts from '../contexts.tsx';
 import Rail from '@/components/rail.tsx';
 
 export default function Layout({ children }) {

@@ -120,7 +120,6 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
                   docs={item.docs}
                   description={item.description}
                   title={item.text}
-                  data-test-class="drop-panel-item"
                 >
                   <NodeEntry icon={item.icon} text={item.text} />
                 </DragItem>
@@ -131,11 +130,7 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
             }
 
             return (
-              <Accordion.Item
-                value={value.key}
-                key={value.key}
-                data-test-class="drop-panel-trigger"
-              >
+              <Accordion.Item value={value.key} key={value.key}>
                 <StyledAccordionTrigger>
                   <Stack
                     align="center"

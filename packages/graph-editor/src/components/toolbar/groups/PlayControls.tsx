@@ -1,4 +1,4 @@
-import { Button } from '@tokens-studio/ui';
+import { IconButton } from '@tokens-studio/ui';
 import { Pause, Play, Square } from 'iconoir-react';
 import { playStateSelector } from '@/redux/selectors/index.js';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,30 +32,25 @@ export const PlayControls = () => {
 
   return (
     <>
-      <Button
+      <IconButton
         variant="invisible"
         onClick={onPlay}
         disabled={!(state === PlayState.STOPPED)}
-        style={{ paddingLeft: '0', paddingRight: '0' }}
-      >
-        <Play />
-      </Button>
-      <Button
+        icon={<Play />}
+      />
+      <IconButton
         variant={state === PlayState.PAUSED ? 'secondary' : 'invisible'}
         onClick={onPause}
         disabled={state === PlayState.STOPPED}
-        style={{ paddingLeft: '0', paddingRight: '0' }}
-      >
-        <Pause />
-      </Button>
-      <Button
+        icon={<Pause />}
+      />
+      <IconButton
         variant="invisible"
         onClick={onStop}
         disabled={state === PlayState.STOPPED}
         style={{ paddingLeft: '0', paddingRight: '0' }}
-      >
-        <Square />
-      </Button>
+        icon={<Square />}
+      />
     </>
   );
 };

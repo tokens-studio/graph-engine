@@ -13,7 +13,8 @@ export const graphContract = c.router({
 
 		query: z.object({
 			take: z.number().lte(50).gte(1).optional().default(10),
-			skip: z.number().gte(0).optional().default(0)
+			skip: z.number().gte(0).optional().default(0),
+			token: z.string().optional().describe('The token to use for pagination')
 		}),
 
 		responses: {
@@ -43,6 +44,7 @@ export const graphContract = c.router({
 			200: z.object({
 				name: z.string(),
 				id: z.string(),
+				description: z.string().optional(),
 				graph: SerializedGraph,
 				updatedAt: z.number(),
 				public: z.boolean()
@@ -74,7 +76,7 @@ export const graphContract = c.router({
 			graph: SerializedGraph
 		}),
 		responses: {
-			200: z.object({
+			201: z.object({
 				id: z.string()
 			})
 		}

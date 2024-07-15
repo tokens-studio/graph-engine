@@ -43,11 +43,11 @@ wss.on('connection', function connection(ws) {
 
 	ws.on('error', console.error);
 
-	ws.on('message', function message(data) {
+	ws.on('message', async function message(data) {
 		//We assume that this is a stringified graph
 		console.log('Received a graph');
 
-		const graph = new Graph().deserialize(
+		const graph = await new Graph().deserialize(
 			JSON.parse(data.toString()),
 			nodeTypes
 		);

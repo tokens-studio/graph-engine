@@ -1,8 +1,8 @@
+import { BaseNodeWrapper } from '../wrapper/base.js';
 import { Box, IconButton, Textarea } from '@tokens-studio/ui';
 import { EditPencil } from 'iconoir-react';
 import { Node } from '@tokens-studio/graph-engine';
 import { NodeProps, NodeResizer } from 'reactflow';
-import { Node as Wrapper } from '../wrapper/node.js';
 import { description, title } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
 import { useLocalGraph } from '@/context/graph.js';
@@ -10,7 +10,8 @@ import Markdown from 'react-markdown';
 import React from 'react';
 
 const minWidth = 120;
-function NoteNode(props: NodeProps) {
+
+export function NoteNode(props: NodeProps) {
   const { id } = props;
   const graph = useLocalGraph();
   const node = graph.getNode(id);
@@ -35,7 +36,7 @@ const Note = observer(({ node, annotations }: IAnnotation) => {
   };
 
   return (
-    <Wrapper
+    <BaseNodeWrapper
       id={node.id}
       title={(annotations[title] as string) || 'Note'}
       controls={
@@ -82,7 +83,7 @@ const Note = observer(({ node, annotations }: IAnnotation) => {
           </Box>
         )}
       </Box>
-    </Wrapper>
+    </BaseNodeWrapper>
   );
 });
 
