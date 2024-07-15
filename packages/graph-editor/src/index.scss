@@ -9,31 +9,11 @@
 @import url('./css/contextify.css');
 @import url('./components/curveEditor/override.css');
 @import '@radix-ui/colors/gray-dark.css';
-@import '@radix-ui/colors/sand-dark.css';
-@import '@radix-ui/colors/amber-dark.css';
-@import '@radix-ui/colors/crimson-dark.css';
-@import '@radix-ui/colors/pink-dark.css';
-@import '@radix-ui/colors/purple-dark.css';
-@import '@radix-ui/colors/violet-dark.css';
-@import '@radix-ui/colors/indigo-dark.css';
-@import '@radix-ui/colors/teal-dark.css';
-@import '@radix-ui/colors/lime-dark.css';
-@import '@radix-ui/colors/mint-dark.css';
-@import '@radix-ui/colors/blue-dark.css';
-@import '@radix-ui/colors/blue-dark-alpha.css';
-@import '@radix-ui/colors/red-dark.css';
-@import '@radix-ui/colors/green-dark.css';
-@import '@radix-ui/colors/orange-dark.css';
-@import '@radix-ui/colors/gold-dark.css';
-@import '@radix-ui/colors/tomato-dark.css';
-@import '@radix-ui/colors/jade-dark.css';
-@import '@radix-ui/colors/sky-dark.css';
 
 :root {
     --globals-drop-panel-width: 240px;
-  
+ 
 }
-
 
 #drop-panel {
     margin: 0;
@@ -50,7 +30,7 @@
 }
 
 .dock-tab {
-    color: var(--gray-12);
+    color: var(--colors-fgDefault);
     border-bottom: none;
     z-index: 10;
 }
@@ -70,9 +50,12 @@
 
 
 
+.dock-panel {
+    background: var(--colors-panelBg);
+}
 
 .dock-fbox>.dock-panel {
-    box-shadow: 0 0 0.25rem var(--gray-3);
+    box-shadow: 0 0 0.25rem var(--colors-bgDefault);
 }
 
 .dock-top .dock-bar,
@@ -81,17 +64,17 @@
 }
 
 .dock-panel.dock-style-main .dock-bar {
-    border-bottom-color: var(--gray-6);
+    border-bottom-color: var(--colors-borderDefault);
 }
 
 .dock-content-holder {
     scrollbar-color: var(--colors-bgSubtle) transparent;
     scrollbar-width: thin;
-    border-bottom: 1px solid var(--gray-6);
+    border-bottom: 1px solid var(--colors-borderDefault);
 }
 
 .dock-top .dock-ink-bar {
-    background: var(--gray-3);
+    background: var(--colors-bgDefault);
     z-index: 0;
     height: 100%;
     border-radius: var(--radii-small);

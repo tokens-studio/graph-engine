@@ -1,21 +1,6 @@
 import { CSS as StitchesCSS, createStitches } from '@stitches/react';
-import {
-  amberDark,
-  blueDark,
-  crimsonDark,
-  grayDark,
-  greenDark,
-  indigoDark,
-  limeDark,
-  mintDark,
-  pinkDark,
-  purpleDark,
-  redDark,
-  sandDark,
-  tealDark,
-  violetDark,
-} from '@radix-ui/colors';
 import { core, darkTheme } from '@tokens-studio/tokens';
+import { grayDark } from '@radix-ui/colors';
 
 export type CSS = StitchesCSS<typeof config>;
 
@@ -46,21 +31,15 @@ export const {
         fgSubtle: '#8a8a8a',
         inputBg: '#202020',
         inputBorderRest: '#454545',
+
+        /* Graph Styles */
+        pageBg: '#111111',
+        nodeBg: '$bgDefault',
+        nodeBorder: '#454545',
+        graphBg: '#191919',
+        panelBg: '$bgDefault',
       },
       ...grayDark,
-      ...sandDark,
-      ...amberDark,
-      ...crimsonDark,
-      ...pinkDark,
-      ...purpleDark,
-      ...violetDark,
-      ...indigoDark,
-      ...tealDark,
-      ...limeDark,
-      ...mintDark,
-      ...blueDark,
-      ...redDark,
-      ...greenDark,
     },
     shadows: darkTheme.shadows,
   },

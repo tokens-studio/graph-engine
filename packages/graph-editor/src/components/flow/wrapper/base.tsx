@@ -49,7 +49,7 @@ const NodeWrapper = styled('div', {
   position: 'relative',
   boxShadow: '$contextMenu',
   borderRadius: '$medium',
-  background: '$gray4',
+  background: '$nodeBg',
   border: '2px solid $gray4',
   flex: 1,
   display: 'flex',
