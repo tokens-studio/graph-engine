@@ -26,7 +26,7 @@ const panelGroups = [
 
 const panelItems = new DropPanelStore(panelGroups);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById('__cy_root')!).render(
   <React.StrictMode>
     <div id="graph-editor">
       <Editor
