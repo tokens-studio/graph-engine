@@ -16,7 +16,7 @@
     "dist"
   ],
   "scripts": {
-    "start": "vite",
+    "start": "vite dev",
     "build": "tsup",
     "build:storybook": "storybook build",
     "dev": "tsup --watch",
@@ -86,7 +86,7 @@
   },
   "resolutions": {
     "jackspeak": "2.1.1",
-    "resq": "1.11.0"
+    "resq": "^1.11.0"
   },
   "devDependencies": {
     "@4tw/cypress-drag-drop": "^2.2.5",
@@ -108,11 +108,16 @@
     "cypress-react-selector": "^3.0.0",
     "esbuild-sass-plugin": "^3.3.1",
     "resp": "^0.1.1",
+    "resq": "^1.11.0",
+    "start-server-and-test": "^2.0.4",
     "storybook": "^8.0.9",
     "tsup": "^8.1.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",
     "vite-plugin-babel": "^1.2.0",
     "vite-tsconfig-paths": "^4.2.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

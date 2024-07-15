@@ -1,17 +1,6 @@
 version: '3.7'
 services:
 
-  postgresql:
-    image: postgres:13
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./data/postgres:/var/lib/postgresql/data
-
   # Jaeger
   jaeger:
     image: jaegertracing/all-in-one:latest
@@ -34,7 +23,7 @@ services:
     restart: always
     command: ["--config=/etc/otel-collector-config.yaml"]
     volumes:
-      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+      - ./packages/ui/otel-collector-config.yaml:/etc/otel-collector-config.yaml
     ports:
       - "1888:1888"   # pprof extension
       - "8888:8888"   # Prometheus metrics exposed by the collector
@@ -52,6 +41,6 @@ services:
     image: prom/prometheus:latest
     restart: always
     volumes:
-      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+      - ./data/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"

@@ -7,13 +7,14 @@ export const copyNodeAction = (
   graph,
   nodeLookup,
 ) => {
-  return (nodes: SerializedNode[]) => {
-    const { addNodes } = nodes.reduce(
-      (acc, node) => {
+  return async (nodes: SerializedNode[]) => {
+    const { addNodes } = await nodes.reduce(
+      async (acc, node) => {
+        const resolvedAcc = await acc;
         const newID = uuidv4();
         if (node.engine) {
           const graphNode = graph.getNode(node.engine.id);
-          const newGraphNode = graphNode?.factory.deserialize(
+          const newGraphNode = await graphNode?.factory.deserialize(
             {
               ...node.engine,
               id: newID,
@@ -36,12 +37,12 @@ export const copyNodeAction = (
         } as Node;
 
         return {
-          addNodes: acc.addNodes.concat(newNode),
+          addNodes: resolvedAcc.addNodes.concat(newNode),
         };
       },
-      {
+      Promise.resolve({
         addNodes: [] as Node[],
-      },
+      }),
     );
 
     //We also need to duplicate the existing node in the actual graph

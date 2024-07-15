@@ -1,3 +1,4 @@
+import { ALIGNMENT, align, distribute } from '@/components/panels/index.js';
 import {
   AlignHorizontalCenters,
   AlignHorizontalSpacing,
@@ -7,7 +8,7 @@ import {
   CompAlignRight,
   CompAlignTop,
 } from 'iconoir-react';
-import { Button, DropdownMenu, Tooltip } from '@tokens-studio/ui';
+import { DropdownMenu, IconButton, Tooltip } from '@tokens-studio/ui';
 import { Node } from 'reactflow';
 import { graphEditorSelector } from '@/redux/selectors/index.js';
 import { useSelector } from 'react-redux';
@@ -43,83 +44,6 @@ const handleChange = (graphEditor) => (updater) => {
   currentFlow.setNodes([...unselectedNodes, ...selectedNodes]);
 };
 
-export enum ALIGNMENT {
-  START = 0,
-  CENTER = 1,
-  END = 2,
-}
-
-const align =
-  (align: ALIGNMENT, prop = 'x') =>
-  (selectedNodes) => {
-    // Align selected nodes to the left
-    let v = 0,
-      vmin,
-      vmax;
-    switch (align) {
-      case ALIGNMENT.START:
-        v = Math.min(...selectedNodes.map((node) => node.position[prop]));
-        break;
-      case ALIGNMENT.CENTER:
-        vmin = Math.min(...selectedNodes.map((node) => node.position[prop]));
-        vmax = Math.max(...selectedNodes.map((node) => node.position[prop]));
-        v = (vmin + vmax) / 2;
-        break;
-      default:
-        v = Math.max(...selectedNodes.map((node) => node.position[prop]));
-    }
-    selectedNodes.forEach((node) => {
-      node.position[prop] = v;
-    });
-  };
-
-const distribute =
-  (align: ALIGNMENT, prop = 'x') =>
-  (selectedNodes) => {
-    if (selectedNodes.length < 3) {
-      return;
-    }
-
-    //Sort the nodes by position
-    selectedNodes = [...selectedNodes].sort(
-      (a, b) => a.position[prop] - b.position[prop],
-    );
-
-    const getLength = (node) => {
-      if (prop === 'x') {
-        return node.width;
-      }
-      return node.height;
-    };
-
-    const getPos = (node) => {
-      switch (align) {
-        case ALIGNMENT.START:
-          return node.position[prop];
-        case ALIGNMENT.CENTER:
-          return node.position[prop] + getLength(node) / 2;
-        default:
-          return node.position[prop] + getLength(node);
-      }
-    };
-
-    const startNode = selectedNodes.reduce((acc, node) => {
-      return getPos(node) < getPos(acc) ? node : acc;
-    }, selectedNodes[0]);
-
-    const endNode = selectedNodes.reduce((acc, node) => {
-      return getPos(node) > getPos(acc) ? node : acc;
-    }, selectedNodes[0]);
-
-    //Get the total length
-    const incrementLength =
-      (getPos(endNode) - getPos(startNode)) / (selectedNodes.length - 1);
-
-    selectedNodes.forEach((node, i) => {
-      node.position[prop] = startNode.position[prop] + i * incrementLength;
-    });
-  };
-
 export const AlignDropdown = () => {
   const graphEditor = useSelector(graphEditorSelector);
   const updateNodes = handleChange(graphEditor);
@@ -128,12 +52,11 @@ export const AlignDropdown = () => {
     <DropdownMenu>
       <Tooltip label="Align and distribute" side="bottom">
         <DropdownMenu.Trigger asChild>
-          <Button
+          <IconButton
             variant="invisible"
             style={{ paddingLeft: '0', paddingRight: '0' }}
-          >
-            <AlignHorizontalCenters />
-          </Button>
+            icon={<AlignHorizontalCenters />}
+          />
         </DropdownMenu.Trigger>
       </Tooltip>
       <DropdownMenu.Portal>

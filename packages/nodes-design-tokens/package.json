@@ -14,6 +14,9 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.prod.json",
     "dev": "tsup --watch",

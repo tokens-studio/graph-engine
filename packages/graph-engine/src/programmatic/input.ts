@@ -14,10 +14,6 @@ export interface IInputProps<T = any> {
 	node: Node;
 	variadic?: boolean;
 	annotations?: Record<string, any>;
-	/**
-	 * Whether the input is pure. Impure inputs will result in a trigger of the node if they change value, whereas if the input is pure and receives no change, it assumes the same output will be produced and is ignored.
-	 */
-	impure?: boolean;
 }
 
 export interface ISetValue {
@@ -30,12 +26,10 @@ export class Input<T = any> extends Port<T> {
 	 * Expects to have connections to this node done by enqueing the edge
 	 */
 	public readonly variadic: boolean;
-	public readonly impure: boolean;
 
 	constructor(props: IInputProps<T>) {
 		super(props);
 
-		this.impure = props.impure || false;
 		this.variadic = props.variadic || false;
 		makeObservable(this, {
 			setValue: action,
@@ -123,7 +117,6 @@ export class Input<T = any> extends Port<T> {
 			node: this.node,
 			variadic: this.variadic,
 			annotations: { ...this.annotations },
-			impure: this.impure,
 			value: this.value
 		});
 
@@ -154,8 +147,8 @@ export class Input<T = any> extends Port<T> {
 		if (type.variadic) {
 			serialized.variadic = true;
 		}
-		if (type.visible) {
-			serialized.visible = true;
+		if (type.visible == false) {
+			serialized.visible = false;
 		}
 
 		if (Object.keys(this.annotations).length > 0) {

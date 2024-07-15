@@ -30,8 +30,8 @@ export const {
   createTheme,
 } = createStitches({
   theme: {
+    ...core,
     colors: {
-      ...core,
       ...darkTheme.colors,
       ...{
         /* Desaturated colors */

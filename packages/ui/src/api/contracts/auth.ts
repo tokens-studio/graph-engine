@@ -21,8 +21,8 @@ export const contract: Record<string, AppRouteMutation | AppRouteQuery> = {
 		method: 'PUT',
 		path: '/auth/details',
 		body: z.object({
-			name: z.string().nullable().optional(),
-			image: z.string().nullable().optional()
+			name: z.string().optional(),
+			image: z.string().optional()
 		}),
 		responses: {
 			200: z.object({

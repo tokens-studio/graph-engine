@@ -9,7 +9,7 @@ export default defineConfig({
   sourcemap: env === 'production', // source map is only available in prod
   format: 'esm',
   skipNodeModulesBundle: true,
-  clean: true,
+  clean: false,
   /** @ts-expect-error multiple different installations of esbuild so plugins types are not compatible */
   esbuildPlugins: [sassPlugin()],
   minify: false,

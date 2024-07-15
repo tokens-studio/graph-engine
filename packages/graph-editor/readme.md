@@ -82,4 +82,4 @@ In the example above, we use the useRef hook to create a reference to the Editor
 
 ## Development
 
-We need to force the cypress react selector to use a version of `resq` that supports 18.2.0
+We need to force the cypress react selector to use a version of `resq` that supports 18.2.0. This is done through resolutions and by manually adding it as a dev dependency

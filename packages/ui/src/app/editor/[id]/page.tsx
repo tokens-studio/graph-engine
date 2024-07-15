@@ -1,23 +1,23 @@
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
-import { client } from '@/api/sdk/index.ts';
 import { getServerClient } from '@/api/sdk/getServerClient.ts';
+import { router as graphs } from '@/api/controllers/graph.ts';
+import { runContract } from '@/api/server/index.ts';
 import Inner from './clientPage.tsx';
 import React from 'react';
 
 const Page = async ({ params }) => {
-	const { id } = params;
-	const serverClient = getServerClient();
-	await client.graph.getGraph.prefetchQuery(
-		serverClient,
-		['getGraph', id],
-		{},
-		{
-			staleTime: 5000
-		}
-	);
+	const queryClient = getServerClient();
+	await Promise.all([
+		queryClient.prefetchQuery({
+			queryKey: ['getGraph', params.id],
+			queryFn: runContract(graphs.getGraph, {
+				params
+			})
+		})
+	]);
 
 	return (
-		<HydrationBoundary state={dehydrate(serverClient)}>
+		<HydrationBoundary state={dehydrate(queryClient)}>
 			<Inner id={params.id} />
 		</HydrationBoundary>
 	);

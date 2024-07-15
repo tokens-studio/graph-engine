@@ -1,5 +1,5 @@
-import { IObservableValue, makeAutoObservable, observable } from 'mobx';
 import { ImperativeEditorRef } from '@tokens-studio/graph-editor';
+import { action, makeAutoObservable, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
 class UIState {
@@ -11,21 +11,28 @@ class UIState {
 		this.theme = 'dark';
 		this.showExamplePicker = false;
 		this.showNodesPanel = true;
-		makeAutoObservable(this, {
-			theme: true,
-			showExamplePicker: true,
-			showNodesPanel: true
+		makeObservable(this, {
+			theme: observable.ref,
+			showExamplePicker: observable.ref,
+			showNodesPanel: observable.ref
 		});
 		this.rootStore = rootStore;
 	}
 }
 
-class RefState {
-	editor: IObservableValue<ImperativeEditorRef | null>;
+export class RefState {
+	editor: ImperativeEditorRef | null = null;
 	rootStore: GlobalState;
 	constructor(rootStore: GlobalState) {
-		this.editor = observable.box(null);
 		this.rootStore = rootStore;
+
+		makeObservable(this, {
+			editor: observable.ref,
+			setEditor: action
+		});
+	}
+	setEditor(editor: ImperativeEditorRef) {
+		this.editor = editor;
 	}
 }
 
@@ -35,8 +42,8 @@ class JourneyState {
 	constructor(rootStore: GlobalState) {
 		this.showJourney = true;
 		this.rootStore = rootStore;
-		makeAutoObservable(this, {
-			showJourney: true
+		makeObservable(this, {
+			showJourney: observable.ref
 		});
 		if (typeof window !== 'undefined') {
 			makePersistable(this, {

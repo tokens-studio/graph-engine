@@ -1,4 +1,4 @@
-import { Node } from './node.js';
+import { BaseNodeWrapper } from './base.js';
 
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import {
@@ -8,6 +8,7 @@ import {
   OBJECT,
   Port,
   SchemaObject,
+  annotatedDynamicInputs,
   annotatedNodeRunning,
   toColor,
   toHex,
@@ -79,10 +80,16 @@ const NodeWrap = observer(({ node, icon }: INodeWrap) => {
   const showTimingsValue = useSelector(showTimings);
   const specifics = useSelector(nodeSpecifics);
 
+  //Check if the input allows for dynamic inputs
+  const isInput = !!(
+    node.factory.type == 'studio.tokens.generic.input' &&
+    node.annotations[annotatedDynamicInputs]
+  );
+
   const Specific = specifics[node.factory.type];
 
   return (
-    <Node
+    <BaseNodeWrapper
       id={node.id}
       isAsync={node.annotations[annotatedNodeRunning] as boolean}
       icon={icon}
@@ -98,6 +105,7 @@ const NodeWrap = observer(({ node, icon }: INodeWrap) => {
         <Stack direction="column" gap={3} css={{ padding: '$3 0 $3 0' }}>
           <HandleContainer type="source" className={'source'} full>
             <PortArray ports={node.outputs} />
+            {isInput && <DynamicOutput />}
           </HandleContainer>
           <HandleContainer type="target" className={'target'} full>
             <PortArray ports={node.inputs} />
@@ -116,7 +124,7 @@ const NodeWrap = observer(({ node, icon }: INodeWrap) => {
           </Text>
         </Box>
       )}
-    </Node>
+    </BaseNodeWrapper>
   );
 });
 
@@ -136,6 +144,20 @@ export const PortArray = observer(({ ports, hideNames }: IPortArray) => {
     </>
   );
 });
+
+export const DynamicOutput = () => {
+  return (
+    <Handle
+      color={'black'}
+      backgroundColor={'hsl(60, 80%, 60%)'}
+      visible={true}
+      id={'[dynamic]'}
+      isConnected={false}
+    >
+      <i>Add New</i>
+    </Handle>
+  );
+};
 
 const extractTypeIcon = (
   port: Port,
@@ -293,6 +315,7 @@ const InputHandle = observer(
     const inlineValuesValue = useSelector(inlineValues);
     const typeCol = extractTypeIcon(port, iconTypeRegistry);
     const input = port as unknown as Input;
+    const handleInformation = useHandle();
 
     if (input.variadic) {
       return (
@@ -310,6 +333,8 @@ const InputHandle = observer(
             return (
               <Handle
                 {...typeCol}
+                //The underlying type might not be an array
+                isArray={port.type.type?.type === 'array'}
                 visible={port.visible || port.isConnected}
                 id={port.name + `[${edge.annotations['engine.index']}]`}
                 key={i}
@@ -337,8 +362,6 @@ const InputHandle = observer(
       );
       //We need to render additional handles
     }
-
-    const handleInformation = useHandle();
 
     return (
       <Handle

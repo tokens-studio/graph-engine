@@ -52,6 +52,11 @@
   "keywords": [
     "studio",
     "tokens",
-    "ui"
-  ]
+    "ui",
+    "audio",
+    "graph"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }

@@ -1,6 +1,12 @@
 'use client';
-import { Avatar, Box, Separator, Stack, Tooltip } from '@tokens-studio/ui';
-import { GitMerge, Home, Settings } from 'iconoir-react';
+import {
+	Avatar,
+	IconButton,
+	Separator,
+	Stack,
+	Tooltip
+} from '@tokens-studio/ui';
+import { GitMerge, Home, Settings, ShoppingBag } from 'iconoir-react';
 import { client } from '@/api/sdk/index.ts';
 import Image from 'next/image.js';
 import Link from 'next/link.js';
@@ -15,8 +21,8 @@ interface RailItem {
 
 const railItemsStart: RailItem[] = [
 	{ icon: <Home />, label: 'Home', link: '/dashboard' },
-	{ icon: <GitMerge />, label: 'Editor', link: '/editor' }
-	// { icon: <ShoppingBag />, label: 'Marketplace', link: '/dashboard/marketplace' }
+	{ icon: <GitMerge />, label: 'Editor', link: '/editor' },
+	{ icon: <ShoppingBag />, label: 'Showcase', link: '/marketplace' }
 ];
 
 const railItemsEnd: RailItem[] = [
@@ -28,7 +34,7 @@ const RailItem = ({ icon, label, link }: RailItem) => {
 	return (
 		<Tooltip label={label}>
 			<Link aria-label={label} href={link}>
-				<Box css={{ color: '$fgOnEmphasis', padding: '$2' }}>{icon}</Box>
+				<IconButton variant='invisible' css={{ padding: '$2' }} icon={icon} />
 			</Link>
 		</Tooltip>
 	);
@@ -43,7 +49,13 @@ export interface RailProps {
 }
 
 export const Rail = () => {
-	const { data } = client.auth.getWhoAmI.useQuery(['getWhoAmI']);
+	const { data } = client.auth.getWhoAmI.useQuery(
+		['getWhoAmI'],
+		{},
+		{
+			staleTime: 1000 * 60 * 5
+		}
+	);
 	return (
 		<Stack
 			justify='between'

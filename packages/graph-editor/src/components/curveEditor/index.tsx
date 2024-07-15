@@ -54,28 +54,15 @@ export interface ICurveEditor {
   points: vec.Vector2[];
 }
 
+const noop = () => {};
+
 const x = (vec: vec.Vector2) => vec[0];
 const y = (vec: vec.Vector2) => vec[1];
 
 export function CurveEditor(props: ICurveEditor) {
-  const { domain = [0, 1], range = [0, 1], points, onChange } = props;
+  const { domain = [0, 1], range = [0, 1], points, onChange = noop } = props;
 
   const opacity = 0.25;
-
-  // const p1 = useMovablePoint([0, 0], {
-  //   constrain: defaultConstraintPoint as ConstraintFunction,
-  // });
-  // const p2 = useMovablePoint([1, 1], {
-  //   constrain: defaultConstraintPoint as ConstraintFunction,
-  // });
-
-  // const c1 = useMovablePoint([0.25, 0.6], {
-  //   constrain: defaultConstraintPoint as ConstraintFunction,
-  // });
-  // const c2 = useMovablePoint([0.75, 0.4], {
-  //   constrain: defaultConstraintPoint as ConstraintFunction,
-  // });
-
   const [p1, c1, c2, p2] = points;
 
   function drawLineSegments(
@@ -131,7 +118,7 @@ export function CurveEditor(props: ICurveEditor) {
             color={Theme.blue}
             constrain={defaultConstraintPoint as ConstraintFunction}
             onMove={(newPoint) => {
-              onChange && onChange(i, newPoint);
+              onChange(i, newPoint);
             }}
           />
         ))}

@@ -101,9 +101,10 @@ const StyledRawHandle = styled(RawHandle, {
           marginTop: 'auto',
         },
         '&::after': {
+          position: 'absolute',
           content: '',
-          marginRight: '-24px',
-          marginTop: '-52px',
+          marginRight: '0',
+          marginTop: '0',
           height: '8px',
           width: '8px',
           background: 'var(--colors-accentOnAccent)',
@@ -155,7 +156,7 @@ const HandleHolder = styled(Box, {
 
 export interface HandleProps {
   id: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   visible: boolean;
   shouldHideHandles?: boolean;
   error?: boolean;
@@ -163,7 +164,6 @@ export interface HandleProps {
   isConnected?: boolean;
   color?: string;
   backgroundColor?: string;
-  icon: React.ReactNode;
   variadic?: boolean;
 }
 

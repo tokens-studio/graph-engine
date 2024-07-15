@@ -226,12 +226,12 @@ export default class ArraySubgraph<T, V> extends Node {
 		};
 	}
 
-	static override deserialize(opts) {
-		const innerGraph = new Graph().deserialize(
+	static override async deserialize(opts) {
+		const innerGraph = await new Graph().deserialize(
 			opts.serialized.innergraph,
 			opts.lookup
 		);
-		const node = super.deserialize({
+		const node = await super.deserialize({
 			...opts,
 			innerGraph
 		});

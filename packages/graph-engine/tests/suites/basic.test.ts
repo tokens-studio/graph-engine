@@ -9,7 +9,7 @@ import basic from '../data/processed/basic.js';
 
 describe('basic', () => {
 	test('performs basic passthrough calculations', async () => {
-		const graph = new Graph().deserialize(
+		const graph = await new Graph().deserialize(
 			basic as unknown as SerializedGraph,
 			nodeLookup as Record<string, NodeFactory>
 		);

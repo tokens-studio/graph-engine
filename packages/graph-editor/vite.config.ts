@@ -8,6 +8,7 @@ export default defineConfig({
   server: {
     port: 3001,
   },
+  mode: 'development',
   root: 'examples/defaults',
   plugins: [react({ tsDecorators: true }), tsconfigPaths()],
 });

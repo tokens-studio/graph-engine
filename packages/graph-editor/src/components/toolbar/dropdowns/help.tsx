@@ -1,17 +1,12 @@
-import { Button, DropdownMenu, Tooltip } from '@tokens-studio/ui';
 import { ChatBubbleQuestion } from 'iconoir-react';
+import { DropdownMenu, IconButton, Tooltip } from '@tokens-studio/ui';
 import React from 'react';
 
 export const HelpDropdown = () => (
   <DropdownMenu>
     <Tooltip label="Help" side="bottom">
       <DropdownMenu.Trigger asChild>
-        <Button
-          variant="invisible"
-          style={{ paddingLeft: '0', paddingRight: '0' }}
-        >
-          <ChatBubbleQuestion />
-        </Button>
+        <IconButton variant="invisible" icon={<ChatBubbleQuestion />} />
       </DropdownMenu.Trigger>
     </Tooltip>
     <DropdownMenu.Portal>

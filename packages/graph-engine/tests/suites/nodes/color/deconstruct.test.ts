@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
-import { expect } from 'chai';
+import { describe, expect, test } from 'vitest';
 import DestructColorNode from '../../../../src/nodes/color/deconstruct.js';
 
 describe('color/deconstruct', () => {
-	it('deconstructs an RGB color correctly', async () => {
+	test('deconstructs an RGB color correctly', async () => {
 		const graph = new Graph();
 		const node = new DestructColorNode({ graph });
 
@@ -22,7 +22,7 @@ describe('color/deconstruct', () => {
 		expect(node.outputs.alpha.value).to.equal(1);
 	});
 
-	it('deconstructs an HSL color correctly', async () => {
+	test('deconstructs an HSL color correctly', async () => {
 		const graph = new Graph();
 		const node = new DestructColorNode({ graph });
 
@@ -41,7 +41,7 @@ describe('color/deconstruct', () => {
 		expect(node.outputs.alpha.value).to.equal(0.8);
 	});
 
-	it('handles a color without alpha correctly', async () => {
+	test('handles a color without alpha correctly', async () => {
 		const graph = new Graph();
 		const node = new DestructColorNode({ graph });
 
@@ -59,7 +59,7 @@ describe('color/deconstruct', () => {
 		expect(node.outputs.alpha.value).to.be.undefined;
 	});
 
-	it('throws an error for invalid color input', async () => {
+	test('throws an error for invalid color input', async () => {
 		const graph = new Graph();
 		const node = new DestructColorNode({ graph });
 
@@ -74,7 +74,7 @@ describe('color/deconstruct', () => {
 		}
 	});
 
-	it('handles edge case with zero values', async () => {
+	test('handles edge case with zero values', async () => {
 		const graph = new Graph();
 		const node = new DestructColorNode({ graph });
 
