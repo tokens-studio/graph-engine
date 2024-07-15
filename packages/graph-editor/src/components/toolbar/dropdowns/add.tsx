@@ -1,6 +1,6 @@
 import { Button, DropdownMenu, Stack, Tooltip } from '@tokens-studio/ui';
 import { NavArrowRight, Plus } from 'iconoir-react';
-import { panelItemsSelector } from '@/redux/selectors/index.js';
+import { panelItemsSelector } from '@/redux/selectors/registry.js';
 import { useAction } from '@/editor/actions/provider.js';
 import { useDispatch } from '@/hooks/index.js';
 import { useReactFlow } from 'reactflow';
@@ -53,6 +53,7 @@ export const AddDropdown = () => {
     [reactFlowInstance, createNode, selectAddedNodes],
   );
 
+  console.log(data);
   const nodes = React.useMemo(() => {
     return data.groups.map((group) => {
       return (

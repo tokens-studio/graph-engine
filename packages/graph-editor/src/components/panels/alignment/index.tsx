@@ -56,7 +56,7 @@ export enum ALIGNMENT {
   END = 2,
 }
 
-const align =
+export const align =
   (align: ALIGNMENT, prop = 'x') =>
   (selectedNodes) => {
     // Align selected nodes to the left
@@ -83,7 +83,7 @@ const align =
     });
   };
 
-const distribute =
+export const distribute =
   (align: ALIGNMENT, prop = 'x') =>
   (selectedNodes) => {
     if (selectedNodes.length < 3) {

@@ -1,9 +1,7 @@
 import { Box, Stack, Text } from '@tokens-studio/ui';
-import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Edge, Port, toColor, toHex } from '@tokens-studio/graph-engine';
-import { Edge, Port } from '@tokens-studio/graph-engine';
 import React from 'react';
-import withVariadicField from './withVariadicField';
+import withVariadicField from './withVariadicField.js';
 
 const VariadicColorUI = ({ port, edge }: { port: Port; edge: Edge }) => {
   const value = port.value[edge.annotations['engine.index']];

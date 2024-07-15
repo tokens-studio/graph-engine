@@ -83,6 +83,7 @@ import {
 } from '@/annotations/index.js';
 import { duplicateNodes } from './actions/duplicate.js';
 import { useContextMenu } from 'react-contexify';
+import { useExternalLoader } from '@/context/ExternalLoaderContext.js';
 import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
 import { useSelector } from 'react-redux';
 import { useSetCurrentNode } from '@/hooks/useSetCurrentNode.js';
@@ -115,6 +116,7 @@ export const EditorApp = React.forwardRef<
   const fullNodeLookup = useSelector(nodeTypesSelector);
   const { id, customNodeUI = {}, children } = props;
 
+  const externalLoader = useExternalLoader();
   const showMinimap = useSelector(showMinimapSelector);
   const capabilities = useSelector(capabilitiesSelector);
   const contextMenus = useSelector(contextMenuSelector);
@@ -131,13 +133,17 @@ export const EditorApp = React.forwardRef<
     graph.annotations[description] = '';
     return graph;
   }, []);
-
   const [graph, setTheGraph] = useState(initialGraph);
 
   const showGridValue = useSelector(showGrid);
   const snapGridValue = useSelector(snapGrid);
   const internalRef = useRef<ImperativeEditorRef>(null);
   const activeGraphId = useSelector(currentPanelIdSelector);
+
+  //Update the external loader
+  useEffect(() => {
+    graph.externalLoader = externalLoader;
+  }, [graph, externalLoader]);
 
   const iconLookup = useMemo(() => {
     return panelItems.groups.reduce((acc, group) => {
@@ -464,16 +470,13 @@ export const EditorApp = React.forwardRef<
         serialized.annotations[uiVersion] = version;
         return serialized;
       },
-      loadRaw: (serializedGraph) => {
+      loadRaw: async (serializedGraph) => {
         if (internalRef.current) {
-          internalRef?.current.load(
-            graph.deserialize(serializedGraph, fullNodeLookup),
-          );
+          await graph.deserialize(serializedGraph, fullNodeLookup);
+          internalRef?.current.load(graph);
         }
       },
       load: (loadedGraph: Graph) => {
-        //capabilities.forEach(cap => graph.registerCapability(cap));
-        //const loadedGraph = graph.deserialize(serializedGraph, fullNodeLookup);
         //Read the annotaions
         const viewport = loadedGraph.annotations[uiViewport];
 

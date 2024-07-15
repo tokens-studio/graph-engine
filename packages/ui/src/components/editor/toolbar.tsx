@@ -1,6 +1,15 @@
 import {
-	DefaultToolbarButtons,
+	AddDropdown,
+	AlignDropdown,
+	DownloadToolbarButton,
+	HelpDropdown,
 	ImperativeEditorRef,
+	LayoutDropdown,
+	PlayControls,
+	SettingsToolbarButton,
+	ToolbarSeparator,
+	UploadToolbarButton,
+	ZoomDropdown,
 	mainGraphSelector
 } from '@tokens-studio/graph-editor';
 import { FloppyDisk, ShareAndroidSolid } from 'iconoir-react';
@@ -100,6 +109,24 @@ export const ShareButton = ({ id }) => {
 	);
 };
 
-export const createToolbarButtons = buttons => {
-	return [...DefaultToolbarButtons, ...buttons];
+export const createToolbarButtons = (buttons?: React.ReactElement) => {
+	return (
+		<>
+			<AddDropdown />
+			<ToolbarSeparator />
+			<ZoomDropdown />
+			<ToolbarSeparator />
+			<AlignDropdown />
+			<ToolbarSeparator />
+			<PlayControls />
+			<ToolbarSeparator />
+			<LayoutDropdown />
+			<SettingsToolbarButton />
+			<HelpDropdown />
+			<ToolbarSeparator />
+			<DownloadToolbarButton />
+			<UploadToolbarButton />
+			{buttons}
+		</>
+	);
 };

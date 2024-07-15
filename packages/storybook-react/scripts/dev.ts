@@ -93,7 +93,7 @@ function getCombinations<T>(arrays: T[][]): T[][] {
 
 async function processGraph(path: string) {
 	const data = JSON.parse(await fs.readFile(path, 'utf-8'));
-	const graph = new Graph().deserialize(data, nodeTypes);
+	const graph = await new Graph().deserialize(data, nodeTypes);
 	console.log('Graph loaded:', path);
 
 	const input = Object.values(graph.nodes).find(

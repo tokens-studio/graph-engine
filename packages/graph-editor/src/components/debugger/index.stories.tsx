@@ -1,6 +1,7 @@
 import { CustomTimelineRow, Debugger } from './index.js';
+import { DebugInfo } from './data.js';
 import { TimelineEffect } from '@xzdarcy/react-timeline-editor';
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Debugger> = {
@@ -19,7 +20,7 @@ const mockEffect: Record<string, TimelineEffect> = {
   },
 };
 
-const mockData: CustomTimelineRow[] = new Array(20).fill(0).map((_, i) => {
+const mockRows: CustomTimelineRow[] = new Array(20).fill(0).map((_, i) => {
   return {
     id: i.toString(),
     name: 'Row ' + i,
@@ -37,6 +38,15 @@ const mockData: CustomTimelineRow[] = new Array(20).fill(0).map((_, i) => {
 export default meta;
 type Story = StoryObj<typeof Debugger>;
 export const Default: Story = {
-  render: () => <Debugger data={mockData} effects={mockEffect} />,
+  render: () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const mockData = useMemo(() => {
+      return new DebugInfo({
+        rows: mockRows,
+      });
+    }, []);
+
+    return <Debugger data={mockData} effects={mockEffect} />;
+  },
   args: {},
 };

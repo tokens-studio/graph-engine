@@ -1,8 +1,11 @@
 describe('Nodes', () => {
   it('can create a node from the drop panel', () => {
     cy.visit('/');
-    cy.get('[data-test-class="drop-panel-trigger"]').first().click();
-    cy.get('[data-test-class="drop-panel-item"]')
+    cy.waitForReact(2000);
+    //Open the first group
+    cy.react('DropPanel').should('exist');
+    cy.react('DropPanel').react('Styled.AccordionTrigger').first().click();
+    cy.react('DragItem')
       .first()
       .drag('[data-testid="rf__wrapper"]')
       .then((success) => {

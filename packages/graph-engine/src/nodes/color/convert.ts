@@ -1,9 +1,5 @@
 import { Color } from '../../types.js';
-import {
-	ColorSchema,
-	NumberSchema,
-	StringSchema
-} from '../../schemas/index.js';
+import { ColorSchema, StringSchema } from '../../schemas/index.js';
 import { ColorSpace, colorSpaces } from './lib/types.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
@@ -35,7 +31,7 @@ export default class NodeDefinition extends Node {
 			}
 		});
 		this.addOutput('color', {
-			type: NumberSchema
+			type: ColorSchema
 		});
 	}
 

@@ -83,7 +83,6 @@ describe('nodeUsage', () => {
 					{
 						name: 'foo',
 						value: 'black',
-						visible: true,
 						type: {
 							$id: 'https://schemas.tokens.studio/string.json',
 							title: 'String',
@@ -107,17 +106,15 @@ describe('nodeUsage', () => {
 							title: 'String',
 							type: 'string'
 						},
-						value: 'black',
-						visible: true
+						value: 'black'
 					}
 				],
 				type: 'studio.tokens.generic.output'
 			}
 		]);
 
-		const deserializedOutput = await new Graph()
-			.deserialize(serialized, nodeLookup)
-			.execute();
+		const newGraph = await new Graph().deserialize(serialized, nodeLookup);
+		const deserializedOutput = await newGraph.execute();
 
 		expect(deserializedOutput.output).to.eql({
 			input: {

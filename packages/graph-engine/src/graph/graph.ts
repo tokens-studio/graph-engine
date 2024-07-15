@@ -1,6 +1,5 @@
 import { AnySchema, GraphSchema } from '../schemas/index.js';
 import { Edge, VariadicEdgeData } from '../programmatic/edge.js';
-import { ExternalLoader } from './externalLoader.js';
 import { ISetValue, Input } from '../programmatic/input.js';
 import { Node } from '../programmatic/node.js';
 import { Output } from '../programmatic/output.js';
@@ -16,8 +15,8 @@ import { compareVersions } from 'compare-versions';
 import { makeObservable, observable, toJS } from 'mobx';
 import { topologicalSort } from './topologicSort.js';
 import { v4 as uuid } from 'uuid';
+import type { ExternalLoader, NodeRun, NodeStart } from '../types.js';
 import type { NodeFactory, SerializedGraph } from './types.js';
-import type { NodeRun, NodeStart } from '../types.js';
 
 export type CapabilityFactory = {
 	name: string;
@@ -396,7 +395,7 @@ export class Graph {
 			return;
 		}
 
-		// await this.propagate(node.id);
+		await this.propagate(node.id);
 	}
 	/**
 	 * Serialize the graph for transport
@@ -446,10 +445,10 @@ export class Graph {
 	 * @param input
 	 * @param lookup
 	 */
-	deserialize(
+	async deserialize(
 		serialized: SerializedGraph,
 		lookup: Record<string, NodeFactory>
-	): Graph {
+	): Promise<Graph> {
 		const version =
 			(serialized.annotations && serialized.annotations['engine.version']) ||
 			'0.0.0';
@@ -474,14 +473,16 @@ export class Graph {
 
 		//We don't execute anything here till needed
 
-		serialized.nodes.forEach(node => {
-			const factory = lookup[node.type];
-			factory.deserialize({
-				serialized: node,
-				graph: this,
-				lookup
-			});
-		});
+		await Promise.all(
+			serialized.nodes.map(async node => {
+				const factory = lookup[node.type];
+				return await factory.deserialize({
+					serialized: node,
+					graph: this,
+					lookup
+				});
+			})
+		);
 
 		this.edges = serialized.edges.reduce((acc, edge) => {
 			//Don't change the edge
@@ -531,6 +532,7 @@ export class Graph {
 
 	clone(): Graph {
 		const clonedGraph = new Graph();
+		clonedGraph.externalLoader = this.externalLoader;
 		const oldToNewIdMap = new Map<string, string>();
 
 		// Clone nodes
@@ -773,7 +775,7 @@ export class Graph {
 
 			//Check if setting the value would result in an execution
 			//If pure and the value is the same ignore
-			if (!input.impure && input.value === output.value) {
+			if (input.value === output.value) {
 				return acc;
 			}
 

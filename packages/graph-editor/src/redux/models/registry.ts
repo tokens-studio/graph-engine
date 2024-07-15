@@ -34,7 +34,7 @@ export const registryState = createModel<RootModel>()({
     panelItems: defaultPanelGroupsFactory(),
     nodeTypes: {},
     capabilities: [],
-    toolbarButtons: DefaultToolbarButtons,
+    toolbarButtons: DefaultToolbarButtons(),
   } as RegistryState,
   reducers: {
     setToolbarButtons(state, toolbarButtons: ReactElement[]) {

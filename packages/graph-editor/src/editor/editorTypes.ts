@@ -1,6 +1,6 @@
 import {
   CapabilityFactory,
-  ExternalLoadOptions,
+  ExternalLoader,
   Graph,
   Node as GraphNode,
   SerializedGraph,
@@ -28,7 +28,10 @@ export interface EditorProps {
   emptyContent?: React.ReactNode;
   children?: React.ReactNode;
   onOutputChange?: (output: Record<string, unknown>) => void;
-  externalLoader?: (opts: ExternalLoadOptions) => Promise<unknown> | unknown;
+  /**
+   * An external loader to use for loading the graphs or node data
+   */
+  externalLoader?: ExternalLoader;
   /**
    * Whether or not to show the menu
    */

@@ -4,18 +4,26 @@ import {
 } from '@/components/debugger/index.js';
 import { action, computed, makeObservable, observable } from 'mobx';
 
+export interface IDebugInfo {
+  rows?: CustomTimelineRow[];
+}
+
 export class DebugInfo {
   _rows: CustomTimelineRow[] = [];
   offset = 0;
   first = true;
 
-  constructor() {
+  constructor(init?: IDebugInfo) {
+    const { rows = [] } = init || {};
+
     makeObservable(this, {
-      _rows: observable,
+      _rows: observable.ref,
       rows: computed,
       addRow: action,
       addAction: action,
     });
+
+    this._rows = rows;
   }
 
   get rows() {
@@ -40,8 +48,8 @@ export class DebugInfo {
             ...row.actions,
             {
               ...action,
-              start: (action.start - this.offset) / 1000,
-              end: (action.end - this.offset) / 1000,
+              start: action.start - this.offset,
+              end: action.end - this.offset,
             },
           ],
         };

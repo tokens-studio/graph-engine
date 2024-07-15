@@ -15,13 +15,61 @@ model Graph {
   id       String   @id @default(cuid())
   name     String
   // Effectively Json
-  graph    String
+  graph    Json
   description String?
   public    Boolean @default(false)
 
   owner    String
+  user     User     @relation(fields: [owner], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Thumbnail {
+  id      String   @id @default(cuid())
+  //Size  in bytes
+  size    Int
+  path    String
+  data Bytes?
+  //The original name of the file 
+  name  String
+  //The mime type 
+  type String
+  extension String
+
+
+  //Entities this can be connected to 
+  publishedGraph PublishedGraph?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PublishedGraph {
+  id       String   @id @default(cuid())
+  name     String
+  versions PublishedGraphVersion[]
+  description String?
+  owner    String
+
+  thumbnailId String? @unique
+  thumbnail Thumbnail? @relation(fields: [thumbnailId], references: [id])
+
+  user     User     @relation(fields: [owner], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  downloadsTotal  Int @default(0)
+  likesTotal Int @default(0)
+}
+
+model PublishedGraphVersion{
+  id       String   @id @default(cuid())
+  publishedGraphId String
+  publishedGraph PublishedGraph @relation(fields: [publishedGraphId], references: [id])
+  createdAt DateTime @default(now())
+  version  Int @default(0)
+ // Effectively Json
+  graph    Json
 }
 
 
@@ -35,6 +83,9 @@ model User {
   sessions      Session[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
+
+  graphs        Graph[]
+  publishedGraphs PublishedGraph[]
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
