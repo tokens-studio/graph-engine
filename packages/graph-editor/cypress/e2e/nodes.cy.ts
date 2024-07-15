@@ -1,7 +1,7 @@
 describe('Nodes', () => {
   it('can create a node from the drop panel', () => {
     cy.visit('/');
-    cy.waitForReact(1000);
+    cy.waitForReact(2000);
     //Open the first group
     cy.react('DropPanel').should('exist');
     cy.react('DropPanel').react('Styled.AccordionTrigger').first().click();
