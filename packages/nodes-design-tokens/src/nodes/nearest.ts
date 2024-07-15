@@ -17,43 +17,37 @@ export default class NearestColorNode extends Node {
 		super(props);
 
 		this.addInput('tokens', {
-			type: arrayOf(TokenSchema),
-			visible: true
+			type: arrayOf(TokenSchema)
 		});
 		this.addInput('sourceColor', {
 			type: {
 				...ColorSchema,
 				default: '#ffffff'
-			},
-			visible: true
+			}
 		});
 		this.addInput('compare', {
 			type: {
 				...StringSchema,
 				default: 'Hue',
 				enum: ['Contrast', 'Hue', 'Lightness', 'Saturation', 'Distance']
-			},
-			visible: true
+			}
 		});
 		this.addInput('inverted', {
 			type: {
 				...BooleanSchema,
 				default: false
-			},
-			visible: true
+			}
 		});
 		this.addInput('wcag', {
 			type: {
 				...StringSchema,
 				default: WcagVersion.V3,
 				enum: Object.values(WcagVersion)
-			},
-			visible: true
+			}
 		});
 
 		this.addOutput('value', {
-			type: arrayOf(TokenSchema),
-			visible: true
+			type: arrayOf(TokenSchema)
 		});
 	}
 

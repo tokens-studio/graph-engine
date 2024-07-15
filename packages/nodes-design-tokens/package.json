@@ -18,7 +18,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.prod.json",
+    "build": "tsup",
     "dev": "tsup --watch",
     "docs": "typedoc",
     "format": "npm run format:eslint && npm run format:prettier",

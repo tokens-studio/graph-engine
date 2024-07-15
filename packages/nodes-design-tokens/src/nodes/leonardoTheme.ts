@@ -3,7 +3,8 @@ import {
 	ColorSchema,
 	INodeDefinition,
 	Node,
-	NumberSchema
+	NumberSchema,
+	hexToColor
 } from '@tokens-studio/graph-engine';
 import { LeonardoColorSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
@@ -15,29 +16,23 @@ export default class LeonardoThemeNode extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('colors', {
-			type: arrayOf(LeonardoColorSchema),
-			visible: true
+			type: arrayOf(LeonardoColorSchema)
 		});
 		this.addInput('contrast', {
-			type: NumberSchema,
-			visible: true
+			type: NumberSchema
 		});
 		this.addInput('lightness', {
-			type: NumberSchema,
-			visible: true
+			type: NumberSchema
 		});
 		this.addInput('saturation', {
-			type: NumberSchema,
-			visible: true
+			type: NumberSchema
 		});
 		this.addInput('backgroundColor', {
-			type: LeonardoColorSchema,
-			visible: true
+			type: LeonardoColorSchema
 		});
 
 		this.addOutput('colors', {
-			type: arrayOf(ColorSchema),
-			visible: true
+			type: arrayOf(ColorSchema)
 		});
 	}
 
@@ -53,6 +48,8 @@ export default class LeonardoThemeNode extends Node {
 			lightness
 		});
 
-		this.setOutput('colors', theme.contrastColorValues);
+		const themeColors = theme.contrastColorValues.map(x => hexToColor(x));
+
+		this.setOutput('colors', themeColors);
 	}
 }

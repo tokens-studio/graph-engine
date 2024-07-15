@@ -4,7 +4,9 @@ import {
 	INodeDefinition,
 	Node,
 	NumberSchema,
-	StringSchema
+	StringSchema,
+	toColor,
+	toHex
 } from '@tokens-studio/graph-engine';
 import { LeonardoColorSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
@@ -16,24 +18,20 @@ export default class LeonardoColorNode extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('name', {
-			type: StringSchema,
-			visible: true
+			type: StringSchema
 		});
 		this.addInput('colorKeys', {
-			type: arrayOf(ColorSchema),
-			visible: true
+			type: arrayOf(ColorSchema)
 		});
 		this.addInput('ratios', {
-			type: arrayOf(NumberSchema),
-			visible: true
+			type: arrayOf(NumberSchema)
 		});
 
 		this.addInput('smooth', {
 			type: BooleanSchema
 		});
 		this.addOutput('value', {
-			type: LeonardoColorSchema,
-			visible: true
+			type: LeonardoColorSchema
 		});
 	}
 
@@ -43,7 +41,7 @@ export default class LeonardoColorNode extends Node {
 		//Because the color is mutated inside of the object, we create a plain object and expect downstream nodes to handle the mutation
 		const color = {
 			name,
-			colorKeys,
+			colorKeys: colorKeys.map(x => toHex(toColor(x))),
 			ratios,
 			smooth
 		};

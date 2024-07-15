@@ -315,6 +315,7 @@ const InputHandle = observer(
     const inlineValuesValue = useSelector(inlineValues);
     const typeCol = extractTypeIcon(port, iconTypeRegistry);
     const input = port as unknown as Input;
+    const type = extractType(port.type);
     const handleInformation = useHandle();
 
     if (input.variadic) {
@@ -322,7 +323,8 @@ const InputHandle = observer(
         <>
           <Handle
             {...typeCol}
-            visible={port.visible || port.isConnected}
+            type={type}
+            visible={port.visible != false || port.isConnected}
             id={port.name}
             variadic
           >
@@ -335,7 +337,7 @@ const InputHandle = observer(
                 {...typeCol}
                 //The underlying type might not be an array
                 isArray={port.type.type?.type === 'array'}
-                visible={port.visible || port.isConnected}
+                visible={port.visible != false || port.isConnected}
                 id={port.name + `[${edge.annotations['engine.index']}]`}
                 key={i}
               >
@@ -366,8 +368,9 @@ const InputHandle = observer(
     return (
       <Handle
         {...typeCol}
-        visible={port.visible || port.isConnected}
+        visible={port.visible != false || port.isConnected}
         id={port.name}
+        type={type}
         isConnected={port.isConnected}
       >
         {!hideName && (

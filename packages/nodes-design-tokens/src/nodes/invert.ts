@@ -13,8 +13,7 @@ export default class InvertNode extends Node {
 			type: arrayOf(TokenSchema)
 		});
 		this.addOutput('value', {
-			type: arrayOf(TokenSchema),
-			visible: true
+			type: arrayOf(TokenSchema)
 		});
 	}
 

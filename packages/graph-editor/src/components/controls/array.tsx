@@ -15,6 +15,7 @@ import {
   IconButton,
   Select,
   Stack,
+  Text,
   TextInput,
 } from '@tokens-studio/ui';
 import { ColorPickerPopover } from '../colorPicker/index.js';
@@ -128,6 +129,10 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
   );
 
   const itemList = React.useMemo(() => {
+    if (!value) {
+      return <Text>{'<Error, no items detected>'}</Text>;
+    }
+
     return value.map((val: unknown, index: number) => {
       let value;
       switch (itemsType) {

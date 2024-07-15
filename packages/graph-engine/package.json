@@ -18,7 +18,6 @@
     "dist"
   ],
   "scripts": {
-    "alias": "tsc-alias -p tsconfig.prod.json --dir dist/esm",
     "build": "tsup",
     "dev": "tsup --watch",
     "docs": "typedoc && typedoc --out docs --json ./docs/docs.json",
@@ -45,7 +44,6 @@
     "mobx": "^6.12.0",
     "poline": "^0.7.0",
     "postcss-value-parser-esm": "^4.2.0",
-    "token-transformer": "^0.0.33",
     "uuid": "^9.0.1",
     "z-schema-esm": "^6.0.1"
   },

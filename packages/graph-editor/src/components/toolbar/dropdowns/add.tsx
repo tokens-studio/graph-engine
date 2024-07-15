@@ -53,7 +53,6 @@ export const AddDropdown = () => {
     [reactFlowInstance, createNode, selectAddedNodes],
   );
 
-  console.log(data);
   const nodes = React.useMemo(() => {
     return data.groups.map((group) => {
       return (

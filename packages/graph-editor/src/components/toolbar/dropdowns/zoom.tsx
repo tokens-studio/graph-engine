@@ -3,7 +3,7 @@ import { NavArrowRight } from 'iconoir-react';
 import { getViewports } from '@/components/hotKeys/index.js';
 import { savedViewports } from '@/annotations/index.js';
 import { useLocalGraph } from '@/hooks/index.js';
-import { useReactFlow, useStore } from 'reactflow';
+import { useReactFlow, useViewport } from 'reactflow';
 import { useToast } from '@/hooks/useToast.js';
 import React, { useCallback } from 'react';
 
@@ -13,7 +13,7 @@ export const ZoomDropdown = () => {
   const graph = useLocalGraph();
   const viewports = getViewports(graph);
   const trigger = useToast();
-  const { [2]: zoom } = useStore((s) => s.transform);
+  const { zoom } = useViewport();
 
   const onFitView = useCallback(() => {
     reactFlow.fitView({

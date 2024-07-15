@@ -1,39 +1,28 @@
 import {
 	INodeDefinition,
 	Node,
+	ObjectSchema,
 	StringSchema
 } from '@tokens-studio/graph-engine';
-import { ObjectSchema } from '@tokens-studio/graph-engine';
-import { TokenSchema } from '../schemas/index.js';
+import { TokenSchema, TokenTypographySchema } from '../schemas/index.js';
 import { TokenTypes } from '@tokens-studio/types';
 
-const excluded = [
-	TokenTypes.TYPOGRAPHY,
-	TokenTypes.BORDER,
-	TokenTypes.BOX_SHADOW,
-	TokenTypes.COMPOSITION
-];
-const types = Object.values(TokenTypes)
-	.sort()
-	.filter(x => !excluded.includes(x));
-
 export default class NodeDefinition extends Node {
-	static title = 'Create Design Token';
-	static type = 'studio.tokens.design.create';
+	static title = 'Create Typography Design Token';
+	static type = 'studio.tokens.design.createTypographyToken';
 	static description = 'Creates a design token from inputs';
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('name', {
 			type: StringSchema
 		});
-		this.addInput('type', {
-			type: {
-				...StringSchema,
-				enum: types
-			}
-		});
-		this.addInput('value', {
+
+		this.addInput('reference', {
 			type: StringSchema
+		});
+
+		this.addInput('value', {
+			type: TokenTypographySchema
 		});
 
 		this.addInput('description', {
@@ -53,17 +42,29 @@ export default class NodeDefinition extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const props = this.getAllInputs();
-		const { name, type } = props;
+		const { name, reference, value, description, $extensions } =
+			this.getAllInputs();
 
 		if (!name) {
 			throw new Error('`name` is required');
 		}
 
-		if (!type) {
-			throw new Error('Type is required');
+		const obj = {
+			name,
+			type: TokenTypes.TYPOGRAPHY,
+			value: undefined,
+			description,
+			$extensions
+		};
+
+		if (value) {
+			obj.value = value;
+		} else if (reference) {
+			obj.value = reference;
+		} else {
+			throw new Error('Value or reference is required');
 		}
 
-		this.setOutput('token', props);
+		this.setOutput('token', obj);
 	}
 }

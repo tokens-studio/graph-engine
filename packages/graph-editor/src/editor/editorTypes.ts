@@ -84,7 +84,7 @@ export interface EditorProps {
   /**
    * Additional colors to display in the editor for custom types
    */
-  typeColors?: Record<string, { color: string, backgroundColor: string }>;
+  typeColors?: Record<string, { color: string; backgroundColor: string }>;
 
   initialGraph?: Graph;
 }
