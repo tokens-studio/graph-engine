@@ -52,16 +52,13 @@ export default class ResolveNode extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('inputs', {
-			type: arrayOf(arrayOf(TokenSchema)),
-			visible: true
+			type: arrayOf(arrayOf(TokenSchema))
 		});
 		this.addInput('context', {
-			type: arrayOf(arrayOf(TokenSchema)),
-			visible: true
+			type: arrayOf(arrayOf(TokenSchema))
 		});
 		this.addOutput('value', {
-			type: arrayOf(TokenSchema),
-			visible: true
+			type: arrayOf(TokenSchema)
 		});
 	}
 

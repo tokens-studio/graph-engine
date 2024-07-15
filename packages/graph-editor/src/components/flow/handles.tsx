@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from '@tokens-studio/ui';
+import { Box, Stack, Text, Tooltip } from '@tokens-studio/ui';
 import { Position, Handle as RawHandle } from 'reactflow';
 import { styled } from '@/lib/stitches/index.js';
 import { useIsValidConnection } from '../../hooks/useIsValidConnection.js';
@@ -164,6 +164,8 @@ export interface HandleProps {
   isConnected?: boolean;
   color?: string;
   backgroundColor?: string;
+  //Inline typing info
+  type?: string;
   variadic?: boolean;
 }
 
@@ -176,6 +178,7 @@ export const Handle = (props: HandleProps) => {
     error,
     color,
     isArray,
+    type: dataType,
     isConnected,
     backgroundColor,
     variadic,
@@ -193,24 +196,25 @@ export const Handle = (props: HandleProps) => {
         flexDirection: type === 'target' ? 'row' : 'row-reverse',
       }}
     >
-      <StyledRawHandle
-        style={{
-          color: color,
-          backgroundColor: backgroundColor,
-          outlineColor: backgroundColor,
-        }}
-        id={id}
-        shouldHideHandles={shouldHideHandles}
-        error={error}
-        type={type}
-        position={position}
-        hide={shouldHide}
-        variadic={variadic}
-        isValidConnection={isValidConnection}
-        isConnected={isConnected}
-        isArray={isArray}
-      ></StyledRawHandle>
-
+      <Tooltip label={dataType} side="top">
+        <StyledRawHandle
+          style={{
+            color: color,
+            backgroundColor: backgroundColor,
+            outlineColor: backgroundColor,
+          }}
+          id={id}
+          shouldHideHandles={shouldHideHandles}
+          error={error}
+          type={type}
+          position={position}
+          hide={shouldHide}
+          variadic={variadic}
+          isValidConnection={isValidConnection}
+          isConnected={isConnected}
+          isArray={isArray}
+        ></StyledRawHandle>
+      </Tooltip>
       <Stack
         gap={1}
         align="center"

@@ -21,12 +21,10 @@ export default class ExtractTokenNode extends Node {
 			type: StringSchema
 		});
 		this.addOutput('found', {
-			type: BooleanSchema,
-			visible: true
+			type: BooleanSchema
 		});
 		this.addOutput('token', {
-			type: TokenSchema,
-			visible: true
+			type: TokenSchema
 		});
 	}
 

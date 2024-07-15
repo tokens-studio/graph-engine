@@ -9,12 +9,10 @@ export default class NameTokensNode extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('array', {
-			type: arrayOf(TokenSetSchema),
-			visible: true
+			type: arrayOf(TokenSetSchema)
 		});
 		this.addOutput('value', {
-			type: arrayOf(TokenSetSchema),
-			visible: true
+			type: arrayOf(TokenSetSchema)
 		});
 	}
 

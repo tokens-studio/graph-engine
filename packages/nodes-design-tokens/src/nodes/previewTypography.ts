@@ -11,8 +11,7 @@ export default class NearestColorNode extends Node {
 		super(props);
 
 		this.addInput('value', {
-			type: arrayOf(TokenSchema),
-			visible: true
+			type: arrayOf(TokenSchema)
 		});
 		this.addInput('text', {
 			type: {

@@ -3,6 +3,7 @@ import delay from './delay.js';
 import input from './input.js';
 import note from './note.js';
 import objectMerge from './objectMerge.js';
+import objectPath from './objectProperty.js';
 import objectify from './objectify.js';
 import output from './output.js';
 import panic from './panic.js';
@@ -19,6 +20,7 @@ export const nodes = [
 	subgraph,
 	panic,
 	note,
+	objectPath,
 	objectMerge,
 	time,
 	delay

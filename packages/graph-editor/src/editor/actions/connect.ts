@@ -1,6 +1,7 @@
 import { Connection, Edge } from 'reactflow';
 import { Dispatch } from '@/redux/store.js';
 import { Graph } from '@tokens-studio/graph-engine';
+import { deletable } from '@/annotations/index.js';
 import { getVariadicIndex, stripVariadic } from '@/utils/stripVariadic.js';
 
 export const connectNodes =
@@ -42,6 +43,9 @@ export const connectNodes =
       sourceNode.addInput(candidateName, {
         type: targetPort.type,
         visible: false,
+        annotations: {
+          [deletable]: true,
+        },
       });
       sourceNode.inputs[candidateName].setValue(targetPort.value);
       //Change the handle to the newly created handle

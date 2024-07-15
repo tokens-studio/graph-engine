@@ -6,6 +6,7 @@ import colorCurves from './colorCurves.json';
 import colorScale from './colorScale.json';
 import dynamicNaming from './dynamicNaming.json';
 import dynamicValidation from './dynamicValidation.json';
+import leonardo from './leonardo.json';
 import typescale from './typescale.json';
 
 export const examples: IExample[] = [
@@ -45,6 +46,12 @@ export const examples: IExample[] = [
 		description: 'Handling dynamic validation of inputs',
 		file: dynamicValidation as unknown as SerializedGraph,
 		key: 'dynamicValidation'
+	},
+	{
+		title: 'Color - Adobe Leonardo',
+		description: 'Leonardo themeing',
+		file: leonardo as unknown as SerializedGraph,
+		key: 'adobeLeonardo'
 	},
 	{
 		title: 'Audio - Oscillator',

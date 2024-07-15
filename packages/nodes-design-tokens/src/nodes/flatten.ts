@@ -13,12 +13,10 @@ export default class FlattenNode extends Node {
 			type: {
 				...arrayOf(arrayOf(TokenSchema)),
 				default: []
-			},
-			visible: true
+			}
 		});
 		this.addOutput('value', {
-			type: arrayOf(TokenSchema),
-			visible: true
+			type: arrayOf(TokenSchema)
 		});
 	}
 

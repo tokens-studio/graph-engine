@@ -10,12 +10,10 @@ export default class SetToArrayNode extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('set', {
-			type: TokenSetSchema,
-			visible: true
+			type: TokenSetSchema
 		});
 		this.addOutput('tokens', {
-			type: arrayOf(TokenSchema),
-			visible: true
+			type: arrayOf(TokenSchema)
 		});
 	}
 

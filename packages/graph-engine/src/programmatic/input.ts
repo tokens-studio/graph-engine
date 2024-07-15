@@ -159,7 +159,7 @@ export class Input<T = any> extends Port<T> {
 	}
 
 	deserialize(serialized: SerializedInput) {
-		this.visible = serialized.visible || false;
+		this.visible = serialized.visible ?? true;
 		this._dynamicType = serialized.dynamicType || undefined;
 		this.annotations = serialized.annotations || {};
 		this._value = serialized.value;

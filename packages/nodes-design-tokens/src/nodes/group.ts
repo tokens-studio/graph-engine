@@ -12,16 +12,13 @@ export default class GroupNode extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('accessor', {
-			type: StringSchema,
-			visible: true
+			type: StringSchema
 		});
 		this.addInput('tokens', {
-			type: TokenSetSchema,
-			visible: true
+			type: TokenSetSchema
 		});
 		this.addOutput('value', {
-			type: TokenSetSchema,
-			visible: true
+			type: TokenSetSchema
 		});
 	}
 
