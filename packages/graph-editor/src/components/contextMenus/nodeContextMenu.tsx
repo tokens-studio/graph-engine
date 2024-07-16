@@ -1,3 +1,4 @@
+import { GROUP } from '@/ids.js';
 import { Graph } from 'graphlib';
 import { Item, Menu, Separator } from 'react-contexify';
 import { Node, ReactFlowInstance, useReactFlow } from 'reactflow';
@@ -159,9 +160,11 @@ export const NodeContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
     }
   }, [graph, nodes]);
 
+  const canDuplicate = nodes[0]?.type !== GROUP;
+
   return (
     <Menu id={id}>
-      <Item onClick={onDuplicate}>Duplicate</Item>
+      {canDuplicate && <Item onClick={onDuplicate}>Duplicate</Item>}
       <Item onClick={focus}>Focus</Item>
       <Item disabled={!isDeletable} onClick={deleteEl}>
         Delete

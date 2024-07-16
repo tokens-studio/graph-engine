@@ -1,8 +1,8 @@
 import { Edge, Graph } from '@tokens-studio/graph-engine';
+import { GROUP } from '@/ids.js';
+import { GROUP_NODE_PADDING } from '@/constants.js';
 import { Item, Menu, Separator } from 'react-contexify';
-import { Node, getRectOfNodes, useReactFlow, useStoreApi } from 'reactflow';
-import { NodeTypes } from '../flow/types.js';
-import { getId } from '../flow/utils.js';
+import { Node, getNodesBounds, useReactFlow, useStoreApi } from 'reactflow';
 import { useAction } from '@/editor/actions/provider.js';
 import { useLocalGraph } from '@/hooks/index.js';
 import { v4 as uuid } from 'uuid';
@@ -13,8 +13,6 @@ export type INodeContextMenuProps = {
   nodes: Node[];
 };
 
-const padding = 25;
-
 export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
   const reactFlowInstance = useReactFlow();
   const graph = useLocalGraph();
@@ -24,54 +22,64 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
 
   //Note that we use a filter here to prevent getting nodes that have a parent node, ie are part of a group
   const selectedNodes = nodes.filter(
-    (node) => node.selected && !node.parentNode,
+    (node) => node.selected && !node.parentId,
   );
   const selectedNodeIds = selectedNodes.map((node) => node.id);
 
   const onGroup = useCallback(() => {
-    const rectOfNodes = getRectOfNodes(nodes);
-    const groupId = getId('group');
+    const bounds = getNodesBounds(nodes);
     const parentPosition = {
-      x: rectOfNodes.x,
-      y: rectOfNodes.y,
+      x: bounds.x,
+      y: bounds.y,
     };
-    const groupNode = {
-      id: groupId,
-      type: NodeTypes.GROUP,
-      position: parentPosition,
-      style: {
-        width: rectOfNodes.width + padding * 2,
-        height: rectOfNodes.height + padding * 2,
-      },
-      data: {
-        expandable: true,
-        expanded: true,
-      },
-    } as Node;
 
     store.getState().resetSelectedElements();
     store.setState({ nodesSelectionActive: false });
+
+    const newNodes = createNode({
+      type: GROUP,
+      position: parentPosition,
+    });
+
+    if (!newNodes) {
+      return;
+    }
+
+    const { flowNode } = newNodes;
+
     reactFlowInstance.setNodes((nodes) => {
-      //Note that group nodes should always occur before their parents
-      return [groupNode].concat(
-        nodes.map((node) => {
+      // Note that group nodes should always occur before their children
+      return [{
+        ...flowNode,
+        dragHandle: undefined,
+        style: {
+          width: bounds.width + GROUP_NODE_PADDING * 2,
+          height: bounds.height + GROUP_NODE_PADDING * 2,
+        },
+        data: {
+          expandable: true,
+          expanded: true,
+        }
+      } as Node]
+        .concat(nodes)
+        .map((node) => {
           if (selectedNodeIds.includes(node.id)) {
             return {
               ...node,
               position: {
-                x: node.position.x - parentPosition.x + padding,
-                y: node.position.y - parentPosition.y + padding,
+                x: node.position.x - parentPosition.x + GROUP_NODE_PADDING,
+                y: node.position.y - parentPosition.y + GROUP_NODE_PADDING,
               },
               extent: 'parent' as const,
-              parentNode: groupId,
+              parentId: flowNode.id,
             };
           }
 
           return node;
-        }),
-      );
+        });
     });
-  }, [nodes, reactFlowInstance, selectedNodeIds, store]);
+
+  }, [createNode, nodes, reactFlowInstance, selectedNodeIds, store]);
 
   const onCreateSubgraph = useCallback(() => {
     //We need to work out which nodes do not have parents in the selection
@@ -294,12 +302,18 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
     duplicateNodes(selectedNodeIds);
   };
 
+  const hasGroup = selectedNodes.some((node) => node.type === GROUP);
+
   return (
     <Menu id={id}>
-      <Item onClick={onGroup}>Create group</Item>
+      {!hasGroup && <Item onClick={onGroup}>Create group</Item>}
       <Item onClick={onCreateSubgraph}>Create Subgraph</Item>
-      <Separator />
-      <Item onClick={onDuplicate}>Duplicate</Item>
+      {!hasGroup && (
+        <>
+          <Separator />
+          <Item onClick={onDuplicate}>Duplicate</Item>
+        </>
+      )}
     </Menu>
   );
 };

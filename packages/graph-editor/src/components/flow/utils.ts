@@ -1,12 +1,12 @@
+import { GROUP } from '@/ids.js';
 import { Node } from 'reactflow';
-import { NodeTypes } from './types.js';
 
 // we have to make sure that parent nodes are rendered before their children
 export const sortNodes = (a: Node, b: Node): number => {
   if (a.type === b.type) {
     return 0;
   }
-  return a.type === NodeTypes.GROUP && b.type !== NodeTypes.GROUP ? -1 : 1;
+  return a.type === GROUP && b.type !== GROUP ? -1 : 1;
 };
 
 export const getId = (prefix = 'node') => `${prefix}_${Math.random() * 10000}`;

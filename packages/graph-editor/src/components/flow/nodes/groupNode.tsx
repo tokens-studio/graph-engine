@@ -1,34 +1,36 @@
 import { Button, Stack } from '@tokens-studio/ui';
+import { GROUP_NODE_PADDING } from '@/constants.js';
 import {
   NodeProps,
   NodeToolbar,
-  getRectOfNodes,
+  getNodesBounds,
   useReactFlow,
   useStore,
   useStoreApi,
 } from 'reactflow';
 import { NodeResizer } from '@reactflow/node-resizer';
 import { useCallback } from 'react';
+import { useLocalGraph } from '@/context/graph.js';
 import React from 'react';
 import useDetachNodes from '../../../hooks/useDetachNodes.js';
 
 const lineStyle = { borderColor: 'white' };
-const padding = 25;
 
 function GroupNode(props: NodeProps) {
   const { id, data } = props;
   const store = useStoreApi();
   const { deleteElements } = useReactFlow();
   const detachNodes = useDetachNodes();
+  const graph = useLocalGraph()
   const { minWidth, minHeight, hasChildNodes } = useStore((store) => {
     const childNodes = Array.from(store.nodeInternals.values()).filter(
-      (n) => n.parentNode === id,
+      (n) => n.parentId === id,
     );
-    const rect = getRectOfNodes(childNodes);
+    const bounds = getNodesBounds(childNodes);
 
     return {
-      minWidth: rect.width + padding * 2,
-      minHeight: rect.height + padding * 2,
+      minWidth: bounds.width + GROUP_NODE_PADDING * 2,
+      minHeight: bounds.height + GROUP_NODE_PADDING * 2,
       hasChildNodes: childNodes.length > 0,
     };
   }, isEqual);
@@ -39,11 +41,13 @@ function GroupNode(props: NodeProps) {
 
   const onDetach = useCallback(() => {
     const childNodeIds = Array.from(store.getState().nodeInternals.values())
-      .filter((n) => n.parentNode === id)
+      .filter((n) => n.parentId === id)
       .map((n) => n.id);
 
     detachNodes(childNodeIds, id);
-  }, [detachNodes, id, store]);
+
+    graph.removeNode(id);
+  }, [detachNodes, graph, id, store]);
 
   return (
     <div

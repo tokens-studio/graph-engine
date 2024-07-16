@@ -49,7 +49,7 @@
     border-radius: var(--radii-medium, 8px);
 }
 
-.react-flow__node-studio_tokens_group {
+.react-flow__node-studio.tokens.generic.group {
     background: transparent;
 }
 

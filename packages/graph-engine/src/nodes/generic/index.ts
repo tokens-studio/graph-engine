@@ -1,5 +1,6 @@
 import constant from './constant.js';
 import delay from './delay.js';
+import group from './group.js'
 import input from './input.js';
 import note from './note.js';
 import objectMerge from './objectMerge.js';
@@ -23,5 +24,6 @@ export const nodes = [
 	objectPath,
 	objectMerge,
 	time,
-	delay
+	delay,
+	group
 ];
