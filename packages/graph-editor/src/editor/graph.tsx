@@ -534,7 +534,6 @@ export const EditorApp = React.forwardRef<
         })
           .map((node) => {
             if (node.type === GROUP) {
-              console.log('this is group: ', node, groupsChildren);
               const bounds = getNodesBounds(groupsChildren[node.id]);
 
               return {
