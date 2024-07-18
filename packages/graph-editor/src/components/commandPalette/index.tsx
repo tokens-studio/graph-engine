@@ -21,9 +21,9 @@ export interface ICommandMenu {
   items: DropPanelStore;
   handleSelectNewNodeType: (node: NodeRequest) =>
     | {
-        graphNode: Node;
-        flowNode: ReactFlowNode;
-      }
+      graphNode: Node;
+      flowNode: ReactFlowNode;
+    }
     | undefined;
 }
 
@@ -74,14 +74,16 @@ const CommandMenuGroup = observer(
       <Command.Group
         key={group.key}
         heading={
-          <Stack align="center">
+          <Stack align="center" gap={2} css={{ margin: '$3 0 $2' }}>
             {group.icon}
-            {group.title}
+            <Text size="small" css={{ fontWeight: '$sansMedium' }}>
+              {group.title}
+            </Text>
           </Stack>
         }
       >
         {group.items.map((item) => (
-          <CommandItem item={item} handleSelectItem={handleSelectItem} />
+          <CommandItem key={item.type} item={item} handleSelectItem={handleSelectItem} />
         ))}
       </Command.Group>
     );
@@ -183,7 +185,7 @@ const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
           direction="row"
           css={{
             overflowY: 'scroll',
-            maxHeight: '450px',
+            maxHeight: '500px',
             scrollbarColor: 'var(--colors-bgSubtle) transparent',
             scrollbarWidth: 'thin',
           }}

@@ -47,6 +47,13 @@ function GroupNode(props: NodeProps) {
     detachNodes(childNodeIds, id);
 
     graph.removeNode(id);
+
+    childNodeIds.forEach((nodeId) => {
+      const graphNode = graph.getNode(nodeId);
+      if (graphNode) {
+        delete graphNode.annotations['parentId'];
+      }
+    });
   }, [detachNodes, graph, id, store]);
 
   return (

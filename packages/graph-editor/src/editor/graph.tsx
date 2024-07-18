@@ -199,7 +199,6 @@ export const EditorApp = React.forwardRef<
         node.annotations[ypos] = flowNode.position.y;
         node.annotations[width] = flowNode.width;
         node.annotations[height] = flowNode.height;
-        node.annotations['parentId'] = flowNode.parentId;
       });
 
       return serialized;
@@ -518,8 +517,6 @@ export const EditorApp = React.forwardRef<
               extent: 'parent',
             };
             (groupsChildren[parentId] || (groupsChildren[parentId] = [])).push(reactFlowNode);
-
-            delete node?.annotations['parentId'];
           } else if (node.annotations[uiNodeType] === GROUP) {
             reactFlowNode = {
               ...reactFlowNode,
@@ -533,7 +530,7 @@ export const EditorApp = React.forwardRef<
           return reactFlowNode as Node;
         })
           .map((node) => {
-            if (node.type === GROUP) {
+            if (node.type === GROUP && groupsChildren[node.id]) {
               const bounds = getNodesBounds(groupsChildren[node.id]);
 
               return {
@@ -909,8 +906,8 @@ export const EditorApp = React.forwardRef<
                 css={{
                   position: 'absolute',
                   top: '$7',
-                  left: 0,
-                  right: 0,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
                   display: 'grid',
                   placeItems: 'center',
                   zIndex: '99',

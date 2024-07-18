@@ -560,6 +560,13 @@ export class Graph {
 			}
 		});
 
+		// Update parent ids for children on groups
+		Object.values(clonedGraph.nodes).forEach(node => {
+			if (node.annotations['parentId']) {
+				node.annotations['parentId'] = oldToNewIdMap.get(node.annotations['parentId'] as string);
+			}
+		});
+
 		// Clone capabilities
 		Object.entries(this.capabilities).forEach(([key, value]) => {
 			clonedGraph.capabilities[key] = value;

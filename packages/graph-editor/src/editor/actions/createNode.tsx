@@ -1,7 +1,7 @@
 import { Dispatch } from '@/redux/store.js';
 import { Graph, Node, NodeFactory } from '@tokens-studio/graph-engine';
 import { ReactFlowInstance, Node as ReactFlowNode } from 'reactflow';
-import { uiNodeType } from '@/annotations/index.js';
+import { uiNodeType, xpos, ypos } from '@/annotations/index.js';
 
 export type NodeRequest = {
   type: string;
@@ -70,8 +70,8 @@ export const createNode = ({
 
     const finalPos = position || { x: 0, y: 0 };
 
-    node.annotations['xpos'] = finalPos.x;
-    node.annotations['ypos'] = finalPos.y;
+    node.annotations[xpos] = finalPos.x;
+    node.annotations[ypos] = finalPos.y;
 
     if (customUI[nodeRequest.type]) {
       node.annotations[uiNodeType] = customUI[nodeRequest.type];
