@@ -9,6 +9,7 @@ import {
   useStoreApi,
 } from 'reactflow';
 import { NodeResizer } from '@reactflow/node-resizer';
+import { parentId } from '@/annotations/index.js';
 import { useCallback } from 'react';
 import { useLocalGraph } from '@/context/graph.js';
 import React from 'react';
@@ -51,7 +52,7 @@ function GroupNode(props: NodeProps) {
     childNodeIds.forEach((nodeId) => {
       const graphNode = graph.getNode(nodeId);
       if (graphNode) {
-        delete graphNode.annotations['parentId'];
+        delete graphNode.annotations[parentId];
       }
     });
   }, [detachNodes, graph, id, store]);

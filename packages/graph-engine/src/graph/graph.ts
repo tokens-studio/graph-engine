@@ -562,8 +562,8 @@ export class Graph {
 
 		// Update parent ids for children on groups
 		Object.values(clonedGraph.nodes).forEach(node => {
-			if (node.annotations['parentId']) {
-				node.annotations['parentId'] = oldToNewIdMap.get(node.annotations['parentId'] as string);
+			if (node.annotations['ui.parentId']) {
+				node.annotations['ui.parentId'] = oldToNewIdMap.get(node.annotations['ui.parentId'] as string);
 			}
 		});
 

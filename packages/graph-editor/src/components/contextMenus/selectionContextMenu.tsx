@@ -1,9 +1,9 @@
-import { Edge, Graph, Node as GraphNode } from '@tokens-studio/graph-engine';
+import { Edge, Graph } from '@tokens-studio/graph-engine';
 import { GROUP } from '@/ids.js';
 import { GROUP_NODE_PADDING } from '@/constants.js';
 import { Item, Menu, Separator } from 'react-contexify';
 import { Node, getNodesBounds, useReactFlow, useStoreApi } from 'reactflow';
-import { height, width, xpos, ypos } from '@/annotations/index.js';
+import { height, parentId, width, xpos, ypos } from '@/annotations/index.js';
 import { useAction } from '@/editor/actions/provider.js';
 import { useLocalGraph } from '@/hooks/index.js';
 import { v4 as uuid } from 'uuid';
@@ -94,7 +94,7 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
         graphNode.annotations[ypos] = node.position.y - parentPosition.y + GROUP_NODE_PADDING;
         graphNode.annotations[width] = reactFlowNodesMap.get(node.id)?.width || 200;
         graphNode.annotations[height] = reactFlowNodesMap.get(node.id)?.height || 100;
-        graphNode.annotations['parentId'] = flowNode.id;
+        graphNode.annotations[parentId] = flowNode.id;
       }
     });
 
@@ -330,13 +330,13 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
     );
 
     //We then need to find all the downstream nodes from those nodes for the output
-  }, [createNode, graph, reactFlowInstance, selectedNodeIds, selectedNodes]);
+  }, [createNode, graph, reactFlowInstance, reactFlowNodes, selectedNodes]);
 
   const onDuplicate = () => {
     duplicateNodes(selectedNodeIds);
   };
 
-  const hasGroup = selectedNodes.some((node) => node.type === GROUP);
+  const hasGroup = useMemo(() => selectedNodes.some((node) => node.type === GROUP), [selectedNodes]);
 
   return (
     <Menu id={id}>

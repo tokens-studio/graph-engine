@@ -76,6 +76,7 @@ import { deleteNode } from './actions/deleteNode.js';
 import {
   description,
   height,
+  parentId as parentIdAnnotation,
   title,
   uiNodeType,
   uiVersion,
@@ -509,8 +510,8 @@ export const EditorApp = React.forwardRef<
             height: (node.annotations[height] as number) || null,
           };
 
-          if (node.annotations['parentId']) {
-            const parentId = node.annotations['parentId'] as string;
+          if (node.annotations[parentIdAnnotation]) {
+            const parentId = node.annotations[parentIdAnnotation] as string;
             reactFlowNode = {
               ...reactFlowNode,
               parentId,

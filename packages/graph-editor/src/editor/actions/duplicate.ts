@@ -6,6 +6,7 @@ import {
   Port,
   annotatedSingleton,
 } from '@tokens-studio/graph-engine';
+import { parentId } from '@/annotations/index.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface IDuplicate {
@@ -32,8 +33,6 @@ export const duplicateNodes =
 
       return [...acc, nodeId];
     }, [] as string[]);
-
-    console.log('duplicate');
 
 		const oldToNewIdMap = new Map<string, string>();
     
@@ -65,7 +64,7 @@ export const duplicateNodes =
 
         // Set new parentId annotation if it exists
         if (node.parentId && oldToNewIdMap.get(node.parentId)) {
-          clonedNode.annotations['parentId'] = oldToNewIdMap.get(node.parentId);
+          clonedNode.annotations[parentId] = oldToNewIdMap.get(node.parentId);
         }
 
         graph.addNode(clonedNode);
