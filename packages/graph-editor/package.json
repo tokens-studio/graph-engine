@@ -5,6 +5,10 @@
   "author": "andrew@hyma.io",
   "type": "module",
   "license": "MPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tokens-studio/graph-engine"
+  },
   "exports": {
     ".": {
       "import": "./dist/index.js",

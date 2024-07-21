@@ -52,6 +52,7 @@ const PopoverContent = styled(Popover.Content, {
   borderRadius: '$medium',
   border: '1px solid $borderSubtle',
   padding: 0,
+  zIndex: 10000,
   width: 300,
   backgroundColor: '$bgDefault',
   boxShadow:

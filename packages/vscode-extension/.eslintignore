@@ -1,0 +1,12 @@
+dist/**
+build/**
+coverage/**
+storybook-static/**
+.docusaurus
+docs
+site
+cypress
+cli
+.rollup
+*.md
+out/**
