@@ -5,7 +5,7 @@ import {
 	SchemaObject,
 	StringSchema
 } from '@tokens-studio/graph-engine';
-import { arrayOf } from './utils';
+import { arrayOf } from './utils.js';
 
 export const TOKEN = 'https://schemas.tokens.studio/token.json';
 export const TokenSchema: SchemaObject = {

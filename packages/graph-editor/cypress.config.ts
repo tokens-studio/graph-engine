@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress';
 
 export default defineConfig({
   experimentalStudio: true,
-
+  projectId: "op7qiw",
   env: {
     'cypress-react-selector': {
       root: '#__cy_root',
