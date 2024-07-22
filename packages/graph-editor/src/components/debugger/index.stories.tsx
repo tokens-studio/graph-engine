@@ -2,6 +2,7 @@ import { CustomTimelineRow, Debugger } from './index';
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { TimelineEffect, TimelineRow } from '@xzdarcy/react-timeline-editor';
+import { DebugInfo } from './data';
 
 const meta: Meta<typeof Debugger> = {
     title: 'Components/Debugger',
@@ -35,6 +36,9 @@ const mockData: CustomTimelineRow[] = new Array(20).fill(0).map((_, i) => {
         })
     }
 })
+
+const debugInfo = new DebugInfo();
+mockData.forEach(row => debugInfo.addRow(row));
 
 export default meta;
 type Story = StoryObj<typeof Debugger>;

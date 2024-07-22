@@ -67,18 +67,33 @@ export type SubscriptionLookup = {
   nodeAdded: Node;
   nodeRemoved: string;
   edgeAdded: Edge;
-  edgeRemoved: string;
+  edgeRemoved: Edge;
   nodeUpdated: Node;
+  outputPortRemoved : Output;
+  inputPortRemoved: Input;
+  inputPortAdded: Input;
+  outputPortAdded: Output;
   edgeUpdated: Edge;
-  start: {};
-  stop: {};
-  pause: {};
-  resume: {};
+  start: object;
+  stop: object;
+  pause: object;
+  resume: object;
   edgeIndexUpdated: Edge;
   valueSent: Edge[];
   nodeExecuted: NodeRun;
-  nodeStarted: NodeStart
+  nodeStarted: NodeStart;
+  /**
+   * Emitted when an error occurs during the execution of a node
+   */
+  processError: ProcessError;
 };
+
+export type ProcessError = {
+  node: Node,
+  error: Error;
+  graph: Graph;
+}
+
 
 export type ListenerType<T> = [T] extends [(...args: infer U) => any]
   ? U
@@ -151,11 +166,6 @@ export class Graph {
   edges: Record<string, Edge>;
   capabilities: Record<string, any> = {};
 
-  messageQueue: {
-    eventName: string;
-    data: any;
-    origin: Node;
-  }[] = [];
 
   externalLoader?: ExternalLoader;
   /**
@@ -305,7 +315,7 @@ export class Graph {
     //Get the node
     const target = this.getNode(edge.target);
     if (target) {
-      const index = edge.annotations[annotatedVariadicIndex]!;
+      const index = edge.annotations[annotatedVariadicIndex]! as number;
       const input = target.inputs[edge.targetHandle];
       if (input) {
         //Note that the edges might not be in order 
@@ -314,9 +324,9 @@ export class Graph {
           if (x.id === edgeId) {
             return acc;
           }
-          if (x.annotations[annotatedVariadicIndex]! > index) {
+          if ((x.annotations[annotatedVariadicIndex]! as number) > index) {
             //Update the index
-            x.annotations[annotatedVariadicIndex] = x.annotations[annotatedVariadicIndex] - 1;
+            x.annotations[annotatedVariadicIndex] = (x.annotations[annotatedVariadicIndex] as number) - 1;
             this.emit('edgeIndexUpdated', x);
           }
           return acc.concat(x);
@@ -325,7 +335,8 @@ export class Graph {
       //We need to check if its pointing to a variadic input and compact it if needed
       if (input.variadic) {
         //Remove the index
-        const newVal = [...(input.value || [])];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const newVal = [...((input.value as any) || [])];
         newVal.splice(index, 1);
         input.setValue(newVal, {
           noPropagate: true,
@@ -347,7 +358,7 @@ export class Graph {
 
     //We do not update the value or recalculate here since that might result in a lot of unnecessary updates
 
-    this.emit("edgeRemoved", edgeId);
+    this.emit("edgeRemoved", edge);
   }
   /**
    * Retrieves a flat list of all the nodes ids in the graph
@@ -365,8 +376,6 @@ export class Graph {
   async update(nodeID: string, opts?: IUpdateOpts) {
     const { noRecursive = false } = opts || {};
 
-
-
     const node = this.nodes[nodeID];
     if (!node) {
       throw new Error(`No node found with id ${nodeID}`);
@@ -375,6 +384,11 @@ export class Graph {
     const res = await node.run();
     //Don't propagate if there is an error
     if (res.error) {
+      this.emit('processError',{
+        node,
+        error: res.error,
+        graph: this
+      })
       return;
     }
 
@@ -545,21 +559,6 @@ export class Graph {
     Object.values(this.nodes).forEach((node) => node.onResume());
   }
 
-  /**
-   * Triggers a message on the graph
-   * TODO Complete
-   * @param eventName 
-   * @param data 
-   * @param origin 
-   */
-  trigger = (eventName: string, data: any, origin: Node) => {
-    //Add to the message queue
-    this.messageQueue.push({
-      eventName,
-      data,
-      origin
-    });
-  }
 
 
   /**
@@ -719,8 +718,10 @@ export class Graph {
 
       if (input.variadic) {
         //Don't attempt mutation of the original array
-        const newVal = [...(input.value || [])];
-        newVal[edge.annotations[annotatedVariadicIndex]!] = output.value;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const newVal = [...((input.value as any) || [])];
+        const index = edge.annotations[annotatedVariadicIndex]! as number;
+        newVal[index] = output.value;
         //Extend the variadic array
         input.setValue(newVal, {
           //Create a new type assuming that the items will be of the same type 
@@ -786,8 +787,9 @@ export class Graph {
 
         if (input.variadic) {
           //Don't attempt mutation of the original array
-          const newVal = [...(input.value || [])];
-          newVal[edge.annotations[annotatedVariadicIndex]!] = output.value;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const newVal = [...((input.value as any) || [])];
+          newVal[edge.annotations[annotatedVariadicIndex]! as number] = output.value;
           //Extend the variadic array
           input.setValue(newVal, {
             //We are controlling propagation
@@ -849,7 +851,7 @@ export class Graph {
 
     if (targetPort.variadic) {
       //Extend the variadic array
-      targetPort.setValue((targetPort.value || []).concat([sourcePort.value]), {
+      targetPort.setValue((targetPort.value as any[] || []).concat([sourcePort.value]), {
         //TODO
         // Note that this is a quick fix and that we should probably restrict the update of the typing so that it cannot be overriden later
         type: {

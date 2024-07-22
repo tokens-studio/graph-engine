@@ -5,6 +5,6 @@ export class AudioBaseNode extends Node {
         'engine.capability.web-audio': true
     }
     getAudioCtx(): AudioContext {
-        return this.getGraph().capabilities['web-audio'];
+        return this.getGraph().capabilities['web-audio'] as AudioContext;
     }
 }

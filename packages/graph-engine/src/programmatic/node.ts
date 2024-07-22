@@ -94,16 +94,21 @@ export class Node {
    */
   addInput<T = unknown>(name: string, type: TypeDefinition) {
     //Extract the default value from the schema
-    return (this.inputs[name] = new Input<T>({
+    const input = (this.inputs[name] = new Input<T>({
       name,
       ...type,
       visible: Boolean(type.visible),
       value: getDefaults(type.type),
       node: this,
     }));
+
+    if (this._graph) {
+      this._graph.emit('inputPortAdded', input)
+    }
+    return input;
   }
   addOutput<T = unknown>(name: string, type: TypeDefinition) {
-    this.outputs[name] = new Output<T>({
+    const output =this.outputs[name] = new Output<T>({
       name,
       ...type,
       type: type.type,
@@ -111,6 +116,11 @@ export class Node {
       value: getDefaults(type.type),
       node: this,
     });
+    if (this._graph) {
+      this._graph.emit('outputPortAdded', output)
+    }
+
+    return output;
   }
 
   setAnnotation(key: string, value: unknown) {
@@ -129,9 +139,13 @@ export class Node {
         this._graph?.removeEdge(edge.id);
       });
     }
+    const input = this.inputs[name];
     delete this.inputs[name];
 
     if (this._graph) {
+      if (input) {
+        this._graph.emit('inputPortRemoved', input)
+      }
       //Ask to be recalculated
       this._graph?.update(this.id);
     }
@@ -349,15 +363,7 @@ export class Node {
   public getRawInput = (name: string) => {
     return this.inputs[name];
   };
-  /**
-   * Returns a JSON representation of the output values without calculating them
-   * @returns
-   */
-  public getOutput() {
-    return Object.fromEntries(
-      Object.entries(this.outputs).map(([key, value]) => [key, value.value()])
-    );
-  }
+
 
   /**
    * Function to call when the graph has been started.
@@ -377,5 +383,6 @@ export class Node {
   public onResume = () => {
     this.onStart();
   };
+
 }
 

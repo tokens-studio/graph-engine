@@ -76,11 +76,9 @@ export class Input<T = any> extends Port<T> {
   }
 
   fullType(): TypeDefinition {
-    return {
-      type: this._type,
-      visible: this.visible,
-      variadic: this.variadic,
-    };
+    const type = super.fullType();    
+    type.variadic = this.variadic;
+    return type;
   }
 
   serialize(): SerializedInput {

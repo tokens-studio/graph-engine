@@ -1,6 +1,6 @@
 import { AnySchema, GraphSchema } from "../schemas/index.js";
 import { Edge } from "./edge.js";
-import { Node } from "./node.js";
+import { Node, TypeDefinition } from "./node.js";
 import { action, computed, makeObservable, observable } from "mobx";
 
 export interface IPort<T = any> {
@@ -63,6 +63,13 @@ export class Port<T = any> {
   get value() {
     return this._value;
   }
+  fullType(): TypeDefinition {
+    return {
+      type: this._type,
+      visible: this.visible,
+    };
+  }
+
 
   /**
    * Gets the current type . This might be different from the static type if the value is dynamic

@@ -1,11 +1,10 @@
 import {
-    defaultPanelGroupsFactory,
-    PanelItem,
     PanelGroup,
+    PanelItem,
+    defaultPanelGroupsFactory,
 } from '@tokens-studio/graph-editor';
 import { nodeLookup as audioLookup } from '@tokens-studio/graph-engine-nodes-audio';
 import { nodes as designNodes } from '@tokens-studio/graph-engine-nodes-design-tokens';
-
 
 export const panelItems = defaultPanelGroupsFactory();
 
@@ -35,5 +34,7 @@ panelItems.groups.push(new PanelGroup({
             docs: '',
         })),
 }))
+
+
 
 

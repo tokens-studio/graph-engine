@@ -29,6 +29,12 @@ export default class NodeDefinition extends Node {
         });
     }
 
+    dispose = () => {
+        Node.prototype.dispose.call(this);
+        if (this._interval) {
+            clearInterval(this._interval);
+        }
+    };
     onStart = () => {
         if (this._interval) {
             clearInterval(this._interval);

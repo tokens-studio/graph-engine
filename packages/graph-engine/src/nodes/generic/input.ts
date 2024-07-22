@@ -1,4 +1,4 @@
-import { IDeserializeOpts, SerializedInput } from "../../graph/types.js";
+import { IDeserializeOpts } from "../../graph/types.js";
 import { INodeDefinition } from "../../programmatic/node.js";
 import { Node } from "../../programmatic/node.js";
 import { annotatedDynamicInputs, annotatedSingleton } from '../../annotations/index.js';
@@ -40,7 +40,6 @@ export default class NodeDefinition extends Node {
 
     return node;
   }
-
 
   execute(): void | Promise<void> {
     const inputs = this.getAllInputs();
