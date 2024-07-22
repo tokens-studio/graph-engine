@@ -8,6 +8,8 @@ env:
   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
   TURBO_TELEMETRY_DISABLED: 1
   DO_NOT_TRACK: 1
+  # Needed for VScode test runner
+  DISPLAY: ':99.0'
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -64,6 +66,8 @@ jobs:
 
       - name: Test
         run: yarn run test
+
+
       - uses: actions/upload-artifact@v3
         if: always()
         with:

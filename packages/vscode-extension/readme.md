@@ -22,6 +22,8 @@ No settings are currently exposed.
 
 Due to the embedding of the `@tokens-studio/graph-editor`, this requires a large initial page load. This will be rectified in future releases.
 
+Due to how serialization occurs for array buffers and typed arrays, you must use engine 1.57.0 and above of vscode to prevent huge data transfer inefficiencies
+
 ## Release Notes
 
 Please see the changelog included in the project for more information

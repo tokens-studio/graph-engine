@@ -1,48 +1,38 @@
 import './index.css';
 import '@tokens-studio/graph-editor/index.css';
-import {
-  AddDropdown,
-  AlignDropdown,
-  Editor,
-  HelpDropdown,
-  ImperativeEditorRef,
-  LayoutDropdown,
-  SettingsToolbarButton,
-  ToolbarSeparator,
-  ZoomDropdown,
-  createTheme,
-  defaultPanelGroupsFactory,
-} from '@tokens-studio/graph-editor';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import { CapabilityFactory } from '@tokens-studio/graph-engine';
+import { Editor, ImperativeEditorRef } from '@tokens-studio/graph-editor';
+import { FSCapability } from './lib/capabilities/fs';
+import { Loader } from './lib/loader';
+import { MessageHandler } from './lib/messageHandler';
+import { defaultControls } from '@tokens-studio/graph-editor';
+import React, { useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import initialLayout from './initialLayout.json';
 import type { LayoutBase } from 'rc-dock';
 
-export const vscodeTheme = createTheme('override-theme', {
-  colors: {
-    bgCanvas: 'var(--vscode-editor-background)',
-    bgDefault: '#2d2d2d',
-    bgEmphasis: '#2b2b2b',
-    bgSubtle: '#373737',
-    bgSurface: '#292929',
-    borderDefault: '#636363',
-    borderMuted: '#2e2e2e',
-    borderSubtle: '#454545',
-    fgSubtle: '#8a8a8a',
-    inputBg: 'var(--vscode-input-background)',
-    inputBorderRest: 'var(--vscode-input-border)',
-  },
-});
+import { Toolbar } from './data/toolbar';
+import {
+  controls as fsControls,
+  icons as fsIcons,
+} from '@tokens-studio/graph-engine-nodes-fs';
+import { nodeTypes } from './data/nodeTypes';
+import { panelItems } from './data/panelItems';
+import { vscodeTheme } from './data/theme';
 
-let vscode;
+const nexus = new MessageHandler();
+const loader = new Loader(nexus);
+const loadHook = loader.getLoader();
 
-// @ts-ignore Only available in VS Code
-if (typeof acquireVsCodeApi === 'function') {
-  // @ts-ignore
-  vscode = acquireVsCodeApi();
-}
+const capabilities: CapabilityFactory[] = [
+  new FSCapability(nexus).getCapability(),
+];
 
-const panelItems = defaultPanelGroupsFactory();
+const controls = [...fsControls, ...defaultControls];
+
+const icons = {
+  ...fsIcons,
+};
 
 const Inner = () => {
   const editorRef = React.useRef<ImperativeEditorRef>(null);
@@ -50,65 +40,38 @@ const Inner = () => {
   const ref = useCallback((editor) => {
     //@ts-expect-error This is actually mutable
     editorRef.current = editor;
+    nexus.postMessage('ready');
   }, []);
 
   useEffect(() => {
-    const handler = async (e) => {
-      const { type, body, requestId } = e.data;
-      switch (type) {
-        case 'init': {
-          if (body?.value) {
-            editorRef?.current?.loadRaw(body.value);
-          }
-          return;
-        }
-        case 'update': {
-          return;
-        }
-        case 'getFileData': {
-          const data = editorRef?.current?.save();
-          vscode.postMessage({
-            type: 'response',
-            requestId,
-            body: JSON.stringify(data),
-          });
-          return;
-        }
-      }
-    };
+    const disposers = [
+      nexus.on('init', ({ value }) => {
+        editorRef?.current?.loadRaw(value);
+      }),
+      nexus.on('getFileData', (_, requestId) => {
+        const data = editorRef?.current?.save();
 
-    // Handle messages from the extension
-    window.addEventListener('message', handler);
+        nexus.postResponse(requestId, JSON.stringify(data));
+      }),
+    ];
 
     return () => {
-      window.removeEventListener('message', handler);
+      disposers.forEach((disposer) => disposer());
     };
-  }, []);
-
-  const toolbarButtons = useMemo(() => {
-    return (
-      <>
-        <AddDropdown />
-        <ToolbarSeparator />
-        <ZoomDropdown />
-        <ToolbarSeparator />
-        <AlignDropdown />
-        <ToolbarSeparator />
-        <ToolbarSeparator />
-        <LayoutDropdown />
-        <SettingsToolbarButton />
-        <HelpDropdown />
-      </>
-    );
   }, []);
 
   return (
     <Editor
       ref={ref}
       id="ed1"
-      toolbarButtons={toolbarButtons}
+      toolbarButtons={<Toolbar />}
+      externalLoader={loadHook}
       showMenu={false}
+      icons={icons}
       panelItems={panelItems}
+      capabilities={capabilities}
+      controls={controls}
+      nodeTypes={nodeTypes}
       initialLayout={initialLayout as LayoutBase}
     />
   );
@@ -121,8 +84,3 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </div>
   </React.StrictMode>,
 );
-
-if (vscode) {
-  // Signal to VS Code that the webview is initialized.
-  vscode.postMessage({ type: 'ready' });
-}

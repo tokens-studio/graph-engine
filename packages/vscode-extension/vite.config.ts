@@ -9,7 +9,6 @@ export default defineConfig({
     port: 3000,
   },
   build: {
-    minify: true,
     target: 'es2015',
     manifest: true,
     outDir: '../../build',

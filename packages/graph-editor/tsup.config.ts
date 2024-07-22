@@ -8,10 +8,11 @@ export default defineConfig({
   dts: true,
   sourcemap: env === 'production', // source map is only available in prod
   format: 'esm',
+  //Uncomment this line to generate metafile to check bundle size.
+  //metafile:true,
   skipNodeModulesBundle: true,
   clean: false,
-  /** @ts-expect-error multiple different installations of esbuild so plugins types are not compatible */
+  /** @ts-ignore multiple different installations of esbuild so plugins types are not compatible */
   esbuildPlugins: [sassPlugin()],
-  minify: false,
   target: 'esnext',
 });

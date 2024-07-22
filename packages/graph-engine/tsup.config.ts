@@ -8,7 +8,8 @@ export const tsup: Options = {
 	dts: true, // generate dts file for main module
 	format: 'esm',
 	outDir: 'dist',
+	//Uncomment this line to generate metafile to check bundle size.
+	//metafile:true,
 	entry: ['src/index.ts'],
-	minify: false,
 	target: 'esnext'
 };

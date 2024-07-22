@@ -2,23 +2,32 @@
   "name": "tokens-studio-graph-engine",
   "displayName": "Tokens Studio Graph Engine extension",
   "description": "Run the graph engine locally in VS Code",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "license": "MPL-2.0",
   "publisher": "tokens-studio",
   "author": "andrew@hyma.io",
   "engines": {
-    "vscode": "^1.31.0"
+    "vscode": "^1.60.0"
   },
   "categories": [
     "Extension Packs",
     "Visualization"
   ],
   "pricing": "Free",
-  "icon": "media/icon.png",
+  "icon": "media/logo.png",
   "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "resourceLangId == tsgraph",
+          "command": "graph-engine-tokens-studio.executeGraph",
+          "group": "z_commands"
+        }
+      ]
+    },
     "languages": [
       {
         "id": "tsgraph",
@@ -55,6 +64,10 @@
       {
         "command": "graph-engine-tokens-studio.openGraphEngine",
         "title": "Open Graph Engine"
+      },
+      {
+        "command": "graph-engine-tokens-studio.executeGraph",
+        "title": "Execute Graph"
       }
     ]
   },
@@ -88,6 +101,7 @@
   "dependencies": {
     "@tokens-studio/graph-editor": "*",
     "@tokens-studio/graph-engine": "*",
+    "@tokens-studio/graph-engine-nodes-fs": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
