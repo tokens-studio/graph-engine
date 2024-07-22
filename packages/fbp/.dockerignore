@@ -1,0 +1,4 @@
+dist
+docs
+jest-coverage
+node_modules
