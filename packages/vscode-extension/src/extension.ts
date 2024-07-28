@@ -1,6 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+//@ts-expect-error ESM in CJS
 import { Graph, nodeLookup } from '@tokens-studio/graph-engine';
 import { TSGraphProvider } from './graphProvider.js';
 
@@ -21,16 +22,12 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       'graph-engine-tokens-studio.executeGraph',
       async function (uri) {
-        console.log('data', uri);
         const data = await vscode.workspace.fs.readFile(uri);
-        console.log('loaded');
         const text = new TextDecoder().decode(data);
         const raw = JSON.parse(text);
 
         const graph = await new Graph().deserialize(raw, nodeLookup);
-        console.log('graph');
         const result = await graph.execute();
-        console.log(result);
         //Create a new tab and display the result
         const document = await vscode.workspace.openTextDocument({
           content: JSON.stringify(result, null, 2),

@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
 import { WebviewObject } from '../graphProvider';
-//@ts-ignore
 import type {
   FSCapability,
   FSEntity,
+  //@ts-expect-error ESM in CJS
 } from '@tokens-studio/graph-engine-nodes-fs';
 
 const toLocalUri = (path: string) => {

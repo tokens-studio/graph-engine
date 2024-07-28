@@ -1,11 +1,15 @@
 {
   "compilerOptions": {
-    "module": "Node16",
+    "esModuleInterop": true,
+    "module": "commonjs",
     "target": "ES2022",
     "lib": ["ES2022"],
+    "moduleResolution": "Node",
+    "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx",
     "sourceMap": true,
     "skipLibCheck": true,
+    "downlevelIteration": true,
     "rootDir": "src",
     "strict": true /* enable all strict type-checking options */
     /* Additional Checks */
