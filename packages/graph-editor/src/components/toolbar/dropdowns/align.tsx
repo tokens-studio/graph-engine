@@ -2,6 +2,7 @@ import { ALIGNMENT, align, distribute } from '@/components/panels/index.js';
 import {
   AlignHorizontalCenters,
   AlignHorizontalSpacing,
+  AlignVerticalCenters,
   AlignVerticalSpacing,
   CompAlignBottom,
   CompAlignLeft,
@@ -98,7 +99,7 @@ export const AlignDropdown = () => {
             onSelect={() => updateNodes(align(ALIGNMENT.CENTER, 'y'))}
           >
             <DropdownMenu.LeadingVisual>
-              <AlignHorizontalCenters />
+              <AlignVerticalCenters />
             </DropdownMenu.LeadingVisual>
             Align Center
           </DropdownMenu.Item>
