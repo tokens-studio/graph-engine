@@ -96,7 +96,7 @@
     "lint": "npm run lint:prettier && npm run lint:eslint",
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --check",
-    "test": "vscode-test"
+    "test:e2e": "vscode-test"
   },
   "dependencies": {
     "@tokens-studio/graph-editor": "*",
