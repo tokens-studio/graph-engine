@@ -12,7 +12,6 @@
 
 :root {
     --globals-drop-panel-width: 240px;
- 
 }
 
 #drop-panel {
@@ -20,48 +19,16 @@
 }
 
 
-.dock-panel {
-    color: inherit;
-    border-color: transparent;
-}
 
 .dock-top .dock-bar {
     border-bottom: none;
 }
 
-.dock-tab {
-    color: var(--colors-fgDefault);
-    border-bottom: none;
-    z-index: 10;
-}
-
-.dock-tab>div {
-    padding: var(--space-2) var(--space-3);
-}
-
-.dock-nav-wrap {
-    cursor: move;
-}
-
-.dock-panel.dock-style-main .dock-tab,
-.dock-tab {
-    background: transparent;
-}
 
 
 
-.dock-panel {
-    background: var(--colors-panelBg);
-}
 
-.dock-fbox>.dock-panel {
-    box-shadow: 0 0 0.25rem var(--colors-bgDefault);
-}
 
-.dock-top .dock-bar,
-.dock-tab {
-    background: transparent;
-}
 
 .dock-panel.dock-style-main .dock-bar {
     border-bottom-color: var(--colors-borderDefault);

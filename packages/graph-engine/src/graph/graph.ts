@@ -536,7 +536,7 @@ export class Graph {
 		const oldToNewIdMap = new Map<string, string>();
 
 		// Clone nodes
-		Object.values(this.nodes).forEach(node => {
+		this.forEachNode(node => {
 			const clonedNode = node.clone(clonedGraph);
 			oldToNewIdMap.set(node.id, clonedNode.id);
 			clonedNode.setGraph(clonedGraph);
@@ -574,6 +574,10 @@ export class Graph {
 		return clonedGraph;
 	}
 
+	private forEachNode(cb) {
+		Object.values(this.nodes).forEach(cb);
+	}
+
 	/**
 	 * Starts the graph in network mode
 	 * TODO Complete
@@ -582,7 +586,7 @@ export class Graph {
 		this.annotations[annotatedPlayState] = 'playing';
 		this.emit('start', {});
 		//Trigger the start of all the nodes
-		Object.values(this.nodes).forEach(node => node.onStart());
+		this.forEachNode(node => node.onStart());
 	};
 	/**
 	 * Stops the graph in network mode
@@ -591,20 +595,20 @@ export class Graph {
 		this.annotations[annotatedPlayState] = 'stopped';
 		this.emit('stop', {});
 		//Trigger the start of all the nodes
-		Object.values(this.nodes).forEach(node => node.onStop());
+		this.forEachNode(node => node.onStop());
 	};
 
 	pause = () => {
 		this.annotations[annotatedPlayState] = 'paused';
 		this.emit('pause', {});
 		//Trigger the start of all the nodes
-		Object.values(this.nodes).forEach(node => node.onPause());
+		this.forEachNode(node => node.onPause());
 	};
 	resume = () => {
 		this.annotations[annotatedPlayState] = 'playing';
 		this.emit('resume', {});
 		//Trigger the start of all the nodes
-		Object.values(this.nodes).forEach(node => node.onResume());
+		this.forEachNode(node => node.onResume());
 	};
 
 	/**

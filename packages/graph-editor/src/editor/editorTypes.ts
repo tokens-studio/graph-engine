@@ -79,7 +79,7 @@ export interface EditorProps {
   /**
    * Additional buttons to display in the toolbar
    */
-  toolbarButtons?: React.ReactElement[];
+  toolbarButtons?: React.ReactElement;
 
   /**
    * Additional colors to display in the editor for custom types

@@ -37,7 +37,7 @@
     "colorjs.io": "^0.5.0",
     "dot-prop": "^8.0.2",
     "lodash.orderby": "^4.6.0",
-    "mobx-react-lite": "^4.0.7",
+    "mobx-react-lite": "^4.0.5",
     "token-transformer": "^0.0.33"
   },
   "peerDependencies": {

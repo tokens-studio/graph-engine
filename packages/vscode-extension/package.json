@@ -1,0 +1,122 @@
+{
+  "name": "tokens-studio-graph-engine",
+  "displayName": "Tokens Studio Graph Engine extension",
+  "description": "Run the graph engine locally in VS Code",
+  "version": "0.0.2",
+  "private": true,
+  "license": "MPL-2.0",
+  "publisher": "tokens-studio",
+  "author": "andrew@hyma.io",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Extension Packs",
+    "Visualization"
+  ],
+  "pricing": "Free",
+  "icon": "media/logo.png",
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "resourceLangId == tsgraph",
+          "command": "graph-engine-tokens-studio.executeGraph",
+          "group": "z_commands"
+        }
+      ]
+    },
+    "languages": [
+      {
+        "id": "tsgraph",
+        "aliases": [
+          "TS Graph",
+          "Token Studio Graph"
+        ],
+        "extensions": [
+          ".tsgraph"
+        ],
+        "icon": {
+          "light": "./media/icon.png",
+          "dark": "./media/icon.png"
+        }
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "graph-engine-tokens-studio.graphFile",
+        "displayName": "Graph Engine file",
+        "selector": [
+          {
+            "filenamePattern": "*.tsgraph"
+          }
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "graph-engine-tokens-studio.graph.new",
+        "title": "Create new TS Graph file",
+        "category": "Graph Engine"
+      },
+      {
+        "command": "graph-engine-tokens-studio.openGraphEngine",
+        "title": "Open Graph Engine"
+      },
+      {
+        "command": "graph-engine-tokens-studio.executeGraph",
+        "title": "Execute Graph"
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tokens-studio/graph-engine"
+  },
+  "scripts": {
+    "vite": "vite",
+    "build:app": "vite build",
+    "vscode:prepublish": "yarn run package",
+    "build": "yarn run check-types  && npm run build:app && npm run build:ext",
+    "build:ext": "node esbuild.js",
+    "dev": "npm-run-all -p dev:*",
+    "dev:esbuild": "node esbuild.js --watch",
+    "dev:app": "vite build --watch",
+    "dev:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "yarn run check-types && node esbuild.js --production",
+    "build-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "yarn run build-tests && yarn run build ",
+    "format": "npm run format:eslint && npm run format:prettier",
+    "format:eslint": "eslint . --fix",
+    "format:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --write",
+    "check-types": "tsc --noEmit",
+    "lint": "npm run lint:prettier && npm run lint:eslint",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --check",
+    "test:e2e": "vscode-test"
+  },
+  "dependencies": {
+    "@tokens-studio/graph-editor": "*",
+    "@tokens-studio/graph-engine": "*",
+    "@tokens-studio/graph-engine-nodes-fs": "*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@tokens-studio/eslint-config-custom": "*",
+    "@tokens-studio/prettier-config-custom": "*",
+    "@types/vscode": "^1.91.0",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "esbuild": "^0.21.5",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.10",
+    "@vitejs/plugin-react-swc": "^3.6.0",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.4.0"
+  }
+}
