@@ -33,6 +33,7 @@
     "@tanstack/react-query-devtools": "5.50.1",
     "@tokens-studio/graph-editor": "*",
     "@tokens-studio/graph-engine": "*",
+    "@tokens-studio/graph-engine-nodes-image": "*",
     "@tokens-studio/graph-engine-nodes-audio": "*",
     "@tokens-studio/graph-engine-nodes-design-tokens": "*",
     "@tokens-studio/tokens": "0.0.24",
@@ -76,6 +77,8 @@
     "sass": "1.62.1",
     "swagger-ui-react": "5.17.14",
     "uuid": "9.0.0",
+    "wasm-import": "0.3.0",
+    "ws": "8.17.0",
     "zod": "3.23.8"
   },
   "devDependencies": {

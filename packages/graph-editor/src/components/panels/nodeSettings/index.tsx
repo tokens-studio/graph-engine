@@ -133,7 +133,6 @@ const NodeSettings = ({
   selectedNode: Node;
   annotations: Record<string, unknown>;
 }) => {
-  console.log('node setting');
   return (
     <Stack direction="column" gap={2}>
       <Label>Node ID</Label>

@@ -13,6 +13,19 @@ const withBundleAnalyzer = analyzer({
 export default withBundleAnalyzer({
   reactStrictMode: true,
   transpilePackages: ['@tokens-studio/graph-editor', '@tokens-studio/graph-engine', 'mobx', 'colorjs.io'],
+  webpack:(config,{isServer})=>{
+
+    config.experiments={
+      ...(config.experiments || {}),
+      asyncWebAssembly: true
+    }
+    if (!isServer) {
+      config.resolve.fallback = { fs: false,module:false };
+
+    }
+
+    return config
+  },
   experimental: {
     esmExternals: true,
     //Terrible hack to fix
@@ -23,7 +36,7 @@ export default withBundleAnalyzer({
     instrumentationHook: OTEL_ENABLED
   },
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production'
+  
   },
   output: "standalone",
 });
