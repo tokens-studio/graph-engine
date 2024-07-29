@@ -38,7 +38,7 @@
     "@bundled-es-modules/deepmerge": "^4.3.1",
     "@tokens-studio/types": "^0.3.0",
     "color-blind-esm": "^0.1.4",
-    "colorjs.io": "^0.5.0",
+    "colorjs.io": "^0.5.2",
     "compare-versions": "^6.1.0",
     "dot-prop": "^8.0.2",
     "expr-eval": "^2.0.2",

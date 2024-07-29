@@ -10,43 +10,46 @@ const toLocalUri = (path: string) => {
   return vscode.Uri.joinPath(vscode.workspace.workspaceFolders![0]!.uri, path);
 };
 
+async function attempt(
+  functor: () => Promise<unknown>,
+  requestId: number | undefined,
+  graph: WebviewObject,
+) {
+  try {
+    const data = await functor();
+    graph.messageHandler.postResponse(requestId!, data);
+  } catch (error) {
+    graph.messageHandler.postErrorResponse(requestId!, error);
+  }
+}
+
 export class FileSystem implements FSCapability {
   constructor(graph: WebviewObject) {
     graph.messageHandler.on('fs.readFile', async (path, requestId) => {
-      const data = await this.readFile(path);
-      console.log(
-        data,
-        data instanceof Uint8Array,
-        data instanceof ArrayBuffer,
-      );
-      graph.messageHandler.postResponse(requestId!, data);
+      attempt(() => this.readFile(path), requestId, graph);
     });
 
     graph.messageHandler.on(
       'fs.writeFile',
       async ({ path, data }, requestId) => {
-        await this.writeFile(path, data);
-        graph.messageHandler.postResponse(requestId!);
+        attempt(() => this.writeFile(path, data), requestId, graph);
       },
     );
 
     graph.messageHandler.on('fs.rm', async (path, requestId) => {
-      await this.rm(path);
-      graph.messageHandler.postResponse(requestId!);
+      attempt(() => this.rm(path), requestId, graph);
     });
 
     graph.messageHandler.on('fs.mkdir', async ({ path }, requestId) => {
-      await this.mkdir(path);
-      graph.messageHandler.postResponse(requestId!);
+      attempt(() => this.mkdir(path), requestId, graph);
     });
 
     graph.messageHandler.on('fs.rmdir', async (path, requestId) => {
-      await this.rmdir(path);
-      graph.messageHandler.postResponse(requestId!);
+      attempt(() => this.rmdir(path), requestId, graph);
     });
 
     graph.messageHandler.on('fs.cp', async ({ src, dest }, requestId) => {
-      await this.cp(src, dest);
+      attempt(() => this.cp(src, dest), requestId, graph);
       graph.messageHandler.postResponse(requestId!);
     });
 
@@ -115,8 +118,6 @@ export class FileSystem implements FSCapability {
   }
 
   async readFile(path: string) {
-    console.log(path);
-    console.log('as local', toLocalUri(path));
     return new Uint8Array(await vscode.workspace.fs.readFile(toLocalUri(path)));
   }
 

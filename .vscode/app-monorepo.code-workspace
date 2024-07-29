@@ -17,6 +17,6 @@
         "files.exclude": {
             "node_modules/": true,
             "packages/": true
-        },
+        }
     }
 }

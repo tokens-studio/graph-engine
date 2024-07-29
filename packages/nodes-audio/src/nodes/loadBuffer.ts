@@ -1,11 +1,10 @@
-import { AudioBaseNode } from './base.js';
-import { AudioBufferSchema } from '../schemas/index.js';
 import {
-	BufferSchema,
+	AnySchema,
 	INodeDefinition,
 	ToInput
 } from '@tokens-studio/graph-engine';
-import toAudioBuffer from 'audio-buffer-from';
+import { AudioBaseNode } from './base.js';
+import { AudioBufferSchema } from '../schemas/index.js';
 
 export type inputs = {
 	resource: Buffer;
@@ -21,7 +20,7 @@ export class AudioLoadBufferNode extends AudioBaseNode {
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('resource', {
-			type: BufferSchema,
+			type: AnySchema,
 			visible: true
 		});
 		this.addOutput('buffer', {
@@ -33,8 +32,17 @@ export class AudioLoadBufferNode extends AudioBaseNode {
 	execute(): void | Promise<void> {
 		const { resource } = this.getAllInputs<inputs>();
 
-		const audioBuffer = toAudioBuffer(resource);
+		const context = this.getAudioCtx();
 
-		this.setOutput('buffer', audioBuffer);
+		return new Promise((resolve, reject) => {
+			context.decodeAudioData(resource.buffer, res => {
+				try {
+					this.setOutput('buffer', res);
+					resolve();
+				} catch (err) {
+					reject(err);
+				}
+			});
+		});
 	}
 }

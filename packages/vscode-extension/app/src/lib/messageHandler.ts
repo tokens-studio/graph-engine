@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+type Callback = {
+  resolve: (response: any) => void;
+  reject: (error: any) => void;
+};
+
 export class MessageHandler {
   private _requestId = 1;
-  private readonly _callbacks = new Map<number, (response: any) => void>();
+  private readonly _callbacks = new Map<number, Callback>();
 
   private handlers = new Map<
     string,
@@ -35,8 +41,8 @@ export class MessageHandler {
     body: any,
   ): Promise<R> {
     const requestId = this._requestId++;
-    const p = new Promise<R>((resolve) =>
-      this._callbacks.set(requestId, resolve),
+    const p = new Promise<R>((resolve, reject) =>
+      this._callbacks.set(requestId, { resolve, reject }),
     );
     this.vscode.postMessage({ type, requestId, body });
     return p;
@@ -58,7 +64,11 @@ export class MessageHandler {
     switch (message.type) {
       case 'response': {
         const callback = this._callbacks.get(message.requestId);
-        callback?.(message.body);
+        if (message.error) {
+          callback?.reject(message.body);
+        } else {
+          callback?.resolve(message.body);
+        }
         return;
       }
       default: {
