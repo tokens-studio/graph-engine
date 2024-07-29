@@ -1,3 +1,4 @@
+import { nodeLookup as audioLookup } from '@tokens-studio/graph-engine-nodes-audio';
 import { nodes as fsNodes } from '@tokens-studio/graph-engine-nodes-fs';
 import { nodeLookup } from '@tokens-studio/graph-engine';
 
@@ -5,6 +6,7 @@ import { nodeLookup } from '@tokens-studio/graph-engine';
 export const nodeTypes = {
   //Default
   ...nodeLookup,
+  ...audioLookup,
   ...fsNodes.reduce((acc, node) => {
     acc[node.type] = node;
     return acc;

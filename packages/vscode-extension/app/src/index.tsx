@@ -12,6 +12,7 @@ import initialLayout from './initialLayout.json';
 import type { LayoutBase } from 'rc-dock';
 
 import { Toolbar } from './data/toolbar';
+import { WebAudioCapability } from '@tokens-studio/graph-engine-nodes-audio/index.js';
 import {
   controls as fsControls,
   icons as fsIcons,
@@ -25,6 +26,7 @@ const loader = new Loader(nexus);
 const loadHook = loader.getLoader();
 
 const capabilities: CapabilityFactory[] = [
+  WebAudioCapability,
   new FSCapability(nexus).getCapability(),
 ];
 

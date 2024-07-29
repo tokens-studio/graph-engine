@@ -1,3 +1,4 @@
+import { ContrastAlgorithm } from './types/index.js';
 import type { Graph } from './graph/graph.js';
 import type { Node } from './programmatic/node.js';
 
@@ -62,3 +63,5 @@ export type GradientStop = {
 	position: number;
 	color: string;
 };
+
+export type ContrastAlgorithmType = keyof typeof ContrastAlgorithm;

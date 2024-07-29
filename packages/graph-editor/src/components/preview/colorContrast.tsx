@@ -1,12 +1,12 @@
 import { Box, Text } from '@tokens-studio/ui';
+import { ContrastAlgorithmType, toColor } from '@tokens-studio/graph-engine';
 import { castToHex } from '@/utils/index.js';
-import { toColor } from '@tokens-studio/graph-engine';
 import Color from 'colorjs.io';
 import React from 'react';
 
 function contrastingColor(
   background: Color,
-  contrastAlgorithm: string = 'APCA',
+  contrastAlgorithm: ContrastAlgorithmType = 'APCA',
 ) {
   const contrastBlack = Math.abs(
     background.contrast(new Color('#ffffff'), contrastAlgorithm),

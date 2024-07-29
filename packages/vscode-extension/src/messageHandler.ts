@@ -27,6 +27,14 @@ export class MessageHandler {
   public postResponse(requestId: number, body: any = null): void {
     this.webview.webview.postMessage({ type: 'response', requestId, body });
   }
+  public postErrorResponse(requestId: number, body: any = null): void {
+    this.webview.webview.postMessage({
+      type: 'response',
+      requestId,
+      body,
+      error: true,
+    });
+  }
 
   public postMessageWithResponse<R = unknown>(
     type: string,

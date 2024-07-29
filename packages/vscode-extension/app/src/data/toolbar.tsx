@@ -3,6 +3,7 @@ import {
   AlignDropdown,
   HelpDropdown,
   LayoutDropdown,
+  PlayControls,
   SettingsToolbarButton,
   ToolbarSeparator,
   ZoomDropdown,
@@ -16,7 +17,10 @@ export const Toolbar = () => {
       <ToolbarSeparator />
       <ZoomDropdown />
       <ToolbarSeparator />
+
       <AlignDropdown />
+      <ToolbarSeparator />
+      <PlayControls />
       <ToolbarSeparator />
       <LayoutDropdown />
       <SettingsToolbarButton />

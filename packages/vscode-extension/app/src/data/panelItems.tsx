@@ -10,6 +10,7 @@ import {
   EyeSolid,
   FillColor,
   SigmaFunction,
+  SoundHigh,
   Star,
   Text,
   TwoPointsCircle,
@@ -20,6 +21,7 @@ import {
   PanelItem,
   defaultPanelGroupsFactory,
 } from '@tokens-studio/graph-editor';
+import { nodeLookup as audioLookup } from '@tokens-studio/graph-engine-nodes-audio';
 import { nodes as fsNodes } from '@tokens-studio/graph-engine-nodes-fs';
 import React from 'react';
 
@@ -47,6 +49,23 @@ export const panelItems = defaultPanelGroupsFactory();
 panelItems.groups.forEach((group) => {
   group.icon = icons[group.key];
 });
+
+panelItems.groups.push(
+  new PanelGroup({
+    title: 'Audio',
+    key: 'audio',
+    icon: <SoundHigh />,
+    items: Object.values(audioLookup).map(
+      (node) =>
+        new PanelItem({
+          type: node.type,
+          text: node.title,
+          description: node.description,
+          docs: '',
+        }),
+    ),
+  }),
+);
 
 panelItems.groups.push(
   new PanelGroup({

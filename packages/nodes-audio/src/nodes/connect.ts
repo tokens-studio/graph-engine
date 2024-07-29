@@ -1,9 +1,9 @@
 import { AudioBaseNode } from './base.js';
-import { DestinationSchema, SourceSchema } from '../schemas/index.js';
 import {
 	INodeDefinition,
 	createVariadicSchema
 } from '@tokens-studio/graph-engine';
+import { NodeSchema } from '../schemas/index.js';
 
 type inputs = {
 	source: AudioNode[];
@@ -19,19 +19,16 @@ export class AudioConnectNode extends AudioBaseNode {
 		super(props);
 		this.addInput('source', {
 			type: {
-				...createVariadicSchema(SourceSchema),
+				...createVariadicSchema(NodeSchema),
 				default: []
 			},
-			variadic: true,
-			visible: true
+			variadic: true
 		});
 		this.addInput('destination', {
-			type: DestinationSchema,
-			visible: true
+			type: NodeSchema
 		});
 		this.addOutput('destination', {
-			type: SourceSchema,
-			visible: true
+			type: NodeSchema
 		});
 	}
 

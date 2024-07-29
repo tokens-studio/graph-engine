@@ -1,0 +1,35 @@
+{
+	"compilerOptions": {
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true,
+		"noEmit": true,
+		"jsx": "react",
+		"target": "ESNext",
+		"outDir": "./types",
+		"preserveConstEnums": true,
+		"module": "esnext",
+		"skipLibCheck": true,
+		"moduleResolution": "bundler",
+		"rootDir": ".",
+		"noImplicitAny": false,
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
+		"types": [
+			"node"
+		],
+		"baseUrl": ".",
+		"paths": {
+			"@/*": [
+				"./*"
+			]
+		}
+	},
+	"exclude": [
+		"node_modules",
+		"cypress/**"
+	]
+}
