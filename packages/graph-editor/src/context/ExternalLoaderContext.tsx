@@ -1,11 +1,7 @@
-import { ExternalLoadOptions } from '@tokens-studio/graph-engine';
-import React, { createContext, useContext, useMemo } from 'react';
+import { ExternalLoader } from '@tokens-studio/graph-engine';
+import React, { createContext, useContext } from 'react';
 
-type ExternalLoaderType = {
-  externalLoader?: (opts: ExternalLoadOptions) => Promise<any> | any;
-};
-
-const ExternalLoaderContext = createContext<ExternalLoaderType | undefined>(
+const ExternalLoaderContext = createContext<ExternalLoader | undefined>(
   undefined,
 );
 
@@ -14,12 +10,10 @@ function ExternalLoaderProvider({
   externalLoader,
 }: {
   children: React.ReactNode;
-  externalLoader?: (opts: ExternalLoadOptions) => Promise<any> | any;
+  externalLoader?: ExternalLoader;
 }) {
-  const providerValue = useMemo(() => ({ externalLoader }), [externalLoader]);
-
   return (
-    <ExternalLoaderContext.Provider value={providerValue}>
+    <ExternalLoaderContext.Provider value={externalLoader}>
       {children}
     </ExternalLoaderContext.Provider>
   );
@@ -28,11 +22,6 @@ function ExternalLoaderProvider({
 function useExternalLoader() {
   const context = useContext(ExternalLoaderContext);
 
-  if (context === undefined) {
-    throw new Error(
-      'useExternalLoader must be used within a ExternalLoaderProvider',
-    );
-  }
   return context;
 }
 

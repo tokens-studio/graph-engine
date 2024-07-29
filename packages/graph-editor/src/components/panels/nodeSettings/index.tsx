@@ -1,19 +1,19 @@
-import React, { useCallback, useMemo } from 'react';
 import {
   Box,
+  Label,
   Stack,
   Text,
-  Label,
   TextInput,
   Textarea,
 } from '@tokens-studio/ui';
+import React, { useCallback, useMemo } from 'react';
 
-import { currentNode } from '@/redux/selectors/graph';
-import { useSelector } from 'react-redux';
 import { Node } from '@tokens-studio/graph-engine';
-import { useGraph } from '@/hooks/useGraph';
+import { currentNode } from '@/redux/selectors/graph.js';
+import { description, title } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
-import { description, title } from '@/annotations';
+import { useGraph } from '@/hooks/useGraph.js';
+import { useSelector } from 'react-redux';
 
 export function NodeSettingsPanel() {
   const graph = useGraph();
@@ -31,50 +31,55 @@ export function NodeSettingsPanel() {
       css={{ height: '100%', flex: 1, padding: '$3', overflow: 'auto' }}
     >
       <Box css={{ padding: '$3' }}>
-        <NodeSettings selectedNode={selectedNode} annotations={selectedNode.annotations} key={nodeID} />
+        <NodeSettings
+          selectedNode={selectedNode}
+          annotations={selectedNode.annotations}
+          key={nodeID}
+        />
       </Box>
     </Stack>
   );
 }
 
-
-
 const Annotations = observer(({ annotations }: Record<string, unknown>) => {
+  return (
+    <>
+      {Object.entries(annotations as Record<string, unknown>).reduce(
+        (acc, [key, value]) => {
+          switch (key) {
+            case title:
+            case description:
+              return acc;
+          }
 
-  return <>{Object.entries(annotations as Record<string,any>).reduce((acc, [key, value]) => {
+          const val = (() => {
+            switch (typeof value) {
+              case 'boolean':
+                return value ? 'true' : 'false';
+              case 'string':
+                return value;
+              case 'object':
+                return JSON.stringify(value);
+              default:
+                return value;
+            }
+          })() as string;
 
-    switch (key) {
-      case title:
-      case description:
-        return acc;
-    }
-
-    const val = (() => {
-      switch (typeof value) {
-        case 'boolean':
-          return value ? 'true' : 'false';
-        case 'string':
-          return value;
-        case 'object':
-          return JSON.stringify(value);
-        default:
-          return value;
-      }
-    })();
-
-    acc.push((
-      <Stack direction="column" gap={2} justify='between' key={key}>
-        <Label>{key}</Label>
-        <Text size="xsmall" muted>
-          {val}
-        </Text>
-      </Stack>
-    ));
-    return acc;
-  }, [] as JSX.Element[])}
-  </>;
+          acc.push(
+            <Stack direction="column" gap={2} justify="between" key={key}>
+              <Label>{key}</Label>
+              <Text size="xsmall" muted>
+                {val}
+              </Text>
+            </Stack>,
+          );
+          return acc;
+        },
+        [] as JSX.Element[],
+      )}
+    </>
+  );
 });
-
 
 const NodeTitle = ({ selectedNode }: { selectedNode: Node }) => {
   const onChangeTitle = useCallback(
@@ -85,7 +90,7 @@ const NodeTitle = ({ selectedNode }: { selectedNode: Node }) => {
   );
 
   return (
-    <Stack direction='column' gap={2}>
+    <Stack direction="column" gap={2}>
       <Label>Title</Label>
       <TextInput
         onChange={onChangeTitle}
@@ -93,10 +98,15 @@ const NodeTitle = ({ selectedNode }: { selectedNode: Node }) => {
       />
     </Stack>
   );
-}
+};
 
-const NodeDescription = ({ selectedNode, annotations }: { selectedNode: Node, annotations:Record<string,any> }) => {
-
+const NodeDescription = ({
+  selectedNode,
+  annotations,
+}: {
+  selectedNode: Node;
+  annotations: Record<string, unknown>;
+}) => {
   const onChangeDesc = useCallback(
     (newString: string) => {
       selectedNode.setAnnotation(description, newString);
@@ -104,21 +114,25 @@ const NodeDescription = ({ selectedNode, annotations }: { selectedNode: Node, an
     [selectedNode],
   );
 
-
-  return <Stack direction='column' gap={2}>
-    <Label>Description</Label>
-    <Textarea
-      placeholder={selectedNode.factory.description}
-      onChange={onChangeDesc}
-      value={annotations[description] as string}
-    />
-  </Stack>
-
+  return (
+    <Stack direction="column" gap={2}>
+      <Label>Description</Label>
+      <Textarea
+        placeholder={selectedNode.factory.description}
+        onChange={onChangeDesc}
+        value={annotations[description] as string}
+      />
+    </Stack>
+  );
 };
 
-
-const NodeSettings = ({ selectedNode, annotations }: { selectedNode: Node, annotations: Record<string, unknown> }) => {
-
+const NodeSettings = ({
+  selectedNode,
+  annotations,
+}: {
+  selectedNode: Node;
+  annotations: Record<string, unknown>;
+}) => {
   return (
     <Stack direction="column" gap={2}>
       <Label>Node ID</Label>

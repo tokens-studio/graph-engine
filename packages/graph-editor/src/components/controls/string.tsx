@@ -1,16 +1,13 @@
-
-import { observer } from 'mobx-react-lite';
-import { IField } from './interface';
-import React, { useEffect } from 'react';
-import { Input } from '@tokens-studio/graph-engine';
-import { IconButton, Text, TextInput, Stack } from '@tokens-studio/ui';
-import { delayedUpdateSelector } from '@/redux/selectors';
-import { useSelector } from 'react-redux';
 import { FloppyDisk } from 'iconoir-react';
+import { IField } from './interface.js';
+import { IconButton, Stack, Text, TextInput } from '@tokens-studio/ui';
+import { Input } from '@tokens-studio/graph-engine';
+import { delayedUpdateSelector } from '@/redux/selectors/index.js';
+import { observer } from 'mobx-react-lite';
+import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
 
 export const Textfield = observer(({ port, readOnly }: IField) => {
-
-
   const useDelayed = useSelector(delayedUpdateSelector);
   const [val, setVal] = React.useState(port.value);
 
@@ -18,9 +15,7 @@ export const Textfield = observer(({ port, readOnly }: IField) => {
     setVal(port.value);
   }, [port.value]);
 
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
     const str = e.target.value;
     setVal(str);
     if (useDelayed) {
@@ -34,8 +29,15 @@ export const Textfield = observer(({ port, readOnly }: IField) => {
     return <Text>{port.value}</Text>;
   }
 
-  return <Stack gap={3}>
-    <TextInput width={'100%'} value={val} onChange={onChange} />
-    {useDelayed && <IconButton icon={<FloppyDisk />} onClick={() => (port as Input).setValue(val)} />}
-  </Stack>;
+  return (
+    <Stack gap={3}>
+      <TextInput width={'100%'} value={val} onChange={onChange} />
+      {useDelayed && (
+        <IconButton
+          icon={<FloppyDisk />}
+          onClick={() => (port as Input).setValue(val)}
+        />
+      )}
+    </Stack>
+  );
 });

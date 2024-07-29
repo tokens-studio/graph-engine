@@ -1,4 +1,4 @@
 module.exports = {
     root:true,
-    extends: ['@tokens-studio/eslint-custom-config'],
+    extends: ['@tokens-studio/eslint-config-custom'],
   };

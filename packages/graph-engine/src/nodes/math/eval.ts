@@ -1,54 +1,51 @@
-import { INodeDefinition, Node } from "../../programmatic/node.js";
-import {
-  NumberSchema,
-  StringSchema,
-} from "../../schemas/index.js";
-import { Parser } from "expr-eval";
-import { ToInput } from "../../programmatic/input.js";
-import { ToOutput } from "../../programmatic/output.js";
+import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { NumberSchema, StringSchema } from '../../schemas/index.js';
+import { Parser } from 'expr-eval';
+import { ToInput } from '../../programmatic/input.js';
+import { ToOutput } from '../../programmatic/output.js';
 import { annotatedDynamicInputs } from '../../annotations/index.js';
 
 export default class NodeDefinition extends Node {
-  static title = "Evaluate math";
-  static type = "studio.tokens.math.eval";
-  static description = "Allows you to evaluate arbitrary math expressions";
+	static title = 'Evaluate math';
+	static type = 'studio.tokens.math.eval';
+	static description = 'Allows you to evaluate arbitrary math expressions';
 
+	declare inputs: ToInput<{
+		expression: string;
+	}> &
+		ToInput<{
+			[key: string]: number;
+		}>;
 
-  declare inputs: ToInput<{
-    expression: string;
-  }> & ToInput<{
-    [key: string]: number
-  }>;
+	declare outputs: ToOutput<{
+		value: number;
+	}>;
 
-  declare outputs: ToOutput<{
-    value: number;
-  }>;
+	constructor(props: INodeDefinition) {
+		super(props);
 
-  constructor(props: INodeDefinition) {
-    super(props);
+		this.annotations[annotatedDynamicInputs] = true;
+		this.addInput('expression', {
+			type: StringSchema
+		});
 
-    this.annotations[annotatedDynamicInputs] = true
-    this.addInput("expression", {
-      type: StringSchema,
-    });
+		//We expect users to expose the variables they want to use in the expression as inputs
 
-    //We expect users to expose the variables they want to use in the expression as inputs
+		this.addOutput('value', {
+			type: NumberSchema
+		});
+		this.addOutput('expression', {
+			type: StringSchema
+		});
+	}
 
-    this.addOutput("value", {
-      type: NumberSchema,
-    });
-    this.addOutput("expression", {
-      type: StringSchema
-    });
-  }
+	execute(): void | Promise<void> {
+		const { expression, ...inputs } = this.getAllInputs();
+		const parser = new Parser();
 
-  execute(): void | Promise<void> {
-    const { expression, ...inputs } = this.getAllInputs();
-    const parser = new Parser();
+		const output = parser.evaluate(expression, inputs);
 
-    const output = parser.evaluate(expression, inputs);
-
-    this.setOutput("expression", expression);
-    this.setOutput("value", output);
-  }
+		this.setOutput('expression', expression);
+		this.setOutput('value', output);
+	}
 }

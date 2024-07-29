@@ -1,13 +1,18 @@
-import Ajv from "ajv";
-import { NumberSchema, AnySchema, AnyArraySchema } from "../../../src/schemas/index.js";
-// @ts-ignore
-const ajv = new Ajv({ useDefaults: true });
+import {
+	AnyArraySchema,
+	AnySchema,
+	NumberSchema
+} from '../../../src/schemas/index.js';
+import { describe, expect, test } from 'vitest';
+import ZSchema from 'z-schema-esm';
 
-describe("schema", () => {
-  [NumberSchema, AnySchema, AnyArraySchema].forEach((schema) => {
-    it(`should validate ${schema.title}`, async () => {
-      const validate = ajv.validateSchema(schema);
-      expect(validate).toBe(true);
-    });
-  });
+const zschema = new ZSchema();
+
+describe('schema', () => {
+	[NumberSchema, AnySchema, AnyArraySchema].forEach(schema => {
+		test(`should validate ${schema.title}`, async () => {
+			const validate = zschema.validateSchema(schema);
+			expect(validate).to.be.true;
+		});
+	});
 });

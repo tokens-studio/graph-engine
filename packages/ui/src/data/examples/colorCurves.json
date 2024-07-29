@@ -1,2265 +1,2010 @@
 {
-    "nodes": [
-        {
-            "id": "e485b0fe-fac9-4bbf-8288-02cdfb252b82",
-            "type": "studio.tokens.generic.constant",
-            "inputs": [
-                {
-                    "name": "value",
-                    "value": {
-                        "curves": [
-                            {
-                                "points": [
-                                    [
-                                        0,
-                                        0
-                                    ],
-                                    [
-                                        0.4375,
-                                        1
-                                    ],
-                                    [
-                                        1,
-                                        0
-                                    ],
-                                    [
-                                        1,
-                                        1
-                                    ]
-                                ]
-                            }
-                        ]
-                    },
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/any.json",
-                        "title": "Any"
-                    },
-                    "dynamicType": {
-                        "$id": "https://schemas.tokens.studio/curve.json",
-                        "title": "Curve",
-                        "type": "object",
-                        "default": {
-                            "curves": [
-                                {
-                                    "type": "bezier",
-                                    "points": [
-                                        [
-                                            0,
-                                            0
-                                        ],
-                                        [
-                                            0.25,
-                                            0.6
-                                        ],
-                                        [
-                                            0.75,
-                                            0.4
-                                        ],
-                                        [
-                                            1,
-                                            1
-                                        ]
-                                    ]
-                                }
-                            ]
-                        },
-                        "properties": {
-                            "curves": {
-                                "type": "array",
-                                "items": [
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "type": {
-                                                "type": "string"
-                                            },
-                                            "points": {
-                                                "type": "array",
-                                                "items": [
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "integer"
-                                                            },
-                                                            {
-                                                                "type": "integer"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "number"
-                                                            },
-                                                            {
-                                                                "type": "number"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "number"
-                                                            },
-                                                            {
-                                                                "type": "number"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "integer"
-                                                            },
-                                                            {
-                                                                "type": "integer"
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        "required": [
-                                            "type",
-                                            "points"
-                                        ]
-                                    }
-                                ]
-                            }
-                        },
-                        "required": [
-                            "curves"
-                        ]
-                    },
-                    "annotations": {
-                        "ui.resetable": true
-                    }
-                }
-            ],
-            "annotations": {
-                "ui.position.x": 253.87908827701267,
-                "ui.position.y": 612.5478158260928
-            }
-        },
-        {
-            "id": "284e1555-05a6-443c-8b66-797aabe88a72",
-            "type": "studio.tokens.generic.constant",
-            "inputs": [
-                {
-                    "name": "value",
-                    "value": {
-                        "curves": [
-                            {
-                                "points": [
-                                    [
-                                        0,
-                                        0
-                                    ],
-                                    [
-                                        0.42361145019531254,
-                                        0.542222412109375
-                                    ],
-                                    [
-                                        1,
-                                        0.24888891601562502
-                                    ],
-                                    [
-                                        1,
-                                        1
-                                    ]
-                                ]
-                            }
-                        ]
-                    },
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/any.json",
-                        "title": "Any"
-                    },
-                    "dynamicType": {
-                        "$id": "https://schemas.tokens.studio/curve.json",
-                        "title": "Curve",
-                        "type": "object",
-                        "default": {
-                            "curves": [
-                                {
-                                    "type": "bezier",
-                                    "points": [
-                                        [
-                                            0,
-                                            0
-                                        ],
-                                        [
-                                            0.25,
-                                            0.6
-                                        ],
-                                        [
-                                            0.75,
-                                            0.4
-                                        ],
-                                        [
-                                            1,
-                                            1
-                                        ]
-                                    ]
-                                }
-                            ]
-                        },
-                        "properties": {
-                            "curves": {
-                                "type": "array",
-                                "items": [
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "type": {
-                                                "type": "string"
-                                            },
-                                            "points": {
-                                                "type": "array",
-                                                "items": [
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "integer"
-                                                            },
-                                                            {
-                                                                "type": "integer"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "number"
-                                                            },
-                                                            {
-                                                                "type": "number"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "number"
-                                                            },
-                                                            {
-                                                                "type": "number"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "integer"
-                                                            },
-                                                            {
-                                                                "type": "integer"
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        "required": [
-                                            "type",
-                                            "points"
-                                        ]
-                                    }
-                                ]
-                            }
-                        },
-                        "required": [
-                            "curves"
-                        ]
-                    },
-                    "annotations": {
-                        "ui.resetable": true
-                    }
-                }
-            ],
-            "annotations": {
-                "ui.position.x": 253.87908827701267,
-                "ui.position.y": 741.2669645130932
-            }
-        },
-        {
-            "id": "5f562147-a039-4f8b-aa1d-1cadee078969",
-            "type": "studio.tokens.generic.constant",
-            "inputs": [
-                {
-                    "name": "value",
-                    "value": {
-                        "curves": [
-                            {
-                                "points": [
-                                    [
-                                        0,
-                                        0
-                                    ],
-                                    [
-                                        0.8055549621582031,
-                                        0.40444433593749995
-                                    ],
-                                    [
-                                        0.3263885498046875,
-                                        0.9066667480468751
-                                    ],
-                                    [
-                                        1,
-                                        1
-                                    ]
-                                ]
-                            }
-                        ]
-                    },
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/any.json",
-                        "title": "Any"
-                    },
-                    "dynamicType": {
-                        "$id": "https://schemas.tokens.studio/curve.json",
-                        "title": "Curve",
-                        "type": "object",
-                        "default": {
-                            "curves": [
-                                {
-                                    "type": "bezier",
-                                    "points": [
-                                        [
-                                            0,
-                                            0
-                                        ],
-                                        [
-                                            0.25,
-                                            0.6
-                                        ],
-                                        [
-                                            0.75,
-                                            0.4
-                                        ],
-                                        [
-                                            1,
-                                            1
-                                        ]
-                                    ]
-                                }
-                            ]
-                        },
-                        "properties": {
-                            "curves": {
-                                "type": "array",
-                                "items": [
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "type": {
-                                                "type": "string"
-                                            },
-                                            "points": {
-                                                "type": "array",
-                                                "items": [
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "integer"
-                                                            },
-                                                            {
-                                                                "type": "integer"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "number"
-                                                            },
-                                                            {
-                                                                "type": "number"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "number"
-                                                            },
-                                                            {
-                                                                "type": "number"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "integer"
-                                                            },
-                                                            {
-                                                                "type": "integer"
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        "required": [
-                                            "type",
-                                            "points"
-                                        ]
-                                    }
-                                ]
-                            }
-                        },
-                        "required": [
-                            "curves"
-                        ]
-                    },
-                    "annotations": {
-                        "ui.resetable": true
-                    }
-                }
-            ],
-            "annotations": {
-                "ui.position.x": 253.87908827701267,
-                "ui.position.y": 869.9861132000935
-            }
-        },
-        {
-            "id": "d429a512-fcd7-48d4-bc7a-9ff1240950dd",
-            "type": "tokens.studio.array.map",
-            "inputs": [
-                {
-                    "name": "array",
-                    "value": [
-                        0,
-                        0.1,
-                        0.2,
-                        0.3,
-                        0.4,
-                        0.5,
-                        0.6,
-                        0.7,
-                        0.8,
-                        0.9,
-                        1
-                    ],
-                    "type": {
-                        "title": "Any[]",
-                        "type": "array",
-                        "items": {
-                            "$id": "https://schemas.tokens.studio/any.json",
-                            "title": "Any"
-                        },
-                        "default": []
-                    },
-                    "dynamicType": {
-                        "type": "array",
-                        "items": {
-                            "$id": "https://schemas.tokens.studio/number.json",
-                            "title": "Number",
-                            "type": "number"
-                        }
-                    },
-                    "visible": true,
-                    "annotations": {
-                        "ui.editable": false
-                    }
-                },
-                {
-                    "name": "red",
-                    "value": {
-                        "curves": [
-                            {
-                                "points": [
-                                    [
-                                        0,
-                                        0
-                                    ],
-                                    [
-                                        0.4375,
-                                        1
-                                    ],
-                                    [
-                                        1,
-                                        0
-                                    ],
-                                    [
-                                        1,
-                                        1
-                                    ]
-                                ]
-                            }
-                        ]
-                    },
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/curve.json",
-                        "title": "Curve",
-                        "type": "object",
-                        "default": {
-                            "curves": [
-                                {
-                                    "type": "bezier",
-                                    "points": [
-                                        [
-                                            0,
-                                            0
-                                        ],
-                                        [
-                                            0.25,
-                                            0.6
-                                        ],
-                                        [
-                                            0.75,
-                                            0.4
-                                        ],
-                                        [
-                                            1,
-                                            1
-                                        ]
-                                    ]
-                                }
-                            ]
-                        },
-                        "properties": {
-                            "curves": {
-                                "type": "array",
-                                "items": [
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "type": {
-                                                "type": "string"
-                                            },
-                                            "points": {
-                                                "type": "array",
-                                                "items": [
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "integer"
-                                                            },
-                                                            {
-                                                                "type": "integer"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "number"
-                                                            },
-                                                            {
-                                                                "type": "number"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "number"
-                                                            },
-                                                            {
-                                                                "type": "number"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "integer"
-                                                            },
-                                                            {
-                                                                "type": "integer"
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        "required": [
-                                            "type",
-                                            "points"
-                                        ]
-                                    }
-                                ]
-                            }
-                        },
-                        "required": [
-                            "curves"
-                        ]
-                    },
-                    "visible": true
-                },
-                {
-                    "name": "blue",
-                    "value": {
-                        "curves": [
-                            {
-                                "points": [
-                                    [
-                                        0,
-                                        0
-                                    ],
-                                    [
-                                        0.42361145019531254,
-                                        0.542222412109375
-                                    ],
-                                    [
-                                        1,
-                                        0.24888891601562502
-                                    ],
-                                    [
-                                        1,
-                                        1
-                                    ]
-                                ]
-                            }
-                        ]
-                    },
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/curve.json",
-                        "title": "Curve",
-                        "type": "object",
-                        "default": {
-                            "curves": [
-                                {
-                                    "type": "bezier",
-                                    "points": [
-                                        [
-                                            0,
-                                            0
-                                        ],
-                                        [
-                                            0.25,
-                                            0.6
-                                        ],
-                                        [
-                                            0.75,
-                                            0.4
-                                        ],
-                                        [
-                                            1,
-                                            1
-                                        ]
-                                    ]
-                                }
-                            ]
-                        },
-                        "properties": {
-                            "curves": {
-                                "type": "array",
-                                "items": [
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "type": {
-                                                "type": "string"
-                                            },
-                                            "points": {
-                                                "type": "array",
-                                                "items": [
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "integer"
-                                                            },
-                                                            {
-                                                                "type": "integer"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "number"
-                                                            },
-                                                            {
-                                                                "type": "number"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "number"
-                                                            },
-                                                            {
-                                                                "type": "number"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "integer"
-                                                            },
-                                                            {
-                                                                "type": "integer"
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        "required": [
-                                            "type",
-                                            "points"
-                                        ]
-                                    }
-                                ]
-                            }
-                        },
-                        "required": [
-                            "curves"
-                        ]
-                    },
-                    "visible": true
-                },
-                {
-                    "name": "green",
-                    "value": {
-                        "curves": [
-                            {
-                                "points": [
-                                    [
-                                        0,
-                                        0
-                                    ],
-                                    [
-                                        0.8055549621582031,
-                                        0.40444433593749995
-                                    ],
-                                    [
-                                        0.3263885498046875,
-                                        0.9066667480468751
-                                    ],
-                                    [
-                                        1,
-                                        1
-                                    ]
-                                ]
-                            }
-                        ]
-                    },
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/curve.json",
-                        "title": "Curve",
-                        "type": "object",
-                        "default": {
-                            "curves": [
-                                {
-                                    "type": "bezier",
-                                    "points": [
-                                        [
-                                            0,
-                                            0
-                                        ],
-                                        [
-                                            0.25,
-                                            0.6
-                                        ],
-                                        [
-                                            0.75,
-                                            0.4
-                                        ],
-                                        [
-                                            1,
-                                            1
-                                        ]
-                                    ]
-                                }
-                            ]
-                        },
-                        "properties": {
-                            "curves": {
-                                "type": "array",
-                                "items": [
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "type": {
-                                                "type": "string"
-                                            },
-                                            "points": {
-                                                "type": "array",
-                                                "items": [
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "integer"
-                                                            },
-                                                            {
-                                                                "type": "integer"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "number"
-                                                            },
-                                                            {
-                                                                "type": "number"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "number"
-                                                            },
-                                                            {
-                                                                "type": "number"
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "array",
-                                                        "items": [
-                                                            {
-                                                                "type": "integer"
-                                                            },
-                                                            {
-                                                                "type": "integer"
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        "required": [
-                                            "type",
-                                            "points"
-                                        ]
-                                    }
-                                ]
-                            }
-                        },
-                        "required": [
-                            "curves"
-                        ]
-                    },
-                    "visible": true
-                }
-            ],
-            "annotations": {
-                "ui.position.x": 836,
-                "ui.position.y": 616.5
-            },
-            "innergraph": {
-                "nodes": [
-                    {
-                        "id": "adf59978-9761-4fdf-bc97-0c750dc883d7",
-                        "type": "studio.tokens.generic.input",
-                        "inputs": [
-                            {
-                                "name": "value",
-                                "value": 1,
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/any.json",
-                                    "title": "Any"
-                                },
-                                "dynamicType": {
-                                    "$id": "https://schemas.tokens.studio/number.json",
-                                    "title": "Number",
-                                    "type": "number"
-                                },
-                                "annotations": {
-                                    "ui.editable": false,
-                                    "ui.hidden": true,
-                                    "engine.hideFromParentSubgraph": true
-                                }
-                            },
-                            {
-                                "name": "index",
-                                "value": 10,
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/number.json",
-                                    "title": "Number",
-                                    "type": "number"
-                                },
-                                "annotations": {
-                                    "ui.editable": false,
-                                    "engine.hideFromParentSubgraph": true
-                                }
-                            },
-                            {
-                                "name": "length",
-                                "value": 11,
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/number.json",
-                                    "title": "Number",
-                                    "type": "number"
-                                },
-                                "annotations": {
-                                    "ui.editable": false,
-                                    "engine.hideFromParentSubgraph": true
-                                }
-                            },
-                            {
-                                "name": "red",
-                                "value": {
-                                    "curves": [
-                                        {
-                                            "points": [
-                                                [
-                                                    0,
-                                                    0
-                                                ],
-                                                [
-                                                    0.4375,
-                                                    1
-                                                ],
-                                                [
-                                                    1,
-                                                    0
-                                                ],
-                                                [
-                                                    1,
-                                                    1
-                                                ]
-                                            ]
-                                        }
-                                    ]
-                                },
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/curve.json",
-                                    "title": "Curve",
-                                    "type": "object",
-                                    "default": {
-                                        "curves": [
-                                            {
-                                                "type": "bezier",
-                                                "points": [
-                                                    [
-                                                        0,
-                                                        0
-                                                    ],
-                                                    [
-                                                        0.25,
-                                                        0.6
-                                                    ],
-                                                    [
-                                                        0.75,
-                                                        0.4
-                                                    ],
-                                                    [
-                                                        1,
-                                                        1
-                                                    ]
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    "properties": {
-                                        "curves": {
-                                            "type": "array",
-                                            "items": [
-                                                {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "type": {
-                                                            "type": "string"
-                                                        },
-                                                        "points": {
-                                                            "type": "array",
-                                                            "items": [
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "integer"
-                                                                        },
-                                                                        {
-                                                                            "type": "integer"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "number"
-                                                                        },
-                                                                        {
-                                                                            "type": "number"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "number"
-                                                                        },
-                                                                        {
-                                                                            "type": "number"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "integer"
-                                                                        },
-                                                                        {
-                                                                            "type": "integer"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "type",
-                                                        "points"
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    "required": [
-                                        "curves"
-                                    ]
-                                },
-                                "annotations": {
-                                    "ui.deletable": true
-                                }
-                            },
-                            {
-                                "name": "blue",
-                                "value": {
-                                    "curves": [
-                                        {
-                                            "points": [
-                                                [
-                                                    0,
-                                                    0
-                                                ],
-                                                [
-                                                    0.42361145019531254,
-                                                    0.542222412109375
-                                                ],
-                                                [
-                                                    1,
-                                                    0.24888891601562502
-                                                ],
-                                                [
-                                                    1,
-                                                    1
-                                                ]
-                                            ]
-                                        }
-                                    ]
-                                },
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/curve.json",
-                                    "title": "Curve",
-                                    "type": "object",
-                                    "default": {
-                                        "curves": [
-                                            {
-                                                "type": "bezier",
-                                                "points": [
-                                                    [
-                                                        0,
-                                                        0
-                                                    ],
-                                                    [
-                                                        0.25,
-                                                        0.6
-                                                    ],
-                                                    [
-                                                        0.75,
-                                                        0.4
-                                                    ],
-                                                    [
-                                                        1,
-                                                        1
-                                                    ]
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    "properties": {
-                                        "curves": {
-                                            "type": "array",
-                                            "items": [
-                                                {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "type": {
-                                                            "type": "string"
-                                                        },
-                                                        "points": {
-                                                            "type": "array",
-                                                            "items": [
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "integer"
-                                                                        },
-                                                                        {
-                                                                            "type": "integer"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "number"
-                                                                        },
-                                                                        {
-                                                                            "type": "number"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "number"
-                                                                        },
-                                                                        {
-                                                                            "type": "number"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "integer"
-                                                                        },
-                                                                        {
-                                                                            "type": "integer"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "type",
-                                                        "points"
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    "required": [
-                                        "curves"
-                                    ]
-                                },
-                                "annotations": {
-                                    "ui.deletable": true
-                                }
-                            },
-                            {
-                                "name": "green",
-                                "value": {
-                                    "curves": [
-                                        {
-                                            "points": [
-                                                [
-                                                    0,
-                                                    0
-                                                ],
-                                                [
-                                                    0.8055549621582031,
-                                                    0.40444433593749995
-                                                ],
-                                                [
-                                                    0.3263885498046875,
-                                                    0.9066667480468751
-                                                ],
-                                                [
-                                                    1,
-                                                    1
-                                                ]
-                                            ]
-                                        }
-                                    ]
-                                },
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/curve.json",
-                                    "title": "Curve",
-                                    "type": "object",
-                                    "default": {
-                                        "curves": [
-                                            {
-                                                "type": "bezier",
-                                                "points": [
-                                                    [
-                                                        0,
-                                                        0
-                                                    ],
-                                                    [
-                                                        0.25,
-                                                        0.6
-                                                    ],
-                                                    [
-                                                        0.75,
-                                                        0.4
-                                                    ],
-                                                    [
-                                                        1,
-                                                        1
-                                                    ]
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    "properties": {
-                                        "curves": {
-                                            "type": "array",
-                                            "items": [
-                                                {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "type": {
-                                                            "type": "string"
-                                                        },
-                                                        "points": {
-                                                            "type": "array",
-                                                            "items": [
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "integer"
-                                                                        },
-                                                                        {
-                                                                            "type": "integer"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "number"
-                                                                        },
-                                                                        {
-                                                                            "type": "number"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "number"
-                                                                        },
-                                                                        {
-                                                                            "type": "number"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "integer"
-                                                                        },
-                                                                        {
-                                                                            "type": "integer"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "type",
-                                                        "points"
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    "required": [
-                                        "curves"
-                                    ]
-                                },
-                                "annotations": {
-                                    "ui.deletable": true
-                                }
-                            }
-                        ],
-                        "annotations": {
-                            "engine.singleton": true,
-                            "engine.dynamicInputs": true,
-                            "engine.deletable": false,
-                            "ui.position.x": -927.7975050385301,
-                            "ui.position.y": 220.2593008691898
-                        }
-                    },
-                    {
-                        "id": "7281f382-aacf-4ae0-9422-df49c62bbad6",
-                        "type": "studio.tokens.generic.output",
-                        "inputs": [
-                            {
-                                "name": "value",
-                                "value": "#ffffffff",
-                                "type": {
-                                    "type": "array",
-                                    "items": {
-                                        "$id": "https://schemas.tokens.studio/any.json",
-                                        "title": "Any"
-                                    }
-                                },
-                                "dynamicType": {
-                                    "$id": "https://schemas.tokens.studio/color.json",
-                                    "title": "Color",
-                                    "type": "string"
-                                },
-                                "visible": true,
-                                "annotations": {
-                                    "ui.editable": false
-                                }
-                            }
-                        ],
-                        "annotations": {
-                            "engine.singleton": true,
-                            "engine.deletable": false,
-                            "ui.position.x": 1749.8367851470362,
-                            "ui.position.y": 218.01442744543715
-                        }
-                    },
-                    {
-                        "id": "4f0eccde-dc1f-41a8-839f-e3497c65d00d",
-                        "type": "studio.tokens.color.create",
-                        "inputs": [
-                            {
-                                "name": "space",
-                                "value": "rgb",
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/string.json",
-                                    "title": "String",
-                                    "type": "string",
-                                    "enum": [
-                                        "rgb",
-                                        "lrgb",
-                                        "p3",
-                                        "prophoto",
-                                        "rec2020",
-                                        "a98",
-                                        "hsl",
-                                        "hsv",
-                                        "hsi",
-                                        "hwb",
-                                        "lab",
-                                        "lch",
-                                        "lab65",
-                                        "lch65",
-                                        "luv",
-                                        "lchuv",
-                                        "dlab",
-                                        "dlch",
-                                        "oklab",
-                                        "oklch",
-                                        "okhsl",
-                                        "okhsv",
-                                        "jab",
-                                        "jch",
-                                        "yiq",
-                                        "xyz50",
-                                        "xyz65",
-                                        "xyb",
-                                        "itp",
-                                        "cubehelix"
-                                    ],
-                                    "default": "rgb"
-                                }
-                            },
-                            {
-                                "name": "a",
-                                "value": 1,
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/number.json",
-                                    "title": "Number",
-                                    "type": "number"
-                                },
-                                "visible": true
-                            },
-                            {
-                                "name": "b",
-                                "value": 1,
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/number.json",
-                                    "title": "Number",
-                                    "type": "number"
-                                },
-                                "visible": true
-                            },
-                            {
-                                "name": "c",
-                                "value": 1,
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/number.json",
-                                    "title": "Number",
-                                    "type": "number"
-                                },
-                                "visible": true
-                            },
-                            {
-                                "name": "d",
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/number.json",
-                                    "title": "Number",
-                                    "type": "number"
-                                },
-                                "visible": true
-                            }
-                        ],
-                        "annotations": {
-                            "ui.position.x": 1145.166058508571,
-                            "ui.position.y": 204.18102516522242
-                        }
-                    },
-                    {
-                        "id": "a4c63bab-3cc3-4e3b-8fd7-71a207fd90e1",
-                        "type": "studio.tokens.curve.sample",
-                        "inputs": [
-                            {
-                                "name": "curve",
-                                "value": {
-                                    "curves": [
-                                        {
-                                            "points": [
-                                                [
-                                                    0,
-                                                    0
-                                                ],
-                                                [
-                                                    0.4375,
-                                                    1
-                                                ],
-                                                [
-                                                    1,
-                                                    0
-                                                ],
-                                                [
-                                                    1,
-                                                    1
-                                                ]
-                                            ]
-                                        }
-                                    ]
-                                },
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/curve.json",
-                                    "title": "Curve",
-                                    "type": "object",
-                                    "default": {
-                                        "curves": [
-                                            {
-                                                "type": "bezier",
-                                                "points": [
-                                                    [
-                                                        0,
-                                                        0
-                                                    ],
-                                                    [
-                                                        0.25,
-                                                        0.6
-                                                    ],
-                                                    [
-                                                        0.75,
-                                                        0.4
-                                                    ],
-                                                    [
-                                                        1,
-                                                        1
-                                                    ]
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    "properties": {
-                                        "curves": {
-                                            "type": "array",
-                                            "items": [
-                                                {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "type": {
-                                                            "type": "string"
-                                                        },
-                                                        "points": {
-                                                            "type": "array",
-                                                            "items": [
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "integer"
-                                                                        },
-                                                                        {
-                                                                            "type": "integer"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "number"
-                                                                        },
-                                                                        {
-                                                                            "type": "number"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "number"
-                                                                        },
-                                                                        {
-                                                                            "type": "number"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "integer"
-                                                                        },
-                                                                        {
-                                                                            "type": "integer"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "type",
-                                                        "points"
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    "required": [
-                                        "curves"
-                                    ]
-                                },
-                                "visible": true
-                            },
-                            {
-                                "name": "sample",
-                                "value": 1,
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/number.json",
-                                    "title": "Number",
-                                    "type": "number"
-                                },
-                                "visible": true
-                            }
-                        ],
-                        "annotations": {
-                            "ui.position.x": -195.50868699257762,
-                            "ui.position.y": 107.09389484165905
-                        }
-                    },
-                    {
-                        "id": "94bbc5ce-fa1c-4a90-b331-57b231fc3122",
-                        "type": "studio.tokens.curve.sample",
-                        "inputs": [
-                            {
-                                "name": "curve",
-                                "value": {
-                                    "curves": [
-                                        {
-                                            "points": [
-                                                [
-                                                    0,
-                                                    0
-                                                ],
-                                                [
-                                                    0.42361145019531254,
-                                                    0.542222412109375
-                                                ],
-                                                [
-                                                    1,
-                                                    0.24888891601562502
-                                                ],
-                                                [
-                                                    1,
-                                                    1
-                                                ]
-                                            ]
-                                        }
-                                    ]
-                                },
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/curve.json",
-                                    "title": "Curve",
-                                    "type": "object",
-                                    "default": {
-                                        "curves": [
-                                            {
-                                                "type": "bezier",
-                                                "points": [
-                                                    [
-                                                        0,
-                                                        0
-                                                    ],
-                                                    [
-                                                        0.25,
-                                                        0.6
-                                                    ],
-                                                    [
-                                                        0.75,
-                                                        0.4
-                                                    ],
-                                                    [
-                                                        1,
-                                                        1
-                                                    ]
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    "properties": {
-                                        "curves": {
-                                            "type": "array",
-                                            "items": [
-                                                {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "type": {
-                                                            "type": "string"
-                                                        },
-                                                        "points": {
-                                                            "type": "array",
-                                                            "items": [
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "integer"
-                                                                        },
-                                                                        {
-                                                                            "type": "integer"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "number"
-                                                                        },
-                                                                        {
-                                                                            "type": "number"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "number"
-                                                                        },
-                                                                        {
-                                                                            "type": "number"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "integer"
-                                                                        },
-                                                                        {
-                                                                            "type": "integer"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "type",
-                                                        "points"
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    "required": [
-                                        "curves"
-                                    ]
-                                },
-                                "visible": true
-                            },
-                            {
-                                "name": "sample",
-                                "value": 1,
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/number.json",
-                                    "title": "Number",
-                                    "type": "number"
-                                },
-                                "visible": true
-                            }
-                        ],
-                        "annotations": {
-                            "ui.position.x": -183.30615089585882,
-                            "ui.position.y": 279.97471812334743
-                        }
-                    },
-                    {
-                        "id": "7aef5eec-7c29-419f-95db-5711d5a0d3e3",
-                        "type": "studio.tokens.curve.sample",
-                        "inputs": [
-                            {
-                                "name": "curve",
-                                "value": {
-                                    "curves": [
-                                        {
-                                            "points": [
-                                                [
-                                                    0,
-                                                    0
-                                                ],
-                                                [
-                                                    0.8055549621582031,
-                                                    0.40444433593749995
-                                                ],
-                                                [
-                                                    0.3263885498046875,
-                                                    0.9066667480468751
-                                                ],
-                                                [
-                                                    1,
-                                                    1
-                                                ]
-                                            ]
-                                        }
-                                    ]
-                                },
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/curve.json",
-                                    "title": "Curve",
-                                    "type": "object",
-                                    "default": {
-                                        "curves": [
-                                            {
-                                                "type": "bezier",
-                                                "points": [
-                                                    [
-                                                        0,
-                                                        0
-                                                    ],
-                                                    [
-                                                        0.25,
-                                                        0.6
-                                                    ],
-                                                    [
-                                                        0.75,
-                                                        0.4
-                                                    ],
-                                                    [
-                                                        1,
-                                                        1
-                                                    ]
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    "properties": {
-                                        "curves": {
-                                            "type": "array",
-                                            "items": [
-                                                {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "type": {
-                                                            "type": "string"
-                                                        },
-                                                        "points": {
-                                                            "type": "array",
-                                                            "items": [
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "integer"
-                                                                        },
-                                                                        {
-                                                                            "type": "integer"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "number"
-                                                                        },
-                                                                        {
-                                                                            "type": "number"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "number"
-                                                                        },
-                                                                        {
-                                                                            "type": "number"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "type": "array",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "integer"
-                                                                        },
-                                                                        {
-                                                                            "type": "integer"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "type",
-                                                        "points"
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    "required": [
-                                        "curves"
-                                    ]
-                                },
-                                "visible": true
-                            },
-                            {
-                                "name": "sample",
-                                "value": 1,
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/number.json",
-                                    "title": "Number",
-                                    "type": "number"
-                                },
-                                "visible": true
-                            }
-                        ],
-                        "annotations": {
-                            "ui.position.x": -175.89827922932432,
-                            "ui.position.y": 438.7148252633716
-                        }
-                    },
-                    {
-                        "id": "8be4512a-d42d-4d7f-a4c8-1a5a29ee6eaf",
-                        "type": "studio.tokens.vector2.destructure",
-                        "inputs": [
-                            {
-                                "name": "value",
-                                "value": [
-                                    1,
-                                    1
-                                ],
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/vec2.json",
-                                    "title": "Vec2",
-                                    "type": "array",
-                                    "minItems": 2,
-                                    "maxItems": 2,
-                                    "items": {
-                                        "$id": "https://schemas.tokens.studio/number.json",
-                                        "title": "Number",
-                                        "type": "number"
-                                    },
-                                    "default": [
-                                        0,
-                                        0
-                                    ]
-                                },
-                                "visible": true
-                            }
-                        ],
-                        "annotations": {
-                            "ui.position.x": 370.1676893323592,
-                            "ui.position.y": 112.7684719358551
-                        }
-                    },
-                    {
-                        "id": "c1ce6e67-59cb-440e-aa5a-dfe37d1536ce",
-                        "type": "studio.tokens.vector2.destructure",
-                        "inputs": [
-                            {
-                                "name": "value",
-                                "value": [
-                                    1,
-                                    1
-                                ],
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/vec2.json",
-                                    "title": "Vec2",
-                                    "type": "array",
-                                    "minItems": 2,
-                                    "maxItems": 2,
-                                    "items": {
-                                        "$id": "https://schemas.tokens.studio/number.json",
-                                        "title": "Number",
-                                        "type": "number"
-                                    },
-                                    "default": [
-                                        0,
-                                        0
-                                    ]
-                                },
-                                "visible": true
-                            }
-                        ],
-                        "annotations": {
-                            "ui.position.x": 389.21650218916204,
-                            "ui.position.y": 275.74164859961337
-                        }
-                    },
-                    {
-                        "id": "91a061a6-02ec-4a0b-8f0c-de2a3310552c",
-                        "type": "studio.tokens.vector2.destructure",
-                        "inputs": [
-                            {
-                                "name": "value",
-                                "value": [
-                                    1,
-                                    1
-                                ],
-                                "type": {
-                                    "$id": "https://schemas.tokens.studio/vec2.json",
-                                    "title": "Vec2",
-                                    "type": "array",
-                                    "minItems": 2,
-                                    "maxItems": 2,
-                                    "items": {
-                                        "$id": "https://schemas.tokens.studio/number.json",
-                                        "title": "Number",
-                                        "type": "number"
-                                    },
-                                    "default": [
-                                        0,
-                                        0
-                                    ]
-                                },
-                                "visible": true
-                            }
-                        ],
-                        "annotations": {
-                            "ui.position.x": 404.03224552223105,
-                            "ui.position.y": 433.4234883587041
-                        }
-                    }
-                ],
-                "edges": [
-                    {
-                        "id": "6eb8bea9-1a36-4873-bf71-3db29fb8208d",
-                        "source": "adf59978-9761-4fdf-bc97-0c750dc883d7",
-                        "sourceHandle": "red",
-                        "target": "a4c63bab-3cc3-4e3b-8fd7-71a207fd90e1",
-                        "targetHandle": "curve"
-                    },
-                    {
-                        "id": "33f6063b-130a-4f24-bfb8-485d1cd347ad",
-                        "source": "adf59978-9761-4fdf-bc97-0c750dc883d7",
-                        "sourceHandle": "value",
-                        "target": "a4c63bab-3cc3-4e3b-8fd7-71a207fd90e1",
-                        "targetHandle": "sample"
-                    },
-                    {
-                        "id": "5f2a3ba3-31a0-40b7-a12e-378805865db0",
-                        "source": "adf59978-9761-4fdf-bc97-0c750dc883d7",
-                        "sourceHandle": "blue",
-                        "target": "94bbc5ce-fa1c-4a90-b331-57b231fc3122",
-                        "targetHandle": "curve"
-                    },
-                    {
-                        "id": "999e120e-4be6-45b7-a112-40bdda865091",
-                        "source": "adf59978-9761-4fdf-bc97-0c750dc883d7",
-                        "sourceHandle": "value",
-                        "target": "94bbc5ce-fa1c-4a90-b331-57b231fc3122",
-                        "targetHandle": "sample"
-                    },
-                    {
-                        "id": "683090d5-4fc8-4a3e-ad8e-cd349c1651b3",
-                        "source": "adf59978-9761-4fdf-bc97-0c750dc883d7",
-                        "sourceHandle": "green",
-                        "target": "7aef5eec-7c29-419f-95db-5711d5a0d3e3",
-                        "targetHandle": "curve"
-                    },
-                    {
-                        "id": "dda59a06-f839-4d8e-80b8-f558485ece4d",
-                        "source": "adf59978-9761-4fdf-bc97-0c750dc883d7",
-                        "sourceHandle": "value",
-                        "target": "7aef5eec-7c29-419f-95db-5711d5a0d3e3",
-                        "targetHandle": "sample"
-                    },
-                    {
-                        "id": "2ecdc761-fc99-45a5-ae46-48ec30887c21",
-                        "source": "a4c63bab-3cc3-4e3b-8fd7-71a207fd90e1",
-                        "sourceHandle": "value",
-                        "target": "8be4512a-d42d-4d7f-a4c8-1a5a29ee6eaf",
-                        "targetHandle": "value"
-                    },
-                    {
-                        "id": "7e67ae00-197f-44ab-ba96-46304a2f283f",
-                        "source": "94bbc5ce-fa1c-4a90-b331-57b231fc3122",
-                        "sourceHandle": "value",
-                        "target": "c1ce6e67-59cb-440e-aa5a-dfe37d1536ce",
-                        "targetHandle": "value"
-                    },
-                    {
-                        "id": "8e145764-5b37-4d69-8e3f-57c1fe93c085",
-                        "source": "7aef5eec-7c29-419f-95db-5711d5a0d3e3",
-                        "sourceHandle": "value",
-                        "target": "91a061a6-02ec-4a0b-8f0c-de2a3310552c",
-                        "targetHandle": "value"
-                    },
-                    {
-                        "id": "cfe75760-15ff-4f71-be51-443d61edc985",
-                        "source": "8be4512a-d42d-4d7f-a4c8-1a5a29ee6eaf",
-                        "sourceHandle": "x",
-                        "target": "4f0eccde-dc1f-41a8-839f-e3497c65d00d",
-                        "targetHandle": "a"
-                    },
-                    {
-                        "id": "eda07576-881d-49a3-934d-a851f7b87cbb",
-                        "source": "c1ce6e67-59cb-440e-aa5a-dfe37d1536ce",
-                        "sourceHandle": "x",
-                        "target": "4f0eccde-dc1f-41a8-839f-e3497c65d00d",
-                        "targetHandle": "b"
-                    },
-                    {
-                        "id": "15529610-85b1-45cd-bdc4-e80a5063c0d0",
-                        "source": "91a061a6-02ec-4a0b-8f0c-de2a3310552c",
-                        "sourceHandle": "x",
-                        "target": "4f0eccde-dc1f-41a8-839f-e3497c65d00d",
-                        "targetHandle": "c"
-                    },
-                    {
-                        "id": "aee99c84-d580-475e-b127-e3e3404a6d99",
-                        "source": "4f0eccde-dc1f-41a8-839f-e3497c65d00d",
-                        "sourceHandle": "value",
-                        "target": "7281f382-aacf-4ae0-9422-df49c62bbad6",
-                        "targetHandle": "value"
-                    }
-                ],
-                "annotations": {
-                    "engine.id": "fffb6961-4500-4d1a-97c8-9665ec6215a4",
-                    "engine.capabilities.web-audio": "0.0.0",
-                    "engine.capabilities.fs": "0.0.0",
-                    "engine.version": "0.12.0"
-                }
-            }
-        },
-        {
-            "id": "40ad9f1a-5d7e-4cd3-ab5c-c3410263a3b2",
-            "type": "studio.tokens.series.arithmetic",
-            "inputs": [
-                {
-                    "name": "base",
-                    "value": 0,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/number.json",
-                        "title": "Number",
-                        "type": "number",
-                        "default": 16
-                    },
-                    "visible": true
-                },
-                {
-                    "name": "stepsDown",
-                    "value": 0,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/number.json",
-                        "title": "Number",
-                        "type": "number",
-                        "default": 0
-                    },
-                    "visible": true
-                },
-                {
-                    "name": "stepsUp",
-                    "value": 10,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/number.json",
-                        "title": "Number",
-                        "type": "number",
-                        "default": 1
-                    },
-                    "visible": true
-                },
-                {
-                    "name": "increment",
-                    "value": 0.1,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/number.json",
-                        "title": "Number",
-                        "type": "number",
-                        "default": 1
-                    }
-                },
-                {
-                    "name": "precision",
-                    "value": 2,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/number.json",
-                        "title": "Number",
-                        "type": "number",
-                        "default": 2
-                    }
-                }
-            ],
-            "annotations": {
-                "ui.position.x": 253.87908827701267,
-                "ui.position.y": 423.3453205271199
-            }
-        },
-        {
-            "id": "f98708c5-c422-4d44-bc7f-2cdf476d8be9",
-            "type": "studio.tokens.preview.colorScale",
-            "inputs": [
-                {
-                    "name": "value",
-                    "value": [
-                        "#222134ff",
-                        "#454459ff",
-                        "#686771ff",
-                        "#8a8881ff",
-                        "#a9a88cff",
-                        "#c5c496ff",
-                        "#dddca3ff",
-                        "#efefb6ff",
-                        "#fbfbd4ff",
-                        "#ffffffff",
-                        "#ffffffff"
-                    ],
-                    "type": {
-                        "type": "array",
-                        "items": {
-                            "$id": "https://schemas.tokens.studio/color.json",
-                            "title": "Color",
-                            "type": "string"
-                        }
-                    },
-                    "dynamicType": {
-                        "title": "Color",
-                        "type": "array",
-                        "items": {
-                            "$id": "https://schemas.tokens.studio/color.json",
-                            "title": "Color",
-                            "type": "string"
-                        }
-                    },
-                    "visible": true
-                }
-            ],
-            "annotations": {
-                "ui.position.x": 1482.506903689967,
-                "ui.position.y": 604.7421237259513
-            }
-        },
-        {
-            "id": "6b08f5d9-26eb-4645-b22d-b56fd2affd3b",
-            "type": "studio.tokens.generic.note",
-            "inputs": [],
-            "annotations": {
-                "ui.position.x": 876.7069925796782,
-                "ui.position.y": 295.8184276773376,
-                "ui.nodeType": "studio.tokens.generic.note",
-                "ui.description": "This is creating colors by sampling multiple curves   according to the amount of steps that we have"
-            }
-        }
-    ],
-    "edges": [
-        {
-            "id": "7d520d56-d831-4f5c-8bbc-39ccf96eee1f",
-            "source": "40ad9f1a-5d7e-4cd3-ab5c-c3410263a3b2",
-            "sourceHandle": "array",
-            "target": "d429a512-fcd7-48d4-bc7a-9ff1240950dd",
-            "targetHandle": "array"
-        },
-        {
-            "id": "fd50c8cd-67c7-4e4b-a109-7ee34ffd2368",
-            "source": "e485b0fe-fac9-4bbf-8288-02cdfb252b82",
-            "sourceHandle": "value",
-            "target": "d429a512-fcd7-48d4-bc7a-9ff1240950dd",
-            "targetHandle": "red"
-        },
-        {
-            "id": "33660019-c9d5-4293-817e-a8416b3d47b0",
-            "source": "284e1555-05a6-443c-8b66-797aabe88a72",
-            "sourceHandle": "value",
-            "target": "d429a512-fcd7-48d4-bc7a-9ff1240950dd",
-            "targetHandle": "blue"
-        },
-        {
-            "id": "647ff369-6e51-4ac0-969a-25aa87818ad8",
-            "source": "5f562147-a039-4f8b-aa1d-1cadee078969",
-            "sourceHandle": "value",
-            "target": "d429a512-fcd7-48d4-bc7a-9ff1240950dd",
-            "targetHandle": "green"
-        },
-        {
-            "id": "972a007a-4e37-4b07-b3bb-bd31ee592f3f",
-            "source": "d429a512-fcd7-48d4-bc7a-9ff1240950dd",
-            "sourceHandle": "value",
-            "target": "f98708c5-c422-4d44-bc7f-2cdf476d8be9",
-            "targetHandle": "value"
-        }
-    ],
-    "annotations": {
-        "engine.id": "59833114-a3dd-4f3b-8092-604875368aec",
-        "engine.capabilities.web-audio": "0.0.0",
-        "engine.capabilities.fs": "0.0.0",
-        "engine.version": "0.12.0",
-        "ui.viewport": {
-            "x": -85.31217041286698,
-            "y": -213.6211695772855,
-            "zoom": 0.8100447909477646
-        },
-        "ui.version": "2.9.4"
-    }
+	"nodes": [
+		{
+			"id": "e485b0fe-fac9-4bbf-8288-02cdfb252b82",
+			"type": "studio.tokens.generic.constant",
+			"inputs": [
+				{
+					"name": "value",
+					"value": {
+						"curves": [
+							{
+								"points": [
+									[0, 0],
+									[0.4096254355400697, 0.528],
+									[0.6724738675958188, 0.064],
+									[1, 1]
+								]
+							}
+						]
+					},
+					"type": {
+						"$id": "https://schemas.tokens.studio/any.json",
+						"title": "Any"
+					},
+					"dynamicType": {
+						"$id": "https://schemas.tokens.studio/curve.json",
+						"title": "Curve",
+						"type": "object",
+						"default": {
+							"curves": [
+								{
+									"type": "bezier",
+									"points": [
+										[0, 0],
+										[0.25, 0.6],
+										[0.75, 0.4],
+										[1, 1]
+									]
+								}
+							]
+						},
+						"properties": {
+							"curves": {
+								"type": "array",
+								"items": [
+									{
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string"
+											},
+											"points": {
+												"type": "array",
+												"items": [
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "integer"
+															},
+															{
+																"type": "integer"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "number"
+															},
+															{
+																"type": "number"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "number"
+															},
+															{
+																"type": "number"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "integer"
+															},
+															{
+																"type": "integer"
+															}
+														]
+													}
+												]
+											}
+										},
+										"required": ["type", "points"]
+									}
+								]
+							}
+						},
+						"required": ["curves"]
+					},
+					"annotations": {
+						"ui.resetable": true
+					}
+				}
+			],
+			"annotations": {
+				"ui.position.x": 253.87908827701267,
+				"ui.position.y": 612.5478158260928
+			}
+		},
+		{
+			"id": "284e1555-05a6-443c-8b66-797aabe88a72",
+			"type": "studio.tokens.generic.constant",
+			"inputs": [
+				{
+					"name": "value",
+					"value": {
+						"curves": [
+							{
+								"points": [
+									[0, 0],
+									[0.08214803556116618, 0.542222412109375],
+									[1, 0.5448889160156251],
+									[1, 1]
+								]
+							}
+						]
+					},
+					"type": {
+						"$id": "https://schemas.tokens.studio/any.json",
+						"title": "Any"
+					},
+					"dynamicType": {
+						"$id": "https://schemas.tokens.studio/curve.json",
+						"title": "Curve",
+						"type": "object",
+						"default": {
+							"curves": [
+								{
+									"type": "bezier",
+									"points": [
+										[0, 0],
+										[0.25, 0.6],
+										[0.75, 0.4],
+										[1, 1]
+									]
+								}
+							]
+						},
+						"properties": {
+							"curves": {
+								"type": "array",
+								"items": [
+									{
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string"
+											},
+											"points": {
+												"type": "array",
+												"items": [
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "integer"
+															},
+															{
+																"type": "integer"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "number"
+															},
+															{
+																"type": "number"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "number"
+															},
+															{
+																"type": "number"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "integer"
+															},
+															{
+																"type": "integer"
+															}
+														]
+													}
+												]
+											}
+										},
+										"required": ["type", "points"]
+									}
+								]
+							}
+						},
+						"required": ["curves"]
+					},
+					"annotations": {
+						"ui.resetable": true
+					}
+				}
+			],
+			"annotations": {
+				"ui.position.x": 253.87908827701267,
+				"ui.position.y": 741.2669645130932
+			}
+		},
+		{
+			"id": "5f562147-a039-4f8b-aa1d-1cadee078969",
+			"type": "studio.tokens.generic.constant",
+			"inputs": [
+				{
+					"name": "value",
+					"value": {
+						"curves": [
+							{
+								"points": [
+									[0, 0],
+									[0.8055549621582031, 0.40444433593749995],
+									[0.3263885498046875, 0.9066667480468751],
+									[1, 1]
+								]
+							}
+						]
+					},
+					"type": {
+						"$id": "https://schemas.tokens.studio/any.json",
+						"title": "Any"
+					},
+					"dynamicType": {
+						"$id": "https://schemas.tokens.studio/curve.json",
+						"title": "Curve",
+						"type": "object",
+						"default": {
+							"curves": [
+								{
+									"type": "bezier",
+									"points": [
+										[0, 0],
+										[0.25, 0.6],
+										[0.75, 0.4],
+										[1, 1]
+									]
+								}
+							]
+						},
+						"properties": {
+							"curves": {
+								"type": "array",
+								"items": [
+									{
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string"
+											},
+											"points": {
+												"type": "array",
+												"items": [
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "integer"
+															},
+															{
+																"type": "integer"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "number"
+															},
+															{
+																"type": "number"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "number"
+															},
+															{
+																"type": "number"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "integer"
+															},
+															{
+																"type": "integer"
+															}
+														]
+													}
+												]
+											}
+										},
+										"required": ["type", "points"]
+									}
+								]
+							}
+						},
+						"required": ["curves"]
+					},
+					"annotations": {
+						"ui.resetable": true
+					}
+				}
+			],
+			"annotations": {
+				"ui.position.x": 253.87908827701267,
+				"ui.position.y": 869.9861132000935
+			}
+		},
+		{
+			"id": "d429a512-fcd7-48d4-bc7a-9ff1240950dd",
+			"type": "tokens.studio.array.map",
+			"inputs": [
+				{
+					"name": "array",
+					"value": [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+					"type": {
+						"title": "Any[]",
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/any.json",
+							"title": "Any"
+						},
+						"default": []
+					},
+					"dynamicType": {
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/number.json",
+							"title": "Number",
+							"type": "number"
+						}
+					},
+					"visible": true,
+					"annotations": {
+						"ui.editable": false
+					}
+				},
+				{
+					"name": "red",
+					"value": {
+						"curves": [
+							{
+								"points": [
+									[0, 0],
+									[0.4096254355400697, 0.528],
+									[0.6724738675958188, 0.064],
+									[1, 1]
+								]
+							}
+						]
+					},
+					"type": {
+						"$id": "https://schemas.tokens.studio/curve.json",
+						"title": "Curve",
+						"type": "object",
+						"default": {
+							"curves": [
+								{
+									"type": "bezier",
+									"points": [
+										[0, 0],
+										[0.25, 0.6],
+										[0.75, 0.4],
+										[1, 1]
+									]
+								}
+							]
+						},
+						"properties": {
+							"curves": {
+								"type": "array",
+								"items": [
+									{
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string"
+											},
+											"points": {
+												"type": "array",
+												"items": [
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "integer"
+															},
+															{
+																"type": "integer"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "number"
+															},
+															{
+																"type": "number"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "number"
+															},
+															{
+																"type": "number"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "integer"
+															},
+															{
+																"type": "integer"
+															}
+														]
+													}
+												]
+											}
+										},
+										"required": ["type", "points"]
+									}
+								]
+							}
+						},
+						"required": ["curves"]
+					},
+					"visible": true
+				},
+				{
+					"name": "blue",
+					"value": {
+						"curves": [
+							{
+								"points": [
+									[0, 0],
+									[0.08214803556116618, 0.542222412109375],
+									[1, 0.5448889160156251],
+									[1, 1]
+								]
+							}
+						]
+					},
+					"type": {
+						"$id": "https://schemas.tokens.studio/curve.json",
+						"title": "Curve",
+						"type": "object",
+						"default": {
+							"curves": [
+								{
+									"type": "bezier",
+									"points": [
+										[0, 0],
+										[0.25, 0.6],
+										[0.75, 0.4],
+										[1, 1]
+									]
+								}
+							]
+						},
+						"properties": {
+							"curves": {
+								"type": "array",
+								"items": [
+									{
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string"
+											},
+											"points": {
+												"type": "array",
+												"items": [
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "integer"
+															},
+															{
+																"type": "integer"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "number"
+															},
+															{
+																"type": "number"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "number"
+															},
+															{
+																"type": "number"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "integer"
+															},
+															{
+																"type": "integer"
+															}
+														]
+													}
+												]
+											}
+										},
+										"required": ["type", "points"]
+									}
+								]
+							}
+						},
+						"required": ["curves"]
+					},
+					"visible": true
+				},
+				{
+					"name": "green",
+					"value": {
+						"curves": [
+							{
+								"points": [
+									[0, 0],
+									[0.8055549621582031, 0.40444433593749995],
+									[0.3263885498046875, 0.9066667480468751],
+									[1, 1]
+								]
+							}
+						]
+					},
+					"type": {
+						"$id": "https://schemas.tokens.studio/curve.json",
+						"title": "Curve",
+						"type": "object",
+						"default": {
+							"curves": [
+								{
+									"type": "bezier",
+									"points": [
+										[0, 0],
+										[0.25, 0.6],
+										[0.75, 0.4],
+										[1, 1]
+									]
+								}
+							]
+						},
+						"properties": {
+							"curves": {
+								"type": "array",
+								"items": [
+									{
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string"
+											},
+											"points": {
+												"type": "array",
+												"items": [
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "integer"
+															},
+															{
+																"type": "integer"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "number"
+															},
+															{
+																"type": "number"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "number"
+															},
+															{
+																"type": "number"
+															}
+														]
+													},
+													{
+														"type": "array",
+														"items": [
+															{
+																"type": "integer"
+															},
+															{
+																"type": "integer"
+															}
+														]
+													}
+												]
+											}
+										},
+										"required": ["type", "points"]
+									}
+								]
+							}
+						},
+						"required": ["curves"]
+					},
+					"visible": true
+				}
+			],
+			"annotations": {
+				"ui.position.x": 836,
+				"ui.position.y": 616.5
+			},
+			"innergraph": {
+				"nodes": [
+					{
+						"id": "adf59978-9761-4fdf-bc97-0c750dc883d7",
+						"type": "studio.tokens.generic.input",
+						"inputs": [
+							{
+								"name": "value",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/any.json",
+									"title": "Any"
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"annotations": {
+									"ui.editable": false,
+									"ui.hidden": true,
+									"engine.hideFromParentSubgraph": true
+								}
+							},
+							{
+								"name": "index",
+								"value": 10,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"annotations": {
+									"ui.editable": false,
+									"engine.hideFromParentSubgraph": true
+								}
+							},
+							{
+								"name": "length",
+								"value": 11,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"annotations": {
+									"ui.editable": false,
+									"engine.hideFromParentSubgraph": true
+								}
+							},
+							{
+								"name": "red",
+								"value": {
+									"curves": [
+										{
+											"points": [
+												[0, 0],
+												[0.4096254355400697, 0.528],
+												[0.6724738675958188, 0.064],
+												[1, 1]
+											]
+										}
+									]
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/curve.json",
+									"title": "Curve",
+									"type": "object",
+									"default": {
+										"curves": [
+											{
+												"type": "bezier",
+												"points": [
+													[0, 0],
+													[0.25, 0.6],
+													[0.75, 0.4],
+													[1, 1]
+												]
+											}
+										]
+									},
+									"properties": {
+										"curves": {
+											"type": "array",
+											"items": [
+												{
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string"
+														},
+														"points": {
+															"type": "array",
+															"items": [
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "integer"
+																		},
+																		{
+																			"type": "integer"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "number"
+																		},
+																		{
+																			"type": "number"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "number"
+																		},
+																		{
+																			"type": "number"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "integer"
+																		},
+																		{
+																			"type": "integer"
+																		}
+																	]
+																}
+															]
+														}
+													},
+													"required": ["type", "points"]
+												}
+											]
+										}
+									},
+									"required": ["curves"]
+								},
+								"annotations": {
+									"ui.deletable": true
+								}
+							},
+							{
+								"name": "blue",
+								"value": {
+									"curves": [
+										{
+											"points": [
+												[0, 0],
+												[0.08214803556116618, 0.542222412109375],
+												[1, 0.5448889160156251],
+												[1, 1]
+											]
+										}
+									]
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/curve.json",
+									"title": "Curve",
+									"type": "object",
+									"default": {
+										"curves": [
+											{
+												"type": "bezier",
+												"points": [
+													[0, 0],
+													[0.25, 0.6],
+													[0.75, 0.4],
+													[1, 1]
+												]
+											}
+										]
+									},
+									"properties": {
+										"curves": {
+											"type": "array",
+											"items": [
+												{
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string"
+														},
+														"points": {
+															"type": "array",
+															"items": [
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "integer"
+																		},
+																		{
+																			"type": "integer"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "number"
+																		},
+																		{
+																			"type": "number"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "number"
+																		},
+																		{
+																			"type": "number"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "integer"
+																		},
+																		{
+																			"type": "integer"
+																		}
+																	]
+																}
+															]
+														}
+													},
+													"required": ["type", "points"]
+												}
+											]
+										}
+									},
+									"required": ["curves"]
+								},
+								"annotations": {
+									"ui.deletable": true
+								}
+							},
+							{
+								"name": "green",
+								"value": {
+									"curves": [
+										{
+											"points": [
+												[0, 0],
+												[0.8055549621582031, 0.40444433593749995],
+												[0.3263885498046875, 0.9066667480468751],
+												[1, 1]
+											]
+										}
+									]
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/curve.json",
+									"title": "Curve",
+									"type": "object",
+									"default": {
+										"curves": [
+											{
+												"type": "bezier",
+												"points": [
+													[0, 0],
+													[0.25, 0.6],
+													[0.75, 0.4],
+													[1, 1]
+												]
+											}
+										]
+									},
+									"properties": {
+										"curves": {
+											"type": "array",
+											"items": [
+												{
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string"
+														},
+														"points": {
+															"type": "array",
+															"items": [
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "integer"
+																		},
+																		{
+																			"type": "integer"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "number"
+																		},
+																		{
+																			"type": "number"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "number"
+																		},
+																		{
+																			"type": "number"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "integer"
+																		},
+																		{
+																			"type": "integer"
+																		}
+																	]
+																}
+															]
+														}
+													},
+													"required": ["type", "points"]
+												}
+											]
+										}
+									},
+									"required": ["curves"]
+								},
+								"annotations": {
+									"ui.deletable": true
+								}
+							}
+						],
+						"annotations": {
+							"engine.singleton": true,
+							"engine.dynamicInputs": true,
+							"engine.deletable": false,
+							"ui.position.x": -927.7975050385301,
+							"ui.position.y": 220.2593008691898
+						}
+					},
+					{
+						"id": "7281f382-aacf-4ae0-9422-df49c62bbad6",
+						"type": "studio.tokens.generic.output",
+						"inputs": [
+							{
+								"name": "value",
+								"value": {
+									"space": "srgb",
+									"channels": [1, 1, 1]
+								},
+								"type": {
+									"type": "array",
+									"items": {
+										"$id": "https://schemas.tokens.studio/any.json",
+										"title": "Any"
+									}
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/color.json",
+									"title": "Color",
+									"type": "object",
+									"properties": {
+										"channels": {
+											"type": "array",
+											"items": {
+												"$id": "https://schemas.tokens.studio/number.json",
+												"title": "Number",
+												"type": "number"
+											}
+										},
+										"space": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"alpha": {
+											"$id": "https://schemas.tokens.studio/number.json",
+											"title": "Number",
+											"type": "number"
+										}
+									},
+									"required": ["channels", "space"]
+								},
+								"visible": true,
+								"annotations": {
+									"ui.editable": false
+								}
+							}
+						],
+						"annotations": {
+							"engine.singleton": true,
+							"engine.deletable": false,
+							"ui.position.x": 1749.8367851470362,
+							"ui.position.y": 218.01442744543715
+						}
+					},
+					{
+						"id": "4f0eccde-dc1f-41a8-839f-e3497c65d00d",
+						"type": "studio.tokens.color.create",
+						"inputs": [
+							{
+								"name": "space",
+								"value": "srgb",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string",
+									"enum": [
+										"srgb",
+										"lrgb",
+										"p3",
+										"prophoto",
+										"rec2020",
+										"a98",
+										"hsl",
+										"hsv",
+										"hsi",
+										"hwb",
+										"lab",
+										"lch",
+										"lab65",
+										"lch65",
+										"luv",
+										"lchuv",
+										"dlab",
+										"dlch",
+										"oklab",
+										"oklch",
+										"okhsv",
+										"jab",
+										"jch",
+										"yiq",
+										"xyz50",
+										"xyz65",
+										"xyb",
+										"itp",
+										"cubehelix"
+									],
+									"default": "srgb"
+								}
+							},
+							{
+								"name": "a",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": "0"
+								},
+								"visible": true
+							},
+							{
+								"name": "b",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": "0"
+								},
+								"visible": true
+							},
+							{
+								"name": "c",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": "0"
+								},
+								"visible": true
+							},
+							{
+								"name": "d",
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"visible": true
+							}
+						],
+						"annotations": {
+							"ui.position.x": 1145.166058508571,
+							"ui.position.y": 204.18102516522242
+						}
+					},
+					{
+						"id": "a4c63bab-3cc3-4e3b-8fd7-71a207fd90e1",
+						"type": "studio.tokens.curve.sample",
+						"inputs": [
+							{
+								"name": "curve",
+								"value": {
+									"curves": [
+										{
+											"points": [
+												[0, 0],
+												[0.4096254355400697, 0.528],
+												[0.6724738675958188, 0.064],
+												[1, 1]
+											]
+										}
+									]
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/curve.json",
+									"title": "Curve",
+									"type": "object",
+									"default": {
+										"curves": [
+											{
+												"type": "bezier",
+												"points": [
+													[0, 0],
+													[0.25, 0.6],
+													[0.75, 0.4],
+													[1, 1]
+												]
+											}
+										]
+									},
+									"properties": {
+										"curves": {
+											"type": "array",
+											"items": [
+												{
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string"
+														},
+														"points": {
+															"type": "array",
+															"items": [
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "integer"
+																		},
+																		{
+																			"type": "integer"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "number"
+																		},
+																		{
+																			"type": "number"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "number"
+																		},
+																		{
+																			"type": "number"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "integer"
+																		},
+																		{
+																			"type": "integer"
+																		}
+																	]
+																}
+															]
+														}
+													},
+													"required": ["type", "points"]
+												}
+											]
+										}
+									},
+									"required": ["curves"]
+								},
+								"visible": true
+							},
+							{
+								"name": "sample",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0.5
+								},
+								"visible": true
+							}
+						],
+						"annotations": {
+							"ui.position.x": -195.50868699257762,
+							"ui.position.y": 107.09389484165905
+						}
+					},
+					{
+						"id": "94bbc5ce-fa1c-4a90-b331-57b231fc3122",
+						"type": "studio.tokens.curve.sample",
+						"inputs": [
+							{
+								"name": "curve",
+								"value": {
+									"curves": [
+										{
+											"points": [
+												[0, 0],
+												[0.08214803556116618, 0.542222412109375],
+												[1, 0.5448889160156251],
+												[1, 1]
+											]
+										}
+									]
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/curve.json",
+									"title": "Curve",
+									"type": "object",
+									"default": {
+										"curves": [
+											{
+												"type": "bezier",
+												"points": [
+													[0, 0],
+													[0.25, 0.6],
+													[0.75, 0.4],
+													[1, 1]
+												]
+											}
+										]
+									},
+									"properties": {
+										"curves": {
+											"type": "array",
+											"items": [
+												{
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string"
+														},
+														"points": {
+															"type": "array",
+															"items": [
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "integer"
+																		},
+																		{
+																			"type": "integer"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "number"
+																		},
+																		{
+																			"type": "number"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "number"
+																		},
+																		{
+																			"type": "number"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "integer"
+																		},
+																		{
+																			"type": "integer"
+																		}
+																	]
+																}
+															]
+														}
+													},
+													"required": ["type", "points"]
+												}
+											]
+										}
+									},
+									"required": ["curves"]
+								},
+								"visible": true
+							},
+							{
+								"name": "sample",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0.5
+								},
+								"visible": true
+							}
+						],
+						"annotations": {
+							"ui.position.x": -183.30615089585882,
+							"ui.position.y": 279.97471812334743
+						}
+					},
+					{
+						"id": "7aef5eec-7c29-419f-95db-5711d5a0d3e3",
+						"type": "studio.tokens.curve.sample",
+						"inputs": [
+							{
+								"name": "curve",
+								"value": {
+									"curves": [
+										{
+											"points": [
+												[0, 0],
+												[0.8055549621582031, 0.40444433593749995],
+												[0.3263885498046875, 0.9066667480468751],
+												[1, 1]
+											]
+										}
+									]
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/curve.json",
+									"title": "Curve",
+									"type": "object",
+									"default": {
+										"curves": [
+											{
+												"type": "bezier",
+												"points": [
+													[0, 0],
+													[0.25, 0.6],
+													[0.75, 0.4],
+													[1, 1]
+												]
+											}
+										]
+									},
+									"properties": {
+										"curves": {
+											"type": "array",
+											"items": [
+												{
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string"
+														},
+														"points": {
+															"type": "array",
+															"items": [
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "integer"
+																		},
+																		{
+																			"type": "integer"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "number"
+																		},
+																		{
+																			"type": "number"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "number"
+																		},
+																		{
+																			"type": "number"
+																		}
+																	]
+																},
+																{
+																	"type": "array",
+																	"items": [
+																		{
+																			"type": "integer"
+																		},
+																		{
+																			"type": "integer"
+																		}
+																	]
+																}
+															]
+														}
+													},
+													"required": ["type", "points"]
+												}
+											]
+										}
+									},
+									"required": ["curves"]
+								},
+								"visible": true
+							},
+							{
+								"name": "sample",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0.5
+								},
+								"visible": true
+							}
+						],
+						"annotations": {
+							"ui.position.x": -175.89827922932432,
+							"ui.position.y": 438.7148252633716
+						}
+					},
+					{
+						"id": "8be4512a-d42d-4d7f-a4c8-1a5a29ee6eaf",
+						"type": "studio.tokens.vector2.destructure",
+						"inputs": [
+							{
+								"name": "value",
+								"value": [1, 1],
+								"type": {
+									"$id": "https://schemas.tokens.studio/vec2.json",
+									"title": "Vec2",
+									"type": "array",
+									"minItems": 2,
+									"maxItems": 2,
+									"items": {
+										"$id": "https://schemas.tokens.studio/number.json",
+										"title": "Number",
+										"type": "number"
+									},
+									"default": [0, 0]
+								},
+								"visible": true
+							}
+						],
+						"annotations": {
+							"ui.position.x": 370.1676893323592,
+							"ui.position.y": 112.7684719358551
+						}
+					},
+					{
+						"id": "c1ce6e67-59cb-440e-aa5a-dfe37d1536ce",
+						"type": "studio.tokens.vector2.destructure",
+						"inputs": [
+							{
+								"name": "value",
+								"value": [1, 1],
+								"type": {
+									"$id": "https://schemas.tokens.studio/vec2.json",
+									"title": "Vec2",
+									"type": "array",
+									"minItems": 2,
+									"maxItems": 2,
+									"items": {
+										"$id": "https://schemas.tokens.studio/number.json",
+										"title": "Number",
+										"type": "number"
+									},
+									"default": [0, 0]
+								},
+								"visible": true
+							}
+						],
+						"annotations": {
+							"ui.position.x": 389.21650218916204,
+							"ui.position.y": 275.74164859961337
+						}
+					},
+					{
+						"id": "91a061a6-02ec-4a0b-8f0c-de2a3310552c",
+						"type": "studio.tokens.vector2.destructure",
+						"inputs": [
+							{
+								"name": "value",
+								"value": [1, 1],
+								"type": {
+									"$id": "https://schemas.tokens.studio/vec2.json",
+									"title": "Vec2",
+									"type": "array",
+									"minItems": 2,
+									"maxItems": 2,
+									"items": {
+										"$id": "https://schemas.tokens.studio/number.json",
+										"title": "Number",
+										"type": "number"
+									},
+									"default": [0, 0]
+								},
+								"visible": true
+							}
+						],
+						"annotations": {
+							"ui.position.x": 404.03224552223105,
+							"ui.position.y": 433.4234883587041
+						}
+					}
+				],
+				"edges": [
+					{
+						"id": "6eb8bea9-1a36-4873-bf71-3db29fb8208d",
+						"source": "adf59978-9761-4fdf-bc97-0c750dc883d7",
+						"sourceHandle": "red",
+						"target": "a4c63bab-3cc3-4e3b-8fd7-71a207fd90e1",
+						"targetHandle": "curve"
+					},
+					{
+						"id": "33f6063b-130a-4f24-bfb8-485d1cd347ad",
+						"source": "adf59978-9761-4fdf-bc97-0c750dc883d7",
+						"sourceHandle": "value",
+						"target": "a4c63bab-3cc3-4e3b-8fd7-71a207fd90e1",
+						"targetHandle": "sample"
+					},
+					{
+						"id": "5f2a3ba3-31a0-40b7-a12e-378805865db0",
+						"source": "adf59978-9761-4fdf-bc97-0c750dc883d7",
+						"sourceHandle": "blue",
+						"target": "94bbc5ce-fa1c-4a90-b331-57b231fc3122",
+						"targetHandle": "curve"
+					},
+					{
+						"id": "999e120e-4be6-45b7-a112-40bdda865091",
+						"source": "adf59978-9761-4fdf-bc97-0c750dc883d7",
+						"sourceHandle": "value",
+						"target": "94bbc5ce-fa1c-4a90-b331-57b231fc3122",
+						"targetHandle": "sample"
+					},
+					{
+						"id": "683090d5-4fc8-4a3e-ad8e-cd349c1651b3",
+						"source": "adf59978-9761-4fdf-bc97-0c750dc883d7",
+						"sourceHandle": "green",
+						"target": "7aef5eec-7c29-419f-95db-5711d5a0d3e3",
+						"targetHandle": "curve"
+					},
+					{
+						"id": "dda59a06-f839-4d8e-80b8-f558485ece4d",
+						"source": "adf59978-9761-4fdf-bc97-0c750dc883d7",
+						"sourceHandle": "value",
+						"target": "7aef5eec-7c29-419f-95db-5711d5a0d3e3",
+						"targetHandle": "sample"
+					},
+					{
+						"id": "2ecdc761-fc99-45a5-ae46-48ec30887c21",
+						"source": "a4c63bab-3cc3-4e3b-8fd7-71a207fd90e1",
+						"sourceHandle": "value",
+						"target": "8be4512a-d42d-4d7f-a4c8-1a5a29ee6eaf",
+						"targetHandle": "value"
+					},
+					{
+						"id": "7e67ae00-197f-44ab-ba96-46304a2f283f",
+						"source": "94bbc5ce-fa1c-4a90-b331-57b231fc3122",
+						"sourceHandle": "value",
+						"target": "c1ce6e67-59cb-440e-aa5a-dfe37d1536ce",
+						"targetHandle": "value"
+					},
+					{
+						"id": "8e145764-5b37-4d69-8e3f-57c1fe93c085",
+						"source": "7aef5eec-7c29-419f-95db-5711d5a0d3e3",
+						"sourceHandle": "value",
+						"target": "91a061a6-02ec-4a0b-8f0c-de2a3310552c",
+						"targetHandle": "value"
+					},
+					{
+						"id": "cfe75760-15ff-4f71-be51-443d61edc985",
+						"source": "8be4512a-d42d-4d7f-a4c8-1a5a29ee6eaf",
+						"sourceHandle": "x",
+						"target": "4f0eccde-dc1f-41a8-839f-e3497c65d00d",
+						"targetHandle": "a"
+					},
+					{
+						"id": "eda07576-881d-49a3-934d-a851f7b87cbb",
+						"source": "c1ce6e67-59cb-440e-aa5a-dfe37d1536ce",
+						"sourceHandle": "x",
+						"target": "4f0eccde-dc1f-41a8-839f-e3497c65d00d",
+						"targetHandle": "b"
+					},
+					{
+						"id": "15529610-85b1-45cd-bdc4-e80a5063c0d0",
+						"source": "91a061a6-02ec-4a0b-8f0c-de2a3310552c",
+						"sourceHandle": "x",
+						"target": "4f0eccde-dc1f-41a8-839f-e3497c65d00d",
+						"targetHandle": "c"
+					},
+					{
+						"id": "aee99c84-d580-475e-b127-e3e3404a6d99",
+						"source": "4f0eccde-dc1f-41a8-839f-e3497c65d00d",
+						"sourceHandle": "value",
+						"target": "7281f382-aacf-4ae0-9422-df49c62bbad6",
+						"targetHandle": "value"
+					}
+				],
+				"annotations": {
+					"engine.id": "fffb6961-4500-4d1a-97c8-9665ec6215a4",
+					"engine.capabilities.web-audio": "0.0.0",
+					"engine.capabilities.fs": "0.0.0",
+					"engine.version": "0.12.0"
+				}
+			}
+		},
+		{
+			"id": "40ad9f1a-5d7e-4cd3-ab5c-c3410263a3b2",
+			"type": "studio.tokens.series.arithmetic",
+			"inputs": [
+				{
+					"name": "base",
+					"value": 0,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 16
+					},
+					"visible": true
+				},
+				{
+					"name": "stepsDown",
+					"value": 0,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 0
+					},
+					"visible": true
+				},
+				{
+					"name": "stepsUp",
+					"value": 10,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 1
+					},
+					"visible": true
+				},
+				{
+					"name": "increment",
+					"value": 0.1,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 1
+					}
+				},
+				{
+					"name": "precision",
+					"value": 2,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 2
+					}
+				}
+			],
+			"annotations": {
+				"ui.position.x": 253.87908827701267,
+				"ui.position.y": 423.3453205271199
+			}
+		},
+		{
+			"id": "f98708c5-c422-4d44-bc7f-2cdf476d8be9",
+			"type": "studio.tokens.preview.colorScale",
+			"inputs": [
+				{
+					"name": "value",
+					"value": [
+						{
+							"space": "srgb",
+							"channels": [0, 0, 0]
+						},
+						{
+							"space": "srgb",
+							"channels": [
+								0.11869577526132406, 0.047961972641363385, 0.20556234664916997
+							]
+						},
+						{
+							"space": "srgb",
+							"channels": [
+								0.2298536585365854, 0.13554484565548786, 0.34866640625000006
+							]
+						},
+						{
+							"space": "srgb",
+							"channels": [
+								0.3347423780487805, 0.25222728368247427, 0.44393717422485335
+							]
+						},
+						{
+							"space": "srgb",
+							"channels": [
+								0.434630662020906, 0.3874879513624238, 0.5059996459960938
+							]
+						},
+						{
+							"space": "srgb",
+							"channels": [
+								0.5307872386759582, 0.5308055133354372, 0.549478816986084
+							]
+						},
+						{
+							"space": "srgb",
+							"channels": [
+								0.6244808362369337, 0.671658634241616, 0.5889996826171872
+							]
+						},
+						{
+							"space": "srgb",
+							"channels": [
+								0.7169801829268292, 0.7995259787210603, 0.6391872383117674
+							]
+						},
+						{
+							"space": "srgb",
+							"channels": [
+								0.8095540069686412, 0.9038862114138719, 0.7146664794921876
+							]
+						},
+						{
+							"space": "srgb",
+							"channels": [
+								0.903471036585366, 0.9742179969601514, 0.8300624015808107
+							]
+						},
+						{
+							"space": "srgb",
+							"channels": [1, 1, 1]
+						}
+					],
+					"type": {
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/color.json",
+							"title": "Color",
+							"type": "object",
+							"properties": {
+								"channels": {
+									"type": "array",
+									"items": {
+										"$id": "https://schemas.tokens.studio/number.json",
+										"title": "Number",
+										"type": "number"
+									}
+								},
+								"space": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"alpha": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								}
+							},
+							"required": ["channels", "space"]
+						}
+					},
+					"dynamicType": {
+						"title": "Color",
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/color.json",
+							"title": "Color",
+							"type": "object",
+							"properties": {
+								"channels": {
+									"type": "array",
+									"items": {
+										"$id": "https://schemas.tokens.studio/number.json",
+										"title": "Number",
+										"type": "number"
+									}
+								},
+								"space": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"alpha": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								}
+							},
+							"required": ["channels", "space"]
+						}
+					},
+					"visible": true
+				}
+			],
+			"annotations": {
+				"ui.position.x": 1482.506903689967,
+				"ui.position.y": 604.7421237259513
+			}
+		},
+		{
+			"id": "6b08f5d9-26eb-4645-b22d-b56fd2affd3b",
+			"type": "studio.tokens.generic.note",
+			"inputs": [],
+			"annotations": {
+				"ui.position.x": 876.7069925796782,
+				"ui.position.y": 295.8184276773376,
+				"ui.nodeType": "studio.tokens.generic.note",
+				"ui.description": "This is creating colors by sampling multiple curves   according to the amount of steps that we have"
+			}
+		}
+	],
+	"edges": [
+		{
+			"id": "7d520d56-d831-4f5c-8bbc-39ccf96eee1f",
+			"source": "40ad9f1a-5d7e-4cd3-ab5c-c3410263a3b2",
+			"sourceHandle": "array",
+			"target": "d429a512-fcd7-48d4-bc7a-9ff1240950dd",
+			"targetHandle": "array"
+		},
+		{
+			"id": "fd50c8cd-67c7-4e4b-a109-7ee34ffd2368",
+			"source": "e485b0fe-fac9-4bbf-8288-02cdfb252b82",
+			"sourceHandle": "value",
+			"target": "d429a512-fcd7-48d4-bc7a-9ff1240950dd",
+			"targetHandle": "red"
+		},
+		{
+			"id": "33660019-c9d5-4293-817e-a8416b3d47b0",
+			"source": "284e1555-05a6-443c-8b66-797aabe88a72",
+			"sourceHandle": "value",
+			"target": "d429a512-fcd7-48d4-bc7a-9ff1240950dd",
+			"targetHandle": "blue"
+		},
+		{
+			"id": "647ff369-6e51-4ac0-969a-25aa87818ad8",
+			"source": "5f562147-a039-4f8b-aa1d-1cadee078969",
+			"sourceHandle": "value",
+			"target": "d429a512-fcd7-48d4-bc7a-9ff1240950dd",
+			"targetHandle": "green"
+		},
+		{
+			"id": "972a007a-4e37-4b07-b3bb-bd31ee592f3f",
+			"source": "d429a512-fcd7-48d4-bc7a-9ff1240950dd",
+			"sourceHandle": "value",
+			"target": "f98708c5-c422-4d44-bc7f-2cdf476d8be9",
+			"targetHandle": "value"
+		}
+	],
+	"annotations": {
+		"engine.id": "59833114-a3dd-4f3b-8092-604875368aec",
+		"engine.capabilities.web-audio": "0.0.0",
+		"engine.capabilities.fs": "0.0.0",
+		"engine.version": "0.12.0",
+		"ui.viewport": {
+			"x": -279.3121704128671,
+			"y": -240.62116957728557,
+			"zoom": 0.8100447909477646
+		},
+		"ui.version": "3.0.0",
+		"ui.viewports": [null, null, null, null, null, null, null, null, null]
+	}
 }

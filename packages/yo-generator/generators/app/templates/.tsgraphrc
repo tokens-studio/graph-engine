@@ -1,0 +1,15 @@
+{
+    "version": "1.0.0",
+    "assets": {
+        "path": "assets"
+    },
+    "nodes": {
+        "path": "nodes"
+    },
+    "metadata": {
+        "path": "metadata.json"
+    },
+    "server": {
+        "port": 3123
+    }
+}

@@ -2,23 +2,15 @@
   "name": "@tokens-studio/graph-engine-nodes-image",
   "version": "1.0.0",
   "description": "Image nodes for the graph engine",
-  "license": "MIT",
+  "license": "MPL-2.0",
   "author": "andrew@hyma.io",
   "type": "module",
   "exports": {
-    "./*": {
-      "import": "./dist/*",
-      "require": "./dist/*",
-      "types": "./dist/*"
-    },
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
       "types": "./dist/index.d.ts"
     }
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
   "files": [
     "dist"
   ],
@@ -32,44 +24,30 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "release": "npm run build && changeset publish",
-    "test": "jest --passWithNoTests"
+    "test": "vitest run --passWithNoTests"
   },
-  "sideEffects": false,
   "types": "./dist/index.d.ts",
   "dependencies": {
     "@imagemagick/magick-wasm": "^0.0.29",
-    "audio-buffer-from": "^1.1.1",
-    "axios": "^1.7.2",
-    "buffer-to-arraybuffer": "^0.0.6",
-    "import-wasm": "^0.2.0",
-    "magica": "^0.2.17"
+    "axios": "^1.7.2"
   },
   "peerDependencies": {
     "@tokens-studio/graph-engine": "*",
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.21.5",
     "@changesets/cli": "2.26.0",
-    "@jest/globals": "^29.5.0",
-    "@tokens-studio/eslint-custom-config": "*",
+    "@tokens-studio/eslint-config-custom": "*",
+    "@tokens-studio/prettier-config-custom": "*",
     "@tokens-studio/graph-engine": "*",
-    "@types/jest": "28.1.0",
-    "@types/node": "^18.15.11",
-    "eslint": "8.57.0",
-    "jest": "28.1.0",
-    "jest-junit": "^15.0.0",
-    "ts-jest": "28.0.3",
-    "ts-jest-resolver": "^2.0.1",
-    "ts-node": "^10.9.1",
-    "tsup": "^8.0.2",
+    "tsup": "^8.1.0",
     "typedoc": "^0.24.7",
-    "typescript": "4.8.4"
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
   },
   "keywords": [
     "studio",
     "tokens",
     "ui"
-  ],
-  "jsnext:main": "./dist/index.js"
+  ]
 }

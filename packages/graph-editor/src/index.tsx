@@ -14,13 +14,12 @@ export * from './components/panels/dropPanel/index.js';
 //Export the menu items
 export * from './components/menubar/index.js';
 
-
 //Export the interface for custom controls
-export * from './components/controls/interface.js'
-//Default controls 
+export * from './components/controls/interface.js';
+//Default controls
 export * from './registry/control.js';
-//Default specifics
 export * from './registry/specifics.js';
-
+export * from './registry/toolbar.js';
 
 export * from './types/index.js';
+export * from './lib/stitches/index.js';

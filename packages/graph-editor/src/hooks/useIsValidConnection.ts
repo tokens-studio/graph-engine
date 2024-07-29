@@ -1,9 +1,9 @@
-import { Connection, useReactFlow } from 'reactflow';
-import { useCallback } from 'react';
-import GraphLib from '@dagrejs/graphlib';
 import { ANY, canConvertSchemaTypes } from '@tokens-studio/graph-engine';
-import { stripVariadic } from '@/utils/stripVariadic';
-import { useLocalGraph } from './useLocalGraph';
+import { Connection, useReactFlow } from 'reactflow';
+import { stripVariadic } from '@/utils/stripVariadic.js';
+import { useCallback } from 'react';
+import { useLocalGraph } from './useLocalGraph.js';
+import GraphLib from '@dagrejs/graphlib';
 const { Graph: CycleGraph, alg } = GraphLib;
 
 export interface IuseIsValidConnection {
@@ -22,7 +22,6 @@ export const useIsValidConnection = ({
 
   return useCallback(
     (connection: Connection): boolean => {
-
       const target = graph.getNode(connection.target!);
       const source = graph.getNode(connection.source!);
 
@@ -36,9 +35,20 @@ export const useIsValidConnection = ({
       }
 
       const strippedVariadic = stripVariadic(connection.targetHandle!);
-      
-      let targetType = target?.inputs[strippedVariadic].type!;
-      let sourceType = source?.outputs[connection.sourceHandle!].type!;
+
+      let targetType = target?.inputs[strippedVariadic].type;
+
+      //They are trying to create a dynamic input. Allow non dynamic sets to connect
+      if (
+        connection.sourceHandle === '[dynamic]' &&
+        !target?.inputs[strippedVariadic].variadic
+      ) {
+        return !target.inputs[strippedVariadic]?.isConnected;
+      }
+
+      let sourceType = connection.sourceHandle
+        ? source?.outputs[connection.sourceHandle].type
+        : null;
 
       if (target.inputs[strippedVariadic].type.items) {
         targetType = target.inputs[strippedVariadic].type.items;
@@ -49,7 +59,10 @@ export const useIsValidConnection = ({
 
       const fullTargetType = target?.inputs[strippedVariadic].fullType();
       //Any types should be allowed to connect to anything
-      if (fullTargetType.type.$id === ANY || fullTargetType.type.items?.$id === ANY) {
+      if (
+        fullTargetType.type.$id === ANY ||
+        fullTargetType.type.items?.$id === ANY
+      ) {
         return true;
       }
 

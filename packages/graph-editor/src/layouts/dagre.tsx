@@ -50,8 +50,8 @@ export function useDagreLayout(
 
     nodes.forEach((node: Node) => {
       dagreGraph.setNode(node.id, {
-        width: node.width,
-        height: node.height,
+        width: node.width ? node.width + 100 : 300,
+        height: node.height ? node.height + 100 : 200,
       });
     });
 

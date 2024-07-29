@@ -1,0 +1,16 @@
+package.json
+package-lock.json
+dist
+coverage
+docs
+jest-coverage
+site
+cli
+.turbo
+.rollup.cache
+.rollup
+build
+storybook-static
+.docusaurus
+cypress
+.next

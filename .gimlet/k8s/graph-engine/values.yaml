@@ -1,0 +1,18 @@
+onechart: 
+  containerPort: 3000
+  replicas: 1
+  resources:
+    ignoreLimits: true
+
+## @param postgresql.secret The secret to reference 
+## @param postgresql.owner The owner of the database
+## @param postgresql.database Name for a custom database to create.
+## @param postgresql.superUser The name of the secret for the superuser
+##
+postgresql:
+  enabled: false
+  # secret: db-graph-engine-secrets
+  owner: nextjs
+  database: graphengine
+  cluster: graphengine
+  # superUser: superuser-secret

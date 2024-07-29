@@ -1,0 +1,147 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Graph {
+  id       String   @id @default(cuid())
+  name     String
+  // Effectively Json
+  graph    Json
+  description String?
+  public    Boolean @default(false)
+
+  owner    String
+  user     User     @relation(fields: [owner], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Thumbnail {
+  id      String   @id @default(cuid())
+  //Size  in bytes
+  size    Int
+  path    String
+  data Bytes?
+  //The original name of the file 
+  name  String
+  //The mime type 
+  type String
+  extension String
+
+
+  //Entities this can be connected to 
+  publishedGraph PublishedGraph?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PublishedGraph {
+  id       String   @id @default(cuid())
+  name     String
+  versions PublishedGraphVersion[]
+  description String?
+  owner    String
+
+  thumbnailId String? @unique
+  thumbnail Thumbnail? @relation(fields: [thumbnailId], references: [id])
+
+  user     User     @relation(fields: [owner], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  downloadsTotal  Int @default(0)
+  likesTotal Int @default(0)
+}
+
+model PublishedGraphVersion{
+  id       String   @id @default(cuid())
+  publishedGraphId String
+  publishedGraph PublishedGraph @relation(fields: [publishedGraphId], references: [id])
+  createdAt DateTime @default(now())
+  version  Int @default(0)
+ // Effectively Json
+  graph    Json
+}
+
+
+model User {
+  id            String          @id @default(cuid())
+  name          String?
+  email         String          @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  // Optional for WebAuthn support
+  Authenticator Authenticator[]
+
+  graphs        Graph[]
+  publishedGraphs PublishedGraph[]
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([provider, providerAccountId])
+}
+ 
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@id([identifier, token])
+}
+ 
+// Optional for WebAuthn support
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([userId, credentialID])
+}

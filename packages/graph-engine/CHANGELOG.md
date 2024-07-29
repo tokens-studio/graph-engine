@@ -1,5 +1,39 @@
 # @tokens-studio/graph-engine
 
+## 2.0.0
+
+### Major Changes
+
+- 787af7d: Rename input channel d to alpha
+- 6321006: Added support for different contrast algorithms Weber, Michelson, APCA, Lstar, DeltaPhi, WCAG21
+  Renamed WCAG Version to algorithm
+  Added validation to distance node
+- f5a622a: Fix contrasting color node
+- 7a7bb9e: BREAKING: Clean up publishing standards, ESM-only, no legacy fields.
+- 921f878: Changed how color was represented to better support more exotic color spaces. Also removed the advanced blend node as culori is an unnecessary complication
+- 6321006: Remove Join Array from array and add to string nodes
+- 921f878: Remove Blend Node and split it up into Lighten, Darken, Mix nodes
+- 6321006: Move Base Font Size Node to Typography section and add precision.
+  Move Contrast from Accessibility to Color
+
+### Minor Changes
+
+- 11dc900: Add deconstruct color node to seperate a color into it's channels
+- 6321006: Change output to color for Color Blindness node
+- 8d0f934: Set dynamic types for variadic inputs
+- 6321006: Add Lighte, Darken, Mix nodes to colors
+- 921f878: Add range mapping node, this node lets you map from one range to another.
+- 6321006: Remove mixing option from the blend node, you now have a mix node for this
+- 921f878: Add string interpolation node for easier naming
+- 6321006: Add WCAG Version selector for contrast node, you can now select between 2.1 and 3.0 (APCA)
+- addb50d: Add preset bezier curves and a create bezier curve
+- 1e68191: Adds filter , find and flatten to array transformations
+
+### Patch Changes
+
+- 921f878: Fixes color compare preview node to crash when entering a non valid color string
+- 921f878: Array Index is now inferring the type
+
 ## 1.0.0
 
 ### Major Changes

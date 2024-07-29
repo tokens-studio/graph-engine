@@ -8,10 +8,27 @@ export const inputControls = createSelector(
 );
 export const controls = createSelector(registry, (state) => state.controls);
 
-export const nodeSpecifics = createSelector(registry, (state) => state.nodeSpecifics);
+export const nodeSpecifics = createSelector(
+  registry,
+  (state) => state.nodeSpecifics,
+);
 
-export const panelItemsSelector = createSelector(registry, (state) => state.panelItems);
+export const panelItemsSelector = createSelector(
+  registry,
+  (state) => state.panelItems,
+);
 
-export const capabilitiesSelector = createSelector(registry, (state) => state.capabilities);
+export const capabilitiesSelector = createSelector(
+  registry,
+  (state) => state.capabilities,
+);
 
-export const nodeTypesSelector = createSelector(registry, (state) => state.nodeTypes);
+export const nodeTypesSelector = createSelector(
+  registry,
+  (state) => state.nodeTypes,
+);
+
+export const ToolBarButtonsSelector = createSelector(
+  registry,
+  (state) => state.toolbarButtons,
+);

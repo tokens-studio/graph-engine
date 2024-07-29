@@ -1,0 +1,6 @@
+dependencies:
+- name: onechart
+  repository: https://chart.onechart.dev
+  version: 0.69.0
+digest: sha256:e316a6ef6f1d10c0e224c6b6f82cd2387102433491814a9b2cbe44ad315c9499
+generated: "2024-07-09T22:52:55.5774121+02:00"

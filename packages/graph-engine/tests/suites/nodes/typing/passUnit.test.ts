@@ -1,45 +1,44 @@
-import Node from "../../../../src/nodes/typing/passUnit.js";
-import { Graph } from "../../../../src/graph/graph.js";
+import { Graph } from '../../../../src/graph/graph.js';
+import { describe, expect, test } from 'vitest';
+import Node from '../../../../src/nodes/typing/passUnit.js';
 
-describe("typing/passUnit", () => {
-  it("adds unit if falsey value", async () => {
-    const graph = new Graph();
-    const node = new Node({ graph });
+describe('typing/passUnit', () => {
+	test('adds unit if falsey value', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
+		node.inputs.value.setValue('0');
+		node.inputs.fallback.setValue('px');
 
-    node.inputs.value.setValue("0");
-    node.inputs.fallback.setValue("px");
+		await node.execute();
 
-    await node.execute();
+		const output = node.outputs.value.value;
+		expect(output).to.equal('0px');
+	});
 
-    const output = node.outputs.value.value;
-    expect(output).toStrictEqual("0px");
-  });
+	test('adds unit if not detected', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-  it("adds unit if not detected", async () => {
-    const graph = new Graph();
-    const node = new Node({ graph });
+		node.inputs.value.setValue('3');
+		node.inputs.fallback.setValue('px');
 
+		await node.execute();
 
-    node.inputs.value.setValue("3");
-    node.inputs.fallback.setValue("px");
+		const output = node.outputs.value.value;
+		expect(output).to.equal('3px');
+	});
 
-    await node.execute();
+	test('does not add unit if  detected', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-    const output = node.outputs.value.value;
-    expect(output).toStrictEqual("3px");
-  });
+		node.inputs.value.setValue('3px');
+		node.inputs.fallback.setValue('px');
 
-  it("does not add unit if  detected", async () => {
-    const graph = new Graph();
-    const node = new Node({ graph });
+		await node.execute();
 
-    node.inputs.value.setValue("3px");
-    node.inputs.fallback.setValue("px");
-
-    await node.execute();
-
-    const output = node.outputs.value.value;
-    expect(output).toStrictEqual("3px");
-  });
+		const output = node.outputs.value.value;
+		expect(output).to.equal('3px');
+	});
 });

@@ -1,79 +1,5 @@
-.dock-panel {
-  border-color: transparent;
-}
-
-.dock-top .dock-bar {
-  border-bottom: none;
-}
-
-.dock-tab {
-  color: var(--gray-12);
-  border-bottom: none;
-  z-index: 10;
-}
-
-.dock-tab>div {
-  padding: var(--space-2) var(--space-3);
-}
-
-.dock-nav-wrap {
-  cursor: move;
-}
-
-.dock-panel.dock-style-main .dock-tab,
-.dock-tab {
-  background: transparent;
-}
-
 #__next {
   height: 100%;
-}
-
-.dock-panel {
-  background: var(--gray-1);
-}
-
-.dock-fbox>.dock-panel {
-  box-shadow: 0 0 0.25rem var(--gray-3);
-}
-
-.dock-top .dock-bar,
-.dock-tab {
-  background: transparent;
-}
-
-.dock-panel.dock-style-main .dock-bar {
-  border-bottom-color: var(--gray-6);
-}
-
-.dock-content-holder {
-  scrollbar-color: var(--colors-bgSubtle) transparent;
-  scrollbar-width: thin;
-  border-bottom: 1px solid var(--gray-6);
-}
-
-.dock-top .dock-ink-bar {
-  background: var(--gray-3);
-  z-index: 0;
-  height: 100%;
-  border-radius: var(--radii-small);
-}
-
-
-
-/* Reset any browser-based margins for the preview */
-#preview {
-  all: unset;
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p {
-    margin: unset;
-  }
 }
 
 html,
@@ -91,8 +17,8 @@ a {
 
 body {
   height: 100vh;
-  color: var(--gray-12);
-  background: var(--gray-1);
+  color: var(--colors-fgDefault);
+  background: var(--colors-pageBg);
 }
 
 

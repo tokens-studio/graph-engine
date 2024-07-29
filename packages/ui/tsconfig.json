@@ -1,79 +1,59 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "include": [
-    "src",
-    "src/scripts",
-    "next-env.d.ts",
-    "prisma",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
-  "ts-node": {
-    "require": [
-      "tsconfig-paths/register"
-    ],
-    // "experimentalSpecifierResolution": "node",
-    // "esm": true,
-    // these options are overrides used only by ts-node
-    // same as our --compilerOptions flag and our TS_NODE_COMPILER_OPTIONS environment variable
-    "compilerOptions": {
-      "module": "es2020",
-      "moduleResolution": "node"
-    }
-  },
-  "compilerOptions": {
-    "target": "esnext",
-    "noImplicitAny": false,
-    "rootDir": ".",
-    "composite": true,
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
-    "experimentalDecorators": true,
-    "allowImportingTsExtensions": true,
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable"
-    ],
-    "strict": true,
-    "noEmit": true,
-    "allowJs": true,
-    "sourceMap": true,
-    "incremental": true,
-    "skipLibCheck": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "types": [
-      "node"
-    ],
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "#selectors": [
-        "src/redux/selectors"
-      ],
-      "#vpages": [
-        "src/virtualPages/*"
-      ],
-      "#selectors/*": [
-        "src/redux/selectors/*"
-      ]
-    },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
-  }
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"include": [
+		"src",
+		"src/scripts",
+		"next-env.d.ts",
+		"prisma",
+		".next/types/**/*.ts"
+	],
+	"exclude": ["node_modules"],
+	"ts-node": {
+		"require": ["tsconfig-paths/register"],
+		// "experimentalSpecifierResolution": "node",
+		// "esm": true,
+		// these options are overrides used only by ts-node
+		// same as our --compilerOptions flag and our TS_NODE_COMPILER_OPTIONS environment variable
+		"compilerOptions": {
+			"module": "es2020",
+			"moduleResolution": "bundler"
+		}
+	},
+	"compilerOptions": {
+		"target": "esnext",
+		"noImplicitAny": false,
+		"rootDir": ".",
+		"composite": true,
+		"module": "NodeNext",
+		"moduleResolution": "nodenext",
+		"experimentalDecorators": true,
+		"allowImportingTsExtensions": true,
+		"lib": ["esnext", "dom", "dom.iterable"],
+		"strict": true,
+		"noEmit": true,
+		"allowJs": true,
+		"sourceMap": true,
+		"incremental": true,
+		"skipLibCheck": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
+		"types": ["node"],
+		"typeRoots": ["node_modules/@types"],
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"],
+			"#selectors": ["src/redux/selectors"],
+			"#vpages": ["src/virtualPages/*"],
+			"#selectors/*": ["src/redux/selectors/*"]
+		},
+		"plugins": [
+			{
+				"name": "next"
+			}
+		]
+	}
 }

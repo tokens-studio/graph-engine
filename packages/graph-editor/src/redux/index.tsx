@@ -1,9 +1,22 @@
 import { Provider } from 'react-redux';
-import React, { useEffect } from 'react';
 import { store } from './store.js';
+import React, { useEffect } from 'react';
 
-export const ReduxProvider = ({ children, nodeTypes, panelItems, capabilities, icons, controls, specifics }) => {
-
+export const ReduxProvider = ({
+  children,
+  nodeTypes,
+  panelItems,
+  capabilities,
+  icons,
+  controls,
+  specifics,
+  toolbarButtons,
+}) => {
+  useEffect(() => {
+    if (toolbarButtons) {
+      store.dispatch.registry.setToolbarButtons(toolbarButtons);
+    }
+  }, [toolbarButtons]);
 
   useEffect(() => {
     store.dispatch.registry.registerIcons(icons || {});
@@ -28,7 +41,6 @@ export const ReduxProvider = ({ children, nodeTypes, panelItems, capabilities, i
   useEffect(() => {
     store.dispatch.registry.setCapabilities(capabilities || []);
   }, [capabilities]);
-
 
   return <Provider store={store}>{children}</Provider>;
 };

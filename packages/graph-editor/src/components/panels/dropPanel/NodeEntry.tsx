@@ -5,7 +5,7 @@ export const NodeEntry = ({
   icon,
   text,
 }: {
-  icon: React.ReactNode | string;
+  icon?: React.ReactNode | string;
   text: string;
 }) => {
   return (
@@ -14,21 +14,24 @@ export const NodeEntry = ({
       gap={2}
       justify="start"
       align="center"
-      css={{ paddingLeft: '$3' }}
+      css={{ paddingLeft: '$3', height: '24px' }}
     >
-      <Box
-        css={{
-          color: '$fgSubtle',
-          width: '24px',
-          height: '24px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '$xxsmall',
-        }}
-      >
-        {icon}
-      </Box>
+      {icon && (
+        <Box
+          css={{
+            color: '$fgSubtle',
+            width: '24px',
+            height: '24px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '$xxsmall',
+          }}
+        >
+          {icon}
+        </Box>
+      )}
+
       <Text
         size="xsmall"
         css={{

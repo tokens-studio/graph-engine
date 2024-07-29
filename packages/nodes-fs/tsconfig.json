@@ -1,0 +1,25 @@
+{
+	"compilerOptions": {
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true,
+		"noEmit": true,
+		"jsx": "react",
+		"target": "ESNext",
+		"outDir": "./types",
+		"preserveConstEnums": true,
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"rootDir": ".",
+		"noImplicitAny": false,
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
+		"types": ["node"],
+		"baseUrl": "."
+	},
+	"include": ["src/**/*", "tests/**/*"],
+	"exclude": ["node_modules"]
+}

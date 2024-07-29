@@ -19,7 +19,7 @@ export const annotatedCapabilityPrefix = 'engine.capability.';
 export const hideFromParentSubgraph = 'engine.hideFromParentSubgraph';
 
 /**
- * Indicates that node will use dynamically created inputs 
+ * Indicates that node will use dynamically created inputs
  */
 export const annotatedDynamicInputs = 'engine.dynamicInputs';
 
@@ -37,3 +37,8 @@ export const annotatedDeleteable = 'engine.deletable';
  * Indicates that a node is currently running
  */
 export const annotatedNodeRunning = 'engine.nodeRunning';
+
+/**
+ * Unique id of the entity
+ */
+export const annotatedId = 'engine.id';

@@ -1,34 +1,32 @@
-import { INodeDefinition, ToInput, ToOutput } from "../../index.js";
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 
-import { AnyArraySchema, NumberSchema } from "../../schemas/index.js";
-import { Node } from "../../programmatic/node.js";
+import { AnyArraySchema, NumberSchema } from '../../schemas/index.js';
+import { Node } from '../../programmatic/node.js';
 
 export default class NodeDefinition extends Node {
-  static title = "Count";
-  static type = "studio.tokens.math.count";
-  static description = "Counts the amount of items in an array.";
+	static title = 'Count';
+	static type = 'studio.tokens.math.count';
+	static description = 'Counts the amount of items in an array.';
 
+	declare inputs: ToInput<{
+		value: any[];
+	}>;
+	declare outputs: ToOutput<{
+		value: number;
+	}>;
 
-  declare inputs: ToInput<{
-    value: any[];
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('value', {
+			type: AnyArraySchema
+		});
+		this.addOutput('value', {
+			type: NumberSchema
+		});
+	}
 
-  }>;
-  declare outputs: ToOutput<{
-    value: number;
-  }>;
-
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("value", {
-      type: AnyArraySchema,
-    });
-    this.addOutput("value", {
-      type: NumberSchema,
-    });
-  }
-
-  execute(): void | Promise<void> {
-    const value = this.getInput("value");
-    this.setOutput("value", value.length);
-  }
+	execute(): void | Promise<void> {
+		const value = this.getInput('value');
+		this.setOutput('value', value.length);
+	}
 }

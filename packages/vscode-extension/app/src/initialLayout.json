@@ -1,0 +1,58 @@
+{
+  "dockbox": {
+    "id": "+17",
+    "size": 200,
+    "mode": "horizontal",
+    "children": [
+      {
+        "id": "graphs",
+        "size": 1694,
+        "tabs": [
+          {
+            "id": "graph1"
+          }
+        ],
+        "group": "graph",
+        "activeId": "graph1"
+      }
+    ]
+  },
+  "floatbox": {
+    "id": "+28",
+    "size": 1,
+    "mode": "float",
+    "children": [
+      {
+        "id": "+31",
+        "size": 200,
+        "tabs": [
+          {
+            "id": "input"
+          },
+          {
+            "id": "outputs"
+          }
+        ],
+        "group": "popout",
+        "activeId": "outputs",
+        "x": 1501,
+        "y": 173,
+        "z": 2,
+        "w": 356,
+        "h": 478
+      }
+    ]
+  },
+  "windowbox": {
+    "id": "+29",
+    "size": 1,
+    "mode": "window",
+    "children": []
+  },
+  "maxbox": {
+    "id": "+30",
+    "size": 1,
+    "mode": "maximize",
+    "children": []
+  }
+}

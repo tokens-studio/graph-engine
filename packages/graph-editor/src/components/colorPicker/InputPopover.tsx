@@ -1,15 +1,20 @@
-import React from 'react';
 import * as Popover from '@radix-ui/react-popover';
-import { styled, keyframes } from '@/lib/stitches/index.js';
-import {Xmark} from 'iconoir-react';
+import { Xmark } from 'iconoir-react';
+import { keyframes, styled } from '@/lib/stitches/index.js';
+import React from 'react';
 
 interface IInputPopover {
   children: React.ReactNode;
   trigger: React.ReactNode;
+  defaultOpen?: boolean;
 }
 
-const InputPopover = ({ children, trigger }: IInputPopover) => (
-  <Popover.Root>
+const InputPopover = ({
+  defaultOpen = false,
+  children,
+  trigger,
+}: IInputPopover) => (
+  <Popover.Root defaultOpen={defaultOpen}>
     <Popover.Trigger asChild>{trigger}</Popover.Trigger>
     <Popover.Portal>
       <PopoverContent sideOffset={5}>
@@ -47,6 +52,7 @@ const PopoverContent = styled(Popover.Content, {
   borderRadius: '$medium',
   border: '1px solid $borderSubtle',
   padding: 0,
+  zIndex: 10000,
   width: 300,
   backgroundColor: '$bgDefault',
   boxShadow:

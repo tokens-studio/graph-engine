@@ -2,28 +2,37 @@ app: graph-engine-beta
 env: prod
 namespace: graph-engine
 chart:
-  repository: https://chart.onechart.dev
-  name: onechart
-  version: 0.64.0
+  name: https://github.com/tokens-studio/graph-engine.git?branch={{ .BRANCH }}&path=/.gimlet/k8s/graph-engine/
 values:
-  containerPort: 3000
-  gitRepository: tokens-studio/graph-engine
-  gitSha: '{{ .SHA }}'
-  image:
-    repository: ghcr.io/tokens-studio/graph-engine
-    tag: frontend-{{ .SHA }}
-  imagePullSecrets:
-    - ghcr-login-secret
-  ingress:
-    ingressClassName: traefik
-    annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-prod
-    host: graph.beta.tokens.studio
-    path: /
-    tlsEnabled: true
-  replicas: 1
-  resources:
-    ignoreLimits: true
-  vars:
-    TS_DEMO_MODE: true
-    HOSTNAME: 0.0.0.0
+  postgresql:
+    enabled: true
+    secret: db-graph-engine-beta-secrets
+    owner: nextjs
+    database: graphengine
+    superUser: graph-engine-beta-superuser-secret
+    cluster: graph-engine-beta-db
+
+  onechart: 
+    vars:
+      HOSTNAME: 0.0.0.0
+      DATABASE_URL: postgres://$username:$password@graph-engine-beta-db-rw:5432/graphengine
+    # Reference the created secrets file
+    secretName: graph-engine-beta-db-app
+    sealedSecrets:
+      AUTH_SECRET: AgAvWeytmGue62IB+PK3j4yUnsnf7UAY5cPUCeHMzTC7IoMAQ752ny9BSOeOlDnmFE+3VqEw46J0NmOw71TDH58dhEY+NdmIhzqWdSHD8i+A876HwrzADfh/bnvT2XI6K5g0iFdr614xjMMkxa0GMzYpozk19ovPkVly6aeYMcH/DjJrXPlaXezCdY8CB1v0Wt0piuMZIlodB94gEEqUUkTTkw1ACAZLP7JQtcViYdTWFjvfNt80qGF5kRt0yIKXGQDmBtgTYFHRoRtOAcs1vVS1xtd/pqUFeRiH+IhS7s0shCvtk1iDOaijTFpmp/AGm0aIUse41PK4Zk+32SCP3VeKDMQ04X2HwVXa5gvs5Y+/FYUye+okCVyA/OGfZbYQYRtYB3FHHmsMEXr0Hx1ZAnqfrdAmeAeexpV2aZJ0YiAIjqYGOZ8dJM0pdOh8CSC7IFhT99f1k3fymMKVFUBRPUbAjd85KbXY8f2bY+zQWGZ3ABdbki0dpq7LCJoPAzXGnEb7m3nGelKcmg/48kcMQxlXDCn5P42zZUxWuGP6LyQAeg9XJIZIv7ixhZ+TC3KGirC+cSlbVBh/jfMXDniFbLqaqnlgFWD4SAh98DheymttgkmU1tQn5lOQa4+NxJTQyHEk2sku194zv3n6eEAcK0LYG3PkKdlmVEmDkhxTQNK2VyV8zzcmH9inEEM0+SB/Tw/yLH48On9LpoX7qHmFpbqQPsFEbdDyxzn5dMu46MLLZC+6E6Bti3KdSYP3XA==
+      AUTH_GITHUB_ID: AgDDnZcqh0FY3ck8ccxs5n569jDc3McRjGtAj1jnhYICpgpBdYT8FPT+yfNTLhDA6lomDq/ZC9OKP+Ovt6FfnerUTqr2bV4lGkrlei4wmDzVqObjLGD5tzDguVkdgLIDDzsQ7Xxu9C78n0FguJUyDZYpuSoy1BLRwC281YMVb34gkfFVFcj23M1sYgW8SePaRRUcHKGrd9FBwKXkEoYBnv14Kxh5IVwCcCcRCd36puwNsMaeTY2NgbiiUOY4Y03+9p2cq7DMjUPd5E/AzDX7b5HzgJCHlR2f2dbeU3jzGVZq1V+fZBwfPKK/tmCBpgHDusVos49KiXx0NJpU2c6WftcaN9xmHSaUybqPXva7YdXyU3I/WozuO7yOBSRCyn8v0Jqg+NIBoC3Jd4gc13cKPk2CdC7dIwSGEewm27ReR6sGQIrvGBB0dQSNCnuPeSpLYGlURKaZAuzwxWnP9NH2WherwsiuvxWiWEBks5FykHQpCYWuqzTQgU1Esj7mRdNMmCMpDMLqrdFQGGvXLXSklhw5EepPYKlEXNm1Y0NNKhxAuSB2INZPm+NeR1avAtZEeFouWfrg+QgABbIieHeyddMzqc7E3IslKhsqs+Bi7IWO0d6UhVEcOMoi91/TKRGwPUgpAltQCkvYK+2Fyoi3D68LHDC0mLIPO/roMIHC3Pp34edMeZImDmOld2k9L1nmBGrsgS1PwJiaKOXXuNYZsKepmzxCLw==
+      AUTH_GITHUB_SECRET: AgDTSlIXgFVsf/piaZDpyJi1uH6q3p9mhTu3rg/DyCgwBzt9HvWxF4gTgBe2vN1V+hsI64+6rvaz2CdJgQbnMDKGm4g11eUKX3+3b1wsogKsoi/vFkHnWEKi7/uDxY+fS7upTKuGcsEMAl6A8iEcqwHIs1jXZd6O8T0XW3QFl5xIb0jTICoaLjn+quSVZDEtZgeiTk4Fb81xf3ILx7aPTs9UGadvxxL3MdEwD25fW6mBnlo3VDZMKIxVw6ggwLP0qcqUY7ObbeuVTkCncimxNM1Gpx+3Dxq8u8OXcnhEP7Ek4Qu/b9r9fK54yRhFyXZAjzM5AalCPIrABjvTWYHVVW+zIwdBdyQO1qrcsNMvTuBLUAZN6U29KKLkpIACO5O6WhjqnPiC8SLJo1BIcDFnjUp4NMbSNXz52819yn9JdnjzJYB3g4iMp574Lh1jtaotrGQr5aWEDQOec8UkzsR8EjBz8vybI7SyCVkxYFi40FfT9EzrQwr/GLBOOMxDzlIf3Z6FFGl6N/r2X6UgXceix3VqgN1wwsNiHWbmx6hz5+d/HF1/op2aXqOMcybkTf/QJ83kPRP971oxdwvdORV0bpANSx6n/rrfRNS7zvjCqG1prdlaEMpzQtASAeKslypW4sGHEEvTEoAOUxRWbiFnz7xMPtJ5fksGXnvSiJ7+eKbiunuoNnXwz0oHL8QuUZYTcXUiQUXwi/HV96grLLpqzSnU0JszwU2i7NlDAPtBJF6W5p+IOydx0ux8
+    gitRepository: tokens-studio/graph-engine
+    gitSha: '{{ .SHA }}'
+    image:
+      repository: ghcr.io/tokens-studio/graph-engine
+      tag: frontend-{{ .SHA }}
+    imagePullSecrets:
+      - ghcr-login-secret
+    ingress:
+      ingressClassName: traefik
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      host: graph.alpha.tokens.studio
+      path: /
+      tlsEnabled: true

@@ -1,69 +1,64 @@
+import { Black, White, toColor } from './lib/utils.js';
+import {
+	ColorSchema,
+	NumberSchema,
+	StringSchema
+} from '../../schemas/index.js';
+import { INodeDefinition } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
+import { setToPrecision } from '../../utils/precision.js';
 
-import { ColorSchema, NumberSchema, StringSchema } from "../../schemas/index.js";
-import { INodeDefinition} from "../../index.js";
-import { Node } from "../../programmatic/node.js";
-import { setToPrecision } from "../../utils/precision.js";
-import Color from "colorjs.io";
+export const algorithms = ['76', 'CMC', '2000', 'Jz', 'ITP', 'OK'] as const;
 
-export const algorithms = [
-  "76",
-  "CMC",
-  "2000",
-  "Jz",
-  "ITP",
-  "OK",
-] as const;
-
-export type algorithm = typeof algorithms[number];
+export type algorithm = (typeof algorithms)[number];
 
 export default class NodeDefinition extends Node {
-  static title = "Delta E (ΔE)";
-  static type = "studio.tokens.color.deltaE";
-  static description =
-    "Delta E node allows you to calculate the distance between two colors.";
+	static title = 'Delta E (ΔE)';
+	static type = 'studio.tokens.color.deltaE';
+	static description =
+		'Delta E node allows you to calculate the distance between two colors.';
 
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('colorA', {
+			type: {
+				...ColorSchema,
+				default: White
+			}
+		});
+		this.addInput('colorB', {
+			type: {
+				...ColorSchema,
+				default: Black
+			}
+		});
+		this.addInput('precision', {
+			type: {
+				...NumberSchema,
+				default: 4
+			}
+		});
+		this.addInput('algorithm', {
+			type: {
+				...StringSchema,
+				enum: algorithms,
+				default: '2000'
+			}
+		});
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("colorA", {
-      type: {
-        ...ColorSchema,
-        default: "#ffffff",
-      },
-    });
-    this.addInput("colorB", {
-      type: {
-        ...ColorSchema,
-        default: "#000000",
-      },
-    });
-    this.addInput("precision", {
-      type: {
-        ...NumberSchema,
-        default: 4,
-      },
-    });
-    this.addInput("algorithm", {
-      type: {
-        ...StringSchema,
-        enum: algorithms,
-        default: "2000",
-      },
-    });
+		this.addOutput('value', {
+			type: NumberSchema
+		});
+	}
 
-    this.addOutput("value", {
-      type: NumberSchema,
-    });
-  }
+	execute(): void | Promise<void> {
+		const { colorA, colorB, algorithm, precision } = this.getAllInputs();
 
-  execute(): void | Promise<void> {
-    const { colorA, colorB, algorithm, precision } = this.getAllInputs();
+		const a = toColor(colorA);
+		const b = toColor(colorB);
 
-    const a = new Color(colorA);
-    const b = new Color(colorB);
+		const distance = a.deltaE(b, algorithm);
 
-    const distance = a.deltaE(b, algorithm);
-
-    this.setOutput("value", setToPrecision(distance, precision));
-  }
+		this.setOutput('value', setToPrecision(distance, precision));
+	}
 }

@@ -1,9 +1,9 @@
 import { Models } from '@rematch/core';
-import { settingsState } from './settings.js';
 import { graphState } from './graph.js';
-import { uiState } from './ui.js';
 import { refState } from './refs.js';
 import { registryState } from './registry.js';
+import { settingsState } from './settings.js';
+import { uiState } from './ui.js';
 
 export interface RootModel extends Models<RootModel> {
   settings: typeof settingsState;

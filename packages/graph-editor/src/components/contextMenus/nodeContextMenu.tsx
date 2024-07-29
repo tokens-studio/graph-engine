@@ -1,17 +1,12 @@
-import {
-  Menu,
-  Item,
-  Separator,
-} from 'react-contexify';
-import classNames from 'classnames/dedupe.js';
-import React, { useCallback } from 'react';
-import { ReactFlowInstance, useReactFlow, Node, Edge } from 'reactflow';
 import { Graph } from 'graphlib';
-import { useAction } from '@/editor/actions/provider';
-import { graph } from '@/redux/selectors';
-import { useLocalGraph } from '@/hooks';
-import { useCanDeleteNode } from '@/hooks/useCanDeleteNode';
-import { useToast } from '@/hooks/useToast';
+import { Item, Menu, Separator } from 'react-contexify';
+import { Node, ReactFlowInstance, useReactFlow } from 'reactflow';
+import { useAction } from '@/editor/actions/provider.js';
+import { useCanDeleteNode } from '@/hooks/useCanDeleteNode.js';
+import { useLocalGraph } from '@/hooks/index.js';
+import { useToast } from '@/hooks/useToast.js';
+import React, { useCallback } from 'react';
+import classNames from 'classnames/dedupe.js';
 
 export interface INodeContextMenuProps {
   id: string;
@@ -21,7 +16,6 @@ export interface INodeContextMenuProps {
 const convertToGraph = (flow: ReactFlowInstance) => {
   const nodes = flow.getNodes();
   const edges = flow.getEdges();
-
 
   const graph = new Graph({ multigraph: true });
   nodes.forEach((node) => graph.setNode(node.id));
@@ -42,10 +36,13 @@ const findAllDownstream = (id: string, graph: Graph) => {
 };
 
 const createNodeLookup = (nodes: string[]) => {
-  return nodes.reduce((acc, node) => {
-    acc[node] = true;
-    return acc;
-  }, {} as Record<string, boolean>);
+  return nodes.reduce(
+    (acc, node) => {
+      acc[node] = true;
+      return acc;
+    },
+    {} as Record<string, boolean>,
+  );
 };
 
 const applyFilters = (
@@ -70,10 +67,7 @@ const applyFilters = (
   );
 };
 
-export const NodeContextMenu = ({
-  id,
-  nodes,
-}: INodeContextMenuProps) => {
+export const NodeContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
   const trigger = useToast();
   const reactFlowInstance = useReactFlow();
   const duplicateNodes = useAction('duplicateNodes');
@@ -83,14 +77,17 @@ export const NodeContextMenu = ({
 
   const deleteEl = useCallback(() => {
     if (!isDeletable) {
-      trigger({ title: 'Node is not deletable', description: 'This node cannot be deleted' })
+      trigger({
+        title: 'Node is not deletable',
+        description: 'This node cannot be deleted',
+      });
       return;
     }
 
     if (nodes) {
       reactFlowInstance.deleteElements({ nodes });
     }
-  }, [nodes, reactFlowInstance]);
+  }, [isDeletable, nodes, reactFlowInstance, trigger]);
 
   const focus = useCallback(() => {
     if (nodes) {
@@ -153,7 +150,6 @@ export const NodeContextMenu = ({
 
   const forceExecution = useCallback(() => {
     if (nodes) {
-
       nodes.forEach((node) => {
         const graphNode = graph.getNode(node.id);
         if (graphNode) {
@@ -167,7 +163,9 @@ export const NodeContextMenu = ({
     <Menu id={id}>
       <Item onClick={onDuplicate}>Duplicate</Item>
       <Item onClick={focus}>Focus</Item>
-      <Item disabled={!isDeletable} onClick={deleteEl}>Delete</Item>
+      <Item disabled={!isDeletable} onClick={deleteEl}>
+        Delete
+      </Item>
       <Item onClick={forceExecution}>Force Execution</Item>
       <Separator />
       {nodes?.length == 1 && (

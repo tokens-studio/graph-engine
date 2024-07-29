@@ -1,8 +1,7 @@
 {
   "name": "@tokens-studio/react-storybook-graph-engine",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
+  "license": "MPL-2.0",
   "author": "andrew@hyma.io",
   "private": true,
   "type": "module",
@@ -10,7 +9,13 @@
     "build:storybook": "storybook build",
     "storybook": "storybook dev -p 6006",
     "bridge": "tsx ./scripts/bridge.ts",
-    "dev": "tsx ./scripts/dev.ts"
+    "dev": "tsx ./scripts/dev.ts",
+    "lint": "npm run lint:prettier && npm run lint:eslint",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --check",
+    "format": "npm run format:eslint && npm run format:prettier",
+    "format:eslint": "eslint --ext .tsx,.ts,.js --fix .",
+    "format:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --write"
   },
   "resolutions": {
     "jackspeak": "2.1.1"
@@ -21,6 +26,8 @@
     "@storybook/react-vite": "^8.0.10",
     "@tokens-studio/graph-engine": "*",
     "@tokens-studio/graph-engine-nodes-design-tokens": "*",
+    "@tokens-studio/eslint-config-custom": "*",
+    "@tokens-studio/prettier-config-custom": "*",
     "@types/ws": "^8.5.10",
     "tsx": "^4.9.3",
     "typescript": "^5.4.5"
@@ -32,7 +39,6 @@
     "fbp-client": "^0.4.3",
     "fs-extra": "^11.2.0",
     "storybook": "^8.0.10",
-    "style-dictionary": "4.0.0-prerelease.26",
-    "ws": "^8.17.0"
+    "style-dictionary": "^4.0.0-prerelease.38"
   }
 }

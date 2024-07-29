@@ -1,7 +1,8 @@
 .dock-panel {
-    border-color: var(--colors-borderSubtle);
+    color: inherit;
+    border-color: transparent;
     border: none;
-    background: var(--colors-bgDefault);
+    background: var(--colors-panelBg);
 }
 
 .dock-top .dock-bar {
@@ -12,9 +13,15 @@
 
 .dock-tab {
     color: var(--colors-fgDefault);
-    background: var(--colors-buttonPrimaryBgHover);
+    background: transparent;
     border-bottom: none;
+    z-index: 10;
 }
+
+.dock-tab>div {
+    padding: var(--space-2) var(--space-3);
+}
+
 
 .dock-tab-close-btn {
     position: relative;
@@ -29,7 +36,7 @@
     background: var(--colors-buttonPrimaryBgHover);
 }
 
-.dock-nav{
+.dock-nav {
     flex-grow: 1;
 }
 
@@ -40,6 +47,10 @@
 .dock-panel.dock-style-main .dock-tab,
 .dock-tab {
     background: var(--colors-bgDefault);
+}
+
+.dock-fbox>.dock-panel {
+    box-shadow: 0 0 0.25rem var(--colors-bgDefault);
 }
 
 .drag-initiator {

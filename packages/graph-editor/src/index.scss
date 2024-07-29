@@ -1,83 +1,55 @@
-@import url('reactflow/dist/style.css');
 @import url("mafs/core.css");
-@import url('react-contexify/ReactContexify.css');
+
 @import url('rc-dock/dist/rc-dock.css');
 @import url('./css/rc-dock.css');
 @import url('rc-menu/assets/index.css');
 @import url('./components/menubar/menubar.css');
 @import url('./css/reactflow.css');
 @import url('./css/cmdk.css');
+@import url('./css/contextify.css');
 @import url('./components/curveEditor/override.css');
 @import '@radix-ui/colors/gray-dark.css';
-@import '@radix-ui/colors/sand-dark.css';
-@import '@radix-ui/colors/amber-dark.css';
-@import '@radix-ui/colors/crimson-dark.css';
-@import '@radix-ui/colors/pink-dark.css';
-@import '@radix-ui/colors/purple-dark.css';
-@import '@radix-ui/colors/violet-dark.css';
-@import '@radix-ui/colors/indigo-dark.css';
-@import '@radix-ui/colors/teal-dark.css';
-@import '@radix-ui/colors/lime-dark.css';
-@import '@radix-ui/colors/mint-dark.css';
-@import '@radix-ui/colors/blue-dark.css';
-@import '@radix-ui/colors/blue-dark-alpha.css';
-@import '@radix-ui/colors/red-dark.css';
-@import '@radix-ui/colors/green-dark.css';
-@import '@radix-ui/colors/orange-dark.css';
-@import '@radix-ui/colors/gold-dark.css';
 
 :root {
     --globals-drop-panel-width: 240px;
-}
-.dark-theme {
-    --colors-bgCanvas: #292929;
-    --colors-bgDefault: #2d2d2d;
-    --colors-bgEmphasis: #2b2b2b;
-    --colors-bgSubtle: #373737;
-    --colors-bgSurface: #292929;
-    
-    /* Desaturated colors */
-    --colors-borderDefault: #636363; /* Desaturated from #4F6978 */
-    --colors-borderMuted: #2e2e2e; /* Desaturated from #1F2B32 */
-    --colors-borderSubtle: #454545;
-
-    --colors-fgSubtle: #8a8a8a; /* Desaturated from #92B2C4 */    //
-   
-    --colors-inputBg: #202020;
-    --colors-inputBorderRest: #454545;
-}
-.dock-panel{
-    color:inherit
-}
-
-.group-color-picker {
-    display: none;
-    position: absolute;
-    top: 100%;
-    margin-top: 1em;
 }
 
 #drop-panel {
     margin: 0;
 }
 
-.contexify {
-    --contexify-menu-bgColor: var(--colors-contextMenuBg);
-    --contexify-separator-color: var(--colors-contextMenuSeparator);
-    --contexify-item-color: var(--colors-contextMenuFg);
-    --contexify-activeItem-color: var(--colors-contextMenuFg);
-    --contexify-activeItem-bgColor: var(--colors-contextMenuBgHover);
-    --contexify-rightSlot-color: var(--colors-contextMenuFgMuted);
-    --contexify-activeRightSlot-color: var(--colors-contextMenuFg);
-    --contexify-arrow-color: var(--colors-contextMenuFgMuted);
-    --contexify-activeArrow-color: var(--colors-contextMenuFgMuted);
-    --contexify-menu-shadow: var(--shadows-contextMenu);
+
+
+.dock-top .dock-bar {
+    border-bottom: none;
 }
+
+
+
+
+
+
+
+.dock-panel.dock-style-main .dock-bar {
+    border-bottom-color: var(--colors-borderDefault);
+}
+
+.dock-content-holder {
+    scrollbar-color: var(--colors-bgSubtle) transparent;
+    scrollbar-width: thin;
+    border-bottom: 1px solid var(--colors-borderDefault);
+}
+
+.dock-top .dock-ink-bar {
+    background: var(--colors-bgDefault);
+    z-index: 0;
+    height: 100%;
+    border-radius: var(--radii-small);
+}
+
 
 .DropdownMenuContent {
     width: var(--radix-dropdown-menu-trigger-width);
     max-height: var(--radix-dropdown-menu-content-available-height);
     overflow-y: scroll;
 }
-
-

@@ -1,18 +1,17 @@
-'use client'
+'use client';
 
-import React, { useState } from 'react'
-import { useServerInsertedHTML } from 'next/navigation.js'
-import { getCssText } from '@/lib/stitches/index.ts';
+import { getCssText } from '@tokens-studio/graph-editor';
+import { useServerInsertedHTML } from 'next/navigation.js';
+import React from 'react';
 
 export default function StitchesProvider({
-    children,
+	children
 }: {
-    children: React.ReactNode
+	children: React.ReactNode;
 }) {
+	useServerInsertedHTML(() => {
+		return <style id='stitches'>{getCssText()}</style>;
+	});
 
-    useServerInsertedHTML(() => {
-        return <style id="stitches">{getCssText()}</style>
-    })
-
-    return <>{children}</>
+	return <>{children}</>;
 }

@@ -1,4 +1,3 @@
-
 import { AutoLevelNode } from "./autoLevel.js";
 import { AutoOrient } from "./autoOrient.js";
 import { BlurNode } from "./blur.js";
@@ -24,27 +23,27 @@ import { SolarizeNode } from "./solarize.js";
 import { VignetteNode } from "./vignette.js";
 
 export const nodes = [
-    AutoLevelNode,
-    AutoOrient,
-    BlurNode,
-    CharcoalNode,
-    ComposeNode,
-    Dither,
-    FlipNode,
-    FlopNode,
-    GaussianBlurNode,
-    GrayscaleNode,
-    FetchNode,
-    Morphology,
-    NegateNode,
-    Oilpaint,
-    PreviewNode,
-    ImageProperties,
-    ResizeNode,
-    RotateNode,
-    SeperateNode,
-    SepiaNode,
-    Sharpen,
-    SolarizeNode,
-    VignetteNode
+  AutoLevelNode,
+  AutoOrient,
+  BlurNode,
+  CharcoalNode,
+  ComposeNode,
+  Dither,
+  FlipNode,
+  FlopNode,
+  GaussianBlurNode,
+  GrayscaleNode,
+  FetchNode,
+  Morphology,
+  NegateNode,
+  Oilpaint,
+  PreviewNode,
+  ImageProperties,
+  ResizeNode,
+  RotateNode,
+  SeperateNode,
+  SepiaNode,
+  Sharpen,
+  SolarizeNode,
+  VignetteNode,
 ];

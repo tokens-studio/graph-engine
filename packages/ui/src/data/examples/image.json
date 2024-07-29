@@ -1,160 +1,160 @@
 {
-    "nodes": [
-        {
-            "id": "02b94803-573f-4a3f-896c-c379792d73ee",
-            "type": "studio.tokens.image.load",
-            "inputs": [
-                {
-                    "name": "url",
-                    "value": "https://picsum.photos/id/237/200/300",
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/string.json",
-                        "title": "String",
-                        "type": "string"
-                    },
-                    "visible": true
-                }
-            ],
-            "annotations": {
-                "ui.position.x": -403.8286597570449,
-                "ui.position.y": 301.6060284763291
-            }
-        },
-        {
-            "id": "7c23ec30-0458-4a83-aa45-0b24842aadbc",
-            "type": "studio.tokens.image.preview",
-            "inputs": [
-                {
-                    "name": "image",
-                    "value": null,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/image/image.json",
-                        "title": "Image",
-                        "type": "object",
-                        "default": null
-                    },
-                    "visible": true
-                }
-            ],
-            "annotations": {
-                "ui.position.x": 261.5898028037411,
-                "ui.position.y": 502.84475727245433
-            }
-        },
-        {
-            "id": "e18083db-2f77-4474-9094-c672ec843f90",
-            "type": "studio.tokens.generic.note",
-            "inputs": [],
-            "annotations": {
-                "ui.position.x": 250.13503736255552,
-                "ui.position.y": 43.98172468588584,
-                "ui.nodeType": "studio.tokens.generic.note",
-                "ui.description": "This loads an external image from an http url and then applies a filter on it"
-            }
-        },
-        {
-            "id": "e38e52fc-12dc-4dff-aa73-9972be6f2d64",
-            "type": "studio.tokens.image.sepia",
-            "inputs": [
-                {
-                    "name": "image",
-                    "value": null,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/image/image.json",
-                        "title": "Image",
-                        "type": "object",
-                        "default": null
-                    },
-                    "visible": true
-                }
-            ],
-            "annotations": {
-                "ui.position.x": 263.9132882078633,
-                "ui.position.y": 296.55300554755377
-            }
-        },
-        {
-            "id": "b1440e96-d749-4213-aead-13854c63808f",
-            "type": "studio.tokens.image.preview",
-            "inputs": [
-                {
-                    "name": "image",
-                    "value": null,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/image/image.json",
-                        "title": "Image",
-                        "type": "object",
-                        "default": null
-                    },
-                    "visible": true
-                }
-            ],
-            "annotations": {
-                "ui.position.x": 883.8118988415104,
-                "ui.position.y": 302.81027983195673
-            }
-        },
-        {
-            "id": "7ba7d010-2610-457a-88bc-97a491ea7989",
-            "type": "studio.tokens.image.properties",
-            "inputs": [
-                {
-                    "name": "image",
-                    "value": null,
-                    "type": {
-                        "$id": "https://schemas.tokens.studio/image/image.json",
-                        "title": "Image",
-                        "type": "object",
-                        "default": null
-                    },
-                    "visible": true
-                }
-            ],
-            "annotations": {
-                "ui.position.x": -396.60386752851826,
-                "ui.position.y": 508.0443859247604
-            }
-        }
-    ],
-    "edges": [
-        {
-            "id": "0a1ef444-1fb6-4462-9c58-7c1c9d067c6e",
-            "source": "02b94803-573f-4a3f-896c-c379792d73ee",
-            "sourceHandle": "image",
-            "target": "7c23ec30-0458-4a83-aa45-0b24842aadbc",
-            "targetHandle": "image"
-        },
-        {
-            "id": "add5a9dc-134d-4e0c-990c-593b586b81c4",
-            "source": "02b94803-573f-4a3f-896c-c379792d73ee",
-            "sourceHandle": "image",
-            "target": "e38e52fc-12dc-4dff-aa73-9972be6f2d64",
-            "targetHandle": "image"
-        },
-        {
-            "id": "70495e81-fbd1-4acb-8cdd-0ee9475e2c07",
-            "source": "e38e52fc-12dc-4dff-aa73-9972be6f2d64",
-            "sourceHandle": "image",
-            "target": "b1440e96-d749-4213-aead-13854c63808f",
-            "targetHandle": "image"
-        },
-        {
-            "id": "ba8d357c-3cca-4811-a33a-a013775b8e83",
-            "source": "02b94803-573f-4a3f-896c-c379792d73ee",
-            "sourceHandle": "image",
-            "target": "7ba7d010-2610-457a-88bc-97a491ea7989",
-            "targetHandle": "image"
-        }
-    ],
-    "annotations": {
-        "engine.id": "42eb643a-fa18-413b-89cd-12ad7ba9d8b4",
-        "engine.capabilities.imageMagick": "0.0.0",
-        "engine.version": "0.12.0",
-        "ui.viewport": {
-            "x": 486.60327141241874,
-            "y": 75.70954264551409,
-            "zoom": 0.4948154665398352
-        },
-        "ui.version": "3.0.0"
-    }
+	"nodes": [
+		{
+			"id": "02b94803-573f-4a3f-896c-c379792d73ee",
+			"type": "studio.tokens.image.load",
+			"inputs": [
+				{
+					"name": "url",
+					"value": "https://picsum.photos/id/237/200/300",
+					"type": {
+						"$id": "https://schemas.tokens.studio/string.json",
+						"title": "String",
+						"type": "string"
+					},
+					"visible": true
+				}
+			],
+			"annotations": {
+				"ui.position.x": -403.8286597570449,
+				"ui.position.y": 301.6060284763291
+			}
+		},
+		{
+			"id": "7c23ec30-0458-4a83-aa45-0b24842aadbc",
+			"type": "studio.tokens.image.preview",
+			"inputs": [
+				{
+					"name": "image",
+					"value": null,
+					"type": {
+						"$id": "https://schemas.tokens.studio/image/image.json",
+						"title": "Image",
+						"type": "object",
+						"default": null
+					},
+					"visible": true
+				}
+			],
+			"annotations": {
+				"ui.position.x": 261.5898028037411,
+				"ui.position.y": 502.84475727245433
+			}
+		},
+		{
+			"id": "e18083db-2f77-4474-9094-c672ec843f90",
+			"type": "studio.tokens.generic.note",
+			"inputs": [],
+			"annotations": {
+				"ui.position.x": 250.13503736255552,
+				"ui.position.y": 43.98172468588584,
+				"ui.nodeType": "studio.tokens.generic.note",
+				"ui.description": "This loads an external image from an http url and then applies a filter on it"
+			}
+		},
+		{
+			"id": "e38e52fc-12dc-4dff-aa73-9972be6f2d64",
+			"type": "studio.tokens.image.sepia",
+			"inputs": [
+				{
+					"name": "image",
+					"value": null,
+					"type": {
+						"$id": "https://schemas.tokens.studio/image/image.json",
+						"title": "Image",
+						"type": "object",
+						"default": null
+					},
+					"visible": true
+				}
+			],
+			"annotations": {
+				"ui.position.x": 263.9132882078633,
+				"ui.position.y": 296.55300554755377
+			}
+		},
+		{
+			"id": "b1440e96-d749-4213-aead-13854c63808f",
+			"type": "studio.tokens.image.preview",
+			"inputs": [
+				{
+					"name": "image",
+					"value": null,
+					"type": {
+						"$id": "https://schemas.tokens.studio/image/image.json",
+						"title": "Image",
+						"type": "object",
+						"default": null
+					},
+					"visible": true
+				}
+			],
+			"annotations": {
+				"ui.position.x": 883.8118988415104,
+				"ui.position.y": 302.81027983195673
+			}
+		},
+		{
+			"id": "7ba7d010-2610-457a-88bc-97a491ea7989",
+			"type": "studio.tokens.image.properties",
+			"inputs": [
+				{
+					"name": "image",
+					"value": null,
+					"type": {
+						"$id": "https://schemas.tokens.studio/image/image.json",
+						"title": "Image",
+						"type": "object",
+						"default": null
+					},
+					"visible": true
+				}
+			],
+			"annotations": {
+				"ui.position.x": -396.60386752851826,
+				"ui.position.y": 508.0443859247604
+			}
+		}
+	],
+	"edges": [
+		{
+			"id": "0a1ef444-1fb6-4462-9c58-7c1c9d067c6e",
+			"source": "02b94803-573f-4a3f-896c-c379792d73ee",
+			"sourceHandle": "image",
+			"target": "7c23ec30-0458-4a83-aa45-0b24842aadbc",
+			"targetHandle": "image"
+		},
+		{
+			"id": "add5a9dc-134d-4e0c-990c-593b586b81c4",
+			"source": "02b94803-573f-4a3f-896c-c379792d73ee",
+			"sourceHandle": "image",
+			"target": "e38e52fc-12dc-4dff-aa73-9972be6f2d64",
+			"targetHandle": "image"
+		},
+		{
+			"id": "70495e81-fbd1-4acb-8cdd-0ee9475e2c07",
+			"source": "e38e52fc-12dc-4dff-aa73-9972be6f2d64",
+			"sourceHandle": "image",
+			"target": "b1440e96-d749-4213-aead-13854c63808f",
+			"targetHandle": "image"
+		},
+		{
+			"id": "ba8d357c-3cca-4811-a33a-a013775b8e83",
+			"source": "02b94803-573f-4a3f-896c-c379792d73ee",
+			"sourceHandle": "image",
+			"target": "7ba7d010-2610-457a-88bc-97a491ea7989",
+			"targetHandle": "image"
+		}
+	],
+	"annotations": {
+		"engine.id": "42eb643a-fa18-413b-89cd-12ad7ba9d8b4",
+		"engine.capabilities.imageMagick": "0.0.0",
+		"engine.version": "0.12.0",
+		"ui.viewport": {
+			"x": 486.60327141241874,
+			"y": 75.70954264551409,
+			"zoom": 0.4948154665398352
+		},
+		"ui.version": "3.0.0"
+	}
 }

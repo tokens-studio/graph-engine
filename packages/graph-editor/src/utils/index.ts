@@ -1,4 +1,5 @@
 // @ts-ignore
+import { Color, toColor, toHex } from '@tokens-studio/graph-engine';
 import { DeepKeyTokenMap, SingleToken, TokenTypes } from '@tokens-studio/types';
 import { setProperty } from 'dot-prop';
 
@@ -42,7 +43,7 @@ export interface IResolvedToken {
    * Optional description of the token
    */
   description?: string;
-  $extensions?: Record<string, any>;
+  $extensions?: Record<string, unknown>;
 }
 
 export const flatten = (
@@ -77,10 +78,13 @@ export const flatten = (
 };
 
 export const flatTokensToMap = (tokens: IResolvedToken[]) => {
-  return tokens.reduce((acc, token) => {
-    acc[token.name] = token;
-    return acc;
-  }, {} as Record<string, IResolvedToken>);
+  return tokens.reduce(
+    (acc, token) => {
+      acc[token.name] = token;
+      return acc;
+    },
+    {} as Record<string, IResolvedToken>,
+  );
 };
 
 export const flatTokensRestoreToMap = (tokens: IResolvedToken[]) => {
@@ -98,7 +102,7 @@ export type W3CToken = {
   $value: string;
   $type: TokenTypes;
   alpha?: number;
-  $extensions?: Record<string, any>;
+  $extensions?: Record<string, unknown>;
 };
 export interface W3CDeepKeyTokenMap {
   [key: string]: W3CDeepKeyTokenMap | W3CToken;
@@ -124,4 +128,12 @@ export const convertW3CToStudio = (
     }
     return acc;
   }, {} as DeepKeyTokenMap);
+};
+
+export const castToHex = (col: Color) => {
+  try {
+    return toHex(toColor(col));
+  } catch {
+    return '';
+  }
 };

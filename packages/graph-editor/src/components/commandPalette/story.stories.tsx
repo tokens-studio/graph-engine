@@ -1,9 +1,10 @@
-import { CommandMenu } from './index';
-import React, { createRef, useRef } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { defaultPanelGroupsFactory } from '../panels/dropPanel';
-import { createMockStore } from '@/stories/utils';
+import { CommandMenu } from './index.js';
 import { Provider } from 'react-redux';
+import { ReactFlowProvider } from 'reactflow';
+import { createMockStore } from '@/stories/utils.js';
+import { defaultPanelGroupsFactory } from '../panels/dropPanel/index.js';
+import React from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof CommandMenu> = {
   title: 'Components/CommandMenu',
@@ -21,18 +22,17 @@ const mockedStore = createMockStore({
 export default meta;
 type Story = StoryObj<typeof CommandMenu>;
 export const Default: Story = {
-  render: (args) => {
+  render: () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     return (
-      <Provider store={mockedStore}>
-        <div ref={ref}>
+      <ReactFlowProvider>
+        <Provider store={mockedStore}>
           <CommandMenu
-
             items={defaultPanelItems}
             handleSelectNewNodeType={() => {}}
           />
-        </div>
-      </Provider>
+        </Provider>
+      </ReactFlowProvider>
     );
   },
   args: {},

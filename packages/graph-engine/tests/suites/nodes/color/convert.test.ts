@@ -1,114 +1,116 @@
-import Node from "../../../../src/nodes/color/convert.js";
-import { getAllOutputs } from "../utils";
-import { Graph } from "../../../../src/graph/graph.js";
+import { Graph } from '../../../../src/graph/graph.js';
+import { describe, expect, test } from 'vitest';
+import { getAllOutputs } from '../utils.js';
+import Node from '../../../../src/nodes/color/convert.js';
 
-describe("color/convert", () => {
-  it("converts csslike colors to rgb", async () => {
-    const graph = new Graph();
-    const node = new Node({ graph });
-    
-    node.inputs.color.setValue("red");
-    node.inputs.space.setValue("rgb");
+describe('color/convert', () => {
+	test('converts csslike colors to rgb', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-    await node.execute();
+		node.inputs.color.setValue({
+			space: 'srgb',
+			channels: [1, 0, 0]
+		});
+		node.inputs.space.setValue('lab');
 
-    expect(getAllOutputs(node)).toStrictEqual({
-      a: 255,
-      b: 0,
-      c: 0,
-      channels: [255, 0, 0, undefined],
-      d: undefined,
-      labels: ["r", "g", "b", "alpha"],
-    });
-  });
+		await node.execute();
 
-  it("converts csslike colors to gl", async () => {
-    const graph = new Graph();
-    const node = new Node({ graph });
-    
-    node.inputs.color.setValue("red");
-    node.inputs.space.setValue("gl");
+		expect(getAllOutputs(node)).to.deep.equal({
+			color: {
+				alpha: 1,
+				channels: [54.29054140467191, 80.80492817043522, 69.89096476862429],
+				space: 'Lab'
+			}
+		});
+	});
 
-    await node.execute();
+	test('converts csslike colors to a98rgb', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-    expect(getAllOutputs(node)).toStrictEqual({
-      a: 255,
-      b: 0,
-      c: 0,
-      channels: [255, 0, 0, undefined],
-      d: undefined,
-      labels: ["r", "g", "b", "alpha"],
-    });
-  });
+		node.inputs.color.setValue({
+			space: 'srgb',
+			channels: [1, 0, 0]
+		});
+		node.inputs.space.setValue('a98rgb');
 
-  it("converts to p3 from hex", async () => {
-    const graph = new Graph();
-    const node = new Node({ graph });
-    
-    node.inputs.color.setValue("#52F234");
-    node.inputs.space.setValue("p3");
+		await node.execute();
 
-    await node.execute();
+		expect(getAllOutputs(node)).to.deep.equal({
+			color: {
+				alpha: 1,
+				channels: [0.8585916022954422, 8.152862362272588e-9, 0],
+				space: 'Adobe® 98 RGB compatible'
+			}
+		});
+	});
 
-    expect(getAllOutputs(node)).toStrictEqual({
-      a: 0.513799063361875,
-      b: 0.9363407960900638,
-      c: 0.3440788676962286,
-      channels: [
-        0.513799063361875,
-        0.9363407960900638,
-        0.3440788676962286,
-        undefined,
-      ],
-      d: undefined,
-      labels: ["r", "g", "b", "alpha"],
-    });
-  });
+	test('converts to p3 from hex', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-  it("converts to oklab from hex", async () => {
-    const graph = new Graph();
-    const node = new Node({ graph });
-    
-    node.inputs.color.setValue("#52F234");
-    node.inputs.space.setValue("oklab");
+		node.inputs.color.setValue({
+			space: 'srgb',
+			channels: [1, 0, 0]
+		});
+		node.inputs.space.setValue('p3');
 
-    await node.execute();
-    expect(getAllOutputs(node)).toStrictEqual({
-      a: 0.8446731133698594,
-      b: -0.19979243108966394,
-      c: 0.16178227223673358,
-      channels: [
-        0.8446731133698594,
-        -0.19979243108966394,
-        0.16178227223673358,
-        undefined,
-      ],
-      d: undefined,
-      labels: ["l", "a", "b", "alpha"],
-    });
-  });
+		await node.execute();
 
-  it("converts to oklab from oklab", async () => {
-    const graph = new Graph();
-    const node = new Node({ graph });
-    
-    node.inputs.color.setValue("oklab(40.1% 0.1143 0.045)");
-    node.inputs.space.setValue("cubehelix");
+		expect(getAllOutputs(node)).to.deep.equal({
+			color: {
+				alpha: 1,
+				channels: [
+					0.9174875573251656, 0.20028680774084717, 0.13856059121111405
+				],
+				space: 'P3'
+			}
+		});
+	});
 
-    await node.execute();
+	test('converts to oklab from hex', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-    expect(getAllOutputs(node)).toStrictEqual({
-      a: -11.61375995607493,
-      b: 0.7511787849960817,
-      c: 0.2469609193911593,
-      channels: [
-        -11.61375995607493,
-        0.7511787849960817,
-        0.2469609193911593,
-        undefined,
-      ],
-      d: undefined,
-      labels: ["h", "s", "l", "alpha"],
-    });
-  });
+		node.inputs.color.setValue({
+			space: 'srgb',
+			channels: [0.3, 0.4, 0.2]
+		});
+		node.inputs.space.setValue('oklab');
+
+		await node.execute();
+		expect(getAllOutputs(node)).to.deep.equal({
+			color: {
+				alpha: 1,
+				channels: [
+					0.4767656277225901, -0.05333477044742116, 0.06192370329969671
+				],
+				space: 'Oklab'
+			}
+		});
+	});
+
+	test('converts to oklab from xyz', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
+
+		node.inputs.color.setValue({
+			space: 'oklab',
+			channels: [0.3, 0.4, 0.2]
+		});
+		node.inputs.space.setValue('xyz-d65');
+
+		await node.execute();
+
+		expect(getAllOutputs(node)).to.deep.equal({
+			color: {
+				alpha: 1,
+				space: 'XYZ D65',
+				channels: [
+					0.14672204396323899, 0.011234589220921708, -0.015842642806276265
+				]
+			}
+		});
+	});
 });

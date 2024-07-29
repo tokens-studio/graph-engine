@@ -1,9 +1,8 @@
-import { Box, Stack, Text } from '@tokens-studio/ui';
+import { Box, Stack, Text, Tooltip } from '@tokens-studio/ui';
 import { Position, Handle as RawHandle } from 'reactflow';
 import { styled } from '@/lib/stitches/index.js';
 import { useIsValidConnection } from '../../hooks/useIsValidConnection.js';
 import React, { createContext, useContext } from 'react';
-import { IconoirProvider } from 'iconoir-react';
 
 export const HandleContext = createContext<{
   position: Position;
@@ -25,7 +24,7 @@ type HolderProps = {
 export const HandleContainerContext = createContext<{
   collapsed: boolean;
   hide?: boolean;
-  onConnect?: (params: any) => void;
+  onConnect?: (params: unknown) => void;
 }>({
   collapsed: false,
   hide: false,
@@ -37,7 +36,7 @@ export const HandleContainer = ({
   shouldHide = false,
   full,
   isSmall,
-  className
+  className,
 }: HolderProps) => {
   if (shouldHide) return null;
   const position = type === 'source' ? Position.Right : Position.Left;
@@ -45,8 +44,12 @@ export const HandleContainer = ({
     <HandleContext.Provider value={{ type, position }}>
       <Stack
         direction="column"
-        gap={2}
-        css={{ flexBasis: full ? '100%' : '50%', position: 'relative', textAlign: type === 'source' ? 'right' : 'left', minWidth: isSmall ? 'auto' : '250px' }}
+        css={{
+          flexBasis: full ? '100%' : '50%',
+          position: 'relative',
+          textAlign: type === 'source' ? 'right' : 'left',
+          minWidth: isSmall ? 'auto' : '150px',
+        }}
         className={className}
       >
         {children}
@@ -55,7 +58,7 @@ export const HandleContainer = ({
   );
 };
 
-const useHandle = () => {
+export const useHandle = () => {
   return useContext(HandleContext);
 };
 
@@ -75,16 +78,15 @@ const StyledRawHandle = styled(RawHandle, {
       },
     },
     isConnected: {
-      true: {
-        background: 'var(--colors-accentEmphasis) !important',
+      false: {
+        background: 'var(--colors-graphBg) !important',
       },
     },
-    left: {
+    isArray: {
       true: {
-        marginLeft: '6px',
-      },
-      false: {
-        marginRight: '6px',
+        borderRadius: '0 !important',
+        width: 'calc($4 - 2px) !important',
+        height: 'calc($4 - 2px) !important',
       },
     },
     shouldHideHandles: {
@@ -95,29 +97,28 @@ const StyledRawHandle = styled(RawHandle, {
     },
     variadic: {
       true: {
-        'svg': {
+        svg: {
           marginTop: 'auto',
         },
         '&::after': {
-          content: "",
-          marginRight: "-24px",
-          marginTop: "-52px",
-          height: "8px",
-          width: "8px",
-          background: "var(--colors-accentOnAccent)",
-          borderRadius: "50%",
+          position: 'absolute',
+          content: '',
+          marginRight: '0',
+          marginTop: '0',
+          height: '8px',
+          width: '8px',
+          background: 'var(--colors-accentOnAccent)',
+          borderRadius: '50%',
           opacity: 0.7,
         },
       },
-    }
+    },
   },
 });
 
 export const HandleText = styled(Text, {
-  textTransform: 'uppercase',
-  fontWeight: 'bold',
   fontSize: '$xxsmall',
-  color: '$accentDefault',
+  color: '$fgDefault',
   whiteSpace: 'nowrap',
   variants: {
     secondary: {
@@ -137,6 +138,7 @@ const HandleHolder = styled(Box, {
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
+  padding: '$2 $4',
   variants: {
     collapsed: {
       true: {
@@ -154,17 +156,18 @@ const HandleHolder = styled(Box, {
 
 export interface HandleProps {
   id: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   visible: boolean;
   shouldHideHandles?: boolean;
   error?: boolean;
   isArray?: boolean;
-  full?: boolean;
+  isConnected?: boolean;
   color?: string;
   backgroundColor?: string;
-  icon: React.ReactNode;
+  //Inline typing info
+  type?: string;
   variadic?: boolean;
-};
+}
 
 export const Handle = (props: HandleProps) => {
   const {
@@ -173,13 +176,12 @@ export const Handle = (props: HandleProps) => {
     visible,
     shouldHideHandles = false,
     error,
-    full,
     color,
     isArray,
+    type: dataType,
+    isConnected,
     backgroundColor,
-    icon,
     variadic,
-    ...rest
   } = props;
   const { position, type } = useHandle();
   const isValidConnection = useIsValidConnection();
@@ -194,43 +196,40 @@ export const Handle = (props: HandleProps) => {
         flexDirection: type === 'target' ? 'row' : 'row-reverse',
       }}
     >
+      <Tooltip label={dataType} side="top">
         <StyledRawHandle
-          style={{ color: color, backgroundColor: backgroundColor }}
+          style={{
+            color: color,
+            backgroundColor: backgroundColor,
+            outlineColor: backgroundColor,
+          }}
           id={id}
           shouldHideHandles={shouldHideHandles}
           error={error}
-          left={type === 'target'}
           type={type}
           position={position}
           hide={shouldHide}
           variadic={variadic}
           isValidConnection={isValidConnection}
-        >
-
-          <IconoirProvider
-            iconProps={{
-              strokeWidth: 1.5,
-              width: '1.5em',
-              height: '1.5em',
-            }}
-          >{icon}</IconoirProvider>
-        </StyledRawHandle>
-
-        <Stack
-          direction="row"
-          gap={1}
-          align="center"
-          css={{
-            flex: 1,
-            justifyContent: type === 'target' ? 'start' : 'end',
-            paddingLeft: shouldHideHandles ? 0 : '$2',
-            paddingRight: shouldHideHandles ? 0 : '$2',
-            fontFamily: '$mono',
-            fontSize: '$xxsmall',
-          }}
-        >
-          {children}
-        </Stack>
+          isConnected={isConnected}
+          isArray={isArray}
+        ></StyledRawHandle>
+      </Tooltip>
+      <Stack
+        gap={1}
+        align="center"
+        css={{
+          flex: 1,
+          justifyContent: type === 'target' ? 'start' : 'end',
+          paddingLeft: shouldHideHandles ? 0 : '$2',
+          paddingRight: shouldHideHandles ? 0 : '$2',
+          fontFamily: '$mono',
+          fontSize: '$xxsmall',
+          flexDirection: type === 'target' ? 'row' : 'row-reverse',
+        }}
+      >
+        {children}
+      </Stack>
     </HandleHolder>
   );
 };

@@ -1,27 +1,31 @@
-import { ColorSchema, GradientStopSchema, NumberSchema } from "../../schemas/index.js";
-import { INodeDefinition } from "../../index.js";
-import { Node } from "../../programmatic/node.js";
+import {
+	ColorSchema,
+	GradientStopSchema,
+	NumberSchema
+} from '../../schemas/index.js';
+import { INodeDefinition } from '../../index.js';
+import { Node } from '../../programmatic/node.js';
 
 export default class NodeDefinition extends Node {
-  static title = "Gradient Stop";
-  static type = "studio.tokens.gradient.stop";
-  static description = "Create a gradient stop.";
+	static title = 'Gradient Stop';
+	static type = 'studio.tokens.gradient.stop';
+	static description = 'Create a gradient stop.';
 
-  constructor(props: INodeDefinition) {
-    super(props);
-    this.addInput("color", {
-      type: ColorSchema,
-    });
-    this.addInput("position", {
-      type: NumberSchema,
-    });
-    this.addOutput("gradientStop", {
-      type: GradientStopSchema,
-    });
-  }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('color', {
+			type: ColorSchema
+		});
+		this.addInput('position', {
+			type: NumberSchema
+		});
+		this.addOutput('gradientStop', {
+			type: GradientStopSchema
+		});
+	}
 
-  execute(): void | Promise<void> {
-    const { color, position } = this.getAllInputs();
-    this.setOutput("gradientStop", { 'color': color, 'position': position});
-  }
+	execute(): void | Promise<void> {
+		const { color, position } = this.getAllInputs();
+		this.setOutput('gradientStop', { color: color, position: position });
+	}
 }

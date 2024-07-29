@@ -12,10 +12,7 @@ const withBundleAnalyzer = analyzer({
 
 export default withBundleAnalyzer({
   reactStrictMode: true,
-  transpilePackages: ['@tokens-studio/graph-editor', '@tokens-studio/graph-engine'],
-  env: {
-    API_PATH: process.env.API_PATH,
-  },
+  transpilePackages: ['@tokens-studio/graph-editor', '@tokens-studio/graph-engine', 'mobx', 'colorjs.io'],
   webpack:(config,{isServer})=>{
 
     config.experiments={
@@ -30,6 +27,7 @@ export default withBundleAnalyzer({
     return config
   },
   experimental: {
+    esmExternals: true,
     //Terrible hack to fix
     optimizePackageImports: ['iconoir-react', "lodash"],
     // esmExternals: 'loose',
@@ -40,5 +38,5 @@ export default withBundleAnalyzer({
   compiler: {
   
   },
-  output: "standalone"
+  output: "standalone",
 });

@@ -1,33 +1,40 @@
-import {  ANY, COLOR, CURVE, STRING, BOOLEAN, NUMBER, OBJECT } from '@tokens-studio/graph-engine'
+import {
+  ANY,
+  BOOLEAN,
+  COLOR,
+  CURVE,
+  NUMBER,
+  OBJECT,
+  STRING,
+} from '@tokens-studio/graph-engine';
 
-/* eslint-disable import/no-anonymous-default-export */
 export default {
   [COLOR]: {
-    color: 'var(--violet-12)',
-    backgroundColor: 'var(--violet-8)',
+    color: 'hsl(250, 100%, 10%)',
+    backgroundColor: 'hsl(3, 60%, 60%)',
   },
   [CURVE]: {
-    color: 'var(--gold-12)',
-    backgroundColor: 'var(--gold-8)',
+    color: '#e8e2d9',
+    backgroundColor: 'hsl(300, 60%, 30%)',
   },
   [BOOLEAN]: {
-    color: 'var(--amber-12)',
-    backgroundColor: 'var(--amber-8)',
+    color: '#ffe7b3',
+    backgroundColor: 'hsl(30, 60%, 60%)',
   },
   [NUMBER]: {
-    color: 'var(--blue-12)',
-    backgroundColor: 'var(--blue-8)',
+    color: '#c2e6ff',
+    backgroundColor: 'hsl(210, 60%, 60%)',
   },
   [STRING]: {
-    color: 'var(--lime-12)',
-    backgroundColor: 'var(--lime-8)',
+    color: '#e3f7ba',
+    backgroundColor: 'hsl(90, 60%, 60%)',
   },
   [ANY]: {
-    color: 'var(--pink-12)',
-    backgroundColor: 'var(--pink-8)',
+    color: '#fdd1ea',
+    backgroundColor: 'hsl(250, 60%, 60%)',
   },
   [OBJECT]: {
-    color: 'var(--teal-12)',
-    backgroundColor: 'var(--teal-8)',
-  }
+    color: '#adf0dd',
+    backgroundColor: 'hsl(170, 60%, 60%)',
+  },
 };

@@ -1,7 +1,4 @@
 {
-  "ts-node": {
-    "esm": true
-  },
   "compilerOptions": {
     "sourceMap": true,
     "declaration": true,
@@ -11,8 +8,8 @@
     "target": "ESNext",
     "outDir": "./types",
     "preserveConstEnums": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "rootDir": ".",
     "noImplicitAny": false,
     "esModuleInterop": true,
@@ -20,20 +17,9 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "types": [
-      "jest",
-      "node"
-    ],
+    "types": ["node"],
     "baseUrl": "."
-    
   },
-  "include": [
-    "stories/**/*",
-    "src/**/*",
-    "tests/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "cypress/**"
-  ]
+  "include": ["src/**/*", "tests/**/*"],
+  "exclude": ["node_modules"]
 }

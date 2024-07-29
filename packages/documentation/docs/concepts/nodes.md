@@ -11,11 +11,11 @@ A node is a the core of the graph and acts a black box to perform some operation
 
 To support this, a node has a concept of `inputs` and `outputs`. These are ports that can values set on them to pass information to other nodes.
 
-## Typing 
+## Typing
 
-Most graph execution engines typically provide either no type safety, or a very simple type system. Simple type systems  lead to an excess of nodes to convert types as well as limitations in maintainability when adding onto an existing system.
+Most graph execution engines typically provide either no type safety, or a very simple type system. Simple type systems lead to an excess of nodes to convert types as well as limitations in maintainability when adding onto an existing system.
 
-Passing a value directly like `5` or `'string'` is likely not scalable and forces a system to have to use duck typing to try interpret what data was passed to it. What happens if a node expects a specific value like `blue` or `red` but is passed through `green`? To address this, we use a typing system to indicated what type of value is passed between the inputs and outputs. This is done through the use of [JSON Schemas](https://json-schema.org/). 
+Passing a value directly like `5` or `'string'` is likely not scalable and forces a system to have to use duck typing to try interpret what data was passed to it. What happens if a node expects a specific value like `blue` or `red` but is passed through `green`? To address this, we use a typing system to indicated what type of value is passed between the inputs and outputs. This is done through the use of [JSON Schemas](https://json-schema.org/).
 
 These type definitions can help other nodes know they need to send data in a specific format to a node port in order to be understood correctly.
 
@@ -49,9 +49,9 @@ In the above example we could support a complex object and indicate that sending
 
 ## Metadata
 
-Information about the input and output types is not all that node might need to indicate. What if you could only ever have a single node in a graph or needed to store the position of a node when showing it in the UI? 
+Information about the input and output types is not all that node might need to indicate. What if you could only ever have a single node in a graph or needed to store the position of a node when showing it in the UI?
 
-For this we provide a `annotations` metadata property. This allows us to store arbitrary metadata through the use of named properties. In the below example we use an annotation provided by the engine 
+For this we provide a `annotations` metadata property. This allows us to store arbitrary metadata through the use of named properties. In the below example we use an annotation provided by the engine
 
 ```ts
 {
@@ -59,4 +59,4 @@ For this we provide a `annotations` metadata property. This allows us to store a
 }
 ```
 
-This can be used to indicate that a node is not allowed to be deleted from the graph. 
+This can be used to indicate that a node is not allowed to be deleted from the graph.
