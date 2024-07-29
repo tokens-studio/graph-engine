@@ -1,6 +1,6 @@
 import { Edge, Port } from '@tokens-studio/graph-engine';
 import { Stack } from '@tokens-studio/ui';
-import { getPreview } from './token';
+import { getPreview } from './token.js';
 import { withVariadicField } from '@tokens-studio/graph-editor';
 import React from 'react';
 

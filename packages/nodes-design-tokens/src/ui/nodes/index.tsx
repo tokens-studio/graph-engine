@@ -1,4 +1,4 @@
-import TypographyPreview from './typography';
+import TypographyPreview from './typography.js';
 
 export const specifics = {
 	'studio.tokens.preview.typography': TypographyPreview

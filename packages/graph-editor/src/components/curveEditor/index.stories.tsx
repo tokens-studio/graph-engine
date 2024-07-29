@@ -1,7 +1,7 @@
 import { CurveEditor } from './index.js';
-import { vec } from 'mafs';
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import type { vec } from 'mafs';
 
 const meta: Meta<typeof CurveEditor> = {
   title: 'Components/Curve Editor',
