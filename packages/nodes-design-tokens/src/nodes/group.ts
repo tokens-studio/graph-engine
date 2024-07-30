@@ -23,8 +23,8 @@ export default class GroupNode extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const { name, tokens } = this.getAllInputs();
-		const output = { [name]: tokens };
+		const { name, tokenSet } = this.getAllInputs();
+		const output = { [name]: tokenSet };
 
 		this.setOutput('tokenSet', output);
 	}
