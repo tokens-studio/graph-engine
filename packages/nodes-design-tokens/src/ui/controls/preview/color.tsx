@@ -1,14 +1,10 @@
 import { Box, Text } from '@tokens-studio/ui';
-import { toColor, toHex } from '@tokens-studio/graph-engine';
 import React from 'react';
 
 export const PreviewColor = ({ value }) => {
 	if (value === undefined) {
 		return <Text>Missing</Text>;
 	}
-
-	//Convert to hex
-	const hex = toHex(toColor(value));
 
 	return (
 		<Box
@@ -26,7 +22,7 @@ export const PreviewColor = ({ value }) => {
 		>
 			<Box
 				css={{
-					background: hex,
+					background: value,
 					position: 'absolute',
 					left: '-8px',
 					top: '-8px',
