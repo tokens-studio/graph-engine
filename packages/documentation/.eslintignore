@@ -1,4 +1,5 @@
 dist/**
+out/**
 build/**
 coverage/**
 storybook-static/**

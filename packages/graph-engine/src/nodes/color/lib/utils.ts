@@ -30,3 +30,8 @@ export const White = {
 	space: 'srgb',
 	channels: [1, 1, 1]
 } as ColorType;
+
+export const Red = {
+	space: 'srgb',
+	channels: [1, 0, 0]
+} as ColorType;

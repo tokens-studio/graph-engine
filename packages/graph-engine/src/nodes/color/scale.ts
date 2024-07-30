@@ -1,8 +1,8 @@
-import { Black, toColor, toColorObject } from './lib/utils.js';
 import { Color } from '../../types.js';
 import { ColorSchema, NumberSchema } from '../../schemas/index.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
+import { Red, toColor, toColorObject } from './lib/utils.js';
 import { arrayOf } from '../../schemas/utils.js';
 
 export default class NodeDefinition extends Node {
@@ -25,7 +25,7 @@ export default class NodeDefinition extends Node {
 		this.addInput('color', {
 			type: {
 				...ColorSchema,
-				default: Black
+				default: Red
 			}
 		});
 		this.addInput('stepsUp', {
@@ -55,16 +55,16 @@ export default class NodeDefinition extends Node {
 
 		const lighter = col
 			.steps('white', { space: 'hsl', steps: sUp })
-			.slice(1, -1)
-			.map(x => toColorObject(x));
+			.slice(0, -1)
+			.map(x => toColorObject(x))
+			.reverse();
 		const darker = col
 			.steps('black', { space: 'hsl', steps: sDown })
 			.slice(1, -1)
 			.map(x => toColorObject(x));
 		//Not need to modify
-		const mid = [color];
 
-		const final = ([] as Color[]).concat(lighter, mid, darker) as Color[];
+		const final = ([] as Color[]).concat(lighter, darker) as Color[];
 		this.setOutput('value', final);
 	}
 }
