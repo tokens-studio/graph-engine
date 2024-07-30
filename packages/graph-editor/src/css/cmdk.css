@@ -47,11 +47,12 @@
 [cmdk-item] {
     font-size: var(--fontSizes-small);
     padding: var(--space-3) var(--space-5);
-    border-radius: 0px
+    border-radius: 0px;
+    cursor: pointer;
 }
 
 [cmdk-group-heading] {
-    padding: var(--space-1) var(--space-5);
+    padding: var(--space-1);
     font-weight: var(--fontWeights-sansMedium);
     color: var(--colors-fgDefault);
     font-size: var(--fontSizes-xxsmall);

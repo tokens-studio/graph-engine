@@ -11,12 +11,12 @@ import {
   SelectionMode,
   SnapGrid,
   XYPosition,
+  getNodesBounds,
   useEdgesState,
   useNodesState,
   useReactFlow,
   useStoreApi,
 } from 'reactflow';
-import { NodeTypes as EditorNodeTypes } from '../components/flow/types.js';
 import { createNode } from './actions/createNode.js';
 import {
   getNodePositionInsideParent,
@@ -45,11 +45,12 @@ import { BatchRunError, Graph } from '@tokens-studio/graph-engine';
 import { Box } from '@tokens-studio/ui';
 import { CommandMenu } from '@/components/commandPalette/index.js';
 import { EdgeContextMenu } from '../components/contextMenus/edgeContextMenu.js';
+import { GROUP, NOTE, PASSTHROUGH } from '@/ids.js';
+import { GROUP_NODE_PADDING } from '@/constants.js';
 import { GraphContextProvider } from '@/context/graph.js';
 import { GraphEditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { GraphToolbar } from '@/components/toolbar/index.js';
 import { HotKeys } from '@/components/hotKeys/index.js';
-import { NOTE, PASSTHROUGH } from '@/ids.js';
 import { NodeContextMenu } from '../components/contextMenus/nodeContextMenu.js';
 import { NodeV2 } from '@/components/index.js';
 import { PaneContextMenu } from '../components/contextMenus/paneContextMenu.js';
@@ -74,10 +75,13 @@ import { currentPanelIdSelector } from '@/redux/selectors/graph.js';
 import { deleteNode } from './actions/deleteNode.js';
 import {
   description,
+  height,
+  parentId as parentIdAnnotation,
   title,
   uiNodeType,
   uiVersion,
   uiViewport,
+  width,
   xpos,
   ypos,
 } from '@/annotations/index.js';
@@ -194,6 +198,8 @@ export const EditorApp = React.forwardRef<
         node.annotations || (node.annotations = {});
         node.annotations[xpos] = flowNode.position.x;
         node.annotations[ypos] = flowNode.position.y;
+        node.annotations[width] = flowNode.width;
+        node.annotations[height] = flowNode.height;
       });
 
       return serialized;
@@ -416,7 +422,7 @@ export const EditorApp = React.forwardRef<
     ...customNodeUI,
     GenericNode: NodeV2,
     [PASSTHROUGH]: PassthroughNode,
-    [EditorNodeTypes.GROUP]: groupNode,
+    [GROUP]: groupNode,
     [NOTE]: noteNode,
   });
 
@@ -426,6 +432,7 @@ export const EditorApp = React.forwardRef<
       Object.entries({
         ...customNodeUI,
         [NOTE]: NOTE,
+        [GROUP]: GROUP,
         'studio.tokens.generic.preview': 'studio.tokens.generic.preview',
       }).map(([k]) => [k, k]),
     );
@@ -485,21 +492,61 @@ export const EditorApp = React.forwardRef<
           reactFlowInstance.setViewport(viewport);
         }
         let offset = -550;
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+        const groupsChildren: Record<string, Node[]> = {};
         const nodes = Object.entries(loadedGraph.nodes).map(([_, node]) => {
           //Generate the react flow nodes
-          return {
+          let reactFlowNode: Node = {
             id: node.id,
-            type: node.annotations[uiNodeType] || 'GenericNode',
+            type: (node.annotations[uiNodeType] || 'GenericNode') as string,
             data: {
               icon: iconLookup[node.factory.type],
             },
             position: {
-              x: node.annotations[xpos] || (offset += 550),
-              y: node.annotations[ypos] || 0,
+              x: (node.annotations[xpos] || (offset += 550)) as number,
+              y: (node.annotations[ypos] || 0) as number,
             },
-          } as Node;
-        });
+            width: (node.annotations[width] as number) || null,
+            height: (node.annotations[height] as number) || null,
+          };
+
+          if (node.annotations[parentIdAnnotation]) {
+            const parentId = node.annotations[parentIdAnnotation] as string;
+            reactFlowNode = {
+              ...reactFlowNode,
+              parentId,
+              extent: 'parent',
+            };
+            (groupsChildren[parentId] || (groupsChildren[parentId] = [])).push(reactFlowNode);
+          } else if (node.annotations[uiNodeType] === GROUP) {
+            reactFlowNode = {
+              ...reactFlowNode,
+              data: {
+                expandable: true,
+                expanded: true,
+              },
+            };
+          }
+
+          return reactFlowNode as Node;
+        })
+          .map((node) => {
+            if (node.type === GROUP && groupsChildren[node.id]) {
+              const bounds = getNodesBounds(groupsChildren[node.id]);
+
+              return {
+                ...node,
+                style: {
+                  width: bounds.width + GROUP_NODE_PADDING * 2,
+                  height: bounds.height + GROUP_NODE_PADDING * 2,
+                },
+              };
+            }
+
+            return node;
+          })
+          .sort(sortNodes);
+
         const edges = Object.values(loadedGraph.edges).map((edge) => {
           //This is the only point of difference for the edges
           const indexed = edge.annotations['engine.index'];
@@ -576,17 +623,17 @@ export const EditorApp = React.forwardRef<
 
   const onNodeDragStop = useCallback(
     (_: MouseEvent, node: Node) => {
-      if (!node.parentNode) {
+      if (!node.parentId) {
         return;
       }
 
       const intersections = getIntersectingNodes(node).filter(
-        (n) => n.type === EditorNodeTypes.GROUP,
+        (n) => n.type === GROUP,
       );
       const groupNode = intersections[0];
 
       // when there is an intersection on drag stop, we want to attach the node to its new parent
-      if (intersections.length && node.parentNode !== groupNode?.id) {
+      if (intersections.length && node.parentId !== groupNode?.id) {
         const nextNodes: Node[] = store
           .getState()
           .getNodes()
@@ -605,7 +652,7 @@ export const EditorApp = React.forwardRef<
               return {
                 ...n,
                 position,
-                parentNode: groupNode.id,
+                parentId: groupNode.id,
                 extent: 'parent' as const,
               };
             }
@@ -705,21 +752,21 @@ export const EditorApp = React.forwardRef<
 
   const onNodeDrag = useCallback(
     (_: MouseEvent, node: Node) => {
-      if (!node.parentNode) {
+      if (!node.parentId) {
         return;
       }
 
       const intersections = getIntersectingNodes(node).filter(
-        (n) => n.type === EditorNodeTypes.GROUP,
+        (n) => n.type === GROUP,
       );
       const groupClassName =
-        intersections.length && node.parentNode !== intersections[0]?.id
+        intersections.length && node.parentId !== intersections[0]?.id
           ? 'active'
           : '';
 
       setNodes((nds) => {
         return nds.map((n) => {
-          if (n.type === EditorNodeTypes.GROUP) {
+          if (n.type === GROUP) {
             return {
               ...n,
               className: groupClassName,
@@ -860,8 +907,8 @@ export const EditorApp = React.forwardRef<
                 css={{
                   position: 'absolute',
                   top: '$7',
-                  left: 0,
-                  right: 0,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
                   display: 'grid',
                   placeItems: 'center',
                   zIndex: '99',

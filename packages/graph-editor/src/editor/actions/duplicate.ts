@@ -1,10 +1,12 @@
 import { Edge, Node, ReactFlowInstance } from 'reactflow';
+import { GROUP } from '@/ids.js';
 import {
   Graph,
   NodeFactory,
   Port,
   annotatedSingleton,
 } from '@tokens-studio/graph-engine';
+import { parentId } from '@/annotations/index.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface IDuplicate {
@@ -20,6 +22,20 @@ export interface IDuplicate {
 export const duplicateNodes =
   ({ graph, reactFlowInstance }: IDuplicate) =>
   (nodeIds: string[]) => {
+    nodeIds = nodeIds.reduce((acc, nodeId) => {
+      const node = reactFlowInstance.getNode(nodeId);
+      if (node?.type == GROUP) {
+        const children = reactFlowInstance.getNodes()
+          .filter((x) => x.parentId === nodeId)
+          .map((x) => x.id);
+        return [...acc, nodeId, ...children];
+      }
+
+      return [...acc, nodeId];
+    }, [] as string[]);
+
+		const oldToNewIdMap = new Map<string, string>();
+    
     const { addNodes, addEdges } = nodeIds.reduce(
       (acc, nodeId) => {
         const node = reactFlowInstance.getNode(nodeId);
@@ -36,6 +52,7 @@ export const duplicateNodes =
         }
 
         const clonedNode = graphNode.clone(graph);
+        oldToNewIdMap.set(nodeId, clonedNode.id);
 
         const newPosition = {
           x: node.position.x + 20,
@@ -44,6 +61,11 @@ export const duplicateNodes =
 
         clonedNode.annotations['ui.position.x'] = newPosition.x;
         clonedNode.annotations['ui.position.y'] = newPosition.y;
+
+        // Set new parentId annotation if it exists
+        if (node.parentId && oldToNewIdMap.get(node.parentId)) {
+          clonedNode.annotations[parentId] = oldToNewIdMap.get(node.parentId);
+        }
 
         graph.addNode(clonedNode);
 
@@ -76,6 +98,7 @@ export const duplicateNodes =
             id: clonedNode.id,
             selected: true,
             position: newPosition,
+            parentId: node.parentId ? oldToNewIdMap.get(node.parentId) : undefined,
           },
         ];
 

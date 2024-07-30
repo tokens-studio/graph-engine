@@ -9,18 +9,18 @@ function useDetachNodes() {
     (ids: string[], removeParentId?: string) => {
       const { nodeInternals } = store.getState();
       const nextNodes = Array.from(nodeInternals.values()).map((n) => {
-        if (ids.includes(n.id) && n.parentNode) {
-          const parentNode = nodeInternals.get(n.parentNode);
+        if (ids.includes(n.id) && n.parentId) {
+          const parentId = nodeInternals.get(n.parentId);
 
           //Remove parent reference and recalculate in global space
           return {
             ...n,
             position: {
-              x: n.position.x + (parentNode?.positionAbsolute?.x ?? 0),
-              y: n.position.y + (parentNode?.positionAbsolute?.y ?? 0),
+              x: n.position.x + (parentId?.positionAbsolute?.x ?? 0),
+              y: n.position.y + (parentId?.positionAbsolute?.y ?? 0),
             },
             extent: undefined,
-            parentNode: undefined,
+            parentId: undefined,
           };
         }
         return n;

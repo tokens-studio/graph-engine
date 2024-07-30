@@ -19,6 +19,9 @@ export const hidden = 'ui.hidden';
 //Used on nodes to indicate meta from a ui
 export const xpos = 'ui.position.x';
 export const ypos = 'ui.position.y';
+export const width = 'ui.dimension.width';
+export const height = 'ui.dimension.height';
+export const parentId = 'ui.parentId';
 
 //Used on nodes and graph
 export const title = 'ui.title';

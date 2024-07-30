@@ -1,19 +1,18 @@
 import { Edge, Graph } from '@tokens-studio/graph-engine';
+import { GROUP } from '@/ids.js';
+import { GROUP_NODE_PADDING } from '@/constants.js';
 import { Item, Menu, Separator } from 'react-contexify';
-import { Node, getRectOfNodes, useReactFlow, useStoreApi } from 'reactflow';
-import { NodeTypes } from '../flow/types.js';
-import { getId } from '../flow/utils.js';
+import { Node, getNodesBounds, useReactFlow, useStoreApi } from 'reactflow';
+import { height, parentId, width, xpos, ypos } from '@/annotations/index.js';
 import { useAction } from '@/editor/actions/provider.js';
 import { useLocalGraph } from '@/hooks/index.js';
 import { v4 as uuid } from 'uuid';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 export type INodeContextMenuProps = {
   id: string;
   nodes: Node[];
 };
-
-const padding = 25;
 
 export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
   const reactFlowInstance = useReactFlow();
@@ -22,60 +21,103 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
   const createNode = useAction('createNode');
   const duplicateNodes = useAction('duplicateNodes');
 
-  //Note that we use a filter here to prevent getting nodes that have a parent node, ie are part of a group
+  const reactFlowNodes = reactFlowInstance.getNodes();
+
+  // Note that we use a filter here to prevent getting nodes that have a parent node, ie are part of a group
   const selectedNodes = nodes.filter(
-    (node) => node.selected && !node.parentNode,
+    (node) => node.selected && !node.parentId,
   );
   const selectedNodeIds = selectedNodes.map((node) => node.id);
 
   const onGroup = useCallback(() => {
-    const rectOfNodes = getRectOfNodes(nodes);
-    const groupId = getId('group');
+    const bounds = getNodesBounds(nodes);
     const parentPosition = {
-      x: rectOfNodes.x,
-      y: rectOfNodes.y,
+      x: bounds.x,
+      y: bounds.y,
     };
-    const groupNode = {
-      id: groupId,
-      type: NodeTypes.GROUP,
-      position: parentPosition,
-      style: {
-        width: rectOfNodes.width + padding * 2,
-        height: rectOfNodes.height + padding * 2,
-      },
-      data: {
-        expandable: true,
-        expanded: true,
-      },
-    } as Node;
 
     store.getState().resetSelectedElements();
     store.setState({ nodesSelectionActive: false });
+
+    const newNodes = createNode({
+      type: GROUP,
+      position: parentPosition,
+    });
+
+    if (!newNodes) {
+      return;
+    }
+
+    const { flowNode } = newNodes;
+
     reactFlowInstance.setNodes((nodes) => {
-      //Note that group nodes should always occur before their parents
-      return [groupNode].concat(
-        nodes.map((node) => {
+      // Note that group nodes should always occur before their children
+      return [{
+        ...flowNode,
+        dragHandle: undefined,
+        style: {
+          width: bounds.width + GROUP_NODE_PADDING * 2,
+          height: bounds.height + GROUP_NODE_PADDING * 2,
+        },
+        data: {
+          expandable: true,
+          expanded: true,
+        }
+      } as Node]
+        .concat(nodes)
+        .map((node) => {
           if (selectedNodeIds.includes(node.id)) {
             return {
               ...node,
               position: {
-                x: node.position.x - parentPosition.x + padding,
-                y: node.position.y - parentPosition.y + padding,
+                x: node.position.x - parentPosition.x + GROUP_NODE_PADDING,
+                y: node.position.y - parentPosition.y + GROUP_NODE_PADDING,
               },
               extent: 'parent' as const,
-              parentNode: groupId,
+              parentId: flowNode.id,
             };
           }
 
           return node;
-        }),
-      );
+        });
     });
-  }, [nodes, reactFlowInstance, selectedNodeIds, store]);
+
+    const reactFlowNodesMap = new Map<string, Node>(
+      reactFlowNodes.map((node) => [node.id, node]),
+    );
+
+    // Set annotations for all items in the group
+    nodes.forEach((node) => {
+      const graphNode = graph.getNode(node.id);
+      if (graphNode) {
+        graphNode.annotations[xpos] = node.position.x - parentPosition.x + GROUP_NODE_PADDING;
+        graphNode.annotations[ypos] = node.position.y - parentPosition.y + GROUP_NODE_PADDING;
+        graphNode.annotations[width] = reactFlowNodesMap.get(node.id)?.width || 200;
+        graphNode.annotations[height] = reactFlowNodesMap.get(node.id)?.height || 100;
+        graphNode.annotations[parentId] = flowNode.id;
+      }
+    });
+
+  }, [createNode, graph, nodes, reactFlowInstance, reactFlowNodes, selectedNodeIds, store]);
 
   const onCreateSubgraph = useCallback(() => {
-    //We need to work out which nodes do not have parents in the selection
+    // Get all selected node ids, including children of groups
+    const selectedNodeIds = selectedNodes
+      .reduce((acc, node) => {
+        if (node.type !== GROUP) {
+          return [...acc, node.id];
+        }
 
+        const children = reactFlowNodes
+          .filter((n) => n.parentId === node.id)
+          .map((x) => x.id);
+
+        if (children.length > 0) {
+          return [...acc, node.id, ...children];
+        }
+
+        return acc;
+      }, [] as string[]);
     const lookup = new Set(selectedNodeIds);
 
     //Lets create a new subgraph node
@@ -95,17 +137,17 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
       y: position.y / selectedNodes.length,
     };
 
-    const nodes = createNode({
+    const newNodes = createNode({
       type: 'studio.tokens.generic.subgraph',
       position: finalPosition,
     });
 
     //Request failed in some way
-    if (!nodes) {
+    if (!newNodes) {
       return;
     }
 
-    const { graphNode, flowNode } = nodes;
+    const { graphNode, flowNode } = newNodes;
 
     //@ts-expect-error
     const internalGraph = graphNode._innerGraph as unknown as Graph;
@@ -288,15 +330,17 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
     );
 
     //We then need to find all the downstream nodes from those nodes for the output
-  }, [createNode, graph, reactFlowInstance, selectedNodeIds, selectedNodes]);
+  }, [createNode, graph, reactFlowInstance, reactFlowNodes, selectedNodes]);
 
   const onDuplicate = () => {
     duplicateNodes(selectedNodeIds);
   };
 
+  const hasGroup = useMemo(() => selectedNodes.some((node) => node.type === GROUP), [selectedNodes]);
+
   return (
     <Menu id={id}>
-      <Item onClick={onGroup}>Create group</Item>
+      {!hasGroup && <Item onClick={onGroup}>Create group</Item>}
       <Item onClick={onCreateSubgraph}>Create Subgraph</Item>
       <Separator />
       <Item onClick={onDuplicate}>Duplicate</Item>
