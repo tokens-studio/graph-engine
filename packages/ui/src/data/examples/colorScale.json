@@ -42,8 +42,7 @@
 							"channels": [0, 0, 0]
 						},
 						"required": ["channels", "space"]
-					},
-					"visible": true
+					}
 				},
 				{
 					"name": "stepsUp",
@@ -72,9 +71,157 @@
 			}
 		},
 		{
+			"id": "6d6fc60d-54d6-4a13-ae5f-07e90c73757e",
+			"type": "studio.tokens.generic.output",
+			"inputs": [
+				{
+					"name": "tokenSet",
+					"value": {
+						"primary-0": {
+							"name": "primary-0",
+							"type": "color",
+							"value": "#d07b7b",
+							"$extensions": {}
+						},
+						"primary-100": {
+							"name": "primary-100",
+							"type": "color",
+							"value": "#d6b0b0",
+							"$extensions": {}
+						},
+						"primary-200": {
+							"name": "primary-200",
+							"type": "color",
+							"value": "#e6dcdc",
+							"$extensions": {}
+						},
+						"primary-300": {
+							"name": "primary-300",
+							"type": "color",
+							"value": "#d33c3c",
+							"$extensions": {}
+						},
+						"primary-400": {
+							"name": "primary-400",
+							"type": "color",
+							"value": "#963535",
+							"$extensions": {}
+						},
+						"primary-500": {
+							"name": "primary-500",
+							"type": "color",
+							"value": "#592e2e",
+							"$extensions": {}
+						},
+						"primary-600": {
+							"name": "primary-600",
+							"type": "color",
+							"value": "#271d1d",
+							"$extensions": {}
+						}
+					},
+					"type": {
+						"$id": "https://schemas.tokens.studio/any.json",
+						"title": "Any"
+					},
+					"dynamicType": {
+						"$id": "https://schemas.tokens.studio/tokenSet.json",
+						"title": "Token Set",
+						"type": "object",
+						"properties": {
+							"name": {
+								"$id": "https://schemas.tokens.studio/string.json",
+								"title": "String",
+								"type": "string"
+							},
+							"token": {
+								"$id": "https://schemas.tokens.studio/string.json",
+								"title": "String",
+								"type": "string"
+							}
+						}
+					},
+					"annotations": {
+						"ui.deletable": true
+					}
+				}
+			],
+			"annotations": {
+				"engine.singleton": true,
+				"engine.dynamicInputs": true,
+				"ui.position.x": 2366.704096027743,
+				"ui.position.y": 414.57086279062395
+			}
+		},
+		{
+			"id": "90f5ae8a-9dcd-4909-9a78-4f2a371b6388",
+			"type": "studio.tokens.generic.input",
+			"inputs": [
+				{
+					"name": "base",
+					"value": {
+						"space": "sRGB",
+						"channels": [
+							0.8274509803921568, 0.23529411764705882, 0.23529411764705882
+						],
+						"alpha": 1
+					},
+					"type": {
+						"$id": "https://schemas.tokens.studio/color.json",
+						"title": "Color",
+						"type": "object",
+						"properties": {
+							"channels": {
+								"type": "array",
+								"items": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								}
+							},
+							"space": {
+								"$id": "https://schemas.tokens.studio/string.json",
+								"title": "String",
+								"type": "string"
+							},
+							"alpha": {
+								"$id": "https://schemas.tokens.studio/number.json",
+								"title": "Number",
+								"type": "number"
+							}
+						},
+						"default": {
+							"channels": [0, 0, 0],
+							"space": "srgb"
+						},
+						"required": ["channels", "space"]
+					},
+					"visible": false,
+					"annotations": {
+						"ui.deletable": true
+					}
+				}
+			],
+			"annotations": {
+				"engine.singleton": true,
+				"engine.dynamicInputs": true,
+				"ui.position.x": 221.6322254725569,
+				"ui.position.y": 394.8674031741904
+			}
+		},
+		{
 			"id": "1cb6bbac-107e-4247-9d03-585631c435ad",
 			"type": "tokens.studio.array.map",
 			"inputs": [
+				{
+					"name": "prefix",
+					"value": "primary",
+					"type": {
+						"$id": "https://schemas.tokens.studio/string.json",
+						"title": "String",
+						"type": "string"
+					}
+				},
 				{
 					"name": "array",
 					"value": [
@@ -158,24 +305,13 @@
 							"required": ["channels", "space"]
 						}
 					},
-					"visible": true,
 					"annotations": {
 						"ui.editable": false
 					}
-				},
-				{
-					"name": "prefix",
-					"value": "primary",
-					"type": {
-						"$id": "https://schemas.tokens.studio/string.json",
-						"title": "String",
-						"type": "string"
-					},
-					"visible": true
 				}
 			],
 			"annotations": {
-				"ui.position.x": 1410,
+				"ui.position.x": 1409.0387140503906,
 				"ui.position.y": 391.5
 			},
 			"innergraph": {
@@ -225,6 +361,7 @@
 									},
 									"required": ["channels", "space"]
 								},
+								"visible": false,
 								"annotations": {
 									"ui.editable": false,
 									"ui.hidden": true,
@@ -239,6 +376,7 @@
 									"title": "Number",
 									"type": "number"
 								},
+								"visible": false,
 								"annotations": {
 									"ui.editable": false,
 									"engine.hideFromParentSubgraph": true
@@ -252,6 +390,7 @@
 									"title": "Number",
 									"type": "number"
 								},
+								"visible": false,
 								"annotations": {
 									"ui.editable": false,
 									"engine.hideFromParentSubgraph": true
@@ -265,6 +404,7 @@
 									"title": "String",
 									"type": "string"
 								},
+								"visible": false,
 								"annotations": {
 									"ui.deletable": true
 								}
@@ -287,7 +427,8 @@
 								"value": {
 									"name": "primary-600",
 									"type": "color",
-									"value": "[object Object]"
+									"value": "#271d1d",
+									"$extensions": {}
 								},
 								"type": {
 									"type": "array",
@@ -318,7 +459,7 @@
 										}
 									}
 								},
-								"visible": true,
+								"visible": false,
 								"annotations": {
 									"ui.editable": false
 								}
@@ -342,8 +483,7 @@
 									"$id": "https://schemas.tokens.studio/string.json",
 									"title": "String",
 									"type": "string"
-								},
-								"visible": true
+								}
 							},
 							{
 								"name": "type",
@@ -355,12 +495,9 @@
 									"enum": [
 										"asset",
 										"boolean",
-										"border",
 										"borderRadius",
 										"borderWidth",
-										"boxShadow",
 										"color",
-										"composition",
 										"dimension",
 										"fontFamilies",
 										"fontSizes",
@@ -377,79 +514,40 @@
 										"strokeStyle",
 										"text",
 										"textCase",
-										"textDecoration",
-										"typography"
+										"textDecoration"
 									]
-								},
-								"visible": true
+								}
 							},
 							{
 								"name": "value",
-								"value": "[object Object]",
+								"value": "#271d1d",
 								"type": {
 									"$id": "https://schemas.tokens.studio/string.json",
 									"title": "String",
 									"type": "string"
-								},
-								"visible": true
+								}
+							},
+							{
+								"name": "description",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							},
+							{
+								"name": "$extensions",
+								"value": {},
+								"type": {
+									"$id": "https://schemas.tokens.studio/object.json",
+									"title": "Object",
+									"type": "object"
+								}
 							}
 						],
 						"annotations": {
 							"ui.position.x": 3132,
 							"ui.position.y": 183
-						}
-					},
-					{
-						"id": "f9fa0061-d3d9-4340-af1e-deb34d811c99",
-						"type": "studio.tokens.string.stringify",
-						"inputs": [
-							{
-								"name": "value",
-								"value": {
-									"space": "HSL",
-									"channels": [0, 15.794979079497907, 13.284313725490193],
-									"alpha": 1
-								},
-								"type": {
-									"$id": "https://schemas.tokens.studio/any.json",
-									"title": "Any"
-								},
-								"dynamicType": {
-									"$id": "https://schemas.tokens.studio/color.json",
-									"title": "Color",
-									"type": "object",
-									"properties": {
-										"channels": {
-											"type": "array",
-											"items": {
-												"$id": "https://schemas.tokens.studio/number.json",
-												"title": "Number",
-												"type": "number"
-											}
-										},
-										"space": {
-											"$id": "https://schemas.tokens.studio/string.json",
-											"title": "String",
-											"type": "string"
-										},
-										"alpha": {
-											"$id": "https://schemas.tokens.studio/number.json",
-											"title": "Number",
-											"type": "number"
-										}
-									},
-									"default": {
-										"channels": [0, 0, 0],
-										"space": "srgb"
-									},
-									"required": ["channels", "space"]
-								},
-								"visible": true
-							}
-						],
-						"annotations": {
-							"ui.position.x": 2558,
-							"ui.position.y": 252.5
 						}
 					},
 					{
@@ -475,8 +573,7 @@
 										"title": "String",
 										"type": "string"
 									}
-								},
-								"visible": true
+								}
 							},
 							{
 								"name": "delimiter",
@@ -486,8 +583,7 @@
 									"title": "String",
 									"type": "string",
 									"default": "-"
-								},
-								"visible": true
+								}
 							},
 							{
 								"name": "separator",
@@ -497,7 +593,8 @@
 									"title": "String",
 									"type": "string",
 									"default": ""
-								}
+								},
+								"visible": false
 							}
 						],
 						"annotations": {
@@ -516,8 +613,7 @@
 									"$id": "https://schemas.tokens.studio/number.json",
 									"title": "Number",
 									"type": "number"
-								},
-								"visible": true
+								}
 							},
 							{
 								"name": "b",
@@ -526,8 +622,7 @@
 									"$id": "https://schemas.tokens.studio/number.json",
 									"title": "Number",
 									"type": "number"
-								},
-								"visible": true
+								}
 							}
 						],
 						"annotations": {
@@ -559,8 +654,7 @@
 										"type": "string"
 									}
 								},
-								"variadic": true,
-								"visible": true
+								"variadic": true
 							}
 						],
 						"annotations": {
@@ -583,31 +677,66 @@
 									"$id": "https://schemas.tokens.studio/number.json",
 									"title": "Number",
 									"type": "number"
-								},
-								"visible": true
+								}
 							}
 						],
 						"annotations": {
 							"ui.position.x": 1410,
 							"ui.position.y": 64
 						}
+					},
+					{
+						"id": "a10bf353-f35e-4292-b08c-c6dce49e188c",
+						"type": "studio.tokens.color.toHex",
+						"inputs": [
+							{
+								"name": "color",
+								"value": {
+									"space": "HSL",
+									"channels": [0, 15.794979079497907, 13.284313725490193],
+									"alpha": 1
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/color.json",
+									"title": "Color",
+									"type": "object",
+									"properties": {
+										"channels": {
+											"type": "array",
+											"items": {
+												"$id": "https://schemas.tokens.studio/number.json",
+												"title": "Number",
+												"type": "number"
+											}
+										},
+										"space": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"alpha": {
+											"$id": "https://schemas.tokens.studio/number.json",
+											"title": "Number",
+											"type": "number"
+										}
+									},
+									"default": {
+										"space": "srgb",
+										"channels": [0, 0, 0]
+									},
+									"required": ["channels", "space"]
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1751.5494435352286,
+							"ypos": 447.7257641414118,
+							"ui.position.x": 2238.9017299195016,
+							"ui.position.y": 356.4113357452006
+						}
 					}
 				],
 				"edges": [
-					{
-						"id": "df60eb51-95ff-499d-9c2b-bd6a36fa50f0",
-						"source": "39211c60-1cc7-4461-9e0a-0c12e839e941",
-						"sourceHandle": "value",
-						"target": "f9fa0061-d3d9-4340-af1e-deb34d811c99",
-						"targetHandle": "value"
-					},
-					{
-						"id": "24238c22-ecd7-444f-8adb-cc78cc815580",
-						"source": "f9fa0061-d3d9-4340-af1e-deb34d811c99",
-						"sourceHandle": "value",
-						"target": "5f723c81-d7f4-40f9-a1af-7cd8cd3b1c48",
-						"targetHandle": "value"
-					},
 					{
 						"id": "278ae9d0-b506-4246-b0dd-9b57b3cbcdab",
 						"source": "5f723c81-d7f4-40f9-a1af-7cd8cd3b1c48",
@@ -662,18 +791,33 @@
 						"sourceHandle": "value",
 						"target": "5f723c81-d7f4-40f9-a1af-7cd8cd3b1c48",
 						"targetHandle": "name"
+					},
+					{
+						"id": "2052c082-5495-470d-9a82-64de53c5adf4",
+						"source": "39211c60-1cc7-4461-9e0a-0c12e839e941",
+						"sourceHandle": "value",
+						"target": "a10bf353-f35e-4292-b08c-c6dce49e188c",
+						"targetHandle": "color"
+					},
+					{
+						"id": "29070f78-33dd-4205-ac78-deb214d6aa88",
+						"source": "a10bf353-f35e-4292-b08c-c6dce49e188c",
+						"sourceHandle": "value",
+						"target": "5f723c81-d7f4-40f9-a1af-7cd8cd3b1c48",
+						"targetHandle": "value"
 					}
 				],
 				"annotations": {
 					"engine.id": "d5015d06-35ed-423a-a455-65749cec07ca",
 					"engine.capabilities.web-audio": "0.0.0",
 					"engine.capabilities.fs": "0.0.0",
-					"engine.version": "0.12.0"
+					"engine.version": "0.12.0",
+					"ui.viewports": [null, null, null, null, null, null, null, null, null]
 				}
 			}
 		},
 		{
-			"id": "17c7dea5-5b17-417b-a93d-cf3246443ef3",
+			"id": "e565cba7-6c59-47f8-9599-b072eb831b23",
 			"type": "studio.tokens.design.arrayToSet",
 			"inputs": [
 				{
@@ -682,37 +826,44 @@
 						{
 							"name": "primary-0",
 							"type": "color",
-							"value": "[object Object]"
+							"value": "#d07b7b",
+							"$extensions": {}
 						},
 						{
 							"name": "primary-100",
 							"type": "color",
-							"value": "[object Object]"
+							"value": "#d6b0b0",
+							"$extensions": {}
 						},
 						{
 							"name": "primary-200",
 							"type": "color",
-							"value": "[object Object]"
+							"value": "#e6dcdc",
+							"$extensions": {}
 						},
 						{
 							"name": "primary-300",
 							"type": "color",
-							"value": "[object Object]"
+							"value": "#d33c3c",
+							"$extensions": {}
 						},
 						{
 							"name": "primary-400",
 							"type": "color",
-							"value": "[object Object]"
+							"value": "#963535",
+							"$extensions": {}
 						},
 						{
 							"name": "primary-500",
 							"type": "color",
-							"value": "[object Object]"
+							"value": "#592e2e",
+							"$extensions": {}
 						},
 						{
 							"name": "primary-600",
 							"type": "color",
-							"value": "[object Object]"
+							"value": "#271d1d",
+							"$extensions": {}
 						}
 					],
 					"type": {
@@ -765,145 +916,14 @@
 								}
 							}
 						}
-					},
-					"visible": true
-				}
-			],
-			"annotations": {
-				"ui.position.x": 1984,
-				"ui.position.y": 391.5
-			}
-		},
-		{
-			"id": "6d6fc60d-54d6-4a13-ae5f-07e90c73757e",
-			"type": "studio.tokens.generic.output",
-			"inputs": [
-				{
-					"name": "tokens",
-					"value": {
-						"primary-0": {
-							"name": "primary-0",
-							"type": "color",
-							"value": "[object Object]"
-						},
-						"primary-100": {
-							"name": "primary-100",
-							"type": "color",
-							"value": "[object Object]"
-						},
-						"primary-200": {
-							"name": "primary-200",
-							"type": "color",
-							"value": "[object Object]"
-						},
-						"primary-300": {
-							"name": "primary-300",
-							"type": "color",
-							"value": "[object Object]"
-						},
-						"primary-400": {
-							"name": "primary-400",
-							"type": "color",
-							"value": "[object Object]"
-						},
-						"primary-500": {
-							"name": "primary-500",
-							"type": "color",
-							"value": "[object Object]"
-						},
-						"primary-600": {
-							"name": "primary-600",
-							"type": "color",
-							"value": "[object Object]"
-						}
-					},
-					"type": {
-						"$id": "https://schemas.tokens.studio/any.json",
-						"title": "Any"
-					},
-					"dynamicType": {
-						"$id": "https://schemas.tokens.studio/tokenSet.json",
-						"title": "Token Set",
-						"type": "object",
-						"properties": {
-							"name": {
-								"$id": "https://schemas.tokens.studio/string.json",
-								"title": "String",
-								"type": "string"
-							},
-							"token": {
-								"$id": "https://schemas.tokens.studio/string.json",
-								"title": "String",
-								"type": "string"
-							}
-						}
-					},
-					"visible": true,
-					"annotations": {
-						"ui.deletable": true
 					}
 				}
 			],
 			"annotations": {
-				"engine.singleton": true,
-				"engine.dynamicInputs": true,
-				"ui.position.x": 2558,
-				"ui.position.y": 391.5
-			}
-		},
-		{
-			"id": "90f5ae8a-9dcd-4909-9a78-4f2a371b6388",
-			"type": "studio.tokens.generic.input",
-			"inputs": [
-				{
-					"name": "base",
-					"value": {
-						"space": "sRGB",
-						"channels": [
-							0.8274509803921568, 0.23529411764705882, 0.23529411764705882
-						],
-						"alpha": 1
-					},
-					"type": {
-						"$id": "https://schemas.tokens.studio/color.json",
-						"title": "Color",
-						"type": "object",
-						"properties": {
-							"channels": {
-								"type": "array",
-								"items": {
-									"$id": "https://schemas.tokens.studio/number.json",
-									"title": "Number",
-									"type": "number"
-								}
-							},
-							"space": {
-								"$id": "https://schemas.tokens.studio/string.json",
-								"title": "String",
-								"type": "string"
-							},
-							"alpha": {
-								"$id": "https://schemas.tokens.studio/number.json",
-								"title": "Number",
-								"type": "number"
-							}
-						},
-						"default": {
-							"channels": [0, 0, 0],
-							"space": "srgb"
-						},
-						"required": ["channels", "space"]
-					},
-					"annotations": {
-						"ui.deletable": true
-					}
-				}
-			],
-			"annotations": {
-				"engine.singleton": true,
-				"engine.dynamicInputs": true,
-				"ui.position.x": 221.6322254725569,
-				"ui.position.y": 394.8674031741904
+				"xpos": 1923.981708887667,
+				"ypos": 401.38031816175635,
+				"ui.position.x": 1923.981708887667,
+				"ui.position.y": 401.38031816175635
 			}
 		}
 	],
@@ -916,25 +936,25 @@
 			"targetHandle": "array"
 		},
 		{
-			"id": "d5b16f2a-5e02-42b8-8edc-195e1b6b0d31",
-			"source": "1cb6bbac-107e-4247-9d03-585631c435ad",
-			"sourceHandle": "value",
-			"target": "17c7dea5-5b17-417b-a93d-cf3246443ef3",
-			"targetHandle": "tokens"
-		},
-		{
-			"id": "b6f090e5-1097-4414-99b3-e481b85b474f",
-			"source": "17c7dea5-5b17-417b-a93d-cf3246443ef3",
-			"sourceHandle": "value",
-			"target": "6d6fc60d-54d6-4a13-ae5f-07e90c73757e",
-			"targetHandle": "tokens"
-		},
-		{
 			"id": "3735a1be-9f98-4a03-a7b4-7ca186f55fe4",
 			"source": "90f5ae8a-9dcd-4909-9a78-4f2a371b6388",
 			"sourceHandle": "base",
 			"target": "30204297-03c6-480b-82c8-5ba44bdbf06d",
 			"targetHandle": "color"
+		},
+		{
+			"id": "b92984a9-f160-4ba8-b786-b7743cfd0e6d",
+			"source": "1cb6bbac-107e-4247-9d03-585631c435ad",
+			"sourceHandle": "value",
+			"target": "e565cba7-6c59-47f8-9599-b072eb831b23",
+			"targetHandle": "tokens"
+		},
+		{
+			"id": "e24ae103-f686-4915-b0c3-e94febadd5ae",
+			"source": "e565cba7-6c59-47f8-9599-b072eb831b23",
+			"sourceHandle": "tokenSet",
+			"target": "6d6fc60d-54d6-4a13-ae5f-07e90c73757e",
+			"targetHandle": "tokenSet"
 		}
 	],
 	"annotations": {
@@ -943,11 +963,11 @@
 		"engine.capabilities.fs": "0.0.0",
 		"engine.version": "0.12.0",
 		"ui.viewport": {
-			"x": -353.27684793932497,
-			"y": 130.38463193772827,
-			"zoom": 0.5683936915675616
+			"x": -1038.0915871997595,
+			"y": 542.4548165664146,
+			"zoom": 1.0402731886452754
 		},
-		"ui.version": "3.0.0",
+		"ui.version": "4.0.0",
 		"ui.viewports": [null, null, null, null, null, null, null, null, null]
 	}
 }
