@@ -32,3 +32,8 @@ export const ToolBarButtonsSelector = createSelector(
   registry,
   (state) => state.toolbarButtons,
 );
+
+export const SchemaSelector = createSelector(
+  registry,
+  (state) => state.schemas,
+);

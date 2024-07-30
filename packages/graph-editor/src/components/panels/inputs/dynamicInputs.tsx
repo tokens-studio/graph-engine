@@ -1,4 +1,3 @@
-import { AllSchemas, STRING } from '@tokens-studio/graph-engine';
 import {
   Button,
   Checkbox,
@@ -10,8 +9,11 @@ import {
   TextInput,
 } from '@tokens-studio/ui';
 import { Node } from '@tokens-studio/graph-engine';
+import { STRING } from '@tokens-studio/graph-engine';
+import { SchemaSelector } from '@/redux/selectors/index.js';
 import { deletable } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
+import { useSelector } from 'react-redux';
 import React, { useMemo } from 'react';
 
 export const DynamicInputs = observer(({ node }: { node: Node }) => {
@@ -21,9 +23,11 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
   const [enumerated, setEnumerated] = React.useState(false);
   const [enumeratedValues, setEnumeratedValues] = React.useState<string>('');
 
+  const schemas = useSelector(SchemaSelector);
+
   const newInput = () => {
     //Find the schema
-    const schema = AllSchemas.find((x) => x.$id === inputType);
+    const schema = schemas.find((x) => x.$id === inputType);
     let type = {
       ...schema,
     };
@@ -89,10 +93,9 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
         style={{ background: 'red' }}
       >
         <Select.Trigger label="Type" value={inputType} />
-        {/* @ts-expect-error */}
         <Select.Content css={{ maxHeight: '200px' }} position="popper">
           <Scroll height="200">
-            {AllSchemas.map((x, i) => (
+            {schemas.map((x, i) => (
               <Select.Item value={x.$id!} key={i}>
                 {x.title || x.$id}
               </Select.Item>

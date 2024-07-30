@@ -8,6 +8,7 @@ export const ReduxProvider = ({
   panelItems,
   capabilities,
   icons,
+  schemas,
   controls,
   specifics,
   toolbarButtons,
@@ -17,6 +18,12 @@ export const ReduxProvider = ({
       store.dispatch.registry.setToolbarButtons(toolbarButtons);
     }
   }, [toolbarButtons]);
+
+  useEffect(() => {
+    if (schemas) {
+      store.dispatch.registry.setSchemas(schemas);
+    }
+  }, [schemas]);
 
   useEffect(() => {
     store.dispatch.registry.registerIcons(icons || {});
