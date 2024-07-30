@@ -4,7 +4,7 @@ import { TokenSchema, TokenSetSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
 
 export default class ArrayToSetNode extends Node {
-	static title = 'Token array to set';
+	static title = 'Array of Tokens to Set';
 	static type = 'studio.tokens.design.arrayToSet';
 	static description = 'Converts an array of tokens to a set';
 	constructor(props: INodeDefinition) {
@@ -12,7 +12,7 @@ export default class ArrayToSetNode extends Node {
 		this.addInput('tokens', {
 			type: arrayOf(TokenSchema)
 		});
-		this.addOutput('value', {
+		this.addOutput('tokenSet', {
 			type: TokenSetSchema
 		});
 	}
@@ -22,6 +22,6 @@ export default class ArrayToSetNode extends Node {
 
 		const asSet = flatTokensToMap(tokens as IResolvedToken[]);
 
-		this.setOutput('value', asSet);
+		this.setOutput('tokenSet', asSet);
 	}
 }

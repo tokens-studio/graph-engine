@@ -16,7 +16,7 @@ export default class ExternalTokensNode extends Node {
 		this.addInput('uri', {
 			type: StringSchema
 		});
-		this.addOutput('value', {
+		this.addOutput('tokenSet', {
 			type: arrayOf(TokenSchema)
 		});
 	}
@@ -29,6 +29,6 @@ export default class ExternalTokensNode extends Node {
 		}
 
 		const tokens = await this.load(uri);
-		this.setOutput('value', tokens);
+		this.setOutput('tokenSet', tokens);
 	}
 }

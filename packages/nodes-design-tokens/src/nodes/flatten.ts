@@ -9,21 +9,21 @@ export default class FlattenNode extends Node {
 	static description = 'Flattens a set of tokens';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('tokens', {
+		this.addInput('arrayOfTokens', {
 			type: {
 				...arrayOf(arrayOf(TokenSchema)),
 				default: []
 			}
 		});
-		this.addOutput('value', {
+		this.addOutput('tokens', {
 			type: arrayOf(TokenSchema)
 		});
 	}
 
 	execute(): void | Promise<void> {
-		const { tokens } = this.getAllInputs();
+		const { arrayOfTokens } = this.getAllInputs();
 
-		const { vals } = (tokens as SingleToken[][])
+		const { vals } = (arrayOfTokens as SingleToken[][])
 			.flat()
 			.flat()
 			.reduceRight(
@@ -41,6 +41,6 @@ export default class FlattenNode extends Node {
 					lookup: {}
 				}
 			);
-		this.setOutput('value', vals.reverse());
+		this.setOutput('tokens', vals.reverse());
 	}
 }
