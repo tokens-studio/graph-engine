@@ -9,7 +9,7 @@ export default class SetToArrayNode extends Node {
 	static description = 'Converts a token set to an array of tokens';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('set', {
+		this.addInput('tokenSet', {
 			type: TokenSetSchema
 		});
 		this.addOutput('tokens', {
@@ -18,7 +18,7 @@ export default class SetToArrayNode extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const set = this.getInput('set');
+		const set = this.getInput('tokenSet');
 
 		const tokens = flatten(set);
 
