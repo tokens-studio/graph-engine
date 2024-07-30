@@ -1,6 +1,6 @@
 # Tokens Studio Graph Engine Monorepo
 
-![NPM version badge](https://img.shields.io/npm/v/@tokens-studio/graph-engine) ![License badge](https://img.shields.io/github/license/tokens-studio/types)
+![NPM version badge](https://img.shields.io/npm/v/@tokens-studio/graph-engine) ![License badge](https://img.shields.io/github/license/tokens-studio/graph-engine)
 
 This is the monorepo for the full Tokens Studio ecosystem powered by [Turborepo](https://turbo.build/)
 

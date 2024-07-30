@@ -20,7 +20,6 @@ export const fs = Volume.fromJSON({
  */
 export const capabilities: CapabilityFactory[] = [
 	WebAudioCapability,
-	ImageCapability,
 	{
 		name: 'fs',
 		register: () => {
@@ -31,20 +30,14 @@ export const capabilities: CapabilityFactory[] = [
 
 export const icons = {
 	...audioIcons,
-	...designIcons,
-	...ImageIcons
+	...designIcons
 };
 
-export const controls = [
-	...designControls,
-	...AudioControls,
-	...defaultControls
-];
+export const controls = [...designControls, ...defaultControls];
 
 export const specifics = {
 	...defaultSpecifics,
-	...designSpecifics,
-	...imageSpecifics
+	...designSpecifics
 } as Record<string, React.FC<{ node: Node }>>;
 
 export { menu } from './menu.tsx';
