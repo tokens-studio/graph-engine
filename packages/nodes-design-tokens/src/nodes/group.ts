@@ -11,21 +11,21 @@ export default class GroupNode extends Node {
 	static description = 'Groups tokens by adding a namespace';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('accessor', {
+		this.addInput('name', {
 			type: StringSchema
 		});
-		this.addInput('tokens', {
+		this.addInput('tokenSet', {
 			type: TokenSetSchema
 		});
-		this.addOutput('value', {
+		this.addOutput('tokenSet', {
 			type: TokenSetSchema
 		});
 	}
 
 	execute(): void | Promise<void> {
-		const { accessor, tokens } = this.getAllInputs();
-		const output = { [accessor]: tokens };
+		const { name, tokenSet } = this.getAllInputs();
+		const output = { [name]: tokenSet };
 
-		this.setOutput('value', output);
+		this.setOutput('tokenSet', output);
 	}
 }

@@ -1,4 +1,9 @@
-import { CapabilityFactory, Node } from '@tokens-studio/graph-engine';
+import {
+  AllSchemas,
+  CapabilityFactory,
+  Node,
+  SchemaObject,
+} from '@tokens-studio/graph-engine';
 import { Control } from '@/types/controls.js';
 import { DefaultToolbarButtons } from '@/registry/toolbar.js';
 import {
@@ -23,6 +28,7 @@ export interface RegistryState {
   panelItems: DropPanelStore;
   capabilities: CapabilityFactory[];
   toolbarButtons: ReactElement[];
+  schemas: SchemaObject[];
 }
 
 export const registryState = createModel<RootModel>()({
@@ -35,8 +41,15 @@ export const registryState = createModel<RootModel>()({
     nodeTypes: {},
     capabilities: [],
     toolbarButtons: DefaultToolbarButtons(),
+    schemas: AllSchemas,
   } as RegistryState,
   reducers: {
+    setSchemas(state, schemas: SchemaObject[]) {
+      return {
+        ...state,
+        schemas,
+      };
+    },
     setToolbarButtons(state, toolbarButtons: ReactElement[]) {
       return {
         ...state,

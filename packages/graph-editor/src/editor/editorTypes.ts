@@ -3,6 +3,7 @@ import {
   ExternalLoader,
   Graph,
   Node as GraphNode,
+  SchemaObject,
   SerializedGraph,
 } from '@tokens-studio/graph-engine';
 import { Control } from '../types/controls.js';
@@ -71,6 +72,11 @@ export interface EditorProps {
    * An initial layout to use
    */
   initialLayout?: LayoutBase;
+
+  /**
+   * Schemas to expose to the editor
+   */
+  schemas?: SchemaObject[];
 
   /**
    * Additional icons to display in the editor for custom types
