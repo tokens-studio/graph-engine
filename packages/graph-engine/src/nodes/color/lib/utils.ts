@@ -8,7 +8,7 @@ export const toColor = (color: ColorType): Color => {
 
 export const toColorObject = (color: Color): ColorType => {
 	return {
-		space: color.space.name,
+		space: color.space.id,
 		channels: color.coords,
 		alpha: color.alpha
 	};
