@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 3.0.1
+
+### Patch Changes
+
+- d116ff8: Fix an issue where we were saving the color space name instead of the id which caused errors in conversion
+
 ## 3.0.0
 
 ### Major Changes
