@@ -1,22 +1,15 @@
 {
-    "folders": [
-        {
-            "name": "ROOT",
-            "path": "../"
-        },
-        {
-            "name": "packages/ui",
-            "path": "../packages/ui"
-        },
-        {
-            "name": "packages/graph-engine",
-            "path": "../packages/graph-engine"
-        }
-    ],
-    "settings": {
-        "files.exclude": {
-            "node_modules/": true,
-            "packages/": true
-        }
-    }
+	"folders": [
+		{
+			"name": "✨ @tokens-studio/graph-engine-monorepo",
+			"path": ".."
+		},
+		{
+			"name": "📦 tokens-studio-graph-engine",
+			"path": "../packages/vscode-extension"
+		}
+	],
+	"settings": {
+		"adrManager.adrDirectory": "adrs"
+	}
 }
