@@ -36,6 +36,8 @@ values:
     gitSha: '{{ .SHA }}'
     vars:
       HOSTNAME: 0.0.0.0
+      AUTH_TRUST_HOST: 'true'
+      AUTH_URL: https://graph.alpha.tokens.studio
     # Reference the created secrets file
     secretName: graph-engine-db-app
     sealedSecrets:
