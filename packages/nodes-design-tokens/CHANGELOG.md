@@ -1,5 +1,41 @@
 # @tokens-studio/graph-engine
 
+## 3.0.0
+
+### Major Changes
+
+- 6f7a482: Replaced Nearest Tokens with sort Color by node, also removed the inverted, this can be done through array reverse.
+- 7325125: Update port names on most set/array operations
+
+### Minor Changes
+
+- 18b45c4: Fixed the typing on the external set
+- 42618c0: Add Dimension and Reference types
+- 42618c0: Added Object path and Assert Defined as a core node, added nodes to handle creating the specific complex objects for the types in the design tokens package
+
+### Patch Changes
+
+- Updated dependencies [42618c0]
+- Updated dependencies [18b45c4]
+- Updated dependencies [57522d0]
+- Updated dependencies [18b45c4]
+- Updated dependencies [6f7a482]
+- Updated dependencies [18b45c4]
+- Updated dependencies [42618c0]
+- Updated dependencies [42618c0]
+- Updated dependencies [18b45c4]
+- Updated dependencies [18b45c4]
+- Updated dependencies [42618c0]
+- Updated dependencies [18b45c4]
+- Updated dependencies [18b45c4]
+- Updated dependencies [45eb061]
+- Updated dependencies [965946d]
+- Updated dependencies [fa6723b]
+- Updated dependencies [18b45c4]
+- Updated dependencies [18b45c4]
+  - @tokens-studio/graph-editor@4.1.0
+  - @tokens-studio/graph-engine@3.0.0
+
 ## 2.0.0
 
 ### Major Changes

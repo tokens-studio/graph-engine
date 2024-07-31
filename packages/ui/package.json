@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@tokens-studio/graph-engine-ui",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "UI for the graph engine",
   "author": "andrew@hyma.io",
   "type": "module",
