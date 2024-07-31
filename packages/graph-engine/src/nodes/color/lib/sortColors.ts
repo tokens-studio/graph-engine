@@ -1,5 +1,5 @@
+import { orderBy } from 'lodash-es';
 import { toColor } from './utils.js';
-import orderBy from 'lodash.orderby';
 
 export const compareFunctions = {
 	Contrast: (foreground, background, algorithm) => {
