@@ -14,6 +14,7 @@ import mix from './mix.js';
 import name from './name.js';
 import poline from './poline.js';
 import scale from './scale.js';
+import sortByDistance from './sortByDistance.js';
 import stringToCol from './stringToColor.js';
 import wheel from './wheel.js';
 
@@ -35,5 +36,6 @@ export const nodes = [
 	colorToString,
 	lighten,
 	darken,
+	sortByDistance,
 	stringToCol
 ];

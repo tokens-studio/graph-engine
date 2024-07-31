@@ -14,7 +14,6 @@ import InvertNode from './invert.js';
 import LeonardoColorNode from './leonardoColor.js';
 import LeonardoThemeNode from './leonardoTheme.js';
 import NameTokensNode from './name.js';
-import NearestColorNode from './nearest.js';
 import PreviewTypography from './previewTypography.js';
 import ResolveNode from './resolve.js';
 import SetToArrayNode from './setToArray.js';
@@ -46,7 +45,6 @@ export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
 	UngroupNode,
 	InvertNode,
 	ResolveNode,
-	NearestColorNode,
 	NameTokensNode,
 	PreviewTypography,
 	LeonardoColorNode,
