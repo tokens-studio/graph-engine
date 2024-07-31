@@ -19,7 +19,7 @@ json6902Patches:
         - name: DATABASE_URL 
           valueFrom:
               secretKeyRef:
-                name: graph-engine=beta-db-app
+                name: graph-engine-beta-db-app
                 key: uri
 values:
   postgresql:
