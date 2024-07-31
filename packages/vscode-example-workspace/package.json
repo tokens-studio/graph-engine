@@ -1,6 +1,6 @@
 {
   "name": "@tokens-studio/graph-engine-example-workspace",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Example workspace for the graph engine",
   "license": "MPL-2.0",
   "author": "andrew@hyma.io",

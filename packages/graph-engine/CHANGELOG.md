@@ -1,5 +1,26 @@
 # @tokens-studio/graph-engine
 
+## 3.0.0
+
+### Major Changes
+
+- 6f7a482: Replaced Nearest Tokens with sort Color by node, also removed the inverted, this can be done through array reverse.
+
+### Minor Changes
+
+- 57522d0: Added colorToString and stringToColor to handle stringification of the color spaces
+- 42618c0: Add range mapping node, this node lets you map from one range to another.
+- 42618c0: Add Dimension and Reference types
+- 42618c0: Added Object path and Assert Defined as a core node, added nodes to handle creating the specific complex objects for the types in the design tokens package
+- fa6723b: Changed registering capabilities to be async if needed
+
+### Patch Changes
+
+- 18b45c4: The deserialization of nodes is now asynchronous to better support loading in dynamic values which might be external
+- 18b45c4: Fixed an issue with duplicate external loader definitions
+- 18b45c4: Removed the unused linear sample. Will be replaced with f curves in the future
+- 18b45c4: Improved performance by removing the ripple behavior in setting a value
+
 ## 2.0.0
 
 ### Major Changes

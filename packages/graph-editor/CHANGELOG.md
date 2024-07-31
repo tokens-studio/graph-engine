@@ -1,5 +1,33 @@
 # @tokens-studio/graph-editor
 
+## 4.1.0
+
+### Minor Changes
+
+- 18b45c4: Add the ability to quick create inputs for input nodes ala blender
+- 42618c0: Add Dimension and Reference types
+- 18b45c4: Added better exposure for customizing the toolbar
+- 18b45c4: Changes the editor to support better injecting toolbar buttons
+- 45eb061: In the exported editor component we now expose a schemas object which can be used to limit or extend which schemas are shown for dynamic inputs
+
+### Patch Changes
+
+- 42618c0: Fixed an issue with a memo leak in the zoomDropdown
+- 18b45c4: Fixed issue with debugger using incorrect timing
+- 965946d: Fix icon on alignment
+- 18b45c4: Fixed connecting the external loader to the graph
+- Updated dependencies [57522d0]
+- Updated dependencies [18b45c4]
+- Updated dependencies [6f7a482]
+- Updated dependencies [42618c0]
+- Updated dependencies [42618c0]
+- Updated dependencies [18b45c4]
+- Updated dependencies [42618c0]
+- Updated dependencies [18b45c4]
+- Updated dependencies [fa6723b]
+- Updated dependencies [18b45c4]
+  - @tokens-studio/graph-engine@3.0.0
+
 ## 4.0.0
 
 ### Major Changes
