@@ -436,7 +436,7 @@
 		},
 		{
 			"id": "ef8bd5b3-45ce-43b5-9a7a-aa70bb164273",
-			"type": "studio.tokens.color.toHex",
+			"type": "studio.tokens.color.colorToString",
 			"inputs": [
 				{
 					"name": "color",
