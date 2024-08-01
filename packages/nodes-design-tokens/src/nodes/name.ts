@@ -1,11 +1,26 @@
-import { INodeDefinition, Node } from '@tokens-studio/graph-engine';
+import {
+	INodeDefinition,
+	Node,
+	ToInput,
+	ToOutput
+} from '@tokens-studio/graph-engine';
 import { TokenSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
+import type { SingleToken } from '@tokens-studio/types';
 
 export default class NameTokensNode extends Node {
 	static title = 'Name tokens';
 	static type = 'studio.tokens.design.nameTokens';
 	static description = 'Names an array of tokens by their index';
+
+	declare inputs: ToInput<{
+		tokens: SingleToken[];
+	}>;
+
+	declare outputs: ToOutput<{
+		tokens: SingleToken[];
+	}>;
+
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('tokens', {

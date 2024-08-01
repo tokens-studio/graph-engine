@@ -1,11 +1,13 @@
 import {
 	INodeDefinition,
 	Node,
-	StringSchema
+	StringSchema,
+	ToInput,
+	ToOutput
 } from '@tokens-studio/graph-engine';
 import { ObjectSchema } from '@tokens-studio/graph-engine';
+import { SingleToken, TokenTypes } from '@tokens-studio/types';
 import { TokenSchema } from '../schemas/index.js';
-import { TokenTypes } from '@tokens-studio/types';
 
 const excluded = [
 	TokenTypes.TYPOGRAPHY,
@@ -21,6 +23,18 @@ export default class NodeDefinition extends Node {
 	static title = 'Create Design Token';
 	static type = 'studio.tokens.design.create';
 	static description = 'Creates a design token from inputs';
+
+	declare inputs: ToInput<{
+		name: string;
+		type: string;
+		value: string;
+		description?: string;
+		$extensions?: Record<string, unknown>;
+	}>;
+	declare outputs: ToOutput<{
+		token: SingleToken;
+	}>;
+
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('name', {

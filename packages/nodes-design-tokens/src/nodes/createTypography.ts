@@ -2,6 +2,7 @@ import {
 	INodeDefinition,
 	Node,
 	StringSchema,
+	ToInput,
 	ToOutput
 } from '@tokens-studio/graph-engine';
 import { TokenTypographySchema } from '../schemas/index.js';
@@ -11,6 +12,17 @@ export default class CreateTypographyNode extends Node {
 	static title = 'Create a Typography';
 	static type = 'studio.tokens.design.createTypography';
 	static description = 'Creates a composite typography value from inputs';
+
+	declare inputs: ToInput<{
+		fontFamily?: string;
+		fontWeight?: string;
+		fontSize?: string;
+		lineHeight?: string;
+		letterSpacing?: string;
+		paragraphSpacing?: string;
+		textDecoration?: string;
+		textCase?: string;
+	}>;
 
 	declare outputs: ToOutput<{
 		token: TokenTypographyValue;

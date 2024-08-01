@@ -12,6 +12,7 @@ import {
 import { TokenSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
 import { transformTokens } from 'token-transformer';
+import type { SingleToken } from '@tokens-studio/types';
 
 const resolveValues = (tokens: IResolvedToken[], context: IResolvedToken[]) => {
 	const setsToUse = ['root', 'excludes'];
@@ -42,8 +43,8 @@ export default class ResolveNode extends Node {
 	static description = 'Resolves a set of tokens';
 
 	declare inputs: ToInput<{
-		inputs: IResolvedToken[];
-		context: IResolvedToken[];
+		inputs: SingleToken[];
+		context: SingleToken[];
 	}>;
 	declare outputs: ToOutput<{
 		value: IResolvedToken[];

@@ -1,14 +1,27 @@
 import {
 	INodeDefinition,
 	Node,
-	StringSchema
+	StringSchema,
+	ToInput,
+	ToOutput
 } from '@tokens-studio/graph-engine';
 import { TokenSetSchema } from '../schemas/index.js';
+import type { DeepKeyTokenMap } from '@tokens-studio/types';
 
 export default class GroupNode extends Node {
 	static title = 'Group tokens';
 	static type = 'studio.tokens.design.group';
 	static description = 'Groups tokens by adding a namespace';
+
+	declare inputs: ToInput<{
+		name: string;
+		tokenSet: DeepKeyTokenMap;
+	}>;
+
+	declare outputs: ToOutput<{
+		tokenSet: DeepKeyTokenMap;
+	}>;
+
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('name', {
