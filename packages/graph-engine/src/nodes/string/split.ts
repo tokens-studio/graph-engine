@@ -2,6 +2,7 @@ import { INodeDefinition, Node } from '../../programmatic/node.js';
 import { StringSchema } from '../../schemas/index.js';
 import { ToInput } from '../../programmatic/input.js';
 import { ToOutput } from '../../programmatic/index.js';
+import { arrayOf } from '../../schemas/utils.js';
 
 export default class NodeDefinition extends Node {
 	static title = 'Split String';
@@ -26,7 +27,7 @@ export default class NodeDefinition extends Node {
 			}
 		});
 		this.addOutput('value', {
-			type: StringSchema
+			type: arrayOf(StringSchema)
 		});
 	}
 
