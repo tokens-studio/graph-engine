@@ -1,5 +1,14 @@
 # @tokens-studio/graph-editor
 
+## 4.1.1
+
+### Patch Changes
+
+- 8af0662: Update the link for the help link to be the correct url
+- Updated dependencies [8af0662]
+- Updated dependencies [e4f6c2c]
+  - @tokens-studio/graph-engine@3.0.2
+
 ## 4.1.0
 
 ### Minor Changes
