@@ -1,7 +1,5 @@
 import { IDeserializeOpts } from '../../graph/types.js';
 import { INodeDefinition, Node } from '../../programmatic/node.js';
-import { ToInput } from '../../programmatic/input.js';
-import { ToOutput } from '../../programmatic/output.js';
 import {
 	annotatedDynamicInputs,
 	annotatedSingleton
@@ -10,17 +8,9 @@ import {
 /**
  * Acts as an output node for the graph. There should only be a single output node per graph.
  */
-export default class NodeDefinition<T> extends Node {
+export default class NodeDefinition extends Node {
 	static title = 'Output';
 	static type = 'studio.tokens.generic.output';
-
-	//Override with static typing
-	public declare inputs: ToInput<{
-		input: T;
-	}>;
-	public declare outputs: ToOutput<{
-		value: T;
-	}>;
 
 	static description = 'Allows you to expose outputs of the node';
 	constructor(props: INodeDefinition) {

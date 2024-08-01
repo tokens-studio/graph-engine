@@ -20,7 +20,7 @@ describe('color/convert', () => {
 			color: {
 				alpha: 1,
 				channels: [54.29054140467191, 80.80492817043522, 69.89096476862429],
-				space: 'Lab'
+				space: 'lab'
 			}
 		});
 	});
@@ -41,7 +41,7 @@ describe('color/convert', () => {
 			color: {
 				alpha: 1,
 				channels: [0.8585916022954422, 8.152862362272588e-9, 0],
-				space: 'Adobe® 98 RGB compatible'
+				space: 'a98rgb'
 			}
 		});
 	});
@@ -64,7 +64,7 @@ describe('color/convert', () => {
 				channels: [
 					0.9174875573251656, 0.20028680774084717, 0.13856059121111405
 				],
-				space: 'P3'
+				space: 'p3'
 			}
 		});
 	});
@@ -86,7 +86,7 @@ describe('color/convert', () => {
 				channels: [
 					0.4767656277225901, -0.05333477044742116, 0.06192370329969671
 				],
-				space: 'Oklab'
+				space: 'oklab'
 			}
 		});
 	});
@@ -106,7 +106,7 @@ describe('color/convert', () => {
 		expect(getAllOutputs(node)).to.deep.equal({
 			color: {
 				alpha: 1,
-				space: 'XYZ D65',
+				space: 'xyz-d65',
 				channels: [
 					0.14672204396323899, 0.011234589220921708, -0.015842642806276265
 				]

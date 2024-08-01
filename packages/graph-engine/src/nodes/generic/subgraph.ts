@@ -16,6 +16,9 @@ import OutputNode from './output.js';
 export interface SerializedSubgraphNode extends SerializedNode {
 	innergraph: SerializedGraph;
 }
+export interface ISubgraphNode extends INodeDefinition {
+	innergraph?: Graph;
+}
 
 export default class SubgraphNode extends Node {
 	static title = 'Subgraph';
@@ -24,22 +27,40 @@ export default class SubgraphNode extends Node {
 
 	_innerGraph: Graph;
 
-	constructor(props: INodeDefinition) {
+	constructor(props: ISubgraphNode) {
 		super(props);
 
-		this._innerGraph = new Graph();
+		const existing = !!props.innergraph;
+		this._innerGraph = props.innergraph || new Graph();
 
 		//Pass capabilities down
 		this._innerGraph.capabilities = this.getGraph().capabilities;
 
-		const input = new InputNode({ graph: this._innerGraph });
-		input.annotations[annotatedDeleteable] = false;
-		const output = new OutputNode({ graph: this._innerGraph });
-		output.annotations[annotatedDeleteable] = false;
+		let input: InputNode;
+		let output: OutputNode;
 
-		//Create the initial input and output nodes
-		this._innerGraph.addNode(input);
-		this._innerGraph.addNode(output);
+		if (!existing) {
+			input = new InputNode({ graph: this._innerGraph });
+			input.annotations[annotatedDeleteable] = false;
+			output = new OutputNode({ graph: this._innerGraph });
+			output.annotations[annotatedDeleteable] = false;
+
+			//Create the initial input and output nodes
+			this._innerGraph.addNode(input);
+			this._innerGraph.addNode(output);
+		} else {
+			Object.values(this._innerGraph.nodes).forEach(node => {
+				if (node.factory.type == InputNode.type) {
+					input = node as InputNode;
+				}
+				if (node.factory.type == OutputNode.type) {
+					output = node as OutputNode;
+				}
+			});
+
+			if (!input) throw new Error('No input node found');
+			if (!output) throw new Error('No output node found');
+		}
 
 		autorun(() => {
 			//Get the existing inputs
@@ -103,13 +124,17 @@ export default class SubgraphNode extends Node {
 	}
 
 	static override async deserialize(opts: IDeserializeOpts) {
-		const node = (await super.deserialize(opts)) as SubgraphNode;
-		const innerGraph = new Graph();
-
-		node._innerGraph = await innerGraph.deserialize(
+		const innergraph = await new Graph().deserialize(
 			(opts.serialized as SerializedSubgraphNode).innergraph,
 			opts.lookup
 		);
+
+		const node = (await super.deserialize({
+			...opts,
+			//@ts-expect-error
+			innergraph
+		})) as SubgraphNode;
+
 		return node;
 	}
 
