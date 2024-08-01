@@ -2,6 +2,7 @@ import {
 	INodeDefinition,
 	Node,
 	StringSchema,
+	ToInput,
 	ToOutput
 } from '@tokens-studio/graph-engine';
 import { TokenBoxShadowSchema } from '../schemas/index.js';
@@ -11,6 +12,15 @@ export default class CreateBoxShadowNode extends Node {
 	static title = 'Create a Box Shadow';
 	static type = 'studio.tokens.design.createBoxShadow';
 	static description = 'Creates a composite box shadow value from inputs';
+
+	declare inputs: ToInput<{
+		x: string;
+		y: string;
+		blur: string;
+		spread: string;
+		color: string;
+		type: string;
+	}>;
 
 	declare outputs: ToOutput<{
 		token: TokenBoxshadowValue;

@@ -1,7 +1,13 @@
-import { INodeDefinition, Node } from '@tokens-studio/graph-engine';
+import {
+	INodeDefinition,
+	Node,
+	ToInput,
+	ToOutput
+} from '@tokens-studio/graph-engine';
 import { IResolvedToken, flatTokensRestoreToMap } from '../utils/index.js';
 import { TokenSchema, TokenSetSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
+import type { DeepKeyTokenMap, SingleToken } from '@tokens-studio/types';
 
 export default class ArrayToSetNode extends Node {
 	static title = 'Array of Tokens to Set';
@@ -16,6 +22,13 @@ export default class ArrayToSetNode extends Node {
 			type: TokenSetSchema
 		});
 	}
+
+	declare inputs: ToInput<{
+		tokens: SingleToken[];
+	}>;
+	declare outputs: ToOutput<{
+		tokenSet: DeepKeyTokenMap;
+	}>;
 
 	execute(): void | Promise<void> {
 		const tokens = this.getInput('tokens');

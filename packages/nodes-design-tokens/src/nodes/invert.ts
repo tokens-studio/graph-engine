@@ -1,5 +1,11 @@
-import { INodeDefinition, Node } from '@tokens-studio/graph-engine';
+import {
+	INodeDefinition,
+	Node,
+	ToInput,
+	ToOutput
+} from '@tokens-studio/graph-engine';
 import { IResolvedToken } from '../utils/index.js';
+import { SingleToken } from '@tokens-studio/types';
 import { TokenSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
 
@@ -7,6 +13,14 @@ export default class InvertNode extends Node {
 	static title = 'Invert Token Set';
 	static type = 'studio.tokens.design.invert';
 	static description = 'Inverts the order of a set of tokens';
+
+	declare inputs: ToInput<{
+		tokens: SingleToken[];
+	}>;
+	declare outputs: ToOutput<{
+		tokens: SingleToken[];
+	}>;
+
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('tokens', {

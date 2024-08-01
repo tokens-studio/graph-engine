@@ -1,11 +1,15 @@
 import { BackgroundColor, Color, Theme } from '@adobe/leonardo-contrast-colors';
 import {
 	ColorSchema,
+	Color as ColorType,
 	INodeDefinition,
 	Node,
 	NumberSchema,
+	ToInput,
+	ToOutput,
 	hexToColor
 } from '@tokens-studio/graph-engine';
+import { LeonardoColor } from './leonardoColor.js';
 import { LeonardoColorSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
 
@@ -35,6 +39,17 @@ export default class LeonardoThemeNode extends Node {
 			type: arrayOf(ColorSchema)
 		});
 	}
+
+	declare inputs: ToInput<{
+		colors: LeonardoColor[];
+		contrast: number;
+		lightness: number;
+		saturation: number;
+		backgroundColor: LeonardoColor;
+	}>;
+	declare outputs: ToOutput<{
+		colors: ColorType[];
+	}>;
 
 	execute(): void | Promise<void> {
 		const { backgroundColor, colors, contrast, saturation, lightness } =

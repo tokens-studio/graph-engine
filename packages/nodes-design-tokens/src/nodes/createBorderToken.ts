@@ -2,16 +2,34 @@ import {
 	INodeDefinition,
 	Node,
 	ObjectSchema,
-	StringSchema
+	StringSchema,
+	ToInput,
+	ToOutput
 } from '@tokens-studio/graph-engine';
 import { TokenBorderSchema, TokenSchema } from '../schemas/index.js';
-import { TokenTypes } from '@tokens-studio/types';
-import { arrayOf } from 'src/schemas/utils.js';
+import { arrayOf } from '../schemas/utils.js';
+import type {
+	SingleToken,
+	TokenBorderValue,
+	TokenTypes
+} from '@tokens-studio/types';
 
 export default class NodeDefinition extends Node {
 	static title = 'Create Border Design Token';
 	static type = 'studio.tokens.design.createBorderToken';
 	static description = 'Creates a design token from inputs';
+
+	declare outputs: ToOutput<{
+		token: SingleToken;
+	}>;
+	declare inputs: ToInput<{
+		name: string;
+		reference: string;
+		value: TokenBorderValue[];
+		description?: string;
+		$extensions?: Record<string, unknown>;
+	}>;
+
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('name', {

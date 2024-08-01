@@ -2,6 +2,7 @@ import {
 	INodeDefinition,
 	Node,
 	StringSchema,
+	ToInput,
 	ToOutput
 } from '@tokens-studio/graph-engine';
 import { TokenBorderSchema } from '../schemas/index.js';
@@ -11,6 +12,12 @@ export default class CreateBorderNode extends Node {
 	static title = 'Create a Border';
 	static type = 'studio.tokens.design.createBorder';
 	static description = 'Creates a composite Border value from inputs';
+
+	declare inputs: ToInput<{
+		color: string;
+		width: string;
+		style: string;
+	}>;
 
 	declare outputs: ToOutput<{
 		token: TokenBorderValue;

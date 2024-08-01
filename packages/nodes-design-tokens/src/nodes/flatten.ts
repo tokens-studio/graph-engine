@@ -1,4 +1,9 @@
-import { INodeDefinition, Node } from '@tokens-studio/graph-engine';
+import {
+	INodeDefinition,
+	Node,
+	ToInput,
+	ToOutput
+} from '@tokens-studio/graph-engine';
 import { SingleToken } from '@tokens-studio/types';
 import { TokenSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
@@ -7,6 +12,15 @@ export default class FlattenNode extends Node {
 	static title = 'Flatten Token Sets';
 	static type = 'studio.tokens.design.flatten';
 	static description = 'Flattens a set of tokens';
+
+	declare inputs: ToInput<{
+		arrayOfTokens: SingleToken[][];
+	}>;
+
+	declare outputs: ToOutput<{
+		tokens: SingleToken[];
+	}>;
+
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('arrayOfTokens', {

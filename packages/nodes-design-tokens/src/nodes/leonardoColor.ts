@@ -1,15 +1,25 @@
 import {
 	BooleanSchema,
+	Color,
 	ColorSchema,
 	INodeDefinition,
 	Node,
 	NumberSchema,
 	StringSchema,
+	ToInput,
+	ToOutput,
 	toColor,
 	toHex
 } from '@tokens-studio/graph-engine';
 import { LeonardoColorSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
+
+export type LeonardoColor = {
+	name: string;
+	colorKeys: Color[];
+	ratios: number[];
+	smooth: boolean;
+};
 
 export default class LeonardoColorNode extends Node {
 	static title = 'Leonardo Color';
@@ -34,6 +44,17 @@ export default class LeonardoColorNode extends Node {
 			type: LeonardoColorSchema
 		});
 	}
+
+	declare inputs: ToInput<{
+		name: string;
+		colorKeys: Color[];
+		ratios: number[];
+		smooth: boolean;
+	}>;
+
+	declare outputs: ToOutput<{
+		value: LeonardoColor;
+	}>;
 
 	execute(): void | Promise<void> {
 		const { name, colorKeys, ratios, smooth } = this.getAllInputs();

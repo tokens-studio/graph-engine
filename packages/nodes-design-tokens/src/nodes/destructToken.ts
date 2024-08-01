@@ -3,6 +3,7 @@ import {
 	Node,
 	ObjectSchema,
 	StringSchema,
+	ToInput,
 	ToOutput
 } from '@tokens-studio/graph-engine';
 import {
@@ -11,16 +12,33 @@ import {
 	TokenSchema,
 	TokenTypographySchema
 } from '../schemas/index.js';
-import { type TokenBorderValue, TokenTypes } from '@tokens-studio/types';
-import { arrayOf } from 'src/schemas/utils.js';
+import { TokenTypes } from '@tokens-studio/types';
+import { arrayOf } from '../schemas/utils.js';
+import type {
+	SingleToken,
+	TokenBorderValue,
+	TokenBoxshadowValue,
+	TokenTypographyValue
+} from '@tokens-studio/types';
 
 export default class CreateBorderNode extends Node {
 	static title = 'Destruct token';
 	static type = 'studio.tokens.design.destruct';
 	static description = 'Breaks down a token into its parts';
 
+	declare inputs: ToInput<{
+		token: SingleToken;
+	}>;
+
 	declare outputs: ToOutput<{
-		token: TokenBorderValue;
+		name: string;
+		description?: string;
+		type: string;
+		$extensions?: Record<string, unknown>;
+		value?: string;
+		border?: TokenBorderValue;
+		typography?: TokenTypographyValue;
+		boxShadow?: TokenBoxshadowValue[];
 	}>;
 
 	constructor(props: INodeDefinition) {

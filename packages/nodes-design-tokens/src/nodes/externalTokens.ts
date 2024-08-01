@@ -11,6 +11,7 @@ export default class ExternalTokensNode extends Node {
 	static type = 'studio.tokens.design.externalSet';
 	static description =
 		'Retrieves an external set of tokens and then exposes them';
+
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('uri', {
