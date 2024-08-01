@@ -1,5 +1,12 @@
 # @tokens-studio/graph-engine
 
+## 3.0.2
+
+### Patch Changes
+
+- 8af0662: Fixed an issue with deserialization of a subgraph node where inputs and outputs would not be computed correctly
+- e4f6c2c: Fix an issue where we were saving the color space name instead of the id which caused errors in conversion
+
 ## 3.0.1
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @tokens-studio/graph-engine
 
+## 3.0.1
+
+### Patch Changes
+
+- 8af0662: Fixed an issue where arrayToSet node did not result in an object with nested keys and instead only ever a single level deep
+- Updated dependencies [8af0662]
+- Updated dependencies [e4f6c2c]
+- Updated dependencies [8af0662]
+  - @tokens-studio/graph-engine@3.0.2
+  - @tokens-studio/graph-editor@4.1.1
+
 ## 3.0.0
 
 ### Major Changes
