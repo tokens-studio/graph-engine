@@ -513,8 +513,8 @@ export class Graph {
 				);
 			}
 
-			source.outputs[theEdge.sourceHandle]._edges.push(theEdge);
-			target.inputs[theEdge.targetHandle]._edges.push(theEdge);
+			source.outputs[theEdge.sourceHandle]?._edges.push(theEdge);
+			target.inputs[theEdge.targetHandle]?._edges.push(theEdge);
 
 			return acc;
 		}, {});

@@ -1,5 +1,5 @@
 import { INodeDefinition, Node } from '@tokens-studio/graph-engine';
-import { IResolvedToken, flatTokensToMap } from '../utils/index.js';
+import { IResolvedToken, flatTokensRestoreToMap } from '../utils/index.js';
 import { TokenSchema, TokenSetSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
 
@@ -20,7 +20,7 @@ export default class ArrayToSetNode extends Node {
 	execute(): void | Promise<void> {
 		const tokens = this.getInput('tokens');
 
-		const asSet = flatTokensToMap(tokens as IResolvedToken[]);
+		const asSet = flatTokensRestoreToMap(tokens as IResolvedToken[]);
 
 		this.setOutput('tokenSet', asSet);
 	}

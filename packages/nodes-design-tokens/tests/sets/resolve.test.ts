@@ -6,11 +6,12 @@ import {
 	TokenTypes
 } from '@tokens-studio/types';
 import { Graph } from '@tokens-studio/graph-engine';
+import { describe, expect, test } from 'vitest';
 import { flatten } from '../../src/utils/index.js';
 import Node from '../../src/nodes/resolve.js';
 
-describe('set/resolve', () => {
-	it('resolves complex values correctly', async () => {
+describe('node/resolve', () => {
+	test('resolves complex values correctly', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 

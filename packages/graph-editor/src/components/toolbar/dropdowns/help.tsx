@@ -19,7 +19,7 @@ export const HelpDropdown = () => (
           <DropdownMenu.Item>Give Feedback / Report a Bug</DropdownMenu.Item>
         </a>
         <a
-          href="https://docs.graph.tokens.studio/"
+          href="https://graph.docs.tokens.studio/"
           target="_blank"
           rel="noreferrer"
         >
