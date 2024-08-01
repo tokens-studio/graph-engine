@@ -44,7 +44,7 @@ export const graphContract = c.router({
 			200: z.object({
 				name: z.string(),
 				id: z.string(),
-				description: z.string().optional(),
+				description: z.string().nullable(),
 				graph: SerializedGraph,
 				updatedAt: z.number(),
 				public: z.boolean()

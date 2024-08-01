@@ -86,7 +86,6 @@ export const router = tsr.router<typeof marketplaceContract, Context>(
 					}
 
 					//We are going to duplicate this graph so that it doesn't break if the original changes. We'll track this as versions at a later point
-
 					let thumbnail:
 						| Prisma.ThumbnailCreateNestedOneWithoutPublishedGraphInput
 						| undefined = undefined;
@@ -250,6 +249,106 @@ export const router = tsr.router<typeof marketplaceContract, Context>(
 						};
 					})
 				}
+			};
+		},
+
+		copyGraph: {
+			middleware: [authMiddleware],
+			handler: async ({ params }, { request }) => {
+				const { id } = params;
+				const graph = await prisma.publishedGraph.findFirst({
+					where: {
+						id
+					},
+					include: {
+						versions: true
+					}
+				});
+
+				if (!graph) {
+					return {
+						status: 404,
+						body: {
+							message: 'Graph not found'
+						}
+					};
+				}
+
+				//Check for versions
+				const latestVersion = graph.versions[0];
+
+				if (!latestVersion) {
+					return {
+						status: 404,
+						body: {
+							message: 'Graph not found'
+						}
+					};
+				}
+
+				//Update the totalDownload count
+
+				await prisma.publishedGraph.update({
+					where: {
+						id
+					},
+					data: {
+						downloadsTotal: {
+							increment: 1
+						}
+					}
+				});
+
+				//Now that we have the graph, we need to duplicate it for the user
+				const owner = request.user;
+
+				const newGraph = await prisma.graph.create({
+					data: {
+						name: graph.name,
+						graph: latestVersion.graph,
+						owner
+					}
+				});
+
+				return {
+					status: 201,
+					body: {
+						id: newGraph.id
+					}
+				};
+			}
+		},
+		likeGraph: async ({ params }) => {
+			const { id } = params;
+			const graph = await prisma.publishedGraph.findFirst({
+				where: {
+					id
+				}
+			});
+
+			if (!graph) {
+				return {
+					status: 404,
+					body: {
+						message: 'Graph not found'
+					}
+				};
+			}
+
+			await prisma.publishedGraph.update({
+				where: {
+					id
+				},
+				data: {
+					likesTotal: {
+						increment: 1
+					}
+				}
+			});
+
+			return {
+				status: 200,
+				body: {}
 			};
 		}
 	}
