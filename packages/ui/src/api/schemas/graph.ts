@@ -19,6 +19,8 @@ export const SerializedGraph = z.object({
 				})
 			)
 		})
+		//Needed for innergraph to work
+		.passthrough()
 		.array(),
 	edges: z
 		.object({

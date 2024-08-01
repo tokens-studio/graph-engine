@@ -14,9 +14,14 @@ import { Download, Heart } from 'iconoir-react';
 import { ImageHolder, PreviewImage } from '../../clientPage.tsx';
 import { client } from '@/api/sdk/index.ts';
 import { useErrorToast } from '@/hooks/useToast.tsx';
+import { useParams, useRouter } from 'next/navigation.js';
 import MDEditor from '@uiw/react-md-editor';
 
-const Page = ({ id }) => {
+const Page = () => {
+	const router = useRouter();
+	const params = useParams() || {};
+	const id = params.id as string;
+
 	const { isPending, mutateAsync } = client.marketplace.likeGraph.useMutation();
 
 	const { isLoading, data, error } = client.marketplace.getGraph.useQuery(
@@ -28,7 +33,21 @@ const Page = ({ id }) => {
 		}
 	);
 
+	const { mutateAsync: copyGraph, isPending: isCopying } =
+		client.marketplace.copyGraph.useMutation();
+
 	useErrorToast(error);
+
+	const onUseGraph = async () => {
+		const res = await copyGraph({
+			params: {
+				id
+			},
+			body: undefined
+		});
+		const graphId = res.body.id;
+		router.push(`/editor/${graphId}`);
+	};
 
 	const onLike = () => {
 		if (isPending) {
@@ -73,7 +92,12 @@ const Page = ({ id }) => {
 									</Text>
 								</Stack>
 								<Stack gap={3} align='center'>
-									<Button size='large' variant='primary'>
+									<Button
+										loading={isCopying}
+										size='large'
+										variant='primary'
+										onClick={onUseGraph}
+									>
 										Use graph
 									</Button>
 									<IconButton

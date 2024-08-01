@@ -6,7 +6,13 @@ const handler = createNextHandler(contract, root, {
 	basePath: '/api/v1',
 	jsonQuery: true,
 	responseValidation: true,
-	handlerType: 'app-router'
+	handlerType: 'app-router',
+	errorHandler: (error, req, res) => {
+		console.error(error);
+		res.status(500).json({
+			error: 'Internal Server Error'
+		});
+	}
 });
 
 export {

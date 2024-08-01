@@ -90,5 +90,19 @@ export const marketplaceContract = c.router({
 				token: z.string().optional()
 			})
 		}
+	},
+
+	copyGraph: {
+		summary: "Copies an available graph and adds it to the user's graphs",
+		method: 'POST',
+		path: '/marketplace/graph/:id/copy',
+		pathParams: z.object({
+			id: z.string()
+		}),
+		responses: {
+			201: z.object({
+				id: z.string()
+			})
+		}
 	}
 });
