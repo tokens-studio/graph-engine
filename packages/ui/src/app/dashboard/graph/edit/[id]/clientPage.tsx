@@ -36,6 +36,10 @@ const Page = ({ id }) => {
 		}
 	});
 
+	const onNameChange = (e) => {
+		setName(e.target.value);
+	}
+
 	useEffect(() => {
 		if (data) {
 			setName(data.body.name!);
@@ -81,7 +85,7 @@ const Page = ({ id }) => {
 							<Label>Graph ID</Label>
 							<TextInput value={id} disabled></TextInput>
 							<Label>Name</Label>
-							<TextInput value={name}></TextInput>
+							<TextInput onChange={onNameChange} value={name}></TextInput>
 							<Label>Description</Label>
 							<MDEditor
 								value={description}
