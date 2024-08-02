@@ -16,13 +16,13 @@ export default class NodeDefinition extends Node {
 	static description = 'Pads a string to a given length';
 
 	declare inputs: ToInput<{
-		value: string;
+		string: string;
 		length: number;
 		character: string;
 		position: Position;
 	}>;
 	declare outputs: ToOutput<{
-		value: string;
+		string: string;
 	}>;
 
 	constructor(props: INodeDefinition) {
@@ -54,9 +54,9 @@ export default class NodeDefinition extends Node {
 		let paddedString: string;
 
 		if (position === Position.START) {
-			paddedString = string.padStart(length, character);
+			paddedString = string.padStart(length, character[0]);
 		} else {
-			paddedString = string.padEnd(length, character);
+			paddedString = string.padEnd(length, character[0]);
 		}
 
 		this.setOutput('string', paddedString);
