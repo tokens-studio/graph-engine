@@ -14,16 +14,19 @@ import { useErrorToast } from '@/hooks/useToast.tsx';
 import MDEditor from '@uiw/react-md-editor';
 import React, { useCallback, useEffect } from 'react';
 //Add rehype to prevent any client of injecting malicious code
-import { useRouter } from 'next/navigation.js';
+import { useParams, useRouter } from 'next/navigation.js';
 import { useState } from 'react';
 import rehypeSanitize from 'rehype-sanitize';
 
-const Page = ({ id }) => {
+const Page = () => {
+	const params = useParams();
+	const { id } = params;
+
 	const { isLoading, data, error } = client.graph.getGraph.useQuery(
 		['getGraph', id],
 		{
 			params: {
-				id
+				id: id as string
 			}
 		}
 	);
@@ -35,10 +38,21 @@ const Page = ({ id }) => {
 			router.push('/dashboard');
 		}
 	});
+	const { isPending: isSummarizing, mutateAsync: getAISummary } =
+		client.ai.getAISummary.useMutation();
+	const onSummarize = async () => {
+		const response = await getAISummary({
+			body: {
+				graph: data?.body.graph
+			}
+		});
 
-	const onNameChange = (e) => {
+		setDescription(response.body.summary);
+	};
+
+	const onNameChange = e => {
 		setName(e.target.value);
-	}
+	};
 
 	useEffect(() => {
 		if (data) {
@@ -94,6 +108,11 @@ const Page = ({ id }) => {
 									rehypePlugins: [[rehypeSanitize]]
 								}}
 							/>
+							<Box>
+								<Button loading={isSummarizing} onClick={onSummarize}>
+									Summarize with AI
+								</Button>
+							</Box>
 						</Stack>
 						<br />
 						<Button onClick={onUpdate} loading={isPending} variant='primary'>

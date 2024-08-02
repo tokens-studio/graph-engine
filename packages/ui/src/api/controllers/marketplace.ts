@@ -145,6 +145,126 @@ export const router = tsr.router<typeof marketplaceContract, Context>(
 				}
 			}
 		},
+		editGraph: {
+			middleware: [authMiddleware],
+			handler: async ({ params }, { request }) => {
+				const { id } = params;
+				const formData = await request.formData();
+
+				const name = (formData.get('name') as string).slice(1, -1);
+				const description = (formData.get('description') as string).slice(
+					1,
+					-1
+				);
+				const thumbnailData = formData.get('thumbnail') as File | undefined;
+				let bytes: Buffer | null = null;
+				let extension: string | null = null;
+
+				if (thumbnailData && thumbnailData.size > FiveMeg) {
+					return {
+						status: 400,
+						body: {
+							message: 'Thumbnail is too large'
+						}
+					};
+				}
+
+				if (thumbnailData) {
+					extension = thumbnailData.name.split('.').pop() || '';
+
+					switch (extension) {
+						case 'png':
+						case 'jpg':
+						case 'jpeg':
+							break;
+						default:
+							return {
+								status: 400,
+								body: {
+									message: 'Invalid thumbnail extension'
+								}
+							};
+					}
+
+					const arrBuffer = await thumbnailData.arrayBuffer();
+					bytes = Buffer.from(arrBuffer);
+				}
+
+				const data = {};
+				if (name) {
+					data['name'] = name;
+				}
+				if (description) {
+					data['description'] = description;
+				}
+
+				const owner = request.user;
+				//Read the graph from the database
+				try {
+					const published = await prisma.publishedGraph.findFirst({
+						where: {
+							id,
+							owner
+						}
+					});
+
+					if (!published) {
+						return {
+							status: 404,
+							body: {
+								message: 'Graph not found'
+							}
+						};
+					}
+
+					let thumbnail:
+						| Prisma.ThumbnailCreateNestedOneWithoutPublishedGraphInput
+						| undefined = undefined;
+
+					if (thumbnailData && bytes) {
+						const thumbnailID = randomUUID();
+						thumbnail = {
+							create: {
+								id: thumbnailID,
+								path: `/thumbnails/${thumbnailID}.${extension}`,
+								extension: extension!,
+								name: thumbnailData.name,
+								type: thumbnailData.type,
+								size: thumbnailData.size,
+								data: bytes
+							}
+						};
+
+						data['thumbnail'] = thumbnail;
+					}
+
+					await prisma.publishedGraph.update({
+						where: {
+							id,
+							owner
+						},
+						data
+					});
+
+					return {
+						status: 200,
+						body: {}
+					};
+				} catch (err) {
+					if (err instanceof Prisma.PrismaClientKnownRequestError) {
+						if (err.code === 'P2025') {
+							return {
+								status: 404,
+								body: {
+									message: 'Entity not found'
+								}
+							};
+						}
+					}
+					throw err;
+				}
+			}
+		},
 
 		getGraph: async ({ params }) => {
 			const { id } = params;

@@ -1,3 +1,4 @@
+import { ExtendedRequest } from '../utils/types.ts';
 import { auth } from '@/auth/index.ts';
 
 export const authMiddleware = async (req: ExtendedRequest) => {
