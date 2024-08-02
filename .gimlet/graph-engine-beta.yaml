@@ -36,6 +36,7 @@ values:
     gitSha: '{{ .SHA }}'
     vars:
       HOSTNAME: 0.0.0.0
+      ANTHROPIC_MODEL: 'claude-3-5-sonnet-20240620'
       AUTH_TRUST_HOST: 'true'
       AUTH_URL: https://graph.beta.tokens.studio
     # Reference the created secrets file

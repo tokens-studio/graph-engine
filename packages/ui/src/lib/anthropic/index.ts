@@ -2,6 +2,7 @@ import { SerializedGraph } from '@tokens-studio/graph-engine';
 import Anthropic from '@anthropic-ai/sdk';
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || 'claude-3-opus-20240229';
 
 const client = new Anthropic({
 	apiKey: ANTHROPIC_API_KEY // This is the default and can be omitted
@@ -19,9 +20,8 @@ export const summarizeGraph = async (graph: SerializedGraph) => {
 			{ role: 'assistant', content: 'Understood' },
 			{ role: 'user', content: '```' + JSON.stringify(graph) + '```' }
 		],
-		model: 'claude-3-opus-20240229'
+		model: ANTHROPIC_MODEL
 	});
 
-	//@ts-expect-error
 	return message.content[0].text;
 };
