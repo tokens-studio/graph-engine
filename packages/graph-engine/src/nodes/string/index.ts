@@ -15,5 +15,5 @@ export const nodes = [
 	regex,
 	split,
 	stringify,
-	uppercase,
+	uppercase
 ];
