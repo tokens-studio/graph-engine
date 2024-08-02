@@ -1,8 +1,8 @@
 import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
-import Node from '../../../../src/nodes/logic/isEmpty.js';
+import Node from '../../../../src/nodes/typing/hasValue.js';
 
-describe('logic/isEmpty', () => {
+describe('typing/hasValue', () => {
 	test('should return true for null value', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
@@ -11,7 +11,7 @@ describe('logic/isEmpty', () => {
 
 		await node.execute();
 
-		expect(node.outputs.isEmpty.value).to.be.true;
+		expect(node.outputs.undefined.value).to.be.true;
 	});
 
 	test('should return true for undefined value', async () => {
@@ -22,10 +22,10 @@ describe('logic/isEmpty', () => {
 
 		await node.execute();
 
-		expect(node.outputs.isEmpty.value).to.be.true;
+		expect(node.outputs.undefined.value).to.be.true;
 	});
 
-	test('should return true for empty string', async () => {
+	test('should return false for empty string', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -33,7 +33,7 @@ describe('logic/isEmpty', () => {
 
 		await node.execute();
 
-		expect(node.outputs.isEmpty.value).to.be.true;
+		expect(node.outputs.undefined.value).to.be.false;
 	});
 
 	test('should return false for non-empty string', async () => {
@@ -44,7 +44,7 @@ describe('logic/isEmpty', () => {
 
 		await node.execute();
 
-		expect(node.outputs.isEmpty.value).to.be.false;
+		expect(node.outputs.undefined.value).to.be.false;
 	});
 
 	test('should return false for number', async () => {
@@ -55,7 +55,7 @@ describe('logic/isEmpty', () => {
 
 		await node.execute();
 
-		expect(node.outputs.isEmpty.value).to.be.false;
+		expect(node.outputs.undefined.value).to.be.false;
 	});
 
 	test('should return false for non-empty array', async () => {
@@ -66,7 +66,7 @@ describe('logic/isEmpty', () => {
 
 		await node.execute();
 
-		expect(node.outputs.isEmpty.value).to.be.false;
+		expect(node.outputs.undefined.value).to.be.false;
 	});
 
 	test('should return false for non-empty object', async () => {
@@ -77,6 +77,6 @@ describe('logic/isEmpty', () => {
 
 		await node.execute();
 
-		expect(node.outputs.isEmpty.value).to.be.false;
+		expect(node.outputs.undefined.value).to.be.false;
 	});
 });

@@ -3,15 +3,16 @@ import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 
 export default class NodeDefinition<T> extends Node {
-	static title = 'Is Empty';
-	static type = 'studio.tokens.logic.isEmpty';
-	static description = 'Checks if a value is empty';
+	static title = 'Has Value';
+	static type = 'studio.tokens.typing.hasValue';
+	static description =
+		'Checks if a value is defined. Returns true if undefined or null.';
 
 	declare inputs: ToInput<{
 		value: T;
 	}>;
 	declare outputs: ToOutput<{
-		isEmpty: boolean;
+		undefined: boolean;
 	}>;
 
 	constructor(props: INodeDefinition) {
@@ -20,18 +21,13 @@ export default class NodeDefinition<T> extends Node {
 			type: AnySchema
 		});
 
-		this.addOutput('isEmpty', {
+		this.addOutput('undefined', {
 			type: BooleanSchema
 		});
 	}
 
 	execute(): void | Promise<void> {
 		const { value } = this.getAllInputs();
-
-		if (value === null || value === undefined || value === '') {
-			this.setOutput('isEmpty', true);
-		} else {
-			this.setOutput('isEmpty', false);
-		}
+		this.setOutput('undefined', value === null || value === undefined);
 	}
 }
