@@ -18,7 +18,10 @@
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
 		"types": ["node"],
-		"baseUrl": "."
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"]
+		}
 	},
 	"include": ["stories/**/*", "src/**/*", "tests/**/*"],
 	"exclude": ["node_modules", "cypress/**"]
