@@ -11,17 +11,22 @@ export const PassthroughNode = (args) => {
   const { id } = args;
   const graph = useLocalGraph();
   const node = graph.getNode(id);
+  const iconTypeRegistry = useSelector(icons);
 
   if (!node) return null;
-  
+
   const port = node.inputs.value;
-  const iconTypeRegistry = useSelector(icons);
   const typeCol = extractTypeIcon(port, iconTypeRegistry);
   const type = extractType(port.type);
 
   return (
-    <Stack direction="column" css={{ 
-      background: '$nodeBg', borderRadius: '$medium' }}>
+    <Stack
+      direction="column"
+      css={{
+        background: '$nodeBg',
+        borderRadius: '$medium',
+      }}
+    >
       {node && (
         <Stack direction="row">
           <HandleContainer type="target" full>
@@ -32,8 +37,7 @@ export const PassthroughNode = (args) => {
               type={type}
               isConnected={port.isConnected}
               isAnchor={true}
-            >
-            </Handle>
+            ></Handle>
           </HandleContainer>
           <HandleContainer type="source" full>
             <Handle
@@ -43,12 +47,10 @@ export const PassthroughNode = (args) => {
               type={type}
               isConnected={port.isConnected}
               isAnchor={true}
-            >
-            </Handle>
+            ></Handle>
           </HandleContainer>
         </Stack>
       )}
     </Stack>
   );
 };
-

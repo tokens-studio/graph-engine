@@ -1,7 +1,6 @@
 import { Graph } from 'graphlib';
 import { Item, Menu, Separator } from 'react-contexify';
 import { Node, ReactFlowInstance, useReactFlow } from 'reactflow';
-import { Text } from '@tokens-studio/ui';
 import { useAction } from '@/editor/actions/provider.js';
 import { useCanDeleteNode } from '@/hooks/useCanDeleteNode.js';
 import { useLocalGraph } from '@/hooks/index.js';
