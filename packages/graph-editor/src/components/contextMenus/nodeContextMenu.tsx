@@ -1,6 +1,7 @@
 import { Graph } from 'graphlib';
 import { Item, Menu, Separator } from 'react-contexify';
 import { Node, ReactFlowInstance, useReactFlow } from 'reactflow';
+import { Text } from '@tokens-studio/ui';
 import { useAction } from '@/editor/actions/provider.js';
 import { useCanDeleteNode } from '@/hooks/useCanDeleteNode.js';
 import { useLocalGraph } from '@/hooks/index.js';
@@ -163,9 +164,6 @@ export const NodeContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
     <Menu id={id}>
       <Item onClick={onDuplicate}>Duplicate</Item>
       <Item onClick={focus}>Focus</Item>
-      <Item disabled={!isDeletable} onClick={deleteEl}>
-        Delete
-      </Item>
       <Item onClick={forceExecution}>Force Execution</Item>
       <Separator />
       {nodes?.length == 1 && (
@@ -174,8 +172,11 @@ export const NodeContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
           <Item onClick={onTraceTarget}>Trace Downstream</Item>
         </>
       )}
-
       <Item onClick={onResetTrace}>Reset Trace</Item>
+      <Separator />
+      <Item disabled={!isDeletable} onClick={deleteEl}>
+        Delete
+      </Item>
     </Menu>
   );
 };
