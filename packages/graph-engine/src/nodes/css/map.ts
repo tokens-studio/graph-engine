@@ -35,6 +35,6 @@ export default class NodeDefinition extends Node {
 			return acc;
 		}, {});
 
-		this.setOutput('value', output);
+		this.outputs.value.set(output);
 	}
 }

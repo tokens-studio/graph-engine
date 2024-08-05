@@ -75,6 +75,6 @@ export default class NodeDefinition extends Node {
 		const converted = Color.mix(colA, colB, mixValue);
 
 		const final = toColorObject(converted);
-		this.setOutput('value', final);
+		this.outputs.value.set(final);
 	}
 }

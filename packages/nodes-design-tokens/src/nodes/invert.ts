@@ -4,7 +4,6 @@ import {
 	ToInput,
 	ToOutput
 } from '@tokens-studio/graph-engine';
-import { IResolvedToken } from '../utils/index.js';
 import { SingleToken } from '@tokens-studio/types';
 import { TokenSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
@@ -32,7 +31,7 @@ export default class InvertNode extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const value = this.getInput('tokens') as IResolvedToken[];
+		const value = this.inputs.tokens.value;
 
 		const inverted = value.map((x, i) => {
 			const vals = inverted[inverted.length - i - 1];
@@ -42,6 +41,6 @@ export default class InvertNode extends Node {
 			};
 		});
 
-		this.setOutput('tokens', value);
+		this.outputs.tokens.set(value);
 	}
 }

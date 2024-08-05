@@ -30,7 +30,7 @@ export default class NodeDefinition<T> extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const array = this.getRawInput('array');
+		const array = this.inputs.array;
 
 		//Attempt to determine the type of the array
 		const type = array.type.items;
@@ -40,6 +40,6 @@ export default class NodeDefinition<T> extends Node {
 		}
 
 		const calculated = array.value.flat();
-		this.setOutput('array', calculated, type);
+		this.outputs.array.set(calculated, type);
 	}
 }

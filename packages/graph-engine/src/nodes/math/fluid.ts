@@ -51,6 +51,6 @@ export default class NodeDefinition extends Node {
 		const fluid = (viewport / 100) * fontV + fontR;
 		const clamped = Math.min(maxSize, Math.max(minSize, fluid));
 
-		this.setOutput('value', clamped);
+		this.outputs.value.set(clamped);
 	}
 }

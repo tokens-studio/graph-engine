@@ -9,14 +9,17 @@ import {
 	TextInput
 } from '@tokens-studio/ui';
 import { client } from '@/api/sdk/index.ts';
-import { useRouter } from 'next/navigation.js';
+import { useParams, useRouter } from 'next/navigation.js';
 import MDEditor from '@uiw/react-md-editor';
 //Add rehype to prevent any client of injecting malicious code
 import { Upload } from 'iconoir-react';
 import { useState } from 'react';
 import rehypeSanitize from 'rehype-sanitize';
 
-const Page = ({ id }) => {
+const Page = () => {
+	const params = useParams();
+	const { id } = params;
+
 	const { mutateAsync, isPending } =
 		client.marketplace.publishGraph.useMutation({
 			onSuccess: () => {
@@ -25,11 +28,30 @@ const Page = ({ id }) => {
 			}
 		});
 
-	const [name, setName] = useState('');
+	const { data } = client.graph.getGraph.useQuery(['getGraph', id], {
+		params: {
+			id: id as string
+		}
+	});
+
+	const [name, setName] = useState(data.body.name);
 	const [thumbnail, setThumbnail] = useState<File | null>(null);
 
-	const [description, setDescription] = useState('');
+	const [description, setDescription] = useState(data.body.description || '');
 	const router = useRouter();
+	const { isPending: isSummarizing, mutateAsync: getAISummary } =
+		client.ai.getAISummary.useMutation();
+	const onSummarize = async () => {
+		if (!data?.body.graph) {
+			const response = await getAISummary({
+				body: {
+					graph: data?.body.graph
+				}
+			});
+
+			setDescription(response.body.summary);
+		}
+	};
 
 	const onPublish = () => {
 		if (isPending) return;
@@ -79,7 +101,11 @@ const Page = ({ id }) => {
 								rehypePlugins: [[rehypeSanitize]]
 							}}
 						/>
-
+						<Box>
+							<Button loading={isSummarizing} onClick={onSummarize}>
+								Summarize with AI
+							</Button>
+						</Box>
 						<br />
 						<Box>
 							<Button

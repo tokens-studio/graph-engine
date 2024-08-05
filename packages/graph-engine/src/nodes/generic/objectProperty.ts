@@ -74,11 +74,11 @@ export default class NodeDefinition extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const object = this.getRawInput('object');
-		const path = this.getRawInput('path');
+		const object = this.inputs.object;
+		const path = this.inputs.path;
 
 		if (!path.value) {
-			this.setOutput('missing', true);
+			this.outputs.missing.set(true);
 			throw new Error('Path is required');
 		}
 
@@ -86,7 +86,7 @@ export default class NodeDefinition extends Node {
 		const property = getNestedProperty(object.value, path.value);
 		const schema = getSchemaByPath(object.type, path.value);
 
-		this.setOutput('value', property, schema);
-		this.setOutput('missing', property == undefined);
+		this.outputs.value.set(property, schema);
+		this.outputs.missing.set(property == undefined);
 	}
 }

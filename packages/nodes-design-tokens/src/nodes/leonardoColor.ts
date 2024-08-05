@@ -66,6 +66,6 @@ export default class LeonardoColorNode extends Node {
 			ratios,
 			smooth
 		};
-		this.setOutput('value', color);
+		this.outputs.value.set(color);
 	}
 }

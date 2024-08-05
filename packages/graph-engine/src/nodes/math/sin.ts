@@ -28,7 +28,7 @@ export default class NodeDefinition extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const value = this.getInput('value');
-		this.setOutput('value', Math.sin(value));
+		const value = this.inputs.value.value;
+		this.outputs.value.set(Math.sin(value));
 	}
 }

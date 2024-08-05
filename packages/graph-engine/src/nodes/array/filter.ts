@@ -153,12 +153,12 @@ export default class ArraySubgraph<T> extends Node {
 	}
 
 	async execute() {
-		const input = this.getRawInput('array');
+		const input = this.inputs.array;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const otherInputs: [string, Input<any>][] = Object.keys(this.inputs)
 			.filter(x => x !== 'array')
-			.map(x => [x, this.getRawInput(x)]);
+			.map(x => [x, this.inputs[x]]);
 		const other = Object.fromEntries(
 			otherInputs.map(([name, x]) => [
 				name,
@@ -200,7 +200,7 @@ export default class ArraySubgraph<T> extends Node {
 			return output;
 		}, Promise.resolve([]));
 
-		this.setOutput('value', output, input.type);
+		this.outputs.value.set(output, input.type);
 	}
 
 	override serialize() {

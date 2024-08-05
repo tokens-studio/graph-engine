@@ -67,6 +67,6 @@ export default class ResolveNode extends Node {
 		const { inputs, context } = this.getAllInputs();
 
 		const resolved = resolveValues(inputs.flat(), context.flat());
-		this.setOutput('value', resolved);
+		this.outputs.value.set(resolved);
 	}
 }

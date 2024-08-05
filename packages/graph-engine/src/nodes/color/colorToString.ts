@@ -11,6 +11,7 @@ export default class NodeDefinition extends Node {
 
 	declare inputs: ToInput<{
 		color: Color;
+		space: 'srgb' | 'hsl' | 'hex';
 	}>;
 	declare outputs: ToOutput<{
 		value: string;
@@ -38,18 +39,20 @@ export default class NodeDefinition extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const color = this.getInput('color');
-		let space = this.getInput('space');
+		// eslint-disable-next-line prefer-const
+		const { color, space } = this.getAllInputs();
+
+		let adjustedSpace: string = space;
 		let format = undefined;
 
 		if (space == 'hex') {
-			space = 'srgb';
+			adjustedSpace = 'srgb';
 			format = {
 				format: 'hex'
 			};
 		}
 
-		const col = toColor(color).to(space).toString(format);
-		this.setOutput('value', col);
+		const col = toColor(color).to(adjustedSpace).toString(format);
+		this.outputs.value.set(col);
 	}
 }

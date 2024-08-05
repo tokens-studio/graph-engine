@@ -32,9 +32,9 @@ export default class NodeDefinition<T> extends Node {
 
 	execute(): void | Promise<void> {
 		const { start, end } = this.getAllInputs();
-		const array = this.getRawInput('array');
+		const array = this.inputs.array;
 		const calculated = array.value.slice(start, end);
 
-		this.setOutput('value', calculated, array.type);
+		this.outputs.value.set(calculated, array.type);
 	}
 }

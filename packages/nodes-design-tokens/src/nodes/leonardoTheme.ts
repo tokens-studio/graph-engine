@@ -65,6 +65,6 @@ export default class LeonardoThemeNode extends Node {
 
 		const themeColors = theme.contrastColorValues.map(x => hexToColor(x));
 
-		this.setOutput('colors', themeColors);
+		this.outputs.colors.set(themeColors);
 	}
 }

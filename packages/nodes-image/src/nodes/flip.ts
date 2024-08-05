@@ -28,7 +28,7 @@ export class FlipNode extends BaseNode {
     await ImageMagick.read(this.cloneImage(image), (image: IMagickImage) => {
       image.flip();
       image.write((data) =>
-        this.setOutput("image", {
+        this.outputs.image.set({
           data,
         }),
       );

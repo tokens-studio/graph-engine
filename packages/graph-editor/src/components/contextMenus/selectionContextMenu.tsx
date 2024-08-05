@@ -2,6 +2,7 @@ import { Edge, Graph } from '@tokens-studio/graph-engine';
 import { Item, Menu, Separator } from 'react-contexify';
 import { Node, getRectOfNodes, useReactFlow, useStoreApi } from 'reactflow';
 import { NodeTypes } from '../flow/types.js';
+import { deletable } from '@/annotations/index.js';
 import { getId } from '../flow/utils.js';
 import { useAction } from '@/editor/actions/provider.js';
 import { useLocalGraph } from '@/hooks/index.js';
@@ -185,9 +186,13 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
         name = initialName + '_' + count++;
       }
 
-      inputNode?.addInput(name, {
+      const newInput = inputNode?.addInput(name, {
         type: input!.type,
       });
+      if (newInput) {
+        newInput.annotations[deletable] = true;
+      }
+
       //The output won't be dynamically generated until the node is executed, so we add it manually
       inputNode?.addOutput(name, {
         type: input!.type,

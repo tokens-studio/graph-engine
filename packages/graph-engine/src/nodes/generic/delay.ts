@@ -42,11 +42,11 @@ export default class NodeDefinition<T> extends Node {
 	}
 	async execute() {
 		const { delay } = this.getAllInputs();
-		const raw = this.getRawInput('value');
+		const raw = this.inputs.value;
 
 		return new Promise<void>(resolve => {
 			setTimeout(() => {
-				this.setOutput('value', raw.value, raw.type);
+				this.outputs.value.set(raw.value, raw.type);
 				resolve();
 			}, delay);
 		});

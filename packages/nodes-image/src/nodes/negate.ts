@@ -4,6 +4,7 @@ import {
   ToInput,
   ToOutput,
 } from "@tokens-studio/graph-engine";
+import { Image } from "../schemas/types.js";
 import { ImageSchema } from "../schemas/index.js";
 import type { IMagickImage } from "@imagemagick/magick-wasm";
 
@@ -12,10 +13,10 @@ export class NegateNode extends BaseNode {
   static type = "studio.tokens.image.negate";
 
   declare inputs: ToInput<{
-    image: ImageData;
+    image: Image;
   }>;
   declare outputs: ToOutput<{
-    image: ImageData;
+    image: Image;
   }>;
 
   constructor(props: INodeDefinition) {
@@ -36,7 +37,7 @@ export class NegateNode extends BaseNode {
     await ImageMagick.read(this.cloneImage(image), (image: IMagickImage) => {
       image.negate();
       image.write((data) =>
-        this.setOutput("image", {
+        this.outputs.image.set({
           data,
         }),
       );

@@ -77,8 +77,8 @@ export default class NodeDefinition extends Node {
 
 		const output = sampleBezier(foundCurve, sample);
 
-		this.setOutput('value', output);
-		this.setOutput('x', output[0]);
-		this.setOutput('y', output[1]);
+		this.outputs.value.set(output);
+		this.outputs.x.set(output[0]);
+		this.outputs.y.set(output[1]);
 	}
 }

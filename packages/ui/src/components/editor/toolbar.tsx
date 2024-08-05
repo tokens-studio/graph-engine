@@ -10,9 +10,12 @@ import {
 	ToolbarSeparator,
 	UploadToolbarButton,
 	ZoomDropdown,
-	mainGraphSelector
+	mainGraphSelector,
+	useOpenPanel
 } from '@tokens-studio/graph-editor';
-import { FloppyDisk, ShareAndroidSolid } from 'iconoir-react';
+
+import { AISummary } from './panels/aiSummary.tsx';
+import { FloppyDisk, ShareAndroidSolid, Sparks } from 'iconoir-react';
 import { IconButton, Tooltip } from '@tokens-studio/ui';
 import { SharePopover } from '../share/index.tsx';
 import { client } from '@/api/sdk/index.ts';
@@ -109,6 +112,25 @@ export const ShareButton = ({ id }) => {
 	);
 };
 
+export const AiSummary = () => {
+	const { toggle } = useOpenPanel();
+	return (
+		<Tooltip label='Artificial intelligence' side='bottom'>
+			<IconButton
+				variant='invisible'
+				onClick={() =>
+					toggle({
+						title: 'Artificial intelligence',
+						id: 'ai',
+						content: <AISummary />
+					})
+				}
+				icon={<Sparks />}
+			/>
+		</Tooltip>
+	);
+};
+
 export const createToolbarButtons = (buttons?: React.ReactElement) => {
 	return (
 		<>
@@ -123,6 +145,7 @@ export const createToolbarButtons = (buttons?: React.ReactElement) => {
 			<LayoutDropdown />
 			<SettingsToolbarButton />
 			<HelpDropdown />
+			<AiSummary />
 			<ToolbarSeparator />
 			<DownloadToolbarButton />
 			<UploadToolbarButton />

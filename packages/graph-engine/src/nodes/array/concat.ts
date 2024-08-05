@@ -28,13 +28,13 @@ export default class NodeDefinition<T> extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const a = this.getRawInput('a');
-		const b = this.getRawInput('b');
+		const a = this.inputs.a;
+		const b = this.inputs.b;
 
 		//Verify types
 		if (a.type.$id !== b.type.$id) throw new Error('Array types must match');
 
 		const calculated = a.value.concat(b.value);
-		this.setOutput('value', calculated, a.type);
+		this.outputs.value.set(calculated, a.type);
 	}
 }

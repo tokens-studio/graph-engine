@@ -3,7 +3,9 @@ env: prod
 namespace: graph-engine
 chart:
   name: https://github.com/tokens-studio/graph-engine.git?branch={{ .BRANCH }}&path=/.gimlet/k8s/graph-engine/
-
+deploy:
+  branch: master
+  event: push
 # Add a patch to inject the database generated secret
 json6902Patches:
 - target:
@@ -34,6 +36,7 @@ values:
     gitSha: '{{ .SHA }}'
     vars:
       HOSTNAME: 0.0.0.0
+      ANTHROPIC_MODEL: 'claude-3-5-sonnet-20240620'
       AUTH_TRUST_HOST: 'true'
       AUTH_URL: https://graph.beta.tokens.studio
     # Reference the created secrets file
@@ -42,6 +45,8 @@ values:
       AUTH_SECRET: AgA+85dYKUmSI0D8/+3e0eEYHBs7c6K+Lrt9SY+G+G5JYBU+dpi8hKaStybg/9aDjOVxNwhMVtHUj32JwqRhDPiQaBEDx8dUbI6B2Zwdv2OnQGXSbDq72NHAcEMeKJ5V2gJpT8zlvqUV0AGvepqnkwQePh9F4igVBX+rRZPLQ8wBvaEh8c9Qd0d7+V/iC4kvsDRkNWRcBXl0bOvrqCLfILqRKnk7NxZMtrwwGmHyJcgXtb/2tDsp145YP8IZ7Vp/cQpE5YPDCZsXe/RGkwWvELsuALGg8kSALMsbjyakDN8JZ+VnZkZOaAeO0MLLNacF+tFCyxEV/vQUZ+zLFcySRpstmIiaI3zcHH8TMMZPfr8Ygm0RzRJEgcNBoqIB8lFiwAgoO8T3whEnX/ZVxpfcLHJ70ioBunhBAi3h3SweUyyoDvoFLSyDOPzDUTL8VHRmo/HD8h2u6PmPKIbKFv1yK0a7Rk1KFYvtsyyjOTif4aPcAZSf3WEzrKkZ5U2K5fvJrI8XFgfJWvBTgO6K2546e1zI/Wt8iFSIlF5qY1OCBmE3l+YHWksFzaQWAgx1h0Nzj7pUfYOZ3UtD/51lBfFZIUls06bWqNDLOEaxVveQjtzH8FhD7Cg8hSy6i47fEtDgDrPaVSMP24wxvX7ycpNL4d9GZpWvW9PMOszVNiN4MIecAn3DLnfqF7aebNQScTdpkBhKM2PdS/kZ4gHxOViqacC48NNW81swUjuGiGzAgDIfkvWIPdU6sGWPMBQAsA==
       AUTH_GITHUB_ID: AgBQPQEYQFEQ45P169fNR84E3vyBNCBX+5cZmJKk0VeAvRqUBz+mjs7kkikYAyTNBJZK5nlM8yYb+nNmAtufqbs5VZj1kvrY2O3omS9TC1QHmKA08BzNnlKnPXwFgpsh9umT3nA+4NsMXDvgJs/Frm2nNEzxcAxA/kdAFKGUgIMMHwdCuW7+KfjOpYthLmRmCQR8GMO2ZFbeJHOaa19NwKUeCn91O3X5QJDYO86TVBImlsmw3qayWto3ZQFLEPIwNHXnqSa+tt9o8mUkFZ7zDtOvGvyXpoHajoJQwAWF+3EDsJ+DFCz5aXl5kf6OsWy+jA4MUPlDGUYN56w3155DhaOnlrbfau/6g0nlWIgZW2M8W2KF+MTAOZH/2AfGsRB1ODEspvTPG5qQOXQaoxwERqxZpPnmxoNewL4FrT0oEHQAl5iHQ28ieJ8lfbsdYH4tJmB1ef4Jv6wTzJzqz0IOiSfji8XyTKjbN2t1kOAlM2dhbWUVEQ6G1IpzI0oOCgJod3kDQopEyuf+u8Z5k/DqHq6M/pR5QC77ka0tJVI7TUKkKjlAI8CWWOscywUqArAwsNCRIqFapbkgU2JnMyPzOIfQQpTe4JsgzMdNiN2LQLgEEkFPp1i2+8M/DD3LMQfEOwi55n81hFrgby4NF5RUKyJuvt+MnEwtq/kmIhqrwbTNK4w1ynGErKg/6s7rf4VSp0mGkm1eSJU0yvqKQmnMWIaKjLlG1A==
       AUTH_GITHUB_SECRET: AgBipuKKl/h7gTz7o42eCKOJPViLfAXhs3A3M0ar+CF5NDbrGmbn4ZLpC3u3fP+p2GO3Zw7fZ7s1rUMRqgrdtb4zClrqL105Eeb2Bbma2S4tBVDHpfTezycY0Ez6Dduq0ImlmG2UeeOiadkCbg/gcRNhgoLnMblp+9A8sMP0jn4yHePbF4VwYjLicJVMIt5qtpyWd2ikEa+Yfn/98kktS1s2A4SCmc73wsPsnDIoZ3ZcBUKDNf6Fe/iS7acBDCgRandgqVk5yA1M+ihQ9MSpn5NEJCCBP/7nsLn9bsvzlp/5ig/BEA/I8f7LraGujI7zWf51Izm6Un6jn0JE/Ngnx1yRB5xB26o7exkxSZDJlQJgxAeyiQGkTDB5EvMxue+LYUxXB7WUAyDX44ycOjOh+mLVxWShij+F4fhRhHI0QwlC4zULbUzTgkbRKt1jG1V6kXHD3OPtq+48LY6lXyXzB27paaoEMRrEf5I9meiIxs0k1CiRWEmoE/Z9MaNhSmHEIIsc6JBdkBilRbEzTDfY+9GhhbFckXxkF8h6a0o+waFKWo3oZEyl9AbJr9QnWj6KbgdSeMdXgT5orO6NsHx0mLuiMERHnvSLvCOuWzScbKLd0h29728F/Ce3M6YpK81HNqrHV+lbPI5jjktkObuB7LJzWOxTsxWOAwsXoS7WN47DhcnlqGLuZaLk2xKelGWGzoEICckiSFAH4+eAwKxlrSZlU2FMQIQuuEA7yyh914YxPXMMopvVB3q7
+      ANTHROPIC_API_KEY: AgCRTHW5dWY4/z2gLMcawLYcK9TqrN04skI7w5aZ9hDZtmDQrv8YqaMyCEX5SDAEEio3f8phlp+26BiUb5R4r/LDu7V8yn4CJTJUsaumQl4JMP5p6t0O9fBF8unQzqKHkBA5G30IhSPt4kerGNslonBnTgMFf1AmfvZrnbCUzfjTm+n+cFn2KWAvVxgsvgz9TBgbeRKi1sTZHWfTUt6NuepFuyJ3kJjhTTGqzb6M18pltsBAoxQcZelJkIfHSSzEYnGNSMAWHHgpqYxXufCIlZyn2Saa4FwAkHNR8d3x2/owylbLxwjVZnbNEnpLwlraN4JriPqTNPOFLJiYXQh6PNjzaGNRU4jb9RksX6o/4WbLO9XFQSRl3bSetUG7ySnzu4c+tsa1/Yj9H29+di75jIfO8LXHfTbvFn3RlQEOhVz+cW178PtoIJHLqbFcX6/DlYoJ4u/NiIJGDh9grQcyzxAOYRjyq6GwPGHLLmK4zoPvb4G4piOIaa2zLXaDCgpmB4v+jOopolTqawbVoKc6bktolPscz93lZz1degyj/hkXBQt970nA6l/08vY6A1ALOjl29GxSBVAI2/F6NfYK9dMql7azBWUppJK5UOJEucHw18DoQimh/RyId3Xo0ZVO+VsJWlyhOsS6f0gVEjxLaqCHA4MJqyeeGBu9tQ9MHAN94GH0Vvf6VOxVJovZ6GG2EjjfDLF9Wqrhjwgr43aCeR2cGZh5GlZCjMqlsvPaOu36BlAhX+aWkU7z+G4x2apJGIXbWLGu4aV0b3pasE0Xe/NZlyBUhdUZE8ByMzgsyJVoD2KZclh+syVlQsfHyLVA3CTFczBkIjFhs5De44k=
+
     image:
       repository: ghcr.io/tokens-studio/graph-engine
       tag: frontend-{{ .SHA }}

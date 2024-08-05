@@ -25,7 +25,7 @@ const Page = async ({ params }) => {
 
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>
-			<Inner id={params.id} />
+			<Inner />
 		</HydrationBoundary>
 	);
 };

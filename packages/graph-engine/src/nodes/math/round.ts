@@ -39,6 +39,6 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { precision, value } = this.getAllInputs();
-		this.setOutput('value', setToPrecision(value, precision));
+		this.outputs.value.set(setToPrecision(value, precision));
 	}
 }

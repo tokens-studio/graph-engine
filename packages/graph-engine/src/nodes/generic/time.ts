@@ -39,6 +39,6 @@ export default class NodeDefinition extends Node {
 	};
 
 	execute(): void | Promise<void> {
-		this.setOutput('value', Date.now());
+		this.outputs.value.set(Date.now());
 	}
 }

@@ -26,10 +26,10 @@ export default class NodeDefinition extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const value = this.getRawInput('value');
+		const value = this.inputs.value;
 		if (value.value === undefined) {
 			throw new Error('Value is required');
 		}
-		this.setOutput('value', value, value.type);
+		this.outputs.value.set(value, value.type);
 	}
 }

@@ -34,7 +34,7 @@ export default class InlineTokenNode extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const value = this.getInput('value');
-		this.setOutput('tokens', value);
+		const value = this.inputs.value.value;
+		this.outputs.tokens.set(value);
 	}
 }

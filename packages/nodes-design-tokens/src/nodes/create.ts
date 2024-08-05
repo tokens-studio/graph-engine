@@ -78,6 +78,6 @@ export default class NodeDefinition extends Node {
 			throw new Error('Type is required');
 		}
 
-		this.setOutput('token', props);
+		this.outputs.token.set(props);
 	}
 }

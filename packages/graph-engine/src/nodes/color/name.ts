@@ -194,6 +194,6 @@ export default class NodeDefinition extends Node {
 				};
 			}
 		});
-		this.setOutput('value', closestName.key);
+		this.outputs.value.set(closestName.key);
 	}
 }

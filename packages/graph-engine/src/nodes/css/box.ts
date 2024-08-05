@@ -52,6 +52,6 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { top, right, bottom, left } = this.getAllInputs();
-		this.setOutput('value', `${top} ${right} ${bottom} ${left}`);
+		this.outputs.value.set(`${top} ${right} ${bottom} ${left}`);
 	}
 }

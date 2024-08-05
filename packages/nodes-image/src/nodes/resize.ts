@@ -58,7 +58,7 @@ export class ResizeNode extends BaseNode {
       image.resize(targetWidth, targetHeight);
 
       image.write((data) =>
-        this.setOutput("image", {
+        this.outputs.image.set({
           data,
         }),
       );

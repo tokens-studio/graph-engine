@@ -1,7 +1,7 @@
 import { ContrastAlgorithm } from '../../../../src/types/index.js';
 import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
-import { getAllOutputs } from '../utils.js';
+import { getAllOutputs } from '@/utils/node.js';
 import Node from '../../../../src/nodes/color/contrasting.js';
 
 describe('color/contrasting', () => {

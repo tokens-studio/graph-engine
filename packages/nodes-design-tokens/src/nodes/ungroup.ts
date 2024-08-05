@@ -46,6 +46,6 @@ export default class UngroupNode extends Node {
 			output = output[accessor];
 		}
 
-		this.setOutput('tokenSet', output);
+		this.outputs.tokenSet.set(output);
 	}
 }

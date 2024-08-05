@@ -41,6 +41,6 @@ export default class NameTokensNode extends Node {
 			};
 		});
 
-		this.setOutput('tokens', renamed);
+		this.outputs.tokens.set(renamed);
 	}
 }

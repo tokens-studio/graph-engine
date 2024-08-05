@@ -35,13 +35,13 @@ export const marketplaceContract = c.router({
 				name: z.string(),
 				id: z.string(),
 				likes: z.number(),
-				description: z.string(),
+				description: z.string().nullable(),
 				versions: z.number(),
 				downloads: z.number(),
 				user: z.object({
 					id: z.string(),
 					name: z.string(),
-					image: z.string()
+					image: z.string().nullable()
 				}),
 				createdAt: z.number()
 			})
@@ -79,10 +79,11 @@ export const marketplaceContract = c.router({
 						likes: z.number(),
 						versions: z.number(),
 						downloads: z.number(),
+						thumbnail: z.string().nullable(),
 						user: z.object({
 							id: z.string(),
 							name: z.string(),
-							image: z.string()
+							image: z.string().nullable()
 						}),
 						createdAt: z.number()
 					})
@@ -92,6 +93,23 @@ export const marketplaceContract = c.router({
 		}
 	},
 
+	editGraph: {
+		summary: 'Edits an existing graph',
+		method: 'PUT',
+		path: '/marketplace/graph/edit/:id',
+		contentType: 'multipart/form-data',
+		pathParams: z.object({
+			id: z.string()
+		}),
+		body: c.type<{
+			thumbnail?: File;
+			name: string;
+			description: string;
+		}>(),
+		responses: {
+			200: z.object({})
+		}
+	},
 	copyGraph: {
 		summary: "Copies an available graph and adds it to the user's graphs",
 		method: 'POST',
@@ -99,6 +117,7 @@ export const marketplaceContract = c.router({
 		pathParams: z.object({
 			id: z.string()
 		}),
+		body: z.undefined(),
 		responses: {
 			201: z.object({
 				id: z.string()

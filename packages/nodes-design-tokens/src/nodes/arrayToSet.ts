@@ -13,6 +13,7 @@ export default class ArrayToSetNode extends Node {
 	static title = 'Array of Tokens to Set';
 	static type = 'studio.tokens.design.arrayToSet';
 	static description = 'Converts an array of tokens to a set';
+
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('tokens', {
@@ -31,10 +32,10 @@ export default class ArrayToSetNode extends Node {
 	}>;
 
 	execute(): void | Promise<void> {
-		const tokens = this.getInput('tokens');
+		const tokens = this.inputs.tokens.value;
 
 		const asSet = flatTokensRestoreToMap(tokens as IResolvedToken[]);
 
-		this.setOutput('tokenSet', asSet);
+		this.outputs.tokenSet.set(asSet);
 	}
 }

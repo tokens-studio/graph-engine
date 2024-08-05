@@ -29,8 +29,8 @@ export default class NodeDefinition extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const inputs = this.getInput('inputs') as number[];
+		const inputs = this.inputs.inputs.value;
 		const output = inputs.reduce((acc, curr) => acc * curr, 1);
-		this.setOutput('value', output);
+		this.outputs.value.set(output);
 	}
 }

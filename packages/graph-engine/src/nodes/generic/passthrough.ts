@@ -27,7 +27,7 @@ export default class NodeDefinition<T> extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const input = this.getRawInput('value');
-		this.setOutput('value', input.value, input.type);
+		const input = this.inputs.value;
+		this.outputs.value.set(input.value, input.type);
 	}
 }

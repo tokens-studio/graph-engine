@@ -53,6 +53,6 @@ export default class CreateBoxShadowNode extends Node {
 
 	execute(): void | Promise<void> {
 		const props = this.getAllInputs();
-		this.setOutput('value', props);
+		this.outputs.value.set(props);
 	}
 }

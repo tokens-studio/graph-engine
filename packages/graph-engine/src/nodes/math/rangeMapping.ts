@@ -88,6 +88,6 @@ export default class RangeMappingNode extends Node {
 			);
 		}
 
-		this.setOutput('mappedValue', mappedValue);
+		this.outputs.mappedValue.set(mappedValue);
 	}
 }

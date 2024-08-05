@@ -33,6 +33,6 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { x, y } = this.getAllInputs();
-		this.setOutput('value', [x, y]);
+		this.outputs.value.set([x, y]);
 	}
 }

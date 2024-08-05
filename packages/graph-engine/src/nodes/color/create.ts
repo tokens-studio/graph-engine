@@ -90,6 +90,6 @@ export default class NodeDefinition extends Node {
 			channels: [a, b, c],
 			alpha: alpha
 		} as Color;
-		this.setOutput('value', color);
+		this.outputs.value.set(color);
 	}
 }

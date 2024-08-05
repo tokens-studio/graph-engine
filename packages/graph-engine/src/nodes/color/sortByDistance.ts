@@ -44,6 +44,6 @@ export default class SortByDistanceNode extends Node {
 
 		const sortedTokens = sortTokens(colors, compareColor, type, algorithm);
 
-		this.setOutput('value', sortedTokens);
+		this.outputs.value.set(sortedTokens);
 	}
 }

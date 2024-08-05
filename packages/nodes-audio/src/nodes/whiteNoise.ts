@@ -6,22 +6,20 @@ import {
 	ToInput
 } from '@tokens-studio/graph-engine';
 
-type inputs = {
-	/**
-	 * The length of the sample
-	 */
-	length: number;
-	/**
-	 * The number of channels
-	 */
-	channels: number;
-};
-
 export class AudioWhiteNoiseNode extends AudioBaseNode {
 	static title = 'Audio whitenoise';
 	static type = 'studio.tokens.audio.whiteNoise';
 
-	declare inputs: ToInput<inputs>;
+	declare inputs: ToInput<{
+		/**
+		 * The length of the sample
+		 */
+		length: number;
+		/**
+		 * The number of channels
+		 */
+		channels: number;
+	}>;
 
 	constructor(props: INodeDefinition) {
 		super(props);
@@ -48,7 +46,7 @@ export class AudioWhiteNoiseNode extends AudioBaseNode {
 
 	async execute(): Promise<void> {
 		const context = this.getAudioCtx();
-		const { channels, length } = this.getAllInputs<inputs>();
+		const { channels, length } = this.getAllInputs();
 
 		const buffer = context.createBuffer(
 			channels,
@@ -66,6 +64,6 @@ export class AudioWhiteNoiseNode extends AudioBaseNode {
 			}
 		}
 
-		this.setOutput('buffer', buffer);
+		this.outputs.buffer.set(buffer);
 	}
 }

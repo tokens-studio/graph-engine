@@ -28,7 +28,6 @@ export default class NodeDefinition extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const value = this.getInput('value');
-		this.setOutput('value', Math.cos(value));
+		this.outputs.value.set(Math.cos(this.inputs.value.value));
 	}
 }

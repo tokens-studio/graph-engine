@@ -37,12 +37,12 @@ export default class NodeDefinition extends Node {
 
 		const x = valueParser.unit(value);
 		if (!x) {
-			this.setOutput('number', 0);
-			this.setOutput('unit', '');
+			this.outputs.number.set(0);
+			this.outputs.unit.set('');
 			return;
 		}
 
-		this.setOutput('number', x.number);
-		this.setOutput('unit', x.unit);
+		this.outputs.number.set(x.number);
+		this.outputs.unit.set(x.unit);
 	}
 }

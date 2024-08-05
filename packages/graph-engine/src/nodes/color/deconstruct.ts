@@ -74,16 +74,16 @@ export default class DestructColorNode extends Node {
 			throw new Error('Invalid color input');
 		}
 
-		this.setOutput('space', color.space);
-		this.setOutput('a', color.channels[0]);
-		this.setOutput('b', color.channels[1]);
-		this.setOutput('c', color.channels[2]);
+		this.outputs.space.set(color.space);
+		this.outputs.a.set(color.channels[0]);
+		this.outputs.b.set(color.channels[1]);
+		this.outputs.c.set(color.channels[2]);
 
 		// Only set alpha if it exists
 		if (color.alpha !== undefined) {
-			this.setOutput('alpha', color.alpha);
+			this.outputs.alpha.set(color.alpha);
 		} else {
-			this.setOutput('alpha', undefined);
+			this.outputs.alpha.set(undefined);
 		}
 	}
 }
