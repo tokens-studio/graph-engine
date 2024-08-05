@@ -1,6 +1,6 @@
 import { AnySchema, StringSchema } from '../../schemas/index.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 import { arrayOf } from '../../schemas/utils.js';
 import deepMerge from '@bundled-es-modules/deepmerge';
 

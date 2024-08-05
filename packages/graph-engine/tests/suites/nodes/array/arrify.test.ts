@@ -1,13 +1,13 @@
 import { AnySchema, StringSchema } from '@/index.js';
-import { Graph } from '@/graph/graph.js';
 import { arrayOf } from '@/schemas/utils.js';
 import { describe, expect, test } from 'vitest';
+import { getDataFlowGraph } from 'tests/utils/index.js';
 import ConstantSourceNode from '@/nodes/generic/constant.js';
 import Node from '@/nodes/array/arrify.js';
 
 describe('array/arrify', () => {
 	test('exports an array by default', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		await node.execute();
@@ -18,7 +18,7 @@ describe('array/arrify', () => {
 		expect(node.outputs.value.type).to.contains(arrayOf(AnySchema));
 	});
 	test('produces the expected array', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		const constantA = new ConstantSourceNode({ graph });

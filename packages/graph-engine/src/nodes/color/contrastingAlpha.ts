@@ -6,7 +6,7 @@ import {
 } from '../../schemas/index.js';
 import { Color as ColorType, ContrastAlgorithmType } from '../../types.js';
 import { ContrastAlgorithm } from '../../types/index.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { INodeDefinition, Node } from '../../programmatic/nodes/node.js';
 import { ToInput } from '@/programmatic/input.js';
 import { ToOutput } from '@/programmatic/output.js';
 import { flattenAlpha } from './lib/flattenAlpha.js';

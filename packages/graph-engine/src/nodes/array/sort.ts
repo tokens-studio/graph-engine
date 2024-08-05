@@ -1,5 +1,5 @@
 import { AnyArraySchema, StringSchema } from '../../schemas/index.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { INodeDefinition, Node } from '../../programmatic/nodes/node.js';
 import { ToInput, ToOutput } from '../../programmatic/index.js';
 import { orderBy } from 'lodash-es';
 

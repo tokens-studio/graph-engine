@@ -2,7 +2,7 @@ import {
 	AnyArraySchema,
 	AnySchema,
 	NumberSchema
-} from '../../../src/schemas/index.js';
+} from '@/schemas/index.js';
 import { describe, expect, test } from 'vitest';
 import ZSchema from 'z-schema-esm';
 

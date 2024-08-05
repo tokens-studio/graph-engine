@@ -5,7 +5,7 @@ import {
 	SchemaObject
 } from '../../schemas/index.js';
 import { Graph } from '../../graph/graph.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { INodeDefinition, Node } from '../../programmatic/nodes/node.js';
 import { Input, ToInput, ToOutput } from '../../programmatic/index.js';
 import {
 	annotatedDeleteable,

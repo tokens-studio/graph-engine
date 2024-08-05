@@ -1,10 +1,10 @@
-import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
-import Node, { Position } from '../../../../src/nodes/string/pad.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node, { Position } from '@/nodes/string/pad.js';
 
 describe('string/pad', () => {
 	test('should pad start of string correctly', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.string.setValue('Hello');
@@ -18,7 +18,7 @@ describe('string/pad', () => {
 	});
 
 	test('should pad end of string correctly', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.string.setValue('World');
@@ -32,7 +32,7 @@ describe('string/pad', () => {
 	});
 
 	test('should not pad if string length is already equal to or greater than specified length', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.string.setValue('LongString');
@@ -46,7 +46,7 @@ describe('string/pad', () => {
 	});
 
 	test('should use default position (start) if not specified', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.string.setValue('Test');
@@ -60,7 +60,7 @@ describe('string/pad', () => {
 	});
 
 	test('should use first character if multiple characters are provided', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.string.setValue('ABC');

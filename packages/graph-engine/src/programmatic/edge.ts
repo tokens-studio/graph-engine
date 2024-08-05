@@ -20,6 +20,17 @@ export interface IEdge {
 	annotations?: Record<string, any>;
 }
 
+export const cloneEdge = (edge: Edge): Edge => {
+	return new Edge({
+		id: edge.id,
+		source: edge.source,
+		sourceHandle: edge.sourceHandle,
+		target: edge.target,
+		targetHandle: edge.targetHandle,
+		annotations: { ...edge.annotations }
+	});
+}
+
 export class Edge {
 	public annotations: Record<string, any> = {};
 	id: string;
@@ -40,7 +51,6 @@ export class Edge {
 			annotations: observable.shallow
 		});
 	}
-
 	serialize(): SerializedEdge {
 		const serialized = {
 			id: this.id,

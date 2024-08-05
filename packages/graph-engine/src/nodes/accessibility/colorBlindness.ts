@@ -8,7 +8,7 @@ import {
 	toHex
 } from '../../index.js';
 import { ColorSchema, StringSchema } from '../../schemas/index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 import blinder from 'color-blind-esm';
 
 export enum ColorBlindnessTypes {

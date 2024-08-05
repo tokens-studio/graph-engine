@@ -1,7 +1,7 @@
 import { ColorSchema, StringSchema } from '../../schemas/index.js';
 import { Color as ColorType } from '../../types.js';
 import { INodeDefinition, ToInput, ToOutput, toColor } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 import Color from 'colorjs.io';
 
 // https://developer.mozilla.org/en-US/docs/Web/CSS/named-color

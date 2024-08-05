@@ -6,7 +6,7 @@ import {
 } from '../../schemas/index.js';
 import { ContrastAlgorithm } from '../../types/index.js';
 import { INodeDefinition } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 import { toColor } from './lib/utils.js';
 
 export default class NodeDefinition extends Node {

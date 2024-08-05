@@ -1,6 +1,6 @@
 import { AnySchema } from '../../schemas/index.js';
 import { INodeDefinition, ToInput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 
 /**
  * @example

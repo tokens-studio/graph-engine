@@ -1,10 +1,10 @@
-import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
-import Node from '../../../../src/nodes/series/geometric.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node from '@/nodes/series/geometric.js';
 
 describe('series/geometric', () => {
 	test('generates the expected series', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.base.setValue(16);

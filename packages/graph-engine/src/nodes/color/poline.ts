@@ -5,7 +5,7 @@ import {
 	StringSchema
 } from '../../schemas/index.js';
 import { Color, INodeDefinition } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 import { Poline, PositionFunction, Vector3, positionFunctions } from 'poline';
 import { arrayOf } from '../../schemas/utils.js';
 import { toColor } from './lib/utils.js';

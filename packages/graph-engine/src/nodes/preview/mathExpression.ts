@@ -1,4 +1,4 @@
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 import { StringSchema } from '../../schemas/index.js';
 
 export default class NodeDefinition extends Node {

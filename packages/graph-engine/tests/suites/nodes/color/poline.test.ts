@@ -1,10 +1,10 @@
-import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
-import Node from '../../../../src/nodes/color/poline.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node from '@/nodes/color/poline.js';
 
 describe('color/poline', () => {
 	test('creates the expected color palette with these inputs 1', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.anchorColors.setValue([
@@ -45,7 +45,7 @@ describe('color/poline', () => {
 	});
 
 	test('creates the expected color palette with these inputs 2', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.anchorColors.setValue([
@@ -103,7 +103,7 @@ describe('color/poline', () => {
 	});
 
 	test('creates the expected color palette with two color inputs and a given state', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.anchorColors.setValue([

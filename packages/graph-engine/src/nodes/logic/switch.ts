@@ -1,7 +1,7 @@
 import { AnySchema, StringSchema } from '../../schemas/index.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
-import { ToInput } from '../../programmatic/input.js';
-import { ToOutput } from '../../programmatic/output.js';
+import { INodeDefinition, Node } from '../../programmatic/nodes/node.js';
+import { ToInput } from '../../programmatic/dataflow/input.js';
+import { ToOutput } from '../../programmatic/dataflow/output.js';
 import { annotatedDynamicInputs } from '../../annotations/index.js';
 
 /**

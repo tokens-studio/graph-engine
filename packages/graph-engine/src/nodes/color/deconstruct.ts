@@ -6,7 +6,7 @@ import {
 } from '../../schemas/index.js';
 import { ColorSpace } from './lib/types.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 
 export default class DestructColorNode extends Node {
 	static title = 'Deconstruct Color';

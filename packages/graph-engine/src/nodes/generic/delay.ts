@@ -1,6 +1,6 @@
 import { AnySchema, NumberSchema } from '../../schemas/index.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 
 /**
  * A node that passes through the input to the output.

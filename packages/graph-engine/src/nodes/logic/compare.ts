@@ -1,6 +1,6 @@
 import { AnySchema, BooleanSchema, StringSchema } from '../../schemas/index.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 
 export enum Operator {
 	EQUAL = '==',

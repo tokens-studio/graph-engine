@@ -2,7 +2,7 @@ import { Color } from '../../types.js';
 import { ColorSchema, StringSchema } from '../../schemas/index.js';
 import { ColorSpace, colorSpaces } from './lib/types.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 import { toColor, toColorObject } from './lib/utils.js';
 
 export default class NodeDefinition extends Node {

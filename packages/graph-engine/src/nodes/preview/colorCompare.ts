@@ -1,6 +1,6 @@
 import { Color } from '../../types.js';
 import { ColorSchema } from '../../schemas';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 import { ToInput } from '../../index.js';
 
 export default class NodeDefinition extends Node {

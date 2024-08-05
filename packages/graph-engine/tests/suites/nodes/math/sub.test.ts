@@ -1,10 +1,11 @@
-import { Graph } from '../../../../src/graph/graph.js';
+
 import { describe, expect, test } from 'vitest';
-import Node from '../../../../src/nodes/math/subtract.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node from '@/nodes/math/subtract.js';
 
 describe('math/sub', () => {
 	test('subtracts two numbers', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 		node.inputs.a.setValue(1);
 		node.inputs.b.setValue(2);

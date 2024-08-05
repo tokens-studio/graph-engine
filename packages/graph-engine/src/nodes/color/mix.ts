@@ -7,7 +7,7 @@ import {
 import { ColorSpace, colorSpaces } from './lib/types.js';
 import { Color as ColorType } from '../../types.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 import Color from 'colorjs.io';
 
 export default class NodeDefinition extends Node {

@@ -13,7 +13,7 @@ import { nodes as string } from './string/index.js';
 import { nodes as typing } from './typing/index.js';
 import { nodes as typography } from './typography/index.js';
 import { nodes as vector2 } from './vector2/index.js';
-import type { Node } from '../programmatic/node.js';
+import type { Node } from '../programmatic/nodes/node.js';
 
 /**
  * All nodes in the system available as an array

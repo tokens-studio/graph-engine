@@ -1,10 +1,10 @@
-import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
-import Node from '../../../../src/nodes/typing/passUnit.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node from '@/nodes/typing/passUnit.js';
 
 describe('typing/passUnit', () => {
 	test('adds unit if falsey value', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.value.setValue('0');
@@ -17,7 +17,7 @@ describe('typing/passUnit', () => {
 	});
 
 	test('adds unit if not detected', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.value.setValue('3');
@@ -30,7 +30,7 @@ describe('typing/passUnit', () => {
 	});
 
 	test('does not add unit if  detected', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.value.setValue('3px');

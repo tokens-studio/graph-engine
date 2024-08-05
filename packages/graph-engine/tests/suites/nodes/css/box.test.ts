@@ -1,10 +1,11 @@
-import { Graph } from '../../../../src/graph/graph.js';
+
 import { describe, expect, test } from 'vitest';
-import Node from '../../../../src/nodes/css/box.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node from '@/nodes/css/box.js';
 
 describe('css/box', () => {
 	test('produces the css box descriptionbs', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.top.setValue(5);

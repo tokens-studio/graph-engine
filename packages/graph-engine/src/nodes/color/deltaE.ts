@@ -5,7 +5,7 @@ import {
 	StringSchema
 } from '../../schemas/index.js';
 import { INodeDefinition } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 import { setToPrecision } from '../../utils/precision.js';
 
 export const algorithms = ['76', 'CMC', '2000', 'Jz', 'ITP', 'OK'] as const;

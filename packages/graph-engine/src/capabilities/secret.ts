@@ -1,4 +1,5 @@
-import { CapabilityFactory } from '../graph/index.js';
+import { CapabilityFactory } from "./interface.js";
+
 
 export type SecretConfig = {
 	secret: string;

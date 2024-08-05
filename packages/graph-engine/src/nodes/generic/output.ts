@@ -1,5 +1,5 @@
 import { IDeserializeOpts } from '../../graph/types.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { INodeDefinition, Node } from '../../programmatic/nodes/node.js';
 import {
 	annotatedDynamicInputs,
 	annotatedSingleton

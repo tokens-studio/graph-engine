@@ -1,6 +1,6 @@
 import { ColorSchema } from '../../schemas/index.js';
 import { INodeDefinition } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 import { flattenAlpha } from './lib/flattenAlpha.js';
 import { toColor, toColorObject } from './lib/utils.js';
 

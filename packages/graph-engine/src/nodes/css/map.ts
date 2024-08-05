@@ -1,5 +1,5 @@
-import { INodeDefinition } from '../../programmatic/node.js';
-import { Node } from '../../programmatic/node.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 import { ObjectSchema } from '../../schemas/index.js';
 import { annotatedDynamicInputs } from '../../annotations/index.js';
 

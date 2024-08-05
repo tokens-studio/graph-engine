@@ -1,8 +1,8 @@
 import { AnySchema, BooleanSchema, StringSchema } from '../../schemas/index.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { INodeDefinition, Node } from '../../programmatic/nodes/node.js';
 import { SchemaObject } from 'ajv';
-import { ToInput } from '../../programmatic/input.js';
-import { ToOutput } from '../../programmatic/output.js';
+import { ToInput } from '../../programmatic/dataflow/input.js';
+import { ToOutput } from '../../programmatic/dataflow/output.js';
 
 function getSchemaByPath(schema: SchemaObject, path: string) {
 	// Remove the leading dot if present

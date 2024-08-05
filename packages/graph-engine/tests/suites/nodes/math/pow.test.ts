@@ -1,10 +1,11 @@
-import { Graph } from '../../../../src/graph/graph.js';
+
 import { describe, expect, test } from 'vitest';
-import Node from '../../../../src/nodes/math/pow.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node from '@/nodes/math/pow.js';
 
 describe('math/pow', () => {
 	test('powers two numbers', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 		node.inputs.base.setValue(2);
 		node.inputs.exponent.setValue(2);

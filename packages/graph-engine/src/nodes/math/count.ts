@@ -1,7 +1,7 @@
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 
 import { AnyArraySchema, NumberSchema } from '../../schemas/index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 
 export default class NodeDefinition extends Node {
 	static title = 'Count';

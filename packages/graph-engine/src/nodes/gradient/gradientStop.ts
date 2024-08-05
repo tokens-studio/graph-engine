@@ -4,7 +4,7 @@ import {
 	NumberSchema
 } from '../../schemas/index.js';
 import { INodeDefinition } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 
 export default class NodeDefinition extends Node {
 	static title = 'Gradient Stop';

@@ -1,10 +1,11 @@
-import { Graph } from '../../../../src/graph/graph.js';
+
 import { describe, expect, test } from 'vitest';
-import Node from '../../../../src/nodes/array/concat.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node from '@/nodes/array/concat.js';
 
 describe('array/concat', () => {
 	test('concats the expected nodes', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		const a = [1, 2, 3];

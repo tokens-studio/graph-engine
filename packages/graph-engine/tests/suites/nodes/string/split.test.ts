@@ -1,10 +1,10 @@
-import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
-import Node from '../../../../src/nodes/string/split.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node from '@/nodes/string/split.js';
 
 describe('string/split', () => {
 	test('splits a string as expected', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.value.setValue('HHH');

@@ -3,7 +3,7 @@ import { ColorSchema, NumberSchema } from '../../schemas/index.js';
 import { ColorSpace } from './lib/types.js';
 import { Color as ColorType } from '../../types.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 export { ColorModifierTypes } from '@tokens-studio/types';
 
 export default class NodeDefinition extends Node {

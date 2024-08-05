@@ -1,10 +1,11 @@
-import { Graph } from '../../../../src/graph/graph.js';
+
 import { describe, expect, test } from 'vitest';
-import Node from '../../../../src/nodes/color/create.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node from '@/nodes/color/create.js';
 
 describe('color/create', () => {
 	test('creates the expected color with rgba', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.space.setValue('srgb');
@@ -23,7 +24,7 @@ describe('color/create', () => {
 	});
 
 	test('creates the expected color with hsl', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.space.setValue('hsl');
@@ -42,7 +43,7 @@ describe('color/create', () => {
 	});
 
 	test('creates the expected color with hsv', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.space.setValue('hsv');

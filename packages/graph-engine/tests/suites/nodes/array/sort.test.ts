@@ -1,10 +1,11 @@
-import { Graph } from '../../../../src/graph/graph.js';
+
 import { describe, expect, test } from 'vitest';
-import Node, { Order } from '../../../../src/nodes/array/sort.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node, { Order } from '@/nodes/array/sort.js';
 
 describe('array/sort', () => {
 	test('sorts the values as expected', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.array.setValue([1, 2, 3, 4]);
@@ -18,7 +19,7 @@ describe('array/sort', () => {
 	});
 
 	test('sorts the values as expected', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.array.setValue([{ a: 3 }, { a: 2 }, { a: 4 }]);

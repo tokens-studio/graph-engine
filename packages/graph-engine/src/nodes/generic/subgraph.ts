@@ -4,7 +4,7 @@ import {
 	SerializedGraph,
 	SerializedNode
 } from '../../graph/types.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { INodeDefinition, Node } from '../../programmatic/nodes/node.js';
 import {
 	annotatedDeleteable,
 	hideFromParentSubgraph

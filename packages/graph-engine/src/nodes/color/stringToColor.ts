@@ -1,7 +1,7 @@
 import { ColorSchema, StringSchema } from '../../schemas/index.js';
 import { Color as ColorType } from '../../types.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 import { toColorObject } from './lib/utils.js';
 import Color from 'colorjs.io';
 export { ColorModifierTypes } from '@tokens-studio/types';

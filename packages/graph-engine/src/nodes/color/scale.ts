@@ -1,7 +1,7 @@
 import { Color } from '../../types.js';
 import { ColorSchema, NumberSchema } from '../../schemas/index.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 import { Red, toColor, toColorObject } from './lib/utils.js';
 import { arrayOf } from '../../schemas/utils.js';
 

@@ -1,5 +1,5 @@
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 import { NumberSchema, StringSchema } from '../../schemas/index.js';
 import valueParser from 'postcss-value-parser-esm';
 

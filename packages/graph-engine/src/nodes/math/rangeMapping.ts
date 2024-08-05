@@ -1,7 +1,7 @@
 // src/nodes/math/dataMapping.ts
 
 import { BooleanSchema, NumberSchema } from '../../schemas/index.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { INodeDefinition, Node } from '../../programmatic/nodes/node.js';
 import { ToInput, ToOutput } from '../../programmatic';
 
 export default class RangeMappingNode extends Node {

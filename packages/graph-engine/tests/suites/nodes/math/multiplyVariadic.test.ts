@@ -1,10 +1,11 @@
-import { Graph } from '../../../../src/graph/graph.js';
+
 import { describe, expect, test } from 'vitest';
-import Node from '../../../../src/nodes/math/multiplyVariadic.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node from '@/nodes/math/multiplyVariadic.js';
 
 describe('math/mul', () => {
 	test('multiplies two numbers', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.inputs.setValue([1, 2]);
@@ -12,7 +13,7 @@ describe('math/mul', () => {
 		expect(node.outputs.value.value).to.equal(2);
 	});
 	test('multiplies multiple numbers', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.inputs.setValue([8, 2, 2]);

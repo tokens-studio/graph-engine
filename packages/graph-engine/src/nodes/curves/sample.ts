@@ -1,7 +1,7 @@
 import { Curve } from '../../types.js';
 import { CurveSchema, NumberSchema, Vec2Schema } from '../../schemas/index.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 
 const scaleVec = (vec, scale) => vec.map(v => v * scale);
 const addVec = (vec1, vec2) => vec1.map((v, i) => v + vec2[i]);

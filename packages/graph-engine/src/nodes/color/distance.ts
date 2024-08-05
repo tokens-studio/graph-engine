@@ -6,7 +6,7 @@ import {
 } from '../../schemas/index.js';
 import { Color as ColorType } from '../../types.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 import { setToPrecision } from '../../utils/precision.js';
 
 export const colorSpaces = ['Lab', 'ICtCp', 'Jzazbz'] as const;

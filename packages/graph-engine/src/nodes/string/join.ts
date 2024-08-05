@@ -1,6 +1,6 @@
 import { AnyArraySchema, StringSchema } from '../../schemas/index.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
+import { Node } from '../../programmatic/nodes/node.js';
 export default class NodeDefinition<T> extends Node {
 	static title = 'Join Array';
 	static type = 'studio.tokens.string.join';

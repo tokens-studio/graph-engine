@@ -1,6 +1,6 @@
 // src/nodes/string/interpolate.ts
 
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { INodeDefinition, Node } from '../../programmatic/nodes/node.js';
 import { StringSchema } from '../../schemas/index.js';
 import { ToInput, ToOutput } from '../../programmatic';
 import { annotatedDynamicInputs } from '../../annotations/index.js';

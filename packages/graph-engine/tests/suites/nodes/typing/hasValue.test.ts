@@ -1,10 +1,10 @@
-import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
-import Node from '../../../../src/nodes/typing/hasValue.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node from '@/nodes/typing/hasValue.js';
 
 describe('typing/hasValue', () => {
 	test('should return true for null value', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.value.setValue(null);
@@ -15,7 +15,7 @@ describe('typing/hasValue', () => {
 	});
 
 	test('should return true for undefined value', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.value.setValue(undefined);
@@ -26,7 +26,7 @@ describe('typing/hasValue', () => {
 	});
 
 	test('should return false for empty string', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.value.setValue('');
@@ -37,7 +37,7 @@ describe('typing/hasValue', () => {
 	});
 
 	test('should return false for non-empty string', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.value.setValue('Hello');
@@ -48,7 +48,7 @@ describe('typing/hasValue', () => {
 	});
 
 	test('should return false for number', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.value.setValue(0);
@@ -59,7 +59,7 @@ describe('typing/hasValue', () => {
 	});
 
 	test('should return false for non-empty array', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.value.setValue([1, 2, 3]);
@@ -70,7 +70,7 @@ describe('typing/hasValue', () => {
 	});
 
 	test('should return false for non-empty object', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.value.setValue({ key: 'value' });
