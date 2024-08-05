@@ -27,9 +27,12 @@ export default class ArraySubgraph<T> extends Node {
 	static description = 'Finds an item in an array';
 	_innerGraph: Graph;
 
-	declare inputs: ToInput<{
-		array: T[];
-	}>;
+	declare inputs: ToInput<
+		{
+			array: T[];
+			//Other dynamic inputs
+		} & Record<string, Input>
+	>;
 
 	declare outputs: ToOutput<{
 		value: T;
@@ -163,12 +166,12 @@ export default class ArraySubgraph<T> extends Node {
 	}
 
 	async execute() {
-		const input = this.getRawInput('array');
+		const input = this.inputs.array;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const otherInputs: [string, Input<any>][] = Object.keys(this.inputs)
 			.filter(x => x !== 'array')
-			.map(x => [x, this.getRawInput(x)]);
+			.map(x => [x, this.inputs[x]]);
 		const other = Object.fromEntries(
 			otherInputs.map(([name, x]) => [
 				name,
@@ -210,10 +213,9 @@ export default class ArraySubgraph<T> extends Node {
 				break;
 			}
 		}
-
-		this.setOutput('found', found);
-		this.setOutput('index', found ? index : -1);
-		this.setOutput('value', output, input.type.items);
+		this.outputs.found.set(found);
+		this.outputs.index.set(found ? index : -1);
+		this.outputs.value.set(output, input.type.items);
 	}
 
 	override serialize() {

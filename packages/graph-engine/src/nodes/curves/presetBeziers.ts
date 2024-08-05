@@ -38,7 +38,7 @@ export default class BezierCurveNode extends Node {
 	static description = 'Allows you to choose from preset bezier curves';
 
 	declare inputs: ToInput<{
-		name: string;
+		name: keyof typeof presetBeziers;
 	}>;
 
 	declare outputs: ToOutput<{
@@ -84,6 +84,6 @@ export default class BezierCurveNode extends Node {
 			]
 		};
 
-		this.setOutput('curve', curve);
+		this.outputs.curve.set(curve);
 	}
 }

@@ -35,6 +35,6 @@ export default class NodeDefinition extends Node {
 
 		const value = await secretCapability.getSecret({ secret, key });
 
-		this.setOutput('value', value);
+		this.outputs.value.set(value);
 	}
 }

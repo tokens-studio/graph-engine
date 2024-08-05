@@ -39,6 +39,6 @@ export default class GroupNode extends Node {
 		const { name, tokenSet } = this.getAllInputs();
 		const output = { [name]: tokenSet };
 
-		this.setOutput('tokenSet', output);
+		this.outputs.tokenSet.set(output);
 	}
 }

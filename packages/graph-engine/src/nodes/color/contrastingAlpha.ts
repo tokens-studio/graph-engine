@@ -1,17 +1,14 @@
-/**
- * Performs a contrast calculation between two colors using APCA-W3 calcs
- *
- * @packageDocumentation
- */
 import { Black, White, toColor, toColorObject } from './lib/utils.js';
 import {
 	ColorSchema,
 	NumberSchema,
 	StringSchema
 } from '../../schemas/index.js';
+import { Color as ColorType, ContrastAlgorithmType } from '../../types.js';
 import { ContrastAlgorithm } from '../../types/index.js';
 import { INodeDefinition, Node } from '../../programmatic/node.js';
-import { Input, Output } from '../../programmatic';
+import { ToInput } from '@/programmatic/input.js';
+import { ToOutput } from '@/programmatic/output.js';
 import { flattenAlpha } from './lib/flattenAlpha.js';
 import Color from 'colorjs.io';
 
@@ -28,18 +25,18 @@ export default class NodeDefinition extends Node {
 	static type = 'studio.tokens.color.contrastingAlpha';
 	static description = 'Reduce alpha until you are close to the threshold.';
 
-	declare inputs: {
-		a: Input;
-		b: Input;
-		background: Input;
-		wcag: Input;
-		threshold: Input<number>;
-	};
-	declare outputs: {
-		color: Output;
-		sufficient: Output<boolean>;
-		contrast: Output<number>;
-	};
+	declare inputs: ToInput<{
+		foreground: ColorType;
+		background: ColorType;
+		algorithm: ContrastAlgorithmType;
+		threshold: number;
+		precision: number;
+	}>;
+	declare outputs: ToOutput<{
+		color: ColorType;
+		alpha: number;
+		contrast: number;
+	}>;
 
 	constructor(props: INodeDefinition) {
 		super(props);
@@ -145,12 +142,9 @@ export default class NodeDefinition extends Node {
 		);
 
 		if (currentContrast <= threshold) {
-			this.setOutput('alpha', 1);
-			this.setOutput(
-				'color',
-				foregroundColor.to('srgb').toString({ format: 'hex' })
-			);
-			this.setOutput('contrast', currentContrast);
+			this.outputs.alpha.set(1);
+			this.outputs.color.set(toColorObject(foregroundColor));
+			this.outputs.contrast.set(currentContrast);
 			return;
 		}
 
@@ -169,8 +163,8 @@ export default class NodeDefinition extends Node {
 			finalColor.contrast(backgroundColor, algorithm)
 		);
 
-		this.setOutput('alpha', finalAlpha);
-		this.setOutput('color', toColorObject(finalColor));
-		this.setOutput('contrast', finalContrast);
+		this.outputs.alpha.set(finalAlpha);
+		this.outputs.color.set(toColorObject(finalColor));
+		this.outputs.contrast.set(finalContrast);
 	}
 }

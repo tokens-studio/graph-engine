@@ -3,11 +3,6 @@ import { INodeDefinition, NumberSchema } from '@tokens-studio/graph-engine';
 import { NodeSchema } from '../schemas/index.js';
 import type { ToInput } from '@tokens-studio/graph-engine';
 
-type inputs = {
-	gain: number;
-	input: AudioNode | undefined;
-};
-
 export class AudioGainNode extends AudioBaseNode {
 	static title = 'Audio Gain node';
 	static type = 'studio.tokens.audio.gain';
@@ -15,7 +10,10 @@ export class AudioGainNode extends AudioBaseNode {
 	gainNode: GainNode | undefined;
 	_last: AudioNode | undefined;
 
-	declare inputs: ToInput<inputs>;
+	declare inputs: ToInput<{
+		gain: number;
+		input: AudioNode | undefined;
+	}>;
 	static description =
 		'Modifies an audio source to provide a gain (volume) control.';
 	constructor(props: INodeDefinition) {
@@ -47,7 +45,7 @@ export class AudioGainNode extends AudioBaseNode {
 	}
 
 	execute(): void | Promise<void> {
-		const { gain, input } = this.getAllInputs<inputs>();
+		const { gain, input } = this.getAllInputs();
 
 		const context = this.getAudioCtx();
 
@@ -67,6 +65,6 @@ export class AudioGainNode extends AudioBaseNode {
 			this._last = input;
 		}
 
-		this.setOutput('node', this.gainNode);
+		this.outputs.node.set(this.gainNode);
 	}
 }

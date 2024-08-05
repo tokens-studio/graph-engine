@@ -1,75 +1,73 @@
-import { CurveSchema, NumberSchema } from '../../schemas/index.js';
-import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { FloatCurve, INodeDefinition, ToInput, ToOutput } from '../../index.js';
+import { FloatCurveSchema, NumberSchema } from '../../schemas/index.js';
 import { Node } from '../../programmatic/node.js';
 
-type Vec2 = [number, number];
-
-function cubicBezier(t: number, p0: Vec2, p1: Vec2, p2: Vec2, p3: Vec2): Vec2 {
-    const u = 1 - t;
-    const tt = t * t;
-    const uu = u * u;
-    const uuu = uu * u;
-    const ttt = tt * t;
-
-    const p = [
-        uuu * p0[0] + 3 * uu * t * p1[0] + 3 * u * tt * p2[0] + ttt * p3[0],
-        uuu * p0[1] + 3 * uu * t * p1[1] + 3 * u * tt * p2[1] + ttt * p3[1]
-    ];
-
-    return p as Vec2;
+export function cubicBezier(p0, c1, c2, p1, t) {
+	return (
+		(1 - t) ** 3 * p0 +
+		3 * (1 - t) ** 2 * t * c1 +
+		3 * (1 - t) * t ** 2 * c2 +
+		t ** 3 * p1
+	);
 }
-
-function evaluateCurve(x: number, points: Vec2[]): number {
-    if (points.length !== 4) {
-        throw new Error("Cubic Bezier curve requires exactly 4 control points.");
-    }
-
-    // Binary search to find the parameter t for given x
-    let t = 0.5;
-    let step = 0.25;
-    let [px, py] = cubicBezier(t, points[0], points[1], points[2], points[3]);
-
-    for (let i = 0; i < 10; i++) { // Adjust iteration count for desired precision
-        if (Math.abs(px - x) < 0.0001) break; // Adjust epsilon for desired accuracy
-        if (px < x) t += step;
-        else t -= step;
-        step *= 0.5;
-        [px, py] = cubicBezier(t, points[0], points[1], points[2], points[3]);
-    }
-
-    return py;
-}
-
 export default class NodeDefinition extends Node {
-    static title = 'Float Curve';
-    static type = 'studio.tokens.curve.floatCurve';
-    static description = 'Evaluates a float curve at a given x value';
+	static title = 'Sample Float Curve';
+	static type = 'studio.tokens.curve.sampleFloat';
+	static description = 'Evaluates a float curve at a given x value';
 
-    declare inputs: ToInput<{
-        curve: { curves: { points: Vec2[] }[] };
-        x: number;
-    }>;
-    declare outputs: ToOutput<{
-        y: number;
-    }>;
+	declare inputs: ToInput<{
+		curve: FloatCurve;
+		//We assume this is a normalized value between 0 and 1
+		x: number;
+	}>;
+	declare outputs: ToOutput<{
+		y: number;
+	}>;
 
-    constructor(props: INodeDefinition) {
-        super(props);
-        this.addInput('curve', {
-            type: CurveSchema
-        });
-        this.addInput('x', {
-            type: NumberSchema
-        });
-        this.addOutput('y', {
-            type: NumberSchema
-        });
-    }
+	constructor(props: INodeDefinition) {
+		super(props);
+		this.addInput('curve', {
+			type: FloatCurveSchema
+		});
+		this.addInput('x', {
+			type: {
+				...NumberSchema,
+				minimum: 0,
+				maximum: 1,
+				default: 0
+			}
+		});
+		this.addOutput('y', {
+			type: NumberSchema
+		});
+	}
 
-    execute(): void | Promise<void> {
-        const { curve, x } = this.getAllInputs();
-        const points = curve.curves[0].points;
-        const y = evaluateCurve(x, points);
-        this.setOutput('y', y);
-    }
+	execute(): void | Promise<void> {
+		const { curve, x } = this.getAllInputs();
+
+		//Find the segment where the x value lines between the two x values
+
+		const startIndex = curve.segments.findIndex((segment, i) => {
+			const nextSegment = curve.segments[i + 1];
+			return segment[0] <= x && x <= nextSegment[0];
+		});
+		const p0 = curve.segments[startIndex];
+		const p1 = curve.segments[startIndex + 1];
+
+		const [c1, c2] = curve.controlPoints[startIndex];
+
+		const t = (x - p0[0]) / (p1[0] - p0[0]);
+
+		// Cubic Bézier formula
+		const y = cubicBezier(
+			//We need the y values of all of these control points
+			p0[1],
+			c1[1],
+			c2[1],
+			p1[1],
+			t
+		);
+
+		this.outputs.y.set(y);
+	}
 }

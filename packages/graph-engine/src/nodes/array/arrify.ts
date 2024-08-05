@@ -33,7 +33,8 @@ export default class NodeDefinition<T> extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const items = this.getRawInput('items');
-		this.setOutput('value', items.value, items.type);
+		const items = this.inputs.items;
+
+		this.outputs.value.set(items.value, items.type);
 	}
 }

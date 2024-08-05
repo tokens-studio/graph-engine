@@ -44,7 +44,7 @@ export default class ExtractTokenNode extends Node {
 		const { tokens, name } = this.getAllInputs();
 
 		const token = tokens.find((token: SingleToken) => token.name === name);
-		this.setOutput('token', token);
-		this.setOutput('found', !!token);
+		this.outputs.token.set(token);
+		this.outputs.found.set(!!token);
 	}
 }

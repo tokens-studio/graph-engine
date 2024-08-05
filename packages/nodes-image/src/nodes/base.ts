@@ -10,7 +10,7 @@ export class BaseNode extends Node {
     return this.getGraph().capabilities["imageMagick"];
   }
 
-  cloneImage = (image: Image) => {
+  cloneImage = (image: ImageData | Image) => {
     const dst = new Uint8Array(image.data.byteLength);
     dst.set(new Uint8Array(image.data));
     return dst;

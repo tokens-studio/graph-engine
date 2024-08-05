@@ -8,7 +8,7 @@ import {
 import { Color as ColorType } from '../../types.js';
 import { ContrastAlgorithm } from '../../types/index.js';
 import { INodeDefinition, Node } from '../../programmatic/node.js';
-import { Output, ToInput, ToOutput } from '../../programmatic/index.js';
+import { ToInput, ToOutput } from '../../programmatic/index.js';
 
 /**
  * Performs a contrast calculation between two colors using APCA-W3 calcs
@@ -27,9 +27,9 @@ export default class NodeDefinition extends Node {
 		threshold: number;
 	}>;
 	declare outputs: ToOutput<{
-		color: Output;
-		sufficient: Output<boolean>;
-		contrast: Output<number>;
+		color: ColorType;
+		sufficient: boolean;
+		contrast: number;
 	}>;
 
 	constructor(props: INodeDefinition) {
@@ -89,13 +89,13 @@ export default class NodeDefinition extends Node {
 		const contrastB = Math.abs(backgroundCol.contrast(colorB, algorithm));
 
 		if (contrastA > contrastB) {
-			this.setOutput('color', a);
-			this.setOutput('sufficient', contrastA >= threshold);
-			this.setOutput('contrast', contrastA);
+			this.outputs.color.set(a);
+			this.outputs.sufficient.set(contrastA >= threshold);
+			this.outputs.contrast.set(contrastA);
 		} else {
-			this.setOutput('color', b);
-			this.setOutput('sufficient', contrastB >= threshold);
-			this.setOutput('contrast', contrastB);
+			this.outputs.color.set(b);
+			this.outputs.sufficient.set(contrastB >= threshold);
+			this.outputs.contrast.set(contrastB);
 		}
 	}
 }

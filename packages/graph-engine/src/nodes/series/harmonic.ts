@@ -103,10 +103,7 @@ export default class NodeDefinition extends Node {
 			});
 		}
 
-		this.setOutput(
-			'array',
-			values.map(x => x.value)
-		);
-		this.setOutput('indexed', values);
+		this.outputs.array.set(values.map(x => x.value));
+		this.outputs.indexed.set(values);
 	}
 }

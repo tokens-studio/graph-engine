@@ -1,18 +1,19 @@
 import { AudioBaseNode } from './base.js';
 import {
 	INodeDefinition,
+	ToInput,
 	createVariadicSchema
 } from '@tokens-studio/graph-engine';
 import { NodeSchema } from '../schemas/index.js';
 
-type inputs = {
-	source: AudioNode[];
-	destination: AudioNode;
-};
-
 export class AudioConnectNode extends AudioBaseNode {
 	static title = 'Audio Connect node';
 	static type = 'studio.tokens.audio.connect';
+
+	declare inputs: ToInput<{
+		source: AudioNode[];
+		destination: AudioNode;
+	}>;
 
 	static description = 'An explicit connection between audio nodes';
 	constructor(props: INodeDefinition) {
@@ -33,13 +34,13 @@ export class AudioConnectNode extends AudioBaseNode {
 	}
 
 	execute(): void | Promise<void> {
-		const { destination, source } = this.getAllInputs<inputs>();
+		const { destination, source } = this.getAllInputs();
 
 		source.map(sourceNode => {
 			sourceNode.disconnect();
 			sourceNode.connect(destination);
 		});
 
-		this.setOutput('destination', destination);
+		this.outputs.destination.set(destination);
 	}
 }

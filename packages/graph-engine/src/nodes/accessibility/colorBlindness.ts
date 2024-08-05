@@ -1,5 +1,5 @@
-import { ColorSchema, StringSchema } from '../../schemas/index.js';
 import {
+	Color,
 	INodeDefinition,
 	ToInput,
 	ToOutput,
@@ -7,6 +7,7 @@ import {
 	toColor,
 	toHex
 } from '../../index.js';
+import { ColorSchema, StringSchema } from '../../schemas/index.js';
 import { Node } from '../../programmatic/node.js';
 import blinder from 'color-blind-esm';
 
@@ -31,7 +32,7 @@ export default class NodeDefinition extends Node {
 		'Converts provided colors to the colors as perceived by the specified color blindness type. The output is a hex color string. The color blindness types include protanopia, protanomaly, deuteranopia, deuteranomaly, tritanopia, tritanomaly, achromatopsia, and achromatomaly. The output is a hex color string.';
 
 	declare inputs: ToInput<{
-		color: string;
+		color: Color;
 		type: ColorBlindnessTypes;
 	}>;
 
@@ -39,7 +40,7 @@ export default class NodeDefinition extends Node {
 		/**
 		 * The calculated color contrast based on the input color and the specified color blindness type.
 		 */
-		value: string;
+		value: Color;
 	}>;
 
 	constructor(props: INodeDefinition) {
@@ -102,6 +103,6 @@ export default class NodeDefinition extends Node {
 
 		const asCol = hexToColor(processed);
 
-		this.setOutput('value', asCol);
+		this.outputs.value.set(asCol);
 	}
 }

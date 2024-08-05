@@ -61,8 +61,9 @@ export class FetchNode extends BaseNode {
 
     const { data } = await loadImageAsBuffer(url);
 
-    this.setOutput("image", {
+    this.outputs.image.set({
       data,
+      settings: new MagickReadSettings(),
     });
   }
 }

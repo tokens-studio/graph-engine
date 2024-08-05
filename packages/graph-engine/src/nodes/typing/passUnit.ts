@@ -41,9 +41,9 @@ export default class NodeDefinition extends Node {
 		}
 
 		if (x.unit) {
-			this.setOutput('value', value);
+			this.outputs.value.set(value);
 		} else {
-			this.setOutput('value', `${value}${fallback || ''}`);
+			this.outputs.value.set(`${value}${fallback || ''}`);
 		}
 	}
 }

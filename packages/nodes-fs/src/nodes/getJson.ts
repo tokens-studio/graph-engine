@@ -6,15 +6,13 @@ import {
 } from '@tokens-studio/graph-engine';
 import type { ToInput } from '@tokens-studio/graph-engine';
 
-type inputs = {
-	file: Uint8Array;
-};
-
 export class GetJSONNode extends Node {
 	static title = 'Read file as json';
 	static type = 'studio.tokens.fs.getJson';
 
-	declare inputs: ToInput<inputs>;
+	declare inputs: ToInput<{
+		file: Uint8Array;
+	}>;
 	static description =
 		'Reads the context of a file from the file system as a JSON object.';
 	constructor(props: INodeDefinition) {
@@ -33,6 +31,6 @@ export class GetJSONNode extends Node {
 
 		const contents = JSON.parse(new TextDecoder().decode(file));
 
-		this.setOutput('contents', contents);
+		this.outputs.contents.set(contents);
 	}
 }

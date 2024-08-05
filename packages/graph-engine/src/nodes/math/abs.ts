@@ -33,7 +33,7 @@ export default class NodeDefinition extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const input = this.getInput('input') as number;
-		this.setOutput('value', Math.abs(input));
+		const input = this.inputs.input.value;
+		this.outputs.value.set(Math.abs(input));
 	}
 }

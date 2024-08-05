@@ -88,6 +88,7 @@ export class ComposeNode extends BaseNode {
   declare inputs: ToInput<{
     a: Image;
     b: Image;
+    operator: keyof typeof CompositeOperatorLookup;
   }>;
 
   constructor(props: INodeDefinition) {
@@ -129,7 +130,7 @@ export class ComposeNode extends BaseNode {
         image.composite(bbb, compositeOperator as CompositeOperator);
       });
       image.write((data) =>
-        this.setOutput("image", {
+        this.outputs.image.set({
           data,
         }),
       );

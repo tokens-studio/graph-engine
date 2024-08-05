@@ -7,6 +7,7 @@ import {
   ToInput,
   ToOutput,
 } from "@tokens-studio/graph-engine";
+import { Image } from "../schemas/types.js";
 import { ImageSchema } from "../schemas/index.js";
 
 export const colorSpaceLookup = {
@@ -55,12 +56,14 @@ export class Dither extends BaseNode {
   static type = "studio.tokens.image.dither";
 
   declare inputs: ToInput<{
-    image: ImageData;
+    image: Image;
     sigma: number;
-    radius: number;
+    colors: number;
+    colorSpace: keyof typeof colorSpaceLookup;
+    ditherMethod: keyof typeof ditherMethodLookup;
   }>;
   declare outputs: ToOutput<{
-    image: ImageData;
+    image: Image;
   }>;
 
   constructor(props: INodeDefinition) {
@@ -108,7 +111,7 @@ export class Dither extends BaseNode {
     await ImageMagick.read(this.cloneImage(image), (image: IMagickImage) => {
       image.quantize(opts);
       image.write((data) =>
-        this.setOutput("image", {
+        this.outputs.image.set({
           data,
         }),
       );

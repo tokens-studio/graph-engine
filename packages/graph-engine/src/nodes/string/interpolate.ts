@@ -49,7 +49,7 @@ export default class StringInterpolationNode extends Node {
 				}
 			);
 
-			this.setOutput('value', interpolatedString);
+			this.outputs.value.set(interpolatedString);
 		} catch (error) {
 			this.error = new Error(
 				`Error during string interpolation: ${error.message}`

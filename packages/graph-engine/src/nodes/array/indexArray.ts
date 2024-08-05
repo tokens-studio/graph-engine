@@ -47,7 +47,7 @@ export default class NodeDefinition<T> extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const array = this.getRawInput('array');
+		const array = this.inputs.array;
 		const { index } = this.getAllInputs();
 		//Get the value
 		const calculated = array.value[index];
@@ -60,6 +60,6 @@ export default class NodeDefinition<T> extends Node {
 			itemType = array.type.items as SchemaObject;
 		}
 
-		this.setOutput('value', calculated, itemType);
+		this.outputs.value.set(calculated, itemType);
 	}
 }

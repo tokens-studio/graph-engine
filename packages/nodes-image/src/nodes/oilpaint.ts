@@ -5,6 +5,7 @@ import {
   ToInput,
   ToOutput,
 } from "@tokens-studio/graph-engine";
+import { Image } from "../schemas/types.js";
 import { ImageSchema } from "../schemas/index.js";
 import type { IMagickImage } from "@imagemagick/magick-wasm";
 
@@ -17,7 +18,7 @@ export class Oilpaint extends BaseNode {
     radius: number;
   }>;
   declare outputs: ToOutput<{
-    image: ImageData;
+    image: Image;
   }>;
 
   constructor(props: INodeDefinition) {
@@ -41,7 +42,7 @@ export class Oilpaint extends BaseNode {
     await ImageMagick.read(this.cloneImage(image), (image: IMagickImage) => {
       image.oilPaint(radius);
       image.write((data) =>
-        this.setOutput("image", {
+        this.outputs.image.set({
           data,
         }),
       );

@@ -34,6 +34,6 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { base, exponent } = this.getAllInputs();
-		this.setOutput('value', Math.pow(base, exponent));
+		this.outputs.value.set(Math.pow(base, exponent));
 	}
 }

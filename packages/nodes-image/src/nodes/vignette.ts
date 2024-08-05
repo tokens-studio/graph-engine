@@ -13,15 +13,15 @@ export class VignetteNode extends BaseNode {
 
   declare inputs: ToInput<{
     image: ImageData;
-    degrees: number;
+    radius: number;
+    sigma: number;
+    x: number;
+    y: number;
   }>;
   constructor(props: INodeDefinition) {
     super(props);
     this.addInput("image", {
       type: ImageSchema,
-    });
-    this.addInput("radius", {
-      type: NumberSchema,
     });
     this.addInput("radius", {
       type: NumberSchema,
@@ -47,7 +47,7 @@ export class VignetteNode extends BaseNode {
     await ImageMagick.read(this.cloneImage(image), (image: IMagickImage) => {
       image.vignette(radius, sigma, x, y);
       image.write((data) =>
-        this.setOutput("image", {
+        this.outputs.image.set({
           data,
         }),
       );

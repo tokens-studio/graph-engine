@@ -53,7 +53,7 @@ export class SeperateNode extends BaseNode {
       async (image: IMagickImage) => {
         await image.separate(ch as Channels, (collection) => {
           collection.at(0).write(image.format, (data) =>
-            this.setOutput("image", {
+            this.outputs.image.set({
               data,
             }),
           );

@@ -33,6 +33,18 @@ export interface TypeDefinition {
 	annotations?: Record<string, unknown>;
 }
 
+// Helper type to preserve literal types
+type Prettify<T> = {
+	[K in keyof T]: T[K];
+	// eslint-disable-next-line @typescript-eslint/ban-types
+} & {};
+
+type InputValue<T> = T extends Input<infer U> ? U : never;
+// Updated UnwrapInput type
+type UnwrapInput<T> = Prettify<{
+	[K in keyof T]: InputValue<T[K]>;
+}>;
+
 export class Node {
 	/**
 	 * Unique instance specific identifier
@@ -325,18 +337,10 @@ export class Node {
 		return this.type;
 	};
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	getAllInputs = <T = Record<string, any>>(): T => {
+	getAllInputs = (): UnwrapInput<this['inputs']> => {
 		return Object.fromEntries(
 			Object.entries(this.inputs).map(([key, value]) => [key, value.value])
-		) as T;
-	};
-
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	getAllOutputs = <T = Record<string, any>>(): T => {
-		return Object.fromEntries(
-			Object.entries(this.outputs).map(([key, value]) => [key, value.value])
-		) as T;
+		) as UnwrapInput<this['inputs']>;
 	};
 
 	/**
@@ -360,33 +364,6 @@ export class Node {
 		//@ts-ignore This is forcing manual cleanup
 		this._graph = undefined;
 	};
-
-	/**
-	 * Set the output of the node
-	 * @param name
-	 * @param value
-	 * @param type
-	 */
-
-	protected setOutput = (name: string, value: unknown, type?: GraphSchema) => {
-		this.outputs[name]?.set(value, type);
-	};
-
-	protected getInput = (name: string) => {
-		return this.inputs[name].value;
-	};
-	public getRawInput = (name: string) => {
-		return this.inputs[name];
-	};
-	/**
-	 * Returns a JSON representation of the output values without calculating them
-	 * @returns
-	 */
-	public getOutput() {
-		return Object.fromEntries(
-			Object.entries(this.outputs).map(([key, value]) => [key, value.value()])
-		);
-	}
 
 	/**
 	 * Function to call when the graph has been started.

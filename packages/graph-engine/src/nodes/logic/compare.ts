@@ -72,6 +72,6 @@ export default class NodeDefinition<T> extends Node {
 				break;
 		}
 
-		this.setOutput('value', answer);
+		this.outputs.value.set(answer);
 	}
 }

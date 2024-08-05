@@ -70,6 +70,6 @@ export default class NodeDefinition extends Node {
 
 		const distance = a.distance(b, space);
 
-		this.setOutput('value', setToPrecision(distance, precision));
+		this.outputs.value.set(setToPrecision(distance, precision));
 	}
 }

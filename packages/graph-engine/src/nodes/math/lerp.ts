@@ -45,6 +45,6 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { a, b, t } = this.getAllInputs();
-		this.setOutput('value', a + t * (b - a));
+		this.outputs.value.set(a + t * (b - a));
 	}
 }

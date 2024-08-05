@@ -49,8 +49,9 @@ export default class MyCustomNode extends Node {
 
   //This is the main logic of your node. The execute can be async or not.
   execute() {
+    //These will be strongly typed if you used declarations
     const { a, b } = this.getAllInputs();
-    this.setOutput("value", a + b);
+    this.outputs.value.set(a + b);
   }
 }
 ```

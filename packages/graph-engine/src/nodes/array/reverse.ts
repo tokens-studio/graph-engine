@@ -24,10 +24,10 @@ export default class NodeDefinition<T> extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const array = this.getRawInput('array');
+		const array = this.inputs.array;
 		//Normal reverse mutates the array. We don't want that.
 		const reversed = [...array.value].reverse();
 
-		this.setOutput('value', reversed, array.type);
+		this.outputs.value.set(reversed, array.type);
 	}
 }

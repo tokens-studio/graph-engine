@@ -34,8 +34,8 @@ export default class NodeDefinition<T> extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const inputs = this.getInput('inputs') as number[];
+		const inputs = this.inputs.inputs.value;
 		const output = inputs.reduce((acc, curr) => acc && !!curr, true);
-		this.setOutput('value', output);
+		this.outputs.value.set(output);
 	}
 }

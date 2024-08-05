@@ -34,9 +34,9 @@ export default class NodeDefinition extends Node {
 	execute(): void | Promise<void> {
 		const { value, separator } = this.getAllInputs();
 		if (separator === undefined) {
-			this.setOutput('value', [value]);
+			this.outputs.value.set([value]);
 		} else {
-			this.setOutput('value', value.split(separator));
+			this.outputs.value.set(value.split(separator));
 		}
 	}
 }

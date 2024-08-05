@@ -6,15 +6,13 @@ import {
 import { AudioBaseNode } from './base.js';
 import { AudioBufferSchema } from '../schemas/index.js';
 
-export type inputs = {
-	resource: Buffer;
-};
-
 export class AudioLoadBufferNode extends AudioBaseNode {
 	static title = 'Audio Load Buffer node';
 	static type = 'studio.tokens.audio.loadBuffer';
 
-	declare inputs: ToInput<inputs>;
+	declare inputs: ToInput<{
+		resource: Buffer;
+	}>;
 	static description = 'Converts a buffer to an audio buffer';
 
 	constructor(props: INodeDefinition) {
@@ -30,14 +28,14 @@ export class AudioLoadBufferNode extends AudioBaseNode {
 	}
 
 	execute(): void | Promise<void> {
-		const { resource } = this.getAllInputs<inputs>();
+		const { resource } = this.getAllInputs();
 
 		const context = this.getAudioCtx();
 
 		return new Promise((resolve, reject) => {
 			context.decodeAudioData(resource.buffer, res => {
 				try {
-					this.setOutput('buffer', res);
+					this.outputs.buffer.set(res);
 					resolve();
 				} catch (err) {
 					reject(err);

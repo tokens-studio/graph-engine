@@ -6,13 +6,13 @@ import {
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 
-export default class NodeDefinition<T> extends Node {
+export default class NodeDefinition<T = any> extends Node {
 	static title = 'Logical or';
 	static type = 'studio.tokens.logic.or';
 	static description = 'OR node allows you to check if all inputs are true.';
 
 	declare inputs: ToInput<{
-		value: T;
+		inputs: T[];
 	}>;
 
 	declare outputs: ToOutput<{
@@ -34,8 +34,8 @@ export default class NodeDefinition<T> extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const inputs = this.getInput('inputs') as number[];
+		const inputs = this.inputs.inputs.value;
 		const output = inputs.reduce((acc, curr) => acc || !!curr, false);
-		this.setOutput('value', output);
+		this.outputs.value.set(output);
 	}
 }

@@ -36,11 +36,11 @@ export default class NodeDefinition<T, V> extends Node {
 
 	execute(): void | Promise<void> {
 		const { condition } = this.getAllInputs();
-		const a = this.getRawInput('a');
-		const b = this.getRawInput('b');
+		const a = this.inputs.a;
+		const b = this.inputs.b;
 
 		const val = condition ? a : b;
 
-		this.setOutput('value', val.value, val.type);
+		this.outputs.value.set(val.value, val.type);
 	}
 }

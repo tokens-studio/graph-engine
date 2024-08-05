@@ -28,6 +28,6 @@ export default class NodeDefinition<T> extends Node {
 
 	execute(): void | Promise<void> {
 		const { value } = this.getAllInputs();
-		this.setOutput('undefined', value === null || value === undefined);
+		this.outputs.undefined.set(value === null || value === undefined);
 	}
 }

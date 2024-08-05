@@ -56,15 +56,15 @@ export default class NodeDefinition<T> extends Node {
 
 	execute(): void | Promise<void> {
 		const { condition } = this.getAllInputs();
-		const defaultVal = this.getRawInput('default');
+		const defaultVal = this.inputs.default;
 
 		//Check if an input matches the condition
 		if (this.inputs[condition]) {
-			const input = this.getRawInput(condition);
-			this.setOutput('value', input.value, input.type);
+			const input = this.inputs[condition];
+			this.outputs.value.set(input.value, input.type);
 			return;
 		}
 
-		this.setOutput('value', defaultVal.value, defaultVal.type);
+		this.outputs.value.set(defaultVal.value, defaultVal.type);
 	}
 }

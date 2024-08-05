@@ -26,6 +26,6 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { color, position } = this.getAllInputs();
-		this.setOutput('gradientStop', { color: color, position: position });
+		this.outputs.gradientStop.set({ color: color, position: position });
 	}
 }

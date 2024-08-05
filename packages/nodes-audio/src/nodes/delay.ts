@@ -6,11 +6,6 @@ import {
 } from '@tokens-studio/graph-engine';
 import { NodeSchema } from '../schemas/index.js';
 
-type inputs = {
-	delay: number;
-	input: AudioNode | undefined;
-};
-
 export class AudioDelayNode extends AudioBaseNode {
 	static title = 'Audio Delay node';
 	static type = 'studio.tokens.audio.delay';
@@ -18,7 +13,10 @@ export class AudioDelayNode extends AudioBaseNode {
 	audioNode: DelayNode | undefined;
 	_last: AudioNode | undefined;
 
-	declare inputs: ToInput<inputs>;
+	declare inputs: ToInput<{
+		delay: number;
+		input: AudioNode | undefined;
+	}>;
 	static description = 'Modifies an audio source to provide delay.';
 	constructor(props: INodeDefinition) {
 		super(props);
@@ -50,7 +48,7 @@ export class AudioDelayNode extends AudioBaseNode {
 
 	execute(): void | Promise<void> {
 		const context = this.getAudioCtx();
-		const { input, delay } = this.getAllInputs<inputs>();
+		const { input, delay } = this.getAllInputs();
 
 		if (!this.audioNode) {
 			this.audioNode = context.createDelay(delay);
@@ -67,6 +65,6 @@ export class AudioDelayNode extends AudioBaseNode {
 		}
 
 		this.audioNode.delayTime.setValueAtTime(delay, context.currentTime);
-		this.setOutput('node', this.audioNode);
+		this.outputs.node.set(this.audioNode);
 	}
 }

@@ -67,6 +67,6 @@ export default class NodeDefinition extends Node {
 			colorList.push(toColorObject(color));
 		}
 
-		this.setOutput('value', colorList);
+		this.outputs.value.set(colorList);
 	}
 }

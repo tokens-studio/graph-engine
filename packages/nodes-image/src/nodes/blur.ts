@@ -7,6 +7,7 @@ import {
 } from "@tokens-studio/graph-engine";
 import { ImageSchema } from "../schemas/index.js";
 
+import { Image } from "../schemas/types.js";
 import type { IMagickImage } from "@imagemagick/magick-wasm";
 
 export class BlurNode extends BaseNode {
@@ -14,12 +15,12 @@ export class BlurNode extends BaseNode {
   static type = "studio.tokens.image.blur";
 
   declare inputs: ToInput<{
-    image: ImageData;
+    image: Image;
     sigma: number;
     radius: number;
   }>;
   declare outputs: ToOutput<{
-    image: ImageData;
+    image: Image;
   }>;
 
   constructor(props: INodeDefinition) {
@@ -46,7 +47,7 @@ export class BlurNode extends BaseNode {
     await ImageMagick.read(this.cloneImage(image), (image: IMagickImage) => {
       image.blur(radius, sigma);
       image.write((data) =>
-        this.setOutput("image", {
+        this.outputs.image.set({
           data,
         }),
       );

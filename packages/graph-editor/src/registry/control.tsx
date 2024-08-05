@@ -3,6 +3,7 @@ import {
   BOOLEAN,
   COLOR,
   CURVE,
+  FLOATCURVE,
   Input,
   NUMBER,
   Port,
@@ -17,6 +18,7 @@ import { ColorField } from '@/components/controls/color.js';
 import { CurveField } from '@/components/controls/curve.js';
 import { DefaultField } from '@/components/controls/default.js';
 import { EnumeratedTextfield } from '@/components/controls/enumerated.js';
+import { FloatCurveField } from '@/components/controls/floatCurve.js';
 import { NumericField } from '@/components/controls/numeric.js';
 import { SliderField } from '@/components/controls/slider.js';
 import { TextArea } from '@/components/controls/text.js';
@@ -41,9 +43,14 @@ export const defaultControls = [
     component: SliderField,
   },
   {
+    matcher: (port: Port) => port.type.$id === FLOATCURVE,
+    component: FloatCurveField,
+  },
+  {
     matcher: (port: Port) => port.type.$id === CURVE,
     component: CurveField,
   },
+
   {
     matcher: (port: Port) => port.type.$id === BOOLEAN,
     component: BooleanField,

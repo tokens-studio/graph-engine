@@ -83,6 +83,6 @@ export default class NodeDefinition extends Node {
 			throw new Error('Value or reference is required');
 		}
 
-		this.setOutput('token', obj);
+		this.outputs.token.set(obj);
 	}
 }
