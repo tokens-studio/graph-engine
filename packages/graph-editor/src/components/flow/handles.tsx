@@ -82,12 +82,29 @@ const StyledRawHandle = styled(RawHandle, {
         background: 'var(--colors-graphBg) !important',
       },
     },
-    isArray: {
-      true: {
+
+    variant: {
+      array:{
         borderRadius: '0 !important',
         width: 'calc($4 - 2px) !important',
         height: 'calc($4 - 2px) !important',
       },
+      message:{
+        borderRadius: '0 !important',
+        width: 'calc($4 - 2px) !important',
+        height: 'calc($4 - 2px) !important',
+        transform : 'rotate(45deg)',
+        '&:after':{
+          content: '""',
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '2px',
+          height: '2px',
+          borderRadius: '50%',
+        }
+      }
     },
     shouldHideHandles: {
       true: {
@@ -160,7 +177,7 @@ export interface HandleProps {
   visible: boolean;
   shouldHideHandles?: boolean;
   error?: boolean;
-  isArray?: boolean;
+  variant?: 'array' | 'message';
   isConnected?: boolean;
   color?: string;
   backgroundColor?: string;
@@ -177,7 +194,7 @@ export const Handle = (props: HandleProps) => {
     shouldHideHandles = false,
     error,
     color,
-    isArray,
+    variant,
     type: dataType,
     isConnected,
     backgroundColor,
@@ -212,7 +229,7 @@ export const Handle = (props: HandleProps) => {
           variadic={variadic}
           isValidConnection={isValidConnection}
           isConnected={isConnected}
-          isArray={isArray}
+          variant={variant}
         ></StyledRawHandle>
       </Tooltip>
       <Stack

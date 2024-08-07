@@ -1,5 +1,5 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition } from '../../programmatic/nodes/node.js';
-import { Node } from '../../programmatic/nodes/node.js';
 import { ObjectSchema } from '../../schemas/index.js';
 import { annotatedDynamicInputs } from '../../annotations/index.js';
 
@@ -10,7 +10,7 @@ import { annotatedDynamicInputs } from '../../annotations/index.js';
  * be. Note that you should using something like the "mdn-data" package to get the list of
  * properties and their types. This is just a convenience node.
  */
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'CSS Map';
 	static type = 'studio.tokens.css.map';
 
@@ -21,7 +21,7 @@ export default class NodeDefinition extends Node {
 
 		//Indaicate that is uses dynamic inputs
 		this.annotations[annotatedDynamicInputs] = true;
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: ObjectSchema
 		});
 	}

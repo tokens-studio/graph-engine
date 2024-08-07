@@ -43,6 +43,7 @@ export const Settings = () => {
   return (
     <Box
       css={{
+        boxSizing:'border-box',
         height: '100%',
         width: '100%',
         flex: 1,

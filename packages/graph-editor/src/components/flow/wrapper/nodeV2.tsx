@@ -3,10 +3,13 @@ import { BaseNodeWrapper } from './base.js';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import {
   COLOR,
+  CONTROL_PORT,
   Color,
+  ControlFlowPort,
+  DataFlowPort,
+  DataflowNode,
   Input,
   OBJECT,
-  Port,
   SchemaObject,
   annotatedDynamicInputs,
   annotatedNodeRunning,
@@ -15,7 +18,6 @@ import {
 } from '@tokens-studio/graph-engine';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
-import { Node as GraphNode } from '@tokens-studio/graph-engine';
 import { Handle, HandleContainer, useHandle } from '../handles.js';
 import { icons, nodeSpecifics } from '@/redux/selectors/registry.js';
 import {
@@ -54,7 +56,7 @@ export type WrappedNodeDefinition = {
 export const NodeV2 = (args) => {
   const { id } = args;
   const graph = useLocalGraph();
-  const node = graph.getNode(id);
+  const node = graph.getNode(id) as DataflowNode;
 
   if (!node) {
     return <Box>Node not found</Box>;
@@ -74,7 +76,7 @@ export interface INodeWrap {
   title?: string;
   subtitle?: string;
   icon?: React.ReactNode;
-  node: GraphNode;
+  node: DataflowNode;
 }
 const NodeWrap = observer(({ node, icon }: INodeWrap) => {
   const showTimingsValue = useSelector(showTimings);
@@ -97,18 +99,18 @@ const NodeWrap = observer(({ node, icon }: INodeWrap) => {
         (node.annotations[title] as string) || node.factory.title || 'Node'
       }
       subtitle={node.annotations[title] ? node.factory.title : ''}
-      error={node.error || null}
+      error={node.dataflow?.error || null}
       controls={''}
       style={{ minWidth: '200px' }}
     >
       <Stack direction="column" gap={2}>
         <Stack direction="column" gap={3} css={{ padding: '$3 0 $3 0' }}>
           <HandleContainer type="source" className={'source'} full>
-            <PortArray ports={node.outputs} />
+            <PortArray ports={node.outputs as Record<string, DataFlowPort>} />
             {isInput && <DynamicOutput />}
           </HandleContainer>
           <HandleContainer type="target" className={'target'} full>
-            <PortArray ports={node.inputs} />
+            <PortArray ports={node.inputs as Record<string, DataFlowPort>} />
           </HandleContainer>
         </Stack>
         {Specific && (
@@ -120,7 +122,7 @@ const NodeWrap = observer(({ node, icon }: INodeWrap) => {
       {showTimingsValue && (
         <Box css={{ position: 'absolute', bottom: '-1.5em' }}>
           <Text size="xsmall" muted>
-            {node.lastExecutedDuration}ms
+            {node.dataflow?.lastExecutedDuration}ms
           </Text>
         </Box>
       )}
@@ -129,7 +131,7 @@ const NodeWrap = observer(({ node, icon }: INodeWrap) => {
 });
 
 export interface IPortArray {
-  ports: Record<string, Port>;
+  ports: Record<string, DataFlowPort>;
   hideNames?: boolean;
 }
 export const PortArray = observer(({ ports, hideNames }: IPortArray) => {
@@ -160,7 +162,7 @@ export const DynamicOutput = () => {
 };
 
 const extractTypeIcon = (
-  port: Port,
+  port: DataFlowPort | ControlFlowPort,
   iconLookup: Record<string, React.ReactNode>,
 ) => {
   let id = port.type.$id || '';
@@ -199,7 +201,7 @@ export const extractType = (schema: SchemaObject) => {
   return schema.type;
 };
 
-export const InlineTypeLabel = ({ port }: { port: Port }) => {
+export const InlineTypeLabel = ({ port }: { port: DataFlowPort }) => {
   //Try lookup the id if possible
   const typeName = extractType(port.type);
   const handleInformation = useHandle();
@@ -309,7 +311,7 @@ const getValuePreview = (value, type) => {
 };
 
 const InputHandle = observer(
-  ({ port, hideName }: { port: Port; hideName?: boolean }) => {
+  ({ port, hideName }: { port: DataFlowPort; hideName?: boolean }) => {
     const inlineTypesValue = useSelector(inlineTypes);
     const iconTypeRegistry = useSelector(icons);
     const inlineValuesValue = useSelector(inlineValues);
@@ -317,6 +319,8 @@ const InputHandle = observer(
     const input = port as unknown as Input;
     const type = extractType(port.type);
     const handleInformation = useHandle();
+
+    const variant = typeCol.isArray ? 'array' : (port.pType == CONTROL_PORT?'message':undefined);
 
     if (input.variadic) {
       return (
@@ -326,6 +330,7 @@ const InputHandle = observer(
             type={type}
             visible={port.visible != false || port.isConnected}
             id={port.name}
+            variant={variant}
             variadic
           >
             {!hideName && <Text>{port.name} + </Text>}
@@ -336,7 +341,7 @@ const InputHandle = observer(
               <Handle
                 {...typeCol}
                 //The underlying type might not be an array
-                isArray={port.type.type?.type === 'array'}
+                variant={port.type.type?.type === 'array'?'array':undefined}
                 visible={port.visible != false || port.isConnected}
                 id={port.name + `[${edge.annotations['engine.index']}]`}
                 key={i}
@@ -368,6 +373,7 @@ const InputHandle = observer(
     return (
       <Handle
         {...typeCol}
+        variant={variant}
         visible={port.visible != false || port.isConnected}
         id={port.name}
         type={type}

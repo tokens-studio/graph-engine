@@ -1,7 +1,7 @@
 import { CurveSchema } from '../../schemas/index.js';
-import { Node } from '../../programmatic/nodes/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'PreviewCurve';
 	static type = 'studio.tokens.preview.curve';
 
@@ -10,7 +10,7 @@ export default class NodeDefinition extends Node {
 	constructor(props) {
 		super(props);
 
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: CurveSchema
 		});
 	}

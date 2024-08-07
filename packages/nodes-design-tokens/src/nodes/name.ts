@@ -1,6 +1,6 @@
 import {
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	ToInput,
 	ToOutput
 } from '@tokens-studio/graph-engine';
@@ -8,7 +8,7 @@ import { TokenSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
 import type { SingleToken } from '@tokens-studio/types';
 
-export default class NameTokensNode extends Node {
+export default class NameTokensNode extends DataflowNode {
 	static title = 'Name tokens';
 	static type = 'studio.tokens.design.nameTokens';
 	static description = 'Names an array of tokens by their index';
@@ -23,10 +23,10 @@ export default class NameTokensNode extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('tokens', {
+		this.dataflow.addInput('tokens', {
 			type: arrayOf(TokenSchema)
 		});
-		this.addOutput('tokens', {
+		this.dataflow.addOutput('tokens', {
 			type: arrayOf(TokenSchema)
 		});
 	}

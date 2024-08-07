@@ -7,8 +7,12 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   server: {
     port: 3001,
+    cors:false
   },
   mode: 'development',
   root: 'examples/defaults',
+  define: {
+    'process.env': {}
+  },
   plugins: [react({ tsDecorators: true }), tsconfigPaths()],
 });

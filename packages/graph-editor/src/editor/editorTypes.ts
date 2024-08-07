@@ -1,7 +1,5 @@
 import {
   CapabilityFactory,
-  ExternalLoader,
-  Graph,
   Node as GraphNode,
   SchemaObject,
   SerializedGraph,
@@ -9,6 +7,7 @@ import {
 import { Control } from '../types/controls.js';
 import { DropPanelStore } from '@/components/panels/dropPanel/index.js';
 import { Edge, Node, ReactFlowInstance } from 'reactflow';
+import { FullyFeaturedGraph } from '@/types/index.js';
 import { LayoutBase } from 'rc-dock';
 import { Menu } from '@/components/menubar/data.js';
 
@@ -29,10 +28,6 @@ export interface EditorProps {
   emptyContent?: React.ReactNode;
   children?: React.ReactNode;
   onOutputChange?: (output: Record<string, unknown>) => void;
-  /**
-   * An external loader to use for loading the graphs or node data
-   */
-  externalLoader?: ExternalLoader;
   /**
    * Whether or not to show the menu
    */
@@ -92,7 +87,7 @@ export interface EditorProps {
    */
   typeColors?: Record<string, { color: string; backgroundColor: string }>;
 
-  initialGraph?: Graph;
+  initialGraph?: FullyFeaturedGraph;
 }
 
 export interface GraphEditorProps {
@@ -120,10 +115,10 @@ export type ImperativeEditorRef = {
    */
   clear: () => void;
   save: () => SerializedGraph;
-  load: (state: Graph) => void;
+  load: (state: FullyFeaturedGraph) => void;
   loadRaw: (state: SerializedGraph) => void;
   getFlow: () => ReactFlowInstance;
-  getGraph: () => Graph;
+  getGraph: () => FullyFeaturedGraph;
 };
 
 export type EditorNode = Node;

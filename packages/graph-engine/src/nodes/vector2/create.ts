@@ -1,16 +1,16 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/nodes/node.js';
 import { NumberSchema, Vec2Schema } from '../../schemas/index.js';
 import { Vec2 } from '../../index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Create vector2';
 	static type = 'studio.tokens.vector2.create';
 	static description = 'Allows you to create a vector2';
 
 	declare inputs: ToInput<{
 		x: number;
-		y: string;
+		y: number;
 	}>;
 
 	declare outputs: ToOutput<{
@@ -20,13 +20,13 @@ export default class NodeDefinition extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.addInput('x', {
+		this.dataflow.addInput('x', {
 			type: NumberSchema
 		});
-		this.addInput('y', {
+		this.dataflow.addInput('y', {
 			type: NumberSchema
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: Vec2Schema
 		});
 	}

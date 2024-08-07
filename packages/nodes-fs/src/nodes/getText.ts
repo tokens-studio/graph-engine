@@ -1,12 +1,12 @@
-import { FileSchema } from '../schemas/index.js';
 import {
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	StringSchema
 } from '@tokens-studio/graph-engine';
+import { FileSchema } from '../schemas/index.js';
 import type { ToInput } from '@tokens-studio/graph-engine';
 
-export class GetTextNode extends Node {
+export class GetTextNode extends DataflowNode {
 	static title = 'Read file as text';
 	static type = 'studio.tokens.fs.getText';
 
@@ -16,11 +16,11 @@ export class GetTextNode extends Node {
 	static description = 'Reads the text context of a file from the file system.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('file', {
+		this.dataflow.addInput('file', {
 			type: FileSchema
 		});
 
-		this.addOutput('contents', {
+		this.dataflow.addOutput('contents', {
 			type: StringSchema
 		});
 	}

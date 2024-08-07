@@ -3,23 +3,23 @@ import {
 	GradientStopSchema,
 	NumberSchema
 } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition } from '../../index.js';
-import { Node } from '../../programmatic/nodes/node.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Gradient Stop';
 	static type = 'studio.tokens.gradient.stop';
 	static description = 'Create a gradient stop.';
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('color', {
+		this.dataflow.addInput('color', {
 			type: ColorSchema
 		});
-		this.addInput('position', {
+		this.dataflow.addInput('position', {
 			type: NumberSchema
 		});
-		this.addOutput('gradientStop', {
+		this.dataflow.addOutput('gradientStop', {
 			type: GradientStopSchema
 		});
 	}

@@ -1,8 +1,8 @@
 import { AnySchema, BooleanSchema } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/nodes/node.js';
 
-export default class NodeDefinition<T> extends Node {
+export default class NodeDefinition<T> extends DataflowNode {
 	static title = 'Logical Not';
 	static type = 'studio.tokens.logic.not';
 	static description = 'Not node allows you to negate a boolean value.';
@@ -17,10 +17,10 @@ export default class NodeDefinition<T> extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: AnySchema
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: BooleanSchema
 		});
 	}

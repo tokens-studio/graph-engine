@@ -1,6 +1,6 @@
 import { AnySchema, StringSchema } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/nodes/node.js';
 import { arrayOf } from '../../schemas/utils.js';
 import deepMerge from '@bundled-es-modules/deepmerge';
 
@@ -25,7 +25,7 @@ const CONCAT = 'concat';
 const MERGE = 'merge';
 const COMBINE = 'combine';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Merge objects';
 	static type = 'studio.tokens.generic.mergeObjects';
 	static description =
@@ -41,20 +41,20 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('objects', {
+		this.dataflow.addInput('objects', {
 			type: {
 				...arrayOf(AnySchema),
 				default: []
 			}
 		});
-		this.addInput('concatArray', {
+		this.dataflow.addInput('concatArray', {
 			type: {
 				...StringSchema,
 				enum: [CONCAT, MERGE, COMBINE],
 				default: CONCAT
 			}
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: AnySchema
 		});
 	}

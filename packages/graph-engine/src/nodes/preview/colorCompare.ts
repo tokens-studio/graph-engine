@@ -1,9 +1,9 @@
 import { Color } from '../../types.js';
 import { ColorSchema } from '../../schemas';
-import { Node } from '../../programmatic/nodes/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { ToInput } from '../../index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Color Compare';
 	static type = 'studio.tokens.preview.colorCompare';
 	static description = 'Compares colors';
@@ -16,14 +16,14 @@ export default class NodeDefinition extends Node {
 	constructor(props) {
 		super(props);
 
-		this.addInput('colorA', {
+		this.dataflow.addInput('colorA', {
 			type: {
 				...ColorSchema,
 				default: '#ffffff'
 			}
 		});
 
-		this.addInput('colorB', {
+		this.dataflow.addInput('colorB', {
 			type: {
 				...ColorSchema,
 				default: '#000000'

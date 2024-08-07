@@ -1,5 +1,6 @@
 import { AnySchema, StringSchema } from '../../schemas/index.js';
-import { INodeDefinition, Node } from '../../programmatic/nodes/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { ToInput } from '../../programmatic/dataflow/input.js';
 import { ToOutput } from '../../programmatic/dataflow/output.js';
 import { annotatedDynamicInputs } from '../../annotations/index.js';
@@ -22,7 +23,7 @@ import { annotatedDynamicInputs } from '../../annotations/index.js';
  *
  * ```
  */
-export default class NodeDefinition<T> extends Node {
+export default class NodeDefinition<T> extends DataflowNode {
 	static title = 'Switch';
 	static type = 'studio.tokens.logic.switch';
 	static description =
@@ -41,15 +42,15 @@ export default class NodeDefinition<T> extends Node {
 
 		this.annotations[annotatedDynamicInputs] = true;
 
-		this.addInput('default', {
+		this.dataflow.addInput('default', {
 			type: AnySchema
 		});
 
-		this.addInput('condition', {
+		this.dataflow.addInput('condition', {
 			type: StringSchema
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: AnySchema
 		});
 	}

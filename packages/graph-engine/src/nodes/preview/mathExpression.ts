@@ -1,7 +1,7 @@
-import { Node } from '../../programmatic/nodes/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { StringSchema } from '../../schemas/index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Math Expression';
 	static type = 'studio.tokens.preview.mathExpression';
 
@@ -10,7 +10,7 @@ export default class NodeDefinition extends Node {
 	constructor(props) {
 		super(props);
 
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: StringSchema
 		});
 	}

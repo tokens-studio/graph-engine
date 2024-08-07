@@ -1,6 +1,8 @@
 import { Dispatch } from '@/redux/store.js';
-import { Graph, Node, NodeFactory } from '@tokens-studio/graph-engine';
+import { FullyFeaturedGraph } from '@/types/index.js';
+import { Graph, Input, Node, NodeFactory } from '@tokens-studio/graph-engine';
 import { ReactFlowInstance, Node as ReactFlowNode } from 'reactflow';
+import { xpos, ypos } from '@/annotations/index.js';
 
 export type NodeRequest = {
   type: string;
@@ -10,7 +12,7 @@ export type NodeRequest = {
 
 export interface ICreateNode {
   reactFlowInstance: ReactFlowInstance;
-  graph: Graph;
+  graph: FullyFeaturedGraph;
   nodeLookup: Record<string, NodeFactory>;
   iconLookup: Record<string, string>;
   /**
@@ -63,14 +65,14 @@ export const createNode = ({
 
     //Generate the new node
     const node = new Factory({
-      graph: graph,
+      graph: graph as unknown as Graph,
     });
     graph.addNode(node);
 
     const finalPos = position || { x: 0, y: 0 };
 
-    node.annotations['xpos'] = finalPos.x;
-    node.annotations['ypos'] = finalPos.y;
+    node.setAnnotation(xpos, finalPos.x);
+    node.setAnnotation(ypos, finalPos.y);
 
     if (customUI[nodeRequest.type]) {
       node.annotations['uiNodeType'] = customUI[nodeRequest.type];
@@ -83,11 +85,11 @@ export const createNode = ({
       if (!input) {
         return;
       }
-      node.inputs[name].setValue(value);
+      (node.inputs[name] as Input).setValue(value);
     });
 
     //Update immediately
-    graph.update(node.id);
+    graph.capabilities.dataFlow?.update(node.id);
 
     //Add the node to the react flow instance
     const reactFlowNode = {

@@ -1,16 +1,10 @@
-import {
-	Graph,
-	NodeFactory,
-	SerializedGraph,
-	nodeLookup
-} from '../../src/index.js';
+import { NodeFactory, SerializedGraph, nodeLookup } from '../../src/index.js';
 import { describe, expect, test } from 'vitest';
 import { getDataFlowGraph } from '@tests/utils/index.js';
 import basic from '../data/processed/basic.js';
 
 describe('basic', () => {
 	test('performs basic passthrough calculations', async () => {
-
 		const dataflow = getDataFlowGraph();
 
 		const graph = await dataflow.deserialize(

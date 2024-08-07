@@ -8,9 +8,9 @@ export type Actions = {
   createNode: (nodeRequest: NodeRequest) =>
     | undefined
     | {
-        graphNode: Node;
-        flowNode: FlowNode;
-      };
+      graphNode: Node;
+      flowNode: FlowNode;
+    };
   deleteNode: (nodeId: string) => void;
   copyNodes: (nodes: SerializedNode[]) => void;
   duplicateNodes: (nodeIds: string[]) => void;
@@ -33,6 +33,6 @@ export const ActionProvider = ({ children, actions }: ActionProviderProps) => {
 export const useAction = <T extends keyof Actions>(
   actionName: T,
 ): Actions[T] => {
-  const actions = React.useContext(ContextProvider);
+  const actions = React.useContext(ContextProvider) as Actions;
   return actions[actionName];
 };

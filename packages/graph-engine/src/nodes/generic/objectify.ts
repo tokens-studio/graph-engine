@@ -1,10 +1,11 @@
-import { INodeDefinition, Node } from '../../programmatic/nodes/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { ObjectSchema } from '../../schemas/index.js';
 import { ToInput } from '../../programmatic/dataflow/input.js';
 import { ToOutput } from '../../programmatic/dataflow/output.js';
 import { annotatedDynamicInputs } from '../../annotations/index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Objectify';
 	static type = 'studio.tokens.generic.objectify';
 	static description =
@@ -22,7 +23,7 @@ export default class NodeDefinition extends Node {
 
 		this.annotations[annotatedDynamicInputs] = true;
 		//Purely runtime inputs
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: ObjectSchema
 		});
 	}

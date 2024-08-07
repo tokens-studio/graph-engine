@@ -1,12 +1,12 @@
 import { ColorSchema, NumberSchema } from '../../schemas/index.js';
 import { Color as ColorType } from '../../types.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition } from '../../index.js';
-import { Node } from '../../programmatic/nodes/node.js';
 import { arrayOf } from '../../schemas/utils.js';
 import { toColorObject } from './lib/utils.js';
 import Color from 'colorjs.io';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Color Wheel';
 	static type = 'studio.tokens.color.wheel';
 	static description =
@@ -14,38 +14,38 @@ export default class NodeDefinition extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.addInput('baseHue', {
+		this.dataflow.addInput('baseHue', {
 			type: {
 				...NumberSchema,
 				default: 360
 			}
 		});
-		this.addInput('angle', {
+		this.dataflow.addInput('angle', {
 			type: {
 				...NumberSchema,
 				default: 180
 			}
 		});
-		this.addInput('saturation', {
+		this.dataflow.addInput('saturation', {
 			type: {
 				...NumberSchema,
 				default: 80
 			}
 		});
-		this.addInput('lightness', {
+		this.dataflow.addInput('lightness', {
 			type: {
 				...NumberSchema,
 				default: 80
 			}
 		});
-		this.addInput('colors', {
+		this.dataflow.addInput('colors', {
 			type: {
 				...NumberSchema,
 				default: 8
 			}
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: arrayOf(ColorSchema)
 		});
 	}

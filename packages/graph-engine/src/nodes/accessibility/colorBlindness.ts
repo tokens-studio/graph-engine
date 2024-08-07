@@ -8,7 +8,7 @@ import {
 	toHex
 } from '../../index.js';
 import { ColorSchema, StringSchema } from '../../schemas/index.js';
-import { Node } from '../../programmatic/nodes/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import blinder from 'color-blind-esm';
 
 export enum ColorBlindnessTypes {
@@ -25,7 +25,7 @@ export enum ColorBlindnessTypes {
 /**
  * Converts provided colors to the colors as perceived by the specified color blindness type.
  */
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Color Blindness';
 	static type = 'studio.tokens.accessibility.colorBlindness';
 	static description =
@@ -45,7 +45,7 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('color', {
+		this.dataflow.addInput('color', {
 			type: {
 				...ColorSchema,
 				default: {
@@ -54,7 +54,7 @@ export default class NodeDefinition extends Node {
 				}
 			}
 		});
-		this.addInput('type', {
+		this.dataflow.addInput('type', {
 			type: {
 				...StringSchema,
 				title: 'Color Blindness Type',
@@ -63,7 +63,7 @@ export default class NodeDefinition extends Node {
 			}
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: ColorSchema
 		});
 	}

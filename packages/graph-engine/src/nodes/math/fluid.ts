@@ -1,8 +1,8 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/nodes/node.js';
 import { NumberSchema } from '../../schemas/index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Fluid';
 	static type = 'studio.tokens.math.fluid';
 	static description =
@@ -21,22 +21,22 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('minSize', {
+		this.dataflow.addInput('minSize', {
 			type: NumberSchema
 		});
-		this.addInput('maxSize', {
+		this.dataflow.addInput('maxSize', {
 			type: NumberSchema
 		});
-		this.addInput('minViewport', {
+		this.dataflow.addInput('minViewport', {
 			type: NumberSchema
 		});
-		this.addInput('maxViewport', {
+		this.dataflow.addInput('maxViewport', {
 			type: NumberSchema
 		});
-		this.addInput('viewport', {
+		this.dataflow.addInput('viewport', {
 			type: NumberSchema
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: NumberSchema
 		});
 	}

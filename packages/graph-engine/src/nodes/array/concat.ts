@@ -1,7 +1,8 @@
 import { AnyArraySchema } from '../../schemas/index.js';
-import { INodeDefinition, Node } from '../../programmatic/nodes/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { ToInput, ToOutput } from '../../programmatic/index.js';
-export default class NodeDefinition<T> extends Node {
+export default class NodeDefinition<T> extends DataflowNode {
 	static title = 'Concat Array';
 	static type = 'studio.tokens.array.concat';
 	declare inputs: ToInput<{
@@ -16,13 +17,13 @@ export default class NodeDefinition<T> extends Node {
 	static description = 'Performs an array join using a string delimiter';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('a', {
+		this.dataflow.addInput('a', {
 			type: AnyArraySchema
 		});
-		this.addInput('b', {
+		this.dataflow.addInput('b', {
 			type: AnyArraySchema
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: AnyArraySchema
 		});
 	}

@@ -36,13 +36,13 @@ export const registryState = createModel<RootModel>()({
     nodeSpecifics: defaultSpecifics,
     icons: icons(),
     inputControls: { ...inputControls },
-    controls: [...(defaultControls as Control[])],
+    controls: [...(defaultControls as unknown[]) as Control[]],
     panelItems: defaultPanelGroupsFactory(),
     nodeTypes: {},
     capabilities: [],
     toolbarButtons: DefaultToolbarButtons(),
     schemas: AllSchemas,
-  } as RegistryState,
+  } as unknown as RegistryState,
   reducers: {
     setSchemas(state, schemas: SchemaObject[]) {
       return {

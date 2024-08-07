@@ -5,10 +5,10 @@ import {
 	StringSchema
 } from '../../schemas/index.js';
 import { ColorSpace } from './lib/types.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/nodes/node.js';
 
-export default class DestructColorNode extends Node {
+export default class DestructColorNode extends DataflowNode {
 	static title = 'Deconstruct Color';
 	static type = 'studio.tokens.color.deconstruct';
 	static description =
@@ -46,23 +46,23 @@ export default class DestructColorNode extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('color', {
+		this.dataflow.addInput('color', {
 			type: ColorSchema
 		});
 
-		this.addOutput('space', {
+		this.dataflow.addOutput('space', {
 			type: StringSchema
 		});
-		this.addOutput('a', {
+		this.dataflow.addOutput('a', {
 			type: NumberSchema
 		});
-		this.addOutput('b', {
+		this.dataflow.addOutput('b', {
 			type: NumberSchema
 		});
-		this.addOutput('c', {
+		this.dataflow.addOutput('c', {
 			type: NumberSchema
 		});
-		this.addOutput('alpha', {
+		this.dataflow.addOutput('alpha', {
 			type: NumberSchema
 		});
 	}

@@ -4,12 +4,12 @@ import {
 	NumberSchema,
 	StringSchema
 } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/nodes/node.js';
 export { ColorModifierTypes } from '@tokens-studio/types';
 import { ColorSpace, colorSpaces } from './lib/types.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Create Color';
 	static type = 'studio.tokens.color.create';
 	static description =
@@ -44,26 +44,26 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('space', {
+		this.dataflow.addInput('space', {
 			type: {
 				...StringSchema,
 				enum: colorSpaces,
 				default: 'srgb'
 			}
 		});
-		this.addInput('a', {
+		this.dataflow.addInput('a', {
 			type: {
 				...NumberSchema,
 				default: '0'
 			}
 		});
-		this.addInput('b', {
+		this.dataflow.addInput('b', {
 			type: {
 				...NumberSchema,
 				default: '0'
 			}
 		});
-		this.addInput('c', {
+		this.dataflow.addInput('c', {
 			type: {
 				...NumberSchema,
 				default: '0'
@@ -71,13 +71,13 @@ export default class NodeDefinition extends Node {
 		});
 
 		//No default on alpha as this might result in Hex8 colors which are not always desired
-		this.addInput('alpha', {
+		this.dataflow.addInput('alpha', {
 			type: {
 				...NumberSchema
 			}
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: ColorSchema
 		});
 	}

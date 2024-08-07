@@ -1,0 +1,19 @@
+title: Add
+summary: Adds 2 numbers together
+changelog: []
+repository:
+  type: git
+  url: "https://github.com/tokens-studio/graph-engine"
+licence: MIT
+author:
+  name: SorsOps
+inputs:
+  a:
+    title : First number
+    description: The first number to add
+    visible: false
+    # These are editor only annotations that can be used to help detect the correct controls
+    annotations: {}
+    # The json schema that identifies this input
+    type: {}
+outputs:

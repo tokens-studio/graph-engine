@@ -1,8 +1,8 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/nodes/node.js';
 import { NumberSchema } from '../../schemas/index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Clamp';
 	static type = 'studio.tokens.math.clamp';
 	static description =
@@ -19,25 +19,25 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.addInput('min', {
+		this.dataflow.addInput('min', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.addInput('max', {
+		this.dataflow.addInput('max', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: NumberSchema
 		});
 	}

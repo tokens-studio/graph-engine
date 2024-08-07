@@ -6,11 +6,11 @@ import {
 } from '../../schemas/index.js';
 import { ColorSpace, colorSpaces } from './lib/types.js';
 import { Color as ColorType } from '../../types.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/nodes/node.js';
 import Color from 'colorjs.io';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Mix Colors';
 	static type = 'studio.tokens.color.mix';
 	static description = 'Mixes two colors together';
@@ -28,26 +28,26 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('colorA', {
+		this.dataflow.addInput('colorA', {
 			type: {
 				...ColorSchema,
 				default: White
 			}
 		});
-		this.addInput('colorB', {
+		this.dataflow.addInput('colorB', {
 			type: {
 				...ColorSchema,
 				default: Black
 			}
 		});
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: {
 				...NumberSchema,
 				default: 0.5,
 				description: 'Value to apply to the modifier'
 			}
 		});
-		this.addInput('space', {
+		this.dataflow.addInput('space', {
 			type: {
 				...StringSchema,
 				default: 'srgb',
@@ -56,7 +56,7 @@ export default class NodeDefinition extends Node {
 			}
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: ColorSchema
 		});
 	}

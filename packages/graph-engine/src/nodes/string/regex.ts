@@ -1,8 +1,8 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/nodes/node.js';
 import { StringSchema } from '../../schemas/index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Regex';
 	static type = 'studio.tokens.string.regex';
 	static description = 'Replaces a string with a regex';
@@ -22,28 +22,28 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('input', {
+		this.dataflow.addInput('input', {
 			type: StringSchema
 		});
-		this.addInput('match', {
+		this.dataflow.addInput('match', {
 			type: {
 				...StringSchema,
 				default: ''
 			}
 		});
-		this.addInput('flags', {
+		this.dataflow.addInput('flags', {
 			type: {
 				...StringSchema,
 				default: ''
 			}
 		});
-		this.addInput('replace', {
+		this.dataflow.addInput('replace', {
 			type: {
 				...StringSchema,
 				default: ''
 			}
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: StringSchema
 		});
 	}

@@ -1,9 +1,9 @@
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 
 import { AnyArraySchema, NumberSchema } from '../../schemas/index.js';
-import { Node } from '../../programmatic/nodes/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Count';
 	static type = 'studio.tokens.math.count';
 	static description = 'Counts the amount of items in an array.';
@@ -17,10 +17,10 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: AnyArraySchema
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: NumberSchema
 		});
 	}

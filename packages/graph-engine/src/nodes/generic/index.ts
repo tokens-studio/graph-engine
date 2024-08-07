@@ -1,5 +1,4 @@
 import constant from './constant.js';
-import delay from './delay.js';
 import input from './input.js';
 import note from './note.js';
 import objectMerge from './objectMerge.js';
@@ -9,8 +8,6 @@ import output from './output.js';
 import panic from './panic.js';
 import passthrough from './passthrough.js';
 import subgraph from './subgraph.js';
-import time from './time.js';
-
 export const nodes = [
 	constant,
 	input,
@@ -21,7 +18,5 @@ export const nodes = [
 	panic,
 	note,
 	objectPath,
-	objectMerge,
-	time,
-	delay
+	objectMerge
 ];

@@ -1,6 +1,6 @@
 import { AnySchema, BooleanSchema, StringSchema } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/nodes/node.js';
 
 export enum Operator {
 	EQUAL = '==',
@@ -11,7 +11,7 @@ export enum Operator {
 	LESS_THAN_OR_EQUAL = '<='
 }
 
-export default class NodeDefinition<T> extends Node {
+export default class NodeDefinition<T> extends DataflowNode {
 	static title = 'Compare';
 	static type = 'studio.tokens.logic.compare';
 	static description =
@@ -28,13 +28,14 @@ export default class NodeDefinition<T> extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('a', {
+		this.dataflow.addInput('a', {
 			type: AnySchema
 		});
-		this.addInput('b', {
+		this.dataflow.addInput('b', {
 			type: AnySchema
 		});
-		this.addInput('operator', {
+
+		this.dataflow.addInput('operator', {
 			type: {
 				...StringSchema,
 				enum: Object.values(Operator),
@@ -42,7 +43,7 @@ export default class NodeDefinition<T> extends Node {
 			}
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: BooleanSchema
 		});
 	}

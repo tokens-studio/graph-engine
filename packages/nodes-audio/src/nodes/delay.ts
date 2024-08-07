@@ -2,7 +2,8 @@ import { AudioBaseNode } from './base.js';
 import {
 	INodeDefinition,
 	NumberSchema,
-	ToInput
+	ToInput,
+	ToOutput
 } from '@tokens-studio/graph-engine';
 import { NodeSchema } from '../schemas/index.js';
 
@@ -17,10 +18,15 @@ export class AudioDelayNode extends AudioBaseNode {
 		delay: number;
 		input: AudioNode | undefined;
 	}>;
+
+	declare outputs: ToOutput<{
+		node: AudioNode;
+	}>;
+
 	static description = 'Modifies an audio source to provide delay.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('delay', {
+		this.dataflow.addInput('delay', {
 			type: {
 				...NumberSchema,
 				default: 1,
@@ -32,12 +38,12 @@ export class AudioDelayNode extends AudioBaseNode {
 				'ui.control': 'slider'
 			}
 		});
-		this.addInput('input', {
+		this.dataflow.addInput('input', {
 			type: NodeSchema,
 			visible: true
 		});
 
-		this.addOutput('node', {
+		this.dataflow.addOutput('node', {
 			visible: true,
 			type: {
 				...NodeSchema,

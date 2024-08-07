@@ -1,7 +1,8 @@
 import { Curve } from '../../types.js';
 import { CurveSchema, StringSchema } from '../../schemas/index.js';
-import { INodeDefinition, Node } from '../../programmatic/nodes/node.js';
-import { ToInput, ToOutput } from '../../programmatic';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
+import { ToInput, ToOutput } from '@/programmatic/index.js';
 
 export const presetBeziers = {
 	easeInOutSine: [0.445, 0.05, 0.55, 0.95],
@@ -32,7 +33,7 @@ export const presetBeziers = {
 	easeOutBack: [0.175, 0.885, 0.32, 1.275]
 };
 
-export default class BezierCurveNode extends Node {
+export default class BezierCurveNode extends DataflowNode {
 	static title = 'Preset Bezier Curves';
 	static type = 'studio.tokens.curve.presetBeziers';
 	static description = 'Allows you to choose from preset bezier curves';
@@ -48,7 +49,7 @@ export default class BezierCurveNode extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.addInput('name', {
+		this.dataflow.addInput('name', {
 			type: {
 				...StringSchema,
 				enum: Object.keys(presetBeziers),
@@ -56,7 +57,7 @@ export default class BezierCurveNode extends Node {
 			}
 		});
 
-		this.addOutput('curve', {
+		this.dataflow.addOutput('curve', {
 			type: CurveSchema
 		});
 	}

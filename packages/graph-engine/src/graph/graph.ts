@@ -1,25 +1,21 @@
-import { AnySchema } from '../schemas/index.js';
-import { Edge } from '../programmatic/edge.js';
-import { Input } from '../programmatic/dataflow/input.js';
+import { AnySchema } from '@/schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { Edge, VariadicEdgeData } from '../programmatic/edge.js';
 import { Node } from '../programmatic/nodes/node.js';
+import { Port } from '@/programmatic/port.js';
 import { VERSION } from '../constants.js';
 import {
-	annotatedCapabilityPrefix,
 	annotatedId,
-	annotatedPlayState,
 	annotatedVariadicIndex,
 	annotatedVersion
 } from '../annotations/index.js';
 import { compareVersions } from 'compare-versions';
 import { dedupe } from '@/utils/dedupe.js';
 import { makeObservable, observable, toJS } from 'mobx';
-import { v4 as uuid } from 'uuid';
+import { nanoid as uuid } from 'nanoid';
 import type { CapabilityFactory } from '@/capabilities/interface.js';
 import type { NodeFactory, SerializedGraph } from './types.js';
 import type { NodeRun, NodeStart } from '../types.js';
-
-
-
 
 export type EdgeOpts = {
 	id: string;
@@ -44,16 +40,16 @@ export type FinalizerType = 'serialize' | 'output' | 'clone' | 'nodeAdded';
 export type FinalizerLookup = {
 	serialize: SerializedGraph;
 	output: any;
-	clone: Graph
+	clone: Graph;
 	edgeAdded: Edge;
-	nodeAdded: Node
+	nodeAdded: Node;
 };
 
 export type SubscriptionLookup = {
 	nodeAdded: Node;
 	nodeRemoved: string;
 	edgeAdded: Edge;
-	edgeRemoved: string;
+	edgeRemoved: Edge;
 	nodeUpdated: Node;
 	edgeUpdated: Edge;
 	start: object;
@@ -69,8 +65,8 @@ export type SubscriptionLookup = {
 export type ListenerType<T> = [T] extends [(...args: infer U) => any]
 	? U
 	: [T] extends [void]
-	? []
-	: [T];
+		? []
+		: [T];
 
 export type SubscriptionExecutor<T extends keyof SubscriptionLookup> = (
 	data: SubscriptionLookup[T]
@@ -83,19 +79,13 @@ export type FinalizerExecutor<Type extends keyof FinalizerLookup> = (
 	value: SerializerType<Type>
 ) => SerializerType<Type>;
 
-export type PlayState = 'playing' | 'paused' | 'stopped';
-
 export interface IGraph {
-	/**
-	 * Whether to automatically update the graph when the state changes or to wait for an explicit call to update
-	 */
-	autoUpdate?: boolean;
 	annotations?: Record<string, any>;
 }
 
-
-
-
+export type Capabilities = {
+	[key: string]: any;
+};
 const defaultGraphOpts: IGraph = {
 	annotations: {}
 };
@@ -103,18 +93,18 @@ const defaultGraphOpts: IGraph = {
  * This is our internal graph representation that we use to perform transformations on
  */
 export class Graph {
-	private finalizers: Record<string, any[]> = {};
-	private listeners: Record<string, any[]> = {};
+	finalizers: Record<string, any[]> = {};
+	listeners: Record<string, any[]> = {};
 	public annotations: Record<string, any> = {};
 
 	/**
 	 * Used internally to store capability factories
 	 */
-	private _cf: CapabilityFactory[] = [];
+	registeredCapabilities: CapabilityFactory[] = [];
 
 	nodes: Record<string, Node>;
 	edges: Record<string, Edge>;
-	capabilities: Record<string, any> = {};
+	capabilities: Capabilities;
 
 	/**
 	 * Outgoing edges from a node as an array of edgeIds
@@ -127,24 +117,13 @@ export class Graph {
 		this.annotations = input.annotations || {};
 		this.nodes = {};
 		this.edges = {};
+		this.capabilities = {};
 
 		makeObservable(this, {
 			annotations: observable.shallow
 		});
 
 		this.annotations[annotatedId] || (this.annotations[annotatedId] = uuid());
-	}
-
-	/**
-	 * Checks to see if there exists any connection for an input
-	 * @param source
-	 * @param port
-	 * @returns
-	 */
-	hasConnectedInput(source: Node, input: Input): boolean {
-		const edges = this.inEdges(source.id);
-
-		return edges.some(x => x.targetHandle === input.name);
 	}
 
 	/**
@@ -156,10 +135,6 @@ export class Graph {
 	}
 
 	addNode(node: Node) {
-		if (node.factory) {
-			this.checkCapabilitites(node.factory.annotations);
-		}
-
 		this.nodes[node.id] = node;
 		this.emit('nodeAdded', node);
 
@@ -194,8 +169,8 @@ export class Graph {
 
 	/**
 	 * Removes an edge connection between two nodes
-	 * @param edgeId 
-	 * @returns 
+	 * @param edgeId
+	 * @returns
 	 */
 	removeEdge(edgeId: string) {
 		const edge = this.edges[edgeId];
@@ -224,15 +199,6 @@ export class Graph {
 					return acc.concat(x);
 				}, [] as Edge[]);
 			}
-			//We need to check if its pointing to a variadic input and compact it if needed
-			if (input.variadic) {
-				//Remove the index
-				const newVal = [...(input.value || [])];
-				newVal.splice(index, 1);
-				input.setValue(newVal, {
-					noPropagate: true
-				});
-			}
 		}
 
 		// Get the sources, there might be multiple, and we should not set the output to be disconnected if there are multiple
@@ -249,7 +215,7 @@ export class Graph {
 
 		//We do not update the value or recalculate here since that might result in a lot of unnecessary updates
 
-		this.emit('edgeRemoved', edgeId);
+		this.emit('edgeRemoved', edge);
 	}
 	/**
 	 * Retrieves a flat list of all the nodes ids in the graph
@@ -258,7 +224,6 @@ export class Graph {
 	getNodeIds() {
 		return Object.keys(this.nodes);
 	}
-
 
 	/**
 	 * Serialize the graph for transport
@@ -270,8 +235,6 @@ export class Graph {
 			//Ensure we update the version
 			[annotatedVersion]: VERSION
 		};
-		//Make sure the playing state is not serialized. This would likely cause issues
-		delete annotations[annotatedPlayState];
 
 		const serialized = {
 			nodes: Object.values(this.nodes).map(x => x.serialize()),
@@ -288,22 +251,13 @@ export class Graph {
 		return (this.finalizers[type] || []).reduce((acc, x) => x(acc), value);
 	}
 
-
-	checkCapabilitites(annotations: Record<string, any>) {
-		Object.entries(annotations).forEach(([key]) => {
-			if (key.startsWith(annotatedCapabilityPrefix)) {
-				const capabilityName = key.replace(annotatedCapabilityPrefix, '');
-				if (!this.capabilities[capabilityName]) {
-					throw new Error(`Capability ${capabilityName} is missing`);
-				}
-			}
-		});
-	}
-
 	/**
 	 * Creates a graph from a serialized graph. Note that the types of the nodes must be present in the lookup.
-	 * @param input
-	 * @param lookup
+	 * @example
+	 * ```typescript
+	 * //You should always create a fresh graph when deserializing to avoid side effects
+	 * const graph = new Graph().deserialize(serialized, lookup);
+	 * ```
 	 */
 	async deserialize(
 		serialized: SerializedGraph,
@@ -321,11 +275,6 @@ export class Graph {
 		}
 
 		this.annotations = serialized.annotations;
-		//Check that all capabilities are present
-
-		//Look for annotations that mention capabilities and check that a key is present.
-		//We assume that the capabilities have already been loaded
-		this.checkCapabilitites(this.annotations);
 
 		//Life cycle
 		// 1 - Create the nodes
@@ -361,12 +310,14 @@ export class Graph {
 				throw new Error(`No target node found with id ${theEdge.target}`);
 			}
 
+			//TODO remove this. This is awful to have to try fix after the fact
 			if (!source.outputs[theEdge.sourceHandle]) {
 				//This must be a dynamic output. We create a new one with any type as its likely dependent on runtime anyway
-				source.addOutput(theEdge.sourceHandle, {
+				(source as DataflowNode).dataflow.addOutput(theEdge.sourceHandle, {
 					type: AnySchema
 				});
 			}
+
 			if (!target.inputs[theEdge.targetHandle]) {
 				throw new Error(
 					`No input found on target node ${target.id} with handle ${theEdge.targetHandle}`
@@ -383,7 +334,7 @@ export class Graph {
 	}
 
 	registerCapability(factory: CapabilityFactory) {
-		this._cf.push(factory);
+		this.registeredCapabilities.push(factory);
 		const value = factory.register(this);
 		this.capabilities[factory.name] = value;
 		//Make it obvious that this capability is present on the serialized graph
@@ -400,14 +351,12 @@ export class Graph {
 			[annotatedId]: uuid()
 		};
 
-
 		const oldToNewIdMap = new Map<string, string>();
 
 		// Clone capabilities
-		this._cf.forEach((value) => {
+		this.registeredCapabilities.forEach(value => {
 			clonedGraph.registerCapability(value);
 		});
-
 
 		// Clone nodes
 		this.forEachNode(node => {
@@ -440,6 +389,48 @@ export class Graph {
 	forEachNode(cb) {
 		Object.values(this.nodes).forEach(cb);
 	}
+	/**
+	 * Connects two nodes together. If the target is variadic, it will automatically add the index to the edge data if not provided
+	 * @param source
+	 * @param sourceHandle
+	 * @param target
+	 * @param targetHandle
+	 * @param variadicIndex
+	 * @returns
+	 */
+	connect(
+		source: Node,
+		sourceHandle: Port,
+		target: Node,
+		targetHandle: Port,
+		variadicIndex: number = -1
+	): Edge {
+		//If its variadic we need to check the existing edges
+		let annotations = {};
+		if (targetHandle.variadic) {
+			const edges = this.inEdges(target.id, targetHandle.name);
+			//The number of edges is the new index
+			annotations = {
+				[annotatedVariadicIndex]:
+					variadicIndex == -1 ? edges.length : variadicIndex
+			} as VariadicEdgeData;
+		}
+		//Check to see if there is already a connection on the target
+		if (targetHandle._edges.length > 0 && !targetHandle.variadic) {
+			throw new Error(
+				`Input ${targetHandle.name} on node ${target.id} is already connected`
+			);
+		}
+		return this.createEdge({
+			id: uuid(),
+			source: source.id,
+			target: target.id,
+			sourceHandle: sourceHandle.name,
+			targetHandle: targetHandle.name,
+			annotations
+		});
+	}
+
 	/**
 	 * Returns the ids of the node that are immediate successors of the given node. O(m) the amount of edges
 	 * @param nodeId
@@ -484,22 +475,10 @@ export class Graph {
 		//Then update the connection on the ports
 		targetPort._edges.push(edge);
 
-		if (targetPort.variadic) {
-			//Extend the variadic array
-			targetPort.setValue((targetPort.value || []).concat([sourcePort.value]), {
-				//TODO
-				// Note that this is a quick fix and that we should probably restrict the update of the typing so that it cannot be overriden later
-				type: {
-					type: 'array',
-					items: sourcePort.type
-				}
-			});
-		}
-
 		const finalEdge = this.applyFinalizers('edgeAdded', edge);
 		sourcePort?._edges.push(edge);
 		this.emit('edgeAdded', finalEdge);
-		return
+		return finalEdge;
 	}
 	/**
 	 * Return all edges that point into the nodes inputs.

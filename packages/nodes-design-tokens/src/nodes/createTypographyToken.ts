@@ -1,19 +1,19 @@
 import {
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	ObjectSchema,
 	StringSchema,
 	ToInput,
 	ToOutput
 } from '@tokens-studio/graph-engine';
 import {
-	SingleToken,
+	SingleTypographyToken,
 	TokenTypes,
-	TypographyValues
+	TokenTypographyValue
 } from '@tokens-studio/types';
 import { TokenSchema, TokenTypographySchema } from '../schemas/index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Create Typography Design Token';
 	static type = 'studio.tokens.design.createTypographyToken';
 	static description = 'Creates a design token from inputs';
@@ -21,41 +21,41 @@ export default class NodeDefinition extends Node {
 	declare inputs: ToInput<{
 		name: string;
 		reference?: string;
-		value?: TypographyValues;
+		value?: TokenTypographyValue;
 		description?: string;
 		$extensions?: Record<string, unknown>;
 	}>;
 
 	declare outputs: ToOutput<{
-		token: SingleToken;
+		token: SingleTypographyToken;
 	}>;
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('name', {
+		this.dataflow.addInput('name', {
 			type: StringSchema
 		});
 
-		this.addInput('reference', {
+		this.dataflow.addInput('reference', {
 			type: StringSchema
 		});
 
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: TokenTypographySchema
 		});
 
-		this.addInput('description', {
+		this.dataflow.addInput('description', {
 			type: StringSchema
 		});
 
-		this.addInput('$extensions', {
+		this.dataflow.addInput('$extensions', {
 			type: {
 				...ObjectSchema,
 				default: undefined
 			}
 		});
 
-		this.addOutput('token', {
+		this.dataflow.addOutput('token', {
 			type: TokenSchema
 		});
 	}

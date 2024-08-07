@@ -3,13 +3,13 @@ import { ColorCompare } from '@/components/preview/colorCompare.js';
 import { ColorScale } from '@/components/preview/colorScale.js';
 import { ColorSwatch } from '@/components/preview/swatch.js';
 import { CurveField } from '@/components/controls/curve.js';
+import { DataflowNode, Input } from '@tokens-studio/graph-engine';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
 import { EyeSolid } from 'iconoir-react';
 import { GraphEditor } from '@/editor/graphEditor.js';
 import { ImperativeEditorRef } from '../index.js';
 import { MathExpression } from '@/components/preview/mathExpression.js';
-import { Node } from '@tokens-studio/graph-engine';
 import { title as annotatedTitle } from '@/annotations/index.js';
 import { dockerSelector } from '@/redux/selectors/refs.js';
 import { observer } from 'mobx-react-lite';
@@ -67,34 +67,34 @@ const SubgraphExplorer = ({ node }) => {
   );
 };
 
-const ColorComparePreview = observer(({ node }: { node: Node }) => {
+const ColorComparePreview = observer(({ node }: { node: DataflowNode }) => {
   return (
     <ColorCompare
       colors={[
-        node.inputs.colorA.value || '#ffffff',
-        node.inputs.colorB.value || '#000000',
+        (node.inputs.colorA as Input).value || '#ffffff',
+        (node.inputs.colorB as Input).value || '#000000',
       ]}
     />
   );
 });
 
-const ColorScalePreview = observer(({ node }: { node: Node }) => {
-  return <ColorScale scale={node.inputs.value.value} />;
+const ColorScalePreview = observer(({ node }: { node: DataflowNode }) => {
+  return <ColorScale scale={(node.inputs.value as Input).value} />;
 });
 
-const CurvePreview = observer(({ node }: { node: Node }) => {
-  return <CurveField port={node.inputs.value} readOnly />;
+const CurvePreview = observer(({ node }: { node: DataflowNode }) => {
+  return <CurveField port={(node.inputs.value as Input) } readOnly />;
 });
 
-const MathExpressionPreview = observer(({ node }: { node: Node }) => {
-  return <MathExpression value={node.inputs.value.value} />;
+const MathExpressionPreview = observer(({ node }: { node: DataflowNode }) => {
+  return <MathExpression value={(node.inputs.value as Input).value} />;
 });
 
-const SwatchPreview = observer(({ node }: { node: Node }) => {
-  return <ColorSwatch value={node.inputs.value.value} />;
+const SwatchPreview = observer(({ node }: { node: DataflowNode }) => {
+  return <ColorSwatch value={(node.inputs.value as Input).value} />;
 });
 
-const NumberPreview = observer(({ node }: { node: Node }) => {
+const NumberPreview = observer(({ node }: { node: DataflowNode }) => {
   const { precision, value } = node.getAllInputs();
 
   const shift = 10 ** precision;

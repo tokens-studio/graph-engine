@@ -1,7 +1,7 @@
 import { ColorSchema, StringSchema } from '../../schemas/index.js';
 import { Color as ColorType } from '../../types.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput, toColor } from '../../index.js';
-import { Node } from '../../programmatic/nodes/node.js';
 import Color from 'colorjs.io';
 
 // https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
@@ -157,7 +157,7 @@ const colorMap = {
 	yellowgreen: '#9acd32'
 };
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Name Color';
 	static type = 'studio.tokens.color.name';
 	static description = 'Returns the name of the color';
@@ -172,10 +172,10 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('color', {
+		this.dataflow.addInput('color', {
 			type: ColorSchema
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: StringSchema
 		});
 	}

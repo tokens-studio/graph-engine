@@ -4,6 +4,7 @@ import {
   INodeDefinition,
   StringSchema,
   ToInput,
+  ToOutput,
 } from "@tokens-studio/graph-engine";
 import { Image } from "../schemas/types.js";
 import { ImageSchema } from "../schemas/index.js";
@@ -91,16 +92,20 @@ export class ComposeNode extends BaseNode {
     operator: keyof typeof CompositeOperatorLookup;
   }>;
 
+  declare outputs: ToOutput<{
+    image: Image;
+  }>;
+
   constructor(props: INodeDefinition) {
     super(props);
-    this.addInput("a", {
+    this.dataflow.addInput("a", {
       type: ImageSchema,
     });
-    this.addInput("b", {
+    this.dataflow.addInput("b", {
       type: ImageSchema,
     });
 
-    this.addInput("operator", {
+    this.dataflow.addInput("operator", {
       type: {
         ...StringSchema,
         enum: Object.keys(CompositeOperatorLookup),
@@ -108,7 +113,7 @@ export class ComposeNode extends BaseNode {
       },
     });
 
-    this.addOutput("image", {
+    this.dataflow.addOutput("image", {
       type: ImageSchema,
     });
   }

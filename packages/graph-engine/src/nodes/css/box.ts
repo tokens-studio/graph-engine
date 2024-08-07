@@ -1,8 +1,8 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/nodes/node.js';
 import { NumberSchema, StringSchema } from '../../schemas/index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'CSS Box';
 	static type = 'studio.tokens.css.box';
 	static description =
@@ -20,32 +20,32 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('top', {
+		this.dataflow.addInput('top', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.addInput('right', {
+		this.dataflow.addInput('right', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.addInput('bottom', {
+		this.dataflow.addInput('bottom', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.addInput('left', {
+		this.dataflow.addInput('left', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: StringSchema
 		});
 	}

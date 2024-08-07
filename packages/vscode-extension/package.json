@@ -18,6 +18,16 @@
   "icon": "media/logo.png",
   "activationEvents": [],
   "main": "./dist/extension.js",
+  "capabilities": {
+    "virtualWorkspaces": {
+      "supported": false,
+      "description": "Using ESLint is not possible in virtual workspaces."
+    },
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": "The extension requires workspace trust because it loads configuration files and code from the workspace and executes it."
+    }
+  },
   "contributes": {
     "menus": {
       "explorer/context": [
@@ -28,6 +38,12 @@
         }
       ]
     },
+    "jsonValidation": [
+      {
+        "fileMatch": ".tsgraphrc",
+        "url": "https://schemas.tokens.studio/tsgraphrc.json"
+      }
+    ],
     "languages": [
       {
         "id": "tsgraph",

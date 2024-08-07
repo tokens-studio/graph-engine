@@ -1,9 +1,10 @@
 import { Curve } from '../../types.js';
 import { CurveSchema, NumberSchema } from '../../schemas/index.js';
-import { INodeDefinition, Node } from '../../programmatic/nodes/node.js';
-import { ToInput, ToOutput } from '../../programmatic';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
+import { ToInput, ToOutput } from '@/programmatic/index.js';
 
-export default class BezierCurveNode extends Node {
+export default class BezierCurveNode extends DataflowNode {
 	static title = 'Bezier Curve';
 	static type = 'studio.tokens.curve.bezier';
 	static description = 'Creates a bezier curve from two control points';
@@ -22,7 +23,7 @@ export default class BezierCurveNode extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.addInput('x1', {
+		this.dataflow.addInput('x1', {
 			type: {
 				...NumberSchema,
 				default: 0.5,
@@ -30,7 +31,7 @@ export default class BezierCurveNode extends Node {
 				maximum: 1
 			}
 		});
-		this.addInput('y1', {
+		this.dataflow.addInput('y1', {
 			type: {
 				...NumberSchema,
 				default: 0,
@@ -38,7 +39,7 @@ export default class BezierCurveNode extends Node {
 				maximum: 1
 			}
 		});
-		this.addInput('x2', {
+		this.dataflow.addInput('x2', {
 			type: {
 				...NumberSchema,
 				default: 0.5,
@@ -46,7 +47,7 @@ export default class BezierCurveNode extends Node {
 				maximum: 1
 			}
 		});
-		this.addInput('y2', {
+		this.dataflow.addInput('y2', {
 			type: {
 				...NumberSchema,
 				default: 1,
@@ -55,7 +56,7 @@ export default class BezierCurveNode extends Node {
 			}
 		});
 
-		this.addOutput('curve', {
+		this.dataflow.addOutput('curve', {
 			type: CurveSchema
 		});
 	}

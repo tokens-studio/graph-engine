@@ -1,4 +1,3 @@
-import { Graph } from '@/graph/graph.js';
 import { NumberSchema } from '@/index.js';
 import { arrayOf } from '@/schemas/utils.js';
 import { describe, expect, test } from 'vitest';

@@ -1,5 +1,5 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/nodes/node.js';
 import { NumberSchema } from '../../schemas/index.js';
 import { arrayOf } from '../../schemas/utils.js';
 import { setToPrecision } from '../../utils/precision.js';
@@ -9,7 +9,7 @@ type HarmonicValue = {
 	value: number;
 };
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Harmonic Series';
 	static type = 'studio.tokens.series.harmonic';
 	static description =
@@ -32,48 +32,48 @@ export default class NodeDefinition extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.addInput('base', {
+		this.dataflow.addInput('base', {
 			type: {
 				...NumberSchema,
 				default: 16
 			}
 		});
-		this.addInput('stepsDown', {
+		this.dataflow.addInput('stepsDown', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.addInput('stepsUp', {
+		this.dataflow.addInput('stepsUp', {
 			type: {
 				...NumberSchema,
 				default: 5
 			}
 		});
-		this.addInput('notes', {
+		this.dataflow.addInput('notes', {
 			type: {
 				...NumberSchema,
 				default: 5
 			}
 		});
 
-		this.addInput('ratio', {
+		this.dataflow.addInput('ratio', {
 			type: {
 				...NumberSchema,
 				default: 2
 			}
 		});
 
-		this.addInput('precision', {
+		this.dataflow.addInput('precision', {
 			type: {
 				...NumberSchema,
 				default: 2
 			}
 		});
-		this.addOutput('array', {
+		this.dataflow.addOutput('array', {
 			type: arrayOf(NumberSchema)
 		});
-		this.addOutput('indexed', {
+		this.dataflow.addOutput('indexed', {
 			type: {
 				$id: `https://schemas.tokens.studio/studio.tokens.series.harmonic/indexed.json`,
 				type: 'object',

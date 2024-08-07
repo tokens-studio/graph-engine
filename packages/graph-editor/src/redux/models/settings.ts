@@ -22,6 +22,10 @@ export interface SettingsState {
   showTimings: boolean;
   showMinimap: boolean;
   showGrid: boolean;
+  /**
+   * Whether to animate messages when they are added
+   */
+  animateMessages: boolean;
   showSearch: boolean;
   /**
    * Whether to delay the update of a node when a value is changed
@@ -44,6 +48,7 @@ export const settingsState = createModel<RootModel>()({
     edgeType: EdgeType.bezier,
     layoutType: LayoutType.dagre,
     showGrid: true,
+    animateMessages:false,
     connectOnClick: true,
     showTimings: false,
     showSearch: false,

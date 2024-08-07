@@ -1,7 +1,7 @@
 import { AudioBaseNode } from './base.js';
 import { INodeDefinition, NumberSchema } from '@tokens-studio/graph-engine';
 import { NodeSchema } from '../schemas/index.js';
-import type { ToInput } from '@tokens-studio/graph-engine';
+import type { ToInput, ToOutput } from '@tokens-studio/graph-engine';
 
 export class AudioGainNode extends AudioBaseNode {
 	static title = 'Audio Gain node';
@@ -14,11 +14,16 @@ export class AudioGainNode extends AudioBaseNode {
 		gain: number;
 		input: AudioNode | undefined;
 	}>;
+
+	declare outputs: ToOutput<{
+		node: AudioNode;
+	}>;
+
 	static description =
 		'Modifies an audio source to provide a gain (volume) control.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('gain', {
+		this.dataflow.addInput('gain', {
 			type: {
 				...NumberSchema,
 				default: 1,
@@ -30,12 +35,12 @@ export class AudioGainNode extends AudioBaseNode {
 				'ui.control': 'slider'
 			}
 		});
-		this.addInput('input', {
+		this.dataflow.addInput('input', {
 			type: NodeSchema,
 			visible: true
 		});
 
-		this.addOutput('node', {
+		this.dataflow.addOutput('node', {
 			visible: true,
 			type: {
 				...NodeSchema,

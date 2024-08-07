@@ -1,7 +1,7 @@
-import { Node } from '../../programmatic/nodes/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { NumberSchema } from '../../schemas/index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Number';
 	static type = 'studio.tokens.preview.number';
 
@@ -10,11 +10,11 @@ export default class NodeDefinition extends Node {
 	constructor(props) {
 		super(props);
 
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: { ...NumberSchema, default: 0 }
 		});
 
-		this.addInput('precision', {
+		this.dataflow.addInput('precision', {
 			type: { ...NumberSchema, default: 2 }
 		});
 	}

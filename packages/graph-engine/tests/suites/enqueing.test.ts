@@ -1,3 +1,4 @@
+import { Input } from '@/index.js';
 import { NumberSchema } from '../../src/schemas/index.js';
 import { describe, expect, test } from 'vitest';
 import { getDataFlowGraph } from '@tests/utils/index.js';
@@ -15,7 +16,7 @@ describe('enqueing', () => {
 		const output = new OutputNode({ id: 'output', graph });
 
 		//Create an input port on the output node
-		output.addInput('input', {
+		output.dataflow.addInput('input', {
 			type: NumberSchema
 		});
 
@@ -31,7 +32,7 @@ describe('enqueing', () => {
 		//These should be enqueued automatically
 		input1.outputs.value.connect(sub.inputs.inputs);
 		input2.outputs.value.connect(sub.inputs.inputs);
-		sub.outputs.value.connect(output.inputs.input);
+		sub.outputs.value.connect(output.inputs.input as Input);
 
 		const final = await graph.capabilities.dataFlow.execute();
 

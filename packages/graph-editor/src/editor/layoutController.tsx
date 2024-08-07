@@ -6,10 +6,9 @@ import {
   PanelBase,
   TabGroup,
 } from 'rc-dock';
-import { ExternalLoaderProvider } from '@/context/ExternalLoaderContext.js';
 import { GraphEditor } from './graphEditor.js';
-import { Inputsheet } from '@/components/panels/inputs/index.js';
 import { MenuBar, defaultMenuDataFactory } from '@/components/menubar/index.js';
+import { UnifiedSheet } from '@/components/panels/unified/index.js';
 import { dockerSelector } from '@/redux/selectors/refs.js';
 import { useDispatch } from '@/hooks/useDispatch.js';
 import { useRegisterRef } from '@/hooks/useRegisterRef.js';
@@ -230,32 +229,13 @@ const layoutDataFactory = (props, ref): LayoutData => {
                               closable: true,
                               cached: true,
                               group: 'popout',
-                              id: 'input',
-                              title: 'Inputs',
+                              id: 'nodeSheet',
+                              title: 'Node',
                               content: (
                                 <ErrorBoundary
                                   fallback={<ErrorBoundaryContent />}
                                 >
-                                  <Inputsheet />
-                                </ErrorBoundary>
-                              ),
-                            },
-                          ],
-                        },
-                        {
-                          size: 12,
-                          tabs: [
-                            {
-                              closable: true,
-                              cached: true,
-                              group: 'popout',
-                              id: 'outputs',
-                              title: 'Outputs',
-                              content: (
-                                <ErrorBoundary
-                                  fallback={<ErrorBoundaryContent />}
-                                >
-                                  <OutputSheet />
+                                  <UnifiedSheet />
                                 </ErrorBoundary>
                               ),
                             },
@@ -279,7 +259,6 @@ export const LayoutController = React.forwardRef<
   EditorProps
 >((props: EditorProps, ref) => {
   const {
-    externalLoader,
     initialLayout,
     menuItems = defaultMenuDataFactory(),
   } = props;
@@ -313,21 +292,19 @@ export const LayoutController = React.forwardRef<
   };
 
   return (
-    <ExternalLoaderProvider externalLoader={externalLoader}>
-      <Stack direction="column" css={{ height: '100%' }}>
-        {props.showMenu && <MenuBar menu={menuItems} />}
-        <Tooltip.Provider>
-          <DockLayout
-            ref={registerDocker}
-            defaultLayout={defaultDockLayout}
-            groups={groups}
-            style={{ flex: 1 }}
-            onLayoutChange={onLayoutChange}
-          />
-          <FindDialog />
-        </Tooltip.Provider>
-      </Stack>
-    </ExternalLoaderProvider>
+    <Stack direction="column" css={{ height: '100%' }}>
+      {props.showMenu && <MenuBar menu={menuItems} />}
+      <Tooltip.Provider>
+        <DockLayout
+          ref={registerDocker}
+          defaultLayout={defaultDockLayout}
+          groups={groups}
+          style={{ flex: 1 }}
+          onLayoutChange={onLayoutChange}
+        />
+        <FindDialog />
+      </Tooltip.Provider>
+    </Stack>
   );
 });
 LayoutController.displayName = 'LayoutController';

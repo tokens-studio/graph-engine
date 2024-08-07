@@ -1,8 +1,8 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/nodes/node.js';
 import { NumberSchema } from '../../schemas/index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Lerp';
 	static type = 'studio.tokens.math.lerp';
 	static description =
@@ -20,25 +20,25 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('a', {
+		this.dataflow.addInput('a', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.addInput('b', {
+		this.dataflow.addInput('b', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.addInput('t', {
+		this.dataflow.addInput('t', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: NumberSchema
 		});
 	}

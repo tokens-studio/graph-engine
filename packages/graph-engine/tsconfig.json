@@ -17,26 +17,13 @@
 		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
-		"types": [
-			"node"
-		],
+		"types": ["node"],
 		"baseUrl": ".",
 		"paths": {
-			"@/*": [
-				"src/*"
-			],
-			"@tests/*": [
-				"tests/*"
-			]
+			"@/*": ["src/*"],
+			"@tests/*": ["tests/*"]
 		}
 	},
-	"include": [
-		"stories/**/*",
-		"src/**/*",
-		"tests/**/*"
-	],
-	"exclude": [
-		"node_modules",
-		"cypress/**"
-	]
+	"include": ["stories/**/*", "src/**/*", "tests/**/*"],
+	"exclude": ["node_modules", "cypress/**"]
 }

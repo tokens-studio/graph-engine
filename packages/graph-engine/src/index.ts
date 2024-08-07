@@ -7,3 +7,17 @@ export * from './schemas/index.js';
 export * from './annotations/index.js';
 
 export * from './nodes/color/lib/utils.js';
+
+//Nodes
+export * from './programmatic/nodes/dataflow.js';
+export * from './programmatic/nodes/controlflow.js';
+
+//Ports
+export * from './programmatic/dataflow/base.js';
+export * from './programmatic/controlflow/base.js';
+
+//Capabilities
+export * from './capabilities/controlFlow.js';
+export * from './capabilities/dataflow.js';
+export * from './capabilities/interface.js';
+export * from './capabilities/secret.js';

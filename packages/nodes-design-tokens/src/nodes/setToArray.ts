@@ -1,6 +1,6 @@
 import {
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	ToInput,
 	ToOutput
 } from '@tokens-studio/graph-engine';
@@ -9,7 +9,7 @@ import { arrayOf } from '../schemas/utils.js';
 import { flatten } from '../utils/index.js';
 import type { DeepKeyTokenMap, SingleToken } from '@tokens-studio/types';
 
-export default class SetToArrayNode extends Node {
+export default class SetToArrayNode extends DataflowNode {
 	static title = 'Token set to token aray ';
 	static type = 'studio.tokens.design.setToArray';
 	static description = 'Converts a token set to an array of tokens';
@@ -24,10 +24,10 @@ export default class SetToArrayNode extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('tokenSet', {
+		this.dataflow.addInput('tokenSet', {
 			type: TokenSetSchema
 		});
-		this.addOutput('tokens', {
+		this.dataflow.addOutput('tokens', {
 			type: arrayOf(TokenSchema)
 		});
 	}
