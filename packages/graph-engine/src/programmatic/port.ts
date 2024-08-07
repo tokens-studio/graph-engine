@@ -50,7 +50,8 @@ export class Port<T = any> {
 			value: computed,
 			isConnected: computed,
 			dynamicType: computed,
-			setVisible: action
+			setVisible: action,
+			setType: action
 		});
 	}
 
@@ -79,5 +80,9 @@ export class Port<T = any> {
 
 	setNode(node: Node) {
 		this.node = node;
+	}
+
+	setType(type: GraphSchema) {
+		this._dynamicType = type;
 	}
 }
