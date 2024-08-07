@@ -22,7 +22,6 @@ export interface DataFlowCapability {
 	 * @returns
 	 */
 	propagate(nodeId: string, oneShot?: boolean): Promise<void>;
-
 }
 
 export type InputDefinition = {
@@ -156,7 +155,7 @@ export const DataFlowCapabilityFactory: CapabilityFactory = {
 					const nodes = dedupe(affectedNodes);
 					await Promise.all(nodes.map(x => ctx.update(x)));
 				}
-			},
+			}
 		} as DataFlowCapability;
 
 		graph.on('edgeRemoved', edge => {
@@ -216,7 +215,6 @@ export const DataFlowCapabilityFactory: CapabilityFactory = {
 	}
 };
 
-
 export type DataflowGraph = ApplyCapabilities<Graph, [WithDataFlow]>;
 
 /**
@@ -226,9 +224,11 @@ export type DataflowGraph = ApplyCapabilities<Graph, [WithDataFlow]>;
  * @throws {BatchRunError}
  * @returns
  */
-export const execute = async (graph: DataflowGraph, opts?: GraphExecuteOptions): Promise<BatchExecution> => {
-
-	if (!graph.capabilities.dataFlow){
+export const execute = async (
+	graph: DataflowGraph,
+	opts?: GraphExecuteOptions
+): Promise<BatchExecution> => {
+	if (!graph.capabilities.dataFlow) {
 		throw new Error('Dataflow capability not found');
 	}
 
@@ -304,7 +304,6 @@ export const execute = async (graph: DataflowGraph, opts?: GraphExecuteOptions):
 	if (outputNode) {
 		//Output has a dynamic amount of ports, so emit a single object with each of them
 		output = Object.fromEntries(
-
 			Object.entries(outputNode.inputs)
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				.filter(([_, v]) => v.pType == DATAFLOW_PORT)
@@ -328,7 +327,7 @@ export const execute = async (graph: DataflowGraph, opts?: GraphExecuteOptions):
 		end,
 		output
 	};
-}
+};
 
 export type WithDataFlow = {
 	dataFlow: DataFlowCapability;
