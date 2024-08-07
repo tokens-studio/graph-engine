@@ -1,4 +1,10 @@
-import { DataflowNode, Edge, Graph, Input, Output } from '@tokens-studio/graph-engine';
+import {
+  DataflowNode,
+  Edge,
+  Graph,
+  Input,
+  Output,
+} from '@tokens-studio/graph-engine';
 import { Item, Menu, Separator } from 'react-contexify';
 import { Node, getRectOfNodes, useReactFlow, useStoreApi } from 'reactflow';
 import { NodeTypes } from '../flow/types.js';
@@ -6,7 +12,7 @@ import { deletable } from '@/annotations/index.js';
 import { getId } from '../flow/utils.js';
 import { useAction } from '@/editor/actions/provider.js';
 import { useLocalGraph } from '@/hooks/index.js';
-import { nanoid as uuid } from 'nanoid'
+import { nanoid as uuid } from 'nanoid';
 import React, { useCallback } from 'react';
 
 export type INodeContextMenuProps = {

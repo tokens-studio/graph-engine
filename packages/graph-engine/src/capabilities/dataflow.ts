@@ -239,8 +239,9 @@ export const DataFlowCapabilityFactory: CapabilityFactory = {
 				if (outputNode) {
 					//Output has a dynamic amount of ports, so emit a single object with each of them
 					output = Object.fromEntries(
-						// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 						Object.entries(outputNode.inputs)
+							// eslint-disable-next-line @typescript-eslint/no-unused-vars
 							.filter(([_, v]) => v.pType == DATAFLOW_PORT)
 							.map(([key, value]: [string, Output]) => {
 								return [

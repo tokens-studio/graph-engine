@@ -37,7 +37,8 @@ export const variadicMatcher = (id) => (port: DataFlowPort) =>
  */
 export const defaultControls = [
   {
-    matcher: (port: DataFlowPort) => port.annotations['ui.control'] === 'slider',
+    matcher: (port: DataFlowPort) =>
+      port.annotations['ui.control'] === 'slider',
     component: SliderField,
   },
   {

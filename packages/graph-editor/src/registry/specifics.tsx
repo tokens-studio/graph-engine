@@ -83,7 +83,7 @@ const ColorScalePreview = observer(({ node }: { node: DataflowNode }) => {
 });
 
 const CurvePreview = observer(({ node }: { node: DataflowNode }) => {
-  return <CurveField port={(node.inputs.value as Input) } readOnly />;
+  return <CurveField port={node.inputs.value as Input} readOnly />;
 });
 
 const MathExpressionPreview = observer(({ node }: { node: DataflowNode }) => {

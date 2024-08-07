@@ -1,4 +1,9 @@
-import { ANY, ControlFlowPort, DataFlowPort, canConvertSchemaTypes } from '@tokens-studio/graph-engine';
+import {
+  ANY,
+  ControlFlowPort,
+  DataFlowPort,
+  canConvertSchemaTypes,
+} from '@tokens-studio/graph-engine';
 import { Connection, useReactFlow } from 'reactflow';
 import { stripVariadic } from '@/utils/stripVariadic.js';
 import { useCallback } from 'react';
@@ -13,7 +18,6 @@ export interface IuseIsValidConnection {
 export interface IuseIsValidConnection {
   postProcessor?: (connection: Connection) => boolean;
 }
-
 
 type TypedPort = ControlFlowPort | DataFlowPort;
 
@@ -55,10 +59,9 @@ export const useIsValidConnection = ({
       //Do not allow connections of different port types
       if (srcPort && tgtPort) {
         if (srcPort.pType !== tgtPort.pType) {
-          return false
+          return false;
         }
       }
-
 
       let sourceType = (srcPort as TypedPort).type || null;
 

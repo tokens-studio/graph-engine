@@ -169,8 +169,12 @@ export const NodeContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
       <Separator />
       {nodes?.length == 1 && (
         <>
-          <ContextMenuItem onClick={onTraceSource}>Trace Upstream</ContextMenuItem>
-          <ContextMenuItem onClick={onTraceTarget}>Trace Downstream</ContextMenuItem>
+          <ContextMenuItem onClick={onTraceSource}>
+            Trace Upstream
+          </ContextMenuItem>
+          <ContextMenuItem onClick={onTraceTarget}>
+            Trace Downstream
+          </ContextMenuItem>
         </>
       )}
       <ContextMenuItem onClick={onResetTrace}>Reset Trace</ContextMenuItem>

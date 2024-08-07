@@ -57,9 +57,8 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IPort) => {
   const resettable = Boolean(port.annotations[resetable]);
 
   const inner = useMemo(() => {
-
     if (port.pType !== DATAFLOW_PORT) {
-      return <></>
+      return <></>;
     }
 
     const field = controlSelector.find((x) => x.matcher(port, { readOnly }));
@@ -112,7 +111,7 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IPort) => {
   }, [dataflowPort.value]);
 
   return (
-    <Stack direction="column" gap={3} >
+    <Stack direction="column" gap={3}>
       <Stack direction="row" gap={2} align="center" justify="between">
         <Stack direction="row" gap={2} align="center">
           {!isInput && (

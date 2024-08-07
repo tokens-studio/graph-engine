@@ -14,7 +14,7 @@ export interface IPaneContextMenu<T = unknown> {
   onSelectItem: (item: T) => void;
 }
 
-export const PaneContextMenu = <T = unknown>({ id }: IPaneContextMenu<T>) => {
+export const PaneContextMenu = <T = unknown,>({ id }: IPaneContextMenu<T>) => {
   const reactFlowInstance = useReactFlow();
 
   const frame = useFrame();
