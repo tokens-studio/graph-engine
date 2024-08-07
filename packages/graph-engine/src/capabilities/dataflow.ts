@@ -1,4 +1,4 @@
-import { CapabilityFactory } from './interface.js';
+import { ApplyCapabilities, CapabilityFactory } from './interface.js';
 import { DATAFLOW_PORT } from '@/programmatic/dataflow/base.js';
 import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { Graph, topologicalSort } from '../graph/index.js';
@@ -22,14 +22,7 @@ export interface DataFlowCapability {
 	 * @returns
 	 */
 	propagate(nodeId: string, oneShot?: boolean): Promise<void>;
-	/**
-	 * Executes the graph as a single batch. This will execute all the nodes in the graph and return the output of the output node
-	 * Note that this can have side effects and you should create a new instance of a graph between runs if you want to isolate the execution
-	 * @param opts
-	 * @throws {BatchRunError}
-	 * @returns
-	 */
-	execute(opts?: GraphExecuteOptions): Promise<BatchExecution>;
+
 }
 
 export type InputDefinition = {
@@ -107,7 +100,6 @@ export const DataFlowCapabilityFactory: CapabilityFactory = {
 
 				await ctx.propagate(node.id);
 			},
-
 			async propagate(nodeId: string, oneShot: boolean = false) {
 				const node = graph.getNode(nodeId);
 				if (!node) {
@@ -165,105 +157,6 @@ export const DataFlowCapabilityFactory: CapabilityFactory = {
 					await Promise.all(nodes.map(x => ctx.update(x)));
 				}
 			},
-
-			async execute(opts?: GraphExecuteOptions): Promise<BatchExecution> {
-				const { inputs, stats } = opts || {};
-
-				const start = performance.now();
-				const statsTracker = {};
-
-				if (inputs) {
-					const input = Object.values(graph.nodes).find(
-						x => x.factory.type === 'studio.tokens.generic.input'
-					);
-					if (!input) {
-						throw new Error('No input node found');
-					}
-
-					//Set the inputs for execution
-					Object.entries(inputs).forEach(([key, value]) => {
-						const opts: ISetValue = {
-							//We are controlling propagation
-							noPropagate: true
-						};
-						//Only necessary if there is dynamic typing involved
-						if (value.type) {
-							opts.type = value.type;
-						}
-						const port = input.inputs[key] as Input;
-
-						if (port && port.pType == DATAFLOW_PORT) {
-							port.setValue(value.value, opts);
-						}
-
-						//Its possible that there is no input with the name
-					});
-				}
-
-				//Perform a topological sort
-
-				const topologic = topologicalSort(graph);
-				//This stores intermediate states during execution
-				for (let i = 0, c = topologic.length; i < c; i++) {
-					const nodeId = topologic[i];
-
-					const node = graph.getNode(nodeId);
-
-					// Might happen with graphs that have not cleaned up their edges to nowhere
-					if (!node) {
-						continue;
-					}
-					//Execute the node
-					const res = await (node as DataflowNode).dataflow?.run();
-					if (res.error) {
-						//@ts-ignore
-						(res.error as BatchRunError).nodeId = nodeId;
-						throw res.error;
-					}
-
-					if (stats) {
-						statsTracker[nodeId] = res;
-					}
-
-					//Propagate the values. No need to wait as it is a oneshot
-					ctx.propagate(nodeId, true);
-				}
-
-				let output: BatchExecution['output'] = undefined;
-
-				//Get the output node
-				const outputNode = Object.values(graph.nodes).find(
-					x => x.factory.type === 'studio.tokens.generic.output'
-				);
-
-				if (outputNode) {
-					//Output has a dynamic amount of ports, so emit a single object with each of them
-					output = Object.fromEntries(
-
-						Object.entries(outputNode.inputs)
-							// eslint-disable-next-line @typescript-eslint/no-unused-vars
-							.filter(([_, v]) => v.pType == DATAFLOW_PORT)
-							.map(([key, value]: [string, Output]) => {
-								return [
-									key,
-									{
-										value: value.value,
-										type: value.type
-									}
-								];
-							})
-					);
-				}
-
-				const end = performance.now();
-				return {
-					order: topologic,
-					stats: statsTracker,
-					start,
-					end,
-					output
-				};
-			}
 		} as DataFlowCapability;
 
 		graph.on('edgeRemoved', edge => {
@@ -322,6 +215,120 @@ export const DataFlowCapabilityFactory: CapabilityFactory = {
 		return ctx;
 	}
 };
+
+
+export type DataflowGraph = ApplyCapabilities<Graph, [WithDataFlow]>;
+
+/**
+ * Executes the graph as a single batch. This will execute all the nodes in the graph and return the output of the output node
+ * Note that this can have side effects and you should create a new instance of a graph between runs if you want to isolate the execution
+ * @param opts
+ * @throws {BatchRunError}
+ * @returns
+ */
+export const execute = async (graph: DataflowGraph, opts?: GraphExecuteOptions): Promise<BatchExecution> => {
+
+	if (!graph.capabilities.dataFlow){
+		throw new Error('Dataflow capability not found');
+	}
+
+	const { inputs, stats } = opts || {};
+
+	const start = performance.now();
+	const statsTracker = {};
+
+	if (inputs) {
+		const input = Object.values(graph.nodes).find(
+			x => x.factory.type === 'studio.tokens.generic.input'
+		);
+		if (!input) {
+			throw new Error('No input node found');
+		}
+
+		//Set the inputs for execution
+		Object.entries(inputs).forEach(([key, value]) => {
+			const opts: ISetValue = {
+				//We are controlling propagation
+				noPropagate: true
+			};
+			//Only necessary if there is dynamic typing involved
+			if (value.type) {
+				opts.type = value.type;
+			}
+			const port = input.inputs[key] as Input;
+
+			if (port && port.pType == DATAFLOW_PORT) {
+				port.setValue(value.value, opts);
+			}
+
+			//Its possible that there is no input with the name
+		});
+	}
+
+	//Perform a topological sort
+
+	const topologic = topologicalSort(graph);
+	//This stores intermediate states during execution
+	for (let i = 0, c = topologic.length; i < c; i++) {
+		const nodeId = topologic[i];
+
+		const node = graph.getNode(nodeId);
+
+		// Might happen with graphs that have not cleaned up their edges to nowhere
+		if (!node) {
+			continue;
+		}
+		//Execute the node
+		const res = await (node as DataflowNode).dataflow?.run();
+		if (res.error) {
+			//@ts-ignore
+			(res.error as BatchRunError).nodeId = nodeId;
+			throw res.error;
+		}
+
+		if (stats) {
+			statsTracker[nodeId] = res;
+		}
+
+		//Propagate the values. No need to wait as it is a oneshot
+		graph.capabilities.dataFlow.propagate(nodeId, true);
+	}
+
+	let output: BatchExecution['output'] = undefined;
+
+	//Get the output node
+	const outputNode = Object.values(graph.nodes).find(
+		x => x.factory.type === 'studio.tokens.generic.output'
+	);
+
+	if (outputNode) {
+		//Output has a dynamic amount of ports, so emit a single object with each of them
+		output = Object.fromEntries(
+
+			Object.entries(outputNode.inputs)
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+				.filter(([_, v]) => v.pType == DATAFLOW_PORT)
+				.map(([key, value]: [string, Output]) => {
+					return [
+						key,
+						{
+							value: value.value,
+							type: value.type
+						}
+					];
+				})
+		);
+	}
+
+	const end = performance.now();
+	return {
+		order: topologic,
+		stats: statsTracker,
+		start,
+		end,
+		output
+	};
+}
 
 export type WithDataFlow = {
 	dataFlow: DataFlowCapability;
