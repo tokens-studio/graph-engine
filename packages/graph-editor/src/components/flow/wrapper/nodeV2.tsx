@@ -320,7 +320,11 @@ const InputHandle = observer(
     const type = extractType(port.type);
     const handleInformation = useHandle();
 
-    const variant = typeCol.isArray ? 'array' : (port.pType == CONTROL_PORT?'message':undefined);
+    const variant = typeCol.isArray
+      ? 'array'
+      : port.pType == CONTROL_PORT
+        ? 'message'
+        : undefined;
 
     if (input.variadic) {
       return (
@@ -341,7 +345,7 @@ const InputHandle = observer(
               <Handle
                 {...typeCol}
                 //The underlying type might not be an array
-                variant={port.type.type?.type === 'array'?'array':undefined}
+                variant={port.type.type?.type === 'array' ? 'array' : undefined}
                 visible={port.visible != false || port.isConnected}
                 id={port.name + `[${edge.annotations['engine.index']}]`}
                 key={i}

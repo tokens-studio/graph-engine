@@ -2,7 +2,7 @@ import { FullyFeaturedGraph } from '@/types/index.js';
 import { ImperativeEditorRef } from '@/editor/editorTypes.js';
 import { MAIN_GRAPH_ID } from '@/constants.js';
 import { RootModel } from './root.js';
-import {  annotatedPlayState } from '@tokens-studio/graph-engine';
+import { annotatedPlayState } from '@tokens-studio/graph-engine';
 import { createModel } from '@rematch/core';
 import type { PlayState } from '@tokens-studio/graph-engine';
 

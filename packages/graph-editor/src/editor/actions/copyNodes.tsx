@@ -1,6 +1,6 @@
 import { Node, ReactFlowInstance } from 'reactflow';
 import { SerializedNode } from '@/types/serializedNode.js';
-import { nanoid as uuid } from 'nanoid'
+import { nanoid as uuid } from 'nanoid';
 
 export const copyNodeAction = (
   reactFlowInstance: ReactFlowInstance,

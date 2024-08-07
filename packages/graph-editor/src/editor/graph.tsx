@@ -24,7 +24,7 @@ import {
 } from '../components/flow/utils.js';
 import { handleDrop } from './actions/handleDrop.js';
 import { useDispatch } from '../hooks/index.js';
-import { nanoid as uuid } from 'nanoid'
+import { nanoid as uuid } from 'nanoid';
 import CustomEdge from '../components/flow/edges/edge.js';
 import React, {
   MouseEvent,
@@ -41,7 +41,11 @@ import groupNode from '../components/flow/nodes/groupNode.js';
 import noteNode from '../components/flow/nodes/noteNode.js';
 
 import { ActionProvider } from './actions/provider.js';
-import { BatchRunError, DataFlowCapabilityFactory, Graph } from '@tokens-studio/graph-engine';
+import {
+  BatchRunError,
+  DataFlowCapabilityFactory,
+  Graph,
+} from '@tokens-studio/graph-engine';
 import { Box } from '@tokens-studio/ui';
 import { CommandMenu } from '@/components/commandPalette/index.js';
 import { ControlFlowCapabilityFactory } from '@tokens-studio/graph-engine';
@@ -139,7 +143,6 @@ export const EditorApp = React.forwardRef<
   const internalRef = useRef<ImperativeEditorRef>(null);
   const activeGraphId = useSelector(currentPanelIdSelector);
 
-
   const iconLookup = useMemo(() => {
     return panelItems.groups.reduce((acc, group) => {
       group.items.forEach((item) => {
@@ -168,7 +171,6 @@ export const EditorApp = React.forwardRef<
 
   //Attach sideeffect listeners
   useEffect(() => {
-
     graph.onFinalize('serialize', (serialized) => {
       const nodes = reactFlowInstance.getNodes();
 
@@ -384,9 +386,14 @@ export const EditorApp = React.forwardRef<
             break;
           case 'position':
             if ((change as NodePositionChange).position) {
-              node.setAnnotation(xpos, (change as NodePositionChange).position!.x);
-              node.setAnnotation(ypos, (change as NodePositionChange).position!.y);
-
+              node.setAnnotation(
+                xpos,
+                (change as NodePositionChange).position!.x,
+              );
+              node.setAnnotation(
+                ypos,
+                (change as NodePositionChange).position!.y,
+              );
             }
             break;
         }
@@ -525,17 +532,19 @@ export const EditorApp = React.forwardRef<
         });
         //Execute the graph once to propagate values and update the UI
 
-        loadedGraph.capabilities.dataFlow.execute().catch((e: BatchRunError) => {
-          dispatch.graph.appendLog({
-            type: 'error',
-            time: new Date(),
-            data: {
-              node: e.nodeId,
-              error: e.message,
-              msg: `Error executing graph`,
-            },
+        loadedGraph.capabilities.dataFlow
+          .execute()
+          .catch((e: BatchRunError) => {
+            dispatch.graph.appendLog({
+              type: 'error',
+              time: new Date(),
+              data: {
+                node: e.nodeId,
+                error: e.message,
+                msg: `Error executing graph`,
+              },
+            });
           });
-        });
 
         setTheGraph(loadedGraph);
       },
@@ -633,7 +642,7 @@ export const EditorApp = React.forwardRef<
       });
 
       const newNode = new fullNodeLookup[PASSTHROUGH]({
-        graph:graph as unknown as Graph
+        graph: graph as unknown as Graph,
       });
 
       newNode.annotations[uiNodeType] = PASSTHROUGH;

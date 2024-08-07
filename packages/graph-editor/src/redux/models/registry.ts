@@ -36,7 +36,7 @@ export const registryState = createModel<RootModel>()({
     nodeSpecifics: defaultSpecifics,
     icons: icons(),
     inputControls: { ...inputControls },
-    controls: [...(defaultControls as unknown[]) as Control[]],
+    controls: [...(defaultControls as unknown[] as Control[])],
     panelItems: defaultPanelGroupsFactory(),
     nodeTypes: {},
     capabilities: [],

@@ -15,7 +15,7 @@ export interface IPaneContextMenu<T = unknown> {
   onSelectItem: (item: T) => void;
 }
 
-export const PaneContextMenu = <T = unknown>({ id }: IPaneContextMenu<T>) => {
+export const PaneContextMenu = <T = unknown,>({ id }: IPaneContextMenu<T>) => {
   const reactFlowInstance = useReactFlow();
   const showGridValue = useSelector(showGrid);
   const snapGridValue = useSelector(snapGrid);

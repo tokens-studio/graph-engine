@@ -28,7 +28,6 @@ export const showMinimapSelector = createSelector(
   (state) => state.showMinimap,
 );
 
-
 export const animateMessagesSelector = createSelector(
   settings,
   (state) => state.animateMessages,

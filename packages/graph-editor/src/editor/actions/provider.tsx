@@ -8,9 +8,9 @@ export type Actions = {
   createNode: (nodeRequest: NodeRequest) =>
     | undefined
     | {
-      graphNode: Node;
-      flowNode: FlowNode;
-    };
+        graphNode: Node;
+        flowNode: FlowNode;
+      };
   deleteNode: (nodeId: string) => void;
   copyNodes: (nodes: SerializedNode[]) => void;
   duplicateNodes: (nodeIds: string[]) => void;

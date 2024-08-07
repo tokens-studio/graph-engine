@@ -48,7 +48,7 @@ export const settingsState = createModel<RootModel>()({
     edgeType: EdgeType.bezier,
     layoutType: LayoutType.dagre,
     showGrid: true,
-    animateMessages:false,
+    animateMessages: false,
     connectOnClick: true,
     showTimings: false,
     showSearch: false,

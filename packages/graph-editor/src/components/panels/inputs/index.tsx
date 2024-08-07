@@ -11,9 +11,7 @@ import { inputControls } from '@/redux/selectors/registry.js';
 import { useGraph } from '@/hooks/useGraph.js';
 import { useSelector } from 'react-redux';
 
-
 export const InputInner = ({ selectedNode }) => {
-
   const dynamicInputs =
     selectedNode.annotations[annotatedDynamicInputs] &&
     selectedNode.annotations[editable] != false;
@@ -26,32 +24,27 @@ export const InputInner = ({ selectedNode }) => {
     return inputControlRegistry[selectedNode?.factory?.type];
   }, [inputControlRegistry, selectedNode]);
 
+  return (
+    <Box css={{ padding: '$2' }}>
+      {dynamicInputs && <DynamicInputs node={selectedNode} />}
 
-  return <Box css={{ padding: '$2' }}>
-    {dynamicInputs && <DynamicInputs node={selectedNode} />}
-
-
-
-    {SpecificInput ? <SpecificInput node={selectedNode} /> : null}
-    <Stack width="full" css={{ paddingTop: '$1', paddingBottom: '$1' }}>
-      {/* The purpose of the key is to invalidate the port panel if the selected node changes */}
-      <PortPanel ports={selectedNode?.inputs} key={selectedNode.id} />
-    </Stack>
-  </Box>
-}
-
+      {SpecificInput ? <SpecificInput node={selectedNode} /> : null}
+      <Stack width="full" css={{ paddingTop: '$1', paddingBottom: '$1' }}>
+        {/* The purpose of the key is to invalidate the port panel if the selected node changes */}
+        <PortPanel ports={selectedNode?.inputs} key={selectedNode.id} />
+      </Stack>
+    </Box>
+  );
+};
 
 export function Inputsheet() {
   const graph = useGraph();
   const nodeID = useSelector(currentNode);
   const selectedNode = useMemo(() => graph?.getNode(nodeID), [graph, nodeID]);
 
-
-
   if (!selectedNode) {
     return <></>;
   }
-
 
   return (
     <Box

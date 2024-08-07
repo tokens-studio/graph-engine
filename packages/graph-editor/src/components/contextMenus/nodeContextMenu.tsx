@@ -168,12 +168,18 @@ export const NodeContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
       <ContextMenuItem disabled={!isDeletable} onClick={deleteEl}>
         Delete
       </ContextMenuItem>
-      <ContextMenuItem onClick={forceExecution}>Force Execution</ContextMenuItem>
+      <ContextMenuItem onClick={forceExecution}>
+        Force Execution
+      </ContextMenuItem>
       <Separator />
       {nodes?.length == 1 && (
         <>
-          <ContextMenuItem onClick={onTraceSource}>Trace Upstream</ContextMenuItem>
-          <ContextMenuItem onClick={onTraceTarget}>Trace Downstream</ContextMenuItem>
+          <ContextMenuItem onClick={onTraceSource}>
+            Trace Upstream
+          </ContextMenuItem>
+          <ContextMenuItem onClick={onTraceTarget}>
+            Trace Downstream
+          </ContextMenuItem>
         </>
       )}
 

@@ -1,4 +1,9 @@
-import { ApplyCapabilities, Graph, WithControlFlow, WithDataFlow } from '@tokens-studio/graph-engine';
+import {
+  ApplyCapabilities,
+  Graph,
+  WithControlFlow,
+  WithDataFlow,
+} from '@tokens-studio/graph-engine';
 import { TokenType } from '../utils/index.js';
 
 export type Token = {
@@ -7,6 +12,9 @@ export type Token = {
   type: TokenType;
 };
 
-export type FullyFeaturedGraph = ApplyCapabilities<Graph, [WithControlFlow, WithDataFlow]>
+export type FullyFeaturedGraph = ApplyCapabilities<
+  Graph,
+  [WithControlFlow, WithDataFlow]
+>;
 
 export * from './controls.js';

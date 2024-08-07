@@ -15,32 +15,35 @@ export function OutputSheet() {
   if (!selectedNode) {
     return <></>;
   }
-  return <Box
-    css={{
-      height: '100%',
-      width: '100%',
-      flex: 1,
-      display: 'flex',
-      overflow: 'auto',
-      flexDirection: 'column',
-    }}
-  >
-    <Stack
-      direction="column"
-      gap={4}
-      css={{ height: '100%', flex: 1, padding: '$3' }}
+  return (
+    <Box
+      css={{
+        height: '100%',
+        width: '100%',
+        flex: 1,
+        display: 'flex',
+        overflow: 'auto',
+        flexDirection: 'column',
+      }}
     >
-      <Stack direction="column" gap={3}>
-        <Stack gap={2} align="start" justify="between">
-          <Heading size="large"> {selectedNode.factory.title}</Heading>
-          <IconButton
-            tooltip={selectedNode.factory.description}
-            icon={<InfoCircleSolid />}
-          />
-        </Stack>
-      </Stack> <OutputSheetObserver node={selectedNode} />
-    </Stack>
-  </Box>;
+      <Stack
+        direction="column"
+        gap={4}
+        css={{ height: '100%', flex: 1, padding: '$3' }}
+      >
+        <Stack direction="column" gap={3}>
+          <Stack gap={2} align="start" justify="between">
+            <Heading size="large"> {selectedNode.factory.title}</Heading>
+            <IconButton
+              tooltip={selectedNode.factory.description}
+              icon={<InfoCircleSolid />}
+            />
+          </Stack>
+        </Stack>{' '}
+        <OutputSheetObserver node={selectedNode} />
+      </Stack>
+    </Box>
+  );
 }
 
 /**

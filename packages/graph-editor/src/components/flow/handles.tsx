@@ -84,17 +84,17 @@ const StyledRawHandle = styled(RawHandle, {
     },
 
     variant: {
-      array:{
+      array: {
         borderRadius: '0 !important',
         width: 'calc($4 - 2px) !important',
         height: 'calc($4 - 2px) !important',
       },
-      message:{
+      message: {
         borderRadius: '0 !important',
         width: 'calc($4 - 2px) !important',
         height: 'calc($4 - 2px) !important',
-        transform : 'rotate(45deg)',
-        '&:after':{
+        transform: 'rotate(45deg)',
+        '&:after': {
           content: '""',
           position: 'absolute',
           top: '50%',
@@ -103,8 +103,8 @@ const StyledRawHandle = styled(RawHandle, {
           width: '2px',
           height: '2px',
           borderRadius: '50%',
-        }
-      }
+        },
+      },
     },
     shouldHideHandles: {
       true: {

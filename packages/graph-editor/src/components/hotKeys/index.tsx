@@ -106,7 +106,6 @@ export const keyMapDescriptions = {
   RECALL_VIEWPORT: 'Recall Viewport',
 };
 
-
 export const getViewports = (graph) => {
   const viewports =
     graph.annotations[savedViewports] || new Array(9).fill(null);

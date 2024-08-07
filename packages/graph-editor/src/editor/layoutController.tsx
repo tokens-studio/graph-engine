@@ -258,10 +258,7 @@ export const LayoutController = React.forwardRef<
   ImperativeEditorRef,
   EditorProps
 >((props: EditorProps, ref) => {
-  const {
-    initialLayout,
-    menuItems = defaultMenuDataFactory(),
-  } = props;
+  const { initialLayout, menuItems = defaultMenuDataFactory() } = props;
 
   const registerDocker = useRegisterRef<DockLayout>('docker');
   const dispatch = useDispatch();

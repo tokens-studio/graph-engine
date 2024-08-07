@@ -14,7 +14,7 @@ function GraphContextProvider({
   graph,
   children,
 }: {
-    graph: FullyFeaturedGraph;
+  graph: FullyFeaturedGraph;
   children: React.ReactNode;
 }) {
   const providerValue = useMemo(() => ({ graph }), [graph]);
