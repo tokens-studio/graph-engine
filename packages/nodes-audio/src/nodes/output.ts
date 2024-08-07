@@ -1,5 +1,5 @@
 import { AudioBaseNode } from './base.js';
-import { INodeDefinition } from '@tokens-studio/graph-engine';
+import { INodeDefinition, ToInput } from '@tokens-studio/graph-engine';
 import { NodeSchema } from '../schemas/index.js';
 
 export class AudioOutputNode extends AudioBaseNode {
@@ -8,11 +8,15 @@ export class AudioOutputNode extends AudioBaseNode {
 
 	_last: AudioNode | undefined;
 
+	declare inputs: ToInput<{
+		input: AudioNode;
+	}>;
+
 	static description =
 		'Provides access to the output of a the audio context. This is the final node in the audio graph.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('input', {
+		this.dataflow.addInput('input', {
 			visible: true,
 			type: NodeSchema
 		});

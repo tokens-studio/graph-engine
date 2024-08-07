@@ -1,10 +1,9 @@
-import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/array/indexArray.js';
 
 describe('array/indexArray', () => {
 	test('returns the expected value', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.array.setValue([0, 1, 2]);
@@ -17,7 +16,7 @@ describe('array/indexArray', () => {
 	});
 
 	test('returns value at negative index', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.array.setValue([11, 22, 33, 44, 55]);

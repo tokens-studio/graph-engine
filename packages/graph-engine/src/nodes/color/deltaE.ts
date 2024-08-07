@@ -4,15 +4,15 @@ import {
 	NumberSchema,
 	StringSchema
 } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { setToPrecision } from '../../utils/precision.js';
 
 export const algorithms = ['76', 'CMC', '2000', 'Jz', 'ITP', 'OK'] as const;
 
 export type algorithm = (typeof algorithms)[number];
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Delta E (ΔE)';
 	static type = 'studio.tokens.color.deltaE';
 	static description =
@@ -20,25 +20,25 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('colorA', {
+		this.dataflow.addInput('colorA', {
 			type: {
 				...ColorSchema,
 				default: White
 			}
 		});
-		this.addInput('colorB', {
+		this.dataflow.addInput('colorB', {
 			type: {
 				...ColorSchema,
 				default: Black
 			}
 		});
-		this.addInput('precision', {
+		this.dataflow.addInput('precision', {
 			type: {
 				...NumberSchema,
 				default: 4
 			}
 		});
-		this.addInput('algorithm', {
+		this.dataflow.addInput('algorithm', {
 			type: {
 				...StringSchema,
 				enum: algorithms,
@@ -46,7 +46,7 @@ export default class NodeDefinition extends Node {
 			}
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: NumberSchema
 		});
 	}

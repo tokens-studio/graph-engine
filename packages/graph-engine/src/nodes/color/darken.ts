@@ -1,10 +1,11 @@
 import { ColorSchema, NumberSchema } from '../../schemas/index.js';
+import { ColorSpace } from './lib/types.js';
 import { Color as ColorType } from '../../types.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { White, toColor, toColorObject } from './lib/utils.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Darken Color';
 	static type = 'studio.tokens.color.darken';
 	static description = 'Darkens a color by a specified value';
@@ -12,6 +13,7 @@ export default class NodeDefinition extends Node {
 	declare inputs: ToInput<{
 		color: ColorType;
 		value: number;
+		space: ColorSpace;
 	}>;
 
 	declare outputs: ToOutput<{
@@ -20,13 +22,13 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('color', {
+		this.dataflow.addInput('color', {
 			type: {
 				...ColorSchema,
 				default: White
 			}
 		});
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: {
 				...NumberSchema,
 				default: 0.5,
@@ -34,7 +36,7 @@ export default class NodeDefinition extends Node {
 			}
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: ColorSchema
 		});
 	}

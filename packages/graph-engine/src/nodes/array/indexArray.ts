@@ -3,10 +3,10 @@ import {
 	AnySchema,
 	NumberSchema
 } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { SchemaObject } from 'ajv';
-export default class NodeDefinition<T> extends Node {
+export default class NodeDefinition<T> extends DataflowNode {
 	static title = 'Index Array';
 	static type = 'studio.tokens.array.index';
 	static description = 'Extracts a value from an array at a given index. ';
@@ -31,17 +31,17 @@ export default class NodeDefinition<T> extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('array', {
+		this.dataflow.addInput('array', {
 			type: AnyArraySchema
 		});
-		this.addInput('index', {
+		this.dataflow.addInput('index', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: AnySchema
 		});
 	}
@@ -50,7 +50,7 @@ export default class NodeDefinition<T> extends Node {
 		const array = this.inputs.array;
 		const { index } = this.getAllInputs();
 		//Get the value
-		const calculated = array.value.at(index)!;
+		const calculated = array.value[index];
 		//Extract the type
 		//We assume that the array has a single defined item
 

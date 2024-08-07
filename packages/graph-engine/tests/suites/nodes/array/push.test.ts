@@ -1,10 +1,9 @@
-import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/array/push.js';
 
 describe('array/push', () => {
 	test('does a non mutative push', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		const array = [1, 2, 3];

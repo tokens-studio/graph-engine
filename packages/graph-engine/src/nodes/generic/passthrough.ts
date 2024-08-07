@@ -1,11 +1,11 @@
 import { AnySchema } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 
 /**
  * A node that passes through the input to the output.
  */
-export default class NodeDefinition<T> extends Node {
+export default class NodeDefinition<T> extends DataflowNode {
 	static title = 'Passthrough';
 	static type = 'studio.tokens.generic.passthrough';
 	static description = 'Passes a value through to the output';
@@ -18,10 +18,10 @@ export default class NodeDefinition<T> extends Node {
 	}>;
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: AnySchema
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: AnySchema
 		});
 	}

@@ -4,7 +4,9 @@ import {
   INodeDefinition,
   StringSchema,
   ToInput,
+  ToOutput,
 } from "@tokens-studio/graph-engine";
+import { Image } from "../schemas/types.js";
 import { ImageSchema } from "../schemas/index.js";
 
 const ChannelLookup = {
@@ -20,17 +22,22 @@ export class SeperateNode extends BaseNode {
   static type = "studio.tokens.image.seperate";
 
   declare inputs: ToInput<{
-    image: ImageData;
+    image: Image;
     channel: keyof typeof ChannelLookup;
+    channel: keyof typeof ChannelLookup;
+  }>;
+
+  declare outputs: ToOutput<{
+    image: Image;
   }>;
 
   constructor(props: INodeDefinition) {
     super(props);
-    this.addInput("image", {
+    this.dataflow.addInput("image", {
       type: ImageSchema,
     });
 
-    this.addInput("channel", {
+    this.dataflow.addInput("channel", {
       type: {
         ...StringSchema,
         enum: Object.keys(ChannelLookup),
@@ -38,7 +45,7 @@ export class SeperateNode extends BaseNode {
       },
     });
 
-    this.addOutput("image", {
+    this.dataflow.addOutput("image", {
       type: ImageSchema,
     });
   }

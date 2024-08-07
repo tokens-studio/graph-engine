@@ -1,11 +1,13 @@
 import {
-  Graph,
+  CapabilityFactory,
   Node as GraphNode,
   SchemaObject,
   SerializedGraph,
 } from '@tokens-studio/graph-engine';
 
 import { Edge, Node, ReactFlowInstance } from 'reactflow';
+import { FullyFeaturedGraph } from '@/types/index.js';
+import { LayoutBase } from 'rc-dock';
 import { Menu } from '@/components/menubar/data.js';
 import { System } from '@/system/index.js';
 import type { LayoutBase } from 'rc-dock';
@@ -81,10 +83,10 @@ export type ImperativeEditorRef = {
    */
   clear: () => void;
   save: () => SerializedGraph;
-  load: (state: Graph) => void;
+  load: (state: FullyFeaturedGraph) => void;
   loadRaw: (state: SerializedGraph) => void;
   getFlow: () => ReactFlowInstance;
-  getGraph: () => Graph;
+  getGraph: () => FullyFeaturedGraph;
 };
 
 export type EditorNode = Node;

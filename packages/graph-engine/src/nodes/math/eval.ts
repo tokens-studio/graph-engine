@@ -1,11 +1,12 @@
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { NumberSchema, StringSchema } from '../../schemas/index.js';
 import { Parser } from 'expr-eval';
-import { ToInput } from '../../programmatic/input.js';
-import { ToOutput } from '../../programmatic/output.js';
+import { ToInput } from '../../programmatic/dataflow/input.js';
+import { ToOutput } from '../../programmatic/dataflow/output.js';
 import { annotatedDynamicInputs } from '../../annotations/index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Evaluate math';
 	static type = 'studio.tokens.math.eval';
 	static description = 'Allows you to evaluate arbitrary math expressions';
@@ -18,7 +19,6 @@ export default class NodeDefinition extends Node {
 		}>;
 
 	declare outputs: ToOutput<{
-		expression: string;
 		value: number;
 	}>;
 
@@ -26,16 +26,16 @@ export default class NodeDefinition extends Node {
 		super(props);
 
 		this.annotations[annotatedDynamicInputs] = true;
-		this.addInput('expression', {
+		this.dataflow.addInput('expression', {
 			type: StringSchema
 		});
 
 		//We expect users to expose the variables they want to use in the expression as inputs
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: NumberSchema
 		});
-		this.addOutput('expression', {
+		this.dataflow.addOutput('expression', {
 			type: StringSchema
 		});
 	}

@@ -14,6 +14,7 @@ import {
 } from '../../annotations/index.js';
 import { autorun } from 'mobx';
 import { extractArray } from '../../schemas/utils.js';
+import { injectCapabilities } from '@/utils/graph.js';
 import InputNode from '../generic/input.js';
 import OutputNode from '../generic/output.js';
 
@@ -50,7 +51,7 @@ export default class ArraySubgraph<T extends undefined> extends Node {
 
 		if (!existing) {
 			//Pass capabilities down
-			this._innerGraph.capabilities = this.getGraph().capabilities;
+			injectCapabilities(this.getGraph(), this._innerGraph);
 
 			input = new InputNode({ graph: this._innerGraph });
 			input.annotations[annotatedDeleteable] = false;
@@ -115,7 +116,7 @@ export default class ArraySubgraph<T extends undefined> extends Node {
 				//If the key doesn't exist in the existing inputs, add it
 				if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
 					//Always add it as visible
-					this.addInput(key, {
+					this.dataflow.addInput(key, {
 						type: value.type,
 						visible: true
 					});
@@ -142,24 +143,24 @@ export default class ArraySubgraph<T extends undefined> extends Node {
 			});
 		});
 
-		this.addInput('array', {
+		this.dataflow.addInput('array', {
 			type: AnyArraySchema,
 			visible: true
 		});
 
 		this.inputs['array'].annotations['ui.editable'] = false;
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: AnyArraySchema,
 			visible: true
 		});
 
-		this.addOutput('index', {
+		this.dataflow.addOutput('index', {
 			type: NumberSchema,
 			visible: true
 		});
 
-		this.addOutput('found', {
+		this.dataflow.addOutput('found', {
 			type: BooleanSchema,
 			visible: true
 		});

@@ -1,8 +1,9 @@
 import { AnySchema, BooleanSchema, StringSchema } from '../../schemas/index.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { SchemaObject } from 'ajv';
-import { ToInput } from '../../programmatic/input.js';
-import { ToOutput } from '../../programmatic/output.js';
+import { ToInput } from '../../programmatic/dataflow/input.js';
+import { ToOutput } from '../../programmatic/dataflow/output.js';
 
 function getSchemaByPath(schema: SchemaObject, path: string) {
 	// Remove the leading dot if present
@@ -39,7 +40,7 @@ function getNestedProperty(obj: object, path: string) {
 	return keys.reduce((acc, key) => acc && acc[key], obj);
 }
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Object Path';
 	static type = 'studio.tokens.generic.objectPath';
 	static description = 'Accesses an object at a given path.';
@@ -56,19 +57,19 @@ export default class NodeDefinition extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.addInput('object', {
+		this.dataflow.addInput('object', {
 			type: AnySchema
 		});
 
-		this.addInput('path', {
+		this.dataflow.addInput('path', {
 			type: StringSchema
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: AnySchema
 		});
 
-		this.addOutput('missing', {
+		this.dataflow.addOutput('missing', {
 			type: BooleanSchema
 		});
 	}

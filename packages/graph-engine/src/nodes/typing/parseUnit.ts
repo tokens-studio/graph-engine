@@ -1,9 +1,9 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { NumberSchema, StringSchema } from '../../schemas/index.js';
 import valueParser from 'postcss-value-parser-esm';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Parse unit';
 	static type = 'studio.tokens.typing.parseUnit';
 	static description =
@@ -21,13 +21,13 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: StringSchema
 		});
-		this.addOutput('unit', {
+		this.dataflow.addOutput('unit', {
 			type: StringSchema
 		});
-		this.addOutput('number', {
+		this.dataflow.addOutput('number', {
 			type: NumberSchema
 		});
 	}

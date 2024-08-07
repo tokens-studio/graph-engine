@@ -1,4 +1,4 @@
-import { Edge, Graph } from '@tokens-studio/graph-engine';
+import { DataflowNode, Edge, Graph, Input, Output } from '@tokens-studio/graph-engine';
 import { Item, Menu, Separator } from 'react-contexify';
 import { Node, getRectOfNodes, useReactFlow, useStoreApi } from 'reactflow';
 import { NodeTypes } from '../flow/types.js';
@@ -6,7 +6,7 @@ import { deletable } from '@/annotations/index.js';
 import { getId } from '../flow/utils.js';
 import { useAction } from '@/editor/actions/provider.js';
 import { useLocalGraph } from '@/hooks/index.js';
-import { v4 as uuid } from 'uuid';
+import { nanoid as uuid } from 'nanoid'
 import React, { useCallback } from 'react';
 
 export type INodeContextMenuProps = {
@@ -120,10 +120,10 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
     const existingInternal = Object.values(internalGraph.nodes);
     const inputNode = existingInternal.find(
       (x) => x.factory.type == 'studio.tokens.generic.input',
-    );
+    ) as DataflowNode | undefined;
     const outputNode = existingInternal.find(
       (x) => x.factory.type == 'studio.tokens.generic.output',
-    );
+    ) as DataflowNode | undefined;
 
     //Now we need to determine the inputs and outputs of the subgraph
     //We need to find the entry nodes and the exit nodes
@@ -174,8 +174,8 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
     //We need to create a input  for each of the entry edges
     entryEdges.forEach((edge) => {
       //Get the output node of the edge
-      const outputNode = graph.getNode(edge.target);
-      const input = outputNode?.inputs[edge.targetHandle];
+      const outputNode = graph.getNode(edge.target) as DataflowNode;
+      const input = outputNode?.inputs[edge.targetHandle] as Input;
 
       //Its possible that we have a collision with the name so we need to rename it
       const initialName = edge.targetHandle;
@@ -186,15 +186,13 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
         name = initialName + '_' + count++;
       }
 
-      const newInput = inputNode?.addInput(name, {
+      inputNode?.dataflow.addInput(name, {
         type: input!.type,
       });
-      if (newInput) {
-        newInput.annotations[deletable] = true;
-      }
+      inputNode?.inputs[name]?.setAnnotation(deletable, true);
 
       //The output won't be dynamically generated until the node is executed, so we add it manually
-      inputNode?.addOutput(name, {
+      inputNode?.dataflow.addOutput(name, {
         type: input!.type,
       });
 
@@ -223,7 +221,7 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
     exitEdges.forEach((edge) => {
       //Get the output node of the edge
       const sourceNode = graph.getNode(edge.source);
-      const sourceOutput = sourceNode?.outputs[edge.sourceHandle];
+      const sourceOutput = sourceNode?.outputs[edge.sourceHandle] as Output;
 
       //Its possible that we have a collision with the name so we need to rename it
       const initialName = edge.targetHandle;
@@ -234,15 +232,15 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
         name = initialName + '_' + count++;
       }
 
-      outputNode?.addInput(name, {
+      outputNode?.dataflow.addInput(name, {
         type: sourceOutput!.type,
       });
-      outputNode?.addOutput(name, {
+      outputNode?.dataflow.addOutput(name, {
         type: sourceOutput!.type,
       });
 
       //Ensure the output exists on the outer graph node as it will only be dynamically populated once the subgraph has run
-      graphNode.addOutput(name, {
+      (graphNode as DataflowNode).dataflow.addOutput(name, {
         type: sourceOutput!.type,
       });
 

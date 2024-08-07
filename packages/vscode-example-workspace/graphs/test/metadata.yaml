@@ -1,0 +1,25 @@
+version: 1.0.0 
+title: My awesome graph
+summary: A cool graph I made
+tags: []
+context: 
+  - name: dataflow
+# Required capabilities to run this graph
+capabilities:
+  - name: File system
+    version: 0.0.0
+ui: 
+  viewport:
+    x: -39.44401416206222,
+    y: -106.86520579770138,
+    zoom: 0.6138991546274897 
+  nodes:
+    sdfsdf2323:
+      portOrder: []
+      visible: false
+      position: 
+        x: 343
+        y: 123
+
+output:
+  path: "./output.json"

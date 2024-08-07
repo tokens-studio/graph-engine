@@ -1,6 +1,6 @@
+import { Annotated } from './annotated.js';
 import { SerializedEdge } from '../index.js';
-import { makeObservable, observable } from 'mobx';
-import { v4 as uuid } from 'uuid';
+import { nanoid as uuid } from 'nanoid';
 
 /**
  * Additional data stored on an edge
@@ -20,8 +20,18 @@ export interface IEdge {
 	annotations?: Record<string, any>;
 }
 
-export class Edge {
-	public annotations: Record<string, any> = {};
+export const cloneEdge = (edge: Edge): Edge => {
+	return new Edge({
+		id: edge.id,
+		source: edge.source,
+		sourceHandle: edge.sourceHandle,
+		target: edge.target,
+		targetHandle: edge.targetHandle,
+		annotations: { ...edge.annotations }
+	});
+};
+
+export class Edge extends Annotated {
 	id: string;
 	source: string;
 	sourceHandle: string;
@@ -29,16 +39,12 @@ export class Edge {
 	targetHandle: string;
 
 	constructor(props: IEdge) {
+		super(props);
 		this.id = props.id || uuid();
 		this.source = props.source;
 		this.sourceHandle = props.sourceHandle;
 		this.target = props.target;
 		this.targetHandle = props.targetHandle;
-		this.annotations = props.annotations || {};
-
-		makeObservable(this, {
-			annotations: observable.shallow
-		});
 	}
 
 	serialize(): SerializedEdge {

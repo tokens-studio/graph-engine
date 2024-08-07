@@ -1,5 +1,6 @@
 import { AnyArraySchema, StringSchema } from '../../schemas/index.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { ToInput, ToOutput } from '../../programmatic/index.js';
 import { orderBy } from 'lodash-es';
 
@@ -17,7 +18,7 @@ export type NamedInput = {
 export const defaults = {
 	order: Order.ASC
 };
-export default class NodeDefinition<T> extends Node {
+export default class NodeDefinition<T> extends DataflowNode {
 	static title = 'Sort Array';
 	static type = 'studio.tokens.array.sort';
 
@@ -34,20 +35,20 @@ export default class NodeDefinition<T> extends Node {
 	static description = 'Sorts an array';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('array', {
+		this.dataflow.addInput('array', {
 			type: AnyArraySchema
 		});
-		this.addInput('order', {
+		this.dataflow.addInput('order', {
 			type: {
 				...StringSchema,
 				enum: [Order.ASC, Order.DESC],
 				default: Order.ASC
 			}
 		});
-		this.addInput('sortBy', {
+		this.dataflow.addInput('sortBy', {
 			type: StringSchema
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: AnyArraySchema
 		});
 	}

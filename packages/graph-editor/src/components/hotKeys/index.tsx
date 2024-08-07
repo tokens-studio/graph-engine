@@ -66,6 +66,41 @@ export const keyMap = {
   RECALL_VIEWPORT: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
 };
 
+export const keyMapDescriptions = {
+  AUTO_LAYOUT: 'Auto Layout',
+  COPY: 'Copy',
+  PASTE: 'Paste',
+  DELETE: 'Delete',
+  UNDO: 'Undo',
+  REDO: 'Redo',
+  SELECT_ALL: 'Select All',
+  DUPLICATE: 'Duplicate',
+  GROUP: 'Group',
+  UNGROUP: 'Ungroup',
+  SAVE: 'Save',
+  LOAD: 'Load',
+  FIND: 'Find',
+  RESET: 'Reset',
+  ZOOM_IN: 'Zoom In',
+  ZOOM_OUT: 'Zoom Out',
+  ZOOM_RESET: 'Zoom Reset',
+  TOGGLE_GRID: 'Toggle Grid',
+  TOGGLE_MINIMAP: 'Toggle Minimap',
+  TOGGLE_CONTROLS: 'Toggle Controls',
+  TOGGLE_SIDEBAR: 'Toggle Sidebar',
+  TOGGLE_HIDE: 'Toggle Hide',
+  TOGGLE_FULLSCREEN: 'Toggle Fullscreen',
+  TOGGLE_HELP: 'Toggle Help',
+  TOGGLE_THEME: 'Toggle Theme',
+  TOGGLE_SNAP_GRID: 'Toggle Snap Grid',
+  TOGGLE_NODES_PANEL: 'Toggle Nodes Panel',
+  TOGGLE_TYPES: 'Toggle Types',
+  TOGGLE_VALUES: 'Toggle Values',
+  SAVE_VIEWPORT: 'Save Viewport',
+  RECALL_VIEWPORT: 'Recall Viewport',
+};
+
+
 export const getViewports = (graph) => {
   const viewports =
     graph.annotations[savedViewports] || new Array(9).fill(null);

@@ -1,9 +1,9 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { NumberSchema } from '../../schemas/index.js';
 import { setToPrecision } from '../../utils/precision.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Fluid';
 	static type = 'studio.tokens.math.fluid';
 	static description =
@@ -23,42 +23,42 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('minSize', {
+		this.dataflow.addInput('minSize', {
 			type: {
 				...NumberSchema,
 				default: 16,
 				description: 'Minimum size in pixels'
 			}
 		});
-		this.addInput('maxSize', {
+		this.dataflow.addInput('maxSize', {
 			type: {
 				...NumberSchema,
 				default: 24,
 				description: 'Maximum size in pixels'
 			}
 		});
-		this.addInput('minViewport', {
+		this.dataflow.addInput('minViewport', {
 			type: {
 				...NumberSchema,
 				default: 320,
 				description: 'Minimum viewport width in pixels'
 			}
 		});
-		this.addInput('maxViewport', {
+		this.dataflow.addInput('maxViewport', {
 			type: {
 				...NumberSchema,
 				default: 1920,
 				description: 'Maximum viewport width in pixels'
 			}
 		});
-		this.addInput('viewport', {
+		this.dataflow.addInput('viewport', {
 			type: {
 				...NumberSchema,
 				default: 768,
 				description: 'Current viewport width in pixels'
 			}
 		});
-		this.addInput('precision', {
+		this.dataflow.addInput('precision', {
 			type: {
 				...NumberSchema,
 				default: 2,
@@ -66,7 +66,7 @@ export default class NodeDefinition extends Node {
 				description: 'Number of decimal places in the output'
 			}
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: NumberSchema
 		});
 	}

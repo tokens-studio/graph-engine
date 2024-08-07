@@ -1,4 +1,4 @@
-import { Edge, Graph, nodeLookup } from '../../src/index.js';
+import { Edge, Input, Output, nodeLookup } from '../../src/index.js';
 import { StringSchema } from '../../src/schemas/index.js';
 import { describe, expect, test } from 'vitest';
 import InputNode from '../../src/nodes/generic/input.js';
@@ -22,20 +22,22 @@ describe('nodeUsage', () => {
 		graph.addNode(output);
 
 		//Create an input port on the input
-		input.addInput('foo', {
+		input.dataflow.addInput('foo', {
 			type: StringSchema
 		});
 
-		output.addInput('input', {
+		output.dataflow.addInput('input', {
 			type: StringSchema
 		});
 
 		//Input is a special case with dynamic values so it needs to be executed and computed to generate the output values
-		const res = await input.run();
+		const res = await input.dataflow.run();
 
 		expect(res.error).to.be.null;
 
-		const edge = input.outputs.foo.connect(output.inputs.input);
+		const edge = (input.outputs.foo as Output).connect(
+			output.inputs.input as Input
+		);
 
 		const final = await graph.execute({
 			inputs: {

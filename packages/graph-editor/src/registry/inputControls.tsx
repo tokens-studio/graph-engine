@@ -1,5 +1,5 @@
 import { Button, Heading, Select, Stack } from '@tokens-studio/ui';
-import { Node } from '@tokens-studio/graph-engine';
+import { DataflowNode } from '@tokens-studio/graph-engine';
 import { StringSchema } from '@tokens-studio/graph-engine';
 import { deletable } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
@@ -10,17 +10,18 @@ import properties from 'mdn-data/css/properties.json' with { type: 'json' };
 
 const CSSProperties = Object.keys(properties);
 
-const CSSMapSpecifics = observer(({ node }: { node: Node }) => {
+const CSSMapSpecifics = observer(({ node }: { node: DataflowNode }) => {
   const [inputName, setInputName] = React.useState('-');
 
   const onClick = () => {
-    const input = node.addInput(inputName, {
+    node.dataflow.addInput(inputName, {
       type: StringSchema,
       visible: true,
     });
-    input.annotations[deletable] = true;
+    const input = node.inputs[inputName];
+    input.setAnnotation(deletable, true);
     setInputName('');
-    node.run();
+    node.dataflow?.run();
   };
 
   const isDisabled = useMemo(() => {
@@ -52,6 +53,6 @@ const CSSMapSpecifics = observer(({ node }: { node: Node }) => {
   );
 });
 
-export const inputControls = {
+export const inputControls: Record<string, React.FC<{ node: DataflowNode }>> = {
   'studio.tokens.css.map': CSSMapSpecifics,
-} as Record<string, React.FC<{ node: Node }>>;
+};

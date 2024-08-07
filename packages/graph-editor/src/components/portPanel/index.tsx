@@ -1,3 +1,4 @@
+import { DATAFLOW_PORT, DataFlowPort, Port } from '@tokens-studio/graph-engine';
 import {
   DropdownMenu,
   IconButton,
@@ -5,7 +6,6 @@ import {
   Stack,
   Tooltip,
 } from '@tokens-studio/ui';
-import { Port as GraphPort } from '@tokens-studio/graph-engine';
 import { IField } from '@/components/controls/interface.js';
 import { InlineTypeLabel } from '@/components/flow/index.js';
 import { Input } from '@tokens-studio/graph-engine';
@@ -24,7 +24,7 @@ import Xmark from '@tokens-studio/icons/Xmark.js';
 import copy from 'copy-to-clipboard';
 
 export interface IPortPanel {
-  ports: Record<string, GraphPort>;
+  ports: Record<string, Port>;
   readOnly?: boolean;
 }
 
@@ -37,11 +37,11 @@ export const PortPanel = observer(({ ports, readOnly }: IPortPanel) => {
   const entries = Object.values(ports).sort();
 
   return (
-    <Stack direction="column" gap={3} width="full">
+    <Stack direction="column" gap={2} width="full">
       {entries
         .filter((x) => !x.annotations[hidden])
         .map((x) => (
-          <Port port={x} key={x.name} readOnly={readOnly} />
+          <PortEl port={x} key={x.name} readOnly={readOnly} />
         ))}
     </Stack>
   );
@@ -51,20 +51,26 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IPort) => {
   const readOnly = isReadOnly || port.isConnected;
   const frame = useFrame();
   const graph = useGraph();
+  const dataflowPort = port as DataFlowPort;
   const isInput = 'studio.tokens.generic.input' === port.node.factory.type;
   const isDynamicInput = Boolean(port.annotations[deletable]);
   const resettable = Boolean(port.annotations[resetable]);
 
   const inner = useMemo(() => {
-    const field = frame.controls.find((x) => x.matcher(port, { readOnly }));
+
+    if (port.pType !== DATAFLOW_PORT) {
+      return <></>
+    }
+
+    const field = controlSelector.find((x) => x.matcher(port, { readOnly }));
     const Component = field?.component as React.FC<IField>;
 
     return (
-      <Component port={port} readOnly={readOnly} settings={frame.settings} />
+      <Component port={port as DataFlowPort} readOnly={readOnly} settings={frame.settings} />
     );
     //We use an explicit dependency on the type
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [frame.controls, port, readOnly, port.type]);
+  }, [controlSelector, port, readOnly, (port as DataFlowPort).type!]);
 
   const onClick = useCallback(() => {
     port.setVisible(!port.visible);
@@ -90,23 +96,23 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IPort) => {
   }, [port]);
 
   const onCopySchema = useCallback(() => {
-    const type = port.type;
+    const type = dataflowPort.type;
 
     copy(JSON.stringify(type, null, 4), {
       debug: true,
     });
-  }, [port]);
+  }, [dataflowPort.type]);
 
   const onCopyValue = useCallback(() => {
-    const value = port.value;
+    const value = dataflowPort.value;
 
     copy(JSON.stringify(value, null, 4), {
       debug: true,
     });
-  }, [port]);
+  }, [dataflowPort.value]);
 
   return (
-    <Stack direction="column" gap={3}>
+    <Stack direction="column" gap={3} >
       <Stack direction="row" gap={2} align="center" justify="between">
         <Stack direction="row" gap={2} align="center">
           {!isInput && (
@@ -117,12 +123,12 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IPort) => {
               icon={port.visible ? <Eye /> : <EyeClosed />}
             />
           )}
-          <Tooltip label={port.type.description || ''}>
+          <Tooltip label={dataflowPort.type.description || ''}>
             <Label bold>{port.name}</Label>
           </Tooltip>
         </Stack>
         <Stack gap={2} align="center">
-          <InlineTypeLabel port={port} />
+          <InlineTypeLabel port={dataflowPort} />
           <DropdownMenu>
             <DropdownMenu.Trigger asChild>
               <IconButton

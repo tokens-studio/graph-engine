@@ -1,13 +1,13 @@
-import { FSCapability } from '../capability/fs.js';
 import {
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	StringSchema
 } from '@tokens-studio/graph-engine';
+import { FSCapability } from '../capability/fs.js';
 import { arrayOf } from '../schemas/utils.js';
 import type { ToInput } from '@tokens-studio/graph-engine';
 
-export class GetDirectoryNode extends Node {
+export class GetDirectoryNode extends DataflowNode {
 	static title = 'Read directory';
 	static type = 'studio.tokens.fs.getDirectory';
 
@@ -17,14 +17,14 @@ export class GetDirectoryNode extends Node {
 	static description = 'Reads the directory of a path';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('path', {
+		this.dataflow.addInput('path', {
 			type: StringSchema
 		});
 
-		this.addOutput('files', {
+		this.dataflow.addOutput('files', {
 			type: arrayOf(StringSchema)
 		});
-		this.addOutput('dirs', {
+		this.dataflow.addOutput('dirs', {
 			type: arrayOf(StringSchema)
 		});
 	}

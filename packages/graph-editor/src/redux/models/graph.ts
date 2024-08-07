@@ -1,7 +1,8 @@
-import { Graph, annotatedPlayState } from '@tokens-studio/graph-engine';
+import { FullyFeaturedGraph } from '@/types/index.js';
 import { ImperativeEditorRef } from '@/editor/editorTypes.js';
 import { MAIN_GRAPH_ID } from '@/constants.js';
 import { RootModel } from './root.js';
+import {  annotatedPlayState } from '@tokens-studio/graph-engine';
 import { createModel } from '@rematch/core';
 import type { PlayState } from '@tokens-studio/graph-engine';
 
@@ -12,12 +13,12 @@ export interface ILog {
 }
 
 export interface IPanel {
-  graph: Graph;
+  graph: FullyFeaturedGraph;
   ref: ImperativeEditorRef;
 }
 
 export interface GraphState {
-  graph: Graph | undefined;
+  graph: FullyFeaturedGraph | undefined;
   currentNode: string;
   logs: ILog[];
   graphPlayState: PlayState;
@@ -83,28 +84,28 @@ export const graphState = createModel<RootModel>()({
       };
     },
     startGraph(state) {
-      state.graph?.start();
+      state.graph?.capabilities.controlFlow.start();
       return {
         ...state,
         graphPlayState: state.graph?.annotations[annotatedPlayState],
       };
     },
     pauseGraph(state) {
-      state.graph?.pause();
+      state.graph?.capabilities.controlFlow.pause();
       return {
         ...state,
         graphPlayState: state.graph?.annotations[annotatedPlayState],
       };
     },
     resumeGraph(state) {
-      state.graph?.resume();
+      state.graph?.capabilities.controlFlow.resume();
       return {
         ...state,
         graphPlayState: state.graph?.annotations[annotatedPlayState],
       };
     },
     stopGraph(state) {
-      state.graph?.stop();
+      state.graph?.capabilities.controlFlow.stop();
       return {
         ...state,
         graphPlayState: state.graph?.annotations[annotatedPlayState],
@@ -116,7 +117,7 @@ export const graphState = createModel<RootModel>()({
         logs: [],
       };
     },
-    setGraph(state, graph: Graph) {
+    setGraph(state, graph: FullyFeaturedGraph) {
       return {
         ...state,
         graph,

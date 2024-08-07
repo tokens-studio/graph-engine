@@ -3,13 +3,12 @@ import {
   BOOLEAN,
   COLOR,
   CURVE,
+  DataFlowPort,
   FLOATCURVE,
   Input,
   NUMBER,
-  Port,
   STRING,
   VEC2,
-  VEC3,
 } from '@tokens-studio/graph-engine';
 import { AnyField } from '@/components/controls/any.js';
 import { ArrayField } from '@/components/controls/array.js';
@@ -27,9 +26,8 @@ import { VariadicAny } from '@/components/controls/variadicAny.js';
 import { VariadicColor } from '@/components/controls/variadicColor.js';
 import { VariadicNumber } from '@/components/controls/variadicNumber.js';
 import { Vec2field } from '@/components/controls/vec2.js';
-import { Vec3field } from '@/components/controls/vec3.js';
 
-export const variadicMatcher = (id) => (port: Port) =>
+export const variadicMatcher = (id) => (port: DataFlowPort) =>
   port.type.type === 'array' &&
   port.type.items.$id === id &&
   (port as Input).variadic;
@@ -39,57 +37,53 @@ export const variadicMatcher = (id) => (port: Port) =>
  */
 export const defaultControls = [
   {
-    matcher: (port: Port) => port.annotations['ui.control'] === 'slider',
+    matcher: (port: DataFlowPort) => port.annotations['ui.control'] === 'slider',
     component: SliderField,
   },
   {
-    matcher: (port: Port) => port.type.$id === FLOATCURVE,
+    matcher: (port: DataFlowPort) => port.type.$id === FLOATCURVE,
     component: FloatCurveField,
   },
   {
-    matcher: (port: Port) => port.type.$id === CURVE,
+    matcher: (port: DataFlowPort) => port.type.$id === CURVE,
     component: CurveField,
   },
 
   {
-    matcher: (port: Port) => port.type.$id === BOOLEAN,
+    matcher: (port: DataFlowPort) => port.type.$id === BOOLEAN,
     component: BooleanField,
   },
   {
-    matcher: (port: Port) => port.type.$id === COLOR,
+    matcher: (port: DataFlowPort) => port.type.$id === COLOR,
     component: ColorField,
   },
   {
-    matcher: (port: Port) => port.type.$id === NUMBER,
+    matcher: (port: DataFlowPort) => port.type.$id === NUMBER,
     component: NumericField,
   },
   {
-    matcher: (port: Port) => port.type.$id === STRING && port.type.enum,
+    matcher: (port: DataFlowPort) => port.type.$id === STRING && port.type.enum,
     component: EnumeratedTextfield,
   },
   {
-    matcher: (port: Port) =>
+    matcher: (port: DataFlowPort) =>
       port.type.$id === STRING && port.annotations['ui.control'] === 'textarea',
     component: TextArea,
   },
   {
-    matcher: (port: Port) => port.type.$id === STRING,
+    matcher: (port: DataFlowPort) => port.type.$id === STRING,
     component: Textfield,
   },
   {
-    matcher: (port: Port) => port.type.$id === VEC2,
+    matcher: (port: DataFlowPort) => port.type.$id === VEC2,
     component: Vec2field,
   },
   {
-    matcher: (port: Port) => port.type.$id === VEC3,
-    component: Vec3field,
-  },
-  {
-    matcher: (port: Port) => port.type.$id === ANY,
+    matcher: (port: DataFlowPort) => port.type.$id === ANY,
     component: AnyField,
   },
   {
-    matcher: (port: Port) =>
+    matcher: (port: DataFlowPort) =>
       port.type.type === 'array' && !(port as Input).variadic,
     component: ArrayField,
   },

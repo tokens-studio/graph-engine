@@ -1,7 +1,7 @@
 import { AnyArraySchema, NumberSchema } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
-export default class NodeDefinition<T> extends Node {
+export default class NodeDefinition<T> extends DataflowNode {
 	static title = 'Slice Array';
 	static type = 'studio.tokens.array.slice';
 	static description = 'Slices an input array';
@@ -16,16 +16,16 @@ export default class NodeDefinition<T> extends Node {
 	}>;
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('array', {
+		this.dataflow.addInput('array', {
 			type: AnyArraySchema
 		});
-		this.addInput('start', {
+		this.dataflow.addInput('start', {
 			type: NumberSchema
 		});
-		this.addInput('end', {
+		this.dataflow.addInput('end', {
 			type: NumberSchema
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: AnyArraySchema
 		});
 	}

@@ -25,11 +25,6 @@ const output = new Output({ graph });
 const add = new Add({ graph });
 const div = new Divide({ graph });
 
-//Lets add the nodes explicitly. This makes sure if they apply side effects to the graph on entry that they are seperated from being defined
-graph.addNode(input);
-graph.addNode(output);
-graph.addNode(add);
-graph.addNode(div);
 
 //Create an input port on the input. This would be a dynamic property
 input.addInput("y", {

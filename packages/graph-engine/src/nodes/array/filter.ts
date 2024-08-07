@@ -4,8 +4,9 @@ import {
 	BooleanSchema,
 	NumberSchema
 } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { Graph } from '../../graph/graph.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { Input, ToInput, ToOutput } from '../../programmatic/index.js';
 import {
 	annotatedDeleteable,
@@ -14,6 +15,7 @@ import {
 } from '../../annotations/index.js';
 import { autorun } from 'mobx';
 import { extractArray } from '../../schemas/utils.js';
+import { injectCapabilities } from '@/utils/graph.js';
 import InputNode from '../generic/input.js';
 import OutputNode from '../generic/output.js';
 
@@ -21,7 +23,7 @@ export interface IArraySubgraph extends INodeDefinition {
 	innerGraph?: Graph;
 }
 
-export default class ArraySubgraph<T> extends Node {
+export default class ArraySubgraph<T> extends DataflowNode {
 	static title = 'Array filter';
 	static type = 'tokens.studio.array.filter';
 	static description =
@@ -47,7 +49,8 @@ export default class ArraySubgraph<T> extends Node {
 
 		if (!existing) {
 			//Pass capabilities down
-			this._innerGraph.capabilities = this.getGraph().capabilities;
+			//Pass capabilities down
+			injectCapabilities(this.getGraph(), this._innerGraph);
 
 			input = new InputNode({ graph: this._innerGraph });
 			input.annotations[annotatedDeleteable] = false;
@@ -112,7 +115,7 @@ export default class ArraySubgraph<T> extends Node {
 				//If the key doesn't exist in the existing inputs, add it
 				if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
 					//Always add it as visible
-					this.addInput(key, {
+					this.dataflow.addInput(key, {
 						type: value.type,
 						visible: true
 					});
@@ -139,14 +142,14 @@ export default class ArraySubgraph<T> extends Node {
 			});
 		});
 
-		this.addInput('array', {
+		this.dataflow.addInput('array', {
 			type: AnyArraySchema,
 			visible: true
 		});
 
 		this.inputs['array'].annotations['ui.editable'] = false;
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: AnyArraySchema,
 			visible: true
 		});

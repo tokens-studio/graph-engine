@@ -1,19 +1,20 @@
+import { FullyFeaturedGraph } from '@/types/index.js';
 import { Graph } from '@tokens-studio/graph-engine';
 import React, { createContext, useContext, useMemo } from 'react';
 
 type GraphContextType = {
-  graph: Graph;
+  graph: FullyFeaturedGraph;
 };
 
 const GraphContext = createContext<GraphContextType>({
-  graph: new Graph(),
+  graph: new Graph() as unknown as FullyFeaturedGraph,
 });
 
 function GraphContextProvider({
   graph,
   children,
 }: {
-  graph: Graph;
+    graph: FullyFeaturedGraph;
   children: React.ReactNode;
 }) {
   const providerValue = useMemo(() => ({ graph }), [graph]);
@@ -25,7 +26,7 @@ function GraphContextProvider({
   );
 }
 
-function useLocalGraph(): Graph {
+function useLocalGraph(): FullyFeaturedGraph {
   return useContext(GraphContext).graph;
 }
 

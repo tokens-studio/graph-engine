@@ -2,8 +2,8 @@ import {
 	BooleanSchema,
 	Color,
 	ColorSchema,
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	NumberSchema,
 	StringSchema,
 	ToInput,
@@ -22,26 +22,26 @@ export type LeonardoColor = {
 	smooth: boolean;
 };
 
-export default class LeonardoColorNode extends Node {
+export default class LeonardoColorNode extends DataflowNode {
 	static title = 'Leonardo Color';
 	static type = 'studio.tokens.design.leonardo.color';
 	static description = 'Creates a leonardo color';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('name', {
+		this.dataflow.addInput('name', {
 			type: StringSchema
 		});
-		this.addInput('colorKeys', {
+		this.dataflow.addInput('colorKeys', {
 			type: arrayOf(ColorSchema)
 		});
-		this.addInput('ratios', {
+		this.dataflow.addInput('ratios', {
 			type: arrayOf(NumberSchema)
 		});
 
-		this.addInput('smooth', {
+		this.dataflow.addInput('smooth', {
 			type: BooleanSchema
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: LeonardoColorSchema
 		});
 	}

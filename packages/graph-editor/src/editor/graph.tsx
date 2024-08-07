@@ -24,7 +24,7 @@ import {
 } from '../components/flow/utils.js';
 import { handleDrop } from './actions/handleDrop.js';
 import { useDispatch } from '../hooks/index.js';
-import { v4 as uuidv4 } from 'uuid';
+import { nanoid as uuid } from 'nanoid'
 import CustomEdge from '../components/flow/edges/edge.js';
 import React, {
   MouseEvent,
@@ -42,9 +42,11 @@ import groupNode from '../components/flow/nodes/groupNode.js';
 import noteNode from '../components/flow/nodes/noteNode.js';
 
 import { ActionProvider } from './actions/provider.js';
-import { BatchRunError, Graph } from '@tokens-studio/graph-engine';
+import { BatchRunError, DataFlowCapabilityFactory, Graph } from '@tokens-studio/graph-engine';
 import { CommandMenu } from '@/components/commandPalette/index.js';
+import { ControlFlowCapabilityFactory } from '@tokens-studio/graph-engine';
 import { EdgeContextMenu } from '../components/contextMenus/edgeContextMenu.js';
+import { FullyFeaturedGraph } from '@/types/index.js';
 import { GraphContextProvider } from '@/context/graph.js';
 import { GraphEditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { GraphToolbar } from '@/components/toolbar/index.js';
@@ -71,6 +73,10 @@ import {
   ypos,
 } from '@/annotations/index.js';
 import { duplicateNodes } from './actions/duplicate.js';
+import {
+  nodeTypesSelector,
+  panelItemsSelector,
+} from '@/redux/selectors/registry.js';
 import { useContextMenu } from 'react-contexify';
 import { useFrame } from '@/system/frame/hook.js';
 import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
@@ -145,7 +151,6 @@ export const EditorApp = React.forwardRef<
 
   //Attach sideeffect listeners
   useEffect(() => {
-    frame.capabilities.forEach((factory) => graph.registerCapability(factory));
 
     graph.onFinalize('serialize', (serialized) => {
       const nodes = reactFlowInstance.getNodes();
@@ -318,12 +323,9 @@ export const EditorApp = React.forwardRef<
             break;
           case 'position':
             if ((change as NodePositionChange).position) {
-              node.annotations['ui.position.x'] = (
-                change as NodePositionChange
-              ).position?.x;
-              node.annotations['ui.position.y'] = (
-                change as NodePositionChange
-              ).position?.y;
+              node.setAnnotation(xpos, (change as NodePositionChange).position!.x);
+              node.setAnnotation(ypos, (change as NodePositionChange).position!.y);
+
             }
             break;
         }
@@ -405,7 +407,7 @@ export const EditorApp = React.forwardRef<
           internalRef?.current.load(graph);
         }
       },
-      load: (loadedGraph: Graph) => {
+      load: (loadedGraph: FullyFeaturedGraph) => {
         //Read the annotaions
         const viewport = loadedGraph.annotations[uiViewport];
 
@@ -462,7 +464,7 @@ export const EditorApp = React.forwardRef<
         });
         //Execute the graph once to propagate values and update the UI
 
-        loadedGraph.execute().catch((e: BatchRunError) => {
+        loadedGraph.capabilities.dataFlow.execute().catch((e: BatchRunError) => {
           dispatch.graph.appendLog({
             type: 'error',
             time: new Date(),
@@ -565,7 +567,7 @@ export const EditorApp = React.forwardRef<
       const PassthroughFactory = await frame.nodeLoader(PASSTHROUGH);
 
       const newNode = new PassthroughFactory({
-        graph,
+        graph:graph as unknown as Graph
       });
 
       newNode.annotations[uiNodeType] = PASSTHROUGH;
@@ -582,14 +584,14 @@ export const EditorApp = React.forwardRef<
       graph.removeEdge(clickedEdge.id);
 
       const aEdge = {
-        id: uuidv4(),
+        id: uuid(),
         source: clickedEdge.source,
         target: newNode.id,
         sourceHandle: clickedEdge.sourceHandle,
         targetHandle: 'value',
       };
       const bEdge = {
-        id: uuidv4(),
+        id: uuid(),
         source: newNode.id,
         sourceHandle: 'value',
         target: clickedEdge.target,
@@ -599,7 +601,7 @@ export const EditorApp = React.forwardRef<
       graph.createEdge(aEdge);
       graph.createEdge(bEdge);
 
-      graph.update(newNode.id);
+      graph.capabilities.data.update(newNode.id);
       setNodes((nds) => [...nds, editorNode]);
 
       setEdges((eds) => {
@@ -697,7 +699,7 @@ export const EditorApp = React.forwardRef<
         newNodes.filter((x) => !!x).map((x) => x?.flowNode ?? ({} as Node)),
       );
     },
-    [handleSelectNewNodeType, reactFlowInstance],
+    [handleSelectNewNodeType, reactFlowInstance, selectAddedNodes],
   );
   const nodeCount = nodes.length;
   return (

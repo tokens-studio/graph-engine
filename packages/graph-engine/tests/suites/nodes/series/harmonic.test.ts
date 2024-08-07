@@ -1,10 +1,9 @@
-import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/series/harmonic.js';
 
 describe('series/harmonic', () => {
 	test('generates the expected series', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.base.setValue(16);

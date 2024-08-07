@@ -1,10 +1,9 @@
-import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/array/reverse.js';
 
 describe('array/reverse', () => {
 	test('does a non mutative reverse', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		const array = [1, 2, 3];

@@ -1,8 +1,8 @@
-import { Node } from '../../programmatic/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { SecretCapability } from '../../capabilities/secret.js';
 import { StringSchema } from '../../schemas/index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Retrieve Secret';
 	static type = 'studio.tokens.secret.retrieve';
 
@@ -16,13 +16,13 @@ export default class NodeDefinition extends Node {
 	constructor(props) {
 		super(props);
 
-		this.addInput('secret', {
+		this.dataflow.addInput('secret', {
 			type: StringSchema
 		});
-		this.addInput('key', {
+		this.dataflow.addInput('key', {
 			type: StringSchema
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: StringSchema
 		});
 	}

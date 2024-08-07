@@ -5,15 +5,15 @@ import {
 	StringSchema
 } from '../../schemas/index.js';
 import { Color as ColorType } from '../../types.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { setToPrecision } from '../../utils/precision.js';
 
 export const colorSpaces = ['Lab', 'ICtCp', 'Jzazbz'] as const;
 
 export type ColorSpace = (typeof colorSpaces)[number];
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Distance';
 	static type = 'studio.tokens.color.distance';
 	static description =
@@ -22,35 +22,34 @@ export default class NodeDefinition extends Node {
 	declare inputs: ToInput<{
 		colorA: ColorType;
 		colorB: ColorType;
-		space: ColorSpace;
 		precision: number;
 	}>;
 
 	declare outputs: ToOutput<{
-		value: number;
+		value: ColorType;
 	}>;
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('colorA', {
+		this.dataflow.addInput('colorA', {
 			type: {
 				...ColorSchema,
 				default: White
 			}
 		});
-		this.addInput('colorB', {
+		this.dataflow.addInput('colorB', {
 			type: {
 				...ColorSchema,
 				default: Black
 			}
 		});
-		this.addInput('precision', {
+		this.dataflow.addInput('precision', {
 			type: {
 				...NumberSchema,
 				default: 4
 			}
 		});
-		this.addInput('space', {
+		this.dataflow.addInput('space', {
 			type: {
 				...StringSchema,
 				enum: colorSpaces,
@@ -58,7 +57,7 @@ export default class NodeDefinition extends Node {
 			}
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: NumberSchema
 		});
 	}

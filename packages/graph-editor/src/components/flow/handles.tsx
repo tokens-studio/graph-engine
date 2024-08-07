@@ -84,7 +84,7 @@ export const Handle = (props: HandleProps) => {
     shouldHideHandles = false,
     error,
     backgroundColor,
-    isArray,
+    variant,
     type: dataType,
     variadic,
     isAnchor,

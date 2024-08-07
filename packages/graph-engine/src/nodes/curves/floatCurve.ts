@@ -1,6 +1,6 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { FloatCurve, INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { FloatCurveSchema, NumberSchema } from '../../schemas/index.js';
-import { Node } from '../../programmatic/node.js';
 
 export function cubicBezier(p0, c1, c2, p1, t) {
 	return (
@@ -10,7 +10,7 @@ export function cubicBezier(p0, c1, c2, p1, t) {
 		t ** 3 * p1
 	);
 }
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Sample Float Curve';
 	static type = 'studio.tokens.curve.sampleFloat';
 	static description = 'Evaluates a float curve at a given x value';
@@ -26,10 +26,10 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('curve', {
+		this.dataflow.addInput('curve', {
 			type: FloatCurveSchema
 		});
-		this.addInput('x', {
+		this.dataflow.addInput('x', {
 			type: {
 				...NumberSchema,
 				minimum: 0,
@@ -37,7 +37,7 @@ export default class NodeDefinition extends Node {
 				default: 0
 			}
 		});
-		this.addOutput('y', {
+		this.dataflow.addOutput('y', {
 			type: NumberSchema
 		});
 	}

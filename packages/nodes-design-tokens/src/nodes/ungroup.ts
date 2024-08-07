@@ -1,14 +1,14 @@
-import { DeepKeyTokenMap } from '@tokens-studio/types';
 import {
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	StringSchema,
 	ToInput,
 	ToOutput
 } from '@tokens-studio/graph-engine';
+import { DeepKeyTokenMap } from '@tokens-studio/types';
 import { TokenSetSchema } from '../schemas/index.js';
 
-export default class UngroupNode extends Node {
+export default class UngroupNode extends DataflowNode {
 	static title = 'Ungroup tokens';
 	static type = 'studio.tokens.design.ungroup';
 	static description = 'Ungroups tokens by removing their namespace';
@@ -24,13 +24,13 @@ export default class UngroupNode extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('name', {
+		this.dataflow.addInput('name', {
 			type: StringSchema
 		});
-		this.addInput('tokenSet', {
+		this.dataflow.addInput('tokenSet', {
 			type: TokenSetSchema
 		});
-		this.addOutput('tokenSet', {
+		this.dataflow.addOutput('tokenSet', {
 			type: TokenSetSchema
 		});
 	}

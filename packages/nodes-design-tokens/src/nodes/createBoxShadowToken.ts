@@ -1,6 +1,6 @@
 import {
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	ObjectSchema,
 	StringSchema,
 	ToInput,
@@ -15,7 +15,7 @@ import type {
 	TokenBoxshadowValue
 } from '@tokens-studio/types';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Create Box Shadow Design Token';
 	static type = 'studio.tokens.design.createBoxShadowToken';
 	static description = 'Creates a design token from inputs';
@@ -34,30 +34,30 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('name', {
+		this.dataflow.addInput('name', {
 			type: StringSchema
 		});
 
-		this.addInput('reference', {
+		this.dataflow.addInput('reference', {
 			type: StringSchema
 		});
 
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: arrayOf(TokenBoxShadowSchema)
 		});
 
-		this.addInput('description', {
+		this.dataflow.addInput('description', {
 			type: StringSchema
 		});
 
-		this.addInput('$extensions', {
+		this.dataflow.addInput('$extensions', {
 			type: {
 				...ObjectSchema,
 				default: undefined
 			}
 		});
 
-		this.addOutput('token', {
+		this.dataflow.addOutput('token', {
 			type: TokenSchema
 		});
 	}

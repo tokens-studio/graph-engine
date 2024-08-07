@@ -1,4 +1,4 @@
-import { ANY, canConvertSchemaTypes } from '@tokens-studio/graph-engine';
+import { ANY, ControlFlowPort, DataFlowPort, canConvertSchemaTypes } from '@tokens-studio/graph-engine';
 import { Connection, useReactFlow } from 'reactflow';
 import { stripVariadic } from '@/utils/stripVariadic.js';
 import { useCallback } from 'react';
@@ -13,6 +13,9 @@ export interface IuseIsValidConnection {
 export interface IuseIsValidConnection {
   postProcessor?: (connection: Connection) => boolean;
 }
+
+
+type TypedPort = ControlFlowPort | DataFlowPort;
 
 export const useIsValidConnection = ({
   postProcessor,
@@ -36,7 +39,7 @@ export const useIsValidConnection = ({
 
       const strippedVariadic = stripVariadic(connection.targetHandle!);
 
-      let targetType = target?.inputs[strippedVariadic].type;
+      let targetType = (target?.inputs[strippedVariadic] as TypedPort).type;
 
       //They are trying to create a dynamic input. Allow non dynamic sets to connect
       if (
@@ -46,11 +49,20 @@ export const useIsValidConnection = ({
         return !target.inputs[strippedVariadic]?.isConnected;
       }
 
-      let sourceType = connection.sourceHandle
-        ? source?.outputs[connection.sourceHandle].type
-        : null;
+      const srcPort = source.outputs[connection.sourceHandle!];
+      const tgtPort = target.inputs[strippedVariadic];
 
-      if (target.inputs[strippedVariadic].type.items) {
+      //Do not allow connections of different port types
+      if (srcPort && tgtPort) {
+        if (srcPort.pType !== tgtPort.pType) {
+          return false
+        }
+      }
+
+
+      let sourceType = (srcPort as TypedPort).type || null;
+
+      if ((target.inputs[strippedVariadic] as TypedPort).type.items) {
         targetType = target.inputs[strippedVariadic].type.items;
       }
       if (source.outputs[connection.sourceHandle!].type.items) {

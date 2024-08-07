@@ -53,11 +53,8 @@ export const LayoutDropdown = () => {
       </Tooltip>
       <DropdownMenu.Portal>
         <DropdownMenu.Content style={{ minWidth: '200px' }}>
-          <DropdownMenu.Item onSelect={() => onClick('inputs')}>
-            Input
-          </DropdownMenu.Item>
-          <DropdownMenu.Item onSelect={() => onClick('outputs')}>
-            Output
+          <DropdownMenu.Item onSelect={() => onClick('nodeSheet')}>
+            Node Sheet
           </DropdownMenu.Item>
           <DropdownMenu.Item onSelect={() => onClick('nodeSettings')}>
             Node Settings
@@ -77,7 +74,9 @@ export const LayoutDropdown = () => {
           <DropdownMenu.Item onSelect={() => onClick('dropPanel')}>
             Nodes
           </DropdownMenu.Item>
-
+          <DropdownMenu.Item onSelect={() => onClick('keyboardShortcuts')}>
+            Keyboard Shortcuts
+          </DropdownMenu.Item>
           <DropdownMenu.Separator />
           <DropdownMenu.Item onSelect={saveLayout}>
             Save Layout

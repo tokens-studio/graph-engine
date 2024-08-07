@@ -1,8 +1,8 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { NumberSchema } from '../../schemas/index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Multiply';
 	static type = 'studio.tokens.math.multiply';
 	static description = 'Multiply node allows you to multiply two  numbers.';
@@ -16,13 +16,13 @@ export default class NodeDefinition extends Node {
 	}>;
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('a', {
+		this.dataflow.addInput('a', {
 			type: NumberSchema
 		});
-		this.addInput('b', {
+		this.dataflow.addInput('b', {
 			type: NumberSchema
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: NumberSchema
 		});
 	}

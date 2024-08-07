@@ -1,14 +1,14 @@
 import {
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	StringSchema,
 	ToInput,
 	ToOutput
 } from '@tokens-studio/graph-engine';
 import { TokenBoxShadowSchema } from '../schemas/index.js';
-import type { TokenBoxshadowValue } from '@tokens-studio/types';
+import type { BoxShadowTypes, TokenBoxshadowValue } from '@tokens-studio/types';
 
-export default class CreateBoxShadowNode extends Node {
+export default class CreateBoxShadowNode extends DataflowNode {
 	static title = 'Create a Box Shadow';
 	static type = 'studio.tokens.design.createBoxShadow';
 	static description = 'Creates a composite box shadow value from inputs';
@@ -19,7 +19,8 @@ export default class CreateBoxShadowNode extends Node {
 		blur: string;
 		spread: string;
 		color: string;
-		type: string;
+		type: BoxShadowTypes;
+		blendMode?: string;
 	}>;
 
 	declare outputs: ToOutput<{
@@ -28,25 +29,28 @@ export default class CreateBoxShadowNode extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('x', {
+		this.dataflow.addInput('x', {
 			type: StringSchema
 		});
-		this.addInput('y', {
+		this.dataflow.addInput('y', {
 			type: StringSchema
 		});
-		this.addInput('blur', {
+		this.dataflow.addInput('blur', {
 			type: StringSchema
 		});
-		this.addInput('spread', {
+		this.dataflow.addInput('spread', {
 			type: StringSchema
 		});
-		this.addInput('color', {
+		this.dataflow.addInput('color', {
 			type: StringSchema
 		});
-		this.addInput('type', {
+		this.dataflow.addInput('type', {
 			type: StringSchema
 		});
-		this.addOutput('value', {
+		this.dataflow.addInput('blendMode', {
+			type: StringSchema
+		});
+		this.dataflow.addOutput('value', {
 			type: TokenBoxShadowSchema
 		});
 	}

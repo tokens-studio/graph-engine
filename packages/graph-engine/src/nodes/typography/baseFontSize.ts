@@ -1,9 +1,9 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { NumberSchema } from '../../schemas/index.js';
 import { setToPrecision } from '../../utils/precision.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Base Font Size';
 	static type = 'studio.tokens.typography.baseFontSize';
 
@@ -30,58 +30,58 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('visualAcuity', {
+		this.dataflow.addInput('visualAcuity', {
 			type: {
 				...NumberSchema,
 				default: 0.7
 			}
 		});
-		this.addInput('correctionFactor', {
+		this.dataflow.addInput('correctionFactor', {
 			type: {
 				...NumberSchema,
 				default: 13
 			}
 		});
-		this.addInput('lightingCondition', {
+		this.dataflow.addInput('lightingCondition', {
 			type: {
 				...NumberSchema,
 				default: 0.83
 			}
 		});
-		this.addInput('distance', {
+		this.dataflow.addInput('distance', {
 			type: {
 				...NumberSchema,
 				default: 30
 			}
 		});
 
-		this.addInput('xHeightRatio', {
+		this.dataflow.addInput('xHeightRatio', {
 			type: {
 				...NumberSchema,
 				default: 0.53
 			}
 		});
 
-		this.addInput('ppi', {
+		this.dataflow.addInput('ppi', {
 			type: {
 				...NumberSchema,
 				default: 458
 			}
 		});
-		this.addInput('pixelDensity', {
+		this.dataflow.addInput('pixelDensity', {
 			type: {
 				...NumberSchema,
 				default: 3
 			}
 		});
-		this.addInput('precision', {
+		this.dataflow.addInput('precision', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: {
 				...NumberSchema,
 				description: 'The generated font size'

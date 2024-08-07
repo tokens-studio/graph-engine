@@ -1,7 +1,7 @@
 import { Curve } from '../../types.js';
 import { CurveSchema, NumberSchema, Vec2Schema } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 
 const scaleVec = (vec, scale) => vec.map(v => v * scale);
 const addVec = (vec1, vec2) => vec1.map((v, i) => v + vec2[i]);
@@ -18,7 +18,7 @@ const sampleBezier = (bezier: Curve['curves'][0], sample) => {
 	].reduce(addVec, [0, 0]);
 };
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Sample Curve';
 	static type = 'studio.tokens.curve.sample';
 	static description = 'Samples a curve at a specified point';
@@ -39,28 +39,26 @@ export default class NodeDefinition extends Node {
 		 * A 2D vector representing the value of the curve at the sample point
 		 */
 		value: [number, number];
-		x: number;
-		y: number;
 	}>;
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('curve', {
+		this.dataflow.addInput('curve', {
 			type: CurveSchema
 		});
-		this.addInput('sample', {
+		this.dataflow.addInput('sample', {
 			type: {
 				...NumberSchema,
 				default: 0.5
 			}
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: Vec2Schema
 		});
-		this.addOutput('x', {
+		this.dataflow.addOutput('x', {
 			type: NumberSchema
 		});
-		this.addOutput('y', {
+		this.dataflow.addOutput('y', {
 			type: NumberSchema
 		});
 	}

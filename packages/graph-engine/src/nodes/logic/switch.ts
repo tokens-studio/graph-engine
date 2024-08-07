@@ -1,7 +1,8 @@
 import { AnySchema, StringSchema } from '../../schemas/index.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
-import { ToInput } from '../../programmatic/input.js';
-import { ToOutput } from '../../programmatic/output.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
+import { ToInput } from '../../programmatic/dataflow/input.js';
+import { ToOutput } from '../../programmatic/dataflow/output.js';
 import { annotatedDynamicInputs } from '../../annotations/index.js';
 
 /**
@@ -22,7 +23,7 @@ import { annotatedDynamicInputs } from '../../annotations/index.js';
  *
  * ```
  */
-export default class NodeDefinition<T> extends Node {
+export default class NodeDefinition<T> extends DataflowNode {
 	static title = 'Switch';
 	static type = 'studio.tokens.logic.switch';
 	static description =
@@ -41,15 +42,15 @@ export default class NodeDefinition<T> extends Node {
 
 		this.annotations[annotatedDynamicInputs] = true;
 
-		this.addInput('default', {
+		this.dataflow.addInput('default', {
 			type: AnySchema
 		});
 
-		this.addInput('condition', {
+		this.dataflow.addInput('condition', {
 			type: StringSchema
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: AnySchema
 		});
 	}
@@ -59,8 +60,8 @@ export default class NodeDefinition<T> extends Node {
 		const defaultVal = this.inputs.default;
 
 		//Check if an input matches the condition
-		if (this.inputs[condition as keyof typeof this.inputs]) {
-			const input = this.inputs[condition as keyof typeof this.inputs];
+		if (this.inputs[condition]) {
+			const input = this.inputs[condition];
 			this.outputs.value.set(input.value, input.type);
 			return;
 		}

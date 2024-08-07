@@ -1,6 +1,6 @@
 import {
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	ToInput,
 	ToOutput
 } from '@tokens-studio/graph-engine';
@@ -8,7 +8,7 @@ import { SingleToken } from '@tokens-studio/types';
 import { TokenSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
 
-export default class InvertNode extends Node {
+export default class InvertNode extends DataflowNode {
 	static title = 'Invert Token Set';
 	static type = 'studio.tokens.design.invert';
 	static description = 'Inverts the order of a set of tokens';
@@ -22,10 +22,10 @@ export default class InvertNode extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('tokens', {
+		this.dataflow.addInput('tokens', {
 			type: arrayOf(TokenSchema)
 		});
-		this.addOutput('tokens', {
+		this.dataflow.addOutput('tokens', {
 			type: arrayOf(TokenSchema)
 		});
 	}

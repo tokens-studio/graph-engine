@@ -1,6 +1,6 @@
 import {
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	StringSchema,
 	ToInput,
 	ToOutput
@@ -8,7 +8,7 @@ import {
 import { TokenBorderSchema } from '../schemas/index.js';
 import type { TokenBorderValue } from '@tokens-studio/types';
 
-export default class CreateBorderNode extends Node {
+export default class CreateBorderNode extends DataflowNode {
 	static title = 'Create a Border';
 	static type = 'studio.tokens.design.createBorder';
 	static description = 'Creates a composite Border value from inputs';
@@ -25,17 +25,17 @@ export default class CreateBorderNode extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('color', {
+		this.dataflow.addInput('color', {
 			type: StringSchema
 		});
-		this.addInput('width', {
+		this.dataflow.addInput('width', {
 			type: StringSchema
 		});
-		this.addInput('style', {
+		this.dataflow.addInput('style', {
 			type: StringSchema
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: TokenBorderSchema
 		});
 	}

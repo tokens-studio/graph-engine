@@ -42,6 +42,7 @@
     "@bundled-es-modules/deepmerge": "^4.3.1",
     "@tokens-studio/types": "^0.5.1",
     "ajv": "^8.17.1",
+    "axios": "^1.7.3",
     "color-blind-esm": "^0.1.4",
     "colorjs.io": "^0.5.2",
     "compare-versions": "^6.1.0",
@@ -51,9 +52,9 @@
     "lodash-es": "^4.17.21",
     "mdn-data": "^2.3.0",
     "mobx": "^6.12.0",
+    "nanoid": "^5.0.7",
     "poline": "^0.7.0",
     "postcss-value-parser-esm": "^4.2.0",
-    "uuid": "^9.0.1",
     "z-schema-esm": "^6.0.1"
   },
   "devDependencies": {

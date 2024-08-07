@@ -36,13 +36,13 @@ export default class MyCustomNode extends Node {
   //You will likely want to expose input and output ports for the node
   constructor(props: INodeDefinition) {
     super(props);
-    this.addInput("a", {
+    this.dataflow.addInput("a", {
       type: NumberSchema,
     });
-    this.addInput("b", {
+    this.dataflow.addInput("b", {
       type: NumberSchema,
     });
-    this.addOutput("value", {
+    this.dataflow.addOutput("value", {
       type: NumberSchema,
     });
   }

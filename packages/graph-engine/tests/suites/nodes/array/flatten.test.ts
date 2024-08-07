@@ -1,6 +1,5 @@
-import { Graph } from '../../../../src/graph/graph.js';
-import { NumberSchema } from '../../../../src/index.js';
-import { arrayOf } from '../../../../src/schemas/utils.js';
+import { NumberSchema } from '@/index.js';
+import { arrayOf } from '@/schemas/utils.js';
 import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/array/flatten.js';
 

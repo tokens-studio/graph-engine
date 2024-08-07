@@ -3,7 +3,8 @@ import { AudioBufferSchema } from '../schemas/index.js';
 import {
 	INodeDefinition,
 	NumberSchema,
-	ToInput
+	ToInput,
+	ToOutput
 } from '@tokens-studio/graph-engine';
 
 export class AudioWhiteNoiseNode extends AudioBaseNode {
@@ -21,24 +22,28 @@ export class AudioWhiteNoiseNode extends AudioBaseNode {
 		channels: number;
 	}>;
 
+	declare outputs: ToOutput<{
+		buffer: AudioBuffer;
+	}>;
+
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.addInput('channels', {
+		this.dataflow.addInput('channels', {
 			type: {
 				...NumberSchema,
 				default: 1
 			},
 			visible: true
 		});
-		this.addInput('length', {
+		this.dataflow.addInput('length', {
 			type: {
 				...NumberSchema,
 				default: 3
 			},
 			visible: true
 		});
-		this.addOutput('buffer', {
+		this.dataflow.addOutput('buffer', {
 			type: AudioBufferSchema,
 			visible: true
 		});

@@ -1,5 +1,7 @@
+import { DataFlowPort } from '@/programmatic/dataflow/base.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { IDeserializeOpts } from '../../graph/types.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import {
 	annotatedDynamicInputs,
 	annotatedSingleton
@@ -9,7 +11,7 @@ import { getAllOutputs } from '@/utils/node.js';
 /**
  * Acts as an output node for the graph. There should only be a single output node per graph.
  */
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Output';
 	static type = 'studio.tokens.generic.output';
 
@@ -20,13 +22,16 @@ export default class NodeDefinition extends Node {
 		this.annotations[annotatedDynamicInputs] = true;
 	}
 
+	declare inputs: Record<string, DataFlowPort>;
+	declare outputs: Record<string, DataFlowPort>;
+
 	static override async deserialize(opts: IDeserializeOpts) {
-		const node = await super.deserialize(opts);
+		const node = (await super.deserialize(opts)) as DataflowNode;
 
 		//Create the outputs immediately as we are just a passthrough
 		Object.keys(node.inputs).forEach(input => {
 			const rawInput = node.inputs[input];
-			node.addOutput(input, {
+			node.dataflow.addOutput(input, {
 				visible: false,
 				type: rawInput.type
 			});
@@ -44,7 +49,7 @@ export default class NodeDefinition extends Node {
 			const rawInput = this.inputs[input];
 
 			if (!(input in outputs)) {
-				this.addOutput(input, {
+				this.dataflow.addOutput(input, {
 					type: rawInput.type,
 					visible: false
 				});

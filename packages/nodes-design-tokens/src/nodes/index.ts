@@ -22,12 +22,11 @@ import SetToArrayNode from './setToArray.js';
 import UngroupNode from './ungroup.js';
 import arrayToSet from './arrayToSet.js';
 import create from './create.js';
-import type { Node } from '@tokens-studio/graph-engine';
 
 /**
  * All nodes in the system available as an array
  */
-export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
+export const nodes = [].concat(
 	arrayToSet,
 	ExtractTokenNode,
 

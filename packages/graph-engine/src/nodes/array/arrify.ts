@@ -3,9 +3,10 @@ import {
 	AnySchema,
 	createVariadicSchema
 } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
-export default class NodeDefinition<T> extends Node {
+
+export default class NodeDefinition<T> extends DataflowNode {
 	static title = 'Arrify';
 	static type = 'studio.tokens.array.arrify';
 	static description =
@@ -20,14 +21,14 @@ export default class NodeDefinition<T> extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('items', {
+		this.dataflow.addInput('items', {
 			type: {
 				...createVariadicSchema(AnySchema),
 				default: []
 			},
 			variadic: true
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: AnyArraySchema
 		});
 	}

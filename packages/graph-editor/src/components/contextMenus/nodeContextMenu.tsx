@@ -1,5 +1,7 @@
+import { ContextMenuItem } from './ContextMenuStyles.js';
+import { DataflowNode } from '@tokens-studio/graph-engine';
 import { Graph } from 'graphlib';
-import { Item, Menu, Separator } from 'react-contexify';
+import { Menu, Separator } from 'react-contexify';
 import { Node, ReactFlowInstance, useReactFlow } from 'reactflow';
 import { useAction } from '@/editor/actions/provider.js';
 import { useCanDeleteNode } from '@/hooks/useCanDeleteNode.js';
@@ -153,7 +155,7 @@ export const NodeContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
       nodes.forEach((node) => {
         const graphNode = graph.getNode(node.id);
         if (graphNode) {
-          graphNode.run();
+          (graphNode as DataflowNode).dataflow?.run();
         }
       });
     }
@@ -167,11 +169,11 @@ export const NodeContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
       <Separator />
       {nodes?.length == 1 && (
         <>
-          <Item onClick={onTraceSource}>Trace Upstream</Item>
-          <Item onClick={onTraceTarget}>Trace Downstream</Item>
+          <ContextMenuItem onClick={onTraceSource}>Trace Upstream</ContextMenuItem>
+          <ContextMenuItem onClick={onTraceTarget}>Trace Downstream</ContextMenuItem>
         </>
       )}
-      <Item onClick={onResetTrace}>Reset Trace</Item>
+      <ContextMenuItem onClick={onResetTrace}>Reset Trace</ContextMenuItem>
       <Separator />
       <Item disabled={!isDeletable} onClick={deleteEl}>
         Delete

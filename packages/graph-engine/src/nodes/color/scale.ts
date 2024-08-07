@@ -1,11 +1,11 @@
 import { Color } from '../../types.js';
 import { ColorSchema, NumberSchema } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { Red, toColor, toColorObject } from './lib/utils.js';
 import { arrayOf } from '../../schemas/utils.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Scale colors';
 	static type = 'studio.tokens.color.scale';
 	static description =
@@ -22,25 +22,25 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('color', {
+		this.dataflow.addInput('color', {
 			type: {
 				...ColorSchema,
 				default: Red
 			}
 		});
-		this.addInput('stepsUp', {
+		this.dataflow.addInput('stepsUp', {
 			type: {
 				...NumberSchema,
 				default: 5
 			}
 		});
-		this.addInput('stepsDown', {
+		this.dataflow.addInput('stepsDown', {
 			type: {
 				...NumberSchema,
 				default: 5
 			}
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: arrayOf(ColorSchema)
 		});
 	}

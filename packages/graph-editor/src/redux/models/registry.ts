@@ -17,7 +17,7 @@ export const registryState = createModel<RootModel>()({
   state: {
     inputControls: { ...inputControls },
     schemas: AllSchemas,
-  } as RegistryState,
+  } as unknown as RegistryState,
   reducers: {
     setSchemas(state, schemas: SchemaObject[]) {
       return {

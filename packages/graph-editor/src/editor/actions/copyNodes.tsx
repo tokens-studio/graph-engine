@@ -1,6 +1,6 @@
 import { Node, ReactFlowInstance } from 'reactflow';
 import { SerializedNode } from '@/types/serializedNode.js';
-import { v4 as uuidv4 } from 'uuid';
+import { nanoid as uuid } from 'nanoid'
 
 export const copyNodeAction = (
   reactFlowInstance: ReactFlowInstance,
@@ -11,7 +11,7 @@ export const copyNodeAction = (
     const { addNodes } = await nodes.reduce(
       async (acc, node) => {
         const resolvedAcc = await acc;
-        const newID = uuidv4();
+        const newID = uuid();
         if (node.engine) {
           const graphNode = graph.getNode(node.engine.id);
           const newGraphNode = await graphNode?.factory.deserialize(

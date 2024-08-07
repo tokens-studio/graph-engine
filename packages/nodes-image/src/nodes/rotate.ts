@@ -4,7 +4,9 @@ import {
   INodeDefinition,
   NumberSchema,
   ToInput,
+  ToOutput,
 } from "@tokens-studio/graph-engine";
+import { Image } from "src/schemas/types.js";
 import { ImageSchema } from "../schemas/index.js";
 
 export class RotateNode extends BaseNode {
@@ -15,15 +17,20 @@ export class RotateNode extends BaseNode {
     image: ImageData;
     degrees: number;
   }>;
+
+  declare outputs: ToOutput<{
+    image: Image;
+  }>;
+
   constructor(props: INodeDefinition) {
     super(props);
-    this.addInput("image", {
+    this.dataflow.addInput("image", {
       type: ImageSchema,
     });
-    this.addInput("degrees", {
+    this.dataflow.addInput("degrees", {
       type: NumberSchema,
     });
-    this.addOutput("image", {
+    this.dataflow.addOutput("image", {
       type: ImageSchema,
     });
   }

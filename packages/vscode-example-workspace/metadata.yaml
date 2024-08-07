@@ -1,0 +1,17 @@
+# These options are global for all files in the workspace
+editor:
+  version: 4.0.0
+  layout: full
+  options:
+    showInlineTypes: true
+    showInlineValues: true
+    useDelayedInteraction: true
+    clickToConnect: true
+    showExecutionTime: true
+    showMinimap: true
+    enableContextMenus: true
+    edgeType: "bezier"
+    layoutType: "dagre"
+logs:
+  output: "./output.log"
+

@@ -36,6 +36,6 @@ export const ActionProvider = ({ children, actions }: ActionProviderProps) => {
 export const useAction = <T extends keyof Actions>(
   actionName: T,
 ): Actions[T] => {
-  const actions = React.useContext<Actions>(ContextProvider);
+  const actions = React.useContext(ContextProvider) as Actions;
   return actions[actionName];
 };

@@ -1,26 +1,29 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { Graph } from '../../graph/graph.js';
 import {
 	IDeserializeOpts,
 	SerializedGraph,
 	SerializedNode
 } from '../../graph/types.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
+import { WithDataFlow } from '@/capabilities/dataflow.js';
 import {
 	annotatedDeleteable,
 	hideFromParentSubgraph
 } from '../../annotations/index.js';
 import { autorun } from 'mobx';
+import { injectCapabilities } from '@/utils/graph.js';
 import InputNode from './input.js';
 import OutputNode from './output.js';
 
 export interface SerializedSubgraphNode extends SerializedNode {
-	innergraph?: SerializedGraph;
+	innergraph: SerializedGraph;
 }
 export interface ISubgraphNode extends INodeDefinition {
 	innergraph?: Graph;
 }
 
-export default class SubgraphNode extends Node {
+export default class SubgraphNode extends DataflowNode {
 	static title = 'Subgraph';
 	static type = 'studio.tokens.generic.subgraph';
 	static description = 'Allows you to run another subgraph internally';
@@ -34,10 +37,11 @@ export default class SubgraphNode extends Node {
 		this._innerGraph = props.innergraph || new Graph();
 
 		//Pass capabilities down
-		this._innerGraph.capabilities = this.getGraph().capabilities;
+		//Pass capabilities down
+		injectCapabilities(this.getGraph(), this._innerGraph);
 
-		let input: InputNode | undefined = undefined;
-		let output: OutputNode | undefined = undefined;
+		let input: InputNode;
+		let output: OutputNode;
 
 		if (!existing) {
 			input = new InputNode({ graph: this._innerGraph });
@@ -57,20 +61,20 @@ export default class SubgraphNode extends Node {
 					output = node as OutputNode;
 				}
 			});
-		}
 
-		if (!input) throw new Error('No input node found');
-		if (!output) throw new Error('No output node found');
+			if (!input) throw new Error('No input node found');
+			if (!output) throw new Error('No output node found');
+		}
 
 		autorun(() => {
 			//Get the existing inputs
 			const existing = this.inputs;
 			//Iterate through the inputs of the input node in the inner graph
-			Object.entries(input!.inputs).map(([key, value]) => {
+			Object.entries(input.inputs).map(([key, value]) => {
 				//If the key doesn't exist in the existing inputs, add it
 				if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
 					//Always add it as visible
-					this.addInput(key, {
+					this.dataflow.addInput(key, {
 						type: value.type
 					});
 					this.inputs[key].setValue(value.value, {
@@ -91,11 +95,11 @@ export default class SubgraphNode extends Node {
 		autorun(() => {
 			const existing = this.outputs;
 			const existingPorts = Object.keys(existing);
-			Object.entries(output!.inputs).map(([key, value]) => {
+			Object.entries(output.inputs).map(([key, value]) => {
 				//If the key doesn't exist in the existing inputs, add it
 				if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
 					//Always add it as visible
-					this.addOutput(key, {
+					this.dataflow.addOutput(key, {
 						type: value.type
 					});
 					this.outputs[key].set(value.value, value.type);
@@ -108,7 +112,7 @@ export default class SubgraphNode extends Node {
 
 			//Remove any outputs that are no longer in the inner graph
 			existingPorts.forEach(port => {
-				if (!output!.inputs[port]) {
+				if (!output.inputs[port]) {
 					this.removeOutput(port);
 				}
 			});
@@ -124,12 +128,10 @@ export default class SubgraphNode extends Node {
 	}
 
 	static override async deserialize(opts: IDeserializeOpts) {
-		const serializedInner = (opts.serialized as SerializedSubgraphNode)
-			.innergraph;
-
-		const innergraph = serializedInner
-			? await new Graph().deserialize(serializedInner, opts.lookup)
-			: undefined;
+		const innergraph = await new Graph().deserialize(
+			(opts.serialized as SerializedSubgraphNode).innergraph,
+			opts.lookup
+		);
 
 		const node = (await super.deserialize({
 			...opts,
@@ -148,11 +150,13 @@ export default class SubgraphNode extends Node {
 			return acc;
 		}, {});
 
-		const result = await this._innerGraph.execute({
+		const result = await (
+			this._innerGraph as WithDataFlow<Graph>
+		).capabilities.dataFlow.execute({
 			inputs
 		});
 
-		Object.entries(result.output || {}).forEach(([key, value]) => {
+		Object.entries(result.output).forEach(([key, value]) => {
 			this.outputs[key].set(value.value, value.type);
 		});
 	}

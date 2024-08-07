@@ -46,28 +46,6 @@ export const ColorSchema: SchemaObject = {
 	required: ['channels', 'space']
 };
 
-export const COLOR_OBJECT = 'https://schemas.tokens.studio/colorObject.json';
-export const ColorObjectSchema: SchemaObject = {
-	$id: COLOR,
-	title: 'Color Object',
-	type: 'string'
-};
-
-export const DIMENSION = 'https://schemas.tokens.studio/dimension.json';
-export const DimensionSchema: SchemaObject = {
-	$id: DIMENSION,
-	title: 'Dimension',
-	type: 'object',
-	properties: {
-		value: {
-			type: NumberSchema
-		},
-		unit: {
-			type: StringSchema
-		}
-	}
-};
-
 export const ANY = 'https://schemas.tokens.studio/any.json';
 export const AnySchema: SchemaObject = {
 	$id: ANY,
@@ -248,17 +226,6 @@ export const Vec2Schema: SchemaObject = {
 	default: [0, 0]
 };
 
-export const VEC3 = 'https://schemas.tokens.studio/vec3.json';
-export const Vec3Schema: SchemaObject = {
-	$id: VEC3,
-	title: 'Vec3',
-	type: 'array',
-	minItems: 3,
-	maxItems: 3,
-	items: NumberSchema,
-	default: [0, 0, 0]
-};
-
 export const GRADIENT_STOP = 'https://schemas.tokens.studio/gradientStop.json';
 export const GradientStopSchema: SchemaObject = {
 	$id: GRADIENT_STOP,
@@ -319,17 +286,6 @@ export const GradientSchema: SchemaObject = {
 		}
 	}
 };
-
-export const BUFFER = 'https://schemas.tokens.studio/buffer.json';
-export const BufferSchema: SchemaObject = {
-	$id: BUFFER,
-	title: 'Buffer',
-	type: 'object',
-	default: null,
-	//Listing all the properties of a buffer is not practical
-	properties: {}
-};
-
 /**
  * Checks whether a schema can be converted to another schema
  * @param src
@@ -351,24 +307,6 @@ export const canConvertSchemaTypes = (
 		if (target.items?.$id === ANY) return true;
 	}
 
-	switch (src.$id) {
-		case NUMBER:
-			switch (target.$id) {
-				case STRING:
-					return true;
-				case BOOLEAN:
-					return true;
-			}
-			break;
-		case STRING: {
-			switch (target.$id) {
-				case NUMBER:
-					return true;
-				case BOOLEAN:
-					return true;
-			}
-		}
-	}
 	return false;
 };
 
@@ -385,22 +323,6 @@ export const convertSchemaType = (
 	targetSchema: SchemaObject,
 	src: any
 ) => {
-	switch (srcSchema.$id) {
-		case NUMBER:
-			switch (targetSchema.$id) {
-				case STRING:
-					return String(src);
-				case BOOLEAN:
-					return Boolean(src);
-			}
-			break;
-		case STRING:
-			switch (targetSchema.$id) {
-				case BOOLEAN:
-					return Boolean(src);
-			}
-			break;
-	}
 	return src;
 };
 
@@ -416,6 +338,5 @@ export const AllSchemas = [
 	ObjectSchema,
 	CurveSchema,
 	Vec2Schema,
-	Vec3Schema,
 	GradientStopSchema
 ];

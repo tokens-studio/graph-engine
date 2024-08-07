@@ -1,11 +1,11 @@
 import { Color } from '../../types.js';
 import { ColorSchema, StringSchema } from '../../schemas/index.js';
-import { ColorSpace, ColorSpaces } from './lib/spaces.js';
+import { ColorSpace, colorSpaces } from './lib/types.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { toColor, toColorObject } from './lib/utils.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Convert Color';
 	static type = 'studio.tokens.color.convert';
 	static description = 'Transforms a color from one space to another';
@@ -20,17 +20,17 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('color', {
+		this.dataflow.addInput('color', {
 			type: ColorSchema
 		});
-		this.addInput('space', {
+		this.dataflow.addInput('space', {
 			type: {
 				...StringSchema,
-				enum: ColorSpaces,
+				enum: colorSpaces,
 				default: 'srgb'
 			}
 		});
-		this.addOutput('color', {
+		this.dataflow.addOutput('color', {
 			type: ColorSchema
 		});
 	}
@@ -38,7 +38,7 @@ export default class NodeDefinition extends Node {
 	execute(): void | Promise<void> {
 		const { color, space } = this.getAllInputs();
 
-		if (!ColorSpaces.includes(space)) {
+		if (!colorSpaces.includes(space)) {
 			throw new Error('Invalid color space ' + space);
 		}
 

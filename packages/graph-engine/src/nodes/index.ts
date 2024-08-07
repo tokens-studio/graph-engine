@@ -7,19 +7,19 @@ import { nodes as generic } from './generic/index.js';
 import { nodes as gradient } from './gradient/index.js';
 import { nodes as logic } from './logic/index.js';
 import { nodes as math } from './math/index.js';
+import { nodes as network } from './network/index.js';
 import { nodes as preview } from './preview/index.js';
-import { nodes as search } from './search/index.js';
 import { nodes as series } from './series/index.js';
 import { nodes as string } from './string/index.js';
 import { nodes as typing } from './typing/index.js';
 import { nodes as typography } from './typography/index.js';
 import { nodes as vector2 } from './vector2/index.js';
-import type { Node } from '../programmatic/node.js';
+import type { Node } from '../programmatic/nodes/node.js';
 
 /**
  * All nodes in the system available as an array
  */
-export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
+export const nodes = [].concat(
 	accessibility,
 	array,
 	color,
@@ -30,12 +30,12 @@ export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
 	logic,
 	math,
 	preview,
-	search,
 	series,
 	string,
 	typing,
+	vector2,
 	typography,
-	vector2
+	network
 );
 
 /**

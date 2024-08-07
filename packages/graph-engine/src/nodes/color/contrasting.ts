@@ -7,13 +7,14 @@ import {
 } from '../../schemas/index.js';
 import { Color as ColorType } from '../../types.js';
 import { ContrastAlgorithm } from '../../types/index.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { ToInput, ToOutput } from '../../programmatic/index.js';
 
 /**
  * Performs a contrast calculation between two colors using APCA-W3 calcs
  */
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Contrasting Color';
 	static type = 'studio.tokens.color.contrasting';
 	static description =
@@ -34,46 +35,46 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('a', {
+		this.dataflow.addInput('a', {
 			type: {
 				...ColorSchema,
 				default: White
 			}
 		});
-		this.addInput('b', {
+		this.dataflow.addInput('b', {
 			type: {
 				...ColorSchema,
 				default: Black
 			}
 		});
-		this.addInput('background', {
+		this.dataflow.addInput('background', {
 			type: {
 				...ColorSchema,
 				default: White
 			}
 		});
 
-		this.addInput('algorithm', {
+		this.dataflow.addInput('algorithm', {
 			type: {
 				...StringSchema,
 				enum: Object.values(ContrastAlgorithm),
 				default: ContrastAlgorithm.APCA
 			}
 		});
-		this.addInput('threshold', {
+		this.dataflow.addInput('threshold', {
 			type: {
 				...NumberSchema,
 				default: 60
 			}
 		});
 
-		this.addOutput('sufficient', {
+		this.dataflow.addOutput('sufficient', {
 			type: BooleanSchema
 		});
-		this.addOutput('color', {
+		this.dataflow.addOutput('color', {
 			type: ColorSchema
 		});
-		this.addOutput('contrast', {
+		this.dataflow.addOutput('contrast', {
 			type: NumberSchema
 		});
 	}

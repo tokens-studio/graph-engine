@@ -1,11 +1,10 @@
-// src/nodes/string/interpolate.ts
-
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { StringSchema } from '../../schemas/index.js';
-import { ToInput, ToOutput } from '../../programmatic/index.js';
+import { ToInput, ToOutput } from '../../programmatic';
 import { annotatedDynamicInputs } from '../../annotations/index.js';
 
-export default class StringInterpolationNode extends Node {
+export default class StringInterpolationNode extends DataflowNode {
 	static title = 'Interpolation';
 	static type = 'studio.tokens.string.interpolate';
 	static description = 'Interpolates a string with provided values';
@@ -26,11 +25,11 @@ export default class StringInterpolationNode extends Node {
 
 		this.annotations[annotatedDynamicInputs] = true;
 
-		this.addInput('template', {
+		this.dataflow.addInput('template', {
 			type: StringSchema
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: StringSchema
 		});
 	}
@@ -52,7 +51,7 @@ export default class StringInterpolationNode extends Node {
 			this.outputs.value.set(interpolatedString);
 		} catch (error) {
 			this.error = new Error(
-				`Error during string interpolation: ${(error as Error).message}`
+				`Error during string interpolation: ${error.message}`
 			);
 		}
 	}

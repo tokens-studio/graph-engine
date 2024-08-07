@@ -1,6 +1,6 @@
 import {
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	ToInput,
 	ToOutput
 } from '@tokens-studio/graph-engine';
@@ -8,7 +8,7 @@ import { TokenSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
 import type { SingleToken } from '@tokens-studio/types';
 
-export default class InlineTokenNode extends Node {
+export default class InlineTokenNode extends DataflowNode {
 	static title = 'Inline Tokens';
 	static type = 'studio.tokens.design.inline';
 	static description =
@@ -24,11 +24,11 @@ export default class InlineTokenNode extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: arrayOf(TokenSchema),
 			visible: false
 		});
-		this.addOutput('tokens', {
+		this.dataflow.addOutput('tokens', {
 			type: arrayOf(TokenSchema)
 		});
 	}

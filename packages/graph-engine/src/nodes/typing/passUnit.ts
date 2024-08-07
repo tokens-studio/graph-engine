@@ -1,11 +1,12 @@
 import valueParser from 'postcss-value-parser-esm';
 
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { StringSchema } from '../../schemas/index.js';
 import { ToInput } from '../../programmatic/input.js';
 import { ToOutput } from '../../programmatic/output.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Pass unit';
 	static type = 'studio.tokens.typing.passUnit';
 	declare inputs: ToInput<{
@@ -18,16 +19,16 @@ export default class NodeDefinition extends Node {
 	static description = "Adds a unit to a value if it doesn't already have one";
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: StringSchema
 		});
-		this.addInput('fallback', {
+		this.dataflow.addInput('fallback', {
 			type: {
 				...StringSchema,
 				default: 'px'
 			}
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: StringSchema
 		});
 	}

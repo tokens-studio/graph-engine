@@ -4,11 +4,11 @@ import {
 	NumberSchema,
 	StringSchema
 } from '../../schemas/index.js';
-import { ColorSpace } from './lib/spaces.js';
+import { ColorSpace } from './lib/types.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 
-export default class DestructColorNode extends Node {
+export default class DestructColorNode extends DataflowNode {
 	static title = 'Deconstruct Color';
 	static type = 'studio.tokens.color.deconstruct';
 	static description =
@@ -46,23 +46,23 @@ export default class DestructColorNode extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('color', {
+		this.dataflow.addInput('color', {
 			type: ColorSchema
 		});
 
-		this.addOutput('space', {
+		this.dataflow.addOutput('space', {
 			type: StringSchema
 		});
-		this.addOutput('a', {
+		this.dataflow.addOutput('a', {
 			type: NumberSchema
 		});
-		this.addOutput('b', {
+		this.dataflow.addOutput('b', {
 			type: NumberSchema
 		});
-		this.addOutput('c', {
+		this.dataflow.addOutput('c', {
 			type: NumberSchema
 		});
-		this.addOutput('alpha', {
+		this.dataflow.addOutput('alpha', {
 			type: NumberSchema
 		});
 	}
@@ -75,17 +75,15 @@ export default class DestructColorNode extends Node {
 		}
 
 		this.outputs.space.set(color.space);
-
-		// Set channel values, defaulting to 0 if NaN
-		this.outputs.a.set(isNaN(color.channels[0]) ? 0 : color.channels[0]);
-		this.outputs.b.set(isNaN(color.channels[1]) ? 0 : color.channels[1]);
-		this.outputs.c.set(isNaN(color.channels[2]) ? 0 : color.channels[2]);
+		this.outputs.a.set(color.channels[0]);
+		this.outputs.b.set(color.channels[1]);
+		this.outputs.c.set(color.channels[2]);
 
 		// Only set alpha if it exists
 		if (color.alpha !== undefined) {
-			this.outputs.alpha!.set(color.alpha);
+			this.outputs.alpha.set(color.alpha);
 		} else {
-			this.outputs.alpha!.set(undefined);
+			this.outputs.alpha.set(undefined);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 import {
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	StringSchema,
 	ToInput,
 	ToOutput
@@ -8,7 +8,7 @@ import {
 import { TokenTypographySchema } from '../schemas/index.js';
 import type { TokenTypographyValue } from '@tokens-studio/types';
 
-export default class CreateTypographyNode extends Node {
+export default class CreateTypographyNode extends DataflowNode {
 	static title = 'Create a Typography';
 	static type = 'studio.tokens.design.createTypography';
 	static description = 'Creates a composite typography value from inputs';
@@ -30,33 +30,33 @@ export default class CreateTypographyNode extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('fontFamily', {
+		this.dataflow.addInput('fontFamily', {
 			type: StringSchema
 		});
-		this.addInput('fontWeight', {
+		this.dataflow.addInput('fontWeight', {
 			type: StringSchema
 		});
-		this.addInput('fontSize', {
-			type: StringSchema
-		});
-
-		this.addInput('lineHeight', {
-			type: StringSchema
-		});
-		this.addInput('letterSpacing', {
-			type: StringSchema
-		});
-		this.addInput('paragraphSpacing', {
-			type: StringSchema
-		});
-		this.addInput('textDecoration', {
-			type: StringSchema
-		});
-		this.addInput('textCase', {
+		this.dataflow.addInput('fontSize', {
 			type: StringSchema
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addInput('lineHeight', {
+			type: StringSchema
+		});
+		this.dataflow.addInput('letterSpacing', {
+			type: StringSchema
+		});
+		this.dataflow.addInput('paragraphSpacing', {
+			type: StringSchema
+		});
+		this.dataflow.addInput('textDecoration', {
+			type: StringSchema
+		});
+		this.dataflow.addInput('textCase', {
+			type: StringSchema
+		});
+
+		this.dataflow.addOutput('value', {
 			type: TokenTypographySchema
 		});
 	}
