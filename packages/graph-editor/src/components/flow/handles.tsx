@@ -35,7 +35,6 @@ export const HandleContainer = ({
   children,
   shouldHide = false,
   full,
-  isSmall,
   className,
 }: HolderProps) => {
   if (shouldHide) return null;
@@ -48,7 +47,6 @@ export const HandleContainer = ({
           flexBasis: full ? '100%' : '50%',
           position: 'relative',
           textAlign: type === 'source' ? 'right' : 'left',
-          minWidth: isSmall ? 'auto' : '150px',
         }}
         className={className}
       >
@@ -151,6 +149,11 @@ const HandleHolder = styled(Box, {
         minHeight: '1em',
       },
     },
+    isAnchor: {
+      true: {
+        padding: '$2 $2',
+      },
+    },
   },
 });
 
@@ -167,6 +170,7 @@ export interface HandleProps {
   //Inline typing info
   type?: string;
   variadic?: boolean;
+  isAnchor?: boolean;
 }
 
 export const Handle = (props: HandleProps) => {
@@ -182,6 +186,7 @@ export const Handle = (props: HandleProps) => {
     isConnected,
     backgroundColor,
     variadic,
+    isAnchor,
   } = props;
   const { position, type } = useHandle();
   const isValidConnection = useIsValidConnection();
@@ -192,6 +197,7 @@ export const Handle = (props: HandleProps) => {
   return (
     <HandleHolder
       collapsed={collapsed || shouldHide}
+      isAnchor={isAnchor}
       css={{
         flexDirection: type === 'target' ? 'row' : 'row-reverse',
       }}
@@ -213,6 +219,7 @@ export const Handle = (props: HandleProps) => {
           isValidConnection={isValidConnection}
           isConnected={isConnected}
           isArray={isArray}
+          isAnchor={isAnchor}
         ></StyledRawHandle>
       </Tooltip>
       <Stack

@@ -159,7 +159,7 @@ export const DynamicOutput = () => {
   );
 };
 
-const extractTypeIcon = (
+export const extractTypeIcon = (
   port: Port,
   iconLookup: Record<string, React.ReactNode>,
 ) => {
