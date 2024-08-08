@@ -13,7 +13,7 @@ inputs:
     description: The first number to add
     # These are editor only annotations that can be used to help detect the correct controls
     annotations: 
-      # The input must be connected to a cvalue
+      # The input must be connected to a value
       requiredConnection : true
       # Show port in the editor
       visible: false

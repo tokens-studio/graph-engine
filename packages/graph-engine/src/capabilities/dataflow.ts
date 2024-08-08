@@ -49,17 +49,9 @@ export interface StatRecord {
 
 export interface IUpdateOpts {
 	/**
-	 * If true, no memoization will be performed
-	 */
-	noMemo?: boolean;
-	/**
 	 * If true, the update will not be propagated to the successor nodes
 	 */
 	noRecursive?: boolean;
-	/**
-	 * If true, we won't compare the input values to see if the node needs to be updated
-	 */
-	noCompare?: boolean;
 }
 
 export interface BatchExecution {
@@ -75,6 +67,9 @@ export interface BatchExecution {
 	};
 }
 
+/**
+ * Creates a dataflow capability for the graph
+ */
 export const DataFlowCapabilityFactory: CapabilityFactory = {
 	name: 'dataFlow',
 	register: (graph: Graph) => {
@@ -215,11 +210,20 @@ export const DataFlowCapabilityFactory: CapabilityFactory = {
 	}
 };
 
+export type WithDataFlow = {
+	dataFlow: DataFlowCapability;
+};
+
+
 export type DataflowGraph = ApplyCapabilities<Graph, [WithDataFlow]>;
 
 /**
  * Executes the graph as a single batch. This will execute all the nodes in the graph and return the output of the output node
  * Note that this can have side effects and you should create a new instance of a graph between runs if you want to isolate the execution
+ * 
+ * Note that you can achieve the same effect by changing the inputs on the graph and calling the run method on the Input node.
+ * 
+ * The difference is that this method will provide additional metadata about the execution and allow for journaling to occur
  * @param opts
  * @throws {BatchRunError}
  * @returns
@@ -329,6 +333,3 @@ export const execute = async (
 	};
 };
 
-export type WithDataFlow = {
-	dataFlow: DataFlowCapability;
-};

@@ -14,4 +14,3 @@ editor:
     layoutType: "dagre"
 logs:
   output: "./output.log"
-
