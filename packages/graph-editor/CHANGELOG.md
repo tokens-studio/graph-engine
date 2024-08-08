@@ -1,5 +1,17 @@
 # @tokens-studio/graph-editor
 
+## 4.1.2
+
+### Patch Changes
+
+- ac96d35: Fix Icon Alignment on Quicksearch Group, Restyle Passthrough
+- 5af49ac: Fix an issue where create subgraph did not make the create inputs deletable
+- Updated dependencies [02620af]
+- Updated dependencies [bc39aeb]
+- Updated dependencies [83abbb5]
+- Updated dependencies [381fc4d]
+  - @tokens-studio/graph-engine@3.1.0
+
 ## 4.1.1
 
 ### Patch Changes
