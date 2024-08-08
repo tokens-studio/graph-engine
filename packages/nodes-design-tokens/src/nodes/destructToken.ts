@@ -1,6 +1,6 @@
 import {
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	ObjectSchema,
 	StringSchema,
 	ToInput,
@@ -21,7 +21,7 @@ import type {
 	TokenTypographyValue
 } from '@tokens-studio/types';
 
-export default class CreateBorderNode extends Node {
+export default class CreateBorderNode extends DataflowNode {
 	static title = 'Destruct token';
 	static type = 'studio.tokens.design.destruct';
 	static description = 'Breaks down a token into its parts';
@@ -43,34 +43,34 @@ export default class CreateBorderNode extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('token', {
+		this.dataflow.addInput('token', {
 			type: TokenSchema
 		});
 
-		this.addOutput('name', {
+		this.dataflow.addOutput('name', {
 			type: StringSchema
 		});
-		this.addOutput('description', {
+		this.dataflow.addOutput('description', {
 			type: StringSchema
 		});
-		this.addOutput('type', {
+		this.dataflow.addOutput('type', {
 			type: StringSchema
 		});
-		this.addOutput('$extension', {
+		this.dataflow.addOutput('$extension', {
 			type: ObjectSchema
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: StringSchema
 		});
 
-		this.addOutput('border', {
+		this.dataflow.addOutput('border', {
 			type: TokenBorderSchema
 		});
-		this.addOutput('typography', {
+		this.dataflow.addOutput('typography', {
 			type: TokenTypographySchema
 		});
-		this.addOutput('boxShadow', {
+		this.dataflow.addOutput('boxShadow', {
 			type: arrayOf(TokenBoxShadowSchema)
 		});
 	}

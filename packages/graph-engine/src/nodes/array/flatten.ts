@@ -1,7 +1,7 @@
 import { AnyArraySchema } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
-export default class NodeDefinition<T> extends Node {
+export default class NodeDefinition<T> extends DataflowNode {
 	static title = 'Array flatten';
 	static type = 'studio.tokens.array.flatten';
 	static description = 'Flattens an array of arrays into a single array.';
@@ -21,10 +21,10 @@ export default class NodeDefinition<T> extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('array', {
+		this.dataflow.addInput('array', {
 			type: AnyArraySchema
 		});
-		this.addOutput('array', {
+		this.dataflow.addOutput('array', {
 			type: AnyArraySchema
 		});
 	}

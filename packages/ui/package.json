@@ -77,7 +77,6 @@
     "sanitize.css": "13.0.0",
     "sass": "1.62.1",
     "swagger-ui-react": "5.17.14",
-    "uuid": "9.0.0",
     "wasm-import": "0.3.0",
     "ws": "8.17.0",
     "zod": "3.23.8"

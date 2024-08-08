@@ -1,7 +1,7 @@
 import {
 	BooleanSchema,
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	StringSchema,
 	ToInput,
 	ToOutput
@@ -10,7 +10,7 @@ import { SingleToken } from '@tokens-studio/types';
 import { TokenSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
 
-export default class ExtractTokenNode extends Node {
+export default class ExtractTokenNode extends DataflowNode {
 	static title = 'Extract token ';
 	static type = 'studio.tokens.design.extractToken';
 	static description = 'Extracts a token from a token set';
@@ -26,16 +26,16 @@ export default class ExtractTokenNode extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('tokens', {
+		this.dataflow.addInput('tokens', {
 			type: arrayOf(TokenSchema)
 		});
-		this.addInput('name', {
+		this.dataflow.addInput('name', {
 			type: StringSchema
 		});
-		this.addOutput('found', {
+		this.dataflow.addOutput('found', {
 			type: BooleanSchema
 		});
-		this.addOutput('token', {
+		this.dataflow.addOutput('token', {
 			type: TokenSchema
 		});
 	}

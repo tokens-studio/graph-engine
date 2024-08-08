@@ -6,9 +6,9 @@ import {
 } from '../../schemas/index.js';
 import { Color as ColorType, ContrastAlgorithmType } from '../../types.js';
 import { ContrastAlgorithm } from '../../types/index.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
-import { ToInput } from '@/programmatic/input.js';
-import { ToOutput } from '@/programmatic/output.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
+import { ToInput, ToOutput } from '@/programmatic/index.js';
 import { flattenAlpha } from './lib/flattenAlpha.js';
 import Color from 'colorjs.io';
 
@@ -20,7 +20,7 @@ export const contrastCheck = (
 	return Math.abs(foreground.contrast(background, algorithm));
 };
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Contrasting Alpha';
 	static type = 'studio.tokens.color.contrastingAlpha';
 	static description = 'Reduce alpha until you are close to the threshold.';
@@ -42,32 +42,32 @@ export default class NodeDefinition extends Node {
 		super(props);
 
 		// Inputs
-		this.addInput('foreground', {
+		this.dataflow.addInput('foreground', {
 			type: {
 				...ColorSchema,
 				default: Black
 			}
 		});
-		this.addInput('background', {
+		this.dataflow.addInput('background', {
 			type: {
 				...ColorSchema,
 				default: White
 			}
 		});
-		this.addInput('algorithm', {
+		this.dataflow.addInput('algorithm', {
 			type: {
 				...StringSchema,
 				enum: Object.values(ContrastAlgorithm),
 				default: ContrastAlgorithm.APCA
 			}
 		});
-		this.addInput('threshold', {
+		this.dataflow.addInput('threshold', {
 			type: {
 				...NumberSchema,
 				default: 60
 			}
 		});
-		this.addInput('precision', {
+		this.dataflow.addInput('precision', {
 			type: {
 				...NumberSchema,
 				default: 5
@@ -75,13 +75,13 @@ export default class NodeDefinition extends Node {
 		});
 
 		// Outputs
-		this.addOutput('alpha', {
+		this.dataflow.addOutput('alpha', {
 			type: NumberSchema
 		});
-		this.addOutput('color', {
+		this.dataflow.addOutput('color', {
 			type: ColorSchema
 		});
-		this.addOutput('contrast', {
+		this.dataflow.addOutput('contrast', {
 			type: NumberSchema
 		});
 	}

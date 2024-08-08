@@ -14,7 +14,7 @@ export class PreviewNode extends BaseNode {
   static description = "Applies sepia effect to an image.";
   constructor(props: INodeDefinition) {
     super(props);
-    this.addInput("image", {
+    this.dataflow.addInput("image", {
       type: ImageSchema,
     });
   }

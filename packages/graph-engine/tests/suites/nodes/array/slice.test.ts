@@ -1,10 +1,10 @@
-import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
-import Node from '../../../../src/nodes/array/slice.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node from '@/nodes/array/slice.js';
 
 describe('array/slice', () => {
 	test('performs an array slice', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		const array = [0, 1, 2, 3, 4];

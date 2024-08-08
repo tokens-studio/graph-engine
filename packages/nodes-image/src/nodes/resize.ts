@@ -26,19 +26,19 @@ export class ResizeNode extends BaseNode {
 
   constructor(props: INodeDefinition) {
     super(props);
-    this.addInput("image", {
+    this.dataflow.addInput("image", {
       type: ImageSchema,
     });
-    this.addInput("width", {
+    this.dataflow.addInput("width", {
       type: NumberSchema,
     });
-    this.addInput("height", {
+    this.dataflow.addInput("height", {
       type: NumberSchema,
     });
-    this.addInput("asPercent", {
+    this.dataflow.addInput("asPercent", {
       type: BooleanSchema,
     });
-    this.addOutput("image", {
+    this.dataflow.addOutput("image", {
       type: ImageSchema,
     });
   }
@@ -48,8 +48,8 @@ export class ResizeNode extends BaseNode {
     const { image, width, height, asPercent } = this.getAllInputs();
 
     await ImageMagick.read(this.cloneImage(image), (image: IMagickImage) => {
-      let targetWidth = width;
-      let targetHeight = height;
+      let targetWidth: number = width;
+      let targetHeight: number = height;
 
       if (asPercent) {
         targetWidth = image.width * (width / 100);

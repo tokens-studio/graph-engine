@@ -1,8 +1,8 @@
 import { AnySchema, BooleanSchema } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 
-export default class NodeDefinition<T> extends Node {
+export default class NodeDefinition<T> extends DataflowNode {
 	static title = 'Has Value';
 	static type = 'studio.tokens.typing.hasValue';
 	static description =
@@ -17,11 +17,11 @@ export default class NodeDefinition<T> extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: AnySchema
 		});
 
-		this.addOutput('undefined', {
+		this.dataflow.addOutput('undefined', {
 			type: BooleanSchema
 		});
 	}

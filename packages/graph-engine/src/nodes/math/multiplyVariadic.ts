@@ -1,8 +1,8 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { NumberSchema, createVariadicSchema } from '../../schemas/index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Multiply (Variadic)';
 	static type = 'studio.tokens.math.multiplyVariadic';
 	static description =
@@ -16,14 +16,14 @@ export default class NodeDefinition extends Node {
 	}>;
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('inputs', {
+		this.dataflow.addInput('inputs', {
 			type: {
 				...createVariadicSchema(NumberSchema),
 				default: []
 			},
 			variadic: true
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: NumberSchema
 		});
 	}

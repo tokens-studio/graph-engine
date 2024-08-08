@@ -1,15 +1,16 @@
 import { Edge, Node, ReactFlowInstance } from 'reactflow';
+import { FullyFeaturedGraph } from '@/types/index.js';
 import {
-  Graph,
   NodeFactory,
   Port,
   annotatedSingleton,
 } from '@tokens-studio/graph-engine';
-import { v4 as uuidv4 } from 'uuid';
+import { nanoid as uuid } from 'nanoid';
+import { xpos, ypos } from '@/annotations/index.js';
 
 export interface IDuplicate {
   reactFlowInstance: ReactFlowInstance;
-  graph: Graph;
+  graph: FullyFeaturedGraph;
   nodeLookup: Record<string, NodeFactory>;
 }
 
@@ -42,8 +43,8 @@ export const duplicateNodes =
           y: node.position.y + 100,
         };
 
-        clonedNode.annotations['ui.position.x'] = newPosition.x;
-        clonedNode.annotations['ui.position.y'] = newPosition.y;
+        clonedNode.setAnnotation(xpos, newPosition.x);
+        clonedNode.setAnnotation(ypos, newPosition.y);
 
         graph.addNode(clonedNode);
 
@@ -51,7 +52,7 @@ export const duplicateNodes =
           .map(([key, value]) => {
             // value._edges.
             return (value as Port)._edges.map((edge) => {
-              const newEdgeId = uuidv4();
+              const newEdgeId = uuid();
 
               const vals = {
                 id: newEdgeId,

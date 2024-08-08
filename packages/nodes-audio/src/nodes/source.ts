@@ -3,7 +3,8 @@ import { AudioBufferSchema, NodeSchema } from '../schemas/index.js';
 import {
 	BooleanSchema,
 	INodeDefinition,
-	ToInput
+	ToInput,
+	ToOutput
 } from '@tokens-studio/graph-engine';
 
 export class AudioSourceNode extends AudioBaseNode {
@@ -21,19 +22,23 @@ export class AudioSourceNode extends AudioBaseNode {
 		loop?: boolean;
 	}>;
 
+	declare outputs: ToOutput<{
+		node: AudioNode;
+	}>;
+
 	_values: { buffer?: AudioBuffer; loop?: boolean } = {};
 
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.addInput('buffer', {
+		this.dataflow.addInput('buffer', {
 			type: AudioBufferSchema,
 			visible: true
 		});
-		this.addInput('loop', {
+		this.dataflow.addInput('loop', {
 			type: BooleanSchema
 		});
-		this.addOutput('node', {
+		this.dataflow.addOutput('node', {
 			type: {
 				...NodeSchema,
 				description: 'The generated oscillator node'

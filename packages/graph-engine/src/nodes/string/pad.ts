@@ -1,5 +1,5 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { NumberSchema, StringSchema } from '../../schemas/index.js';
 
 export enum Position {
@@ -10,7 +10,7 @@ export enum Position {
 /**
  * This node pads a string to a given length
  */
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Pad';
 	static type = 'studio.tokens.string.pad';
 	static description = 'Pads a string to a given length';
@@ -27,23 +27,23 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('string', {
+		this.dataflow.addInput('string', {
 			type: StringSchema
 		});
-		this.addInput('length', {
+		this.dataflow.addInput('length', {
 			type: NumberSchema
 		});
-		this.addInput('character', {
+		this.dataflow.addInput('character', {
 			type: StringSchema
 		});
-		this.addInput('position', {
+		this.dataflow.addInput('position', {
 			type: {
 				...StringSchema,
 				enum: [Position.START, Position.END],
 				default: Position.START
 			}
 		});
-		this.addOutput('string', {
+		this.dataflow.addOutput('string', {
 			type: StringSchema
 		});
 	}

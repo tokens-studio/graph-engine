@@ -1,6 +1,6 @@
 import {
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	ToInput,
 	ToOutput
 } from '@tokens-studio/graph-engine';
@@ -37,7 +37,7 @@ const resolveValues = (tokens: IResolvedToken[], context: IResolvedToken[]) => {
 	return flatten(resolved);
 };
 
-export default class ResolveNode extends Node {
+export default class ResolveNode extends DataflowNode {
 	static title = 'Resolve tokens';
 	static type = 'studio.tokens.design.resolve';
 	static description = 'Resolves a set of tokens';
@@ -52,13 +52,13 @@ export default class ResolveNode extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('inputs', {
+		this.dataflow.addInput('inputs', {
 			type: arrayOf(arrayOf(TokenSchema))
 		});
-		this.addInput('context', {
+		this.dataflow.addInput('context', {
 			type: arrayOf(arrayOf(TokenSchema))
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: arrayOf(TokenSchema)
 		});
 	}

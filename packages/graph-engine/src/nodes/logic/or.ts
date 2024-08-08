@@ -3,10 +3,10 @@ import {
 	BooleanSchema,
 	createVariadicSchema
 } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 
-export default class NodeDefinition<T = any> extends Node {
+export default class NodeDefinition<T = any> extends DataflowNode {
 	static title = 'Logical or';
 	static type = 'studio.tokens.logic.or';
 	static description = 'OR node allows you to check if all inputs are true.';
@@ -21,14 +21,14 @@ export default class NodeDefinition<T = any> extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('inputs', {
+		this.dataflow.addInput('inputs', {
 			type: {
 				...createVariadicSchema(AnySchema),
 				default: []
 			},
 			variadic: true
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: BooleanSchema
 		});
 	}

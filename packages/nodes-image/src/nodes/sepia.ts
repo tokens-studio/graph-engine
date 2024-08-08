@@ -22,11 +22,11 @@ export class SepiaNode extends BaseNode {
   static description = "Applies sepia effect to an image.";
   constructor(props: INodeDefinition) {
     super(props);
-    this.addInput("image", {
+    this.dataflow.addInput("image", {
       type: ImageSchema,
     });
 
-    this.addOutput("image", {
+    this.dataflow.addOutput("image", {
       type: ImageSchema,
     });
   }

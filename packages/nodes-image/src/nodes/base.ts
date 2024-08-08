@@ -1,8 +1,8 @@
+import { DataflowNode } from "@tokens-studio/graph-engine";
 import { Image } from "../schemas/types.js";
-import { Node } from "@tokens-studio/graph-engine";
 import type { ImageMagick } from "@imagemagick/magick-wasm";
 
-export class BaseNode extends Node {
+export class BaseNode extends DataflowNode {
   static annotations = {
     "engine.capability.imageMagick": true,
   };

@@ -1,8 +1,8 @@
 import { ColorSchema } from '../../schemas/index.js';
-import { Node } from '../../programmatic/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { arrayOf } from '../../schemas/utils.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Color Scale';
 	static type = 'studio.tokens.preview.colorScale';
 
@@ -11,7 +11,7 @@ export default class NodeDefinition extends Node {
 	constructor(props) {
 		super(props);
 
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: arrayOf(ColorSchema)
 		});
 	}

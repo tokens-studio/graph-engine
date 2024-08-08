@@ -1,12 +1,13 @@
 import { DebugPanel } from '../panels/debugger/index.js';
 import { DropPanel } from '../panels/dropPanel/index.js';
 import { GraphPanel } from '../panels/graph/index.js';
-import { Inputsheet } from '../panels/inputs/index.js';
+
 import { Legend } from '../panels/legend/index.js';
 import { LogsPanel } from '../panels/logs/index.js';
 import { NodeSettingsPanel } from '../panels/nodeSettings/index.js';
-import { OutputSheet } from '../panels/output/index.js';
 import { Settings } from '../panels/settings/index.js';
+import { ShortcutsPanel } from '../panels/shortcuts/index.js';
+import { UnifiedSheet } from '../panels/unified/index.js';
 import React from 'react';
 
 export const layoutButtons = {
@@ -15,20 +16,20 @@ export const layoutButtons = {
     title: 'Settings',
     content: <Settings />,
   },
-  inputs: {
-    id: 'inputs',
-    title: 'Inputs',
-    content: <Inputsheet />,
-  },
-  outputs: {
-    id: 'outputs',
-    title: 'Outputs',
-    content: <OutputSheet />,
+  nodeSheet: {
+    id: 'nodeSheet',
+    title: 'Node',
+    content: <UnifiedSheet />,
   },
   nodeSettings: {
     id: 'nodeSettings',
     title: 'Node Settings',
     content: <NodeSettingsPanel />,
+  },
+  keyboardShortcuts: {
+    id: 'keyboardShortcuts',
+    title: 'Keyboard Shortcuts',
+    content: <ShortcutsPanel />,
   },
   graphSettings: {
     id: 'graphSettings',

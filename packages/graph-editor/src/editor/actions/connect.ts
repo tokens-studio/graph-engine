@@ -1,6 +1,6 @@
 import { Connection, Edge } from 'reactflow';
 import { Dispatch } from '@/redux/store.js';
-import { Graph } from '@tokens-studio/graph-engine';
+import { FullyFeaturedGraph } from '@/types/index.js';
 import { deletable } from '@/annotations/index.js';
 import { getVariadicIndex, stripVariadic } from '@/utils/stripVariadic.js';
 
@@ -10,7 +10,7 @@ export const connectNodes =
     setEdges,
     dispatch,
   }: {
-    graph: Graph;
+    graph: FullyFeaturedGraph;
     setEdges: React.Dispatch<React.SetStateAction<Edge[]>>;
     dispatch: Dispatch;
   }) =>

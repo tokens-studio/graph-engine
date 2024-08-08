@@ -1,10 +1,10 @@
 import { ColorSchema } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { flattenAlpha } from './lib/flattenAlpha.js';
 import { toColor, toColorObject } from './lib/utils.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Flatten Alpha';
 	static type = 'studio.tokens.color.flattenAlpha';
 	static description =
@@ -12,18 +12,18 @@ export default class NodeDefinition extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.addInput('foreground', {
+		this.dataflow.addInput('foreground', {
 			type: {
 				...ColorSchema
 			}
 		});
-		this.addInput('background', {
+		this.dataflow.addInput('background', {
 			type: {
 				...ColorSchema
 			}
 		});
 
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: ColorSchema
 		});
 	}

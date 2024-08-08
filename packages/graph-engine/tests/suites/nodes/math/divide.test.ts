@@ -1,10 +1,10 @@
-import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
-import Node from '../../../../src/nodes/math/divideVariadic.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node from '@/nodes/math/divideVariadic.js';
 
 describe('math/div', () => {
 	test('divides two numbers', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.inputs.setValue([1, 2]);
@@ -12,7 +12,7 @@ describe('math/div', () => {
 		expect(node.outputs.value.value).to.equal(0.5);
 	});
 	test('divides multiple numbers', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.inputs.setValue([8, 2, 2]);
@@ -21,7 +21,7 @@ describe('math/div', () => {
 	});
 
 	test('returns infinity when dividing by zero', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.inputs.setValue([1, 0]);

@@ -1,11 +1,11 @@
-import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
 import { getAllOutputs } from '@/utils/node.js';
-import Node from '../../../../src/nodes/color/convert.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node from '@/nodes/color/convert.js';
 
 describe('color/convert', () => {
 	test('converts csslike colors to rgb', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.color.setValue({
@@ -26,7 +26,7 @@ describe('color/convert', () => {
 	});
 
 	test('converts csslike colors to a98rgb', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.color.setValue({
@@ -47,7 +47,7 @@ describe('color/convert', () => {
 	});
 
 	test('converts to p3 from hex', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.color.setValue({
@@ -70,7 +70,7 @@ describe('color/convert', () => {
 	});
 
 	test('converts to oklab from hex', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.color.setValue({
@@ -92,7 +92,7 @@ describe('color/convert', () => {
 	});
 
 	test('converts to oklab from xyz', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.color.setValue({

@@ -89,17 +89,17 @@ export class Morphology extends BaseNode {
 
   constructor(props: INodeDefinition) {
     super(props);
-    this.addInput("image", {
+    this.dataflow.addInput("image", {
       type: ImageSchema,
     });
-    this.addInput("method", {
+    this.dataflow.addInput("method", {
       type: {
         ...StringSchema,
         enum: Object.keys(morphologyMethod),
         default: "Convolve",
       },
     });
-    this.addInput("kernel", {
+    this.dataflow.addInput("kernel", {
       type: {
         ...StringSchema,
         enum: Object.keys(Kernel),
@@ -107,7 +107,7 @@ export class Morphology extends BaseNode {
       },
     });
 
-    this.addOutput("image", {
+    this.dataflow.addOutput("image", {
       type: ImageSchema,
     });
   }

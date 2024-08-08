@@ -1,9 +1,9 @@
 import { Dispatch } from '@/redux/store.js';
-import { Graph } from '@tokens-studio/graph-engine';
+import { FullyFeaturedGraph } from '@/types/index.js';
 import { ReactFlowInstance } from 'reactflow';
 
 export const deleteNode = (
-  graph: Graph,
+  graph: FullyFeaturedGraph,
   dispatch: Dispatch,
   reactFlowInstance: ReactFlowInstance,
 ) => {

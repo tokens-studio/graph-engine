@@ -15,6 +15,10 @@ export interface FSCapability {
 	readdir: (path: string) => Promise<FSEntity[]>;
 }
 
+/**
+ * Reifier is a function that takes a graph and returns a capability.
+ * This will likely change depending on the environment the capability is running in, hence we do not make an opinionated choice here.
+ */
 export type Reifier = (graph: Graph) => FSCapability;
 
 export const FSCapabilityFactory = (reifier: Reifier): CapabilityFactory => {

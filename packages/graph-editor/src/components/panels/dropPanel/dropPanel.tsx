@@ -31,7 +31,7 @@ const StyledAccordion = styled(Accordion, {
   boxSizing: 'border-box',
 });
 
-const StyledChevron = styled(NavArrowRight, {
+export const StyledChevron = styled(NavArrowRight, {
   transition: 'all ease 0.3s',
   '[data-state="open"] &': {
     transform: 'rotate(90deg)',

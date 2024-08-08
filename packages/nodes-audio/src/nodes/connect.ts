@@ -2,6 +2,7 @@ import { AudioBaseNode } from './base.js';
 import {
 	INodeDefinition,
 	ToInput,
+	ToOutput,
 	createVariadicSchema
 } from '@tokens-studio/graph-engine';
 import { NodeSchema } from '../schemas/index.js';
@@ -14,21 +15,24 @@ export class AudioConnectNode extends AudioBaseNode {
 		source: AudioNode[];
 		destination: AudioNode;
 	}>;
+	declare outputs: ToOutput<{
+		destination: AudioNode;
+	}>;
 
 	static description = 'An explicit connection between audio nodes';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('source', {
+		this.dataflow.addInput('source', {
 			type: {
 				...createVariadicSchema(NodeSchema),
 				default: []
 			},
 			variadic: true
 		});
-		this.addInput('destination', {
+		this.dataflow.addInput('destination', {
 			type: NodeSchema
 		});
-		this.addOutput('destination', {
+		this.dataflow.addOutput('destination', {
 			type: NodeSchema
 		});
 	}

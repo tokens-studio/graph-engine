@@ -2,8 +2,8 @@ import { BackgroundColor, Color, Theme } from '@adobe/leonardo-contrast-colors';
 import {
 	ColorSchema,
 	Color as ColorType,
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	NumberSchema,
 	ToInput,
 	ToOutput,
@@ -13,29 +13,29 @@ import { LeonardoColor } from './leonardoColor.js';
 import { LeonardoColorSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
 
-export default class LeonardoThemeNode extends Node {
+export default class LeonardoThemeNode extends DataflowNode {
 	static title = 'Leonardo Theme';
 	static type = 'studio.tokens.design.leonardo.theme';
 	static description = 'Creates a leonardo theme';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('colors', {
+		this.dataflow.addInput('colors', {
 			type: arrayOf(LeonardoColorSchema)
 		});
-		this.addInput('contrast', {
+		this.dataflow.addInput('contrast', {
 			type: NumberSchema
 		});
-		this.addInput('lightness', {
+		this.dataflow.addInput('lightness', {
 			type: NumberSchema
 		});
-		this.addInput('saturation', {
+		this.dataflow.addInput('saturation', {
 			type: NumberSchema
 		});
-		this.addInput('backgroundColor', {
+		this.dataflow.addInput('backgroundColor', {
 			type: LeonardoColorSchema
 		});
 
-		this.addOutput('colors', {
+		this.dataflow.addOutput('colors', {
 			type: arrayOf(ColorSchema)
 		});
 	}

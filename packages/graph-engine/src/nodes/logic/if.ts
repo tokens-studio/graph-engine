@@ -1,8 +1,8 @@
 import { AnySchema, BooleanSchema } from '../../schemas/index.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 
-export default class NodeDefinition<T, V> extends Node {
+export default class NodeDefinition<T, V> extends DataflowNode {
 	static title = 'If';
 	static type = 'studio.tokens.logic.if';
 	static description =
@@ -20,16 +20,16 @@ export default class NodeDefinition<T, V> extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('condition', {
+		this.dataflow.addInput('condition', {
 			type: BooleanSchema
 		});
-		this.addInput('a', {
+		this.dataflow.addInput('a', {
 			type: AnySchema
 		});
-		this.addInput('b', {
+		this.dataflow.addInput('b', {
 			type: AnySchema
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: AnySchema
 		});
 	}

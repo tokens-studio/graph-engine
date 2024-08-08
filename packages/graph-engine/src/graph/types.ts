@@ -1,6 +1,6 @@
 import { Graph, TypeDefinition } from '../index.js';
 import { GraphSchema } from '../schemas/index.js';
-import { Node } from '../programmatic/node.js';
+import { Node } from '../programmatic/nodes/node.js';
 
 export interface SerializedInput {
 	name: string;

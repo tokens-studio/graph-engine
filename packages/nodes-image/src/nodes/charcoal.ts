@@ -4,7 +4,9 @@ import {
   INodeDefinition,
   NumberSchema,
   ToInput,
+  ToOutput,
 } from "@tokens-studio/graph-engine";
+import { Image } from "../schemas/types.js";
 import { ImageSchema } from "../schemas/index.js";
 
 export class CharcoalNode extends BaseNode {
@@ -14,27 +16,32 @@ export class CharcoalNode extends BaseNode {
   declare inputs: ToInput<{
     image: ImageData;
     width: number;
+    radius: number;
+    sigma: number;
     height: number;
+  }>;
+  declare outputs: ToOutput<{
+    image: Image;
   }>;
 
   constructor(props: INodeDefinition) {
     super(props);
-    this.addInput("image", {
+    this.dataflow.addInput("image", {
       type: ImageSchema,
     });
-    this.addInput("radius", {
+    this.dataflow.addInput("radius", {
       type: {
         ...NumberSchema,
         default: 0,
       },
     });
-    this.addInput("sigma", {
+    this.dataflow.addInput("sigma", {
       type: {
         ...NumberSchema,
         default: 0,
       },
     });
-    this.addOutput("image", {
+    this.dataflow.addOutput("image", {
       type: ImageSchema,
     });
   }

@@ -1,9 +1,9 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { NumberSchema, Vec2Schema } from '../../schemas/index.js';
 import { Vec2 } from '../../index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Destructure vector2';
 	static type = 'studio.tokens.vector2.destructure';
 	static description =
@@ -20,13 +20,13 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: Vec2Schema
 		});
-		this.addOutput('x', {
+		this.dataflow.addOutput('x', {
 			type: NumberSchema
 		});
-		this.addOutput('y', {
+		this.dataflow.addOutput('y', {
 			type: NumberSchema
 		});
 	}

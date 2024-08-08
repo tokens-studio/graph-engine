@@ -1,5 +1,5 @@
-import { Port } from '@tokens-studio/graph-engine';
+import type { DataFlowPort } from '@tokens-studio/graph-engine';
 export interface IField {
-  port: Port;
+  port: DataFlowPort;
   readOnly?: boolean;
 }

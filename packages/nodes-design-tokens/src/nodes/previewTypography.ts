@@ -1,8 +1,8 @@
-import { Node, StringSchema } from '@tokens-studio/graph-engine';
+import { DataflowNode, StringSchema } from '@tokens-studio/graph-engine';
 import { TokenSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
 
-export default class NearestColorNode extends Node {
+export default class NearestColorNode extends DataflowNode {
 	static title = 'Preview Typography';
 	static type = 'studio.tokens.preview.typography';
 	static description = 'Previews typographic tokens';
@@ -10,10 +10,10 @@ export default class NearestColorNode extends Node {
 	constructor(props) {
 		super(props);
 
-		this.addInput('value', {
+		this.dataflow.addInput('value', {
 			type: arrayOf(TokenSchema)
 		});
-		this.addInput('text', {
+		this.dataflow.addInput('text', {
 			type: {
 				...StringSchema,
 				default: 'The quick brown fox jumps over the lazy dog'

@@ -12,13 +12,11 @@ import { DebugPanel } from '../panels/debugger/index.js';
 import { DropPanel } from '../panels/dropPanel/index.js';
 import { GraphPanel } from '../panels/graph/index.js';
 import { ImperativeEditorRef } from '@/editor/editorTypes.js';
-import { Inputsheet } from '../panels/inputs/index.js';
 import { Legend } from '../panels/legend/index.js';
 import { LogsPanel } from '../panels/logs/index.js';
 import { Menu, MenuItem, Seperator, SubMenu } from './data.js';
 import { MenuItemElement } from './menuItem.js';
 import { NodeSettingsPanel } from '../panels/nodeSettings/index.js';
-import { OutputSheet } from '../panels/output/index.js';
 import { PlayPanel } from '../panels/play/index.js';
 import { Settings } from '../panels/settings/index.js';
 import { TabData } from 'rc-dock';
@@ -226,18 +224,6 @@ export const defaultMenuDataFactory = (): Menu =>
         name: 'window',
         title: 'Window',
         items: [
-          windowButton({
-            name: 'inputs',
-            id: 'inputs',
-            title: 'Inputs',
-            content: <Inputsheet />,
-          }),
-          windowButton({
-            name: 'outputs',
-            id: 'outputs',
-            title: 'Outputs',
-            content: <OutputSheet />,
-          }),
           windowButton({
             name: 'nodeSettings',
             id: 'nodeSettings',

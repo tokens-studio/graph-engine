@@ -4,7 +4,9 @@ import {
   INodeDefinition,
   NumberSchema,
   ToInput,
+  ToOutput,
 } from "@tokens-studio/graph-engine";
+import { Image } from "../schemas/types.js";
 import { ImageSchema } from "../schemas/index.js";
 
 export class VignetteNode extends BaseNode {
@@ -12,30 +14,35 @@ export class VignetteNode extends BaseNode {
   static type = "studio.tokens.image.vignette";
 
   declare inputs: ToInput<{
-    image: ImageData;
+    image: Image;
     radius: number;
     sigma: number;
     x: number;
     y: number;
   }>;
+
+  declare outputs: ToOutput<{
+    image: Image;
+  }>;
   constructor(props: INodeDefinition) {
     super(props);
-    this.addInput("image", {
+    const df = this.dataflow;
+    df.addInput("image", {
       type: ImageSchema,
     });
-    this.addInput("radius", {
+    df.addInput("radius", {
       type: NumberSchema,
     });
-    this.addInput("sigma", {
+    df.addInput("sigma", {
       type: NumberSchema,
     });
-    this.addInput("x", {
+    df.addInput("x", {
       type: NumberSchema,
     });
-    this.addInput("y", {
+    df.addInput("y", {
       type: NumberSchema,
     });
-    this.addOutput("image", {
+    df.addOutput("image", {
       type: ImageSchema,
     });
   }

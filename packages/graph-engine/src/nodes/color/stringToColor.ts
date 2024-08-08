@@ -1,12 +1,12 @@
 import { ColorSchema, StringSchema } from '../../schemas/index.js';
 import { Color as ColorType } from '../../types.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { toColorObject } from './lib/utils.js';
 import Color from 'colorjs.io';
 export { ColorModifierTypes } from '@tokens-studio/types';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'String to Color';
 	static type = 'studio.tokens.color.strToColor';
 	static description = 'Parses a string to a color';
@@ -21,11 +21,11 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('color', {
+		this.dataflow.addInput('color', {
 			type: StringSchema
 		});
 
-		this.addOutput('color', {
+		this.dataflow.addOutput('color', {
 			type: ColorSchema
 		});
 	}

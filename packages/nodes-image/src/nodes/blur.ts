@@ -25,18 +25,18 @@ export class BlurNode extends BaseNode {
 
   constructor(props: INodeDefinition) {
     super(props);
-    this.addInput("image", {
+    this.dataflow.addInput("image", {
       type: ImageSchema,
     });
-    this.addInput("sigma", {
+    this.dataflow.addInput("sigma", {
       type: NumberSchema,
     });
 
-    this.addInput("radius", {
+    this.dataflow.addInput("radius", {
       type: NumberSchema,
     });
 
-    this.addOutput("image", {
+    this.dataflow.addOutput("image", {
       type: ImageSchema,
     });
   }

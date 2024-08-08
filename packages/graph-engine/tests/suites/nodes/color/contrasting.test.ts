@@ -1,12 +1,12 @@
-import { ContrastAlgorithm } from '../../../../src/types/index.js';
-import { Graph } from '../../../../src/graph/graph.js';
+import { ContrastAlgorithm } from '@/types/index.js';
 import { describe, expect, test } from 'vitest';
 import { getAllOutputs } from '@/utils/node.js';
-import Node from '../../../../src/nodes/color/contrasting.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import Node from '@/nodes/color/contrasting.js';
 
 describe('color/contrasting', () => {
 	test('should return the more contrasting color correctly with WCAG 3', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.a.setValue({
@@ -24,7 +24,7 @@ describe('color/contrasting', () => {
 		node.inputs.algorithm.setValue(ContrastAlgorithm.APCA);
 		node.inputs.threshold.setValue(60);
 
-		await node.run();
+		await node.execute();
 
 		const output = getAllOutputs(node);
 
@@ -39,7 +39,7 @@ describe('color/contrasting', () => {
 	});
 
 	test('should return the more contrasting color correctly with WCAG 2', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.a.setValue({
@@ -57,7 +57,7 @@ describe('color/contrasting', () => {
 		node.inputs.algorithm.setValue(ContrastAlgorithm.WCAG21);
 		node.inputs.threshold.setValue(4.5);
 
-		await node.run();
+		await node.execute();
 
 		const output = getAllOutputs(node);
 
@@ -72,7 +72,7 @@ describe('color/contrasting', () => {
 	});
 
 	test('should return false for sufficient contrast if below threshold', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new Node({ graph });
 
 		node.inputs.a.setValue({
@@ -90,7 +90,7 @@ describe('color/contrasting', () => {
 		node.inputs.algorithm.setValue(ContrastAlgorithm.APCA);
 		node.inputs.threshold.setValue(60);
 
-		await node.run();
+		await node.execute();
 
 		const output = getAllOutputs(node);
 

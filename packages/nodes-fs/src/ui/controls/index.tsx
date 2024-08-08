@@ -1,10 +1,10 @@
 import { FILE } from '../../schemas/index.js';
 import { FileField } from './file.js';
-import type { Port } from '@tokens-studio/graph-engine';
+import type { DataFlowPort } from '@tokens-studio/graph-engine';
 
 export const controls = [
 	{
-		matcher: (port: Port) => port.type.$id === FILE,
+		matcher: (port: DataFlowPort) => port.type.$id === FILE,
 		component: FileField
 	}
 ];

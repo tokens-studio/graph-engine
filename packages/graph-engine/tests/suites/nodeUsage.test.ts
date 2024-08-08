@@ -1,12 +1,13 @@
-import { Edge, Graph, nodeLookup } from '../../src/index.js';
+import { Edge, Input, Output, nodeLookup } from '../../src/index.js';
 import { StringSchema } from '../../src/schemas/index.js';
 import { describe, expect, test } from 'vitest';
+import { getDataFlowGraph } from '@tests/utils/index.js';
 import InputNode from '../../src/nodes/generic/input.js';
 import OutputNode from '../../src/nodes/generic/output.js';
 
 describe('nodeUsage', () => {
 	test('performs basic passthrough calculations', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 
 		const input = new InputNode({
 			id: '780c1b1a-6931-4176-90c5-2efaef37d43a',
@@ -20,22 +21,24 @@ describe('nodeUsage', () => {
 		graph.addNode(output);
 
 		//Create an input port on the input
-		input.addInput('foo', {
+		input.dataflow.addInput('foo', {
 			type: StringSchema
 		});
 
-		output.addInput('input', {
+		output.dataflow.addInput('input', {
 			type: StringSchema
 		});
 
 		//Input is a special case with dynamic values so it needs to be executed and computed to generate the output values
-		const res = await input.run();
+		const res = await input.dataflow.run();
 
 		expect(res.error).to.be.undefined;
 
-		const edge = input.outputs.foo.connect(output.inputs.input);
+		const edge = (input.outputs.foo as Output).connect(
+			output.inputs.input as Input
+		);
 
-		const final = await graph.execute({
+		const final = await graph.capabilities.dataFlow.execute({
 			inputs: {
 				foo: {
 					value: 'black'
@@ -56,7 +59,7 @@ describe('nodeUsage', () => {
 
 		const serialized = graph.serialize();
 
-		expect(serialized.annotations['engine.version']).to.equal('0.12.0');
+		expect(serialized.annotations['engine.version']).to.equal('4.0.0');
 
 		expect(serialized).to.have.property('edges');
 		expect(serialized).to.have.property('nodes');
@@ -113,8 +116,9 @@ describe('nodeUsage', () => {
 			}
 		]);
 
-		const newGraph = await new Graph().deserialize(serialized, nodeLookup);
-		const deserializedOutput = await newGraph.execute();
+		const newGraph = getDataFlowGraph();
+		await newGraph.deserialize(serialized, nodeLookup);
+		const deserializedOutput = await newGraph.capabilities.dataFlow.execute();
 
 		expect(deserializedOutput.output).to.eql({
 			input: {

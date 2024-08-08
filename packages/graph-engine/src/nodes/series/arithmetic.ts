@@ -1,6 +1,7 @@
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { NumberSchema } from '../../schemas/index.js';
-import { ToInput } from '../../programmatic/input.js';
+import { ToInput } from '../../programmatic/dataflow/input.js';
 import { ToOutput } from '../../programmatic/index.js';
 import { arrayOf } from '../../schemas/utils.js';
 import { setToPrecision } from '../../utils/precision.js';
@@ -9,7 +10,7 @@ export type ArithemeticValue = {
 	value: number;
 };
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Arithmetic Series';
 
 	declare inputs: ToInput<{
@@ -30,21 +31,21 @@ export default class NodeDefinition extends Node {
 		'Generates an arithmetic f(n)= c + (f(n-1)) series of numbers based on the base value, steps down, steps and increment.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('base', {
+		this.dataflow.addInput('base', {
 			type: {
 				...NumberSchema,
 				default: 16
 			},
 			visible: true
 		});
-		this.addInput('stepsDown', {
+		this.dataflow.addInput('stepsDown', {
 			type: {
 				...NumberSchema,
 				default: 0
 			},
 			visible: true
 		});
-		this.addInput('stepsUp', {
+		this.dataflow.addInput('stepsUp', {
 			type: {
 				...NumberSchema,
 				default: 1
@@ -52,23 +53,23 @@ export default class NodeDefinition extends Node {
 			visible: true
 		});
 
-		this.addInput('increment', {
+		this.dataflow.addInput('increment', {
 			type: {
 				...NumberSchema,
 				default: 1
 			}
 		});
 
-		this.addInput('precision', {
+		this.dataflow.addInput('precision', {
 			type: {
 				...NumberSchema,
 				default: 2
 			}
 		});
-		this.addOutput('array', {
+		this.dataflow.addOutput('array', {
 			type: arrayOf(NumberSchema)
 		});
-		this.addOutput('indexed', {
+		this.dataflow.addOutput('indexed', {
 			type: {
 				$id: `https://schemas.tokens.studio/studio.tokens.series.arithmetic/indexed.json`,
 				type: 'object',

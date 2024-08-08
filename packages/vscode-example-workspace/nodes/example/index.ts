@@ -1,14 +1,12 @@
-import { Node, NumberSchema } from "@tokens-studio/graph-engine";
+import { DataflowNode, NumberSchema } from "@tokens-studio/graph-engine";
 import type {
   INodeDefinition,
   ToInput,
   ToOutput,
 } from "@tokens-studio/graph-engine";
 
-export default class NodeDefinition extends Node {
-  static title = "Add";
+export default class NodeDefinition extends DataflowNode {
   static type = "com.my.add";
-  static description = "Add node allows you to add two numbers.";
   declare inputs: ToInput<{
     a: number;
     b: number;
@@ -18,13 +16,13 @@ export default class NodeDefinition extends Node {
   }>;
   constructor(props: INodeDefinition) {
     super(props);
-    this.addInput("a", {
+    this.dataflow.addInput("a", {
       type: NumberSchema,
     });
-    this.addInput("b", {
+    this.dataflow.addInput("b", {
       type: NumberSchema,
     });
-    this.addOutput("value", {
+    this.dataflow.addOutput("value", {
       type: NumberSchema,
     });
   }

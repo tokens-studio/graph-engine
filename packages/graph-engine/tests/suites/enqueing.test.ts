@@ -1,13 +1,14 @@
-import { Graph } from '../../src/index.js';
+import { Input } from '@/index.js';
 import { NumberSchema } from '../../src/schemas/index.js';
 import { describe, expect, test } from 'vitest';
+import { getDataFlowGraph } from '@tests/utils/index.js';
 import ConstantNode from '../../src/nodes/generic/constant.js';
 import OutputNode from '../../src/nodes/generic/output.js';
 import SubtractNode from '../../src/nodes/math/subtractVariadic.js';
 
 describe('enqueing', () => {
 	test('automatically enqueues when using variadic types', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 
 		const input1 = new ConstantNode({ id: '1', graph });
 		const input2 = new ConstantNode({ id: '2', graph });
@@ -15,7 +16,7 @@ describe('enqueing', () => {
 		const output = new OutputNode({ id: 'output', graph });
 
 		//Create an input port on the output node
-		output.addInput('input', {
+		output.dataflow.addInput('input', {
 			type: NumberSchema
 		});
 
@@ -31,9 +32,9 @@ describe('enqueing', () => {
 		//These should be enqueued automatically
 		input1.outputs.value.connect(sub.inputs.inputs);
 		input2.outputs.value.connect(sub.inputs.inputs);
-		sub.outputs.value.connect(output.inputs.input);
+		sub.outputs.value.connect(output.inputs.input as Input);
 
-		const final = await graph.execute();
+		const final = await graph.capabilities.dataFlow.execute();
 
 		const expected = {
 			input: {

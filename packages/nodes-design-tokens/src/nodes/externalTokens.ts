@@ -1,12 +1,12 @@
 import {
+	DataflowNode,
 	INodeDefinition,
-	Node,
 	StringSchema
 } from '@tokens-studio/graph-engine';
 import { TokenSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
 
-export default class ExternalTokensNode extends Node {
+export default class ExternalTokensNode extends DataflowNode {
 	static title = 'External Token Set';
 	static type = 'studio.tokens.design.externalSet';
 	static description =
@@ -14,10 +14,10 @@ export default class ExternalTokensNode extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('uri', {
+		this.dataflow.addInput('uri', {
 			type: StringSchema
 		});
-		this.addOutput('tokenSet', {
+		this.dataflow.addOutput('tokenSet', {
 			type: arrayOf(TokenSchema)
 		});
 	}

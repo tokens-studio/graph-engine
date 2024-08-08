@@ -1,10 +1,10 @@
-import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
-import DestructColorNode from '../../../../src/nodes/color/deconstruct.js';
+import { getDataFlowGraph } from '@tests/utils/index.js';
+import DestructColorNode from '@/nodes/color/deconstruct.js';
 
 describe('color/deconstruct', () => {
 	test('deconstructs an RGB color correctly', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new DestructColorNode({ graph });
 
 		node.inputs.color.setValue({
@@ -23,7 +23,7 @@ describe('color/deconstruct', () => {
 	});
 
 	test('deconstructs an HSL color correctly', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new DestructColorNode({ graph });
 
 		node.inputs.color.setValue({
@@ -42,7 +42,7 @@ describe('color/deconstruct', () => {
 	});
 
 	test('handles a color without alpha correctly', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new DestructColorNode({ graph });
 
 		node.inputs.color.setValue({
@@ -60,7 +60,7 @@ describe('color/deconstruct', () => {
 	});
 
 	test('throws an error for invalid color input', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new DestructColorNode({ graph });
 
 		node.inputs.color.setValue(null);
@@ -75,7 +75,7 @@ describe('color/deconstruct', () => {
 	});
 
 	test('handles edge case with zero values', async () => {
-		const graph = new Graph();
+		const graph = getDataFlowGraph();
 		const node = new DestructColorNode({ graph });
 
 		node.inputs.color.setValue({

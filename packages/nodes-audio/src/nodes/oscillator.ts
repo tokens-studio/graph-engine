@@ -3,7 +3,8 @@ import {
 	INodeDefinition,
 	NumberSchema,
 	StringSchema,
-	ToInput
+	ToInput,
+	ToOutput
 } from '@tokens-studio/graph-engine';
 import { NodeSchema } from '../schemas/index.js';
 
@@ -19,26 +20,30 @@ export class AudioOscillatorNode extends AudioBaseNode {
 		frequency: number;
 	}>;
 
+	declare outputs: ToOutput<{
+		node: AudioNode;
+	}>;
+
 	_values: { type?: string; frequency?: number } = {};
 
 	static description =
 		'Creates an oscillator node, a source representing a periodic waveform. It basically generates a constant tone.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('type', {
+		this.dataflow.addInput('type', {
 			type: {
 				...StringSchema,
 				enum: ['sawtooth', 'sine', 'square', 'triangle'],
 				default: 'sine'
 			}
 		});
-		this.addInput('frequency', {
+		this.dataflow.addInput('frequency', {
 			type: {
 				...NumberSchema,
 				default: 3000
 			}
 		});
-		this.addOutput('node', {
+		this.dataflow.addOutput('node', {
 			type: {
 				...NodeSchema,
 				description: 'The generated oscillator node'

@@ -1,7 +1,8 @@
 import {
 	AnySchema,
 	INodeDefinition,
-	ToInput
+	ToInput,
+	ToOutput
 } from '@tokens-studio/graph-engine';
 import { AudioBaseNode } from './base.js';
 import { AudioBufferSchema } from '../schemas/index.js';
@@ -13,15 +14,20 @@ export class AudioLoadBufferNode extends AudioBaseNode {
 	declare inputs: ToInput<{
 		resource: Buffer;
 	}>;
+
+	declare outputs: ToOutput<{
+		buffer: AudioBuffer;
+	}>;
+
 	static description = 'Converts a buffer to an audio buffer';
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('resource', {
+		this.dataflow.addInput('resource', {
 			type: AnySchema,
 			visible: true
 		});
-		this.addOutput('buffer', {
+		this.dataflow.addOutput('buffer', {
 			visible: true,
 			type: AudioBufferSchema
 		});

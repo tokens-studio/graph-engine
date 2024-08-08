@@ -1,8 +1,8 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { NumberSchema } from '../../schemas/index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Power';
 	static type = 'studio.tokens.math.pow';
 	static description =
@@ -18,16 +18,16 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('base', {
+		this.dataflow.addInput('base', {
 			type: NumberSchema
 		});
-		this.addInput('exponent', {
+		this.dataflow.addInput('exponent', {
 			type: {
 				...NumberSchema,
 				default: 2
 			}
 		});
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: NumberSchema
 		});
 	}

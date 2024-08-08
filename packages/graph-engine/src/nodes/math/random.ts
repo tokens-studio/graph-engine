@@ -1,8 +1,8 @@
+import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { INodeDefinition, ToOutput } from '../../index.js';
-import { Node } from '../../programmatic/node.js';
 import { NumberSchema } from '../../schemas/index.js';
 
-export default class NodeDefinition extends Node {
+export default class NodeDefinition extends DataflowNode {
 	static title = 'Random';
 	static type = 'studio.tokens.math.random';
 	static description =
@@ -14,7 +14,7 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addOutput('value', {
+		this.dataflow.addOutput('value', {
 			type: {
 				...NumberSchema,
 				default: Math.random()
