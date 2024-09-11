@@ -859,6 +859,12 @@ export class Graph {
 						noPropagate: true
 					});
 				} else {
+
+					//Ignore
+					if (input.value === value){
+						return
+					}
+
 					input.setValue(value, {
 						type: node.outputs[edge.sourceHandle].type,
 						//We are controlling propagation

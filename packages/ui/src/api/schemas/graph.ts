@@ -14,7 +14,7 @@ export const SerializedGraph = z.object({
 					visible: z.boolean().optional(),
 					variadic: z.boolean().optional(),
 					dynamicType: z.object({}).optional(),
-					type: z.object({}).optional(),
+					type: z.record(z.any()).optional(),
 					annotations: z.record(z.any()).optional()
 				})
 			)

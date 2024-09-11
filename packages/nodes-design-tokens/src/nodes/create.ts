@@ -57,7 +57,7 @@ export default class NodeDefinition extends Node {
 		this.addInput('$extensions', {
 			type: {
 				...ObjectSchema,
-				default: undefined
+				default: null
 			}
 		});
 
@@ -78,6 +78,7 @@ export default class NodeDefinition extends Node {
 			throw new Error('Type is required');
 		}
 
+		//@ts-expect-error
 		this.outputs.token.set(props);
 	}
 }
