@@ -16,7 +16,9 @@ export type Actions = {
   duplicateNodes: (nodeIds: string[]) => void;
 };
 
-export const ContextProvider = React.createContext({});
+export const ContextProvider = React.createContext<Actions>(
+  {} as unknown as Actions,
+);
 
 export type ActionProviderProps = {
   children: React.ReactNode;
@@ -33,6 +35,6 @@ export const ActionProvider = ({ children, actions }: ActionProviderProps) => {
 export const useAction = <T extends keyof Actions>(
   actionName: T,
 ): Actions[T] => {
-  const actions = React.useContext(ContextProvider);
+  const actions = React.useContext<Actions>(ContextProvider);
   return actions[actionName];
 };

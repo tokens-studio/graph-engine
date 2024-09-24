@@ -209,7 +209,6 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
       <Stack direction="column" gap={3}>
         <Select value={selectItemsType} onValueChange={setSelectItemsType}>
           <Select.Trigger label="Type" value={selectItemsType} />
-          {/* @ts-expect-error */}
           <Select.Content css={{ maxHeight: '200px' }} position="popper">
             {AllSchemas.map((x, i) => (
               <Select.Item value={x.$id!} key={i}>

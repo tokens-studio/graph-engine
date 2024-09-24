@@ -1,4 +1,3 @@
-import './debugger.scss';
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { DebugInfo, debugInfo } from './data.js';
 import {

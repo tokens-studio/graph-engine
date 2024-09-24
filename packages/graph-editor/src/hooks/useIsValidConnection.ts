@@ -66,6 +66,10 @@ export const useIsValidConnection = ({
         return true;
       }
 
+      if (!sourceType) {
+        return false;
+      }
+
       const canConvert = canConvertSchemaTypes(sourceType, targetType);
 
       if (!canConvert) {

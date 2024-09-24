@@ -13,7 +13,7 @@ import { LayoutBase } from 'rc-dock';
 import { Menu } from '@/components/menubar/data.js';
 
 export interface EditorProps {
-  id: string;
+  id?: string;
 
   /**
    * A lookup of the custom node types to display in the editor.
