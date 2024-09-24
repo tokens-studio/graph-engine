@@ -23,7 +23,7 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
   }, [port.value]);
 
   const onChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement> | string) => {
       let col;
       //Weird  problem with the color picker if the user decides to use the text input
       if (typeof e === 'string') {

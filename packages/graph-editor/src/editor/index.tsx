@@ -1,14 +1,11 @@
-import '../index.scss';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { LayoutController } from './layoutController.js';
 import { ReduxProvider } from '../redux/index.js';
 import { ToastProvider } from '@/hooks/useToast.js';
-import {
-  defaultControls,
-  defaultPanelGroupsFactory,
-  defaultSpecifics,
-} from '../index.js';
+import { defaultControls } from '@/registry/control.js';
 import { nodeLookup as defaultNodeLookup } from '@tokens-studio/graph-engine';
+import { defaultPanelGroupsFactory } from '@/components/index.js';
+import { defaultSpecifics } from '@/registry/specifics.js';
 import React from 'react';
 
 /**

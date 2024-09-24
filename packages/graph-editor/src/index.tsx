@@ -1,4 +1,3 @@
-import './index.scss';
 export * from './components/index.js';
 export * from './utils/index.js';
 export * from './types/index.js';
@@ -20,6 +19,5 @@ export * from './components/controls/interface.js';
 export * from './registry/control.js';
 export * from './registry/specifics.js';
 export * from './registry/toolbar.js';
-
 export * from './types/index.js';
 export * from './lib/stitches/index.js';

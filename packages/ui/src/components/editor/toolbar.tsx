@@ -131,6 +131,26 @@ export const AiSummary = () => {
 	);
 };
 
+export const PreviewButton = () => {
+	const { toggle } = useOpenPanel();
+	return (
+		<Tooltip label='Preview' side='bottom'>
+			<IconButton
+				variant='invisible'
+				onClick={() =>
+					toggle({
+						group: 'popout',
+						title: 'Preview',
+						id: 'preview',
+						content: <Preview />
+					})
+				}
+				icon={<XrayView />}
+			/>
+		</Tooltip>
+	);
+};
+
 export const createToolbarButtons = (buttons?: React.ReactElement) => {
 	return (
 		<>

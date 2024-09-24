@@ -87,7 +87,7 @@ import { useExternalLoader } from '@/context/ExternalLoaderContext.js';
 import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
 import { useSelector } from 'react-redux';
 import { useSetCurrentNode } from '@/hooks/useSetCurrentNode.js';
-import { version } from '../../package.json';
+import { version } from '@/data/version.js';
 
 const snapGridCoords: SnapGrid = [16, 16];
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
