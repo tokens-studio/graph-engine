@@ -1,5 +1,17 @@
 # @tokens-studio/graph-engine
 
+## 3.1.0
+
+### Minor Changes
+
+- 02620af: Add typing/hasValue node that lets you check if a value is present
+- bc39aeb: Add pad node that lets you fill a string to a certain lenght with a given character, like 25 to 025
+- 83abbb5: Add Inject Item into Array node, this allows you to add a new item to the array at a given index, also allowing negative index to go last to first
+
+### Patch Changes
+
+- 381fc4d: Fix output of split string to array
+
 ## 3.0.2
 
 ### Patch Changes
