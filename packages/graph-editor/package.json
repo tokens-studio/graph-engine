@@ -12,7 +12,9 @@
   "exports": {
     "./*": {
       "import": "./dist/*",
-      "types": "./dist/*"
+      "types": "./dist/*",
+      "style": "./dist/*"
+
     },
     ".": {
       "import": "./dist/index.js",
