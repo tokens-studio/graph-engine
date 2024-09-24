@@ -1,5 +1,15 @@
 # @tokens-studio/graph-engine-nodes-image
 
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies [02620af]
+- Updated dependencies [bc39aeb]
+- Updated dependencies [83abbb5]
+- Updated dependencies [381fc4d]
+  - @tokens-studio/graph-engine@3.1.0
+
 ## 2.0.0
 
 ### Patch Changes
