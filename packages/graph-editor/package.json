@@ -12,7 +12,8 @@
   "exports": {
     "./*": {
       "import": "./dist/*",
-      "types": "./dist/*"
+      "types": "./dist/*",
+      "style": "./dist/*"
     },
     ".": {
       "import": "./dist/index.js",
@@ -99,7 +100,6 @@
   },
   "devDependencies": {
     "@4tw/cypress-drag-drop": "^2.2.5",
-
     "@storybook/addon-actions": "^8.0.9",
     "@storybook/addon-docs": "^8.0.9",
     "@storybook/addon-essentials": "^8.0.9",
