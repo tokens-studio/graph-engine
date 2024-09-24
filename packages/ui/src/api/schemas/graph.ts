@@ -13,10 +13,10 @@ export const SerializedGraph = z.object({
 					value: z.any(),
 					visible: z.boolean().optional(),
 					variadic: z.boolean().optional(),
-					dynamicType: z.object({}).optional(),
-					type: z.record(z.any()).optional(),
+					dynamicType: z.any().optional(),
+					type: z.any().optional(),
 					annotations: z.record(z.any()).optional()
-				})
+				}).passthrough()
 			)
 		})
 		//Needed for innergraph to work

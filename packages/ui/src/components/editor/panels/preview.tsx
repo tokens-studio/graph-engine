@@ -20,14 +20,12 @@ const findOutput = (graph: Graph) => {
 
 const useFindOutput = (graph: Graph) => {
 
-
     const [outputNode, setOutputNode] = useState<Node | undefined>();
-
-
 
     useEffect(() => {
         let unsub = () => { }
         const foundOutput = outputNode || findOutput(graph);
+        //Add a subscription to wait till we find it 
         if (!foundOutput) {
             const unsubscribe = graph.on('nodeAdded', (x) => {
                 if (x.factory.type == 'studio.tokens.generic.output') {
@@ -92,8 +90,7 @@ export const Listener = ({ previewId }) => {
             }
 
             channel!.onmessage = (e) => {
-
-                if (e.type === 'request') {
+                if (e.data.type === 'request') {
                     channel?.postMessage({
                         type: 'data',
                         data: last

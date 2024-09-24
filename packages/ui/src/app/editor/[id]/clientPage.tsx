@@ -27,16 +27,18 @@ const Page = observer(({ id, refs }: { id: string; refs: RefState }) => {
 		refs.setEditor(editor);
 	}, []);
 	const { data, error } = client.graph.getGraph.useQuery(['getGraph', id], {
+
 		params: {
 			id: id
 		}
+	},{
+		//Do not allow reloading during development
+		staleTime: Infinity
 	});
 	useErrorToast(error);
 
 	useEffect(() => {
 		if (refs.editor && data?.body) {
-			console.log(data);
-
 			refs.editor.loadRaw(data.body.graph as SerializedGraph);
 			setStillLoading(false);
 		}

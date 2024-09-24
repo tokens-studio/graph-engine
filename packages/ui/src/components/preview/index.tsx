@@ -1,3 +1,4 @@
+'use client';
 import './preview.css';
 import {
     SandpackCodeEditor,
@@ -24,26 +25,37 @@ import { useSearchParams } from 'next/navigation.js';
 
 const PERSISTED_KEY = '@sandpack';
 
-const Listener = ({template, channelId}) => {
+const Listener = ({ template, channelId }) => {
 
     const { sandpack } = useSandpack();
+    const [channel, setChannel] = React.useState<BroadcastChannel | null>(null);
+
+
 
     useEffect(() => {
         const bc = new BroadcastChannel(`preview:${channelId}`);
         //Ask for the initial data
         bc.postMessage({
-            type:'request'
+            type: 'request'
         });
-
-        bc.onmessage = (event) => {
-            const data = event.data;
-
-            if (data.type == 'data'){
-                sandpack.updateFile('generated.js', data.data, true)
-            }
-        };
+        setChannel(bc)
         return () => bc.close();
-    }, [channelId, sandpack]);
+    }, [channelId]);
+
+
+    useEffect(() => {
+
+        if (channel) {
+            channel.onmessage = (event) => {
+                const data = event.data;
+
+                if (data.type == 'data') {
+                    sandpack.updateFile('generated.js', data.data, true)
+                }
+            };
+        }
+
+    }, [channel, sandpack]);
 
     useEffect(() => {
 

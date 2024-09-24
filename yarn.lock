@@ -6325,30 +6325,29 @@
   resolved "https://registry.yarnpkg.com/@trysound/sax/-/sax-0.2.0.tgz#cccaab758af56761eb7bf37af6f03f326dd798ad"
   integrity sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==
 
-"@ts-rest/core@3.45.2":
-  version "3.45.2"
-  resolved "https://registry.yarnpkg.com/@ts-rest/core/-/core-3.45.2.tgz#9e2e1b8377bd88bfc326a01cc7599ea2199f2603"
-  integrity sha512-Eiv+Sa23MbsAd1Gx9vNJ+IFCDyLZNdJ+UuGMKbFvb+/NmgcBR1VL1UIVtEkd5DJxpYMMd8SLvW91RgB2TS8iPw==
+"@ts-rest/core@3.51.0":
+  version "3.51.0"
+  resolved "https://registry.yarnpkg.com/@ts-rest/core/-/core-3.51.0.tgz#7e56fbae7abc4037a84396fb098a7eb24759d4a8"
+  integrity sha512-v6lnWEcpZj1UgN9wb84XQ+EORP1QEtncFumoXMJjno5ZUV6vdjKze3MYcQN0C6vjBpIJPQEaI/gab2jr4/0KzQ==
 
-"@ts-rest/open-api@3.45.2":
-  version "3.45.2"
-  resolved "https://registry.yarnpkg.com/@ts-rest/open-api/-/open-api-3.45.2.tgz#fa24730eac239c420f7e950fad9a787d0b706572"
-  integrity sha512-TG5GvD0eyicMR3HjEAMTO2ulO7x/ADSn5bfLF/ZDdVXla48PiQdwhG4NsjVbsUDCghwx+6y5u2aTYjypzdiXQg==
+"@ts-rest/open-api@^3.51.0":
+  version "3.51.0"
+  resolved "https://registry.yarnpkg.com/@ts-rest/open-api/-/open-api-3.51.0.tgz#8f30e9a6d679143b199bc08fc9350b8b5f0ba4ae"
+  integrity sha512-fvpvRr6HIbAMNZR//QQQi75z5qTxMEBMRtmbaBXVi5e1WVVwOK7P6YBaGWTQp6DXSvsZVULX5VZXmsDd1Z1dew==
   dependencies:
     "@anatine/zod-openapi" "^1.12.0"
     openapi3-ts "^2.0.2"
 
-"@ts-rest/react-query@3.45.2":
-  version "3.45.2"
-  resolved "https://registry.yarnpkg.com/@ts-rest/react-query/-/react-query-3.45.2.tgz#073d1728365fd6279b3bd37111fedd374973e2d4"
-  integrity sha512-OFl54tb+d2vJsPENr0ehmb2KrXmXTbwEDMmoIW7iyAHEIbPiL03QreeiFykZpsRDdTUjQJY2TgOmFKCCtLozWA==
+"@ts-rest/react-query@^3.51.0":
+  version "3.51.0"
+  resolved "https://registry.yarnpkg.com/@ts-rest/react-query/-/react-query-3.51.0.tgz#fc30f2404008a8ce385a879ddd2a45a33ce42393"
+  integrity sha512-pWrbyRqvcvmjvm+ORu3zE3sPFqsS6CHOq5vra/UtyLEgXrcnEA+fu/7d9tj/+BLRwe0kOWvalu2S3/d3SDxvFQ==
 
-"@ts-rest/serverless@3.45.2":
-  version "3.45.2"
-  resolved "https://registry.yarnpkg.com/@ts-rest/serverless/-/serverless-3.45.2.tgz#d762db85d374a8e99a6345e56a5b909dc3232522"
-  integrity sha512-7+37i9s9j/5OfdzLB17/PDQBco9v38WYn3fbYLr6x/zHYQqq8RfXXbmHYGvFdE+y3eizat2J0pM2Djqsb4Uppg==
+"@ts-rest/serverless@^3.51.0":
+  version "3.51.0"
+  resolved "https://registry.yarnpkg.com/@ts-rest/serverless/-/serverless-3.51.0.tgz#40b7e99dc4957473133b1473f1faa475702c3aa2"
+  integrity sha512-BjwmLPgnYifdDjSpSvhZk+v1P+3CiM/jpxKNUgdw8RfgnDy/+aaOPmAcSkjhBCOIu6ASChuv/sNpiuWx3YyPUw==
   dependencies:
-    "@ts-rest/core" "3.45.2"
     itty-router "^5.0.9"
 
 "@tsconfig/node10@^1.0.7":
