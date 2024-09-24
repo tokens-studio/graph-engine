@@ -24,7 +24,7 @@
   ],
   "scripts": {
     "start": "vite dev",
-    "build": "node ./scripts/extractVersion.mjs && tspc  -p tsconfig.prod.json || npm run build:css",
+    "build": "node ./scripts/extractVersion.mjs && tspc  -p tsconfig.prod.json && npm run build:css",
     "build:css": "postcss src/index.scss --base src  --dir dist --ext css",
     "build:storybook": "storybook build",
     "dev": "tspc -p tsconfig.prod.json --watch || npm run build:css --watch",
