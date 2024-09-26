@@ -7,12 +7,9 @@ import {
 	ToOutput
 } from '@tokens-studio/graph-engine';
 import { TokenBorderSchema, TokenSchema } from '../schemas/index.js';
+import { TokenTypes } from '@tokens-studio/types';
 import { arrayOf } from '../schemas/utils.js';
-import type {
-	SingleToken,
-	TokenBorderValue,
-	TokenTypes
-} from '@tokens-studio/types';
+import type { SingleToken, TokenBorderValue } from '@tokens-studio/types';
 
 export default class NodeDefinition extends Node {
 	static title = 'Create Border Design Token';
