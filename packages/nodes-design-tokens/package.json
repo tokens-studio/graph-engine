@@ -6,6 +6,11 @@
   "author": "andrew@hyma.io",
   "type": "module",
   "exports": {
+    "./*": {
+      "import": "./dist/*",
+      "types": "./dist/*",
+      "style": "./dist/*"
+    },
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
@@ -18,8 +23,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "tspc  -p tsconfig.prod.json",
+    "dev": "tspc  -p tsconfig.prod.json --watch",
     "docs": "typedoc",
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint . --fix",
@@ -54,7 +59,8 @@
     "@tokens-studio/graph-engine": "*",
     "@types/node": "^18.15.11",
     "ts-node": "^10.9.1",
-    "tsup": "^8.1.0",
+    "ts-patch": "^3.2.1",
+    "typescript-transform-paths": "^3.5.1",
     "typedoc": "^0.24.7",
     "typescript": "^5.4.5",
     "vitest": "^1.6.0"

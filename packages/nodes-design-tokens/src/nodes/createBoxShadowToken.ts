@@ -7,12 +7,9 @@ import {
 	ToOutput
 } from '@tokens-studio/graph-engine';
 import { TokenBoxShadowSchema, TokenSchema } from '../schemas/index.js';
+import { TokenTypes } from '@tokens-studio/types';
 import { arrayOf } from '../schemas/utils.js';
-import type {
-	SingleToken,
-	TokenBoxshadowValue,
-	TokenTypes
-} from '@tokens-studio/types';
+import type { SingleToken, TokenBoxshadowValue } from '@tokens-studio/types';
 
 export default class NodeDefinition extends Node {
 	static title = 'Create Box Shadow Design Token';
