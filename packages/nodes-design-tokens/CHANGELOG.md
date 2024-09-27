@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 4.1.0
+
+### Minor Changes
+
+- cd66e2c: Removed bundling from build step to support treeshaking
+
 ## 4.0.0
 
 ### Patch Changes
