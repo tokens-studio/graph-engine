@@ -1,14 +1,17 @@
-import { Box, Heading, Stack, Text } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
 import { Command } from 'cmdk';
 import {
   DropPanelStore,
   PanelGroup,
   PanelItem,
 } from '../panels/dropPanel/index.js';
+import { Heading } from '@tokens-studio/ui/Heading.js';
 import { Node } from '@tokens-studio/graph-engine';
 import { NodeRequest } from '@/editor/actions/createNode.js';
 import { Node as ReactFlowNode, useReactFlow } from 'reactflow';
 import { Search } from 'iconoir-react';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
 import { isActiveElementTextEditable } from '@/utils/isActiveElementTextEditable.js';
 import { observer } from 'mobx-react-lite';
 import { showNodesCmdPaletteSelector } from '@/redux/selectors/ui.js';

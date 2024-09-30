@@ -42,7 +42,7 @@ import noteNode from '../components/flow/nodes/noteNode.js';
 
 import { ActionProvider } from './actions/provider.js';
 import { BatchRunError, Graph } from '@tokens-studio/graph-engine';
-import { Box } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
 import { CommandMenu } from '@/components/commandPalette/index.js';
 import { EdgeContextMenu } from '../components/contextMenus/edgeContextMenu.js';
 import { GraphContextProvider } from '@/context/graph.js';

@@ -1,7 +1,8 @@
 import { FloppyDisk } from 'iconoir-react';
 import { IField } from './interface.js';
-import { IconButton, Textarea as UITextarea } from '@tokens-studio/ui';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
 import { Input } from '@tokens-studio/graph-engine';
+import { Textarea as UITextarea } from '@tokens-studio/ui/Textarea.js';
 import { delayedUpdateSelector } from '@/redux/selectors/index.js';
 import { observer } from 'mobx-react-lite';
 import { useSelector } from 'react-redux';

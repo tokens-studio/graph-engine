@@ -1,5 +1,8 @@
-import { Box, Spinner, Stack, Text } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
 import { IconoirProvider } from 'iconoir-react';
+import { Spinner } from '@tokens-studio/ui/Spinner.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
 import { styled } from '@stitches/react';
 import React, { useMemo } from 'react';
 

@@ -1,6 +1,6 @@
 import { Handle } from '../handles.js';
 import { HandleContainer } from '../handles.js';
-import { Stack } from '@tokens-studio/ui';
+import { Stack } from '@tokens-studio/ui/Stack.js';
 import { extractType, extractTypeIcon } from '../wrapper/nodeV2.js';
 import { icons } from '@/registry/icon.js';
 import { useLocalGraph } from '@/context/graph.js';

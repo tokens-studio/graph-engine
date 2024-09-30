@@ -1,7 +1,10 @@
-import { Box, Heading, IconButton, Stack } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
+import { Heading } from '@tokens-studio/ui/Heading.js';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
 import { InfoCircleSolid } from 'iconoir-react';
 import { Node } from '@tokens-studio/graph-engine';
 import { PortPanel } from '@/components/portPanel/index.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
 import { currentNode } from '@/redux/selectors/graph.js';
 import { observer } from 'mobx-react-lite';
 import { useGraph } from '@/hooks/useGraph.js';

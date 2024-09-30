@@ -1,5 +1,7 @@
-import { Box, Stack, Text } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
 import { Edge, Port, toColor, toHex } from '@tokens-studio/graph-engine';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
 import React from 'react';
 import withVariadicField from './withVariadicField.js';
 

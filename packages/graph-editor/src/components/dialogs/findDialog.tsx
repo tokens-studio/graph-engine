@@ -1,4 +1,8 @@
-import { Button, Dialog, IconButton, Text, TextInput } from '@tokens-studio/ui';
+import { Button } from '@tokens-studio/ui/Button.js';
+import { Dialog } from '@tokens-studio/ui/Dialog.js';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
+import { Text } from '@tokens-studio/ui/Text.js';
+import { TextInput } from '@tokens-studio/ui/TextInput.js';
 import { Xmark } from 'iconoir-react';
 import { title as annotatedTitle } from '@/annotations/index.js';
 import {

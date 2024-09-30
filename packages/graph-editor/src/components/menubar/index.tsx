@@ -1,4 +1,4 @@
-import { Box } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
 import {
   Menu as MenuData,
   MenuItem as MenuItemData,

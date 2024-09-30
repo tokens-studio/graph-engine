@@ -1,8 +1,11 @@
-import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
 import { ColorPickerPopover } from '../colorPicker/index.js';
 import { FloppyDisk } from 'iconoir-react';
 import { IField } from './interface.js';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
 import { Input, hexToColor, toColor, toHex } from '@tokens-studio/graph-engine';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
 import { delayedUpdateSelector } from '@/redux/selectors/index.js';
 import { observer } from 'mobx-react-lite';
 import { useSelector } from 'react-redux';

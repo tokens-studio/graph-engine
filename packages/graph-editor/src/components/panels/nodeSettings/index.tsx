@@ -1,19 +1,16 @@
-import {
-  Box,
-  Label,
-  Stack,
-  Text,
-  TextInput,
-  Textarea,
-} from '@tokens-studio/ui';
-import React, { useCallback, useMemo } from 'react';
-
+import { Box } from '@tokens-studio/ui/Box.js';
+import { Label } from '@tokens-studio/ui/Label.js';
 import { Node } from '@tokens-studio/graph-engine';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
+import { TextInput } from '@tokens-studio/ui/TextInput.js';
+import { Textarea } from '@tokens-studio/ui/Textarea.js';
 import { currentNode } from '@/redux/selectors/graph.js';
 import { description, title } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
 import { useGraph } from '@/hooks/useGraph.js';
 import { useSelector } from 'react-redux';
+import React, { useCallback, useMemo } from 'react';
 
 export function NodeSettingsPanel() {
   const graph = useGraph();

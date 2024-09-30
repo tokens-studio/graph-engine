@@ -1,5 +1,9 @@
-import { Button, Heading, Scroll, Select, Stack } from '@tokens-studio/ui';
+import { Button } from '@tokens-studio/ui/Button.js';
+import { Heading } from '@tokens-studio/ui/Heading.js';
 import { Node } from '@tokens-studio/graph-engine';
+import { Scroll } from '@tokens-studio/ui/Scroll.js';
+import { Select } from '@tokens-studio/ui/Select.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
 import { StringSchema } from '@tokens-studio/graph-engine';
 import { deletable } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';

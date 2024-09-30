@@ -1,4 +1,5 @@
-import { Box, Text } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
+import { Text } from '@tokens-studio/ui/Text.js';
 import React from 'react';
 
 export const PreviewColor = ({ value }) => {

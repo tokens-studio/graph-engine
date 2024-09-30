@@ -1,4 +1,5 @@
-import { Button, DropdownMenu } from '@tokens-studio/ui';
+import { Button } from '@tokens-studio/ui/Button.js';
+import { DropdownMenu } from '@tokens-studio/ui/DropdownMenu.js';
 import { NavArrowRight } from 'iconoir-react';
 import { getViewports } from '@/components/hotKeys/index.js';
 import { savedViewports } from '@/annotations/index.js';

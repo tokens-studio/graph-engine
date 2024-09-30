@@ -1,4 +1,4 @@
-import { Checkbox } from '@tokens-studio/ui';
+import { Checkbox } from '@tokens-studio/ui/Checkbox.js';
 import { IField } from './interface.js';
 import { Input } from '@tokens-studio/graph-engine';
 import { observer } from 'mobx-react-lite';

@@ -1,8 +1,12 @@
-import { Accordion, Box, Stack, Text, TextInput } from '@tokens-studio/ui';
+import { Accordion } from '@tokens-studio/ui/Accordion.js';
+import { Box } from '@tokens-studio/ui/Box.js';
 import { DragItem } from './DragItem.js';
 import { DropPanelStore } from './data.js';
 import { IconoirProvider, NavArrowRight } from 'iconoir-react';
 import { NodeEntry } from './NodeEntry.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
+import { TextInput } from '@tokens-studio/ui/TextInput.js';
 import { observer } from 'mobx-react-lite';
 import { panelItemsSelector } from '@/redux/selectors/registry.js';
 import { styled } from '@/lib/stitches/index.js';

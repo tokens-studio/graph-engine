@@ -1,6 +1,8 @@
 import { IField } from './interface.js';
 import { Input } from '@tokens-studio/graph-engine';
-import { Label, Stack, TextInput } from '@tokens-studio/ui';
+import { Label } from '@tokens-studio/ui/Label.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { TextInput } from '@tokens-studio/ui/TextInput.js';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 

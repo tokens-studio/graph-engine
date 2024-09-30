@@ -9,8 +9,10 @@ import {
   CompAlignRight,
   CompAlignTop,
 } from 'iconoir-react';
-import { DropdownMenu, IconButton, Tooltip } from '@tokens-studio/ui';
+import { DropdownMenu } from '@tokens-studio/ui/DropdownMenu.js';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
 import { Node } from 'reactflow';
+import { Tooltip } from '@tokens-studio/ui/Tooltip.js';
 import { graphEditorSelector } from '@/redux/selectors/index.js';
 import { useSelector } from 'react-redux';
 import React from 'react';
