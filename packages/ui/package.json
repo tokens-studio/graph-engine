@@ -37,7 +37,7 @@
     "@tokens-studio/graph-engine-nodes-audio": "*",
     "@tokens-studio/graph-engine-nodes-design-tokens": "*",
     "@tokens-studio/graph-engine-nodes-image": "*",
-    "@tokens-studio/tokens": "0.0.24",
+    "@tokens-studio/tokens": "^0.2.5",
     "@tokens-studio/ui": "^0.11.0",
     "@ts-rest/open-api": "3.45.2",
     "@ts-rest/react-query": "3.45.2",
