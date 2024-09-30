@@ -10,18 +10,16 @@ import {
   toColor,
   toHex,
 } from '@tokens-studio/graph-engine';
-import {
-  Button,
-  IconButton,
-  Select,
-  Stack,
-  Text,
-  TextInput,
-} from '@tokens-studio/ui';
+import { Button } from '@tokens-studio/ui/Button.js';
 import { ColorPickerPopover } from '../colorPicker/index.js';
 import { FloppyDisk, Minus, Plus } from 'iconoir-react';
 import { IField } from './interface.js';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
 import { JSONTree } from 'react-json-tree';
+import { Select } from '@tokens-studio/ui/Select.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
+import { TextInput } from '@tokens-studio/ui/TextInput.js';
 import { delayedUpdateSelector } from '@/redux/selectors/index.js';
 import { observer } from 'mobx-react-lite';
 import { toJS } from 'mobx';

@@ -1,15 +1,17 @@
-import { Box, Heading, IconButton, Stack } from '@tokens-studio/ui';
-import React, { useMemo } from 'react';
-
+import { Box } from '@tokens-studio/ui/Box.js';
 import { DynamicInputs } from './dynamicInputs.js';
+import { Heading } from '@tokens-studio/ui/Heading.js';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
 import { InfoCircle } from 'iconoir-react';
 import { PortPanel } from '@/components/portPanel/index.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
 import { annotatedDynamicInputs } from '@tokens-studio/graph-engine';
 import { currentNode } from '@/redux/selectors/graph.js';
 import { editable } from '@/annotations/index.js';
 import { inputControls } from '@/redux/selectors/registry.js';
 import { useGraph } from '@/hooks/useGraph.js';
 import { useSelector } from 'react-redux';
+import React, { useMemo } from 'react';
 
 export function Inputsheet() {
   const graph = useGraph();

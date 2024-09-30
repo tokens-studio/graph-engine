@@ -1,15 +1,13 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  DropdownMenu,
-  Label,
-  Stack,
-  Text,
-  Tooltip,
-} from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
+import { Button } from '@tokens-studio/ui/Button.js';
+import { Checkbox } from '@tokens-studio/ui/Checkbox.js';
+import { DropdownMenu } from '@tokens-studio/ui/DropdownMenu.js';
 import { EdgeType, LayoutType } from '@/redux/models/settings.js';
 import { InfoCircleSolid } from 'iconoir-react';
+import { Label } from '@tokens-studio/ui/Label.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
+import { Tooltip } from '@tokens-studio/ui/Tooltip.js';
 import {
   connectOnClickSelector,
   delayedUpdateSelector,

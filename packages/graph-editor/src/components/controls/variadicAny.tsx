@@ -1,5 +1,6 @@
 import { Edge, Port } from '@tokens-studio/graph-engine';
-import { Text, TextInput } from '@tokens-studio/ui';
+import { Text } from '@tokens-studio/ui/Text.js';
+import { TextInput } from '@tokens-studio/ui/TextInput.js';
 import React from 'react';
 import withVariadicField from './withVariadicField.js';
 

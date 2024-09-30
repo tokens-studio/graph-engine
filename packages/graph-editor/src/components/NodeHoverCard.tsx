@@ -1,5 +1,7 @@
 import * as HoverCard from '@radix-ui/react-hover-card';
-import { Heading, Stack, Text } from '@tokens-studio/ui';
+import { Heading } from '@tokens-studio/ui/Heading.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
 import { keyframes, styled } from '@/lib/stitches/index.js';
 import React from 'react';
 

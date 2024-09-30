@@ -1,7 +1,9 @@
 import { AllSchemas, Input } from '@tokens-studio/graph-engine';
-import { Button, Select, Stack } from '@tokens-studio/ui';
+import { Button } from '@tokens-studio/ui/Button.js';
 import { IField } from './interface.js';
 import { JSONTree } from 'react-json-tree';
+import { Select } from '@tokens-studio/ui/Select.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
 import { observer } from 'mobx-react-lite';
 import { resetable } from '@/annotations/index.js';
 import React from 'react';

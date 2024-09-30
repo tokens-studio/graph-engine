@@ -1,4 +1,7 @@
-import { Button, Stack, Text } from '@tokens-studio/ui';
+import { Button } from '@tokens-studio/ui/Button.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
+
 import { ImperativeEditorRef } from '@/editor/editorTypes.js';
 import { mainGraphSelector } from '@/redux/selectors/graph.js';
 import { title } from '@/annotations/index.js';

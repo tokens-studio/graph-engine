@@ -1,11 +1,14 @@
-import { Box, IconButton, Label, Stack, TextInput } from '@tokens-studio/ui';
-import React, { useState } from 'react';
-
+import { Box } from '@tokens-studio/ui/Box.js';
 import { FloppyDisk } from 'iconoir-react';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
 import { JSONTree } from 'react-json-tree';
+import { Label } from '@tokens-studio/ui/Label.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { TextInput } from '@tokens-studio/ui/TextInput.js';
 import { description, title } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
 import { useGraph } from '@/hooks/useGraph.js';
+import React, { useState } from 'react';
 
 export function GraphPanel() {
   const graph = useGraph();

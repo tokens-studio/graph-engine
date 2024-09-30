@@ -1,5 +1,6 @@
-import { Box, Stack } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
 import { PlayControls } from '@/components/toolbar/groups/playControls.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
 import React from 'react';
 
 export function PlayPanel() {

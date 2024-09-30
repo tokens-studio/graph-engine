@@ -1,4 +1,4 @@
-import { IconButton } from '@tokens-studio/ui';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
 import { Pause, Play, Square } from 'iconoir-react';
 import { playStateSelector } from '@/redux/selectors/index.js';
 import { useDispatch, useSelector } from 'react-redux';

@@ -1,6 +1,8 @@
-import { Box, Button, TextInput } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
+import { Button } from '@tokens-studio/ui/Button.js';
 import { HexColorPicker } from 'react-colorful';
 import { PopoverClose } from '@radix-ui/react-popover';
+import { TextInput } from '@tokens-studio/ui/TextInput.js';
 import { styled } from '@/lib/stitches/index.js';
 import InputPopover from './InputPopover.js';
 import React from 'react';

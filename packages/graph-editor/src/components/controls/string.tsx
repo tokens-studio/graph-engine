@@ -1,7 +1,10 @@
 import { FloppyDisk } from 'iconoir-react';
 import { IField } from './interface.js';
-import { IconButton, Stack, Text, TextInput } from '@tokens-studio/ui';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
 import { Input } from '@tokens-studio/graph-engine';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
+import { TextInput } from '@tokens-studio/ui/TextInput.js';
 import { delayedUpdateSelector } from '@/redux/selectors/index.js';
 import { observer } from 'mobx-react-lite';
 import { useSelector } from 'react-redux';

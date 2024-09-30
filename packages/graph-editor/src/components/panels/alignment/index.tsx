@@ -14,8 +14,11 @@ import {
   CompAlignLeftSolid,
   CompAlignRightSolid,
 } from 'iconoir-react';
-import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
 import { Node } from 'reactflow';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
 import { graphEditorSelector } from '@/redux/selectors/index.js';
 import { useSelector } from 'react-redux';
 import React from 'react';

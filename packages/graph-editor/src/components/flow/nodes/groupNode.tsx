@@ -1,4 +1,4 @@
-import { Button, Stack } from '@tokens-studio/ui';
+import { Button } from '@tokens-studio/ui/Button.js';
 import {
   NodeProps,
   NodeToolbar,
@@ -8,6 +8,7 @@ import {
   useStoreApi,
 } from 'reactflow';
 import { NodeResizer } from '@reactflow/node-resizer';
+import { Stack } from '@tokens-studio/ui/Stack.js';
 import { useCallback } from 'react';
 import React from 'react';
 import useDetachNodes from '../../../hooks/useDetachNodes.js';

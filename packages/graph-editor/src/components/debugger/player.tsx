@@ -1,6 +1,9 @@
 import { DebugInfo } from './data.js';
-import { IconButton, Select, Stack, Text } from '@tokens-studio/ui';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
 import { Pause, Play, Trash, UndoAction, ZoomIn, ZoomOut } from 'iconoir-react';
+import { Select } from '@tokens-studio/ui/Select.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
 import { TimelineState } from '@xzdarcy/react-timeline-editor';
 import React, { useEffect, useState } from 'react';
 

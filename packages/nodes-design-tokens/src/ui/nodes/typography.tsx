@@ -1,4 +1,6 @@
-import { Separator, Stack, Text } from '@tokens-studio/ui';
+import { Separator } from '@tokens-studio/ui/Separator.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import type PreviewNode from '../../nodes/previewTypography.js';

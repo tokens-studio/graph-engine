@@ -1,5 +1,8 @@
-import { Accordion, Button, Separator, Stack } from '@tokens-studio/ui';
+import { Accordion } from '@tokens-studio/ui/Accordion.js';
+import { Button } from '@tokens-studio/ui/Button.js';
 import { IField, flatTokensRestoreToMap } from '@tokens-studio/graph-editor';
+import { Separator } from '@tokens-studio/ui/Separator.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
 import { Token } from './token.js';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

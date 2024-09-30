@@ -20,7 +20,10 @@ import { EditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
 import { FindDialog } from '@/components/dialogs/findDialog.js';
-import { IconButton, Stack, Tooltip } from '@tokens-studio/ui';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Tooltip } from '@tokens-studio/ui/Tooltip.js';
+
 import { MAIN_GRAPH_ID } from '@/constants.js';
 import { Maximize, Reduce, Xmark } from 'iconoir-react';
 import { OutputSheet } from '@/components/panels/output/index.js';

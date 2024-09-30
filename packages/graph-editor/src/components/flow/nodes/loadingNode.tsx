@@ -1,4 +1,7 @@
-import { Spinner, Stack, Text } from '@tokens-studio/ui';
+import { Spinner } from '@tokens-studio/ui/Spinner.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
+
 import NodeWrapper from '../wrapper/base.js';
 import React from 'react';
 

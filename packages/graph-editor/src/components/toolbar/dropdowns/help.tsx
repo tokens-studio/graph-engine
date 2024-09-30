@@ -1,5 +1,7 @@
 import { ChatBubbleQuestion } from 'iconoir-react';
-import { DropdownMenu, IconButton, Tooltip } from '@tokens-studio/ui';
+import { DropdownMenu } from '@tokens-studio/ui/DropdownMenu.js';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
+import { Tooltip } from '@tokens-studio/ui/Tooltip.js';
 import React from 'react';
 
 export const HelpDropdown = () => (

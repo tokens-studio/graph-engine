@@ -1,4 +1,5 @@
-import { Box, Button } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
+import { Button } from '@tokens-studio/ui/Button.js';
 import { ColorCompare } from '@/components/preview/colorCompare.js';
 import { ColorScale } from '@/components/preview/colorScale.js';
 import { ColorSwatch } from '@/components/preview/swatch.js';

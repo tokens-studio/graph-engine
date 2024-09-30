@@ -1,16 +1,14 @@
-import {
-  Button,
-  Checkbox,
-  Heading,
-  Label,
-  Scroll,
-  Select,
-  Stack,
-  TextInput,
-} from '@tokens-studio/ui';
+import { Button } from '@tokens-studio/ui/Button.js';
+import { Checkbox } from '@tokens-studio/ui/Checkbox.js';
+import { Heading } from '@tokens-studio/ui/Heading.js';
+import { Label } from '@tokens-studio/ui/Label.js';
 import { Node } from '@tokens-studio/graph-engine';
 import { STRING } from '@tokens-studio/graph-engine';
 import { SchemaSelector } from '@/redux/selectors/index.js';
+import { Scroll } from '@tokens-studio/ui/Scroll.js';
+import { Select } from '@tokens-studio/ui/Select.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { TextInput } from '@tokens-studio/ui/TextInput.js';
 import { deletable } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
 import { useSelector } from 'react-redux';

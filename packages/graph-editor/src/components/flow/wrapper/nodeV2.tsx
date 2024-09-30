@@ -1,6 +1,5 @@
 import { BaseNodeWrapper } from './base.js';
-
-import { Box, Stack, Text } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
 import {
   COLOR,
   Color,
@@ -17,6 +16,8 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
 import { Node as GraphNode } from '@tokens-studio/graph-engine';
 import { Handle, HandleContainer, useHandle } from '../handles.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
 import { icons, nodeSpecifics } from '@/redux/selectors/registry.js';
 import {
   inlineTypes,

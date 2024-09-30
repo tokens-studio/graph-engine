@@ -1,8 +1,10 @@
 import { BaseNodeWrapper } from '../wrapper/base.js';
-import { Box, IconButton, Textarea } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
 import { EditPencil } from 'iconoir-react';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
 import { Node } from '@tokens-studio/graph-engine';
 import { NodeProps, NodeResizer } from 'reactflow';
+import { Textarea } from '@tokens-studio/ui/Textarea.js';
 import { description, title } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
 import { useLocalGraph } from '@/context/graph.js';

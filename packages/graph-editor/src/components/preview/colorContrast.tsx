@@ -1,5 +1,6 @@
-import { Box, Text } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
 import { ContrastAlgorithmType, toColor } from '@tokens-studio/graph-engine';
+import { Text } from '@tokens-studio/ui/Text.js';
 import { castToHex } from '@/utils/index.js';
 import Color from 'colorjs.io';
 import React from 'react';

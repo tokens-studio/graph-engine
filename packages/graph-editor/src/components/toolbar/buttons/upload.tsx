@@ -1,5 +1,6 @@
-import { IconButton, Tooltip } from '@tokens-studio/ui';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
 import { ImperativeEditorRef } from '@/editor/editorTypes.js';
+import { Tooltip } from '@tokens-studio/ui/Tooltip.js';
 import { Upload } from 'iconoir-react';
 import { mainGraphSelector } from '@/redux/selectors/graph.js';
 import { useSelector } from 'react-redux';

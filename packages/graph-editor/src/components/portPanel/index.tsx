@@ -1,12 +1,10 @@
-import {
-  DropdownMenu,
-  IconButton,
-  Label,
-  Stack,
-  Tooltip,
-} from '@tokens-studio/ui';
+import { DropdownMenu } from '@tokens-studio/ui/DropdownMenu.js';
 import { Port as GraphPort } from '@tokens-studio/graph-engine';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
 import { Input } from '@tokens-studio/graph-engine';
+import { Label } from '@tokens-studio/ui/Label.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Tooltip } from '@tokens-studio/ui/Tooltip.js';
 import { observer } from 'mobx-react-lite';
 import { useSelector } from 'react-redux';
 import React, { useCallback, useMemo } from 'react';

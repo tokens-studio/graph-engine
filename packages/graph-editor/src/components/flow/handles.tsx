@@ -1,5 +1,8 @@
-import { Box, Stack, Text, Tooltip } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
 import { Position, Handle as RawHandle } from 'reactflow';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
+import { Tooltip } from '@tokens-studio/ui/Tooltip.js';
 import { styled } from '@/lib/stitches/index.js';
 import { useIsValidConnection } from '../../hooks/useIsValidConnection.js';
 import React, { createContext, useContext } from 'react';

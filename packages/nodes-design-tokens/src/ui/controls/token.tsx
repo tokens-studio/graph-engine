@@ -1,6 +1,7 @@
-import { Box, Stack } from '@tokens-studio/ui';
+import { Box } from '@tokens-studio/ui/Box.js';
 import { IField } from '@tokens-studio/graph-editor';
 import { PreviewColor } from './preview/color.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
 import { TokenTypes } from '@tokens-studio/types';
 import { observer } from 'mobx-react-lite';
 import React from 'react';

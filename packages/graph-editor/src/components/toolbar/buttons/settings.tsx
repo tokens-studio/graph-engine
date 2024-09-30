@@ -1,5 +1,6 @@
-import { IconButton, Tooltip } from '@tokens-studio/ui';
+import { IconButton } from '@tokens-studio/ui/IconButton.js';
 import { Settings } from 'iconoir-react';
+import { Tooltip } from '@tokens-studio/ui/Tooltip.js';
 import { useLayoutButton } from '../../../hooks/useLayoutButton.js';
 import React from 'react';
 
