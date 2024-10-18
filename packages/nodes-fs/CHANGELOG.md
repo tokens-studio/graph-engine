@@ -1,5 +1,18 @@
 # @tokens-studio/graph-engine-nodes-fs
 
+## 4.0.0
+
+### Minor Changes
+
+- 9fed81e: Removes tsup completely to prevent bundling, and rather to use raw typescript compilation
+
+### Patch Changes
+
+- Updated dependencies [9fed81e]
+- Updated dependencies [7b4a564]
+  - @tokens-studio/graph-editor@4.3.0
+  - @tokens-studio/graph-engine@3.2.0
+
 ## 3.0.0
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @tokens-studio/graph-engine
 
+## 5.0.0
+
+### Patch Changes
+
+- Updated dependencies [9fed81e]
+- Updated dependencies [7b4a564]
+  - @tokens-studio/graph-engine@3.2.0
+
 ## 4.0.0
 
 ### Patch Changes
