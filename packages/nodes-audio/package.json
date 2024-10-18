@@ -46,7 +46,6 @@
     "@types/node": "^18.15.11",
     "ts-node": "^10.9.1",
     "typedoc": "^0.24.7",
-    "ts-patch": "^3.2.1",
     "typescript": "^5.4.5"
   },
   "keywords": [

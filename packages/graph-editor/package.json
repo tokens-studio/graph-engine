@@ -130,7 +130,6 @@
     "resq": "^1.11.0",
     "start-server-and-test": "^2.0.4",
     "storybook": "^8.0.9",
-    "ts-patch": "^3.2.1",
     "typescript": "^5.4.5",
     "typescript-transform-paths": "^3.5.1",
     "vite": "^5.2.10",

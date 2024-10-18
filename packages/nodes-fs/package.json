@@ -45,7 +45,6 @@
     "@tokens-studio/prettier-config-custom": "*",
     "@tokens-studio/graph-editor": "*",
     "@tokens-studio/graph-engine": "*",
-    "ts-patch": "^3.2.1",
     "typescript-transform-paths": "^3.5.1",
     "typedoc": "^0.24.7",
     "typescript": "^5.4.5",
