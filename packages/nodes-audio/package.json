@@ -19,8 +19,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "tspc  -p tsconfig.prod.json",
+    "dev": "tspc  -p tsconfig.prod.json --watch",
     "docs": "typedoc",
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint . --fix",
@@ -45,8 +45,8 @@
     "@tokens-studio/graph-engine": "*",
     "@types/node": "^18.15.11",
     "ts-node": "^10.9.1",
-    "tsup": "^8.1.0",
     "typedoc": "^0.24.7",
+    "ts-patch": "^3.2.1",
     "typescript": "^5.4.5"
   },
   "keywords": [

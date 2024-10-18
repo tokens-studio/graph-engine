@@ -1,7 +1,7 @@
 import { Curve } from '../../types.js';
 import { CurveSchema, NumberSchema } from '../../schemas/index.js';
 import { INodeDefinition, Node } from '../../programmatic/node.js';
-import { ToInput, ToOutput } from '../../programmatic';
+import { ToInput, ToOutput } from '../../programmatic/index.js';
 
 export default class BezierCurveNode extends Node {
 	static title = 'Bezier Curve';

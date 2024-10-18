@@ -806,7 +806,7 @@ export class Graph {
 			}
 
 			return acc.concat(target);
-		}, []);
+		}, [] as Node[]);
 		//Cheaper to emit once
 		this.emit('valueSent', edges);
 

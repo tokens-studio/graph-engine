@@ -1,7 +1,7 @@
 import { Curve } from '../../types.js';
 import { CurveSchema, StringSchema } from '../../schemas/index.js';
 import { INodeDefinition, Node } from '../../programmatic/node.js';
-import { ToInput, ToOutput } from '../../programmatic';
+import { ToInput, ToOutput } from '../../programmatic/index.js';
 
 export const presetBeziers = {
 	easeInOutSine: [0.445, 0.05, 0.55, 0.95],

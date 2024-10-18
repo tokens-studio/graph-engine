@@ -20,7 +20,7 @@ export class Port<T = any> {
 	public visible: boolean = false;
 	public node: Node;
 	//Note that we need null values for the observable to work
-	protected _dynamicType?: GraphSchema = null;
+	protected _dynamicType: GraphSchema | null = null;
 	protected _type: GraphSchema = AnySchema;
 	protected _value: T;
 	// Used to store arbitrary meta data. Most commonly used in the UI

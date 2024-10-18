@@ -36,8 +36,8 @@ export default class SubgraphNode extends Node {
 		//Pass capabilities down
 		this._innerGraph.capabilities = this.getGraph().capabilities;
 
-		let input: InputNode;
-		let output: OutputNode;
+		let input: InputNode | undefined = undefined;
+		let output: OutputNode | undefined = undefined;
 
 		if (!existing) {
 			input = new InputNode({ graph: this._innerGraph });
@@ -57,16 +57,16 @@ export default class SubgraphNode extends Node {
 					output = node as OutputNode;
 				}
 			});
-
-			if (!input) throw new Error('No input node found');
-			if (!output) throw new Error('No output node found');
 		}
+
+		if (!input) throw new Error('No input node found');
+		if (!output) throw new Error('No output node found');
 
 		autorun(() => {
 			//Get the existing inputs
 			const existing = this.inputs;
 			//Iterate through the inputs of the input node in the inner graph
-			Object.entries(input.inputs).map(([key, value]) => {
+			Object.entries(input!.inputs).map(([key, value]) => {
 				//If the key doesn't exist in the existing inputs, add it
 				if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
 					//Always add it as visible
@@ -91,7 +91,7 @@ export default class SubgraphNode extends Node {
 		autorun(() => {
 			const existing = this.outputs;
 			const existingPorts = Object.keys(existing);
-			Object.entries(output.inputs).map(([key, value]) => {
+			Object.entries(output!.inputs).map(([key, value]) => {
 				//If the key doesn't exist in the existing inputs, add it
 				if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
 					//Always add it as visible
@@ -108,7 +108,7 @@ export default class SubgraphNode extends Node {
 
 			//Remove any outputs that are no longer in the inner graph
 			existingPorts.forEach(port => {
-				if (!output.inputs[port]) {
+				if (!output!.inputs[port]) {
 					this.removeOutput(port);
 				}
 			});
@@ -150,7 +150,7 @@ export default class SubgraphNode extends Node {
 			inputs
 		});
 
-		Object.entries(result.output).forEach(([key, value]) => {
+		Object.entries(result.output || {}).forEach(([key, value]) => {
 			this.setOutput(key, value.value, value.type);
 		});
 	}

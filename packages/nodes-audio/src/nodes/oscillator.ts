@@ -7,11 +7,6 @@ import {
 } from '@tokens-studio/graph-engine';
 import { NodeSchema } from '../schemas/index.js';
 
-type inputs = {
-	type: string;
-	frequency: number;
-};
-
 export class AudioOscillatorNode extends AudioBaseNode {
 	static title = 'Audio Oscillator node';
 	static type = 'studio.tokens.audio.oscillator';
@@ -19,7 +14,10 @@ export class AudioOscillatorNode extends AudioBaseNode {
 	audioNode: GainNode | undefined;
 	oscillatorNode: OscillatorNode | undefined;
 
-	declare inputs: ToInput<inputs>;
+	declare inputs: ToInput<{
+		type: string;
+		frequency: number;
+	}>;
 
 	_values: { type?: string; frequency?: number } = {};
 
@@ -51,7 +49,7 @@ export class AudioOscillatorNode extends AudioBaseNode {
 
 	execute(): void | Promise<void> {
 		const context = this.getAudioCtx();
-		const { type, frequency } = this.getAllInputs<inputs>();
+		const { type, frequency } = this.getAllInputs();
 
 		// Store the values
 		this._values = { type, frequency };
@@ -78,7 +76,7 @@ export class AudioOscillatorNode extends AudioBaseNode {
 			const { type, frequency } = this._values;
 			const newBufferSource = context.createOscillator();
 			newBufferSource.type = type as OscillatorType;
-			newBufferSource.frequency.setValueAtTime(frequency, context.currentTime);
+			newBufferSource.frequency.setValueAtTime(frequency!, context.currentTime);
 
 			if (this.oscillatorNode) {
 				//Cleanup old node

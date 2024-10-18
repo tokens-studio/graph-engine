@@ -15,8 +15,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "tspc  -p tsconfig.prod.json",
+    "dev": "tspc  -p tsconfig.prod.json --watch",
     "docs": "typedoc",
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint --ext .tsx,.ts,.js,.html . --fix",
@@ -40,7 +40,8 @@
     "@tokens-studio/eslint-config-custom": "*",
     "@tokens-studio/prettier-config-custom": "*",
     "@tokens-studio/graph-engine": "*",
-    "tsup": "^8.1.0",
+        "typescript-transform-paths": "^3.5.1",
+    "ts-patch": "^3.2.1",
     "typedoc": "^0.24.7",
     "typescript": "^5.4.5",
     "vitest": "^1.6.0"

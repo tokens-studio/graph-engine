@@ -29,7 +29,7 @@ export class Output<T = any> extends Port<T> {
 
 	set(value: T, type?: GraphSchema) {
 		this._value = value;
-		this._dynamicType = type;
+		this._dynamicType = type || null;
 	}
 
 	connect(target: Input) {
