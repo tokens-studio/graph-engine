@@ -1,6 +1,6 @@
 import { Color } from '../../types.js';
 import { ColorSchema, StringSchema } from '../../schemas/index.js';
-import { ColorSpace, colorSpaces } from './lib/types.js';
+import { ColorSpace, ColorSpaces } from './lib/spaces.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 import { toColor, toColorObject } from './lib/utils.js';
@@ -26,7 +26,7 @@ export default class NodeDefinition extends Node {
 		this.addInput('space', {
 			type: {
 				...StringSchema,
-				enum: colorSpaces,
+				enum: ColorSpaces,
 				default: 'srgb'
 			}
 		});
@@ -38,7 +38,7 @@ export default class NodeDefinition extends Node {
 	execute(): void | Promise<void> {
 		const { color, space } = this.getAllInputs();
 
-		if (!colorSpaces.includes(space)) {
+		if (!ColorSpaces.includes(space)) {
 			throw new Error('Invalid color space ' + space);
 		}
 
