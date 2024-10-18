@@ -1,5 +1,12 @@
 # @tokens-studio/graph-engine
 
+## 3.2.0
+
+### Minor Changes
+
+- 9fed81e: Removes tsup completely to prevent bundling, and rather to use raw typescript compilation
+- 7b4a564: Add support for all colorjs color spaces in the color nodes like color to string
+
 ## 3.1.0
 
 ### Minor Changes
