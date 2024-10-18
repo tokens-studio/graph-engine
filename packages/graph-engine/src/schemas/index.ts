@@ -407,6 +407,7 @@ export const convertSchemaType = (
 export type GraphSchema = SchemaObject;
 
 export const AllSchemas = [
+	FloatCurveSchema,
 	NumberSchema,
 	StringSchema,
 	ColorSchema,
