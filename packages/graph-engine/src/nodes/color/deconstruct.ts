@@ -4,7 +4,7 @@ import {
 	NumberSchema,
 	StringSchema
 } from '../../schemas/index.js';
-import { ColorSpace } from './lib/types.js';
+import { ColorSpace } from './lib/spaces.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 

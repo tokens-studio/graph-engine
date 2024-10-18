@@ -4,7 +4,7 @@ import {
 	NumberSchema,
 	StringSchema
 } from '../../schemas/index.js';
-import { ColorSpace, colorSpaces } from './lib/types.js';
+import { ColorSpace, ColorSpaces } from './lib/spaces.js';
 import { Color as ColorType } from '../../types.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
@@ -51,7 +51,7 @@ export default class NodeDefinition extends Node {
 			type: {
 				...StringSchema,
 				default: 'srgb',
-				enum: Object.keys(colorSpaces),
+				enum: ColorSpaces,
 				description: 'The color space we are operating in'
 			}
 		});

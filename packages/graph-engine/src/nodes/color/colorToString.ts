@@ -1,6 +1,7 @@
 import { Black, toColor } from './lib/utils.js';
-import { Color } from '../../types.js';
 import { ColorSchema, StringSchema } from '../../schemas/index.js';
+import { ColorSpaces } from './lib/spaces.js';
+import { Color as ColorType } from '../../types.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 
@@ -10,7 +11,7 @@ export default class NodeDefinition extends Node {
 	static description = 'Converts a color to a string';
 
 	declare inputs: ToInput<{
-		color: Color;
+		color: ColorType;
 	}>;
 	declare outputs: ToOutput<{
 		value: string;
@@ -27,7 +28,7 @@ export default class NodeDefinition extends Node {
 		this.addInput('space', {
 			type: {
 				...StringSchema,
-				enum: ['srgb', 'hsl', 'hex'],
+				enum: ColorSpaces,
 				default: 'hex'
 			},
 			visible: false
