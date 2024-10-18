@@ -41,7 +41,7 @@ export default class NodeDefinition extends Node {
 	execute(): void | Promise<void> {
 		const color = this.getInput('color');
 		let space = this.getInput('space');
-		let format = undefined;
+		let format: { format: string } | undefined = undefined;
 
 		if (space == 'hex') {
 			space = 'srgb';

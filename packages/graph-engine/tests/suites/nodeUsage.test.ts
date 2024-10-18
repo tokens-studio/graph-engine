@@ -31,7 +31,7 @@ describe('nodeUsage', () => {
 		//Input is a special case with dynamic values so it needs to be executed and computed to generate the output values
 		const res = await input.run();
 
-		expect(res.error).to.be.undefined;
+		expect(res.error).to.be.null;
 
 		const edge = input.outputs.foo.connect(output.inputs.input);
 

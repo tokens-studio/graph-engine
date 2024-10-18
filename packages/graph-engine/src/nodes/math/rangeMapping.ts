@@ -2,7 +2,7 @@
 
 import { BooleanSchema, NumberSchema } from '../../schemas/index.js';
 import { INodeDefinition, Node } from '../../programmatic/node.js';
-import { ToInput, ToOutput } from '../../programmatic';
+import { ToInput, ToOutput } from '../../programmatic/index.js';
 
 export default class RangeMappingNode extends Node {
 	static title = 'Range Mapping';

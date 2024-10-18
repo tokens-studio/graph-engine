@@ -1,9 +1,9 @@
-import { AnySchema, StringSchema } from '@/index.js';
-import { Graph } from '@/graph/graph.js';
-import { arrayOf } from '@/schemas/utils.js';
+import { AnySchema, StringSchema } from '../../../../src/index.js';
+import { Graph } from '../../../../src/graph/graph.js';
+import { arrayOf } from '../../../../src/schemas/utils.js';
 import { describe, expect, test } from 'vitest';
-import ConstantSourceNode from '@/nodes/generic/constant.js';
-import Node from '@/nodes/array/arrify.js';
+import ConstantSourceNode from '../../../../src/nodes/generic/constant.js';
+import Node from '../../../../src/nodes/array/arrify.js';
 
 describe('array/arrify', () => {
 	test('exports an array by default', async () => {

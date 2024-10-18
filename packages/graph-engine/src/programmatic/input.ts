@@ -63,7 +63,7 @@ export class Input<T = any> extends Port<T> {
 				) {
 					const graph = this.node.getGraph();
 					const sourceNodesOutputTypes = this._edges.map(edge => {
-						const outputs = graph.getNode(edge.source).outputs;
+						const outputs = graph.getNode(edge.source)!.outputs;
 						return outputs[edge.sourceHandle].type;
 					});
 
@@ -80,7 +80,7 @@ export class Input<T = any> extends Port<T> {
 							items: sourceNodesOutputTypes[0]
 						};
 					} else {
-						this._dynamicType = undefined;
+						this._dynamicType = null;
 					}
 				} else {
 					this._dynamicType = opts.type;
@@ -96,7 +96,7 @@ export class Input<T = any> extends Port<T> {
 	 * Resets the value of the input to the default value
 	 */
 	reset() {
-		this._dynamicType = undefined;
+		this._dynamicType = null;
 		return (this._value = getDefaults(this._type) as T);
 	}
 
@@ -160,7 +160,7 @@ export class Input<T = any> extends Port<T> {
 
 	deserialize(serialized: SerializedInput) {
 		this.visible = serialized.visible ?? true;
-		this._dynamicType = serialized.dynamicType || undefined;
+		this._dynamicType = serialized.dynamicType || null;
 		this.annotations = serialized.annotations || {};
 		this._value = serialized.value;
 	}

@@ -70,5 +70,5 @@ export const findSourceToTargetOfType = (
 				});
 
 			return acc.concat(foundTargets);
-		}, []);
+		}, [] as SourceToTarget[]);
 };

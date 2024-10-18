@@ -41,6 +41,7 @@
     ]
   },
   "dependencies": {
+    "ts-patch": "^3.2.1",
     "patch-package": "^8.0.0"
   },
   "devDependencies": {

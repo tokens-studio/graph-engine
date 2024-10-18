@@ -13,6 +13,8 @@ const filePath = new URL(
 const _scriptDir = import.meta.url;
 const ENVIRONMENT_IS_WEB = typeof window == "object";
 // eslint-disable-next-line no-undef
+declare const importScripts: (...urls: string[]) => void;
+
 const ENVIRONMENT_IS_WORKER = typeof importScripts == "function";
 // N.b. Electron.js environment is simultaneously a NODE-environment, but
 // also a web environment.

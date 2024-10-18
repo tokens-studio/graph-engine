@@ -56,7 +56,7 @@ export default class CreateBorderNode extends Node {
 		this.addOutput('type', {
 			type: StringSchema
 		});
-		this.addOutput('$extension', {
+		this.addOutput('$extensions', {
 			type: ObjectSchema
 		});
 
