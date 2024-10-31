@@ -5,6 +5,7 @@ import {
 	annotatedDynamicInputs,
 	annotatedSingleton
 } from '../../annotations/index.js';
+import { getAllOutputs } from '@/utils/node.js';
 
 /**
  * Acts as an output node for the graph. There can only be a single output node per graph.
@@ -33,7 +34,7 @@ export default class NodeDefinition extends Node {
 		const node = await super.deserialize(opts);
 		//Create the outputs immediately
 		Object.keys(node.inputs).forEach(input => {
-			const rawInput = node.getRawInput(input);
+			const rawInput = node.inputs[input];
 			node.addOutput(input, {
 				type: rawInput.type
 			});
@@ -44,21 +45,21 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const inputs = this.getAllInputs();
-		const outputs = this.getAllOutputs();
+		const outputs = getAllOutputs(this);
 
 		//Passthrough all
 		Object.keys(inputs).forEach(input => {
-			const rawInput = this.getRawInput(input);
+			const rawInput = this.inputs[input];
 
 			if (!(input in outputs)) {
 				this.addOutput(input, {
 					type: rawInput.type
 				});
 			} else {
-				this.setOutput(input, rawInput.value, rawInput.type);
+				this.outputs[input].set(rawInput.value, rawInput.type);
 			}
 
-			this.setOutput(input, rawInput.value, rawInput.type);
+			this.outputs[input].set(rawInput.value, rawInput.type);
 		});
 
 		Object.keys(outputs).forEach(output => {

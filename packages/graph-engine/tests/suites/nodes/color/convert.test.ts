@@ -1,6 +1,6 @@
 import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
-import { getAllOutputs } from '../utils.js';
+import { getAllOutputs } from '../../../../src/utils/node.js';
 import Node from '../../../../src/nodes/color/convert.js';
 
 describe('color/convert', () => {

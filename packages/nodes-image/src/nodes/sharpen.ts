@@ -5,6 +5,7 @@ import {
   ToInput,
   ToOutput,
 } from "@tokens-studio/graph-engine";
+import { Image } from "../schemas/types.js";
 import { ImageSchema } from "../schemas/index.js";
 import type { IMagickImage } from "@imagemagick/magick-wasm";
 
@@ -13,12 +14,12 @@ export class Sharpen extends BaseNode {
   static type = "studio.tokens.image.sharpen";
 
   declare inputs: ToInput<{
-    image: ImageData;
+    image: Image;
     sigma: number;
     radius: number;
   }>;
   declare outputs: ToOutput<{
-    image: ImageData;
+    image: Image;
   }>;
 
   constructor(props: INodeDefinition) {
@@ -45,7 +46,7 @@ export class Sharpen extends BaseNode {
     await ImageMagick.read(this.cloneImage(image), (image: IMagickImage) => {
       image.sharpen(radius, sigma);
       image.write((data) =>
-        this.setOutput("image", {
+        this.outputs.image.set({
           data,
         }),
       );

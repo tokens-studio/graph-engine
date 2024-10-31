@@ -18,6 +18,7 @@ export default class NodeDefinition extends Node {
 		xHeightRatio: number;
 		ppi: number;
 		pixelDensity: number;
+		precision: number;
 	}>;
 
 	declare outputs: ToOutput<{
@@ -107,6 +108,6 @@ export default class NodeDefinition extends Node {
 		const xHeightPX = (xHeightMM / 25.4) * (ppi / pixelDensity);
 		const fontSizePX = (1 * xHeightPX) / xHeightRatio;
 
-		this.setOutput('value', setToPrecision(fontSizePX, precision));
+		this.outputs.value.set(setToPrecision(fontSizePX, precision));
 	}
 }

@@ -7,15 +7,13 @@ import {
 import { arrayOf } from '../schemas/utils.js';
 import type { ToInput } from '@tokens-studio/graph-engine';
 
-type inputs = {
-	path: string;
-};
-
 export class GetDirectoryNode extends Node {
 	static title = 'Read directory';
 	static type = 'studio.tokens.fs.getDirectory';
 
-	declare inputs: ToInput<inputs>;
+	declare inputs: ToInput<{
+		path: string;
+	}>;
 	static description = 'Reads the directory of a path';
 	constructor(props: INodeDefinition) {
 		super(props);
@@ -52,7 +50,7 @@ export class GetDirectoryNode extends Node {
 			{ dirs: [] as string[], files: [] as string[] }
 		);
 
-		this.setOutput('dirs', dirs);
-		this.setOutput('files', files);
+		this.outputs.dirs.set(dirs);
+		this.outputs.files.set(files);
 	}
 }

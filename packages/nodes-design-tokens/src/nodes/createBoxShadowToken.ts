@@ -9,7 +9,11 @@ import {
 import { TokenBoxShadowSchema, TokenSchema } from '../schemas/index.js';
 import { TokenTypes } from '@tokens-studio/types';
 import { arrayOf } from '../schemas/utils.js';
-import type { SingleToken, TokenBoxshadowValue } from '@tokens-studio/types';
+import type {
+	SingleBoxShadowToken,
+	SingleToken,
+	TokenBoxshadowValue
+} from '@tokens-studio/types';
 
 export default class NodeDefinition extends Node {
 	static title = 'Create Box Shadow Design Token';
@@ -68,10 +72,10 @@ export default class NodeDefinition extends Node {
 		const obj = {
 			name,
 			type: TokenTypes.BOX_SHADOW,
-			value: undefined,
+			value: [],
 			description,
 			$extensions
-		};
+		} as SingleBoxShadowToken;
 
 		if (value) {
 			obj.value = value;
@@ -81,6 +85,6 @@ export default class NodeDefinition extends Node {
 			throw new Error('Value or reference is required');
 		}
 
-		this.setOutput('token', obj);
+		this.outputs.token.set(obj);
 	}
 }

@@ -25,7 +25,7 @@ export default class CreateTypographyNode extends Node {
 	}>;
 
 	declare outputs: ToOutput<{
-		token: TokenTypographyValue;
+		value: TokenTypographyValue;
 	}>;
 
 	constructor(props: INodeDefinition) {
@@ -63,6 +63,6 @@ export default class CreateTypographyNode extends Node {
 
 	execute(): void | Promise<void> {
 		const props = this.getAllInputs();
-		this.setOutput('value', props);
+		this.outputs.value.set(props);
 	}
 }

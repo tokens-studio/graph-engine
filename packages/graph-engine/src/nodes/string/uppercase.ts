@@ -26,6 +26,6 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { value } = this.getAllInputs();
-		this.setOutput('value', value.toUpperCase());
+		this.outputs.value.set(value.toUpperCase());
 	}
 }

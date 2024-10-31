@@ -4,6 +4,7 @@ import {
   ToInput,
   ToOutput,
 } from "@tokens-studio/graph-engine";
+import { Image } from "../schemas/types.js";
 import { ImageSchema } from "../schemas/index.js";
 import type { IMagickImage } from "@imagemagick/magick-wasm";
 
@@ -12,10 +13,10 @@ export class SepiaNode extends BaseNode {
   static type = "studio.tokens.image.sepia";
 
   declare inputs: ToInput<{
-    image: ImageData;
+    image: Image;
   }>;
   declare outputs: ToOutput<{
-    image: ImageData;
+    image: Image;
   }>;
 
   static description = "Applies sepia effect to an image.";
@@ -37,7 +38,7 @@ export class SepiaNode extends BaseNode {
     await ImageMagick.read(this.cloneImage(image), (image: IMagickImage) => {
       image.sepiaTone();
       image.write((data) =>
-        this.setOutput("image", {
+        this.outputs.image.set({
           data,
         }),
       );

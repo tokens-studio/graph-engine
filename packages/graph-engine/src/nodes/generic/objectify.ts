@@ -44,6 +44,6 @@ export default class NodeDefinition extends Node {
 				schema: finalType
 			}
 		);
-		this.setOutput('value', value, schema);
+		this.outputs.value.set(value, schema);
 	}
 }

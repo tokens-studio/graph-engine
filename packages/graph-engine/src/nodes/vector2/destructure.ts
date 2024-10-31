@@ -15,7 +15,7 @@ export default class NodeDefinition extends Node {
 
 	declare outputs: ToOutput<{
 		x: number;
-		y: string;
+		y: number;
 	}>;
 
 	constructor(props: INodeDefinition) {
@@ -34,7 +34,7 @@ export default class NodeDefinition extends Node {
 	execute(): void | Promise<void> {
 		const { value } = this.getAllInputs();
 
-		this.setOutput('x', value[0]);
-		this.setOutput('y', value[1]);
+		this.outputs.x.set(value[0]);
+		this.outputs.y.set(value[1]);
 	}
 }

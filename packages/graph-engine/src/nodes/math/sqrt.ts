@@ -27,6 +27,6 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { radicand } = this.getAllInputs();
-		this.setOutput('value', Math.sqrt(radicand));
+		this.outputs.value.set(Math.sqrt(radicand));
 	}
 }

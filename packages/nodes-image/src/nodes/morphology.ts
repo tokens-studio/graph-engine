@@ -6,6 +6,7 @@ import {
   ToInput,
   ToOutput,
 } from "@tokens-studio/graph-engine";
+import { Image } from "../schemas/types.js";
 import { ImageSchema } from "../schemas/index.js";
 
 export const morphologyMethod = {
@@ -78,12 +79,12 @@ export class Morphology extends BaseNode {
   static type = "studio.tokens.image.morphology";
 
   declare inputs: ToInput<{
-    image: ImageData;
+    image: Image;
     kernel: typeof Kernel;
     method: typeof morphologyMethod;
   }>;
   declare outputs: ToOutput<{
-    image: ImageData;
+    image: Image;
   }>;
 
   constructor(props: INodeDefinition) {
@@ -123,7 +124,7 @@ export class Morphology extends BaseNode {
     await ImageMagick.read(this.cloneImage(image), (image: IMagickImage) => {
       image.morphology(settings);
       image.write((data) =>
-        this.setOutput("image", {
+        this.outputs.image.set({
           data,
         }),
       );

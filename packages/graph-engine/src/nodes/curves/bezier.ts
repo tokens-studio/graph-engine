@@ -77,6 +77,6 @@ export default class BezierCurveNode extends Node {
 			]
 		};
 
-		this.setOutput('curve', curve);
+		this.outputs.curve.set(curve);
 	}
 }

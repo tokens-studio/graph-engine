@@ -46,6 +46,6 @@ export default class NodeDefinition extends Node {
 
 		//Convert back to coords
 
-		this.setOutput('color', toColorObject(colObj.to(space)));
+		this.outputs.color.set(toColorObject(colObj.to(space)));
 	}
 }

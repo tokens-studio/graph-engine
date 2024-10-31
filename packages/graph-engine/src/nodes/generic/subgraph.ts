@@ -140,9 +140,9 @@ export default class SubgraphNode extends Node {
 
 	async execute() {
 		const inputs = Object.keys(this.inputs).reduce((acc, key) => {
-			this.getRawInput(key);
+			this.inputs[key];
 			//Todo improve this for typing
-			acc[key] = this.getRawInput(key);
+			acc[key] = this.inputs[key];
 			return acc;
 		}, {});
 
@@ -151,7 +151,7 @@ export default class SubgraphNode extends Node {
 		});
 
 		Object.entries(result.output || {}).forEach(([key, value]) => {
-			this.setOutput(key, value.value, value.type);
+			this.outputs[key].set(value.value, value.type);
 		});
 	}
 }

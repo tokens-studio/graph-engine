@@ -44,6 +44,6 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { value, min, max } = this.getAllInputs();
-		this.setOutput('value', value > max ? max : value < min ? min : value);
+		this.outputs.value.set(value > max ? max : value < min ? min : value);
 	}
 }

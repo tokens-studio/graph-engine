@@ -18,6 +18,7 @@ export default class NodeDefinition extends Node {
 		}>;
 
 	declare outputs: ToOutput<{
+		expression: string;
 		value: number;
 	}>;
 
@@ -45,7 +46,7 @@ export default class NodeDefinition extends Node {
 
 		const output = parser.evaluate(expression, inputs);
 
-		this.setOutput('expression', expression);
-		this.setOutput('value', output);
+		this.outputs.expression.set(expression);
+		this.outputs.value.set(output);
 	}
 }

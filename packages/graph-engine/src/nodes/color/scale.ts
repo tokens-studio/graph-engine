@@ -65,6 +65,6 @@ export default class NodeDefinition extends Node {
 		//Not need to modify
 
 		const final = ([] as Color[]).concat(lighter, darker) as Color[];
-		this.setOutput('value', final);
+		this.outputs.value.set(final);
 	}
 }

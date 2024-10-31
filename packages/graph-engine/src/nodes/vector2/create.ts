@@ -10,7 +10,7 @@ export default class NodeDefinition extends Node {
 
 	declare inputs: ToInput<{
 		x: number;
-		y: string;
+		y: number;
 	}>;
 
 	declare outputs: ToOutput<{
@@ -33,6 +33,6 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { x, y } = this.getAllInputs();
-		this.setOutput('value', [x, y]);
+		this.outputs.value.set([x, y]);
 	}
 }

@@ -27,6 +27,6 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { exponent } = this.getAllInputs();
-		this.setOutput('value', Math.exp(exponent));
+		this.outputs.value.set(Math.exp(exponent));
 	}
 }

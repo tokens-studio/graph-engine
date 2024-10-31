@@ -36,6 +36,6 @@ export default class NodeDefinition extends Node {
 		const fg = toColor(foreground);
 
 		const resultColor = flattenAlpha(fg, bg);
-		this.setOutput('value', toColorObject(resultColor));
+		this.outputs.value.set(toColorObject(resultColor));
 	}
 }

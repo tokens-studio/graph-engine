@@ -18,7 +18,7 @@ export default class NodeDefinition<T> extends Node {
 	}>;
 
 	declare outputs: ToOutput<{
-		value: T[];
+		array: T[];
 	}>;
 
 	constructor(props: INodeDefinition) {
@@ -38,12 +38,12 @@ export default class NodeDefinition<T> extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const { item, index } = this.getAllInputs();
-		const array = this.getRawInput('array');
-		this.inputs.item.setType(array.type.items);
+		const { item, index, array } = this.getAllInputs();
+		const arrayType = this.inputs.array.type;
+		this.inputs.item.setType(arrayType.items);
 
 		// Create a copy of the array value
-		const result = [...array.value];
+		const result = [...array];
 
 		if (index >= 0) {
 			result.splice(index, 0, item);
@@ -53,6 +53,6 @@ export default class NodeDefinition<T> extends Node {
 		}
 
 		// Set the output using the modified result and the original array type
-		this.setOutput('array', result, array.type);
+		this.outputs.array.set(result, arrayType);
 	}
 }

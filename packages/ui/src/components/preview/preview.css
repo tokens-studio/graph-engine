@@ -1,0 +1,22 @@
+.preview-layout{
+    height:100%;
+}
+
+.preview-wrapper{
+    height:100% !important;
+}
+
+.preview-layout>*{
+    height:100% !important
+}
+
+.sp-stack{
+    height: 100%;
+}
+.preview-explorer{
+    height: 100%;
+}
+.preview-explorer>*{
+    height: 100%;
+    max-width: unset !important;
+}

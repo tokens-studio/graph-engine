@@ -54,9 +54,9 @@ export default class NodeDefinition<T> extends Node {
 
 	execute(): void | Promise<void> {
 		const { sortBy, order } = this.getAllInputs();
-		const array = this.getRawInput('array');
+		const array = this.inputs.array;
 		const sorted = orderBy(array.value, [sortBy], order);
 
-		this.setOutput('value', sorted, array.type);
+		this.outputs.value.set(sorted, array.type);
 	}
 }

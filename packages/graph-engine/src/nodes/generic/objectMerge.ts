@@ -70,6 +70,6 @@ export default class NodeDefinition extends Node {
 		}
 
 		const flattened = deepMerge.all(objects, opts);
-		this.setOutput('value', flattened);
+		this.outputs.value.set(flattened);
 	}
 }

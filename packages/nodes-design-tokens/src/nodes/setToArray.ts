@@ -33,10 +33,10 @@ export default class SetToArrayNode extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const set = this.getInput('tokenSet');
+		const set = this.inputs.tokenSet.value;
 
 		const tokens = flatten(set);
 
-		this.setOutput('tokens', tokens);
+		this.outputs.tokens.set(tokens as SingleToken[]);
 	}
 }

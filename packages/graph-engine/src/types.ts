@@ -38,6 +38,13 @@ export type NodeRun = {
 	end: number;
 };
 
+export type FloatCurve = {
+	//The length of the control points array is always one less than the segments
+	controlPoints: [Vec2, Vec2][];
+	//The segments stored as monotonicly increasing x values
+	segments: Vec2[];
+};
+
 export type Vec2 = [number, number];
 export type Vec3 = [number, number, number];
 //Alias for now, will be replaced with a proper type

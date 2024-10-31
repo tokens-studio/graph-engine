@@ -6,14 +6,6 @@ import {
 	ToInput
 } from '@tokens-studio/graph-engine';
 
-type inputs = {
-	/**
-	 * The audio buffer
-	 */
-	buffer: AudioBuffer;
-	loop?: boolean;
-};
-
 export class AudioSourceNode extends AudioBaseNode {
 	static title = 'Audio Source node';
 	static type = 'studio.tokens.audio.source';
@@ -21,7 +13,13 @@ export class AudioSourceNode extends AudioBaseNode {
 	audioNode: GainNode | undefined;
 	bufferNode: AudioBufferSourceNode | undefined;
 
-	declare inputs: ToInput<inputs>;
+	declare inputs: ToInput<{
+		/**
+		 * The audio buffer
+		 */
+		buffer: AudioBuffer;
+		loop?: boolean;
+	}>;
 
 	_values: { buffer?: AudioBuffer; loop?: boolean } = {};
 
@@ -46,7 +44,7 @@ export class AudioSourceNode extends AudioBaseNode {
 
 	async execute(): Promise<void> {
 		const context = this.getAudioCtx();
-		const { buffer, loop } = this.getAllInputs<inputs>();
+		const { buffer, loop } = this.getAllInputs();
 
 		this._values = { buffer, loop };
 
@@ -54,7 +52,7 @@ export class AudioSourceNode extends AudioBaseNode {
 			this.audioNode = context.createGain();
 		}
 
-		this.setOutput('node', this.audioNode);
+		this.outputs.node.set(this.audioNode);
 	}
 
 	onStart = () => {

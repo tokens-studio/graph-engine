@@ -33,6 +33,6 @@ export default class NodeDefinition extends Node {
 	execute(): void | Promise<void> {
 		const { color } = this.getAllInputs();
 
-		this.setOutput('color', toColorObject(new Color(color as string)));
+		this.outputs.color.set(toColorObject(new Color(color as string)));
 	}
 }

@@ -30,6 +30,6 @@ export default class ExternalTokensNode extends Node {
 		}
 
 		const tokens = await this.load(uri);
-		this.setOutput('tokenSet', tokens);
+		this.outputs.tokenSet.set(tokens);
 	}
 }

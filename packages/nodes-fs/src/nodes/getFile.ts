@@ -7,15 +7,13 @@ import {
 } from '@tokens-studio/graph-engine';
 import type { ToInput } from '@tokens-studio/graph-engine';
 
-type inputs = {
-	path: string;
-};
-
 export class GetFileNode extends Node {
 	static title = 'Get File';
 	static type = 'studio.tokens.fs.getFile';
 
-	declare inputs: ToInput<inputs>;
+	declare inputs: ToInput<{
+		path: string;
+	}>;
 	static description = 'Gets a file from the file system.';
 	constructor(props: INodeDefinition) {
 		super(props);
@@ -39,7 +37,7 @@ export class GetFileNode extends Node {
 
 		const file = await this.getFs().readFile(path);
 
-		this.setOutput('file', file);
-		this.setOutput('ext', path.split('.').pop());
+		this.outputs.file.set(file);
+		this.outputs.ext.set(path.split('.').pop());
 	}
 }

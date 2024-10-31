@@ -49,6 +49,6 @@ export default class NodeDefinition extends Node {
 		sourceColor.oklch.l = newLightness;
 		const final = toColorObject(sourceColor);
 
-		this.setOutput('value', final);
+		this.outputs.value.set(final);
 	}
 }

@@ -29,6 +29,6 @@ export default class NodeDefinition extends Node {
 	execute(): void | Promise<void> {
 		const { value } = this.getAllInputs();
 
-		this.setOutput('value', Math.ceil(value));
+		this.outputs.value.set(Math.ceil(value));
 	}
 }

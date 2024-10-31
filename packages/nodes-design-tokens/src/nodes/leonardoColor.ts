@@ -11,12 +11,13 @@ import {
 	toColor,
 	toHex
 } from '@tokens-studio/graph-engine';
+import { CssColor } from '@adobe/leonardo-contrast-colors';
 import { LeonardoColorSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
 
 export type LeonardoColor = {
 	name: string;
-	colorKeys: Color[];
+	colorKeys: CssColor[];
 	ratios: number[];
 	smooth: boolean;
 };
@@ -62,10 +63,10 @@ export default class LeonardoColorNode extends Node {
 		//Because the color is mutated inside of the object, we create a plain object and expect downstream nodes to handle the mutation
 		const color = {
 			name,
-			colorKeys: colorKeys.map(x => toHex(toColor(x))),
+			colorKeys: colorKeys.map(x => toHex(toColor(x)) as CssColor),
 			ratios,
 			smooth
 		};
-		this.setOutput('value', color);
+		this.outputs.value.set(color);
 	}
 }

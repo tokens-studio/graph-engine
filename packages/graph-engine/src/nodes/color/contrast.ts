@@ -54,6 +54,6 @@ export default class NodeDefinition extends Node {
 
 		const calculated = background.contrast(color, algorithm);
 
-		this.setOutput('value', absolute ? Math.abs(calculated) : calculated);
+		this.outputs.value.set(absolute ? Math.abs(calculated) : calculated);
 	}
 }

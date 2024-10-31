@@ -62,7 +62,7 @@ export class Port<T = any> {
 	get dynamicType() {
 		return this._dynamicType;
 	}
-	get value() {
+	get value(): T {
 		return this._value;
 	}
 

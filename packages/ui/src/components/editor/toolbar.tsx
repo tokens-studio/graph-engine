@@ -15,8 +15,9 @@ import {
 } from '@tokens-studio/graph-editor';
 
 import { AISummary } from './panels/aiSummary.tsx';
-import { FloppyDisk, ShareAndroidSolid, Sparks } from 'iconoir-react';
+import { FloppyDisk, ShareAndroidSolid, Sparks, XrayView } from 'iconoir-react';
 import { IconButton, Tooltip } from '@tokens-studio/ui';
+import { Preview } from './panels/preview.tsx';
 import { SharePopover } from '../share/index.tsx';
 import { client } from '@/api/sdk/index.ts';
 import { useErrorToast } from '@/hooks/useToast.tsx';
@@ -166,6 +167,7 @@ export const createToolbarButtons = (buttons?: React.ReactElement) => {
 			<SettingsToolbarButton />
 			<HelpDropdown />
 			<AiSummary />
+			<PreviewButton />
 			<ToolbarSeparator />
 			<DownloadToolbarButton />
 			<UploadToolbarButton />

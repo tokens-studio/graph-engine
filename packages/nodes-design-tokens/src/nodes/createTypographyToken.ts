@@ -8,6 +8,7 @@ import {
 } from '@tokens-studio/graph-engine';
 import {
 	SingleToken,
+	SingleTypographyToken,
 	TokenTypes,
 	TypographyValues
 } from '@tokens-studio/types';
@@ -71,10 +72,10 @@ export default class NodeDefinition extends Node {
 		const obj = {
 			name,
 			type: TokenTypes.TYPOGRAPHY,
-			value: undefined,
+			value: '',
 			description,
 			$extensions
-		};
+		} as SingleTypographyToken;
 
 		if (value) {
 			obj.value = value;
@@ -84,6 +85,6 @@ export default class NodeDefinition extends Node {
 			throw new Error('Value or reference is required');
 		}
 
-		this.setOutput('token', obj);
+		this.outputs.token.set(obj);
 	}
 }

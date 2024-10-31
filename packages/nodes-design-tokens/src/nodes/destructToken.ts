@@ -32,13 +32,13 @@ export default class CreateBorderNode extends Node {
 
 	declare outputs: ToOutput<{
 		name: string;
-		description?: string;
+		description: string | undefined;
 		type: string;
-		$extensions?: Record<string, unknown>;
-		value?: string;
-		border?: TokenBorderValue;
-		typography?: TokenTypographyValue;
-		boxShadow?: TokenBoxshadowValue[];
+		$extensions: Record<string, unknown> | undefined;
+		value: string | undefined;
+		border: TokenBorderValue | undefined;
+		typography: TokenTypographyValue | undefined;
+		boxShadow: TokenBoxshadowValue[] | undefined;
 	}>;
 
 	constructor(props: INodeDefinition) {
@@ -77,37 +77,44 @@ export default class CreateBorderNode extends Node {
 
 	execute(): void | Promise<void> {
 		const { token } = this.getAllInputs();
+		const outputs = this.outputs;
 
 		const { name, description, type, $extensions, value } = token;
-		this.setOutput('name', name);
-		this.setOutput('description', description);
-		this.setOutput('type', type);
-		this.setOutput('$extensions', $extensions);
+		outputs.name.set(name);
+		outputs.description.set(description);
+		outputs.type.set(type!);
+		outputs.$extensions.set($extensions);
 
 		//Make sure to reset all the values
-		this.setOutput('value', undefined);
-		this.setOutput('border', undefined);
-		this.setOutput('typography', undefined);
-		this.setOutput('boxShadow', undefined);
+		outputs.value.set(undefined);
+		outputs.border.set(undefined);
+		outputs.typography.set(undefined);
+		outputs.boxShadow.set(undefined);
 
 		switch (type) {
 			case TokenTypes.BORDER:
-				this.setOutput(typeof value === 'object' ? 'border' : 'value', value);
+				if (typeof value === 'object') {
+					outputs.border.set(value as TokenBorderValue);
+				} else {
+					outputs.value.set(value);
+				}
 				break;
 			case TokenTypes.BOX_SHADOW:
-				this.setOutput(
-					typeof value === 'object' ? 'boxShadow' : 'value',
-					value
-				);
+				if (typeof value === 'object') {
+					outputs.boxShadow.set(value as TokenBoxshadowValue[]);
+				} else {
+					outputs.value.set(value);
+				}
 				break;
 			case TokenTypes.TYPOGRAPHY:
-				this.setOutput(
-					typeof value === 'object' ? 'typography' : 'value',
-					value
-				);
+				if (typeof value === 'object') {
+					outputs.typography.set(value as TokenTypographyValue);
+				} else {
+					outputs.value.set(value);
+				}
 				break;
 			default:
-				this.setOutput('value', value);
+				this.outputs.value.set(value as string);
 		}
 	}
 }

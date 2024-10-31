@@ -53,6 +53,6 @@ export default class NodeDefinition extends Node {
 		const regex = new RegExp(match, flags);
 		const output = input.replace(regex, replace);
 
-		this.setOutput('value', output);
+		this.outputs.value.set(output);
 	}
 }

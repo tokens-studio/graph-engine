@@ -66,7 +66,7 @@ export class AudioOscillatorNode extends AudioBaseNode {
 			);
 		}
 
-		this.setOutput('node', this.audioNode);
+		this.outputs.node.set(this.audioNode);
 	}
 
 	onStart = () => {

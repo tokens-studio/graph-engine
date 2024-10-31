@@ -9,7 +9,11 @@ import {
 import { TokenBorderSchema, TokenSchema } from '../schemas/index.js';
 import { TokenTypes } from '@tokens-studio/types';
 import { arrayOf } from '../schemas/utils.js';
-import type { SingleToken, TokenBorderValue } from '@tokens-studio/types';
+import type {
+	SingleBorderToken,
+	SingleToken,
+	TokenBorderValue
+} from '@tokens-studio/types';
 
 export default class NodeDefinition extends Node {
 	static title = 'Create Border Design Token';
@@ -67,19 +71,19 @@ export default class NodeDefinition extends Node {
 		const obj = {
 			name,
 			type: TokenTypes.BORDER,
-			value: undefined,
+			value: [] as TokenBorderValue[],
 			description,
 			$extensions
-		};
+		} as SingleBorderToken;
 
 		if (value) {
-			obj.value = value;
+			obj.value = value as TokenBorderValue;
 		} else if (reference) {
-			obj.value = reference;
+			obj.value = reference as TokenBorderValue;
 		} else {
 			throw new Error('Value or reference is required');
 		}
 
-		this.setOutput('token', obj);
+		this.outputs.token.set(obj);
 	}
 }

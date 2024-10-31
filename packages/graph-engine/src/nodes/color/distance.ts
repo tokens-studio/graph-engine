@@ -22,11 +22,12 @@ export default class NodeDefinition extends Node {
 	declare inputs: ToInput<{
 		colorA: ColorType;
 		colorB: ColorType;
+		space: ColorSpace;
 		precision: number;
 	}>;
 
 	declare outputs: ToOutput<{
-		value: ColorType;
+		value: number;
 	}>;
 
 	constructor(props: INodeDefinition) {
@@ -70,6 +71,6 @@ export default class NodeDefinition extends Node {
 
 		const distance = a.distance(b, space);
 
-		this.setOutput('value', setToPrecision(distance, precision));
+		this.outputs.value.set(setToPrecision(distance, precision));
 	}
 }

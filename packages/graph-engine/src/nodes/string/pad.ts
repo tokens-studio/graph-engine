@@ -59,6 +59,6 @@ export default class NodeDefinition extends Node {
 			paddedString = string.padEnd(length, character[0]);
 		}
 
-		this.setOutput('string', paddedString);
+		this.outputs.string.set(paddedString);
 	}
 }

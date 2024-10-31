@@ -99,6 +99,58 @@ export const ObjectSchema: SchemaObject = {
 	type: 'object'
 };
 
+export const FLOATCURVE = 'https://schemas.tokens.studio/floatCurve.json';
+export const FloatCurveSchema: SchemaObject = {
+	$id: FLOATCURVE,
+	title: 'Float curve',
+	type: 'object',
+	default: {
+		controlPoints: [
+			[
+				[0.25, 0.25],
+				[0.75, 0.75]
+			]
+		],
+		segments: [
+			[0, 0],
+			[1, 1]
+		]
+	},
+	properties: {
+		segments: {
+			type: 'array',
+			items: {
+				type: 'array',
+				items: {
+					type: 'array',
+					items: [
+						{
+							type: 'number'
+						},
+						{
+							type: 'number'
+						}
+					]
+				}
+			}
+		},
+		controlPoints: {
+			type: 'array',
+			items: {
+				type: 'array',
+				items: [
+					{
+						type: 'number'
+					},
+					{
+						type: 'number'
+					}
+				]
+			}
+		}
+	}
+};
+
 export const CURVE = 'https://schemas.tokens.studio/curve.json';
 export const CurveSchema: SchemaObject = {
 	$id: CURVE,
@@ -355,6 +407,7 @@ export const convertSchemaType = (
 export type GraphSchema = SchemaObject;
 
 export const AllSchemas = [
+	FloatCurveSchema,
 	NumberSchema,
 	StringSchema,
 	ColorSchema,

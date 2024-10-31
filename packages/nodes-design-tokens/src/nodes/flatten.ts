@@ -55,6 +55,6 @@ export default class FlattenNode extends Node {
 					lookup: {}
 				}
 			);
-		this.setOutput('tokens', vals.reverse());
+		this.outputs.tokens.set(vals.reverse());
 	}
 }

@@ -41,11 +41,11 @@ export default class UngroupNode extends Node {
 		const accessorParts = name.split('.');
 
 		//We assume that we will throw an error if we cannot find the values
-		let output = tokenSet;
+		let output: DeepKeyTokenMap = tokenSet;
 		for (const accessor of accessorParts) {
-			output = output[accessor];
+			output = output[accessor] as DeepKeyTokenMap;
 		}
 
-		this.setOutput('tokenSet', output);
+		this.outputs.tokenSet.set(output);
 	}
 }
