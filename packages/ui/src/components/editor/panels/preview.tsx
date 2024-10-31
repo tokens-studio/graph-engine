@@ -141,7 +141,7 @@ export const Listener = ({ previewId }) => {
 export const Preview = () => {
 	const { id } = useParams();
 	//eslint-disable-line @typescript-eslint/no-unused-vars
-	const [previewId, _] = useState(id || uuid());
+	const [previewId] = useState(id || uuid());
 
 	return (
 		<Stack direction='column' gap={2} css={{ padding: '$3 $3' }}>
