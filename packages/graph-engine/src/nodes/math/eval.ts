@@ -18,6 +18,7 @@ export default class NodeDefinition extends Node {
 		}>;
 
 	declare outputs: ToOutput<{
+		expression: string;
 		value: number;
 	}>;
 

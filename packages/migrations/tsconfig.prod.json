@@ -1,0 +1,19 @@
+{
+	"extends": "./tsconfig.json",
+	"include": ["src"],
+	"compilerOptions": {
+		"incremental": true,
+		"rootDir": "src",
+		"module": "NodeNext",
+		"skipLibCheck": true,
+		"moduleResolution": "NodeNext",
+		"plugins": []
+	},
+	"exclude": [
+		"cypress.config.ts",
+		"cypress",
+		"node_modules",
+		"**/*.stories.tsx",
+		"**/*.cy.tsx"
+	]
+}

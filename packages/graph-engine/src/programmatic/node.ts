@@ -70,7 +70,7 @@ export class Node {
 
 	private _graph: Graph;
 
-	public error?: Error = null;
+	public error: Error | null = null;
 
 	constructor(props: INodeDefinition) {
 		this.id = props.id || uuid();
@@ -179,7 +179,7 @@ export class Node {
 		});
 		try {
 			await this.execute();
-			this.error = undefined;
+			this.error = null;
 		} catch (err) {
 			console.log(err);
 			this.error = err as Error;

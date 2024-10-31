@@ -15,7 +15,7 @@ export default class NodeDefinition extends Node {
 
 	declare outputs: ToOutput<{
 		x: number;
-		y: string;
+		y: number;
 	}>;
 
 	constructor(props: INodeDefinition) {

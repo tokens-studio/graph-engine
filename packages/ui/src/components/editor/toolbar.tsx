@@ -128,8 +128,6 @@ export const AiSummary = () => {
 				}
 				icon={<Sparks />}
 			/>
-
-
 		</Tooltip>
 	);
 };
@@ -138,7 +136,6 @@ export const PreviewButton = () => {
 	const { toggle } = useOpenPanel();
 	return (
 		<Tooltip label='Preview' side='bottom'>
-
 			<IconButton
 				variant='invisible'
 				onClick={() =>
@@ -148,13 +145,9 @@ export const PreviewButton = () => {
 						id: 'preview',
 						content: <Preview />
 					})
-
-
-
 				}
 				icon={<XrayView />}
 			/>
-
 		</Tooltip>
 	);
 };

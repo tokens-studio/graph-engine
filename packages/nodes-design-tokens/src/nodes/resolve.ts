@@ -43,8 +43,8 @@ export default class ResolveNode extends Node {
 	static description = 'Resolves a set of tokens';
 
 	declare inputs: ToInput<{
-		inputs: SingleToken[];
-		context: SingleToken[];
+		inputs: SingleToken[][];
+		context: SingleToken[][];
 	}>;
 	declare outputs: ToOutput<{
 		value: IResolvedToken[];
@@ -66,7 +66,10 @@ export default class ResolveNode extends Node {
 	execute(): void | Promise<void> {
 		const { inputs, context } = this.getAllInputs();
 
-		const resolved = resolveValues(inputs.flat(), context.flat());
+		const resolved = resolveValues(
+			inputs.flat() as IResolvedToken[],
+			context.flat() as IResolvedToken[]
+		);
 		this.outputs.value.set(resolved);
 	}
 }

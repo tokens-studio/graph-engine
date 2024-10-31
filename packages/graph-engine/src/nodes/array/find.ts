@@ -21,7 +21,7 @@ export interface IArraySubgraph extends INodeDefinition {
 	innerGraph?: Graph;
 }
 
-export default class ArraySubgraph<T> extends Node {
+export default class ArraySubgraph<T extends undefined> extends Node {
 	static title = 'Array find';
 	static type = 'tokens.studio.array.find';
 	static description = 'Finds an item in an array';
@@ -185,7 +185,7 @@ export default class ArraySubgraph<T> extends Node {
 		//Todo optimize this to run in parallel. We have to run this in series because the inner graph is not designed to run in parallel
 		const itemType = extractArray(input.type);
 		let found = false;
-		let output = undefined;
+		let output: T | undefined = undefined;
 		let index = 0;
 		for (const element of input.value) {
 			const result = await this._innerGraph.execute({
@@ -215,7 +215,7 @@ export default class ArraySubgraph<T> extends Node {
 		}
 		this.outputs.found.set(found);
 		this.outputs.index.set(found ? index : -1);
-		this.outputs.value.set(output, input.type.items);
+		this.outputs.value.set(output!, input.type.items);
 	}
 
 	override serialize() {

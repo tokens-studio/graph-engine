@@ -33,7 +33,7 @@ export type NodeStart = {
 
 export type NodeRun = {
 	node: Node;
-	error?: Error;
+	error: Error | null;
 	start: number;
 	end: number;
 };

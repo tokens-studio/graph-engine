@@ -18,6 +18,7 @@ export default class NodeDefinition extends Node {
 		xHeightRatio: number;
 		ppi: number;
 		pixelDensity: number;
+		precision: number;
 	}>;
 
 	declare outputs: ToOutput<{

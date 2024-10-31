@@ -1,5 +1,26 @@
 # @tokens-studio/graph-engine
 
+## 4.1.0
+
+### Minor Changes
+
+- cd66e2c: Removed bundling from build step to support treeshaking
+
+## 4.0.0
+
+### Patch Changes
+
+- 0c1e6a4: Improves the typescript typing for the nodes for programmatic usage
+- Updated dependencies [5878649]
+- Updated dependencies [02620af]
+- Updated dependencies [bc39aeb]
+- Updated dependencies [83abbb5]
+- Updated dependencies [ac96d35]
+- Updated dependencies [381fc4d]
+- Updated dependencies [5af49ac]
+  - @tokens-studio/graph-editor@4.2.0
+  - @tokens-studio/graph-engine@3.1.0
+
 ## 3.0.1
 
 ### Patch Changes

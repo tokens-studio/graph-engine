@@ -25,7 +25,7 @@ export default class CreateTypographyNode extends Node {
 	}>;
 
 	declare outputs: ToOutput<{
-		token: TokenTypographyValue;
+		value: TokenTypographyValue;
 	}>;
 
 	constructor(props: INodeDefinition) {

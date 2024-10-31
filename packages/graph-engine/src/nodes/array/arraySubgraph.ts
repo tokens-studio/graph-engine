@@ -22,7 +22,7 @@ export interface IArraySubgraph extends INodeDefinition {
 }
 
 export default class ArraySubgraph<T, V> extends Node {
-	static title = 'Array Map (iterate over list) ';
+	static title = 'Array Map';
 	static type = 'tokens.studio.array.map';
 	static description =
 		"Execute a graph for every item in an Array (list of items). The output is an array of the same length as the input array. The inner graph is executed for each item in the array (list). The inner graph automatically has an input node with the name 'value' and an output node with the name 'value' as well. The inner graph also has an input node with the name 'index' and an input node with the name 'length' to get the current index and length of the array.";

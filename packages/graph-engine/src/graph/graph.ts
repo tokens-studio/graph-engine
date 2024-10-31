@@ -806,7 +806,7 @@ export class Graph {
 			}
 
 			return acc.concat(target);
-		}, []);
+		}, [] as Node[]);
 		//Cheaper to emit once
 		this.emit('valueSent', edges);
 
@@ -859,10 +859,9 @@ export class Graph {
 						noPropagate: true
 					});
 				} else {
-
 					//Ignore
-					if (input.value === value){
-						return
+					if (input.value === value) {
+						return;
 					}
 
 					input.setValue(value, {

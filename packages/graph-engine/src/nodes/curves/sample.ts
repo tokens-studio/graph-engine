@@ -39,6 +39,8 @@ export default class NodeDefinition extends Node {
 		 * A 2D vector representing the value of the curve at the sample point
 		 */
 		value: [number, number];
+		x: number;
+		y: number;
 	}>;
 
 	constructor(props: INodeDefinition) {

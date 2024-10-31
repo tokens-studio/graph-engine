@@ -21,6 +21,7 @@ export class SeperateNode extends BaseNode {
 
   declare inputs: ToInput<{
     image: ImageData;
+    channel: keyof typeof ChannelLookup;
   }>;
 
   constructor(props: INodeDefinition) {
@@ -52,7 +53,7 @@ export class SeperateNode extends BaseNode {
       this.cloneImage(image),
       async (image: IMagickImage) => {
         await image.separate(ch as Channels, (collection) => {
-          collection.at(0).write(image.format, (data) =>
+          collection.at(0)?.write(image.format, (data) =>
             this.outputs.image.set({
               data,
             }),

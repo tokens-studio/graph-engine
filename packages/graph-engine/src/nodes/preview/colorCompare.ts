@@ -1,5 +1,5 @@
 import { Color } from '../../types.js';
-import { ColorSchema } from '../../schemas';
+import { ColorSchema } from '../../schemas/index.js';
 import { Node } from '../../programmatic/node.js';
 import { ToInput } from '../../index.js';
 

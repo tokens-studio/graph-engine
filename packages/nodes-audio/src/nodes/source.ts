@@ -61,8 +61,8 @@ export class AudioSourceNode extends AudioBaseNode {
 			const context = this.getAudioCtx();
 			const { buffer, loop } = this._values;
 			const newBufferSource = context.createBufferSource();
-			newBufferSource.buffer = buffer;
-			newBufferSource.loop = loop;
+			newBufferSource.buffer = buffer!;
+			newBufferSource.loop = loop!;
 
 			if (this.bufferNode) {
 				//Cleanup old buffer

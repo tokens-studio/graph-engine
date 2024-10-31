@@ -37,6 +37,6 @@ export default class SetToArrayNode extends Node {
 
 		const tokens = flatten(set);
 
-		this.outputs.tokens.set(tokens);
+		this.outputs.tokens.set(tokens as SingleToken[]);
 	}
 }

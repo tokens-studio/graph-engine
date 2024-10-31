@@ -1,4 +1,10 @@
-import { FloatCurve, INodeDefinition, ToInput, ToOutput, Vec2 } from '../../index.js';
+import {
+	FloatCurve,
+	INodeDefinition,
+	ToInput,
+	ToOutput,
+	Vec2
+} from '../../index.js';
 import { FloatCurveSchema, Vec2Schema } from '../../schemas/index.js';
 import { Node } from '../../programmatic/node.js';
 
@@ -9,8 +15,7 @@ export default class NodeDefinition extends Node {
 
 	declare inputs: ToInput<{
 		segments: Vec2[];
-		controlPoints: [Vec2,Vec2][];
-
+		controlPoints: [Vec2, Vec2][];
 	}>;
 	declare outputs: ToOutput<{
 		curve: FloatCurve;
@@ -18,7 +23,7 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		
+
 		this.addInput('segments', {
 			type: {
 				type: 'array',

@@ -1,6 +1,6 @@
-import { currentPanelIdSelector } from '../index.js';
+import { currentPanelIdSelector } from '@/redux/selectors/graph.js';
 import { useCallback, useEffect } from 'react';
-import { useDispatch } from './index.js';
+import { useDispatch } from './useDispatch.js';
 import { useOnSelectionChange, useReactFlow } from 'reactflow';
 import { useSelector } from 'react-redux';
 

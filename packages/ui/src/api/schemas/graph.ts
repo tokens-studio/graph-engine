@@ -8,15 +8,17 @@ export const SerializedGraph = z.object({
 			annotations: z.record(z.string(), z.any()).optional(),
 			type: z.string(),
 			inputs: z.array(
-				z.object({
-					name: z.string(),
-					value: z.any(),
-					visible: z.boolean().optional(),
-					variadic: z.boolean().optional(),
-					dynamicType: z.any().optional(),
-					type: z.any().optional(),
-					annotations: z.record(z.any()).optional()
-				}).passthrough()
+				z
+					.object({
+						name: z.string(),
+						value: z.any(),
+						visible: z.boolean().optional(),
+						variadic: z.boolean().optional(),
+						dynamicType: z.any().optional(),
+						type: z.any().optional(),
+						annotations: z.record(z.any()).optional()
+					})
+					.passthrough()
 			)
 		})
 		//Needed for innergraph to work

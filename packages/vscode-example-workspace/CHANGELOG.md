@@ -1,5 +1,19 @@
 # @tokens-studio/graph-engine-example-workspace
 
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies [5878649]
+- Updated dependencies [02620af]
+- Updated dependencies [bc39aeb]
+- Updated dependencies [83abbb5]
+- Updated dependencies [ac96d35]
+- Updated dependencies [381fc4d]
+- Updated dependencies [5af49ac]
+  - @tokens-studio/graph-editor@4.2.0
+  - @tokens-studio/graph-engine@3.1.0
+
 ## 1.0.0
 
 ### Patch Changes

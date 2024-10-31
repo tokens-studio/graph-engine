@@ -7,11 +7,12 @@ import {
 	ToOutput
 } from '@tokens-studio/graph-engine';
 import { TokenBoxShadowSchema, TokenSchema } from '../schemas/index.js';
+import { TokenTypes } from '@tokens-studio/types';
 import { arrayOf } from '../schemas/utils.js';
 import type {
+	SingleBoxShadowToken,
 	SingleToken,
-	TokenBoxshadowValue,
-	TokenTypes
+	TokenBoxshadowValue
 } from '@tokens-studio/types';
 
 export default class NodeDefinition extends Node {
@@ -71,10 +72,10 @@ export default class NodeDefinition extends Node {
 		const obj = {
 			name,
 			type: TokenTypes.BOX_SHADOW,
-			value: undefined,
+			value: [],
 			description,
 			$extensions
-		};
+		} as SingleBoxShadowToken;
 
 		if (value) {
 			obj.value = value;

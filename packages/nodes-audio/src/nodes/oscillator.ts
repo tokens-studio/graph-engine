@@ -76,7 +76,7 @@ export class AudioOscillatorNode extends AudioBaseNode {
 			const { type, frequency } = this._values;
 			const newBufferSource = context.createOscillator();
 			newBufferSource.type = type as OscillatorType;
-			newBufferSource.frequency.setValueAtTime(frequency, context.currentTime);
+			newBufferSource.frequency.setValueAtTime(frequency!, context.currentTime);
 
 			if (this.oscillatorNode) {
 				//Cleanup old node

@@ -45,29 +45,29 @@ export async function generateMetadata() {
 		},
 		manifest: '/manifest.json',
 		twitter: {
-			title: 'Resolver playground | Tokens Studio',
+			title: 'Graph Engine Playground - Algorithmic Design by Tokens Studio',
 			card: 'summary_large_image',
-			creator: '@AndrewAtTokens',
+			creator: '@mikekamminga',
 			images: [
 				{
 					url: `/thumbnail.png`,
-					alt: 'Display picture of Token Studio Resolver Sandbox'
+					alt: 'Display picture of Token Studio Graph Engine Playground'
 				}
 			]
 		},
-		applicationName: 'Tokens Studio generator playground',
+		applicationName: 'Graph Engine Playground',
 		referrer: 'origin-when-cross-origin',
-		creator: 'SorsOps',
+		creator: 'MikeKamminga',
 		openGraph: {
 			type: 'website',
 			locale: 'en_US',
-			title: 'Resolver playground | Tokens Studio',
+			title: 'Graph Engine Playground - Algorithmic Design by Tokens Studio',
 			description:
-				'Tokens studio alpha playground to test new resolver / generation functionality',
+				'Use our Node Editor to define the logic behind your design and have Design Tokens generated in real-time & effortlessly import them to Figma Variables.',
 			images: [
 				{
 					url: `/thumbnail.png`,
-					alt: 'Display picture of Token Studio Resolver Sandbox'
+					alt: 'Display picture of Token Studio Graph Engine Playground'
 				}
 			]
 		}

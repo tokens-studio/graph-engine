@@ -14,6 +14,8 @@ export class CharcoalNode extends BaseNode {
   declare inputs: ToInput<{
     image: ImageData;
     width: number;
+    radius: number;
+    sigma: number;
     height: number;
   }>;
 

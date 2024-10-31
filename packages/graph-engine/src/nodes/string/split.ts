@@ -12,7 +12,7 @@ export default class NodeDefinition extends Node {
 		separator: string;
 	}>;
 	declare outputs: ToOutput<{
-		value: string;
+		value: string[];
 	}>;
 	static description = 'Converts a string to lowercase';
 	constructor(props: INodeDefinition) {

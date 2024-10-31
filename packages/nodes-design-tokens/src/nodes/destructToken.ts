@@ -32,13 +32,13 @@ export default class CreateBorderNode extends Node {
 
 	declare outputs: ToOutput<{
 		name: string;
-		description?: string;
+		description: string | undefined;
 		type: string;
-		$extensions?: Record<string, unknown>;
-		value?: string;
-		border?: TokenBorderValue;
-		typography?: TokenTypographyValue;
-		boxShadow?: TokenBoxshadowValue[];
+		$extensions: Record<string, unknown> | undefined;
+		value: string | undefined;
+		border: TokenBorderValue | undefined;
+		typography: TokenTypographyValue | undefined;
+		boxShadow: TokenBoxshadowValue[] | undefined;
 	}>;
 
 	constructor(props: INodeDefinition) {
@@ -56,7 +56,7 @@ export default class CreateBorderNode extends Node {
 		this.addOutput('type', {
 			type: StringSchema
 		});
-		this.addOutput('$extension', {
+		this.addOutput('$extensions', {
 			type: ObjectSchema
 		});
 
@@ -82,7 +82,7 @@ export default class CreateBorderNode extends Node {
 		const { name, description, type, $extensions, value } = token;
 		outputs.name.set(name);
 		outputs.description.set(description);
-		outputs.type.set(type);
+		outputs.type.set(type!);
 		outputs.$extensions.set($extensions);
 
 		//Make sure to reset all the values

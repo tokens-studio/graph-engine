@@ -26,15 +26,18 @@ const Page = observer(({ id, refs }: { id: string; refs: RefState }) => {
 	const ref = useCallback(editor => {
 		refs.setEditor(editor);
 	}, []);
-	const { data, error } = client.graph.getGraph.useQuery(['getGraph', id], {
-
-		params: {
-			id: id
+	const { data, error } = client.graph.getGraph.useQuery(
+		['getGraph', id],
+		{
+			params: {
+				id: id
+			}
+		},
+		{
+			//Do not allow reloading during development
+			staleTime: Infinity
 		}
-	},{
-		//Do not allow reloading during development
-		staleTime: Infinity
-	});
+	);
 	useErrorToast(error);
 
 	useEffect(() => {

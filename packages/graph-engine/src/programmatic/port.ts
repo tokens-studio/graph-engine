@@ -20,7 +20,7 @@ export class Port<T = any> {
 	public visible: boolean = false;
 	public node: Node;
 	//Note that we need null values for the observable to work
-	protected _dynamicType?: GraphSchema = null;
+	protected _dynamicType: GraphSchema | null = null;
 	protected _type: GraphSchema = AnySchema;
 	protected _value: T;
 	// Used to store arbitrary meta data. Most commonly used in the UI
@@ -50,7 +50,8 @@ export class Port<T = any> {
 			value: computed,
 			isConnected: computed,
 			dynamicType: computed,
-			setVisible: action
+			setVisible: action,
+			setType: action
 		});
 	}
 
@@ -79,5 +80,9 @@ export class Port<T = any> {
 
 	setNode(node: Node) {
 		this.node = node;
+	}
+
+	setType(type: GraphSchema) {
+		this._dynamicType = type;
 	}
 }

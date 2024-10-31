@@ -1,31 +1,37 @@
 {
-	"ts-node": {
-		"esm": true
-	},
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"include": ["src", "package.json"],
+	"exclude": ["cypress.config.ts", "cypress", "node_modules"],
 	"compilerOptions": {
-		"sourceMap": true,
+		"composite": false,
 		"declaration": true,
 		"declarationMap": true,
-		"noEmit": true,
+		"esModuleInterop": true,
+		"moduleResolution": "NodeNext",
+		"forceConsistentCasingInFileNames": true,
+		"inlineSources": false,
+		"isolatedModules": true,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"preserveWatchOutput": true,
+		"preserveSymlinks": true,
+		"skipLibCheck": true,
+		"strict": true,
 		"jsx": "react",
-		"rootDir": "./",
-		"outDir": "./types",
-		"preserveConstEnums": true,
 		"module": "NodeNext",
 		"target": "esnext",
-		"moduleResolution": "nodenext",
-		"noImplicitAny": false,
-		"esModuleInterop": true,
-		"resolveJsonModule": true,
-		"allowSyntheticDefaultImports": true,
-		"forceConsistentCasingInFileNames": true,
-		"isolatedModules": true,
-		"types": ["node"],
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["src/*"]
-		}
-	},
-	"include": ["src/**/*", "tests/**/*"],
-	"exclude": ["node_modules", "cypress/**"]
+		},
+		"noImplicitAny": false,
+		"rootDir": ".",
+		"experimentalDecorators": true,
+		"lib": ["esnext", "dom", "dom.iterable"],
+		"allowJs": true,
+		"sourceMap": true,
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
+		"outDir": "dist"
+	}
 }

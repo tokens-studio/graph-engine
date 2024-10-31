@@ -4,6 +4,7 @@ import { StringSchema } from '@tokens-studio/graph-engine';
 import { deletable } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
 import React, { useMemo } from 'react';
+
 // prettier-ignore
 import properties from 'mdn-data/css/properties.json' with { type: 'json' };
 
@@ -31,7 +32,6 @@ const CSSMapSpecifics = observer(({ node }: { node: Node }) => {
       <Heading size="small">Expose Property</Heading>
       <Select value={inputName} onValueChange={setInputName}>
         <Select.Trigger label="Type" value={inputName} />
-        {/* @ts-expect-error */}
         <Select.Content css={{ maxHeight: '300px' }} position="popper">
           <Scroll height="200">
             {CSSProperties.map((x) => (

@@ -42,7 +42,7 @@ export default class NodeDefinition extends Node {
 			return;
 		}
 
-		this.outputs.number.set(x.number);
+		this.outputs.number.set(Number.parseFloat(x.number));
 		this.outputs.unit.set(x.unit);
 	}
 }

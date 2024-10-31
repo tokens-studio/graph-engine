@@ -42,6 +42,6 @@ export default class CreateBorderNode extends Node {
 
 	execute(): void | Promise<void> {
 		const props = this.getAllInputs();
-		this.outputs.value.set(props);
+		this.outputs.token.set(props as TokenBorderValue);
 	}
 }

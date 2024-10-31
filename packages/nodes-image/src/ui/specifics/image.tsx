@@ -32,7 +32,7 @@ export const ImagePreview = ({ node }) => {
                 setHasError(false)
             });
         } catch (err) {
-            setHasError(err);
+            setHasError(true);
         }
 
     }, [magick, theNode.inputs.image.value, canvasRef, theNode]);

@@ -48,8 +48,8 @@ export class ResizeNode extends BaseNode {
     const { image, width, height, asPercent } = this.getAllInputs();
 
     await ImageMagick.read(this.cloneImage(image), (image: IMagickImage) => {
-      let targetWidth = width;
-      let targetHeight = height;
+      let targetWidth: number = width;
+      let targetHeight: number = height;
 
       if (asPercent) {
         targetWidth = image.width * (width / 100);

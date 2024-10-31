@@ -1,7 +1,12 @@
-import { FloatCurve, INodeDefinition, ToInput, ToOutput, Vec2 } from '../../index.js';
+import {
+	FloatCurve,
+	INodeDefinition,
+	ToInput,
+	ToOutput,
+	Vec2
+} from '../../index.js';
 import { FloatCurveSchema, Vec2Schema } from '../../schemas/index.js';
 import { Node } from '../../programmatic/node.js';
-
 
 export default class NodeDefinition extends Node {
 	static title = 'Deconstruct Float Curve';
@@ -40,7 +45,7 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { curve } = this.getAllInputs();
-	
+
 		this.outputs.segments.set(curve.segments);
 		this.outputs.controlPoints.set(curve.controlPoints);
 	}

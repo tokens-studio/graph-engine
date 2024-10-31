@@ -1,6 +1,6 @@
 {
   "name": "@tokens-studio/graph-engine-nodes-image",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Image nodes for the graph engine",
   "license": "MPL-2.0",
   "author": "andrew@hyma.io",
@@ -15,8 +15,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "tspc  -p tsconfig.prod.json",
+    "dev": "tspc  -p tsconfig.prod.json --watch",
     "docs": "typedoc",
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint --ext .tsx,.ts,.js,.html . --fix",
@@ -40,7 +40,7 @@
     "@tokens-studio/eslint-config-custom": "*",
     "@tokens-studio/prettier-config-custom": "*",
     "@tokens-studio/graph-engine": "*",
-    "tsup": "^8.1.0",
+        "typescript-transform-paths": "^3.5.1",
     "typedoc": "^0.24.7",
     "typescript": "^5.4.5",
     "vitest": "^1.6.0"

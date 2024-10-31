@@ -2,6 +2,8 @@
 
 ![NPM version badge](https://img.shields.io/npm/v/@tokens-studio/graph-engine) ![License badge](https://img.shields.io/github/license/tokens-studio/graph-engine)
 
+![Alt](https://repobeats.axiom.co/api/embed/06bbbff5c563c35250055390f4dc027b7da4a761.svg "Repobeats analytics image")
+
 This is the monorepo for the full Tokens Studio ecosystem powered by [Turborepo](https://turbo.build/)
 
 See the Graph-Engine library [here](./packages/graph-engine/readme.md)

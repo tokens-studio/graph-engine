@@ -2,7 +2,7 @@
 
 import { INodeDefinition, Node } from '../../programmatic/node.js';
 import { StringSchema } from '../../schemas/index.js';
-import { ToInput, ToOutput } from '../../programmatic';
+import { ToInput, ToOutput } from '../../programmatic/index.js';
 import { annotatedDynamicInputs } from '../../annotations/index.js';
 
 export default class StringInterpolationNode extends Node {
@@ -52,7 +52,7 @@ export default class StringInterpolationNode extends Node {
 			this.outputs.value.set(interpolatedString);
 		} catch (error) {
 			this.error = new Error(
-				`Error during string interpolation: ${error.message}`
+				`Error during string interpolation: ${(error as Error).message}`
 			);
 		}
 	}

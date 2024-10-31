@@ -1,6 +1,6 @@
 {
   "name": "@tokens-studio/graph-editor",
-  "version": "4.1.1",
+  "version": "4.2.0",
   "description": "UI for the graph engine",
   "author": "andrew@hyma.io",
   "type": "module",
@@ -10,20 +10,25 @@
     "url": "https://github.com/tokens-studio/graph-engine"
   },
   "exports": {
+    "./*": {
+      "import": "./dist/*",
+      "types": "./dist/*",
+      "style": "./dist/*"
+    },
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
-    },
-    "./index.css": "./dist/index.css"
+    }
   },
   "files": [
     "dist"
   ],
   "scripts": {
     "start": "vite dev",
-    "build": "tsup",
+    "build": "node ./scripts/extractVersion.mjs && tspc  -p tsconfig.prod.json && npm run build:css",
+    "build:css": "postcss src/index.scss --base src  --dir dist --ext css",
     "build:storybook": "storybook build",
-    "dev": "tsup --watch",
+    "dev": "tspc -p tsconfig.prod.json --watch || npm run build:css --watch",
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint . --fix",
     "format:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --write",
@@ -61,6 +66,7 @@
     "dagre": "^0.8.5",
     "dot-prop": "^8.0.0",
     "focus-trap-react": "^10.1.1",
+    "graphlib": "^2.1.8",
     "iconoir-react": "^7.6.0",
     "json5": "^2.2.3",
     "jszip": "^3.10.1",
@@ -102,23 +108,31 @@
     "@storybook/addon-mdx-gfm": "^8.0.9",
     "@storybook/react": "^8.0.9",
     "@storybook/react-vite": "^8.0.9",
+    "postcss-scss": "^4.0.9",
     "@tokens-studio/eslint-config-custom": "*",
     "@tokens-studio/prettier-config-custom": "*",
     "@types/graphlib": "^2.1.8",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react-swc": "^3.6.0",
+    "autoprefixer": "^10.4.20",
+    "cssnano": "^7.0.6",
     "cypress": "^13.9.0",
     "cypress-react-selector": "^3.0.0",
-    "esbuild-sass-plugin": "^3.3.1",
+    "glob": "^11.0.0",
+    "postcss": "^8.4.47",
+    "postcss-cli": "^11.0.0",
+    "postcss-css-variables": "^0.19.0",
+    "postcss-import": "^16.1.0",
+    "postcss-nested": "^6.2.0",
+    "postcss-preset-env": "^10.0.5",
     "resp": "^0.1.1",
     "resq": "^1.11.0",
     "start-server-and-test": "^2.0.4",
     "storybook": "^8.0.9",
-    "tsup": "^8.1.0",
     "typescript": "^5.4.5",
+    "typescript-transform-paths": "^3.5.1",
     "vite": "^5.2.10",
-    "vite-plugin-babel": "^1.2.0",
     "vite-tsconfig-paths": "^4.2.2"
   },
   "publishConfig": {

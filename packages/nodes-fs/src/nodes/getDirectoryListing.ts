@@ -47,7 +47,7 @@ export class GetDirectoryNode extends Node {
 				}
 				return acc;
 			},
-			{ dirs: [], files: [] }
+			{ dirs: [] as string[], files: [] as string[] }
 		);
 
 		this.outputs.dirs.set(dirs);

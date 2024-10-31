@@ -4,7 +4,7 @@ import {
 	NumberSchema,
 	StringSchema
 } from '../../schemas/index.js';
-import { ColorSpace } from './lib/types.js';
+import { ColorSpace } from './lib/spaces.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 
@@ -81,9 +81,9 @@ export default class DestructColorNode extends Node {
 
 		// Only set alpha if it exists
 		if (color.alpha !== undefined) {
-			this.outputs.alpha.set(color.alpha);
+			this.outputs.alpha!.set(color.alpha);
 		} else {
-			this.outputs.alpha.set(undefined);
+			this.outputs.alpha!.set(undefined);
 		}
 	}
 }

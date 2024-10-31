@@ -59,8 +59,8 @@ export default class NodeDefinition<T> extends Node {
 		const defaultVal = this.inputs.default;
 
 		//Check if an input matches the condition
-		if (this.inputs[condition]) {
-			const input = this.inputs[condition];
+		if (this.inputs[condition as keyof typeof this.inputs]) {
+			const input = this.inputs[condition as keyof typeof this.inputs];
 			this.outputs.value.set(input.value, input.type);
 			return;
 		}

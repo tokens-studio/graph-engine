@@ -23,7 +23,7 @@ export default class CreateBoxShadowNode extends Node {
 	}>;
 
 	declare outputs: ToOutput<{
-		token: TokenBoxshadowValue;
+		value: TokenBoxshadowValue;
 	}>;
 
 	constructor(props: INodeDefinition) {
@@ -53,6 +53,6 @@ export default class CreateBoxShadowNode extends Node {
 
 	execute(): void | Promise<void> {
 		const props = this.getAllInputs();
-		this.outputs.value.set(props);
+		this.outputs.value.set(props as TokenBoxshadowValue);
 	}
 }

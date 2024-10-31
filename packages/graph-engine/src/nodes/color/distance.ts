@@ -22,11 +22,12 @@ export default class NodeDefinition extends Node {
 	declare inputs: ToInput<{
 		colorA: ColorType;
 		colorB: ColorType;
+		space: ColorSpace;
 		precision: number;
 	}>;
 
 	declare outputs: ToOutput<{
-		value: ColorType;
+		value: number;
 	}>;
 
 	constructor(props: INodeDefinition) {
