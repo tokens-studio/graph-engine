@@ -16784,9 +16784,9 @@ lz-string@^1.4.4, lz-string@^1.5.0:
   resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.5.0.tgz#c1ab50f77887b712621201ba9fd4e3a6ed099941"
   integrity sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==
 
-mafs@^0.20.0:
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/mafs/-/mafs-0.20.0.tgz#86341daba19b38c306a5d60306bf9005fe93a78c"
+mafs@^0.17.1:
+  version "0.17.1"
+  resolved "https://registry.yarnpkg.com/mafs/-/mafs-0.17.1.tgz#86341daba19b38c306a5d60306bf9005fe93a78c"
   integrity sha512-pMUeBUHLwjp4N/4oFkcPrlhP6uncIylZAaUa4OgEql8R2u5WdJ76/MishoPahakSCFYoyKVBJYI7i5c2/Y7nMw==
   dependencies:
     "@react-hook/resize-observer" "^1.2.6"
