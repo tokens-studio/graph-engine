@@ -70,7 +70,7 @@
     "iconoir-react": "^7.6.0",
     "json5": "^2.2.3",
     "jszip": "^3.10.1",
-    "mafs": "^0.17.1",
+    "mafs": "^0.20.0",
     "mdn-data": "^2.3.2",
     "mobx-react-lite": "^4.0.5",
     "rc-dock": "^3.3.0",
