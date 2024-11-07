@@ -5,7 +5,11 @@ export default class NodeDefinition extends Node {
 	static title = 'Math Expression';
 	static type = 'studio.tokens.preview.mathExpression';
 
-	static description = 'Visuaize a math expression';
+	static description = 'Visualize a math expression';
+
+	static annotations: Record<string, unknown> = {
+		deprecated: true
+	};
 
 	constructor(props) {
 		super(props);
