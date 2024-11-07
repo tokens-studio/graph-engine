@@ -16,7 +16,7 @@ export default class NodeDefinition extends Node {
 		'Generates the Fibonacci sequence where each number is the sum of the previous two numbers';
 
 	declare inputs: ToInput<{
-		terms: number;
+		length: number;
 		startFirst: number;
 		startSecond: number;
 		precision: number;
@@ -29,7 +29,7 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('terms', {
+		this.addInput('length', {
 			type: {
 				...NumberSchema,
 				default: 8
@@ -56,30 +56,14 @@ export default class NodeDefinition extends Node {
 		this.addOutput('array', {
 			type: arrayOf(NumberSchema)
 		});
-		this.addOutput('indexed', {
-			type: {
-				$id: `https://schemas.tokens.studio/studio.tokens.series.fibonacci/indexed.json`,
-				type: 'object',
-				properties: {
-					index: {
-						type: NumberSchema
-					},
-					value: {
-						type: NumberSchema
-					}
-				}
-			},
-			visible: false
-		});
 	}
 
 	execute(): void | Promise<void> {
-		const { terms, startFirst, startSecond, precision } = this.getAllInputs();
+		const { length, startFirst, startSecond, precision } = this.getAllInputs();
 		const values: FibonacciValue[] = [];
 
-		if (terms <= 0) {
+		if (length <= 0) {
 			this.outputs.array.set([]);
-			this.outputs.indexed.set([]);
 			return;
 		}
 
@@ -89,9 +73,8 @@ export default class NodeDefinition extends Node {
 			value: setToPrecision(startFirst, precision)
 		});
 
-		if (terms === 1) {
+		if (length === 1) {
 			this.outputs.array.set(values.map(x => x.value));
-			this.outputs.indexed.set(values);
 			return;
 		}
 
@@ -101,8 +84,8 @@ export default class NodeDefinition extends Node {
 			value: setToPrecision(startSecond, precision)
 		});
 
-		// Generate remaining terms
-		for (let i = 2; i < terms; i++) {
+		// Generate remaining length
+		for (let i = 2; i < length; i++) {
 			const nextValue = values[i - 1].value + values[i - 2].value;
 			values.push({
 				index: i,
@@ -111,6 +94,5 @@ export default class NodeDefinition extends Node {
 		}
 
 		this.outputs.array.set(values.map(x => x.value));
-		this.outputs.indexed.set(values);
 	}
 }

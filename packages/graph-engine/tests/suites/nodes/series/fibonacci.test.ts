@@ -7,7 +7,7 @@ describe('series/fibonacci', () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		node.inputs.terms.setValue(8);
+		node.inputs.length.setValue(8);
 		node.inputs.startFirst.setValue(0);
 		node.inputs.startSecond.setValue(1);
 		node.inputs.precision.setValue(2);
@@ -21,7 +21,7 @@ describe('series/fibonacci', () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		node.inputs.terms.setValue(5);
+		node.inputs.length.setValue(5);
 		node.inputs.startFirst.setValue(2);
 		node.inputs.startSecond.setValue(3);
 		node.inputs.precision.setValue(2);
@@ -35,7 +35,7 @@ describe('series/fibonacci', () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		node.inputs.terms.setValue(1);
+		node.inputs.length.setValue(1);
 		node.inputs.startFirst.setValue(0);
 		node.inputs.startSecond.setValue(1);
 		node.inputs.precision.setValue(2);
@@ -45,11 +45,11 @@ describe('series/fibonacci', () => {
 		expect(node.outputs.array.value).to.eql([0]);
 	});
 
-	test('handles zero terms', async () => {
+	test('handles zero length', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		node.inputs.terms.setValue(0);
+		node.inputs.length.setValue(0);
 		await node.execute();
 
 		expect(node.outputs.array.value).to.eql([]);
@@ -59,7 +59,7 @@ describe('series/fibonacci', () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		node.inputs.terms.setValue(4);
+		node.inputs.length.setValue(4);
 		node.inputs.startFirst.setValue(0.5);
 		node.inputs.startSecond.setValue(1.5);
 		node.inputs.precision.setValue(1);

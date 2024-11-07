@@ -58,22 +58,4 @@ describe('series/linear', () => {
 
 		expect(node.outputs.array.value).to.eql([0, 0.5, 1]);
 	});
-
-	test('generates correct indexed values', async () => {
-		const graph = new Graph();
-		const node = new Node({ graph });
-
-		node.inputs.start.setValue(0);
-		node.inputs.stop.setValue(2);
-		node.inputs.count.setValue(3);
-		node.inputs.precision.setValue(2);
-
-		await node.execute();
-
-		expect(node.outputs.indexed.value).to.eql([
-			{ index: 0, value: 0 },
-			{ index: 1, value: 1 },
-			{ index: 2, value: 2 }
-		]);
-	});
 });

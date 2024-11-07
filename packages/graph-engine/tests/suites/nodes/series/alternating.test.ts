@@ -54,21 +54,4 @@ describe('series/alternating', () => {
 
 		expect(node.outputs.array.value).to.eql([1.2, -2.3]);
 	});
-
-	test('generates correct indexed values', async () => {
-		const graph = new Graph();
-		const node = new Node({ graph });
-
-		node.inputs.sequence.setValue([1, 2, 3]);
-		node.inputs.pattern.setValue([1, -1]);
-		node.inputs.precision.setValue(2);
-
-		await node.execute();
-
-		expect(node.outputs.indexed.value).to.eql([
-			{ index: 0, value: 1 },
-			{ index: 1, value: -2 },
-			{ index: 2, value: 3 }
-		]);
-	});
 });

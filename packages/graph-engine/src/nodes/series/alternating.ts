@@ -49,21 +49,6 @@ export default class NodeDefinition extends Node {
 		this.addOutput('array', {
 			type: arrayOf(NumberSchema)
 		});
-		this.addOutput('indexed', {
-			type: {
-				$id: `https://schemas.tokens.studio/studio.tokens.series.alternating/indexed.json`,
-				type: 'object',
-				properties: {
-					index: {
-						type: NumberSchema
-					},
-					value: {
-						type: NumberSchema
-					}
-				}
-			},
-			visible: false
-		});
 	}
 
 	execute(): void | Promise<void> {
@@ -84,6 +69,5 @@ export default class NodeDefinition extends Node {
 		});
 
 		this.outputs.array.set(values.map(x => x.value));
-		this.outputs.indexed.set(values);
 	}
 }
