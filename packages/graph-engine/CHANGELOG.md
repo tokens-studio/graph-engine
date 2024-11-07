@@ -1,5 +1,23 @@
 # @tokens-studio/graph-engine
 
+## 4.0.0
+
+### Major Changes
+
+- 02c859b: Removed .getInput and .getRawInput from the Node. Direct access to the underlying ports are preferred over these utility methods
+- 02c859b: Removed .setOutput from the Node class, this should be replaced with direct port manipulation
+- 02c859b: Removed .getOutput from the node. This was never used and can rather be implemented as a utility method
+- 02c859b: Removed getAllOutputs from the Node definition, this was never used and can rather be implemented as a utility
+
+### Minor Changes
+
+- 9fed81e: Removes tsup completely to prevent bundling, and rather to use raw typescript compilation
+- 64d2acd: Add Replace Item node which lets you replace a specific item of an array.
+- 02c859b: Add typing/hasValue node that lets you check if a value is present
+- 02c859b: Add pad node that lets you fill a string to a certain lenght with a given character, like 25 to 025
+- 7b4a564: Add support for all colorjs color spaces in the color nodes like color to string
+- fb46f15: Upgrade mafs library to latest & remove mathjax
+
 ## 3.1.0
 
 ### Minor Changes
