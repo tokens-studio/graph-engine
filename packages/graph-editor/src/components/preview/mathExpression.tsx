@@ -5,9 +5,7 @@ export const MathExpression = ({ value }) => {
   return (
     <>
       {value && (
-        <Text
-          css={{ fontFamily: '$mono', fontSize: 'x-large', padding: '$5' }}
-        >
+        <Text css={{ fontFamily: '$mono', fontSize: 'x-large', padding: '$5' }}>
           {value}
         </Text>
       )}
