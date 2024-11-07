@@ -26,7 +26,7 @@ describe('series/alternating', () => {
 
 		await node.execute();
 
-		expect(node.outputs.array.value).to.eql([1, -2, -3, 1, -5, -6]);
+		expect(node.outputs.array.value).to.eql([1, -2, -3, 4, -5, -6]);
 	});
 
 	test('handles empty pattern', async () => {

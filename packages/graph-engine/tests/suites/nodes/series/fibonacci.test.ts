@@ -52,7 +52,7 @@ describe('series/fibonacci', () => {
 		node.inputs.terms.setValue(0);
 		await node.execute();
 
-		expect(node.outputs.array.value).to.be.undefined;
+		expect(node.outputs.array.value).to.eql([]);
 	});
 
 	test('respects precision setting', async () => {

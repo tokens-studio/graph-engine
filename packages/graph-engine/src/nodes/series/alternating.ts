@@ -74,7 +74,8 @@ export default class NodeDefinition extends Node {
 		const patternToUse = pattern.length === 0 ? [1] : pattern;
 
 		sequence.forEach((num, i) => {
-			const patternValue = patternToUse[i % patternToUse.length];
+			const patternIndex = i % patternToUse.length;
+			const patternValue = patternToUse[patternIndex];
 			const value = setToPrecision(num * patternValue, precision);
 			values.push({
 				index: i,

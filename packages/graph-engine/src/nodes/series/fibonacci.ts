@@ -78,6 +78,8 @@ export default class NodeDefinition extends Node {
 		const values: FibonacciValue[] = [];
 
 		if (terms <= 0) {
+			this.outputs.array.set([]);
+			this.outputs.indexed.set([]);
 			return;
 		}
 
