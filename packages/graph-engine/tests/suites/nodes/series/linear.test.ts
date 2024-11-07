@@ -3,77 +3,77 @@ import { describe, expect, test } from 'vitest';
 import Node from '../../../../src/nodes/series/linear.js';
 
 describe('series/linear', () => {
-    test('creates evenly spaced numbers', async () => {
-        const graph = new Graph();
-        const node = new Node({ graph });
+	test('creates evenly spaced numbers', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-        node.inputs.start.setValue(0);
-        node.inputs.stop.setValue(1);
-        node.inputs.count.setValue(5);
-        node.inputs.precision.setValue(2);
+		node.inputs.start.setValue(0);
+		node.inputs.stop.setValue(1);
+		node.inputs.count.setValue(5);
+		node.inputs.precision.setValue(2);
 
-        await node.execute();
+		await node.execute();
 
-        expect(node.outputs.array.value).to.eql([0, 0.25, 0.5, 0.75, 1]);
-    });
+		expect(node.outputs.array.value).to.eql([0, 0.25, 0.5, 0.75, 1]);
+	});
 
-    test('handles negative ranges', async () => {
-        const graph = new Graph();
-        const node = new Node({ graph });
+	test('handles negative ranges', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-        node.inputs.start.setValue(-1);
-        node.inputs.stop.setValue(1);
-        node.inputs.count.setValue(3);
-        node.inputs.precision.setValue(2);
+		node.inputs.start.setValue(-1);
+		node.inputs.stop.setValue(1);
+		node.inputs.count.setValue(3);
+		node.inputs.precision.setValue(2);
 
-        await node.execute();
+		await node.execute();
 
-        expect(node.outputs.array.value).to.eql([-1, 0, 1]);
-    });
+		expect(node.outputs.array.value).to.eql([-1, 0, 1]);
+	});
 
-    test('handles single point', async () => {
-        const graph = new Graph();
-        const node = new Node({ graph });
+	test('handles single point', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-        node.inputs.start.setValue(0);
-        node.inputs.stop.setValue(1);
-        node.inputs.count.setValue(1);
-        node.inputs.precision.setValue(2);
+		node.inputs.start.setValue(0);
+		node.inputs.stop.setValue(1);
+		node.inputs.count.setValue(1);
+		node.inputs.precision.setValue(2);
 
-        await node.execute();
+		await node.execute();
 
-        expect(node.outputs.array.value).to.eql([0]);
-    });
+		expect(node.outputs.array.value).to.eql([0]);
+	});
 
-    test('respects precision setting', async () => {
-        const graph = new Graph();
-        const node = new Node({ graph });
+	test('respects precision setting', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-        node.inputs.start.setValue(0);
-        node.inputs.stop.setValue(1);
-        node.inputs.count.setValue(3);
-        node.inputs.precision.setValue(3);
+		node.inputs.start.setValue(0);
+		node.inputs.stop.setValue(1);
+		node.inputs.count.setValue(3);
+		node.inputs.precision.setValue(3);
 
-        await node.execute();
+		await node.execute();
 
-        expect(node.outputs.array.value).to.eql([0, 0.5, 1]);
-    });
+		expect(node.outputs.array.value).to.eql([0, 0.5, 1]);
+	});
 
-    test('generates correct indexed values', async () => {
-        const graph = new Graph();
-        const node = new Node({ graph });
+	test('generates correct indexed values', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
 
-        node.inputs.start.setValue(0);
-        node.inputs.stop.setValue(2);
-        node.inputs.count.setValue(3);
-        node.inputs.precision.setValue(2);
+		node.inputs.start.setValue(0);
+		node.inputs.stop.setValue(2);
+		node.inputs.count.setValue(3);
+		node.inputs.precision.setValue(2);
 
-        await node.execute();
+		await node.execute();
 
-        expect(node.outputs.indexed.value).to.eql([
-            { index: 0, value: 0 },
-            { index: 1, value: 1 },
-            { index: 2, value: 2 }
-        ]);
-    });
+		expect(node.outputs.indexed.value).to.eql([
+			{ index: 0, value: 0 },
+			{ index: 1, value: 1 },
+			{ index: 2, value: 2 }
+		]);
+	});
 });
