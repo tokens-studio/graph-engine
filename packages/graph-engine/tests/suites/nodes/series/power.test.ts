@@ -8,13 +8,11 @@ describe('series/power', () => {
 		const node = new Node({ graph });
 
 		node.inputs.base.setValue(2);
-		node.inputs.startPower.setValue(0);
-		node.inputs.endPower.setValue(3);
+		node.inputs.powers.setValue([0, 1, 2, 3]);
 		node.inputs.precision.setValue(2);
 
 		await node.execute();
 
-		// Should generate [2^0, 2^1, 2^2, 2^3] = [1, 2, 4, 8]
 		expect(node.outputs.array.value).to.eql([1, 2, 4, 8]);
 	});
 
@@ -23,13 +21,11 @@ describe('series/power', () => {
 		const node = new Node({ graph });
 
 		node.inputs.base.setValue(2);
-		node.inputs.startPower.setValue(-2);
-		node.inputs.endPower.setValue(0);
+		node.inputs.powers.setValue([-2, -1, 0]);
 		node.inputs.precision.setValue(2);
 
 		await node.execute();
 
-		// Should generate [2^-2, 2^-1, 2^0] = [0.25, 0.5, 1]
 		expect(node.outputs.array.value).to.eql([0.25, 0.5, 1]);
 	});
 
@@ -38,13 +34,11 @@ describe('series/power', () => {
 		const node = new Node({ graph });
 
 		node.inputs.base.setValue(3);
-		node.inputs.startPower.setValue(0);
-		node.inputs.endPower.setValue(2);
+		node.inputs.powers.setValue([0, 1, 2]);
 		node.inputs.precision.setValue(1);
 
 		await node.execute();
 
-		// Should generate [3^0, 3^1, 3^2] = [1, 3, 9]
 		expect(node.outputs.array.value).to.eql([1, 3, 9]);
 	});
 
@@ -53,14 +47,12 @@ describe('series/power', () => {
 		const node = new Node({ graph });
 
 		node.inputs.base.setValue(2);
-		node.inputs.startPower.setValue(2);
-		node.inputs.endPower.setValue(0);
+		node.inputs.powers.setValue([2, 1, 0]);
 		node.inputs.precision.setValue(2);
 
 		await node.execute();
 
-		// Should generate empty array when start > end
-		expect(node.outputs.array.value).to.eql([]);
+		expect(node.outputs.array.value).to.eql([4, 2, 1]);
 	});
 
 	test('handles base of 1', async () => {
@@ -68,13 +60,37 @@ describe('series/power', () => {
 		const node = new Node({ graph });
 
 		node.inputs.base.setValue(1);
-		node.inputs.startPower.setValue(-2);
-		node.inputs.endPower.setValue(2);
+		node.inputs.powers.setValue([-2, -1, 0, 1, 2]);
 		node.inputs.precision.setValue(2);
 
 		await node.execute();
 
-		// All powers of 1 should be 1
 		expect(node.outputs.array.value).to.eql([1, 1, 1, 1, 1]);
+	});
+
+	test('handles alternating powers', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
+
+		node.inputs.base.setValue(2);
+		node.inputs.powers.setValue([1, -1, 2, -2]);
+		node.inputs.precision.setValue(2);
+
+		await node.execute();
+
+		expect(node.outputs.array.value).to.eql([2, 0.5, 4, 0.25]);
+	});
+
+	test('handles fractional powers', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
+
+		node.inputs.base.setValue(2);
+		node.inputs.powers.setValue([0, 0.5, 1, 1.5]);
+		node.inputs.precision.setValue(2);
+
+		await node.execute();
+
+		expect(node.outputs.array.value).to.eql([1, 1.41, 2, 2.83]);
 	});
 });

@@ -17,8 +17,7 @@ export default class NodeDefinition extends Node {
 
 	declare inputs: ToInput<{
 		base: number;
-		startPower: number;
-		endPower: number;
+		powers: number[];
 		precision: number;
 	}>;
 
@@ -35,16 +34,10 @@ export default class NodeDefinition extends Node {
 				default: 2
 			}
 		});
-		this.addInput('startPower', {
+		this.addInput('powers', {
 			type: {
-				...NumberSchema,
-				default: 0
-			}
-		});
-		this.addInput('endPower', {
-			type: {
-				...NumberSchema,
-				default: 3
+				...arrayOf(NumberSchema),
+				default: [0, 1, 2, 3]
 			}
 		});
 		this.addInput('precision', {
@@ -59,16 +52,11 @@ export default class NodeDefinition extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const { base, startPower, endPower, precision } = this.getAllInputs();
-		const values: PowerValue[] = [];
-
-		for (let i = startPower; i <= endPower; i++) {
-			const value = setToPrecision(Math.pow(base, i), precision);
-			values.push({
-				index: i,
-				value
-			});
-		}
+		const { base, powers, precision } = this.getAllInputs();
+		const values: PowerValue[] = powers.map((power, index) => ({
+			index,
+			value: setToPrecision(Math.pow(base, power), precision)
+		}));
 
 		this.outputs.array.set(values.map(x => x.value));
 	}
