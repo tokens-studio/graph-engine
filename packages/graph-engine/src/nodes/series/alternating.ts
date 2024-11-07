@@ -29,12 +29,16 @@ export default class NodeDefinition extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('sequence', {
-			type: arrayOf(NumberSchema),
-			default: [1, 2, 3, 4]
+			type: {
+				...arrayOf(NumberSchema),
+				default: [1, 2, 3, 4]
+			}
 		});
 		this.addInput('pattern', {
-			type: arrayOf(NumberSchema),
-			default: [1, -1] // Default alternating pattern
+			type: {
+				...arrayOf(NumberSchema),
+				default: [1, -1] // Default alternating pattern
+			}
 		});
 		this.addInput('precision', {
 			type: {
