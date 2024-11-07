@@ -2,4 +2,4 @@
 "@tokens-studio/graph-engine": minor
 ---
 
-Add Fibonacci, Linear and Power series.
+Add Alternating, Fibonacci, Linear and Power series.
