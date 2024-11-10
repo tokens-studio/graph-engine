@@ -24,7 +24,6 @@ export default class NodeDefinition extends Node {
 
 	declare outputs: ToOutput<{
 		array: number[];
-		indexed: FibonacciValue[];
 	}>;
 
 	constructor(props: INodeDefinition) {

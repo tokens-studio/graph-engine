@@ -23,7 +23,6 @@ export default class NodeDefinition extends Node {
 
 	declare outputs: ToOutput<{
 		array: number[];
-		indexed: PowerValue[];
 	}>;
 
 	constructor(props: INodeDefinition) {
