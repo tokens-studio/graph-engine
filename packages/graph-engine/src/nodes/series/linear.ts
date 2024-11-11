@@ -4,11 +4,6 @@ import { NumberSchema } from '../../schemas/index.js';
 import { arrayOf } from '../../schemas/utils.js';
 import { setToPrecision } from '../../utils/precision.js';
 
-type LinearValue = {
-	index: number;
-	value: number;
-};
-
 export default class NodeDefinition extends Node {
 	static title = 'Linear Space';
 	static type = 'studio.tokens.series.linear';
@@ -18,7 +13,7 @@ export default class NodeDefinition extends Node {
 	declare inputs: ToInput<{
 		start: number;
 		stop: number;
-		count: number;
+		length: number;
 		precision: number;
 	}>;
 
@@ -40,7 +35,7 @@ export default class NodeDefinition extends Node {
 				default: 1
 			}
 		});
-		this.addInput('count', {
+		this.addInput('length', {
 			type: {
 				...NumberSchema,
 				default: 5
@@ -58,24 +53,18 @@ export default class NodeDefinition extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const { start, stop, count, precision } = this.getAllInputs();
-		const values: LinearValue[] = [];
-
-		if (count <= 1) {
-			values.push({
-				index: 0,
-				value: setToPrecision(start, precision)
-			});
-		} else {
-			const step = (stop - start) / (count - 1);
-			for (let i = 0; i < count; i++) {
-				values.push({
-					index: i,
-					value: setToPrecision(start + step * i, precision)
-				});
-			}
+		const { start, stop, length, precision } = this.getAllInputs();
+		
+		if (length <= 1) {
+			this.outputs.array.set([setToPrecision(start, precision)]);
+			return;
 		}
 
-		this.outputs.array.set(values.map(x => x.value));
+		const step = (stop - start) / (length - 1);
+		const values = Array.from({ length: length }).map((_, i) => 
+			setToPrecision(start + step * i, precision)
+		);
+
+		this.outputs.array.set(values);
 	}
 }

@@ -4,11 +4,6 @@ import { NumberSchema } from '../../schemas/index.js';
 import { arrayOf } from '../../schemas/utils.js';
 import { setToPrecision } from '../../utils/precision.js';
 
-type FibonacciValue = {
-	index: number;
-	value: number;
-};
-
 export default class NodeDefinition extends Node {
 	static title = 'Fibonacci Series';
 	static type = 'studio.tokens.series.fibonacci';
@@ -59,7 +54,7 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { length, startFirst, startSecond, precision } = this.getAllInputs();
-		const values: FibonacciValue[] = [];
+		const values: number[] = new Array(length).fill(0);
 
 		if (length <= 0) {
 			this.outputs.array.set([]);
@@ -67,31 +62,22 @@ export default class NodeDefinition extends Node {
 		}
 
 		// Add first term
-		values.push({
-			index: 0,
-			value: setToPrecision(startFirst, precision)
-		});
+		values[0] = setToPrecision(startFirst, precision);
 
 		if (length === 1) {
-			this.outputs.array.set(values.map(x => x.value));
+			this.outputs.array.set(values);
 			return;
 		}
 
 		// Add second term
-		values.push({
-			index: 1,
-			value: setToPrecision(startSecond, precision)
-		});
+		values[1] = setToPrecision(startSecond, precision);
 
 		// Generate remaining length
 		for (let i = 2; i < length; i++) {
-			const nextValue = values[i - 1].value + values[i - 2].value;
-			values.push({
-				index: i,
-				value: setToPrecision(nextValue, precision)
-			});
+			const nextValue = values[i - 1] + values[i - 2];
+			values[i] = setToPrecision(nextValue, precision);
 		}
 
-		this.outputs.array.set(values.map(x => x.value));
+		this.outputs.array.set(values);
 	}
 }

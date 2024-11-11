@@ -9,7 +9,7 @@ describe('series/linear', () => {
 
 		node.inputs.start.setValue(0);
 		node.inputs.stop.setValue(1);
-		node.inputs.count.setValue(5);
+		node.inputs.length.setValue(5);
 		node.inputs.precision.setValue(2);
 
 		await node.execute();
@@ -23,7 +23,7 @@ describe('series/linear', () => {
 
 		node.inputs.start.setValue(-1);
 		node.inputs.stop.setValue(1);
-		node.inputs.count.setValue(3);
+		node.inputs.length.setValue(3);
 		node.inputs.precision.setValue(2);
 
 		await node.execute();
@@ -37,7 +37,7 @@ describe('series/linear', () => {
 
 		node.inputs.start.setValue(0);
 		node.inputs.stop.setValue(1);
-		node.inputs.count.setValue(1);
+		node.inputs.length.setValue(1);
 		node.inputs.precision.setValue(2);
 
 		await node.execute();
@@ -51,7 +51,7 @@ describe('series/linear', () => {
 
 		node.inputs.start.setValue(0);
 		node.inputs.stop.setValue(1);
-		node.inputs.count.setValue(3);
+		node.inputs.length.setValue(3);
 		node.inputs.precision.setValue(3);
 
 		await node.execute();

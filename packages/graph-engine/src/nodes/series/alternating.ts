@@ -4,11 +4,6 @@ import { NumberSchema } from '../../schemas/index.js';
 import { arrayOf } from '../../schemas/utils.js';
 import { setToPrecision } from '../../utils/precision.js';
 
-type AlternatingValue = {
-	index: number;
-	value: number;
-};
-
 export default class NodeDefinition extends Node {
 	static title = 'Alternating Series';
 	static type = 'studio.tokens.series.alternating';
@@ -52,7 +47,7 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { sequence, pattern, precision } = this.getAllInputs();
-		const values: AlternatingValue[] = [];
+		const values: number[] = new Array(sequence.length).fill(0);
 
 		// Create a new variable for the pattern to use
 		const patternToUse = pattern.length === 0 ? [1] : pattern;
@@ -61,12 +56,9 @@ export default class NodeDefinition extends Node {
 			const patternIndex = i % patternToUse.length;
 			const patternValue = patternToUse[patternIndex];
 			const value = setToPrecision(num * patternValue, precision);
-			values.push({
-				index: i,
-				value
-			});
+			values[i] = value;
 		});
 
-		this.outputs.array.set(values.map(x => x.value));
+		this.outputs.array.set(values);
 	}
 }
