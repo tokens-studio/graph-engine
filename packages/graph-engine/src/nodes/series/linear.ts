@@ -54,14 +54,14 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { start, stop, length, precision } = this.getAllInputs();
-		
+
 		if (length <= 1) {
 			this.outputs.array.set([setToPrecision(start, precision)]);
 			return;
 		}
 
 		const step = (stop - start) / (length - 1);
-		const values = Array.from({ length: length }).map((_, i) => 
+		const values = Array.from({ length: length }).map((_, i) =>
 			setToPrecision(start + step * i, precision)
 		);
 
