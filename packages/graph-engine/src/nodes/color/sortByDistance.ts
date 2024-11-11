@@ -1,4 +1,8 @@
-import { ColorSchema, StringSchema } from '../../schemas/index.js';
+import {
+	ColorSchema,
+	NumberSchema,
+	StringSchema
+} from '../../schemas/index.js';
 import { ContrastAlgorithm } from '../../types/index.js';
 import { INodeDefinition } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
@@ -37,13 +41,17 @@ export default class SortByDistanceNode extends Node {
 		this.addOutput('value', {
 			type: arrayOf(ColorSchema)
 		});
+		this.addOutput('indices', {
+			type: arrayOf(NumberSchema)
+		});
 	}
 
 	execute(): void | Promise<void> {
 		const { colors, compareColor, type, algorithm } = this.getAllInputs();
 
-		const sortedTokens = sortTokens(colors, compareColor, type, algorithm);
+		const sortedWithIndices = sortTokens(colors, compareColor, type, algorithm);
 
-		this.outputs.value.set(sortedTokens);
+		this.outputs.value.set(sortedWithIndices.map(item => item.color));
+		this.outputs.indices.set(sortedWithIndices.map(item => item.index));
 	}
 }

@@ -16,7 +16,7 @@ export const compareFunctions = {
 
 export const sortTokens = (colors, compareColor, type, algorithm) =>
 	orderBy(
-		colors.map(color => {
+		colors.map((color, index) => {
 			const foreground = toColor(color);
 			const background = toColor(compareColor);
 			const compareValue = compareFunctions[type](
@@ -27,8 +27,12 @@ export const sortTokens = (colors, compareColor, type, algorithm) =>
 
 			return {
 				color,
-				compareValue
+				compareValue,
+				index
 			};
 		}),
 		['compareValue']
-	).map(color => color.color);
+	).map(item => ({
+		color: item.color,
+		index: item.index
+	}));
