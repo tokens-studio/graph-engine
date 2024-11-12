@@ -1,4 +1,4 @@
-import { orderBy } from 'lodash-es';
+import { Color } from '@/types.js';
 import { toColor } from './utils.js';
 
 export const compareFunctions = {
@@ -14,21 +14,36 @@ export const compareFunctions = {
 	Distance: (foreground, background) => foreground.deltaE(background, '2000')
 };
 
-export const sortTokens = (colors, compareColor, type, algorithm) =>
-	orderBy(
-		colors.map(color => {
-			const foreground = toColor(color);
-			const background = toColor(compareColor);
-			const compareValue = compareFunctions[type](
-				foreground,
-				background,
-				algorithm
-			);
+export type SortedTokens = { colors: Color[]; indices: number[] };
 
-			return {
+export const sortTokens = (
+	colors,
+	compareColor,
+	type,
+	algorithm
+): SortedTokens => {
+	const background = toColor(compareColor);
+	const compareFunction = compareFunctions[type];
+
+	return colors
+		.reduce((acc, color, index) => {
+			const foreground = toColor(color);
+			const compareValue = compareFunction(foreground, background, algorithm);
+
+			acc.push({
 				color,
-				compareValue
-			};
-		}),
-		['compareValue']
-	).map(color => color.color);
+				compareValue,
+				index
+			});
+			return acc;
+		}, [])
+		.sort((a, b) => a.compareValue - b.compareValue)
+		.reduce(
+			(acc, { color, index }) => {
+				acc.colors.push(color);
+				acc.indices.push(index);
+				return acc;
+			},
+			{ colors: [], indices: [] } as SortedTokens
+		);
+};
