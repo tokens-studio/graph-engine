@@ -17,18 +17,27 @@ export const sortTokens = (colors, compareColor, type, algorithm) => {
 	const background = toColor(compareColor);
 	const compareFunction = compareFunctions[type];
 
-	return colors
-		.reduce((acc, color, index) => {
+	return colors.reduce(
+		(acc, color, index) => {
 			const foreground = toColor(color);
 			const compareValue = compareFunction(foreground, background, algorithm);
 
-			acc.push({
-				color,
-				compareValue,
-				index
-			});
+			// Find insertion point
+			let insertIndex = 0;
+			while (
+				insertIndex < acc.colors.length &&
+				acc.compareValues[insertIndex] < compareValue
+			) {
+				insertIndex++;
+			}
+
+			// Insert values at the correct position
+			acc.colors.splice(insertIndex, 0, color);
+			acc.indices.splice(insertIndex, 0, index);
+			acc.compareValues.splice(insertIndex, 0, compareValue);
+
 			return acc;
-		}, [])
-		.sort((a, b) => a.compareValue - b.compareValue)
-		.map(({ color, index }) => ({ color, index }));
+		},
+		{ colors: [], indices: [], compareValues: [] }
+	);
 };
