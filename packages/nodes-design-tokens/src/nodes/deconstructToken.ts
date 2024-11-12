@@ -22,8 +22,8 @@ import type {
 } from '@tokens-studio/types';
 
 export default class CreateBorderNode extends Node {
-	static title = 'Destruct token';
-	static type = 'studio.tokens.design.destruct';
+	static title = 'Deconstruct token';
+	static type = 'studio.tokens.design.deconstruct';
 	static description = 'Breaks down a token into its parts';
 
 	declare inputs: ToInput<{
