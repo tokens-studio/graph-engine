@@ -1,10 +1,10 @@
+import { Color, INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import {
 	ColorSchema,
 	NumberSchema,
 	StringSchema
 } from '../../schemas/index.js';
 import { ContrastAlgorithm } from '../../types/index.js';
-import { INodeDefinition } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 import { arrayOf } from '../../schemas/utils.js';
 import { sortTokens } from './lib/sortColors.js';
@@ -14,6 +14,19 @@ export default class SortByDistanceNode extends Node {
 	static type = 'studio.tokens.color.sortColorsBy';
 	static description =
 		'Sorts Colors by constrast, distance, hue, lightness, or saturation to a Color';
+
+	declare inputs: ToInput<{
+		colors: Color[];
+		compareColor: Color;
+		type: 'Contrast' | 'Hue' | 'Lightness' | 'Saturation' | 'Distance';
+		algorithm: ContrastAlgorithm;
+	}>;
+
+	declare outputs: ToOutput<{
+		value: Color[];
+		indices: number[];
+	}>;
+
 	constructor(props: INodeDefinition) {
 		super(props);
 
@@ -50,7 +63,7 @@ export default class SortByDistanceNode extends Node {
 		const { colors, compareColor, type, algorithm } = this.getAllInputs();
 		const sorted = sortTokens(colors, compareColor, type, algorithm);
 
-		this.outputs.value.set(sorted.map(item => item.color));
-		this.outputs.indices.set(sorted.map(item => item.index));
+		this.outputs.value.set(sorted.colors);
+		this.outputs.indices.set(sorted.indices);
 	}
 }

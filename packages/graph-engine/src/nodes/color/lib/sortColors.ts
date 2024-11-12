@@ -1,3 +1,4 @@
+import { Color } from '@/types.js';
 import { toColor } from './utils.js';
 
 export const compareFunctions = {
@@ -13,31 +14,36 @@ export const compareFunctions = {
 	Distance: (foreground, background) => foreground.deltaE(background, '2000')
 };
 
-export const sortTokens = (colors, compareColor, type, algorithm) => {
+export type SortedTokens = { colors: Color[]; indices: number[] };
+
+export const sortTokens = (
+	colors,
+	compareColor,
+	type,
+	algorithm
+): SortedTokens => {
 	const background = toColor(compareColor);
 	const compareFunction = compareFunctions[type];
 
-	return colors.reduce(
-		(acc, color, index) => {
+	return colors
+		.reduce((acc, color, index) => {
 			const foreground = toColor(color);
 			const compareValue = compareFunction(foreground, background, algorithm);
 
-			// Find insertion point
-			let insertIndex = 0;
-			while (
-				insertIndex < acc.colors.length &&
-				acc.compareValues[insertIndex] < compareValue
-			) {
-				insertIndex++;
-			}
-
-			// Insert values at the correct position
-			acc.colors.splice(insertIndex, 0, color);
-			acc.indices.splice(insertIndex, 0, index);
-			acc.compareValues.splice(insertIndex, 0, compareValue);
-
+			acc.push({
+				color,
+				compareValue,
+				index
+			});
 			return acc;
-		},
-		{ colors: [], indices: [], compareValues: [] }
-	);
+		}, [])
+		.sort((a, b) => a.compareValue - b.compareValue)
+		.reduce(
+			(acc, { color, index }) => {
+				acc.colors.push(color);
+				acc.indices.push(index);
+				return acc;
+			},
+			{ colors: [], indices: [] } as SortedTokens
+		);
 };
