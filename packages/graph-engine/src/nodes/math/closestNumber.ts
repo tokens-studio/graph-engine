@@ -11,7 +11,6 @@ export default class NodeDefinition extends Node {
 	declare inputs: ToInput<{
 		numbers: number[];
 		target: number;
-		precision: number;
 	}>;
 
 	declare outputs: ToOutput<{
@@ -66,8 +65,8 @@ export default class NodeDefinition extends Node {
 
 		const result = numbers.reduce(
 			(acc, curr, idx) => {
-				const difference = Math.abs(target - curr);
-				if (difference < acc.difference) {
+				const difference = target - curr;
+				if (Math.abs(difference) < Math.abs(acc.difference)) {
 					return { index: idx, value: curr, difference };
 				}
 				return acc;
@@ -75,7 +74,7 @@ export default class NodeDefinition extends Node {
 			{
 				index: 0,
 				value: numbers[0],
-				difference: Math.abs(target - numbers[0])
+				difference: target - numbers[0]
 			}
 		);
 

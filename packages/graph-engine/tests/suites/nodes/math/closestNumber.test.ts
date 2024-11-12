@@ -17,7 +17,7 @@ describe('math/closestNumber', () => {
 		expect(node.outputs.difference.value).toBe(0);
 	});
 
-	test('finds closest number when no exact match', async () => {
+	test('finds closest lower number', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -28,7 +28,21 @@ describe('math/closestNumber', () => {
 
 		expect(node.outputs.index.value).toBe(1);
 		expect(node.outputs.value.value).toBe(2);
-		expect(node.outputs.difference.value).toBe(1);
+		expect(node.outputs.difference.value).toBe(1); // target (3) - value (2) = 1
+	});
+
+	test('finds closest higher number', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
+
+		node.inputs.numbers.setValue([1, 2, 4, 5]);
+		node.inputs.target.setValue(3.5);
+
+		await node.execute();
+
+		expect(node.outputs.index.value).toBe(2);
+		expect(node.outputs.value.value).toBe(4);
+		expect(node.outputs.difference.value).toBe(-0.5); // target (3.5) - value (4) = -0.5
 	});
 
 	test('handles negative numbers', async () => {
@@ -42,7 +56,7 @@ describe('math/closestNumber', () => {
 
 		expect(node.outputs.index.value).toBe(1);
 		expect(node.outputs.value.value).toBe(-2);
-		expect(node.outputs.difference.value).toBe(1);
+		expect(node.outputs.difference.value).toBe(1); // target (-1) - value (-2) = 1
 	});
 
 	test('throws error for empty array', async () => {
@@ -52,6 +66,12 @@ describe('math/closestNumber', () => {
 		node.inputs.numbers.setValue([]);
 		node.inputs.target.setValue(1);
 
-		await expect(node.execute()).rejects.toThrow('Input array cannot be empty');
+		try {
+			await node.execute();
+			expect.fail('Should have thrown an error');
+		} catch (error) {
+			expect(error).to.be.instanceOf(Error);
+			expect(error.message).to.equal('Input array cannot be empty');
+		}
 	});
 });
