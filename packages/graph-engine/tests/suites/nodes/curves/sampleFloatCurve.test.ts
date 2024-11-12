@@ -21,18 +21,17 @@ describe('curves/sampleFloatCurve', () => {
 		]
 	};
 
-	test('samples at regular x intervals', async () => {
+	test('samples at given x values', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
 		node.inputs.curve.setValue(sampleCurve);
-		node.inputs.samples.setValue(5);
+		node.inputs.samplePoints.setValue([0, 0.25, 0.5, 0.75, 1]);
 
 		await node.execute();
 
 		const values = node.outputs.values.value;
 		expect(values).to.have.lengthOf(5);
-		// Sample points should be at x = 0, 0.25, 0.5, 0.75, 1
 		expect(values[0]).to.equal(0); // Value at x=0
 		expect(values[2]).to.be.approximately(0.8, 0.1); // Value at x=0.5
 		expect(values[4]).to.equal(1); // Value at x=1
@@ -43,7 +42,7 @@ describe('curves/sampleFloatCurve', () => {
 		const node = new Node({ graph });
 
 		node.inputs.curve.setValue(sampleCurve);
-		node.inputs.samples.setValue(5);
+		node.inputs.samplePoints.setValue([0, 0.5, 1]);
 		node.inputs.precision.setValue(1);
 
 		await node.execute();
@@ -55,12 +54,12 @@ describe('curves/sampleFloatCurve', () => {
 		});
 	});
 
-	test('handles minimum samples (2)', async () => {
+	test('handles edge points', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
 		node.inputs.curve.setValue(sampleCurve);
-		node.inputs.samples.setValue(2);
+		node.inputs.samplePoints.setValue([0, 1]);
 
 		await node.execute();
 
@@ -96,7 +95,7 @@ describe('curves/sampleFloatCurve', () => {
 				]
 			]
 		});
-		node.inputs.samples.setValue(4);
+		node.inputs.samplePoints.setValue([0, 0.3, 0.7, 1]);
 
 		await node.execute();
 

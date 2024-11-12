@@ -8,11 +8,11 @@ import { setToPrecision } from '../../utils/precision.js';
 export default class NodeDefinition extends Node {
 	static title = 'Sample Array from Float Curve';
 	static type = 'studio.tokens.curve.sampleFloatCurve';
-	static description = 'Samples a float curve at regular intervals';
+	static description = 'Samples a float curve at given x values';
 
 	declare inputs: ToInput<{
 		curve: FloatCurve;
-		samples: number;
+		samplePoints: number[];
 		precision: number;
 	}>;
 	declare outputs: ToOutput<{
@@ -24,12 +24,13 @@ export default class NodeDefinition extends Node {
 		this.addInput('curve', {
 			type: FloatCurveSchema
 		});
-		this.addInput('samples', {
-			type: {
+		this.addInput('samplePoints', {
+			type: arrayOf({
 				...NumberSchema,
-				minimum: 2,
-				default: 10
-			}
+				minimum: 0,
+				maximum: 1,
+				description: 'X values to sample (between 0 and 1)'
+			})
 		});
 		this.addInput('precision', {
 			type: {
@@ -44,13 +45,10 @@ export default class NodeDefinition extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const { curve, samples, precision } = this.getAllInputs();
+		const { curve, samplePoints, precision } = this.getAllInputs();
 		const values: number[] = [];
 
-		for (let i = 0; i < samples; i++) {
-			const x = i / (samples - 1);
-
-			// Find the segment where x falls
+		for (const x of samplePoints) {
 			const startIndex = curve.segments.findIndex((segment, idx) => {
 				const nextSegment = curve.segments[idx + 1];
 				return segment[0] <= x && (!nextSegment || x <= nextSegment[0]);
@@ -60,10 +58,7 @@ export default class NodeDefinition extends Node {
 			const p1 = curve.segments[startIndex + 1];
 			const [c1, c2] = curve.controlPoints[startIndex];
 
-			// Calculate t parameter
 			const t = (x - p0[0]) / (p1[0] - p0[0]);
-
-			// Calculate y value using cubic Bézier formula
 			const y = setToPrecision(
 				cubicBezier(p0[1], c1[1], c2[1], p1[1], t),
 				precision
