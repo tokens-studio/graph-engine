@@ -5,15 +5,15 @@ import { arrayOf } from '../../schemas/utils.js';
 import { setToPrecision } from '../../utils/precision.js';
 
 export default class NodeDefinition extends Node {
-	static title = 'Exponential Distribution';
-	static type = 'studio.tokens.series.exponentialDistribution';
+	static title = 'Exponential Decay';
+	static type = 'studio.tokens.series.exponentialDecay';
 	static description =
-		'Distributes a value across an array using exponential decay';
+		'Generates a sequence using exponential decay formula: P*e^(-kx)';
 
 	declare inputs: ToInput<{
-		value: number;
+		initialValue: number;
 		length: number;
-		decay: number;
+		decayRate: number;
 		precision: number;
 	}>;
 
@@ -23,24 +23,27 @@ export default class NodeDefinition extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('value', {
+		this.addInput('initialValue', {
 			type: {
 				...NumberSchema,
-				default: 100
+				default: 100,
+				description: 'Initial value (P)'
 			}
 		});
 		this.addInput('length', {
 			type: {
 				...NumberSchema,
 				default: 5,
-				minimum: 1
+				minimum: 1,
+				description: 'Number of values to generate'
 			}
 		});
-		this.addInput('decay', {
+		this.addInput('decayRate', {
 			type: {
 				...NumberSchema,
 				default: 0.5,
-				minimum: 0
+				minimum: 0,
+				description: 'Decay rate constant (k)'
 			}
 		});
 		this.addInput('precision', {
@@ -56,21 +59,12 @@ export default class NodeDefinition extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const { value, length, decay, precision } = this.getAllInputs();
+		const { initialValue, length, decayRate, precision } = this.getAllInputs();
 
-		// Calculate weights using exponential decay
-		const weights = Array.from({ length: length }, (_, i) =>
-			Math.exp(-decay * i)
+		const values = Array.from({ length }, (_, i) =>
+			setToPrecision(initialValue * Math.exp(-decayRate * i), precision)
 		);
 
-		// Calculate total weight for normalization
-		const totalWeight = weights.reduce((sum, w) => sum + w, 0);
-
-		// Calculate distributed values
-		const distributedValues = weights.map(weight =>
-			setToPrecision((weight / totalWeight) * value, precision)
-		);
-
-		this.outputs.values.set(distributedValues);
+		this.outputs.values.set(values);
 	}
 }
