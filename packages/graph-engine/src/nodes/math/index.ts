@@ -3,6 +3,7 @@ import add from './add.js';
 import addVariadic from './addVariadic.js';
 import ceil from './ceil.js';
 import clamp from './clamp.js';
+import closestNumber from './closestNumber.js';
 import cos from './cos.js';
 import count from './count.js';
 import distance from './difference.js';
@@ -32,6 +33,7 @@ export const nodes = [
 	addVariadic,
 	ceil,
 	clamp,
+	closestNumber,
 	cos,
 	count,
 	rangeMapping,
