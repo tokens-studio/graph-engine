@@ -4,7 +4,7 @@ import CreateBoxShadowNode from './createBoxShadow.js';
 import CreateBoxShadowTokenNode from './createBoxShadowToken.js';
 import CreateTypographyNode from './createTypography.js';
 import CreateTypographyTokenNode from './createTypographyToken.js';
-import DestructNode from './destructToken.js';
+import DeconstructNode from './deconstructToken.js';
 import ExternalTokensNode from './externalTokens.js';
 import ExtractTokenNode from './extractSingleToken.js';
 import FlattenNode from './flatten.js';
@@ -37,7 +37,7 @@ export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
 	CreateBorderTokenNode,
 	CreateTypographyTokenNode,
 	create,
-	DestructNode,
+	DeconstructNode,
 	InlineTokenNode,
 	FlattenNode,
 	ExternalTokensNode,
