@@ -5,7 +5,7 @@ import ceil from './ceil.js';
 import clamp from './clamp.js';
 import cos from './cos.js';
 import count from './count.js';
-import distance from './distance.js';
+import distance from './difference.js';
 import divide from './divide.js';
 import divideVariadic from './divideVariadic.js';
 import evalNode from './eval.js';

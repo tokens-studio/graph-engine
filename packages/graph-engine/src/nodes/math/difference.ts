@@ -4,9 +4,9 @@ import { NumberSchema } from '../../schemas/index.js';
 import { setToPrecision } from '../../utils/precision.js';
 
 export default class NodeDefinition extends Node {
-	static title = 'Distance';
-	static type = 'studio.tokens.math.distance';
-	static description = 'Calculates the absolute distance between two numbers';
+	static title = 'Difference';
+	static type = 'studio.tokens.math.difference';
+	static description = 'Calculates the absolute difference between two numbers';
 
 	declare inputs: ToInput<{
 		a: number;
@@ -15,7 +15,7 @@ export default class NodeDefinition extends Node {
 	}>;
 
 	declare outputs: ToOutput<{
-		distance: number;
+		difference: number;
 	}>;
 
 	constructor(props: INodeDefinition) {
@@ -39,14 +39,14 @@ export default class NodeDefinition extends Node {
 				minimum: 0
 			}
 		});
-		this.addOutput('distance', {
+		this.addOutput('difference', {
 			type: NumberSchema
 		});
 	}
 
 	execute(): void | Promise<void> {
 		const { a, b, precision } = this.getAllInputs();
-		const distance = Math.abs(a - b);
-		this.outputs.distance.set(setToPrecision(distance, precision));
+		const difference = Math.abs(a - b);
+		this.outputs.difference.set(setToPrecision(difference, precision));
 	}
 }

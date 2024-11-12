@@ -1,9 +1,9 @@
 import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
-import Node from '../../../../src/nodes/math/distance.js';
+import Node from '../../../../src/nodes/math/difference.js';
 
-describe('math/distance', () => {
-	test('calculates absolute distance between positive numbers', async () => {
+describe('math/difference', () => {
+	test('calculates absolute difference between positive numbers', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -12,10 +12,10 @@ describe('math/distance', () => {
 
 		await node.execute();
 
-		expect(node.outputs.distance.value).to.equal(3);
+		expect(node.outputs.difference.value).to.equal(3);
 	});
 
-	test('calculates absolute distance between negative numbers', async () => {
+	test('calculates absolute difference between negative numbers', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -24,10 +24,10 @@ describe('math/distance', () => {
 
 		await node.execute();
 
-		expect(node.outputs.distance.value).to.equal(3);
+		expect(node.outputs.difference.value).to.equal(3);
 	});
 
-	test('calculates absolute distance with mixed signs', async () => {
+	test('calculates absolute difference with mixed signs', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
@@ -36,7 +36,7 @@ describe('math/distance', () => {
 
 		await node.execute();
 
-		expect(node.outputs.distance.value).to.equal(5);
+		expect(node.outputs.difference.value).to.equal(5);
 	});
 
 	test('respects precision setting', async () => {
@@ -49,6 +49,6 @@ describe('math/distance', () => {
 
 		await node.execute();
 
-		expect(node.outputs.distance.value).to.equal(3.333);
+		expect(node.outputs.difference.value).to.equal(3.333);
 	});
 });
