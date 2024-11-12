@@ -5,6 +5,7 @@ import flipFloatCurve from './flipFloatCurve.js';
 import floatCurve from './floatCurve.js';
 import presetBezier from './presetBeziers.js';
 import sample from './sample.js';
+import sampleFloatCurve from './sampleFloatCurve.js';
 
 export const nodes = [
 	bezier,
@@ -13,5 +14,6 @@ export const nodes = [
 	sample,
 	deconstructFloatCurve,
 	flipFloatCurve,
-	constructFloatCurve
+	constructFloatCurve,
+	sampleFloatCurve
 ];
