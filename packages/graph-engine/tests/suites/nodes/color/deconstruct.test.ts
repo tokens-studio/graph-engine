@@ -92,4 +92,23 @@ describe('color/deconstruct', () => {
 		expect(node.outputs.c.value).to.equal(0);
 		expect(node.outputs.alpha.value).to.equal(0);
 	});
+
+	test('handles NaN values in OKHSL color space', async () => {
+		const graph = new Graph();
+		const node = new DestructColorNode({ graph });
+
+		node.inputs.color.setValue({
+			space: 'okhsl',
+			channels: [0.5, 0, NaN],
+			alpha: 1
+		});
+
+		await node.execute();
+
+		expect(node.outputs.space.value).toBe('okhsl');
+		expect(node.outputs.a.value).toBe(0.5);
+		expect(node.outputs.b.value).toBe(0);
+		expect(node.outputs.c.value).toBe(0);
+		expect(node.outputs.alpha.value).toBe(1);
+	});
 });

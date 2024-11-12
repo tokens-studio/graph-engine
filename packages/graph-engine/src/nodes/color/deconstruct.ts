@@ -75,9 +75,11 @@ export default class DestructColorNode extends Node {
 		}
 
 		this.outputs.space.set(color.space);
-		this.outputs.a.set(color.channels[0]);
-		this.outputs.b.set(color.channels[1]);
-		this.outputs.c.set(color.channels[2]);
+
+		// Set channel values, defaulting to 0 if NaN
+		this.outputs.a.set(isNaN(color.channels[0]) ? 0 : color.channels[0]);
+		this.outputs.b.set(isNaN(color.channels[1]) ? 0 : color.channels[1]);
+		this.outputs.c.set(isNaN(color.channels[2]) ? 0 : color.channels[2]);
 
 		// Only set alpha if it exists
 		if (color.alpha !== undefined) {
