@@ -48,10 +48,9 @@ export default class SortByDistanceNode extends Node {
 
 	execute(): void | Promise<void> {
 		const { colors, compareColor, type, algorithm } = this.getAllInputs();
+		const sorted = sortTokens(colors, compareColor, type, algorithm);
 
-		const sortedWithIndices = sortTokens(colors, compareColor, type, algorithm);
-
-		this.outputs.value.set(sortedWithIndices.map(item => item.color));
-		this.outputs.indices.set(sortedWithIndices.map(item => item.index));
+		this.outputs.value.set(sorted.map(item => item.color));
+		this.outputs.indices.set(sorted.map(item => item.index));
 	}
 }

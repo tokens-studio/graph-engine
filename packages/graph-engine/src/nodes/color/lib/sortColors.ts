@@ -1,4 +1,3 @@
-import { orderBy } from 'lodash-es';
 import { toColor } from './utils.js';
 
 export const compareFunctions = {
@@ -14,25 +13,22 @@ export const compareFunctions = {
 	Distance: (foreground, background) => foreground.deltaE(background, '2000')
 };
 
-export const sortTokens = (colors, compareColor, type, algorithm) =>
-	orderBy(
-		colors.map((color, index) => {
-			const foreground = toColor(color);
-			const background = toColor(compareColor);
-			const compareValue = compareFunctions[type](
-				foreground,
-				background,
-				algorithm
-			);
+export const sortTokens = (colors, compareColor, type, algorithm) => {
+	const background = toColor(compareColor);
+	const compareFunction = compareFunctions[type];
 
-			return {
+	return colors
+		.reduce((acc, color, index) => {
+			const foreground = toColor(color);
+			const compareValue = compareFunction(foreground, background, algorithm);
+
+			acc.push({
 				color,
 				compareValue,
 				index
-			};
-		}),
-		['compareValue']
-	).map(item => ({
-		color: item.color,
-		index: item.index
-	}));
+			});
+			return acc;
+		}, [])
+		.sort((a, b) => a.compareValue - b.compareValue)
+		.map(({ color, index }) => ({ color, index }));
+};
