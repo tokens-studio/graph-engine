@@ -22,7 +22,7 @@ import type {
 } from '@tokens-studio/types';
 
 export default class CreateBorderNode extends Node {
-	static title = 'Deconstruct token';
+	static title = 'Deconstruct Token';
 	static type = 'studio.tokens.design.deconstruct';
 	static description = 'Breaks down a token into its parts';
 
