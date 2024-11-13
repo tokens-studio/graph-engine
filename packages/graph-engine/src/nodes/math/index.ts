@@ -22,6 +22,7 @@ import random from './random.js';
 import rangeMapping from './rangeMapping.js';
 import round from './round.js';
 import sin from './sin.js';
+import snap from './snap.js';
 import sqrt from './sqrt.js';
 import subtract from './subtract.js';
 import subtractVariadic from './subtractVariadic.js';
@@ -52,6 +53,7 @@ export const nodes = [
 	random,
 	round,
 	sin,
+	snap,
 	subtract,
 	subtractVariadic,
 	tan,
