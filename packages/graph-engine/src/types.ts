@@ -1,4 +1,4 @@
-import { ContrastAlgorithm } from './types/index.js';
+import { ContrastAlgorithm, ValueSnapMethod } from './types/index.js';
 import type { Graph } from './graph/graph.js';
 import type { Node } from './programmatic/node.js';
 
@@ -72,3 +72,5 @@ export type GradientStop = {
 };
 
 export type ContrastAlgorithmType = keyof typeof ContrastAlgorithm;
+
+export type ValueSnapMethodType = keyof typeof ValueSnapMethod;
