@@ -34,7 +34,7 @@ const RailItem = ({ icon, label, link }: RailItem) => {
 	return (
 		<Tooltip label={label}>
 			<Link aria-label={label} href={link}>
-				<IconButton variant='invisible' css={{ padding: '$2' }} icon={icon} />
+				<IconButton emphasis='low' css={{ padding: '$2' }} icon={icon} />
 			</Link>
 		</Tooltip>
 	);

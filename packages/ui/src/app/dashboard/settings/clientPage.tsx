@@ -53,7 +53,7 @@ const Page = () => {
 							</Stack>
 						</Stack>
 						<br />
-						<Button onClick={onUpdate} loading={isPending} variant='primary'>
+						<Button onClick={onUpdate} loading={isPending} emphasis='high'>
 							Update
 						</Button>
 					</>
@@ -63,7 +63,7 @@ const Page = () => {
 			<Heading size='large'>Actions</Heading>
 			<Separator />
 			<Link href='/api/auth/signout'>
-				<Button variant='secondary'>Sign out</Button>
+				<Button>Sign out</Button>
 			</Link>
 		</Stack>
 	);

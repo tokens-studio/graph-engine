@@ -30,13 +30,13 @@ export const JoyrideTooltip = ({
 				{step.content}
 			</Stack>
 			<Stack direction='row' gap={2} align='center' justify='between'>
-				<Button variant='secondary' {...skipProps}>
+				<Button {...skipProps}>
 					Skip
 				</Button>
 				<Stack direction='row' gap={2}>
 					{index > 0 && <Button {...backProps}>Back</Button>}
 					{continuous && (
-						<Button variant='primary' {...primaryProps}>
+						<Button emphasis='high' {...primaryProps}>
 							Next
 						</Button>
 					)}

@@ -54,7 +54,7 @@ export const AlignDropdown = () => {
       <Tooltip label="Align and distribute" side="bottom">
         <DropdownMenu.Trigger asChild>
           <IconButton
-            variant="invisible"
+            emphasis="low"
             style={{ paddingLeft: '0', paddingRight: '0' }}
             icon={<AlignHorizontalCenters />}
           />

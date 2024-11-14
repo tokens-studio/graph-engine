@@ -33,7 +33,7 @@ const DebuggerInner = observer<DebuggerProps>(
   /** @ts-expect-error observer not typed here...? */
   ({ data, domRef, timeline, scale }) => {
     return (
-      <Stack css={{ flex: 1 }}>
+      <Stack style={{ flex: 1 }}>
         <div
           ref={domRef}
           style={{ overflow: 'auto' }}
@@ -45,13 +45,13 @@ const DebuggerInner = observer<DebuggerProps>(
         >
           {data.rows.map((item) => {
             return (
-              <Box
+              <div
                 className="timeline-list-item"
                 key={item.id}
-                css={{ padding: '$1' }}
+                style={{ padding: '$1' }}
               >
                 <Text>{item.name}</Text>
-              </Box>
+              </div>
             );
           })}
         </div>
@@ -127,7 +127,7 @@ export const Debugger = ({ data }: DebuggerProps) => {
   const [scale, setScale] = useState(100);
 
   return (
-    <Stack direction="column" width="full" css={{ height: '100%' }}>
+    <Stack direction="column" width="full" style={{ height: '100%' }}>
       <TimelinePlayer
         data={data}
         timelineState={timelineState}
@@ -166,7 +166,7 @@ export const CustomRender0: React.FC<{
 }> = ({ action, index }) => {
   return (
     <Stack
-      css={{
+      style={{
         backgroundColor: action?.color || colors[index % colors.length],
         height: '100%',
         borderRadius: '4px',

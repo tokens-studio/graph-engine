@@ -1,9 +1,10 @@
-import { Box, Button, TextInput } from '@tokens-studio/ui';
+import { Button, TextInput } from '@tokens-studio/ui';
 import { HexColorPicker } from 'react-colorful';
 import { PopoverClose } from '@radix-ui/react-popover';
 import { styled } from '@/lib/stitches/index.js';
 import InputPopover from './InputPopover.js';
 import React from 'react';
+import styles from './index.module.css';
 
 export function ColorPicker({ value, onChange }) {
   return (
@@ -34,21 +35,10 @@ export function ColorPickerPopover({
     <InputPopover
       defaultOpen={defaultOpen}
       trigger={
-        <Box
+        <Button
           as="button"
           style={{ background: value }}
-          css={{
-            all: 'unset',
-            cursor: 'pointer',
-            borderRadius: '$small',
-            width: 26,
-            height: 26,
-            outline: '1px solid $borderDefault',
-            flexShrink: 0,
-            '&:hover': {
-              outline: '1px solid $borderDefault',
-            },
-          }}
+          className={styles.colorPickerTrigger}
           type="button"
         />
       }
@@ -59,17 +49,12 @@ export function ColorPickerPopover({
         onChange={(event) => onChange(event.target.value)}
       />
       {showRemoveButton && (
-        <PopoverCloseRemoveButton>
-          <Button onClick={onRemove} variant="danger">
+        <PopoverClose className={styles.popoverCloseRemoveButton}>
+          <Button onClick={onRemove} emphasis="high" appearance="danger">
             Remove color
           </Button>
-        </PopoverCloseRemoveButton>
+        </PopoverClose>
       )}
     </InputPopover>
   );
 }
-
-const PopoverCloseRemoveButton = styled(PopoverClose, {
-  all: 'unset',
-  margin: '$3',
-});

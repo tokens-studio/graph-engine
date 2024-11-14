@@ -32,7 +32,7 @@ const DockButton = (rest) => {
   return (
     <IconButton
       size="small"
-      variant="invisible"
+      emphasis="low"
       css={{ padding: '$2' }}
       {...rest}
     />

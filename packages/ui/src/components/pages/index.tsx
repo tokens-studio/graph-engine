@@ -9,7 +9,7 @@ export default function Index() {
 		<Stack
 			direction='row'
 			align='center'
-			css={{ height: '100%', width: '100%' }}
+			style={{ height: '100%', width: '100%' }}
 			justify='center'
 		>
 			<Box
@@ -19,7 +19,7 @@ export default function Index() {
 					direction='column'
 					gap={6}
 					align='center'
-					css={{ maxWidth: '300px' }}
+					style={{ maxWidth: '300px' }}
 				>
 					<Image src={Logo} alt='Tokens Studio Logo' width={100} height={100} />
 					<Heading size='large'>Important </Heading>
@@ -32,7 +32,7 @@ export default function Index() {
 					</Text>
 
 					<Link href='/api/auth/signin'>
-						<Button variant='primary'>Goto login</Button>
+						<Button emphasis='high'>Goto login</Button>
 					</Link>
 				</Stack>
 			</Box>

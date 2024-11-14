@@ -195,7 +195,7 @@ export const Settings = () => {
           <Label>Edge Type</Label>
           <DropdownMenu>
             <DropdownMenu.Trigger asChild>
-              <Button variant="secondary" asDropdown size="small">
+              <Button  asDropdown size="small">
                 {edgeTypeValue}
               </Button>
             </DropdownMenu.Trigger>
@@ -218,7 +218,7 @@ export const Settings = () => {
           <Label>Layout type</Label>
           <DropdownMenu>
             <DropdownMenu.Trigger asChild>
-              <Button variant="secondary" asDropdown size="small">
+              <Button  asDropdown size="small">
                 {layoutTypeValue}
               </Button>
             </DropdownMenu.Trigger>

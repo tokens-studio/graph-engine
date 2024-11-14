@@ -1,4 +1,4 @@
-import { Box, IconButton, Stack, Text, TextInput } from '@tokens-studio/ui';
+import { IconButton, Stack, Text, TextInput } from '@tokens-studio/ui';
 import React, { useCallback, useEffect, useRef } from 'react';
 
 import { JSONTree } from 'react-json-tree';
@@ -37,7 +37,7 @@ export function LogsPanel() {
     <Stack
       direction="column"
       gap={2}
-      css={{ height: '100%', flex: 1, padding: '$3' }}
+      style={{ height: '100%', flex: 1, padding: 'var(--component-spacing-md)' }}
     >
       <Stack direction="row" gap={2} justify="end">
         <TextInput
@@ -48,28 +48,28 @@ export function LogsPanel() {
         <IconButton onClick={clearLogs} icon={<Trash />} tooltip="Clear logs" />
       </Stack>
 
-      <Box css={{ padding: '$1', overflow: 'auto', fontSize: 'smaller' }}>
+      <div style={{ padding: 'var(--component-spacing-xs)', overflow: 'auto', fontSize: 'smaller' }}>
         <Stack direction="column" gap={2}>
           {logs.map((log, index) => (
-            <Box
+            <div
               key={index}
-              css={{ border: '1px solid $borderSubtle', padding: '$2' }}
+              style={{ border: '1px solid var(--color-neutral-stroke-subtle)', padding: 'var(--component-spacing-sm)' }}
             >
               <Stack direction="column" gap={2}>
                 <Stack direction="row" gap={2}>
-                  <Text css={{ fontSize: 'xx-small' }}>{log.type}</Text>
-                  <Text css={{ fontSize: '$1', color: '$textSecondary' }}>
+                  <Text style={{ font: 'var(--typography-body-sm)' }}>{log.type}</Text>
+                  <Text style={{ font: 'var(--typography-body-md)', color: 'var(--color-neutral-1500)' }}>
                     {log.time.toUTCString()}
                   </Text>
                 </Stack>
 
                 <JSONTree data={log.data} />
               </Stack>
-            </Box>
+            </div>
           ))}
           <div ref={messagesEndRef} />
         </Stack>
-      </Box>
+      </div>
     </Stack>
   );
 }

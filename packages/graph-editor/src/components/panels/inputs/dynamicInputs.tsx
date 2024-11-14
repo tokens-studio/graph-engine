@@ -134,7 +134,7 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
       )}
 
       <Stack justify="end">
-        <Button variant="primary" disabled={isDisabled} onClick={onClick}>
+        <Button emphasis="high" disabled={isDisabled} onClick={onClick}>
           Add Input
         </Button>
       </Stack>

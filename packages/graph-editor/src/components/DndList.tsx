@@ -1,4 +1,3 @@
-import { Box } from '@tokens-studio/ui';
 import {
   SortableContainer,
   SortableContainerProps,
@@ -7,40 +6,40 @@ import {
   SortableHandle,
 } from 'react-sortable-hoc';
 import React from 'react';
-import type * as Stitches from '@stitches/react';
+import styles from './DndList.module.css';
 
 interface ISortableHandleElement {
   children: React.ReactNode;
-  css?: Stitches.CSS;
+  className?: string;
 }
 
 interface ISortableItem extends SortableElementProps {
   children: React.ReactNode;
-  css?: Stitches.CSS;
+  className?: string;
 }
 
 interface ISortableContainer extends SortableContainerProps {
   children: React.ReactNode;
-  css?: Stitches.CSS;
+  className?: string;
 }
 
 export const DndTrigger: React.ComponentClass<ISortableHandleElement, unknown> =
   SortableHandle(
-    ({ children, css }: { children: React.ReactNode; css: Stitches.CSS }) => (
-      <Box css={{ cursor: 'pointer', ...css }}>{children}</Box>
+    ({ children, className }: { children: React.ReactNode; className?: string }) => (
+      <div className={`${styles.trigger} ${className || ''}`}>{children}</div>
     ),
   );
 
 export const DndItem: React.ComponentClass<ISortableItem, unknown> =
   SortableElement(
-    ({ children, css }: { children: React.ReactNode; css: Stitches.CSS }) => (
-      <Box css={css}>{children}</Box>
+    ({ children, className }: { children: React.ReactNode; className?: string }) => (
+      <div className={`${styles.item} ${className || ''}`}>{children}</div>
     ),
   );
 
 export const DndList: React.ComponentClass<ISortableContainer, unknown> =
   SortableContainer(
-    ({ children, css }: { children: React.ReactNode; css: Stitches.CSS }) => {
-      return <Box css={css}>{children}</Box>;
+    ({ children, className }: { children: React.ReactNode; className?: string }) => {
+      return <div className={`${styles.container} ${className || ''}`}>{children}</div>;
     },
   );

@@ -1,0 +1,19 @@
+.container {
+  padding: var(--components-spacing-md);
+  flex: 1;
+  min-height: 100px;
+  min-width: 100px;
+}
+
+.textareaWrapper {
+  height: 100%;
+}
+
+.textareaWrapper > * {
+  height: 100%;
+}
+
+.textarea {
+  height: 100%;
+  width: 100%;
+}

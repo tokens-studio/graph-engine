@@ -124,14 +124,14 @@ const GraphItem = ({ id, name, updatedAt }) => {
 			</Stack>
 			<Stack gap={2}>
 				<Link href={`/dashboard/graph/edit/${id}`}>
-					<IconButton icon={<EditPencil />} variant='invisible' />
+					<IconButton icon={<EditPencil />} emphasis='low' />
 				</Link>
 				<ShareButton id={id} />
-				{loading && <IconButton variant='invisible' icon={<Spinner />} />}
+				{loading && <IconButton emphasis='low' icon={<Spinner />} />}
 				{!loading && (
 					<DropdownMenu>
 						<DropdownMenu.Trigger asChild>
-							<IconButton variant='invisible' icon={<MoreVert />} />
+							<IconButton emphasis='low' icon={<MoreVert />} />
 						</DropdownMenu.Trigger>
 						<DropdownMenu.Portal>
 							<DropdownMenu.Content>
@@ -248,7 +248,6 @@ const Page = () => {
 							<Button
 								loading={isPending}
 								onClick={importGraph}
-								variant='secondary'
 								icon={<Upload />}
 							>
 								Import a graph
@@ -256,7 +255,7 @@ const Page = () => {
 							<Button
 								loading={isPending}
 								onClick={createGraph}
-								variant='primary'
+								emphasis='high'
 								icon={<Plus />}
 							>
 								Create graph

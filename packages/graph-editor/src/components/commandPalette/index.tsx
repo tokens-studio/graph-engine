@@ -1,10 +1,10 @@
-import { Box, Heading, Stack, Text } from '@tokens-studio/ui';
 import { Command } from 'cmdk';
 import {
   DropPanelStore,
   PanelGroup,
   PanelItem,
 } from '../panels/dropPanel/index.js';
+import { Heading, Stack, Text } from '@tokens-studio/ui';
 import { Node } from '@tokens-studio/graph-engine';
 import { NodeRequest } from '@/editor/actions/createNode.js';
 import { Node as ReactFlowNode, useReactFlow } from 'reactflow';
@@ -12,10 +12,10 @@ import { Search } from 'iconoir-react';
 import { isActiveElementTextEditable } from '@/utils/isActiveElementTextEditable.js';
 import { observer } from 'mobx-react-lite';
 import { showNodesCmdPaletteSelector } from '@/redux/selectors/ui.js';
-import { styled } from '@/lib/stitches/index.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
 import React from 'react';
+import styles from './index.module.css';
 
 export interface ICommandMenu {
   items: DropPanelStore;
@@ -42,19 +42,9 @@ const CommandItem = observer(
         value={item.text.toLowerCase()}
       >
         <Stack direction="row" gap={2} align="center">
-          <Box
-            css={{
-              fontSize: '$xxsmall',
-              color: '$fgMuted',
-              width: '12px',
-              height: '24px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
+          <div className={styles.icon}>
             {item.icon}
-          </Box>
+          </div>
           {item.text}
         </Stack>
       </Command.Item>
@@ -74,7 +64,7 @@ const CommandMenuGroup = observer(
       <Command.Group
         key={group.key}
         heading={
-          <Stack align="center" gap={2} css={{ color: '$fgMuted' }}>
+          <Stack align="center" gap={2} style={{ color: '$fgMuted' }}>
             {group.icon}
             {group.title}
           </Stack>
@@ -158,42 +148,19 @@ const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
       onValueChange={(value) => setSelectedItem(value)}
       label="Global Command Menu"
     >
-      <Box
-        css={{
-          color: '$fgDefault',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: 1,
-          padding: '$4',
-          borderBottom: '1px solid $borderSubtle',
-        }}
-      >
+      <div className={styles.searchContainer}>
         <Search />
         <Command.Input
           placeholder="Find nodes to add…"
           onKeyDown={handleKeyDown}
         />
-      </Box>
+      </div>
       <Command.List>
         <Command.Empty>
-          <Box css={{ padding: '$4' }}>No nodes found.</Box>
+          <div className={styles.emptyState}>No nodes found.</div>
         </Command.Empty>
-        <Stack
-          direction="row"
-          css={{
-            overflowY: 'scroll',
-            maxHeight: '450px',
-            scrollbarColor: 'var(--colors-bgSubtle) transparent',
-            scrollbarWidth: 'thin',
-          }}
-        >
-          <Box
-            css={{
-              width: '50%',
-              padding: '$4',
-            }}
-          >
+        <Stack direction="row" className={styles.scrollContainer}>
+          <div className={styles.leftPanel}>
             {items.groups.map((value) => (
               <CommandMenuGroup
                 key={value.key}
@@ -201,19 +168,8 @@ const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
                 group={value}
               />
             ))}
-          </Box>
-          <Box
-            css={{
-              display: 'flex',
-              flexDirection: 'column',
-              margin: '$5',
-              width: '50%',
-              background: '$bgCanvas',
-              borderRadius: '$medium',
-              position: 'sticky',
-              top: '$5',
-            }}
-          >
+          </div>
+          <div className={styles.rightPanel}>
             {items.groups.map((value) =>
               value.items.map(
                 (item) =>
@@ -227,7 +183,7 @@ const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
                   ),
               ),
             )}
-          </Box>
+          </div>
         </Stack>
       </Command.List>
     </Command.Dialog>
@@ -236,36 +192,24 @@ const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
 
 function NodePreview({ title, description, docs }) {
   return (
-    <Stack direction="column" justify="center" gap={3} css={{ padding: '$6' }}>
+    <Stack direction="column" justify="center" gap={3} className={styles.previewContainer}>
       <Stack direction="column" gap={5}>
-        <Heading
-          css={{
-            fontSize: '$small',
-            fontWeight: '$sansMedium',
-            color: '$fgDefault',
-          }}
-        >
+        <Heading className={styles.previewTitle}>
           {title}
         </Heading>
       </Stack>
-      <Text size="small" muted css={{ lineHeight: '150%' }}>
+      <Text size="small" muted className={styles.previewDescription}>
         {description}
       </Text>
       {docs ? (
         <Text size="xsmall">
-          <StyledLink href={docs} target="_blank">
+          <a href={docs} target="_blank" className={styles.link}>
             Read more
-          </StyledLink>
+          </a>
         </Text>
       ) : null}
     </Stack>
   );
 }
-
-const StyledLink = styled('a', {
-  color: '$accentDefault',
-  textDecoration: 'none',
-  fontWeight: '$sansMedium',
-});
 
 export { CommandMenu };

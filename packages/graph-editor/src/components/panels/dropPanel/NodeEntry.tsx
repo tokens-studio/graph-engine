@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from '@tokens-studio/ui';
+import { Stack, Text } from '@tokens-studio/ui';
 import React from 'react';
 
 export const NodeEntry = ({
@@ -14,28 +14,28 @@ export const NodeEntry = ({
       gap={2}
       justify="start"
       align="center"
-      css={{ paddingLeft: '$3', height: '24px' }}
+      style={{ paddingLeft: 'var(--component-spacing-md)', height: 'var(--size-150)' }}
     >
       {icon && (
-        <Box
-          css={{
-            color: '$fgSubtle',
-            width: '24px',
-            height: '24px',
+        <div
+          style={{
+            color: 'var(--color-neutral-canvas-default-fg-subtle)',
+            width: 'var(--size-150)',
+            height: 'var(--size-150)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '$xxsmall',
+            font: 'var(--typography-body-sm)',
           }}
         >
           {icon}
-        </Box>
+        </div>
       )}
 
       <Text
         size="xsmall"
-        css={{
-          color: '$fgMuted',
+        style={{
+          color: 'var(--color-neutral-canvas-default-fg-subtle)',
           whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',
           overflow: 'hidden',

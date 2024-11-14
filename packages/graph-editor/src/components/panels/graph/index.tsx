@@ -1,4 +1,4 @@
-import { Box, IconButton, Label, Stack, TextInput } from '@tokens-studio/ui';
+import { IconButton, Label, Stack, TextInput } from '@tokens-studio/ui';
 import React, { useState } from 'react';
 
 import { FloppyDisk } from 'iconoir-react';
@@ -18,11 +18,11 @@ export function GraphPanel() {
     <Stack
       direction="column"
       gap={4}
-      css={{ height: '100%', flex: 1, padding: '$3', overflow: 'auto' }}
+      style={{ height: '100%', flex: 1, padding: 'var(--component-spacing-md)', overflow: 'auto' }}
     >
-      <Box css={{ padding: '$3' }}>
+      <div style={{ padding: 'var(--component-spacing-md)' }}>
         <Settings annotations={graph.annotations} />
-      </Box>
+      </div>
     </Stack>
   );
 }

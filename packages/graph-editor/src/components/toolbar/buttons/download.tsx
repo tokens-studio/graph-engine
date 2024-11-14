@@ -24,7 +24,7 @@ export const DownloadToolbarButton = () => {
   return (
     <Tooltip label="Download" side="bottom">
       <IconButton
-        variant="invisible"
+        emphasis="low"
         onClick={onDownload}
         icon={<Download />}
       />

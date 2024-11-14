@@ -1,0 +1,13 @@
+.colorButton {
+  all: unset;
+  cursor: pointer;
+  border-radius: var(--radii-small);
+  width: 16px;
+  height: 16px;
+  outline: 1px solid var(--colors-borderMuted);
+  flex-shrink: 0;
+}
+
+.colorButton:hover {
+  outline: 1px solid var(--colors-borderDefault);
+}

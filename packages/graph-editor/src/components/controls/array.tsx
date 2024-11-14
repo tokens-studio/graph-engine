@@ -150,7 +150,7 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
                 <IconButton
                   title="Remove item"
                   size="small"
-                  variant="invisible"
+                  emphasis="low"
                   icon={<Minus />}
                   onClick={() => removeItem(index)}
                 />
@@ -218,7 +218,7 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
           </Select.Content>
         </Select>
         <Stack direction="row" justify="end">
-          <Button variant="primary" onClick={setType}>
+          <Button emphasis="high" onClick={setType}>
             Set type
           </Button>
         </Stack>

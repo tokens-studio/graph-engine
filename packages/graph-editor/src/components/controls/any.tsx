@@ -39,7 +39,7 @@ export const AnyField = observer(({ port, readOnly }: IField) => {
         </Select.Content>
       </Select>
       <Stack direction="row" justify="end">
-        <Button variant="primary" onClick={onClick}>
+        <Button emphasis="high" onClick={onClick}>
           Set type
         </Button>
       </Stack>

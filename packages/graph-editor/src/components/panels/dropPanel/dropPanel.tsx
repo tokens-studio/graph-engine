@@ -1,4 +1,4 @@
-import { Accordion, Box, Stack, Text, TextInput } from '@tokens-studio/ui';
+import { Accordion, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { DragItem } from './DragItem.js';
 import { DropPanelStore } from './data.js';
 import { IconoirProvider, NavArrowRight } from 'iconoir-react';
@@ -72,8 +72,8 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
   };
 
   return (
-    <Box
-      css={{
+    <div
+      style={{
         height: '100%',
         width: '100%',
         flex: 1,
@@ -86,8 +86,8 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
       <Stack
         direction="column"
         gap={3}
-        css={{
-          paddingTop: '$1',
+        style={{
+          paddingTop: 'var(--component-spacing-xs)',
           width: '100%',
           flex: 1,
           overflow: 'auto',
@@ -97,7 +97,7 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
         <Stack
           direction="column"
           gap={2}
-          css={{ padding: '0 $3', paddingTop: '$4' }}
+          style={{ padding: '0 var(--component-spacing-md)', paddingTop: 'var(--component-spacing-lg)' }}
         >
           <TextInput placeholder="Search…" value={search} onChange={onSearch} />
         </Stack>
@@ -136,34 +136,34 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
                     align="center"
                     justify="between"
                     width="full"
-                    css={{ padding: '$3 0' }}
+                    style={{ padding: 'var(--component-spacing-md) 0' }}
                   >
                     <IconoirProvider
                       iconProps={{ width: '0.875em', height: '0.875em' }}
                     >
                       <Stack gap={3} align="center">
                         {value.icon}
-                        <Text size="xsmall" bold css={{ textAlign: 'left' }}>
+                        <Text size="xsmall" bold style={{ textAlign: 'left' }}>
                           {value.title}
                         </Text>
                       </Stack>
-                      <Box
-                        css={{
+                      <div
+                        style={{
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          width: '$5',
+                          width: 'var(--size-250)',
                         }}
                       >
                         <StyledChevron />
-                      </Box>
+                      </div>
                     </IconoirProvider>
                   </Stack>
                 </StyledAccordionTrigger>
                 <Accordion.Content>
                   <Stack
                     direction="column"
-                    css={{ padding: 0, marginBottom: '$4' }}
+                    style={{ padding: 0, marginBottom: 'var(--component-spacing-lg)' }}
                   >
                     {filteredValues}
                   </Stack>
@@ -173,6 +173,6 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
           })}
         </StyledAccordion>
       </Stack>
-    </Box>
+    </div>
   );
 });

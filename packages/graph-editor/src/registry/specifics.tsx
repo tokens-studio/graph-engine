@@ -61,7 +61,7 @@ const SubgraphExplorer = ({ node }) => {
   }, [dockerRef, node._innerGraph, node.annotations]);
 
   return (
-    <Button variant="primary" icon={<EyeSolid />} onClick={onToggle}>
+    <Button emphasis="high" icon={<EyeSolid />} onClick={onToggle}>
       Subgraph Explorer
     </Button>
   );

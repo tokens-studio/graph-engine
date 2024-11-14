@@ -1,12 +1,13 @@
-import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
 import { ColorPickerPopover } from '../colorPicker/index.js';
 import { FloppyDisk } from 'iconoir-react';
 import { IField } from './interface.js';
+import { IconButton, Stack, Text } from '@tokens-studio/ui';
 import { Input, hexToColor, toColor, toHex } from '@tokens-studio/graph-engine';
 import { delayedUpdateSelector } from '@/redux/selectors/index.js';
 import { observer } from 'mobx-react-lite';
 import { useSelector } from 'react-redux';
 import React, { useCallback } from 'react';
+import styles from './color.module.css';
 
 export const ColorField = observer(({ port, readOnly }: IField) => {
   const useDelayed = useSelector(delayedUpdateSelector);
@@ -47,21 +48,9 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
 
     return (
       <Stack direction="row" justify="between" align="center">
-        <Box
-          as="button"
-          css={{
-            all: 'unset',
-            backgroundColor: hex,
-            cursor: 'pointer',
-            borderRadius: '$small',
-            width: 26,
-            height: 26,
-            outline: '1px solid $borderDefault',
-            flexShrink: 0,
-            '&:hover': {
-              outline: '1px solid $borderDefault',
-            },
-          }}
+        <button
+          className={styles.colorButton}
+          style={{ backgroundColor: hex }}
           type="button"
         />
         <Text>{hex}</Text>

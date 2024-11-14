@@ -87,7 +87,7 @@ export const FindDialog = () => {
             }}
             onClick={() => setOpen(false)}
             aria-label="Close"
-            variant="invisible"
+            emphasis="low"
             icon={<Xmark />}
           />
         </Dialog.Content>

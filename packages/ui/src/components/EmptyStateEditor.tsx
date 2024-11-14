@@ -45,12 +45,12 @@ function EmptyStateInner({ onLoadExamples, showNodesPanel }: IEmptyStateProps) {
 				title='Build scalable and flexible design systems.'
 				description='Add your first node to get started or load an example'
 			>
-				<Stack direction='row' gap={3} css={{ pointerEvents: 'all' }}>
+				<Stack direction='row' gap={3} style={{ pointerEvents: 'all' }}>
 					<Button onClick={onLoadExamples} icon={<PagePlus />}>
 						Load example
 					</Button>
 					<Button
-						variant='primary'
+						emphasis='high'
 						onClick={handleTriggerAddNode}
 						icon={<JournalPage />}
 					>

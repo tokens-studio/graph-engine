@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from '@tokens-studio/ui';
+import { Stack, Text } from '@tokens-studio/ui';
 import { icons } from '@/redux/selectors/registry.js';
 import { useSelector } from 'react-redux';
 import React, { useMemo } from 'react';
@@ -30,9 +30,9 @@ export const LegendInner = ({ iconsRegistry }: ILegendInner) => {
 
         return (
           <Stack gap={3} align="center" key={key}>
-            <Box css={{ ...cols, borderRadius: '$small', padding: '$2' }}>
+            <div style={{ ...cols, borderRadius: 'var(--border-radius-sm)', padding: 'var(--component-spacing-sm)' }}>
               {value}
-            </Box>
+            </div>
             <Text>{name}</Text>
           </Stack>
         );
@@ -41,12 +41,12 @@ export const LegendInner = ({ iconsRegistry }: ILegendInner) => {
   );
 
   return (
-    <Box
-      css={{
+    <div
+      style={{
         height: '100%',
         width: '100%',
-        padding: '$4',
-        paddingTop: '$5',
+        padding: 'var(--component-spacing-lg)',
+        paddingTop: 'var(--component-spacing-xl)',
         flex: 1,
         display: 'flex',
         overflow: 'auto',
@@ -56,6 +56,6 @@ export const LegendInner = ({ iconsRegistry }: ILegendInner) => {
       <Stack direction="column" gap={4} width="full">
         {iconsElements}
       </Stack>
-    </Box>
+    </div>
   );
 };

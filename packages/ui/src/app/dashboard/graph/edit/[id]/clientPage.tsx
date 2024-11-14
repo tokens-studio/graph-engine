@@ -115,7 +115,7 @@ const Page = () => {
 							</Box>
 						</Stack>
 						<br />
-						<Button onClick={onUpdate} loading={isPending} variant='primary'>
+						<Button onClick={onUpdate} loading={isPending} emphasis='high'>
 							Save
 						</Button>
 					</>

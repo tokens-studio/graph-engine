@@ -1,0 +1,16 @@
+.colorPickerTrigger {
+  cursor: pointer;
+  border-radius: var(--component-border-radius-small);
+  width: var(--size-150);
+  height: var(--size-150);
+  flex-shrink: 0;
+
+  &:hover {
+    outline: 1px solid var(--color-neutral-stroke-default);
+  }
+}
+
+.popoverCloseRemoveButton {
+  all: unset;
+  margin: var(--component-spacing-md);
+}

@@ -1,5 +1,5 @@
-import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Item } from 'rc-menu';
+import { Stack, Text } from '@tokens-studio/ui';
 import React from 'react';
 
 export type IMenuItemElement = React.ComponentProps<typeof Item> & {
@@ -24,7 +24,7 @@ export const MenuItemElement = ({
     <Item selectable={'false'} {...rest}>
       {inner(
         <Stack gap={2} align="center">
-          <Box>{icon}</Box>
+          <div>{icon}</div>
           <Text>{children}</Text>
         </Stack>,
       )}

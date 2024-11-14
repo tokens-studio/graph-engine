@@ -26,7 +26,7 @@ export const AISummary = () => {
 		<Box css={{ padding: '$3', height: '100%', overflow: 'scroll' }}>
 			<Stack direction='column'>
 				<Box>
-					<Button variant='primary' onClick={onSummarize} loading={isPending}>
+					<Button emphasis='high' onClick={onSummarize} loading={isPending}>
 						Summarize
 					</Button>
 				</Box>

@@ -48,7 +48,7 @@ export const LayoutDropdown = () => {
     <DropdownMenu>
       <Tooltip label="Layout" side="bottom">
         <DropdownMenu.Trigger asChild>
-          <IconButton variant="invisible" icon={<LayoutLeft />} />
+          <IconButton emphasis="low" icon={<LayoutLeft />} />
         </DropdownMenu.Trigger>
       </Tooltip>
       <DropdownMenu.Portal>

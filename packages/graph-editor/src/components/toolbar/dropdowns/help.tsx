@@ -6,7 +6,7 @@ export const HelpDropdown = () => (
   <DropdownMenu>
     <Tooltip label="Help" side="bottom">
       <DropdownMenu.Trigger asChild>
-        <IconButton variant="invisible" icon={<ChatBubbleQuestion />} />
+        <IconButton emphasis="low" icon={<ChatBubbleQuestion />} />
       </DropdownMenu.Trigger>
     </Tooltip>
     <DropdownMenu.Portal>

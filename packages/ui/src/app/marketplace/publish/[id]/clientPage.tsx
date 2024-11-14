@@ -111,7 +111,7 @@ const Page = () => {
 							<Button
 								onClick={onPublish}
 								loading={isPending}
-								variant='primary'
+								emphasis='high'
 								icon={<Upload />}
 							>
 								Update

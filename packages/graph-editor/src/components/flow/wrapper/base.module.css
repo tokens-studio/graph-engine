@@ -1,0 +1,47 @@
+.collapserContainer {
+  height: 0;
+  overflow: hidden;
+}
+
+.collapserContent {
+  position: relative;
+  padding: var(--space-2);
+  padding-bottom: var(--space-3);
+}
+
+.nodeWrapper {
+  position: relative;
+  box-shadow: var(--shadows-contextMenu);
+  border-radius: var(--radii-medium);
+  background: var(--colors-nodeBg);
+  border: 2px solid var(--colors-gray4);
+  flex: 1;
+  display: flex;
+}
+
+.nodeWrapper.error {
+  --nodeBorderColor: var(--colors-dangerFg);
+  --nodeBgColor: var(--colors-dangerBg);
+  --nodeTextColor: var(--colors-dangerFg);
+}
+
+.nodeContent {
+  flex: 1;
+}
+
+.header {
+  padding: var(--space-1) var(--space-3);
+  background-color: var(--colors-gray6);
+  border-radius: var(--radii-medium);
+}
+
+.title {
+  font-size: var(--fontSizes-medium);
+  font-weight: var(--fontWeights-bold);
+  color: var(--nodeTextColor, var(--colors-gray12));
+}
+
+.subtitle {
+  font-size: var(--fontSizes-xsmall);
+  color: var(--nodeTextColor, var(--colors-gray10));
+}

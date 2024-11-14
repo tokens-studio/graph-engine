@@ -95,7 +95,7 @@ const Page = () => {
 									<Button
 										loading={isCopying}
 										size='large'
-										variant='primary'
+										emphasis='high'
 										onClick={onUseGraph}
 									>
 										Use graph

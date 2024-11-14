@@ -1,6 +1,5 @@
 import { BaseNodeWrapper } from './base.js';
 
-import { Box, Stack, Text } from '@tokens-studio/ui';
 import {
   COLOR,
   Color,
@@ -17,6 +16,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
 import { Node as GraphNode } from '@tokens-studio/graph-engine';
 import { Handle, HandleContainer, useHandle } from '../handles.js';
+import { Stack, Text } from '@tokens-studio/ui';
 import { icons, nodeSpecifics } from '@/redux/selectors/registry.js';
 import {
   inlineTypes,
@@ -29,6 +29,7 @@ import { useLocalGraph } from '@/context/graph.js';
 import { useSelector } from 'react-redux';
 import React from 'react';
 import colors from '@/tokens/colors.js';
+import styles from './nodeV2.module.css';
 
 export type UiNodeDefinition = {
   //Name of the Node
@@ -57,7 +58,7 @@ export const NodeV2 = (args) => {
   const node = graph.getNode(id);
 
   if (!node) {
-    return <Box>Node not found</Box>;
+    return <div>Node not found</div>;
   }
 
   return (
@@ -102,7 +103,7 @@ const NodeWrap = observer(({ node, icon }: INodeWrap) => {
       style={{ minWidth: '200px' }}
     >
       <Stack direction="column" gap={2}>
-        <Stack direction="column" gap={3} css={{ padding: '$3 0 $3 0' }}>
+        <Stack direction="column" gap={3} style={{ padding: 'var(--component-spacing-md) 0' }}>
           <HandleContainer type="source" className={'source'} full>
             <PortArray ports={node.outputs} />
             {isInput && <DynamicOutput />}
@@ -112,17 +113,21 @@ const NodeWrap = observer(({ node, icon }: INodeWrap) => {
           </HandleContainer>
         </Stack>
         {Specific && (
-          <Stack direction="column" gap={3} css={{ padding: '$3' }}>
+          <Stack
+            direction="column"
+            gap={3}
+            style={{ padding: 'var(--component-spacing-md)' }}
+          >
             <Specific node={node} />
           </Stack>
         )}
       </Stack>
       {showTimingsValue && (
-        <Box css={{ position: 'absolute', bottom: '-1.5em' }}>
+        <div className={styles.timingText}>
           <Text size="xsmall" muted>
             {node.lastExecutedDuration}ms
           </Text>
-        </Box>
+        </div>
       )}
     </BaseNodeWrapper>
   );
@@ -205,23 +210,11 @@ export const InlineTypeLabel = ({ port }: { port: Port }) => {
   const handleInformation = useHandle();
 
   return (
-    <Box
-      css={{
-        position: 'absolute',
-        background: '$gray4',
-        color: '$fgDefault',
-        padding: '$1 $2',
-        fontSize: '10px',
-        borderRadius: '$small',
-        textTransform: 'uppercase',
-        left:
-          handleInformation.type === 'source' ? 'calc(100% + 16px)' : 'unset',
-        right:
-          handleInformation.type === 'target' ? 'calc(100% + 16px)' : 'unset',
-      }}
+    <div 
+      className={`${styles.inlineTypeLabel} ${styles[handleInformation.type]}`}
     >
       {typeName}
-    </Box>
+    </div>
   );
 };
 
@@ -235,11 +228,11 @@ const getColorPreview = (color: Color, showValue = false) => {
   }
 
   const colorSwatch = (
-    <Box
-      css={{
-        width: '16px',
-        height: '16px',
-        borderRadius: '$medium',
+    <div
+      style={{
+        width: 'var(--size-100)',
+        height: 'var(--size-100)',
+        borderRadius: 'var(--component-radii-md)',
         backgroundColor: hex,
       }}
     />
@@ -253,7 +246,7 @@ const getColorPreview = (color: Color, showValue = false) => {
     <Stack direction="row" gap={2} justify="center" align="center">
       {colorSwatch}
       {showValue ? (
-        <Text css={{ fontSize: '$small', color: '$gray12' }}>
+        <Text style={{ font: 'var(--typography-body-small)', color: 'var(--color-neutral-1500)' }}>
           {hex.toUpperCase()}
         </Text>
       ) : null}
@@ -275,7 +268,7 @@ const getValuePreview = (value, type) => {
             {value.length > 5 ? (
               <>
                 {value.slice(0, 5).map((val) => getColorPreview(val))}
-                <Text size="xsmall" css={{ color: '$gray10' }}>
+                <Text size="xsmall" style={{ color: 'var(--color-neutral-1200)' }}>
                   +{value.length - 5}
                 </Text>
               </>
@@ -342,19 +335,19 @@ const InputHandle = observer(
                 key={i}
               >
                 {!hideName && (
-                  <Box
-                    css={{
+                  <div
+                    style={{
                       display: 'grid',
                       justifyContent: 'center',
                       direction: 'row',
                     }}
                   >
                     {inlineValuesValue && (
-                      <Text css={{ fontSize: 'medium', color: '$gray11' }}>
+                      <Text style={{ font: 'var(--typography-body-md)', color: 'var(--color-neutral-1200)' }}>
                         {getValuePreview(input.value[i], input.type.items)}
                       </Text>
                     )}
-                  </Box>
+                  </div>
                 )}
                 {inlineTypesValue && <InlineTypeLabel port={port} />}
               </Handle>
@@ -378,16 +371,16 @@ const InputHandle = observer(
             justify="between"
             width="full"
             align="center"
-            css={{
+            style={{
               flexDirection:
                 handleInformation.type === 'source' ? 'row-reverse' : 'row',
             }}
           >
-            <Text css={{ fontSize: '$small', color: '$gray12' }}>
+            <Text style={{ font: 'var(--typography-body-sm)', color: 'var(--color-neutral-1500)' }}>
               {input.name}
             </Text>
             {inlineValuesValue && (
-              <Text css={{ fontSize: '$xxsmall', color: '$gray10' }}>
+              <Text style={{ font: 'var(--typography-body-xs)', color: 'var(--color-neutral-1200)' }}>
                 {getValuePreview(input.value, input.type)}
               </Text>
             )}

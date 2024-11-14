@@ -1,6 +1,6 @@
 import { BaseNodeWrapper } from '../wrapper/base.js';
-import { Box, IconButton, Textarea } from '@tokens-studio/ui';
 import { EditPencil } from 'iconoir-react';
+import { IconButton, Textarea } from '@tokens-studio/ui';
 import { Node } from '@tokens-studio/graph-engine';
 import { NodeProps, NodeResizer } from 'reactflow';
 import { description, title } from '@/annotations/index.js';
@@ -8,6 +8,7 @@ import { observer } from 'mobx-react-lite';
 import { useLocalGraph } from '@/context/graph.js';
 import Markdown from 'react-markdown';
 import React from 'react';
+import styles from './noteNode.module.css';
 
 const minWidth = 120;
 
@@ -17,7 +18,7 @@ export function NoteNode(props: NodeProps) {
   const node = graph.getNode(id);
 
   if (!node) {
-    return <Box>Node not found</Box>;
+    return <div>Node not found</div>;
   }
 
   return <Note node={node} annotations={node.annotations} />;
@@ -42,7 +43,7 @@ const Note = observer(({ node, annotations }: IAnnotation) => {
       controls={
         <IconButton
           size="small"
-          variant="invisible"
+          emphasis="low"
           icon={<EditPencil />}
           onClick={() => setEditing(!editing)}
         />
@@ -50,39 +51,21 @@ const Note = observer(({ node, annotations }: IAnnotation) => {
     >
       <NodeResizer minWidth={minWidth} minHeight={minWidth} />
 
-      <Box
-        css={{
-          padding: '$3',
-          flex: 1,
-          minHeight: '100px',
-          minWidth: '100px',
-        }}
-      >
+      <div className={styles.container}>
         {!editing && (
           <Markdown>{(annotations[description] as string) || ''}</Markdown>
         )}
         {editing && (
-          <Box
-            css={{
-              height: '100%',
-              //Fix limitation with text area
-              '>*': {
-                height: '100%',
-              },
-            }}
-          >
+          <div className={styles.textareaWrapper}>
             <Textarea
-              css={{
-                height: '100%',
-                width: '100%',
-              }}
+              className={styles.textarea}
               onChange={onChange}
               placeholder="Add a description..."
               value={annotations[description] as string}
-            ></Textarea>
-          </Box>
+            />
+          </div>
         )}
-      </Box>
+      </div>
     </BaseNodeWrapper>
   );
 });

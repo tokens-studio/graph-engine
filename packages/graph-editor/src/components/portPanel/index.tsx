@@ -110,7 +110,7 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
             <IconButton
               size="small"
               onClick={onClick}
-              variant={'invisible'}
+              emphasis="low"
               icon={port.visible ? <EyeSolid /> : <EyeClosed />}
             />
           )}
@@ -126,7 +126,7 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
                 size="small"
                 tooltip="Settings"
                 // onClick={onReset}
-                variant={'invisible'}
+                emphasis="low"
                 icon={<MoreVert />}
               />
             </DropdownMenu.Trigger>

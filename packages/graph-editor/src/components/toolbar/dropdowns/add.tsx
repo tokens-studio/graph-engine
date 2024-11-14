@@ -97,7 +97,7 @@ export const AddDropdown = () => {
     <DropdownMenu onOpenChange={onDropdownOpenChange}>
       <Tooltip label="Add node" side="bottom">
         <DropdownMenu.Trigger asChild>
-          <Button variant="primary">
+          <Button emphasis="high">
             <Plus />
           </Button>
         </DropdownMenu.Trigger>

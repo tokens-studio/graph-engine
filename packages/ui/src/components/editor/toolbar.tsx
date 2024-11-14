@@ -56,7 +56,7 @@ export const SaveButton = ({ id }) => {
 	return (
 		<Tooltip label='Save' side='bottom'>
 			<IconButton
-				variant='invisible'
+				emphasis='low'
 				loading={isPending}
 				onClick={onSave}
 				icon={<FloppyDisk />}
@@ -103,7 +103,7 @@ export const ShareButton = ({ id }) => {
 		>
 			<Tooltip label='Share' side='bottom'>
 				<IconButton
-					variant='invisible'
+					emphasis='low'
 					onClick={onShare}
 					loading={isPending}
 					icon={<ShareAndroidSolid />}
@@ -118,7 +118,7 @@ export const AiSummary = () => {
 	return (
 		<Tooltip label='Artificial intelligence' side='bottom'>
 			<IconButton
-				variant='invisible'
+				emphasis='low'
 				onClick={() =>
 					toggle({
 						title: 'Artificial intelligence',
@@ -137,7 +137,7 @@ export const PreviewButton = () => {
 	return (
 		<Tooltip label='Preview' side='bottom'>
 			<IconButton
-				variant='invisible'
+				emphasis='low'
 				onClick={() =>
 					toggle({
 						group: 'popout',

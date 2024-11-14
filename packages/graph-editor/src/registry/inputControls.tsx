@@ -44,7 +44,7 @@ const CSSMapSpecifics = observer(({ node }: { node: Node }) => {
       </Select>
 
       <Stack justify="end">
-        <Button variant="primary" disabled={isDisabled} onClick={onClick}>
+        <Button emphasis="high" disabled={isDisabled} onClick={onClick}>
           Add Input
         </Button>
       </Stack>
