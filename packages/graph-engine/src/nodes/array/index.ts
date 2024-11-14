@@ -6,6 +6,7 @@ import find from './find.js';
 import flatten from './flatten.js';
 import indexArray from './indexArray.js';
 import inject from './inject.js';
+import length from './length.js';
 import push from './push.js';
 import replace from './replace.js';
 import reverse from './reverse.js';
@@ -21,6 +22,7 @@ export const nodes = [
 	flatten,
 	indexArray,
 	inject,
+	length,
 	push,
 	replace,
 	reverse,
