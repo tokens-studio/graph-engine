@@ -1,6 +1,5 @@
 'use client';
 import {
-	Box,
 	Button,
 	Heading,
 	Label,
@@ -42,7 +41,7 @@ const Page = () => {
 		<Stack direction='column' width='full' gap={3}>
 			<Heading size='large'>Public profile</Heading>
 			<Separator />
-			<Box css={{ padding: '$2' }}>
+			<div style={{ padding: 'var(--component-spacing-sm)' }}>
 				{isLoading && <Spinner></Spinner>}
 				{!isLoading && (
 					<>
@@ -58,7 +57,7 @@ const Page = () => {
 						</Button>
 					</>
 				)}
-			</Box>
+			</div>
 
 			<Heading size='large'>Actions</Heading>
 			<Separator />

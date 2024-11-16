@@ -22,9 +22,9 @@ export const PassthroughNode = (args) => {
   return (
     <Stack
       direction="column"
-      css={{
-        background: '$nodeBg',
-        borderRadius: '$medium',
+      style={{
+        background: 'var(--color-node-bg)',
+        borderRadius: 'var(--component-radii-md)',
       }}
     >
       {node && (

@@ -1,37 +1,17 @@
 'use client';
+import { Download, Heart } from 'iconoir-react';
 import {
-	Box,
 	Heading,
 	Separator,
 	Spinner,
 	Stack,
 	Text
 } from '@tokens-studio/ui';
-import { Download, Heart } from 'iconoir-react';
 import { client } from '@/api/sdk/index.ts';
-import { styled } from '@tokens-studio/graph-editor';
 import { useErrorToast } from '@/hooks/useToast.tsx';
 import Link from 'next/link.js';
+import styles from './clientPage.module.css';
 
-const Wrapper = styled(Box, {
-	flex: '33%',
-	maxWidth: '33%',
-	padding: '$3'
-});
-
-export const Item = styled(Box, {});
-
-export const ImageHolder = styled(Box, {
-	paddingBottom: '50%',
-	position: 'relative'
-});
-
-export const PreviewImage = styled('img', {
-	position: 'absolute',
-	width: '100%',
-	height: '100%',
-	display: 'block'
-});
 
 const Page = () => {
 	const { isLoading, data, error } = client.marketplace.listGraphs.useQuery([
@@ -48,18 +28,18 @@ const Page = () => {
 			{isLoading && <Spinner />}
 			{!isLoading && (
 				<>
-					<Stack css={{ flexWrap: 'wrap', padding: '$3' }}>
+					<Stack style={{ flexWrap: 'wrap', padding: '$3' }}>
 						{data?.body.graphs.map(graph => (
-							<Wrapper key={graph.id}>
+							<div className={styles.wrapper} key={graph.id}>
 								<Link href={`/marketplace/graph/${graph.id}`}>
-									<Item>
-										<ImageHolder>
-											<PreviewImage
-												src={graph.thumbnail || '/thumbnail.png'}
-												alt='Display picture of Token Studio Resolver Sandbox'
-											/>
-										</ImageHolder>
-										<Box css={{ padding: '$3' }}>
+									<div>
+										<div className={styles.imageHolder}>
+                    <img
+                      className={styles.previewImage}
+                      src={graph.thumbnail || '/thumbnail.png'}
+                      alt='Display picture of Token Studio Resolver Sandbox' />
+										</div>
+										<div className={styles.itemPadding}>
 											<Text>{graph.name}</Text>
 
 											<Stack direction='row' width='full' justify='between'>
@@ -80,10 +60,10 @@ const Page = () => {
 													</Text>
 												</Stack>
 											</Stack>
-										</Box>
-									</Item>
+										</div>
+									</div>
 								</Link>
-							</Wrapper>
+							</div>
 						))}
 					</Stack>
 				</>

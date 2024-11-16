@@ -1,4 +1,4 @@
-import { Box, Text } from '@tokens-studio/ui';
+import { Text } from '@tokens-studio/ui';
 import { castToHex } from '@/utils/index.js';
 import Color from 'colorjs.io';
 import React, { useMemo } from 'react';
@@ -33,20 +33,20 @@ export const ColorSwatch = ({ value }) => {
     <>
       {value && (
         <>
-          <Box
-            css={{
+          <div
+            style={{
               display: 'grid',
               placeItems: 'center',
               width: '100%',
               minHeight: '100px',
               backgroundColor: hex,
-              padding: '$5',
+              padding: 'var(--component-spacing-xl)',
             }}
           >
-            <Text css={{ fontFamily: '$mono', fontSize: '64px', color }}>
+            <Text style={{ font: 'var(--typography-body-xl)', color }}>
               {hex}
             </Text>
-          </Box>
+          </div>
         </>
       )}
     </>

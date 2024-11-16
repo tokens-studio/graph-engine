@@ -5,38 +5,9 @@ import { IconoirProvider, NavArrowRight } from 'iconoir-react';
 import { NodeEntry } from './NodeEntry.js';
 import { observer } from 'mobx-react-lite';
 import { panelItemsSelector } from '@/redux/selectors/registry.js';
-import { styled } from '@/lib/stitches/index.js';
 import { useSelector } from 'react-redux';
 import React, { useState } from 'react';
-
-const StyledAccordionTrigger = styled(Accordion.Trigger, {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '$2',
-  justifyContent: 'flex-start',
-  width: '100%',
-  padding: '$1 $3',
-  borderRadius: '$small',
-  cursor: 'pointer',
-  '&:hover': {
-    background: '$bgSubtle',
-  },
-});
-
-const StyledAccordion = styled(Accordion, {
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  padding: '$2',
-  boxSizing: 'border-box',
-});
-
-const StyledChevron = styled(NavArrowRight, {
-  transition: 'all ease 0.3s',
-  '[data-state="open"] &': {
-    transform: 'rotate(90deg)',
-  },
-});
+import styles from './dropPanel.module.css';
 
 export type ImperativeDropPanelRef = {
   /**
@@ -63,7 +34,6 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
 
   const onSearch = (e) => {
     setSearch(e.target.value);
-
     if (!e.target.value) {
       setOpened([]);
     } else {
@@ -72,17 +42,7 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
   };
 
   return (
-    <div
-      style={{
-        height: '100%',
-        width: '100%',
-        flex: 1,
-        display: 'flex',
-        overflow: 'auto',
-        flexDirection: 'column',
-      }}
-      id="drop-panel"
-    >
+    <div className={styles.container} id="drop-panel">
       <Stack
         direction="column"
         gap={3}
@@ -101,11 +61,12 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
         >
           <TextInput placeholder="Search…" value={search} onChange={onSearch} />
         </Stack>
-        <StyledAccordion
+        <Accordion
           type="multiple"
           defaultValue={[]}
           value={opened}
           onValueChange={setOpened}
+          className={styles.accordion}
         >
           {data.groups.map((value) => {
             const filteredValues = value.items
@@ -131,7 +92,7 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
 
             return (
               <Accordion.Item value={value.key} key={value.key}>
-                <StyledAccordionTrigger>
+                <div className={styles.accordionTrigger}>
                   <Stack
                     align="center"
                     justify="between"
@@ -155,11 +116,11 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
                           width: 'var(--size-250)',
                         }}
                       >
-                        <StyledChevron />
+                        <NavArrowRight className={styles.chevron} />
                       </div>
                     </IconoirProvider>
                   </Stack>
-                </StyledAccordionTrigger>
+                </div>
                 <Accordion.Content>
                   <Stack
                     direction="column"
@@ -171,7 +132,7 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
               </Accordion.Item>
             );
           })}
-        </StyledAccordion>
+        </Accordion>
       </Stack>
     </div>
   );

@@ -1,5 +1,5 @@
 'use client';
-import { Box, Button, Heading, Stack, Text } from '@tokens-studio/ui';
+import { Button, Heading, Stack, Text } from '@tokens-studio/ui';
 import Image from 'next/image.js';
 import Link from 'next/link.js';
 import Logo from '@/assets/svgs/tokensstudio-logo.svg';
@@ -12,8 +12,8 @@ export default function Index() {
 			style={{ height: '100%', width: '100%' }}
 			justify='center'
 		>
-			<Box
-				css={{ background: '$bgCanvas', padding: '$5', borderRadius: '$small' }}
+			<div
+				style={{ background: 'var(--color-neutral-canvas-minimal-bg)', padding: 'var(--component-spacing-xl)', borderRadius: 'var(--component-radii-sm)' }}
 			>
 				<Stack
 					direction='column'
@@ -35,7 +35,7 @@ export default function Index() {
 						<Button emphasis='high'>Goto login</Button>
 					</Link>
 				</Stack>
-			</Box>
+			</div>
 		</Stack>
 	);
 }

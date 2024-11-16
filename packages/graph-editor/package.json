@@ -15,18 +15,20 @@
       "types": "./dist/*",
       "style": "./dist/*"
     },
+    "./index.css": "./dist/index.css",
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "dist/**/*.css"
   ],
   "scripts": {
     "start": "vite dev",
     "build": "node ./scripts/extractVersion.mjs && tspc  -p tsconfig.prod.json && npm run build:css",
-    "build:css": "postcss src/index.scss --base src  --dir dist --ext css",
+    "build:css": "postcss \"src/**/*.css\" --base src  --dir dist --ext css",
     "build:storybook": "storybook build",
     "dev": "tspc -p tsconfig.prod.json --watch || npm run build:css --watch",
     "format": "npm run format:eslint && npm run format:prettier",
@@ -122,6 +124,7 @@
     "postcss-cli": "^11.0.0",
     "postcss-css-variables": "^0.19.0",
     "postcss-import": "^16.1.0",
+    "postcss-modules": "^6.0.0",
     "postcss-nested": "^6.2.0",
     "postcss-preset-env": "^10.0.5",
     "postcss-scss": "^4.0.9",

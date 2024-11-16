@@ -339,7 +339,7 @@ const InputHandle = observer(
                     style={{
                       display: 'grid',
                       justifyContent: 'center',
-                      direction: 'row',
+                      flexDirection: 'row',
                     }}
                   >
                     {inlineValuesValue && (

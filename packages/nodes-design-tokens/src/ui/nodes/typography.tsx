@@ -7,7 +7,7 @@ export const Typography = ({ value, text }) => {
 	return (
 		<>
 			<Separator orientation='horizontal' />
-			<Stack direction='column' gap={2} css={{ padding: '$3' }}>
+			<Stack direction='column' gap={2} style={{ padding: 'var(--component-spacing-md)' }}>
 				{value.map((token, index) => {
 					const value = token.value;
 					let css = {};
@@ -57,7 +57,7 @@ export const Typography = ({ value, text }) => {
 
 					return (
 						<Stack direction='row' gap={3} key={index} align='center'>
-							<Text css={{ fontStyle: 'italic' }}>{token.name}</Text>
+							<Text>{token.name}</Text>
 							<span title={JSON.stringify(token, null, 4)}>
 								<div style={{ display: 'inline' }}>
 									<span style={css}>{text}</span>

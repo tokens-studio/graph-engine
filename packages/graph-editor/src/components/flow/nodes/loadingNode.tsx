@@ -5,7 +5,7 @@ import React from 'react';
 export const LoadingNode = ({ id }) => {
   return (
     <NodeWrapper id={id} title="loading...">
-      <Stack direction="column" gap={2} align="center" css={{ padding: '$6' }}>
+      <Stack direction="column" gap={2} align="center" style={{ padding: 'var(--component-spacing-2xl)' }}>
         <Spinner />
         <Text>Loading...</Text>
       </Stack>

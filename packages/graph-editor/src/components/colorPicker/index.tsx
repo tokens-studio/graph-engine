@@ -1,7 +1,6 @@
 import { Button, TextInput } from '@tokens-studio/ui';
 import { HexColorPicker } from 'react-colorful';
 import { PopoverClose } from '@radix-ui/react-popover';
-import { styled } from '@/lib/stitches/index.js';
 import InputPopover from './InputPopover.js';
 import React from 'react';
 import styles from './index.module.css';

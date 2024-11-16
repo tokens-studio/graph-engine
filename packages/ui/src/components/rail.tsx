@@ -34,7 +34,7 @@ const RailItem = ({ icon, label, link }: RailItem) => {
 	return (
 		<Tooltip label={label}>
 			<Link aria-label={label} href={link}>
-				<IconButton emphasis='low' css={{ padding: '$2' }} icon={icon} />
+				<IconButton emphasis='low' style={{ padding: 'var(--component-spacing-sm)' }} icon={icon} />
 			</Link>
 		</Tooltip>
 	);
@@ -60,12 +60,12 @@ export const Rail = () => {
 		<Stack
 			justify='between'
 			direction='column'
-			css={{
-				background: '$gray2',
-				borderRight: '1px solid $gray6',
-				color: '$gray11',
+			style={{
+				background: 'var(--color-neutral-canvas-minimal-bg)',
+				borderRight: '1px solid var(--color-neutral-stroke-default)',
+				color: 'var(--color-neutral-canvas-minimal-fg-default)',
 				height: '100%',
-				padding: '$5 $3 $3'
+				padding: 'var(--component-spacing-xl) var(--component-spacing-md) var(--component-spacing-md)'
 			}}
 		>
 			<Stack gap={3} direction='column' align='center'>

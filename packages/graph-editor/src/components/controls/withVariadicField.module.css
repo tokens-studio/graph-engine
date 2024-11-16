@@ -1,0 +1,11 @@
+.dndList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--component-spacing-md);
+}
+
+.dndItem {
+  display: flex;
+  gap: var(--component-spacing-sm);
+  align-items: center;
+}

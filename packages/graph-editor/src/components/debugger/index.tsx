@@ -1,5 +1,5 @@
-import { Box, Stack, Text } from '@tokens-studio/ui';
 import { DebugInfo, debugInfo } from './data.js';
+import { Stack, Text } from '@tokens-studio/ui';
 import {
   Timeline,
   TimelineAction,

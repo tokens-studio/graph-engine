@@ -12,7 +12,6 @@ import {
 	Xmark
 } from 'iconoir-react';
 import {
-	Box,
 	Button,
 	DropdownMenu,
 	Heading,
@@ -31,6 +30,7 @@ import { useRouter } from 'next/navigation.js';
 import Link from 'next/link.js';
 import React, { useCallback, useEffect, useState } from 'react';
 import ago from 's-ago';
+import styles from './clientPage.module.css';
 
 const GraphItem = ({ id, name, updatedAt }) => {
 	const { mutateAsync: deleteGraph, isPending } =
@@ -89,29 +89,21 @@ const GraphItem = ({ id, name, updatedAt }) => {
 	return (
 		<Stack width='full' direction='row' align='center'>
 			<Stack
-				css={{
-					flex: 1,
-					'&:hover': {
-						background: '$gray3'
-					},
-					borderRadius: '$medium',
-					borderColor: '$border',
-					padding: '$4'
-				}}
+				className={styles.graphContainer}
 				direction='row'
 				gap={3}
 				align='center'
 			>
-				<Box
-					css={{
-						color: '$fgDefault',
-						padding: '$3',
-						borderRadius: '$medium',
-						background: '$gray2'
+				<div
+					style={{
+						color: 'var(--color-neutral-canvas-minimal-fg-default)',
+						padding: 'var(--component-spacing-md)',
+						borderRadius: 'var(--component-radii-md)',
+						background: 'var(--color-neutral-canvas-minimal-bg)'
 					}}
 				>
 					<GraphUp />
-				</Box>
+				</div>
 
 				<Stack direction='column'>
 					<Link href={`/editor/${id}`}>
@@ -230,17 +222,10 @@ const Page = () => {
 
 	return (
 		<Stack
-			css={{
-				position: 'relative',
-				width: '100%',
-				height: '100%',
-				overflow: 'auto',
-				background: '$gray1',
-				paddingTop: '$6'
-			}}
+			className={styles.pageContainer}
 			justify='center'
 		>
-			<Box css={{ padding: '$5', width: '80%' }}>
+			<div style={{ padding: 'var(--component-spacing-xl)', width: '80%' }}>
 				<Stack direction='column' gap={4}>
 					<Stack justify='between'>
 						<Heading size='large'>Graphs</Heading>
@@ -270,7 +255,7 @@ const Page = () => {
 						onChange={e => setSearch(e.target.value)}
 					/>
 				</Stack>
-				<Box css={{ padding: '$2' }}>
+				<div style={{ padding: 'var(--component-spacing-sm)' }}>
 					{isLoading && <Spinner />}
 					{!isLoading && (
 						<Stack direction='column' gap={2}>
@@ -290,8 +275,8 @@ const Page = () => {
 									})}
 						</Stack>
 					)}
-				</Box>
-			</Box>
+				</div>
+			</div>
 		</Stack>
 	);
 };

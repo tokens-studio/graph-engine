@@ -1,4 +1,4 @@
-import { Box, Button, Heading, Separator, Stack } from '@tokens-studio/ui';
+import { Button, Heading, Separator, Stack } from '@tokens-studio/ui';
 
 export const JoyrideTooltip = ({
 	continuous,
@@ -10,11 +10,11 @@ export const JoyrideTooltip = ({
 	skipProps,
 	tooltipProps
 }) => (
-	<Box
-		css={{
-			backgroundColor: '$bgDefault',
-			borderRadius: '$medium',
-			padding: '$5',
+	<div
+		style={{
+			backgroundColor: 'var(--color-neutral-canvas-default-bg)',
+			borderRadius: 'var(--component-radii-md)',
+			padding: 'var(--component-spacing-xl)',
 			maxWidth: '25em'
 		}}
 		{...tooltipProps}
@@ -44,5 +44,5 @@ export const JoyrideTooltip = ({
 				</Stack>
 			</Stack>
 		</Stack>
-	</Box>
+	</div>
 );

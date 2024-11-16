@@ -1,0 +1,35 @@
+.graphContainer {
+  flex: 1;
+  border-radius: var(--component-radii-md);
+  border-color: var(--color-neutral-stroke-subtle);
+  padding: var(--component-spacing-lg);
+}
+
+.graphContainer:hover {
+  background: var(--color-neutral-surface-ghost-hover-bg);
+}
+
+.iconContainer {
+  color: var(--color-neutral-surface-minimal-idle-fg-default);
+  padding: var(--component-spacing-md);
+  border-radius: var(--component-radii-md);
+  background: var(--color-neutral-surface-minimal-idle-bg);
+}
+
+.pageContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: var(--color-neutral-canvas-minimal-bg);
+  padding-top: var(--component-spacing-2xl);
+}
+
+.contentWrapper {
+  padding: var(--component-spacing-xl);
+  width: 80%;
+}
+
+.spacer {
+  padding: var(--component-spacing-sm);
+}

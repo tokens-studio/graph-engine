@@ -76,7 +76,6 @@ export const AddDropdown = () => {
             <DropdownMenu.SubContent
               sideOffset={2}
               alignOffset={-5}
-              css={{ ...scrollbarStyle, maxHeight: '300px' }}
             >
               {group.items.map((item) => (
                 <DropdownMenu.Item
@@ -103,13 +102,7 @@ export const AddDropdown = () => {
         </DropdownMenu.Trigger>
       </Tooltip>
       <DropdownMenu.Portal>
-        <DropdownMenu.Content
-          css={{
-            minWidth: '200px',
-            maxHeight: '500px',
-            ...scrollbarStyle,
-          }}
-        >
+        <DropdownMenu.Content>
           <DropdownMenu.Item onSelect={openQuickSearch}>
             Quick Search...
             <DropdownMenu.TrailingVisual>⇧K</DropdownMenu.TrailingVisual>

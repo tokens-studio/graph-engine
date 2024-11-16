@@ -32,7 +32,7 @@ const CSSMapSpecifics = observer(({ node }: { node: Node }) => {
       <Heading size="small">Expose Property</Heading>
       <Select value={inputName} onValueChange={setInputName}>
         <Select.Trigger label="Type" value={inputName} />
-        <Select.Content css={{ maxHeight: '300px' }} position="popper">
+        <Select.Content>
           <Scroll height="200">
             {CSSProperties.map((x) => (
               <Select.Item value={x} key={x}>

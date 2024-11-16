@@ -1,4 +1,4 @@
-import { Box, Text } from '@tokens-studio/ui';
+import { Text } from '@tokens-studio/ui';
 import React from 'react';
 
 export const PreviewColor = ({ value }) => {
@@ -7,11 +7,11 @@ export const PreviewColor = ({ value }) => {
 	}
 
 	return (
-		<Box
-			css={{
+		<div
+			style={{
 				border: '1px solid',
-				borderColor: '$borderMuted',
-				borderRadius: '$medium',
+				borderColor: 'var(--color-neutral-stroke-subtle)',
+				borderRadius: 'var(--component-radii-md)',
 				overflow: 'hidden',
 				display: 'flex',
 				position: 'relative',
@@ -20,8 +20,8 @@ export const PreviewColor = ({ value }) => {
 				flexShrink: '0'
 			}}
 		>
-			<Box
-				css={{
+			<div
+				style={{
 					background: value,
 					position: 'absolute',
 					left: '-8px',
@@ -34,7 +34,7 @@ export const PreviewColor = ({ value }) => {
 					outline: 'none'
 				}}
 			/>
-		</Box>
+		</div>
 	);
 };
 

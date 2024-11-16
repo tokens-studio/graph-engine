@@ -1,0 +1,39 @@
+.container {
+  height: 100%;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  overflow: auto;
+  flex-direction: column;
+}
+
+.accordion {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-2);
+  box-sizing: border-box;
+}
+
+.accordionTrigger {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  justify-content: flex-start;
+  width: 100%;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radii-small);
+  cursor: pointer;
+}
+
+.accordionTrigger:hover {
+  background: var(--colors-bgSubtle);
+}
+
+.chevron {
+  transition: all ease 0.3s;
+}
+
+[data-state="open"] .chevron {
+  transform: rotate(90deg);
+}

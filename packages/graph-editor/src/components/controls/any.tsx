@@ -30,7 +30,7 @@ export const AnyField = observer(({ port, readOnly }: IField) => {
     <Stack direction="column" gap={3}>
       <Select value={inputType} onValueChange={setInputType}>
         <Select.Trigger label="Type" value={inputType} />
-        <Select.Content css={{ maxHeight: '200px' }} position="popper">
+        <Select.Content>
           {AllSchemas.map((x, i) => (
             <Select.Item value={x.$id!} key={i}>
               {x.title || x.$id}

@@ -29,9 +29,10 @@ export function Inputsheet() {
     return <></>;
   }
 
-  const dynamicInputs =
+  const dynamicInputs = Boolean(
     selectedNode.annotations[annotatedDynamicInputs] &&
-    selectedNode.annotations[editable] != false;
+    selectedNode.annotations[editable] !== false
+  );
 
   return (
     <div

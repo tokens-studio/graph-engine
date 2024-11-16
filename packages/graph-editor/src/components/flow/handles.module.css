@@ -1,0 +1,71 @@
+.handleHolder {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+}
+
+.handleHolder.collapsed {
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+}
+
+.handleHolder.isAnchor {
+  padding: var(--space-2) var(--space-2);
+}
+
+.handleText {
+  font-size: var(--fontSizes-xxsmall);
+  color: var(--colors-fgDefault);
+  white-space: nowrap;
+}
+
+.handleText.secondary {
+  color: var(--colors-fgDefault);
+}
+
+.handleText.caseSensitive {
+  text-transform: none;
+}
+
+.rawHandle {
+  background: var(--colors-graphBg);
+}
+
+.rawHandle.error {
+  background: var(--colors-dangerFg);
+  border-color: var(--colors-dangerBorder);
+}
+
+.rawHandle.hide {
+  opacity: 0;
+}
+
+.rawHandle.isArray {
+  border-radius: 0;
+  width: calc(var(--space-4) - 2px);
+  height: calc(var(--space-4) - 2px);
+}
+
+.rawHandle.shouldHideHandles {
+  pointer-events: none;
+  display: none;
+}
+
+.rawHandle.variadic svg {
+  margin-top: auto;
+}
+
+.rawHandle.variadic::after {
+  position: absolute;
+  content: '';
+  margin-right: 0;
+  margin-top: 0;
+  height: 8px;
+  width: 8px;
+  background: var(--colors-accentOnAccent);
+  border-radius: 50%;
+  opacity: 0.7;
+}

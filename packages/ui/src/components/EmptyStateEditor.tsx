@@ -1,5 +1,5 @@
 import { BatteryCharging, JournalPage, PagePlus } from 'iconoir-react';
-import { Box, Button, EmptyState, Stack } from '@tokens-studio/ui';
+import { Button, EmptyState, Stack } from '@tokens-studio/ui';
 import { useCallback } from 'react';
 import { useDispatch } from '@tokens-studio/graph-editor';
 import React from 'react';
@@ -27,8 +27,8 @@ function EmptyStateInner({ onLoadExamples, showNodesPanel }: IEmptyStateProps) {
 	}, []);
 
 	return (
-		<Box
-			css={{
+		<div
+			style={{
 				display: 'flex',
 				alignItems: 'center',
 				justifyContent: 'center',
@@ -58,6 +58,6 @@ function EmptyStateInner({ onLoadExamples, showNodesPanel }: IEmptyStateProps) {
 					</Button>
 				</Stack>
 			</EmptyState>
-		</Box>
+		</div>
 	);
 }

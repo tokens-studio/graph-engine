@@ -1,0 +1,33 @@
+.wrapper {
+  user-select: none;
+}
+
+.grabber {
+  opacity: 0;
+  color: var(--colors-fgSubtle);
+  position: absolute;
+  left: var(--space-1);
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.button {
+  cursor: grab;
+  padding: var(--space-1) var(--space-3);
+  padding-left: var(--space-5);
+  border-radius: var(--radii-small);
+  border: none;
+  width: 100%;
+  position: relative;
+  background-color: var(--colors-buttonSecondaryBgHover);
+}
+
+.button:hover {
+  background: var(--colors-bgSubtle);
+}
+
+.button:hover .grabber {
+  opacity: 1;
+}

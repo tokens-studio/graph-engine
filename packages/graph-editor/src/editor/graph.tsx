@@ -42,7 +42,6 @@ import noteNode from '../components/flow/nodes/noteNode.js';
 
 import { ActionProvider } from './actions/provider.js';
 import { BatchRunError, Graph } from '@tokens-studio/graph-engine';
-import { Box } from '@tokens-studio/ui';
 import { CommandMenu } from '@/components/commandPalette/index.js';
 import { EdgeContextMenu } from '../components/contextMenus/edgeContextMenu.js';
 import { GraphContextProvider } from '@/context/graph.js';
@@ -784,11 +783,11 @@ export const EditorApp = React.forwardRef<
           copyNodes,
         }}
       >
-        <Box
+        <div
           className="editor"
-          css={{
+          style={{
             height: '100%',
-            backgroundColor: '$bgCanvas',
+            backgroundColor: 'var(--color-neutral-canvas-minimal-bg)',
             display: 'flex',
             flexDirection: 'row',
             flexGrow: 1,
@@ -856,10 +855,10 @@ export const EditorApp = React.forwardRef<
                   handleSelectNewNodeType={handleSelectNewNodeType}
                 />
               )}
-              <Box
-                css={{
+              <div
+                style={{
                   position: 'absolute',
-                  top: '$7',
+                  top: 'var(--size-250)',
                   left: 0,
                   right: 0,
                   display: 'grid',
@@ -868,11 +867,11 @@ export const EditorApp = React.forwardRef<
                 }}
               >
                 <GraphToolbar />
-              </Box>
+              </div>
               {props.children}
             </ReactFlow>
           </HotKeys>
-        </Box>
+        </div>
         {showMinimap && <MiniMap />}
 
         <PaneContextMenu

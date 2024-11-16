@@ -28,7 +28,7 @@ export const TokenArrayField = observer(({ port }: IField) => {
 							gap={4}
 							direction='column'
 							align='center'
-							css={{ padding: '$3' }}
+							style={{ padding: 'var(--component-spacing-md)' }}
 						>
 							{(port.value || []).map(token => (
 								<Token token={token} key={token.name} />

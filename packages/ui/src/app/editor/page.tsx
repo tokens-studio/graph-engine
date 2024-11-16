@@ -1,5 +1,4 @@
 'use client';
-import { Box } from '@tokens-studio/ui';
 import { JoyrideTooltip } from '@/components/joyride/tooltip.tsx';
 import { createToolbarButtons } from '@/components/editor/toolbar.tsx';
 import { observer } from 'mobx-react-lite';
@@ -59,20 +58,20 @@ const Page = observer(
 						}
 					}}
 				/>
-				<Box
-					css={{
+				<div
+					style={{
 						position: 'relative',
 						display: 'flex',
 						flexDirection: 'row',
 						width: '100%',
 						height: '100%',
 						overflow: 'hidden',
-						background: '$bgCanvas',
+						background: 'var(--color-neutral-canvas-minimal-bg)',
 						isolation: 'isolate'
 					}}
 				>
 					<Editor ref={ref} toolbarButtons={toolbarButtons} />
-				</Box>
+				</div>
 			</>
 		);
 	}

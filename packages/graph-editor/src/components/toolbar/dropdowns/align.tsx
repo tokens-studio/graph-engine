@@ -61,7 +61,7 @@ export const AlignDropdown = () => {
         </DropdownMenu.Trigger>
       </Tooltip>
       <DropdownMenu.Portal>
-        <DropdownMenu.Content css={{ minWidth: '200px' }}>
+        <DropdownMenu.Content style={{ minWidth: '200px' }}>
           <DropdownMenu.Item
             onSelect={() => updateNodes(align(ALIGNMENT.START))}
           >

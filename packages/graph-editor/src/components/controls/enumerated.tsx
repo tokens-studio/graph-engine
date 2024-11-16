@@ -17,7 +17,7 @@ export const EnumeratedTextfield = observer(({ port, readOnly }: IField) => {
   return (
     <Select value={port.value || '-'} onValueChange={onChange}>
       <Select.Trigger label="Value" value={port.value || '-'} />
-      <Select.Content css={{ maxHeight: '200px' }} position="popper">
+      <Select.Content>
         {port.type.enum.map((x, i) => (
           <Select.Item value={x} key={i}>
             {x}

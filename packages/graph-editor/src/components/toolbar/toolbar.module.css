@@ -1,0 +1,16 @@
+.root {
+  display: flex;
+  padding: 10px;
+  gap: var(--space-1);
+  width: auto;
+  min-width: max-content;
+  border-radius: 6px;
+  background-color: var(--colors-bgSubtle);
+  box-shadow: 0 2px 10px var(--colors-blackA4);
+}
+
+.separator {
+  width: 1px;
+  background-color: var(--colors-borderDefault);
+  margin: 0 10px;
+}

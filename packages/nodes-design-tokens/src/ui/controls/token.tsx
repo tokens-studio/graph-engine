@@ -1,6 +1,6 @@
-import { Box, Stack } from '@tokens-studio/ui';
 import { IField } from '@tokens-studio/graph-editor';
 import { PreviewColor } from './preview/color.js';
+import { Stack } from '@tokens-studio/ui';
 import { TokenTypes } from '@tokens-studio/types';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -26,12 +26,10 @@ export const PreviewToken = ({ token, hideName }: PreviewProps) => (
 			<>
 				{getPreview(token)}
 				{!hideName && (
-					<Box
-						css={{
-							fontWeight: '$sansRegular',
-							fontFamily: 'monospace',
-							fontSize: '$xsmall',
-							color: '$fgMuted',
+					<div
+						style={{
+							font: 'var(--typography-body-xs)',
+							color: 'var(--color-neutral-canvas-default-fg-default)',
 							overflow: 'hidden',
 							whiteSpace: 'nowrap',
 							textOverflow: 'ellipsis'
@@ -39,7 +37,7 @@ export const PreviewToken = ({ token, hideName }: PreviewProps) => (
 						title={token.name}
 					>
 						{token.name || 'No name'}
-					</Box>
+					</div>
 				)}
 			</>
 		)}
@@ -82,29 +80,28 @@ export const Token = ({ token }) => {
 	return (
 		<Stack
 			direction='row'
-			css={{ width: '100%' }}
+			style={{ width: '100%' }}
 			key={token?.name}
 			align='center'
 		>
-			<Box
-				css={{
+			<div
+				style={{
 					display: 'flex',
 					justifyContent: 'space-between',
 					flexGrow: 1,
 					alignItems: 'center',
-					gap: '$2',
+					gap: 'var(--component-spacing-sm)',
 					overflow: 'hidden',
-					paddingLeft: '$3'
+					paddingLeft: 'var(--component-spacing-md)'
 				}}
 			>
 				<PreviewToken token={token} />
-			</Box>
-			<Box
+			</div>
+			<div
 				title={getToolTipData(token)}
-				css={{
-					fontFamily: 'monospace',
-					fontSize: '$xsmall',
-					color: '$fgSubtle',
+				style={{
+					font: 'var(--typography-body-xs)',
+					color: 'var(--color-neutral-canvas-default-fg-muted)',
 					whiteSpace: 'nowrap',
 					overflow: 'hidden',
 					maxWidth: '200px',
@@ -112,7 +109,7 @@ export const Token = ({ token }) => {
 				}}
 			>
 				{getNodeValue(token)}
-			</Box>
+			</div>
 		</Stack>
 	);
 };

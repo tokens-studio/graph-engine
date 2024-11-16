@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Checkbox,
   DropdownMenu,
@@ -41,14 +40,14 @@ export const Settings = () => {
   const dispatch = useDispatch();
 
   return (
-    <Box
-      css={{
+    <div
+      style={{
         height: '100%',
         width: '100%',
         flex: 1,
         display: 'flex',
         overflow: 'auto',
-        padding: '$3',
+        padding: 'var(--component-spacing-md)',
         flexDirection: 'column',
       }}
     >
@@ -61,11 +60,11 @@ export const Settings = () => {
                 'Adds additional labels to help differentiate types for colorblind users'
               }
             >
-              <Box>
+              <div>
                 <Text>
                   <InfoCircleSolid />
                 </Text>
-              </Box>
+              </div>
             </Tooltip>
           </Stack>
           <Checkbox
@@ -83,11 +82,11 @@ export const Settings = () => {
                 'Shows values directly on the node. Useful for debugging but can be cluttered'
               }
             >
-              <Box>
+              <div>
                 <Text>
                   <InfoCircleSolid />
                 </Text>
-              </Box>
+              </div>
             </Tooltip>
           </Stack>
           <Checkbox
@@ -101,11 +100,11 @@ export const Settings = () => {
           <Stack direction="row" gap={2} justify="between">
             <Label>Use delayed interaction</Label>
             <Tooltip label={'Forces a user to click save to update port '}>
-              <Box>
+              <div>
                 <Text>
                   <InfoCircleSolid />
                 </Text>
-              </Box>
+              </div>
             </Tooltip>
           </Stack>
           <Checkbox
@@ -123,11 +122,11 @@ export const Settings = () => {
                 'Allows you to quick connect nodes by clicking on the 2 port'
               }
             >
-              <Box>
+              <div>
                 <Text>
                   <InfoCircleSolid />
                 </Text>
-              </Box>
+              </div>
             </Tooltip>
           </Stack>
           <Checkbox
@@ -141,11 +140,11 @@ export const Settings = () => {
           <Stack direction="row" gap={2} justify="between">
             <Label>Show execution time</Label>
             <Tooltip label={'Shows how long it takes for a node to process'}>
-              <Box>
+              <div>
                 <Text>
                   <InfoCircleSolid />
                 </Text>
-              </Box>
+              </div>
             </Tooltip>
           </Stack>
           <Checkbox
@@ -159,11 +158,11 @@ export const Settings = () => {
           <Stack direction="row" gap={2} justify="between">
             <Label>Show Minimap</Label>
             <Tooltip label={'Shows the minimap in the graph editing area'}>
-              <Box>
+              <div>
                 <Text>
                   <InfoCircleSolid />
                 </Text>
-              </Box>
+              </div>
             </Tooltip>
           </Stack>
           <Checkbox
@@ -177,11 +176,11 @@ export const Settings = () => {
           <Stack direction="row" gap={2} justify="between">
             <Label>Enable Context Menus</Label>
             <Tooltip label={'Provides right click context menus'}>
-              <Box>
+              <div>
                 <Text>
                   <InfoCircleSolid />
                 </Text>
-              </Box>
+              </div>
             </Tooltip>
           </Stack>
           <Checkbox
@@ -238,6 +237,6 @@ export const Settings = () => {
           </DropdownMenu>
         </Stack>
       </Stack>
-    </Box>
+    </div>
   );
 };

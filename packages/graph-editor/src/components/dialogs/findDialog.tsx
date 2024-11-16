@@ -80,10 +80,10 @@ export const FindDialog = () => {
           <Button onClick={onClickTitle}>Find</Button>
 
           <IconButton
-            css={{
+            style={{
               position: 'absolute',
-              top: '$4',
-              right: '$4',
+              top: 'var(--component-spacing-lg)',
+              right: 'var(--component-spacing-lg)',
             }}
             onClick={() => setOpen(false)}
             aria-label="Close"

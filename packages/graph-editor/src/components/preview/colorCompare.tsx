@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from '@tokens-studio/ui';
+import { Stack, Text } from '@tokens-studio/ui';
 import { castToHex } from '@/utils/index.js';
 import Color from 'colorjs.io';
 import React from 'react';
@@ -40,26 +40,25 @@ export const ColorCompare = ({ colors }) => {
           {colors.map((color) => {
             const col = castToHex(color);
             return (
-              <Box
-                css={{
+              <div
+                style={{
                   display: 'grid',
                   placeItems: 'center',
                   minHeight: '100px',
                   backgroundColor: col,
-                  padding: '$8',
+                  padding: 'var(--component-spacing-2xl)',
                   width: '100%',
                 }}
               >
                 <Text
-                  css={{
-                    fontFamily: '$mono',
-                    fontSize: 'xx-large',
+                  style={{
+                    font: 'var(--typography-body-xl)',
                     color: contrastingColor(col),
                   }}
                 >
                   {col}
                 </Text>
-              </Box>
+              </div>
             );
           })}
         </Stack>

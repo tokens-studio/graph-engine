@@ -90,10 +90,9 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
       <Select
         value={inputType}
         onValueChange={setInputType}
-        style={{ background: 'red' }}
       >
         <Select.Trigger label="Type" value={inputType} />
-        <Select.Content css={{ maxHeight: '200px' }} position="popper">
+        <Select.Content>
           <Scroll height="200">
             {schemas.map((x, i) => (
               <Select.Item value={x.$id!} key={i}>
