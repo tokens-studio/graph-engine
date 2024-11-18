@@ -1,6 +1,7 @@
 import { ColorSchema, NumberSchema } from '../../schemas/index.js';
 import { INodeDefinition } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
+import { setToPrecision } from '@/utils/precision.js';
 import { toColor } from './lib/utils.js';
 
 export default class NodeDefinition extends Node {
@@ -12,19 +13,13 @@ export default class NodeDefinition extends Node {
 		super(props);
 
 		this.addInput('foreground', {
-			type: {
-				...ColorSchema
-			}
+			type: ColorSchema
 		});
 		this.addInput('background', {
-			type: {
-				...ColorSchema
-			}
+			type: ColorSchema
 		});
 		this.addInput('reference', {
-			type: {
-				...ColorSchema
-			}
+			type: ColorSchema
 		});
 		this.addInput('precision', {
 			type: {
@@ -59,14 +54,9 @@ export default class NodeDefinition extends Node {
 			alpha = 0;
 		} else {
 			// find the matching alpha for each channel
-			let ar = (ref.r - bg.r) / (fg.r - bg.r);
-			let ag = (ref.g - bg.g) / (fg.g - bg.g);
-			let ab = (ref.b - bg.b) / (fg.b - bg.b);
-
-			// set out-of-range alphas to NaN
-			if (ar < 0 || ar > 1) ar = Number.NaN;
-			if (ag < 0 || ag > 1) ag = Number.NaN;
-			if (ab < 0 || ab > 1) ab = Number.NaN;
+			const ar = validateAlpha((ref.r - bg.r) / (fg.r - bg.r));
+			const ag = validateAlpha((ref.g - bg.g) / (fg.g - bg.g));
+			const ab = validateAlpha((ref.b - bg.b) / (fg.b - bg.b));
 
 			// return the average of the alphas for all matched channels
 			if (!isNaN(ar) && !isNaN(ag) && !isNaN(ab)) {
@@ -95,14 +85,16 @@ export default class NodeDefinition extends Node {
 		}
 
 		// round the result to match the precision
-		const decimals = Math.max(0, -Math.floor(Math.log10(precision)));
-		alpha = roundTo(alpha, decimals);
+		alpha = setToPrecision(
+			alpha,
+			Math.max(0, -Math.floor(Math.log10(precision)))
+		);
 
 		this.outputs.alpha.set(alpha);
 	}
 }
 
-function roundTo(value: number, decimals: number): number {
-	const dec = Math.pow(10, decimals);
-	return Math.round(value * dec) / dec;
+function validateAlpha(alpha: number): number {
+	// set valid but out-of-range alphas to NaN
+	return !isNaN(alpha) && alpha >= 0 && alpha <= 1 ? alpha : Number.NaN;
 }
