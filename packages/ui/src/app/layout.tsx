@@ -1,14 +1,7 @@
 import '@/styles/styles.scss';
 import '@tokens-studio/graph-editor/index.css';
-import 'sanitize.css';
-import 'sanitize.css/assets.css';
-import 'sanitize.css/forms.css';
-import 'sanitize.css/system-ui.css';
-import 'sanitize.css/typography.css';
-import 'sanitize.css/ui-monospace.css';
 
 import { headers } from 'next/headers.js';
-import StitchesProvider from './registry.tsx';
 import type { Viewport } from 'next';
 
 export const viewport: Viewport = {
@@ -84,7 +77,7 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className='dark'>
-				<StitchesProvider>{children}</StitchesProvider>
+				{children}
 			</body>
 		</html>
 	);
