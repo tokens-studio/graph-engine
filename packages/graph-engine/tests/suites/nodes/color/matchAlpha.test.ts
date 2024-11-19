@@ -1,7 +1,6 @@
 import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
 import { getAllOutputs } from '../../../../src/utils/node.js';
-import { isNaN } from 'lodash-es';
 import Node from '../../../../src/nodes/color/matchAlpha.js';
 
 describe('color/matchAlpha', () => {
@@ -50,7 +49,7 @@ describe('color/matchAlpha', () => {
 
 		const output = getAllOutputs(node);
 
-		expect(isNaN(output.alpha)).toEqual(true);
+		expect(Number.isNaN(output.alpha)).toEqual(true);
 	});
 
 	test('bg and ref are the same (within precision)', async () => {
@@ -98,6 +97,6 @@ describe('color/matchAlpha', () => {
 
 		const output = getAllOutputs(node);
 
-		expect(isNaN(output.alpha)).toEqual(true);
+		expect(Number.isNaN(output.alpha)).toEqual(true);
 	});
 });
