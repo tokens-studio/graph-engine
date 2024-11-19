@@ -2,6 +2,7 @@ import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 import { NumberSchema, StringSchema } from '../../schemas/index.js';
 import { ValueSnapMethod } from '../../types/index.js';
+import { getDecimalCount, setToPrecision } from '@/utils/precision.js';
 
 export default class NodeDefinition extends Node {
 	static title = 'Snap';
@@ -11,12 +12,12 @@ export default class NodeDefinition extends Node {
 
 	declare inputs: ToInput<{
 		value: number;
-		method: ValueSnapMethod;
-		base: number;
 		increment: number;
+		base: number;
+		method: ValueSnapMethod;
 	}>;
 	declare outputs: ToOutput<{
-		value: number;
+		snapped: number;
 	}>;
 
 	constructor(props: INodeDefinition) {
@@ -27,11 +28,10 @@ export default class NodeDefinition extends Node {
 				default: 3
 			}
 		});
-		this.addInput('method', {
+		this.addInput('increment', {
 			type: {
-				...StringSchema,
-				enum: Object.values(ValueSnapMethod),
-				default: ValueSnapMethod.Round
+				...NumberSchema,
+				default: 2
 			}
 		});
 		this.addInput('base', {
@@ -40,19 +40,20 @@ export default class NodeDefinition extends Node {
 				default: 0
 			}
 		});
-		this.addInput('increment', {
+		this.addInput('method', {
 			type: {
-				...NumberSchema,
-				default: 2
+				...StringSchema,
+				enum: Object.values(ValueSnapMethod),
+				default: ValueSnapMethod.Round
 			}
 		});
-		this.addOutput('value', {
+		this.addOutput('snapped', {
 			type: NumberSchema
 		});
 	}
 
 	execute(): void | Promise<void> {
-		const { value, method, base, increment } = this.getAllInputs();
+		const { value, increment, base, method } = this.getAllInputs();
 
 		let snap: (x: number) => number;
 
@@ -69,6 +70,18 @@ export default class NodeDefinition extends Node {
 				break;
 		}
 
-		this.outputs.value.set(base + increment * snap((value - base) / increment));
+		// the output precision is determined by the largest precision of the relevant input values
+		const maxDecimals = Math.max(
+			getDecimalCount(value),
+			getDecimalCount(base),
+			getDecimalCount(increment)
+		);
+
+		const snapped = setToPrecision(
+			base + increment * snap((value - base) / increment),
+			maxDecimals
+		);
+
+		this.outputs.snapped.set(snapped);
 	}
 }
