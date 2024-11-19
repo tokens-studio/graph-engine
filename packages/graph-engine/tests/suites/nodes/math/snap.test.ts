@@ -47,5 +47,4 @@ describe('math/snap', () => {
 		await node.execute();
 		expect(node.outputs.snapped.value).to.equal(1.45);
 	});
-
 });
