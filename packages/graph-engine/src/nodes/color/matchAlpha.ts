@@ -4,7 +4,8 @@ import {
 	ColorSchema,
 	NumberSchema
 } from '../../schemas/index.js';
-import { INodeDefinition } from '../../index.js';
+import { Color as ColorType } from '../../types.js';
+import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 import { setToPrecision } from '@/utils/precision.js';
 import Color from 'colorjs.io';
@@ -14,6 +15,19 @@ export default class NodeDefinition extends Node {
 	static type = 'studio.tokens.color.matchAlpha';
 	static description =
 		'Finds the alpha value that, when used to blend the foreground and background colors, will result in the reference color.';
+
+	declare inputs: ToInput<{
+		foreground: ColorType;
+		background: ColorType;
+		reference: ColorType;
+		precision: number;
+	}>;
+	declare outputs: ToOutput<{
+		inRange: boolean;
+		color: ColorType;
+		alpha: number;
+	}>;
+
 	constructor(props: INodeDefinition) {
 		super(props);
 

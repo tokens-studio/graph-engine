@@ -4,14 +4,16 @@ import { getAllOutputs } from '../../../../src/utils/node.js';
 import Color from 'colorjs.io';
 import Node from '../../../../src/nodes/color/matchAlpha.js';
 
+type number3 = [number, number, number];
+
 describe('color/matchAlpha', () => {
 	test('all colors are valid and a result that makes sense can be found', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		const fg = [0.96, 0, 0];
-		const bg = [0, 0, 0];
-		const ref = [0.48, 0, 0];
+		const fg: number3 = [0.96, 0, 0];
+		const bg: number3 = [0, 0, 0];
+		const ref: number3 = [0.48, 0, 0];
 
 		node.inputs.foreground.setValue({ space: 'srgb', channels: fg });
 		node.inputs.background.setValue({ space: 'srgb', channels: bg });
@@ -33,9 +35,9 @@ describe('color/matchAlpha', () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		const fg = [0.96, 0, 0];
-		const bg = [0, 0.2, 0];
-		const ref = [0.48, 0, 0];
+		const fg: number3 = [0.96, 0, 0];
+		const bg: number3 = [0, 0.2, 0];
+		const ref: number3 = [0.48, 0, 0];
 
 		node.inputs.foreground.setValue({ space: 'srgb', channels: fg });
 		node.inputs.background.setValue({ space: 'srgb', channels: bg });
@@ -56,9 +58,9 @@ describe('color/matchAlpha', () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		const fg = [0.96, 0.96, 0];
-		const bg = [0.33, 0.33, 0];
-		const ref = [0.325, 0.335, 0];
+		const fg: number3 = [0.96, 0.96, 0];
+		const bg: number3 = [0.33, 0.33, 0];
+		const ref: number3 = [0.325, 0.335, 0];
 
 		node.inputs.foreground.setValue({ space: 'srgb', channels: fg });
 		node.inputs.background.setValue({ space: 'srgb', channels: bg });
@@ -80,9 +82,9 @@ describe('color/matchAlpha', () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		const fg = [0, 0.5, 0.5];
-		const bg = [0, 0, 0];
-		const ref = [0, 1, 1];
+		const fg: number3 = [0, 0.5, 0.5];
+		const bg: number3 = [0, 0, 0];
+		const ref: number3 = [0, 1, 1];
 
 		node.inputs.foreground.setValue({ space: 'srgb', channels: fg });
 		node.inputs.background.setValue({ space: 'srgb', channels: bg });
