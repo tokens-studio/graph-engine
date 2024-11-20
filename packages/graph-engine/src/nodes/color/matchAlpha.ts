@@ -91,23 +91,17 @@ export default class NodeDefinition extends Node {
 					inRange = true;
 				}
 			} else if (!isNaN(ar) && !isNaN(ag)) {
-				if (
-					Math.abs(ar - ag) < precision
-				) {
+				if (Math.abs(ar - ag) < precision) {
 					alpha = (ar + ag) / 2;
 					inRange = true;
 				}
 			} else if (!isNaN(ag) && !isNaN(ab)) {
-				if (
-					Math.abs(ag - ab) < precision
-				) {
+				if (Math.abs(ag - ab) < precision) {
 					alpha = (ag + ab) / 2;
 					inRange = true;
 				}
 			} else if (!isNaN(ar) && !isNaN(ab)) {
-				if (
-					Math.abs(ar - ab) < precision
-				) {
+				if (Math.abs(ar - ab) < precision) {
 					alpha = (ar + ab) / 2;
 					inRange = true;
 				}
@@ -123,23 +117,19 @@ export default class NodeDefinition extends Node {
 			Math.max(0, -Math.floor(Math.log10(precision)))
 		);
 
-
 		// calculate the composite color, and if it's too far from the reference, return NaN
 		// deltaE() returns values typically ranging from 0 to 100, so I divide it by 100
 		// to compare normalized colors
 		const comp = blendColors(fg, bg, alpha);
 
-		if (comp.deltaE2000(ref) / 100 > precision)
-		{
+		if (comp.deltaE2000(ref) / 100 > precision) {
 			alpha = Number.NaN;
 			inRange = false;
 		}
 
-
 		// if the resulting alpha is valid, assign it to the foreground color,
 		// which becomes the output color
 		if (inRange) fg.alpha = alpha;
-
 
 		this.outputs.inRange.set(inRange);
 		this.outputs.color.set(toColorObject(fg));
@@ -152,15 +142,14 @@ function validateAlpha(alpha: number) {
 	return !isNaN(alpha) && alpha >= 0 && alpha <= 1 ? alpha : Number.NaN;
 }
 
-function blendChannels(fg: number, bg: number, alpha: number)
-{
+function blendChannels(fg: number, bg: number, alpha: number) {
 	return fg * alpha + bg * (1 - alpha);
 }
 
-function blendColors(fg: Color, bg: Color, alpha: number)
-{
+function blendColors(fg: Color, bg: Color, alpha: number) {
 	return new Color('srgb', [
 		blendChannels(fg.r, bg.r, alpha),
 		blendChannels(fg.g, bg.g, alpha),
-		blendChannels(fg.b, bg.b, alpha)]);
+		blendChannels(fg.b, bg.b, alpha)
+	]);
 }
