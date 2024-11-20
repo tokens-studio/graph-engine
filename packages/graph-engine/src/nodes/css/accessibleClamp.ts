@@ -81,14 +81,28 @@ export default class NodeDefinition extends Node {
 			precision
 		} = this.getAllInputs();
 
+		// Get the actual min and max values regardless of input order
+		const actualMinSize = Math.min(minSize, maxSize);
+		const actualMaxSize = Math.max(minSize, maxSize);
+		const actualMinViewport = Math.min(minViewport, maxViewport);
+		const actualMaxViewport = Math.max(minViewport, maxViewport);
+
+		// Handle equal viewport case
+		if (actualMinViewport === actualMaxViewport) {
+			const minSizeRem = actualMinSize / baseFontSize;
+			this.outputs.value.set(`${Number(minSizeRem.toFixed(precision))}rem`);
+			return;
+		}
+
 		// Convert sizes to rem
-		const minSizeRem = minSize / baseFontSize;
-		const maxSizeRem = maxSize / baseFontSize;
+		const minSizeRem = actualMinSize / baseFontSize;
+		const maxSizeRem = actualMaxSize / baseFontSize;
 
 		// Calculate the preferred value parameters
-		const slope = (maxSize - minSize) / (maxViewport - minViewport);
+		const slope =
+			(actualMaxSize - actualMinSize) / (actualMaxViewport - actualMinViewport);
 		const viewportValue = slope * 100; // Convert to vw units
-		const intersect = minSize - slope * minViewport;
+		const intersect = actualMinSize - slope * actualMinViewport;
 		const relativeValue = intersect / baseFontSize; // Convert to rem
 
 		// Format the values with specified precision
