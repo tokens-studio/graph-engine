@@ -3,9 +3,10 @@ import { Node } from '../../programmatic/node.js';
 import { NumberSchema, StringSchema } from '../../schemas/index.js';
 
 export default class NodeDefinition extends Node {
-	static title = 'CSS Clamp';
-	static type = 'studio.tokens.css.clamp';
-	static description = 'Generates a CSS clamp function for fluid typography';
+	static title = 'CSS Accessible Clamp';
+	static type = 'studio.tokens.css.accessibleClamp';
+	static description =
+		'Generates a CSS clamp function for fluid typography that uses rem in addition to ensure accessible values.';
 
 	declare inputs: ToInput<{
 		minSize: number;
@@ -13,6 +14,7 @@ export default class NodeDefinition extends Node {
 		minViewport: number;
 		maxViewport: number;
 		baseFontSize: number;
+		precision: number;
 	}>;
 	declare outputs: ToOutput<{
 		value: string;
@@ -56,14 +58,28 @@ export default class NodeDefinition extends Node {
 					'Base font size in pixels (usually browser default of 16px)'
 			}
 		});
+		this.addInput('precision', {
+			type: {
+				...NumberSchema,
+				default: 3,
+				minimum: 0,
+				description: 'Number of decimal places in the output'
+			}
+		});
 		this.addOutput('value', {
 			type: StringSchema
 		});
 	}
 
 	execute(): void | Promise<void> {
-		const { minSize, maxSize, minViewport, maxViewport, baseFontSize } =
-			this.getAllInputs();
+		const {
+			minSize,
+			maxSize,
+			minViewport,
+			maxViewport,
+			baseFontSize,
+			precision
+		} = this.getAllInputs();
 
 		// Convert sizes to rem
 		const minSizeRem = minSize / baseFontSize;
@@ -75,11 +91,11 @@ export default class NodeDefinition extends Node {
 		const intersect = minSize - slope * minViewport;
 		const relativeValue = intersect / baseFontSize; // Convert to rem
 
-		// Format the values to 4 decimal places for precision
-		const formattedMin = Number(minSizeRem.toFixed(3));
-		const formattedMax = Number(maxSizeRem.toFixed(3));
-		const formattedVw = Number(viewportValue.toFixed(3));
-		const formattedRel = Number(relativeValue.toFixed(3));
+		// Format the values with specified precision
+		const formattedMin = Number(minSizeRem.toFixed(precision));
+		const formattedMax = Number(maxSizeRem.toFixed(precision));
+		const formattedVw = Number(viewportValue.toFixed(precision));
+		const formattedRel = Number(relativeValue.toFixed(precision));
 
 		// Construct the clamp function
 		const clampValue = `clamp(${formattedMin}rem, calc(${formattedVw}vw + ${formattedRel}rem), ${formattedMax}rem)`;
