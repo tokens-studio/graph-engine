@@ -20,6 +20,7 @@ export default class NodeDefinition extends Node {
 		foreground: ColorType;
 		background: ColorType;
 		reference: ColorType;
+		threshold: number;
 		precision: number;
 	}>;
 	declare outputs: ToOutput<{
@@ -49,6 +50,12 @@ export default class NodeDefinition extends Node {
 				default: Gray
 			}
 		});
+		this.addInput('threshold', {
+			type: {
+				...NumberSchema,
+				default: 0.01
+			}
+		});
 		this.addInput('precision', {
 			type: {
 				...NumberSchema,
@@ -68,7 +75,7 @@ export default class NodeDefinition extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const { foreground, background, reference, precision } =
+		const { foreground, background, reference, threshold, precision } =
 			this.getAllInputs();
 
 		const bg = toColor(background);
@@ -136,7 +143,7 @@ export default class NodeDefinition extends Node {
 		// to compare normalized colors
 		const comp = blendColors(fg, bg, alpha);
 
-		if (comp.deltaE2000(ref) / 100 > precision) {
+		if (comp.deltaE2000(ref) / 100 > threshold) {
 			alpha = Number.NaN;
 			inRange = false;
 		}
