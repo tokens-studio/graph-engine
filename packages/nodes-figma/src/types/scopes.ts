@@ -23,7 +23,6 @@ export type FigmaScope =
   | "PARAGRAPH_INDENT";
 
 export const FLOAT_SCOPES: FigmaScope[] = [
-  "ALL_SCOPES",
   "TEXT_CONTENT",
   "CORNER_RADIUS",
   "WIDTH_HEIGHT",
@@ -40,7 +39,6 @@ export const FLOAT_SCOPES: FigmaScope[] = [
 ];
 
 export const COLOR_SCOPES: FigmaScope[] = [
-  "ALL_SCOPES",
   "ALL_FILLS",
   "FRAME_FILL",
   "SHAPE_FILL",
@@ -50,7 +48,6 @@ export const COLOR_SCOPES: FigmaScope[] = [
 ];
 
 export const STRING_SCOPES: FigmaScope[] = [
-  "ALL_SCOPES",
   "TEXT_CONTENT",
   "FONT_FAMILY",
   "FONT_STYLE",
