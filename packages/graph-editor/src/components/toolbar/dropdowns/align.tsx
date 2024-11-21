@@ -8,7 +8,7 @@ import {
   CompAlignLeft,
   CompAlignRight,
   CompAlignTop,
-} from 'iconoir-react';
+} from '@tokens-studio/icons';
 import { DropdownMenu, IconButton, Tooltip } from '@tokens-studio/ui';
 import { Node } from 'reactflow';
 import { graphEditorSelector } from '@/redux/selectors/index.js';

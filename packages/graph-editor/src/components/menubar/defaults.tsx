@@ -7,7 +7,7 @@ import {
   Play,
   Settings as SettingsIcon,
   Upload,
-} from 'iconoir-react';
+} from '@tokens-studio/icons';
 import { DebugPanel } from '../panels/debugger/index.js';
 import { DropPanel } from '../panels/dropPanel/index.js';
 import { GraphPanel } from '../panels/graph/index.js';

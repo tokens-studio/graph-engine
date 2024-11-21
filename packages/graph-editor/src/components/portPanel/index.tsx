@@ -14,12 +14,12 @@ import React, { useCallback, useMemo } from 'react';
 import {
   Download,
   EyeClosed,
-  EyeSolid,
   MoreVert,
   Puzzle,
   Undo,
   Xmark,
-} from 'iconoir-react';
+} from '@tokens-studio/icons';
+import { EyeSolid } from 'iconoir-react';
 import { IField } from '@/components/controls/interface.js';
 import { InlineTypeLabel } from '@/components/flow/index.js';
 import { controls } from '@/redux/selectors/registry.js';

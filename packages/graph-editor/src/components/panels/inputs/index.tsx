@@ -2,7 +2,7 @@ import { Box, Heading, IconButton, Stack } from '@tokens-studio/ui';
 import React, { useMemo } from 'react';
 
 import { DynamicInputs } from './dynamicInputs.js';
-import { InfoCircle } from 'iconoir-react';
+import { InfoCircle } from '@tokens-studio/icons';
 import { PortPanel } from '@/components/portPanel/index.js';
 import { annotatedDynamicInputs } from '@tokens-studio/graph-engine';
 import { currentNode } from '@/redux/selectors/graph.js';

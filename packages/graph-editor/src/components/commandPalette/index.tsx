@@ -8,7 +8,7 @@ import {
 import { Node } from '@tokens-studio/graph-engine';
 import { NodeRequest } from '@/editor/actions/createNode.js';
 import { Node as ReactFlowNode, useReactFlow } from 'reactflow';
-import { Search } from 'iconoir-react';
+import { Search } from '@tokens-studio/icons';
 import { isActiveElementTextEditable } from '@/utils/isActiveElementTextEditable.js';
 import { observer } from 'mobx-react-lite';
 import { showNodesCmdPaletteSelector } from '@/redux/selectors/ui.js';

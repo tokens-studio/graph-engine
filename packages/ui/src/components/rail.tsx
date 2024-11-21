@@ -6,7 +6,7 @@ import {
 	Stack,
 	Tooltip
 } from '@tokens-studio/ui';
-import { GitMerge, Home, Settings, ShoppingBag } from 'iconoir-react';
+import { GitMerge, Home, Settings, ShoppingBag } from '@tokens-studio/icons';
 import { client } from '@/api/sdk/index.ts';
 import Image from 'next/image.js';
 import Link from 'next/link.js';

@@ -1,6 +1,6 @@
 import * as Popover from '@radix-ui/react-popover';
 import { Box, IconButton, Label, Stack, TextInput } from '@tokens-studio/ui';
-import { Copy, Xmark } from 'iconoir-react';
+import { Copy, Xmark } from '@tokens-studio/icons';
 import { styled } from '@tokens-studio/graph-editor';
 import React from 'react';
 import copy from 'copy-to-clipboard';

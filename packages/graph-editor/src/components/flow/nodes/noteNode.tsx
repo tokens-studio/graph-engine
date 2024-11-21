@@ -1,6 +1,6 @@
 import { BaseNodeWrapper } from '../wrapper/base.js';
 import { Box, IconButton, Textarea } from '@tokens-studio/ui';
-import { EditPencil } from 'iconoir-react';
+import { EditPencil } from '@tokens-studio/icons';
 import { Node } from '@tokens-studio/graph-engine';
 import { NodeProps, NodeResizer } from 'reactflow';
 import { description, title } from '@/annotations/index.js';

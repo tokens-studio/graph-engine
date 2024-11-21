@@ -1,5 +1,5 @@
 import { DropdownMenu, IconButton, Tooltip } from '@tokens-studio/ui';
-import { LayoutLeft } from 'iconoir-react';
+import { LayoutLeft } from '@tokens-studio/icons';
 import { dockerSelector } from '@/redux/selectors/index.js';
 import { useLayoutButton } from '../../../hooks/useLayoutButton.js';
 import { useSelector } from 'react-redux';

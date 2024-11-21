@@ -1,4 +1,4 @@
-import { Download } from 'iconoir-react';
+import { Download } from '@tokens-studio/icons';
 import { IconButton, Tooltip } from '@tokens-studio/ui';
 import { ImperativeEditorRef } from '@/editor/editorTypes.js';
 import { mainGraphSelector } from '@/redux/selectors/graph.js';

@@ -12,7 +12,7 @@ import { client } from '@/api/sdk/index.ts';
 import { useParams, useRouter } from 'next/navigation.js';
 import MDEditor from '@uiw/react-md-editor';
 //Add rehype to prevent any client of injecting malicious code
-import { Upload } from 'iconoir-react';
+import { Upload } from '@tokens-studio/icons';
 import { useState } from 'react';
 import rehypeSanitize from 'rehype-sanitize';
 

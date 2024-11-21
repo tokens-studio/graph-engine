@@ -1,4 +1,4 @@
-import { Book } from 'iconoir-react';
+import { Book } from '@tokens-studio/icons';
 import {
 	MenuItem,
 	MenuItemElement,

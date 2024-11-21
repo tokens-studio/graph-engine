@@ -1,4 +1,4 @@
-import { FloppyDisk } from 'iconoir-react';
+import { FloppyDisk } from '@tokens-studio/icons';
 import { IField } from './interface.js';
 import { IconButton, Stack, TextInput } from '@tokens-studio/ui';
 import { Input } from '@tokens-studio/graph-engine';

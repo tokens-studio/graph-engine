@@ -22,7 +22,7 @@ import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
 import { FindDialog } from '@/components/dialogs/findDialog.js';
 import { IconButton, Stack, Tooltip } from '@tokens-studio/ui';
 import { MAIN_GRAPH_ID } from '@/constants.js';
-import { Maximize, Reduce, Xmark } from 'iconoir-react';
+import { Maximize, Reduce, Xmark } from '@tokens-studio/icons';
 import { OutputSheet } from '@/components/panels/output/index.js';
 import React, { MutableRefObject, useEffect, useMemo } from 'react';
 

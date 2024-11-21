@@ -1,4 +1,4 @@
-import { BatteryCharging, JournalPage, PagePlus } from 'iconoir-react';
+import { BatteryCharging, JournalPage, PagePlus } from '@tokens-studio/icons';
 import { Box, Button, EmptyState, Stack } from '@tokens-studio/ui';
 import { useCallback } from 'react';
 import { useDispatch } from '@tokens-studio/graph-editor';

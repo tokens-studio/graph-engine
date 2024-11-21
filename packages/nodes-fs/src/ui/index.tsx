@@ -1,4 +1,4 @@
-import { EmptyPage } from 'iconoir-react';
+import { EmptyPage } from '@tokens-studio/icons';
 import { FILE } from '../schemas/index.js';
 import React from 'react';
 

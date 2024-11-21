@@ -1,6 +1,6 @@
 import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
 import { ColorPickerPopover } from '../colorPicker/index.js';
-import { FloppyDisk } from 'iconoir-react';
+import { FloppyDisk } from '@tokens-studio/icons';
 import { IField } from './interface.js';
 import { Input, hexToColor, toColor, toHex } from '@tokens-studio/graph-engine';
 import { delayedUpdateSelector } from '@/redux/selectors/index.js';

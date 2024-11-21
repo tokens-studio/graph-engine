@@ -1,5 +1,5 @@
 import { Button, DropdownMenu, Stack, Tooltip } from '@tokens-studio/ui';
-import { NavArrowRight, Plus } from 'iconoir-react';
+import { NavArrowRight, Plus } from '@tokens-studio/icons';
 import { panelItemsSelector } from '@/redux/selectors/index.js';
 import { useAction } from '@/editor/actions/provider.js';
 import { useDispatch } from '@/hooks/index.js';

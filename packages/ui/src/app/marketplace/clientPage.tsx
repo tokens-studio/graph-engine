@@ -7,7 +7,7 @@ import {
 	Stack,
 	Text
 } from '@tokens-studio/ui';
-import { Download, Heart } from 'iconoir-react';
+import { Download, Heart } from '@tokens-studio/icons';
 import { client } from '@/api/sdk/index.ts';
 import { styled } from '@tokens-studio/graph-editor';
 import { useErrorToast } from '@/hooks/useToast.tsx';

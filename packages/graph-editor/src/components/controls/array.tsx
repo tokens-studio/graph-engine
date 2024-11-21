@@ -19,7 +19,7 @@ import {
   TextInput,
 } from '@tokens-studio/ui';
 import { ColorPickerPopover } from '../colorPicker/index.js';
-import { FloppyDisk, Minus, Plus } from 'iconoir-react';
+import { FloppyDisk, Minus, Plus } from '@tokens-studio/icons';
 import { IField } from './interface.js';
 import { JSONTree } from 'react-json-tree';
 import { delayedUpdateSelector } from '@/redux/selectors/index.js';

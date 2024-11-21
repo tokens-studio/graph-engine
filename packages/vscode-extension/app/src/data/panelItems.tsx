@@ -15,7 +15,7 @@ import {
   Text,
   TwoPointsCircle,
   Type,
-} from 'iconoir-react';
+} from '@tokens-studio/icons';
 import {
   PanelGroup,
   PanelItem,

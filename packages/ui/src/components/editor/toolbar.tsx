@@ -15,9 +15,10 @@ import {
 } from '@tokens-studio/graph-editor';
 
 import { AISummary } from './panels/aiSummary.tsx';
-import { FloppyDisk, ShareAndroidSolid, Sparks, XrayView } from 'iconoir-react';
+import { FloppyDisk, Sparks, XrayView } from '@tokens-studio/icons';
 import { IconButton, Tooltip } from '@tokens-studio/ui';
 import { Preview } from './panels/preview.tsx';
+import { ShareAndroidSolid } from 'iconoir-react';
 import { SharePopover } from '../share/index.tsx';
 import { client } from '@/api/sdk/index.ts';
 import { useErrorToast } from '@/hooks/useToast.tsx';

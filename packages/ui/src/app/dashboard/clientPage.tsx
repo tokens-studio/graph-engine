@@ -10,7 +10,7 @@ import {
 	Search,
 	Upload,
 	Xmark
-} from 'iconoir-react';
+} from '@tokens-studio/icons';
 import {
 	Box,
 	Button,

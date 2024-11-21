@@ -1,5 +1,5 @@
 import { Button, DropdownMenu } from '@tokens-studio/ui';
-import { NavArrowRight } from 'iconoir-react';
+import { NavArrowRight } from '@tokens-studio/icons';
 import { getViewports } from '@/components/hotKeys/index.js';
 import { savedViewports } from '@/annotations/index.js';
 import { useLocalGraph } from '@/hooks/index.js';

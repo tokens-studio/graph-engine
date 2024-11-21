@@ -1,4 +1,4 @@
-import { ChatBubbleQuestion } from 'iconoir-react';
+import { ChatBubbleQuestion } from '@tokens-studio/icons';
 import { DropdownMenu, IconButton, Tooltip } from '@tokens-studio/ui';
 import React from 'react';
 

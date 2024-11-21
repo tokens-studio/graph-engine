@@ -1,7 +1,7 @@
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Command } from 'cmdk';
 import { IExample } from '../types/IExample.tsx';
-import { Search } from 'iconoir-react';
+import { Search } from '@tokens-studio/icons';
 import { examples } from '../data/examples/examples.tsx';
 import React from 'react';
 

@@ -1,7 +1,7 @@
 import { Box, IconButton, Label, Stack, TextInput } from '@tokens-studio/ui';
 import React, { useState } from 'react';
 
-import { FloppyDisk } from 'iconoir-react';
+import { FloppyDisk } from '@tokens-studio/icons';
 import { JSONTree } from 'react-json-tree';
 import { description, title } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';

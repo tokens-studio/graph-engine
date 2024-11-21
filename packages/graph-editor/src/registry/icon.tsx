@@ -13,9 +13,9 @@ import {
   EaseCurveControlPoints,
   Hashtag,
   InputOutput,
-  SelectPoint3d,
   Text,
-} from 'iconoir-react';
+} from '@tokens-studio/icons';
+import { SelectPoint3d } from 'iconoir-react';
 import React from 'react';
 
 /**

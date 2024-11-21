@@ -2,17 +2,17 @@ import {
   AlignHorizontalCenters,
   AlignVerticalCenters,
   CompAlignBottom,
-  CompAlignBottomSolid,
   CompAlignLeft,
   CompAlignRight,
   CompAlignTop,
-  CompAlignTopSolid,
-} from 'iconoir-react';
+} from '@tokens-studio/icons';
 import {
   AlignHorizontalCentersSolid,
   AlignVerticalCentersSolid,
+  CompAlignBottomSolid,
   CompAlignLeftSolid,
   CompAlignRightSolid,
+  CompAlignTopSolid,
 } from 'iconoir-react';
 import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
 import { Node } from 'reactflow';

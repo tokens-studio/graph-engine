@@ -1,5 +1,5 @@
 import { Button, Dialog, IconButton, Text, TextInput } from '@tokens-studio/ui';
-import { Xmark } from 'iconoir-react';
+import { Xmark } from '@tokens-studio/icons';
 import { title as annotatedTitle } from '@/annotations/index.js';
 import {
   graphEditorSelector,

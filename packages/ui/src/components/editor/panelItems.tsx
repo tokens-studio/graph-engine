@@ -7,7 +7,6 @@ import {
 	DatabaseScript,
 	EaseCurveControlPoints,
 	EditPencil,
-	EyeSolid,
 	FillColor,
 	SigmaFunction,
 	SoundHigh,
@@ -15,7 +14,8 @@ import {
 	Text,
 	TwoPointsCircle,
 	Type
-} from 'iconoir-react';
+} from '@tokens-studio/icons';
+import { EyeSolid } from 'iconoir-react';
 import {
 	PanelGroup,
 	PanelItem,
