@@ -1,3 +1,4 @@
+import { nodes as naming } from './naming/index.js';
 import CreateBorderNode from './createBorder.js';
 import CreateBorderTokenNode from './createBorderToken.js';
 import CreateBoxShadowNode from './createBoxShadow.js';
@@ -49,5 +50,17 @@ export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
 	PreviewTypography,
 	LeonardoColorNode,
 	LeonardoThemeNode,
-	SetToArrayNode
+	SetToArrayNode,
+	naming
+);
+
+/**
+ * Nodes as a lookup map using the node type as the key
+ */
+export const nodeLookup: Record<string, typeof Node> = nodes.reduce(
+	(acc, node) => {
+		acc[node.type] = node;
+		return acc;
+	},
+	{}
 );
