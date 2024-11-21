@@ -8,6 +8,7 @@ import {
 import { FigmaScope } from "../types/scopes.js";
 import { SingleToken } from "@tokens-studio/types";
 import { TokenSchema } from "@tokens-studio/graph-engine-nodes-design-tokens";
+import { mergeTokenExtensions } from "../utils/tokenMerge.js";
 
 export default class NodeDefinition extends Node {
   static title = "Scope String";
@@ -72,24 +73,9 @@ export default class NodeDefinition extends Node {
     if (inputs.fontStyle) newScopes.push("FONT_STYLE");
     if (inputs.textContent) newScopes.push("TEXT_CONTENT");
 
-    // Get existing Figma extension and scopes
-    const existingFigmaExt = inputs.token.$extensions?.["com.figma"] || {};
-    const existingScopes = existingFigmaExt.scopes || [];
-
-    // Combine existing and new scopes, remove duplicates
-    const combinedScopes = [...new Set([...existingScopes, ...newScopes])];
-
-    // Create the modified token with merged Figma scopes
-    const modifiedToken = {
-      ...inputs.token,
-      $extensions: {
-        ...inputs.token.$extensions,
-        "com.figma": {
-          ...existingFigmaExt,
-          scopes: combinedScopes,
-        },
-      },
-    };
+    const modifiedToken = mergeTokenExtensions(inputs.token, {
+      scopes: newScopes,
+    });
 
     this.outputs.token.set(modifiedToken);
   }

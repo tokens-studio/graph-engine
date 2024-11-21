@@ -1,4 +1,3 @@
-import { FigmaScope } from "../types/scopes.js";
 import {
   INodeDefinition,
   Node,
@@ -7,6 +6,7 @@ import {
 } from "@tokens-studio/graph-engine";
 import { SingleToken } from "@tokens-studio/types";
 import { TokenSchema } from "@tokens-studio/graph-engine-nodes-design-tokens";
+import { mergeTokenExtensions } from "../utils/tokenMerge.js";
 
 export default class NodeDefinition extends Node {
   static title = "Scope All";
@@ -37,27 +37,11 @@ export default class NodeDefinition extends Node {
 
   execute(): void | Promise<void> {
     const inputs = this.getAllInputs();
+    const newScopes = ["ALL_SCOPES"];
 
-    // Get existing Figma extension and scopes
-    const existingFigmaExt = inputs.token.$extensions?.["com.figma"] || {};
-    const existingScopes = existingFigmaExt.scopes || [];
-
-    // Add ALL_SCOPES if it doesn't exist
-    const newScopes: FigmaScope[] = existingScopes.includes("ALL_SCOPES")
-      ? existingScopes
-      : [...existingScopes, "ALL_SCOPES"];
-
-    // Create the modified token with merged Figma scopes
-    const modifiedToken = {
-      ...inputs.token,
-      $extensions: {
-        ...inputs.token.$extensions,
-        "com.figma": {
-          ...existingFigmaExt,
-          scopes: newScopes,
-        },
-      },
-    };
+    const modifiedToken = mergeTokenExtensions(inputs.token, {
+      scopes: newScopes,
+    });
 
     this.outputs.token.set(modifiedToken);
   }

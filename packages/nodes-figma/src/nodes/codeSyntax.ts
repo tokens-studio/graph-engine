@@ -7,6 +7,7 @@ import {
 } from "@tokens-studio/graph-engine";
 import { SingleToken } from "@tokens-studio/types";
 import { TokenSchema } from "@tokens-studio/graph-engine-nodes-design-tokens";
+import { mergeTokenExtensions } from "../utils/tokenMerge.js";
 
 export default class NodeDefinition extends Node {
   static title = "Code Syntax";
@@ -65,30 +66,16 @@ export default class NodeDefinition extends Node {
   execute(): void | Promise<void> {
     const inputs = this.getAllInputs();
 
-    // Get existing Figma extension
-    const existingFigmaExt = inputs.token.$extensions?.["com.figma"] || {};
-    const existingCodeSyntax = existingFigmaExt.codeSyntax || {};
-
-    // Create the code syntax object, only adding properties that have values
     const codeSyntax = {
-      ...existingCodeSyntax,
       ...(inputs.web && { Web: inputs.web }),
       ...(inputs.android && { Android: inputs.android }),
       ...(inputs.ios && { iOS: inputs.ios }),
     };
 
-    // Create the modified token with merged Figma code syntax
-    const modifiedToken = {
-      ...inputs.token,
-      $extensions: {
-        ...inputs.token.$extensions,
-        "com.figma": {
-          ...existingFigmaExt,
-          hiddenFromPublishing: false,
-          codeSyntax,
-        },
-      },
-    };
+    const modifiedToken = mergeTokenExtensions(inputs.token, {
+      hiddenFromPublishing: false,
+      codeSyntax,
+    });
 
     this.outputs.token.set(modifiedToken);
   }

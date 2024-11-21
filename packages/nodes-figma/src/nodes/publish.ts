@@ -7,6 +7,7 @@ import {
 } from "@tokens-studio/graph-engine";
 import { SingleToken } from "@tokens-studio/types";
 import { TokenSchema } from "@tokens-studio/graph-engine-nodes-design-tokens";
+import { mergeTokenExtensions } from "../utils/tokenMerge.js";
 
 export default class NodeDefinition extends Node {
   static title = "Publish Variable";
@@ -47,20 +48,9 @@ export default class NodeDefinition extends Node {
   execute(): void | Promise<void> {
     const { token, publish } = this.getAllInputs();
 
-    // Get existing Figma extension
-    const existingFigmaExt = token.$extensions?.["com.figma"] || {};
-
-    // Create the modified token with inverted publish value
-    const modifiedToken = {
-      ...token,
-      $extensions: {
-        ...token.$extensions,
-        "com.figma": {
-          ...existingFigmaExt,
-          hiddenFromPublishing: !publish,
-        },
-      },
-    };
+    const modifiedToken = mergeTokenExtensions(token, {
+      hiddenFromPublishing: !publish,
+    });
 
     this.outputs.token.set(modifiedToken);
   }
