@@ -23,6 +23,7 @@ import {
 } from '@tokens-studio/graph-editor';
 import { nodeLookup as audioLookup } from '@tokens-studio/graph-engine-nodes-audio';
 import { nodes as designNodes } from '@tokens-studio/graph-engine-nodes-design-tokens';
+import { nodes as figmaNodes } from '@tokens-studio/graph-engine-nodes-figma';
 
 const icons = {
 	accessibility: <Accessibility />,
@@ -39,8 +40,19 @@ const icons = {
 	string: <Text />,
 	typing: <Type />,
 	vector2: <TwoPointsCircle />,
-	typography: <EditPencil />
+	typography: <EditPencil />,
+	naming: <Text />
 };
+
+// Helper to filter naming nodes
+const namingNodes = designNodes.filter(node =>
+	node.type.includes('studio.tokens.naming.')
+);
+
+// Helper to filter non-naming design token nodes
+const tokenNodes = designNodes.filter(
+	node => !node.type.includes('studio.tokens.naming.')
+);
 
 export const panelItems = defaultPanelGroupsFactory();
 
@@ -70,7 +82,40 @@ panelItems.groups.push(
 		title: 'Design Tokens',
 		key: 'designTokens',
 		icon: <DatabaseScript />,
-		items: designNodes.map(
+		items: tokenNodes.map(
+			node =>
+				new PanelItem({
+					type: node.type,
+					text: node.title,
+					description: node.description,
+					docs: ''
+				})
+		)
+	})
+);
+panelItems.groups.push(
+	new PanelGroup({
+		title: 'Naming',
+		key: 'naming',
+		icon: icons.naming,
+		items: namingNodes.map(
+			node =>
+				new PanelItem({
+					type: node.type,
+					text: node.title,
+					description: node.description,
+					docs: ''
+				})
+		)
+	})
+);
+
+panelItems.groups.push(
+	new PanelGroup({
+		title: 'Figma',
+		key: 'figma',
+		icon: <DatabaseScript />,
+		items: figmaNodes.map(
 			node =>
 				new PanelItem({
 					type: node.type,

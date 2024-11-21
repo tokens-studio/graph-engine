@@ -1,6 +1,7 @@
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 import { NumberSchema } from '../../schemas/index.js';
+import { setToPrecision } from '../../utils/precision.js';
 
 export default class NodeDefinition extends Node {
 	static title = 'Fluid';
@@ -14,6 +15,7 @@ export default class NodeDefinition extends Node {
 		minViewport: number;
 		maxViewport: number;
 		viewport: number;
+		precision: number;
 	}>;
 	declare outputs: ToOutput<{
 		value: number;
@@ -22,19 +24,47 @@ export default class NodeDefinition extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('minSize', {
-			type: NumberSchema
+			type: {
+				...NumberSchema,
+				default: 16,
+				description: 'Minimum size in pixels'
+			}
 		});
 		this.addInput('maxSize', {
-			type: NumberSchema
+			type: {
+				...NumberSchema,
+				default: 24,
+				description: 'Maximum size in pixels'
+			}
 		});
 		this.addInput('minViewport', {
-			type: NumberSchema
+			type: {
+				...NumberSchema,
+				default: 320,
+				description: 'Minimum viewport width in pixels'
+			}
 		});
 		this.addInput('maxViewport', {
-			type: NumberSchema
+			type: {
+				...NumberSchema,
+				default: 1920,
+				description: 'Maximum viewport width in pixels'
+			}
 		});
 		this.addInput('viewport', {
-			type: NumberSchema
+			type: {
+				...NumberSchema,
+				default: 768,
+				description: 'Current viewport width in pixels'
+			}
+		});
+		this.addInput('precision', {
+			type: {
+				...NumberSchema,
+				default: 2,
+				minimum: 0,
+				description: 'Number of decimal places in the output'
+			}
 		});
 		this.addOutput('value', {
 			type: NumberSchema
@@ -42,15 +72,30 @@ export default class NodeDefinition extends Node {
 	}
 
 	execute(): void | Promise<void> {
-		const { minSize, maxSize, minViewport, maxViewport, viewport } =
+		const { minSize, maxSize, minViewport, maxViewport, viewport, precision } =
 			this.getAllInputs();
-		const fontV = (100 * (maxSize - minSize)) / (maxViewport - minViewport);
-		const fontR =
-			(minViewport * maxSize - maxViewport * minSize) /
-			(minViewport - maxViewport);
-		const fluid = (viewport / 100) * fontV + fontR;
-		const clamped = Math.min(maxSize, Math.max(minSize, fluid));
 
-		this.outputs.value.set(clamped);
+		// Get the actual min and max values regardless of input order
+		const actualMinSize = Math.min(minSize, maxSize);
+		const actualMaxSize = Math.max(minSize, maxSize);
+		const actualMinViewport = Math.min(minViewport, maxViewport);
+		const actualMaxViewport = Math.max(minViewport, maxViewport);
+
+		// Handle equal viewport case
+		if (actualMinViewport === actualMaxViewport) {
+			this.outputs.value.set(setToPrecision(actualMinSize, precision));
+			return;
+		}
+
+		const fontV =
+			(100 * (actualMaxSize - actualMinSize)) /
+			(actualMaxViewport - actualMinViewport);
+		const fontR =
+			(actualMinViewport * actualMaxSize - actualMaxViewport * actualMinSize) /
+			(actualMinViewport - actualMaxViewport);
+		const fluid = (viewport / 100) * fontV + fontR;
+		const clamped = Math.min(actualMaxSize, Math.max(actualMinSize, fluid));
+
+		this.outputs.value.set(setToPrecision(clamped, precision));
 	}
 }
