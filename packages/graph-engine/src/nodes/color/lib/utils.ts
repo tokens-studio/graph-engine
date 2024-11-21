@@ -31,6 +31,11 @@ export const White = {
 	channels: [1, 1, 1]
 } as ColorType;
 
+export const Gray = {
+	space: 'srgb',
+	channels: [0.5, 0.5, 0.5]
+} as ColorType;
+
 export const Red = {
 	space: 'srgb',
 	channels: [1, 0, 0]
