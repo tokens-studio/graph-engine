@@ -84,6 +84,7 @@ export default function CustomEdge({
 
   return (
     <>
+      <path className="react-flow__edge-path-back" d={edgePath} />
       <path
         id={id}
         className="react-flow__edge-path"
