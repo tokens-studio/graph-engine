@@ -16,6 +16,19 @@ describe('array/indexArray', () => {
 		expect(output).to.eql(1);
 	});
 
+	test('returns value at negative index', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
+
+		node.inputs.array.setValue([11, 22, 33, 44, 55]);
+		node.inputs.index.setValue(-2);
+
+		await node.execute();
+
+		const output = node.outputs.value.value;
+		expect(output).to.eql(44);
+	});
+
 	test('returns undefined when out of bounds', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
