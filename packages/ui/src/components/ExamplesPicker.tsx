@@ -1,9 +1,9 @@
 import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Command } from 'cmdk';
 import { IExample } from '../types/IExample.tsx';
-import { Search } from '@tokens-studio/icons';
 import { examples } from '../data/examples/examples.tsx';
 import React from 'react';
+import Search from '@tokens-studio/icons/Search.js';
 
 const ExamplesPicker = ({ open, onClose, loadExample }) => {
 	const handleSelectItem = (example: IExample) => {

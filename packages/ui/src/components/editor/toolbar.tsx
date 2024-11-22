@@ -15,7 +15,6 @@ import {
 } from '@tokens-studio/graph-editor';
 
 import { AISummary } from './panels/aiSummary.tsx';
-import { FloppyDisk, Sparks, XrayView } from '@tokens-studio/icons';
 import { IconButton, Tooltip } from '@tokens-studio/ui';
 import { Preview } from './panels/preview.tsx';
 import { ShareAndroidSolid } from 'iconoir-react';
@@ -23,7 +22,10 @@ import { SharePopover } from '../share/index.tsx';
 import { client } from '@/api/sdk/index.ts';
 import { useErrorToast } from '@/hooks/useToast.tsx';
 import { useSelector } from 'react-redux';
+import FloppyDisk from '@tokens-studio/icons/FloppyDisk.js';
 import React from 'react';
+import Sparks from '@tokens-studio/icons/Sparks.js';
+import XrayView from '@tokens-studio/icons/XrayView.js';
 
 let origin = '';
 if (typeof window !== 'undefined') {

@@ -1,4 +1,3 @@
-import { Book } from '@tokens-studio/icons';
 import {
 	MenuItem,
 	MenuItemElement,
@@ -6,6 +5,7 @@ import {
 	SubMenu,
 	defaultMenuDataFactory
 } from '@tokens-studio/graph-editor';
+import Book from '@tokens-studio/icons/Book.js';
 import Image from 'next/image.js';
 import React from 'react';
 import SlackIcon from '@/assets/svgs/slack.svg';

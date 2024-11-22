@@ -1,15 +1,13 @@
 import { DebugInfo } from './data.js';
 import { IconButton, Select, Stack, Text } from '@tokens-studio/ui';
-import {
-  Pause,
-  Play,
-  Trash,
-  UndoAction,
-  ZoomIn,
-  ZoomOut,
-} from '@tokens-studio/icons';
 import { TimelineState } from '@xzdarcy/react-timeline-editor';
+import Pause from '@tokens-studio/icons/Pause.js';
+import Play from '@tokens-studio/icons/Play.js';
 import React, { useEffect, useState } from 'react';
+import Trash from '@tokens-studio/icons/Trash.js';
+import UndoAction from '@tokens-studio/icons/UndoAction.js';
+import ZoomIn from '@tokens-studio/icons/ZoomIn.js';
+import ZoomOut from '@tokens-studio/icons/ZoomOut.js';
 
 export const scaleWidth = 160;
 export const scale = 5;

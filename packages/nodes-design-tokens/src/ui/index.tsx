@@ -1,5 +1,6 @@
-import { CubeHole, DatabaseScript } from '@tokens-studio/icons';
 import { REFERENCE, TOKEN, TOKEN_SET } from '../schemas/index.js';
+import CubeHole from '@tokens-studio/icons/CubeHole.js';
+import DatabaseScript from '@tokens-studio/icons/DatabaseScript.js';
 import React from 'react';
 
 export const icons = {

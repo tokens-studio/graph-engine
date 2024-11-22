@@ -1,11 +1,11 @@
 import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
 import { ColorPickerPopover } from '../colorPicker/index.js';
-import { FloppyDisk } from '@tokens-studio/icons';
 import { IField } from './interface.js';
 import { Input, hexToColor, toColor, toHex } from '@tokens-studio/graph-engine';
 import { delayedUpdateSelector } from '@/redux/selectors/index.js';
 import { observer } from 'mobx-react-lite';
 import { useSelector } from 'react-redux';
+import FloppyDisk from '@tokens-studio/icons/FloppyDisk.js';
 import React, { useCallback } from 'react';
 
 export const ColorField = observer(({ port, readOnly }: IField) => {

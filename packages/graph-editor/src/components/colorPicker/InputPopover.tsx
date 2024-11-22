@@ -1,7 +1,7 @@
 import * as Popover from '@radix-ui/react-popover';
-import { Xmark } from '@tokens-studio/icons';
 import { keyframes, styled } from '@/lib/stitches/index.js';
 import React from 'react';
+import Xmark from '@tokens-studio/icons/Xmark.js';
 
 interface IInputPopover {
   children: React.ReactNode;

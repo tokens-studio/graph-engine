@@ -1,10 +1,10 @@
-import { FloppyDisk } from '@tokens-studio/icons';
 import { IField } from './interface.js';
 import { IconButton, Stack, TextInput } from '@tokens-studio/ui';
 import { Input } from '@tokens-studio/graph-engine';
 import { delayedUpdateSelector } from '@/redux/selectors/index.js';
 import { observer } from 'mobx-react-lite';
 import { useSelector } from 'react-redux';
+import FloppyDisk from '@tokens-studio/icons/FloppyDisk.js';
 import React, { useCallback } from 'react';
 
 export const NumericField = observer(({ port, readOnly }: IField) => {

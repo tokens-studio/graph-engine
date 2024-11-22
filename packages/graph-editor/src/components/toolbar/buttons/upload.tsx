@@ -1,9 +1,9 @@
 import { IconButton, Tooltip } from '@tokens-studio/ui';
 import { ImperativeEditorRef } from '@/editor/editorTypes.js';
-import { Upload } from '@tokens-studio/icons';
 import { mainGraphSelector } from '@/redux/selectors/graph.js';
 import { useSelector } from 'react-redux';
 import React from 'react';
+import Upload from '@tokens-studio/icons/Upload.js';
 
 export const UploadToolbarButton = () => {
   const mainGraph = useSelector(mainGraphSelector);

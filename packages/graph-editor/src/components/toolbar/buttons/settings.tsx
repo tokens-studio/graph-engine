@@ -1,7 +1,7 @@
 import { IconButton, Tooltip } from '@tokens-studio/ui';
-import { Settings } from '@tokens-studio/icons';
 import { useLayoutButton } from '../../../hooks/useLayoutButton.js';
 import React from 'react';
+import Settings from '@tokens-studio/icons/Settings.js';
 
 export const SettingsToolbarButton = () => {
   const onClick = useLayoutButton();

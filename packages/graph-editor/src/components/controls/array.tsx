@@ -19,13 +19,15 @@ import {
   TextInput,
 } from '@tokens-studio/ui';
 import { ColorPickerPopover } from '../colorPicker/index.js';
-import { FloppyDisk, Minus, Plus } from '@tokens-studio/icons';
 import { IField } from './interface.js';
 import { JSONTree } from 'react-json-tree';
 import { delayedUpdateSelector } from '@/redux/selectors/index.js';
 import { observer } from 'mobx-react-lite';
 import { toJS } from 'mobx';
 import { useSelector } from 'react-redux';
+import FloppyDisk from '@tokens-studio/icons/FloppyDisk.js';
+import Minus from '@tokens-studio/icons/Minus.js';
+import Plus from '@tokens-studio/icons/Plus.js';
 import React, { useCallback } from 'react';
 
 const inputItemTypes = [STRING, NUMBER, COLOR];

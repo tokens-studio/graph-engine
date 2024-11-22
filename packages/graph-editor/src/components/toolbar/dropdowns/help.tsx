@@ -1,5 +1,5 @@
-import { ChatBubbleQuestion } from '@tokens-studio/icons';
 import { DropdownMenu, IconButton, Tooltip } from '@tokens-studio/ui';
+import ChatBubbleQuestion from '@tokens-studio/icons/ChatBubbleQuestion.js';
 import React from 'react';
 
 export const HelpDropdown = () => (

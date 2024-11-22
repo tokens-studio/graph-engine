@@ -1,4 +1,3 @@
-import { FloppyDisk } from '@tokens-studio/icons';
 import { IField } from './interface.js';
 import { IconButton, Stack, Text } from '@tokens-studio/ui';
 import { Input } from '@tokens-studio/graph-engine';
@@ -6,6 +5,7 @@ import { Slider } from '../slider/index.js';
 import { delayedUpdateSelector } from '@/redux/selectors/index.js';
 import { observer } from 'mobx-react-lite';
 import { useSelector } from 'react-redux';
+import FloppyDisk from '@tokens-studio/icons/FloppyDisk.js';
 import React, { useCallback } from 'react';
 
 export const SliderField = observer(({ port, readOnly }: IField) => {

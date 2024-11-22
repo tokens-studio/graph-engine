@@ -11,20 +11,18 @@ import { observer } from 'mobx-react-lite';
 import { useSelector } from 'react-redux';
 import React, { useCallback, useMemo } from 'react';
 
-import {
-  Download,
-  EyeClosed,
-  MoreVert,
-  Puzzle,
-  Undo,
-  Xmark,
-} from '@tokens-studio/icons';
 import { EyeSolid } from 'iconoir-react';
 import { IField } from '@/components/controls/interface.js';
 import { InlineTypeLabel } from '@/components/flow/index.js';
 import { controls } from '@/redux/selectors/registry.js';
 import { deletable, hidden, resetable } from '@/annotations/index.js';
 import { useGraph } from '@/hooks/useGraph.js';
+import Download from '@tokens-studio/icons/Download.js';
+import EyeClosed from '@tokens-studio/icons/EyeClosed.js';
+import MoreVert from '@tokens-studio/icons/MoreVert.js';
+import Puzzle from '@tokens-studio/icons/Puzzle.js';
+import Undo from '@tokens-studio/icons/Undo.js';
+import Xmark from '@tokens-studio/icons/Xmark.js';
 import copy from 'copy-to-clipboard';
 
 export interface IPortPanel {

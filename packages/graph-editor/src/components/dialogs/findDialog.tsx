@@ -1,5 +1,4 @@
 import { Button, Dialog, IconButton, Text, TextInput } from '@tokens-studio/ui';
-import { Xmark } from '@tokens-studio/icons';
 import { title as annotatedTitle } from '@/annotations/index.js';
 import {
   graphEditorSelector,
@@ -8,6 +7,7 @@ import {
 import { useDispatch, useGraph } from '@/hooks/index.js';
 import { useSelector } from 'react-redux';
 import React from 'react';
+import Xmark from '@tokens-studio/icons/Xmark.js';
 
 export const FindDialog = () => {
   const [id, setId] = React.useState('');

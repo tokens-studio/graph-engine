@@ -1,6 +1,6 @@
 import { NODE } from '../schemas/index.js';
-import { SoundHigh } from '@tokens-studio/icons';
 import React from 'react';
+import SoundHigh from '@tokens-studio/icons/SoundHigh.js';
 
 export const icons = {
 	[NODE]: <SoundHigh />

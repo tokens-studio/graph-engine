@@ -1,8 +1,8 @@
-import { Download } from '@tokens-studio/icons';
 import { IconButton, Tooltip } from '@tokens-studio/ui';
 import { ImperativeEditorRef } from '@/editor/editorTypes.js';
 import { mainGraphSelector } from '@/redux/selectors/graph.js';
 import { useSelector } from 'react-redux';
+import Download from '@tokens-studio/icons/Download.js';
 import React from 'react';
 export const DownloadToolbarButton = () => {
   const mainGraph = useSelector(mainGraphSelector);

@@ -1,8 +1,8 @@
 import { DropdownMenu, IconButton, Tooltip } from '@tokens-studio/ui';
-import { LayoutLeft } from '@tokens-studio/icons';
 import { dockerSelector } from '@/redux/selectors/index.js';
 import { useLayoutButton } from '../../../hooks/useLayoutButton.js';
 import { useSelector } from 'react-redux';
+import LayoutLeft from '@tokens-studio/icons/LayoutLeft.js';
 import React, { MutableRefObject } from 'react';
 import type { DockLayout } from 'rc-dock';
 

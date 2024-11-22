@@ -2,7 +2,6 @@ import { Box, Heading, IconButton, Stack } from '@tokens-studio/ui';
 import React, { useMemo } from 'react';
 
 import { DynamicInputs } from './dynamicInputs.js';
-import { InfoCircle } from '@tokens-studio/icons';
 import { PortPanel } from '@/components/portPanel/index.js';
 import { annotatedDynamicInputs } from '@tokens-studio/graph-engine';
 import { currentNode } from '@/redux/selectors/graph.js';
@@ -10,6 +9,7 @@ import { editable } from '@/annotations/index.js';
 import { inputControls } from '@/redux/selectors/registry.js';
 import { useGraph } from '@/hooks/useGraph.js';
 import { useSelector } from 'react-redux';
+import InfoCircle from '@tokens-studio/icons/InfoCircle.js';
 
 export function Inputsheet() {
   const graph = useGraph();

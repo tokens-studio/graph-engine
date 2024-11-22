@@ -1,18 +1,16 @@
 import { ALIGNMENT, align, distribute } from '@/components/panels/index.js';
-import {
-  AlignHorizontalCenters,
-  AlignHorizontalSpacing,
-  AlignVerticalCenters,
-  AlignVerticalSpacing,
-  CompAlignBottom,
-  CompAlignLeft,
-  CompAlignRight,
-  CompAlignTop,
-} from '@tokens-studio/icons';
 import { DropdownMenu, IconButton, Tooltip } from '@tokens-studio/ui';
 import { Node } from 'reactflow';
 import { graphEditorSelector } from '@/redux/selectors/index.js';
 import { useSelector } from 'react-redux';
+import AlignHorizontalCenters from '@tokens-studio/icons/AlignHorizontalCenters.js';
+import AlignHorizontalSpacing from '@tokens-studio/icons/AlignHorizontalSpacing.js';
+import AlignVerticalCenters from '@tokens-studio/icons/AlignVerticalCenters.js';
+import AlignVerticalSpacing from '@tokens-studio/icons/AlignVerticalSpacing.js';
+import CompAlignBottom from '@tokens-studio/icons/CompAlignBottom.js';
+import CompAlignLeft from '@tokens-studio/icons/CompAlignLeft.js';
+import CompAlignRight from '@tokens-studio/icons/CompAlignRight.js';
+import CompAlignTop from '@tokens-studio/icons/CompAlignTop.js';
 import React from 'react';
 
 const partitionSelectedNodes = (nodes: Node[]) => {

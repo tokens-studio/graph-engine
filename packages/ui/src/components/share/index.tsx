@@ -1,8 +1,9 @@
 import * as Popover from '@radix-ui/react-popover';
 import { Box, IconButton, Label, Stack, TextInput } from '@tokens-studio/ui';
-import { Copy, Xmark } from '@tokens-studio/icons';
 import { styled } from '@tokens-studio/graph-editor';
+import Copy from '@tokens-studio/icons/Copy.js';
 import React from 'react';
+import Xmark from '@tokens-studio/icons/Xmark.js';
 import copy from 'copy-to-clipboard';
 
 const PopoverContent = styled(Popover.Content, {

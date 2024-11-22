@@ -1,13 +1,4 @@
 import { AlignmentPanel } from '../panels/alignment/index.js';
-import {
-  Archive,
-  Cpu,
-  Download,
-  PagePlusIn,
-  Play,
-  Settings as SettingsIcon,
-  Upload,
-} from '@tokens-studio/icons';
 import { DebugPanel } from '../panels/debugger/index.js';
 import { DropPanel } from '../panels/dropPanel/index.js';
 import { GraphPanel } from '../panels/graph/index.js';
@@ -30,7 +21,14 @@ import {
 import { title } from '@/annotations/index.js';
 import { useDispatch } from '@/hooks/index.js';
 import { useSelector } from 'react-redux';
+import Archive from '@tokens-studio/icons/Archive.js';
+import Cpu from '@tokens-studio/icons/Cpu.js';
+import Download from '@tokens-studio/icons/Download.js';
+import PagePlusIn from '@tokens-studio/icons/PagePlusIn.js';
+import Play from '@tokens-studio/icons/Play.js';
 import React, { MutableRefObject, useCallback } from 'react';
+import SettingsIcon from '@tokens-studio/icons/Settings.js';
+import Upload from '@tokens-studio/icons/Upload.js';
 import type { DockLayout } from 'rc-dock';
 
 export interface IWindowButton {

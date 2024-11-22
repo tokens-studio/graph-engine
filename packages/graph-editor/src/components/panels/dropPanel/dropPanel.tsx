@@ -2,12 +2,12 @@ import { Accordion, Box, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { DragItem } from './DragItem.js';
 import { DropPanelStore } from './data.js';
 import { IconoirProvider } from 'iconoir-react';
-import { NavArrowRight } from '@tokens-studio/icons';
 import { NodeEntry } from './NodeEntry.js';
 import { observer } from 'mobx-react-lite';
 import { panelItemsSelector } from '@/redux/selectors/registry.js';
 import { styled } from '@/lib/stitches/index.js';
 import { useSelector } from 'react-redux';
+import NavArrowRight from '@tokens-studio/icons/NavArrowRight.js';
 import React, { useState } from 'react';
 
 const StyledAccordionTrigger = styled(Accordion.Trigger, {

@@ -7,10 +7,11 @@ import {
 	Stack,
 	Text
 } from '@tokens-studio/ui';
-import { Download, Heart } from '@tokens-studio/icons';
 import { client } from '@/api/sdk/index.ts';
 import { styled } from '@tokens-studio/graph-editor';
 import { useErrorToast } from '@/hooks/useToast.tsx';
+import Download from '@tokens-studio/icons/Download.js';
+import Heart from '@tokens-studio/icons/Heart.js';
 import Link from 'next/link.js';
 
 const Wrapper = styled(Box, {

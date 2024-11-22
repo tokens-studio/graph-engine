@@ -1,5 +1,5 @@
 import { IMAGE } from '../schemas/index.js';
-import { MediaImage } from '@tokens-studio/icons';
+import MediaImage from '@tokens-studio/icons/MediaImage.js';
 import React from 'react';
 
 export const icons = {
