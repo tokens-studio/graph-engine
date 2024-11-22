@@ -1,7 +1,6 @@
 import { Accordion, Box, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { DragItem } from './DragItem.js';
 import { DropPanelStore } from './data.js';
-import { IconoirProvider } from 'iconoir-react';
 import { NodeEntry } from './NodeEntry.js';
 import { observer } from 'mobx-react-lite';
 import { panelItemsSelector } from '@/redux/selectors/registry.js';
@@ -139,8 +138,12 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
                     width="full"
                     css={{ padding: '$3 0' }}
                   >
-                    <IconoirProvider
-                      iconProps={{ width: '0.875em', height: '0.875em' }}
+                    <div
+                      style={{
+                        display: 'flex',
+                        width: '0.875em',
+                        height: '0.875em',
+                      }}
                     >
                       <Stack gap={3} align="center">
                         {value.icon}
@@ -158,7 +161,7 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
                       >
                         <StyledChevron />
                       </Box>
-                    </IconoirProvider>
+                    </div>
                   </Stack>
                 </StyledAccordionTrigger>
                 <Accordion.Content>
