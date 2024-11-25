@@ -140,7 +140,7 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
                   >
                     <div
                       style={{
-                        display: 'flex',
+                        display: 'inline-flex',
                         width: '0.875em',
                         height: '0.875em',
                       }}
