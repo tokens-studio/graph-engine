@@ -100,53 +100,60 @@ const NodeTitle = observer(({ selectedNode }: { selectedNode: Node }) => {
   );
 });
 
-const NodeDescription = observer(({
-  selectedNode,
-  annotations,
-}: {
-  selectedNode: Node;
-  annotations: Record<string, unknown>;
-}) => {
-  const onChangeDesc = useCallback(
-    (newString: string) => {
-      selectedNode.setAnnotation(description, newString);
-    },
-    [selectedNode],
-  );
+const NodeDescription = observer(
+  ({
+    selectedNode,
+    annotations,
+  }: {
+    selectedNode: Node;
+    annotations: Record<string, unknown>;
+  }) => {
+    const onChangeDesc = useCallback(
+      (newString: string) => {
+        selectedNode.setAnnotation(description, newString);
+      },
+      [selectedNode],
+    );
 
-  return (
-    <Stack direction="column" gap={2}>
-      <Label>Description</Label>
-      <Textarea
-        placeholder={selectedNode.factory.description}
-        onChange={onChangeDesc}
-        value={annotations[description] as string}
-      />
-    </Stack>
-  );
-});
+    return (
+      <Stack direction="column" gap={2}>
+        <Label>Description</Label>
+        <Textarea
+          placeholder={selectedNode.factory.description}
+          onChange={onChangeDesc}
+          value={annotations[description] as string}
+        />
+      </Stack>
+    );
+  },
+);
 
-const NodeSettings = observer(({
-  selectedNode,
-  annotations,
-}: {
-  selectedNode: Node;
-  annotations: Record<string, unknown>;
-}) => {
-  return (
-    <Stack direction="column" gap={2}>
-      <Label>Node ID</Label>
-      <Text size="xsmall" muted>
-        {selectedNode?.id}
-      </Text>
-      <Label>Node Type</Label>
-      <Text size="xsmall" muted>
-        {selectedNode?.factory.type}
-      </Text>
-      <NodeTitle selectedNode={selectedNode} />
-      <NodeDescription selectedNode={selectedNode} annotations={annotations} />
-      <Label>Annotations</Label>
-      <Annotations annotations={annotations} />
-    </Stack>
-  );
-});
+const NodeSettings = observer(
+  ({
+    selectedNode,
+    annotations,
+  }: {
+    selectedNode: Node;
+    annotations: Record<string, unknown>;
+  }) => {
+    return (
+      <Stack direction="column" gap={2}>
+        <Label>Node ID</Label>
+        <Text size="xsmall" muted>
+          {selectedNode?.id}
+        </Text>
+        <Label>Node Type</Label>
+        <Text size="xsmall" muted>
+          {selectedNode?.factory.type}
+        </Text>
+        <NodeTitle selectedNode={selectedNode} />
+        <NodeDescription
+          selectedNode={selectedNode}
+          annotations={annotations}
+        />
+        <Label>Annotations</Label>
+        <Annotations annotations={annotations} />
+      </Stack>
+    );
+  },
+);
