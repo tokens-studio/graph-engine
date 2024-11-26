@@ -15,7 +15,7 @@ import { observer } from 'mobx-react-lite';
 import { useGraph } from '@/hooks/useGraph.js';
 import { useSelector } from 'react-redux';
 
-export function NodeSettingsPanel() {
+export const NodeSettingsPanel = observer(() => {
   const graph = useGraph();
   const nodeID = useSelector(currentNode);
   const selectedNode = useMemo(() => graph?.getNode(nodeID), [graph, nodeID]);
@@ -39,7 +39,7 @@ export function NodeSettingsPanel() {
       </Box>
     </Stack>
   );
-}
+});
 
 const Annotations = observer(({ annotations }: Record<string, unknown>) => {
   return (
@@ -81,12 +81,12 @@ const Annotations = observer(({ annotations }: Record<string, unknown>) => {
   );
 });
 
-const NodeTitle = ({ selectedNode }: { selectedNode: Node }) => {
+const NodeTitle = observer(({ selectedNode }: { selectedNode: Node }) => {
   const onChangeTitle = useCallback(
     (e) => {
-      selectedNode.annotations[title] = e.target.value;
+      selectedNode.setAnnotation(title, e.target.value);
     },
-    [selectedNode.annotations],
+    [selectedNode],
   );
 
   return (
@@ -98,9 +98,9 @@ const NodeTitle = ({ selectedNode }: { selectedNode: Node }) => {
       />
     </Stack>
   );
-};
+});
 
-const NodeDescription = ({
+const NodeDescription = observer(({
   selectedNode,
   annotations,
 }: {
@@ -124,9 +124,9 @@ const NodeDescription = ({
       />
     </Stack>
   );
-};
+});
 
-const NodeSettings = ({
+const NodeSettings = observer(({
   selectedNode,
   annotations,
 }: {
@@ -149,4 +149,4 @@ const NodeSettings = ({
       <Annotations annotations={annotations} />
     </Stack>
   );
-};
+});
