@@ -89,11 +89,7 @@ export const BaseNodeWrapper = (props: NodeProps) => {
               }}
             >
               <Stack direction="row" gap={2} align="center">
-                {icon && (
-                  <div style={{ width: '0.875em', height: '0.875em' }}>
-                    {icon}
-                  </div>
-                )}
+                {icon}
                 <Stack direction="column">
                   <Text
                     css={{

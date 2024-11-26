@@ -7,11 +7,7 @@ import React from 'react';
 
 export const GraphToolbar = () => {
   const toolbarButtons = useSelector(ToolBarButtonsSelector);
-  return (
-    <div style={{ width: '1.5em', height: '1.5em' }}>
-      <ToolbarRoot>{toolbarButtons}</ToolbarRoot>
-    </div>
-  );
+  return <ToolbarRoot>{toolbarButtons}</ToolbarRoot>;
 };
 
 const ToolbarRoot = styled(Toolbar.Root, {

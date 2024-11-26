@@ -138,30 +138,22 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
                     width="full"
                     css={{ padding: '$3 0' }}
                   >
-                    <div
-                      style={{
-                        display: 'inline-flex',
-                        width: '0.875em',
-                        height: '0.875em',
+                    <Stack gap={3} align="center">
+                      {value.icon}
+                      <Text size="xsmall" bold css={{ textAlign: 'left' }}>
+                        {value.title}
+                      </Text>
+                    </Stack>
+                    <Box
+                      css={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '$5',
                       }}
                     >
-                      <Stack gap={3} align="center">
-                        {value.icon}
-                        <Text size="xsmall" bold css={{ textAlign: 'left' }}>
-                          {value.title}
-                        </Text>
-                      </Stack>
-                      <Box
-                        css={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          width: '$5',
-                        }}
-                      >
-                        <StyledChevron />
-                      </Box>
-                    </div>
+                      <StyledChevron />
+                    </Box>
                   </Stack>
                 </StyledAccordionTrigger>
                 <Accordion.Content>
