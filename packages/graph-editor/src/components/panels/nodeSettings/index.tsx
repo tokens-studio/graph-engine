@@ -81,48 +81,34 @@ const Annotations = observer(({ annotations }: Record<string, unknown>) => {
   );
 });
 
-const NodeTitle = observer(({ selectedNode }: { selectedNode: Node }) => {
-  const [localTitle, setLocalTitle] = React.useState(
-    (selectedNode.annotations[title] as string) || '',
-  );
-
-  // Update local state when the annotation changes
-  React.useEffect(() => {
-    setLocalTitle((selectedNode.annotations[title] as string) || '');
-  }, [selectedNode.annotations[title]]);
-
+const NodeTitle = ({ selectedNode }: { selectedNode: Node }) => {
   const onChangeTitle = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newValue = e.target.value;
-      setLocalTitle(newValue);
-      selectedNode.setAnnotation(title, newValue);
+    (e) => {
+      selectedNode.annotations[title] = e.target.value;
     },
-    [selectedNode],
+    [selectedNode.annotations],
   );
 
   return (
     <Stack direction="column" gap={2}>
       <Label>Title</Label>
-      <TextInput onChange={onChangeTitle} value={localTitle} />
+      <TextInput
+        onChange={onChangeTitle}
+        value={selectedNode.annotations[title] as string}
+      />
     </Stack>
   );
-});
+};
 
-const NodeDescription = observer(({ selectedNode }: { selectedNode: Node }) => {
-  const [localDescription, setLocalDescription] = React.useState(
-    (selectedNode.annotations[description] as string) || '',
-  );
-
-  // Update local state when the annotation changes
-  React.useEffect(() => {
-    setLocalDescription(
-      (selectedNode.annotations[description] as string) || '',
-    );
-  }, [selectedNode.annotations[description]]);
-
+const NodeDescription = ({
+  selectedNode,
+  annotations,
+}: {
+  selectedNode: Node;
+  annotations: Record<string, unknown>;
+}) => {
   const onChangeDesc = useCallback(
     (newString: string) => {
-      setLocalDescription(newString);
       selectedNode.setAnnotation(description, newString);
     },
     [selectedNode],
@@ -134,11 +120,11 @@ const NodeDescription = observer(({ selectedNode }: { selectedNode: Node }) => {
       <Textarea
         placeholder={selectedNode.factory.description}
         onChange={onChangeDesc}
-        value={localDescription}
+        value={annotations[description] as string}
       />
     </Stack>
   );
-});
+};
 
 const NodeSettings = ({
   selectedNode,
@@ -158,7 +144,7 @@ const NodeSettings = ({
         {selectedNode?.factory.type}
       </Text>
       <NodeTitle selectedNode={selectedNode} />
-      <NodeDescription selectedNode={selectedNode} />
+      <NodeDescription selectedNode={selectedNode} annotations={annotations} />
       <Label>Annotations</Label>
       <Annotations annotations={annotations} />
     </Stack>
