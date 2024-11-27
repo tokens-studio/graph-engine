@@ -51,6 +51,7 @@ function EmptyStateInner({ onLoadExamples, showNodesPanel }: IEmptyStateProps) {
 					</Button>
 					<Button
 						emphasis='high'
+						appearance='accent'
 						onClick={handleTriggerAddNode}
 						icon={<JournalPage />}
 					>

@@ -63,10 +63,8 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
         </Stack>
         <Accordion
           type="multiple"
-          defaultValue={[]}
           value={opened}
           onValueChange={setOpened}
-          className={styles.accordion}
         >
           {data.groups.map((value) => {
             const filteredValues = value.items
@@ -92,40 +90,17 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
 
             return (
               <Accordion.Item value={value.key} key={value.key}>
-                <div className={styles.accordionTrigger}>
-                  <Stack
-                    align="center"
-                    justify="between"
-                    width="full"
-                    style={{ padding: 'var(--component-spacing-md) 0' }}
-                  >
-                    <IconoirProvider
-                      iconProps={{ width: '0.875em', height: '0.875em' }}
-                    >
-                      <Stack gap={3} align="center">
-                        {value.icon}
-                        <Text size="xsmall" bold style={{ textAlign: 'left' }}>
-                          {value.title}
-                        </Text>
-                      </Stack>
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          width: 'var(--size-250)',
-                        }}
-                      >
-                        <NavArrowRight className={styles.chevron} />
-                      </div>
-                    </IconoirProvider>
-                  </Stack>
-                </div>
+                <Accordion.Trigger className={styles.accordionTrigger}>
+                  <div className={styles.accordionTriggerIcon}>
+                    {value.icon}
+                  </div>
+                  <div className={styles.accordionTriggerTitle}>
+                    {value.title}
+                  </div>
+                  <NavArrowRight className={styles.chevron} />
+                </Accordion.Trigger>
                 <Accordion.Content>
-                  <Stack
-                    direction="column"
-                    style={{ padding: 0, marginBottom: 'var(--component-spacing-lg)' }}
-                  >
+                  <Stack direction="column">
                     {filteredValues}
                   </Stack>
                 </Accordion.Content>

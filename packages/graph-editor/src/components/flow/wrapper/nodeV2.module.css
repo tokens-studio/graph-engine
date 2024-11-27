@@ -5,10 +5,10 @@
 
 .inlineTypeLabel {
   position: absolute;
-  background: var(--colors-gray4);
-  color: var(--colors-fgDefault);
-  padding: var(--space-1) var(--space-2);
-  font-size: 10px;
+  background: var(--color-neutral-surface-default-idle-bg);
+  color: var(--color-neutral-surface-default-idle-fg-default);
+  padding: var(--component-spacing-sm);
+  font: var(--typography-label-xs);
   border-radius: var(--radii-small);
   text-transform: uppercase;
 }

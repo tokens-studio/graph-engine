@@ -45,7 +45,7 @@ export function LogsPanel() {
           placeholder="Search logs. <TODO>"
           onChange={onSearchChange}
         />
-        <IconButton onClick={clearLogs} icon={<Trash />} tooltip="Clear logs" />
+        <IconButton onClick={clearLogs} icon={<Trash />} />
       </Stack>
 
       <div style={{ padding: 'var(--component-spacing-xs)', overflow: 'auto', fontSize: 'smaller' }}>

@@ -5,16 +5,16 @@
 
 .collapserContent {
   position: relative;
-  padding: var(--space-2);
-  padding-bottom: var(--space-3);
+  padding: var(--component-spacing-xs);
+  padding-bottom: var(--component-spacing-md);
 }
 
 .nodeWrapper {
   position: relative;
   box-shadow: var(--shadows-contextMenu);
-  border-radius: var(--radii-medium);
-  background: var(--colors-nodeBg);
-  border: 2px solid var(--colors-gray4);
+  border-radius: var(--component-radii-md);
+  background: var(--color-neutral-surface-default-idle-bg);
+  border: 2px solid var(--color-neutral-stroke-subtle);
   flex: 1;
   display: flex;
 }

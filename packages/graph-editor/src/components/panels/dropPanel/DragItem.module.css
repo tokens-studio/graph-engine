@@ -1,31 +1,24 @@
-.wrapper {
-  user-select: none;
+.button {
+  cursor: grab;
+  padding: var(--component-spacing-xs) var(--component-spacing-sm);
+  border: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  background-color: var(--color-neutral-surface-ghost-idle-bg);
+  color: var(--color-neutral-surface-ghost-idle-fg-default);
 }
 
 .grabber {
   opacity: 0;
-  color: var(--colors-fgSubtle);
-  position: absolute;
-  left: var(--space-1);
-  top: 0;
-  height: 100%;
+  color: var(--color-neutral-surface-ghost-idle-fg-default);
   display: flex;
   align-items: center;
 }
 
-.button {
-  cursor: grab;
-  padding: var(--space-1) var(--space-3);
-  padding-left: var(--space-5);
-  border-radius: var(--radii-small);
-  border: none;
-  width: 100%;
-  position: relative;
-  background-color: var(--colors-buttonSecondaryBgHover);
-}
-
 .button:hover {
-  background: var(--colors-bgSubtle);
+  background: var(--color-neutral-surface-ghost-hover-bg);
 }
 
 .button:hover .grabber {

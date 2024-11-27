@@ -124,7 +124,6 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
             <DropdownMenu.Trigger asChild>
               <IconButton
                 size="small"
-                tooltip="Settings"
                 // onClick={onReset}
                 emphasis="low"
                 icon={<MoreVert />}

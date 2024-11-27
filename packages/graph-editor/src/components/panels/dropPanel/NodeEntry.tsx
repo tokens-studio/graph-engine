@@ -9,13 +9,7 @@ export const NodeEntry = ({
   text: string;
 }) => {
   return (
-    <Stack
-      direction="row"
-      gap={2}
-      justify="start"
-      align="center"
-      style={{ paddingLeft: 'var(--component-spacing-md)', height: 'var(--size-150)' }}
-    >
+    <>
       {icon && (
         <div
           style={{
@@ -35,7 +29,6 @@ export const NodeEntry = ({
       <Text
         size="xsmall"
         style={{
-          color: 'var(--color-neutral-canvas-default-fg-subtle)',
           whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',
           overflow: 'hidden',
@@ -43,6 +36,6 @@ export const NodeEntry = ({
       >
         {text}
       </Text>
-    </Stack>
+    </>
   );
 };

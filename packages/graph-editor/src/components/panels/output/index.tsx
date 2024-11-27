@@ -42,10 +42,6 @@ const OutputSheetObserver = observer(({ node }: { node: Node }) => {
         <Stack direction="column" gap={3}>
           <Stack gap={2} align="start" justify="between">
             <Heading size="large"> {node.factory.title}</Heading>
-            <IconButton
-              tooltip={node.factory.description}
-              icon={<InfoCircleSolid />}
-            />
           </Stack>
         </Stack>
 

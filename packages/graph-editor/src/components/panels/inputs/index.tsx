@@ -53,10 +53,6 @@ export function Inputsheet() {
         <Stack direction="column" gap={3}>
           <Stack gap={2} align="start" justify="between">
             <Heading size="large"> {selectedNode.factory.title}</Heading>
-            <IconButton
-              tooltip={selectedNode.factory.description}
-              icon={<InfoCircle />}
-            />
           </Stack>
         </Stack>
 
