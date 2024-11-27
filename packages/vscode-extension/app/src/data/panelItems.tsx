@@ -13,7 +13,7 @@ import Css3 from '@tokens-studio/icons/Css3.js';
 import EaseCurveControlPoints from '@tokens-studio/icons/EaseCurveControlPoints.js';
 import EditPencil from '@tokens-studio/icons/EditPencil.js';
 import EmptyPage from '@tokens-studio/icons/EmptyPage.js';
-import EyeSolid from '@tokens-studio/icons/EyeSolid.js';
+import Eye from '@tokens-studio/icons/Eye.js';
 import FillColor from '@tokens-studio/icons/FillColor.js';
 import React from 'react';
 import SigmaFunction from '@tokens-studio/icons/SigmaFunction.js';
@@ -33,7 +33,7 @@ const icons = {
   gradient: <FillColor />,
   logic: <CodeBrackets />,
   math: <Calculator />,
-  preview: <EyeSolid />,
+  preview: <Eye />,
   series: <SigmaFunction />,
   string: <Text />,
   typing: <Type />,
