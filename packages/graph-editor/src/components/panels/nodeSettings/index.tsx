@@ -15,7 +15,7 @@ import { observer } from 'mobx-react-lite';
 import { useGraph } from '@/hooks/useGraph.js';
 import { useSelector } from 'react-redux';
 
-export function NodeSettingsPanel() {
+export const NodeSettingsPanel = () => {
   const graph = useGraph();
   const nodeID = useSelector(currentNode);
   const selectedNode = useMemo(() => graph?.getNode(nodeID), [graph, nodeID]);
@@ -39,7 +39,7 @@ export function NodeSettingsPanel() {
       </Box>
     </Stack>
   );
-}
+};
 
 const Annotations = observer(({ annotations }: Record<string, unknown>) => {
   return (
@@ -81,12 +81,12 @@ const Annotations = observer(({ annotations }: Record<string, unknown>) => {
   );
 });
 
-const NodeTitle = ({ selectedNode }: { selectedNode: Node }) => {
+const NodeTitle = observer(({ selectedNode }: { selectedNode: Node }) => {
   const onChangeTitle = useCallback(
     (e) => {
-      selectedNode.annotations[title] = e.target.value;
+      selectedNode.setAnnotation(title, e.target.value);
     },
-    [selectedNode.annotations],
+    [selectedNode],
   );
 
   return (
@@ -98,55 +98,62 @@ const NodeTitle = ({ selectedNode }: { selectedNode: Node }) => {
       />
     </Stack>
   );
-};
+});
 
-const NodeDescription = ({
-  selectedNode,
-  annotations,
-}: {
-  selectedNode: Node;
-  annotations: Record<string, unknown>;
-}) => {
-  const onChangeDesc = useCallback(
-    (newString: string) => {
-      selectedNode.setAnnotation(description, newString);
-    },
-    [selectedNode],
-  );
+const NodeDescription = observer(
+  ({
+    selectedNode,
+    annotations,
+  }: {
+    selectedNode: Node;
+    annotations: Record<string, unknown>;
+  }) => {
+    const onChangeDesc = useCallback(
+      (newString: string) => {
+        selectedNode.setAnnotation(description, newString);
+      },
+      [selectedNode],
+    );
 
-  return (
-    <Stack direction="column" gap={2}>
-      <Label>Description</Label>
-      <Textarea
-        placeholder={selectedNode.factory.description}
-        onChange={onChangeDesc}
-        value={annotations[description] as string}
-      />
-    </Stack>
-  );
-};
+    return (
+      <Stack direction="column" gap={2}>
+        <Label>Description</Label>
+        <Textarea
+          placeholder={selectedNode.factory.description}
+          onChange={onChangeDesc}
+          value={annotations[description] as string}
+        />
+      </Stack>
+    );
+  },
+);
 
-const NodeSettings = ({
-  selectedNode,
-  annotations,
-}: {
-  selectedNode: Node;
-  annotations: Record<string, unknown>;
-}) => {
-  return (
-    <Stack direction="column" gap={2}>
-      <Label>Node ID</Label>
-      <Text size="xsmall" muted>
-        {selectedNode?.id}
-      </Text>
-      <Label>Node Type</Label>
-      <Text size="xsmall" muted>
-        {selectedNode?.factory.type}
-      </Text>
-      <NodeTitle selectedNode={selectedNode} />
-      <NodeDescription selectedNode={selectedNode} annotations={annotations} />
-      <Label>Annotations</Label>
-      <Annotations annotations={annotations} />
-    </Stack>
-  );
-};
+const NodeSettings = observer(
+  ({
+    selectedNode,
+    annotations,
+  }: {
+    selectedNode: Node;
+    annotations: Record<string, unknown>;
+  }) => {
+    return (
+      <Stack direction="column" gap={2}>
+        <Label>Node ID</Label>
+        <Text size="xsmall" muted>
+          {selectedNode?.id}
+        </Text>
+        <Label>Node Type</Label>
+        <Text size="xsmall" muted>
+          {selectedNode?.factory.type}
+        </Text>
+        <NodeTitle selectedNode={selectedNode} />
+        <NodeDescription
+          selectedNode={selectedNode}
+          annotations={annotations}
+        />
+        <Label>Annotations</Label>
+        <Annotations annotations={annotations} />
+      </Stack>
+    );
+  },
+);
