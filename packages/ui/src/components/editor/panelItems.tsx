@@ -6,6 +6,7 @@ import {
 } from '@tokens-studio/graph-editor';
 import { nodeLookup as audioLookup } from '@tokens-studio/graph-engine-nodes-audio';
 import { nodes as designNodes } from '@tokens-studio/graph-engine-nodes-design-tokens';
+import { nodes as figmaNodes } from '@tokens-studio/graph-engine-nodes-figma';
 import Accessibility from '@tokens-studio/icons/Accessibility.js';
 import Calculator from '@tokens-studio/icons/Calculator.js';
 import CodeBrackets from '@tokens-studio/icons/CodeBrackets.js';
@@ -21,7 +22,6 @@ import Star from '@tokens-studio/icons/Star.js';
 import Text from '@tokens-studio/icons/Text.js';
 import TwoPointsCircle from '@tokens-studio/icons/TwoPointsCircle.js';
 import Type from '@tokens-studio/icons/Type.js';
-import { nodes as figmaNodes } from '@tokens-studio/graph-engine-nodes-figma';
 
 const icons = {
 	accessibility: <Accessibility />,
