@@ -21,6 +21,7 @@ import Star from '@tokens-studio/icons/Star.js';
 import Text from '@tokens-studio/icons/Text.js';
 import TwoPointsCircle from '@tokens-studio/icons/TwoPointsCircle.js';
 import Type from '@tokens-studio/icons/Type.js';
+import { nodes as figmaNodes } from '@tokens-studio/graph-engine-nodes-figma';
 
 const icons = {
 	accessibility: <Accessibility />,
@@ -96,6 +97,23 @@ panelItems.groups.push(
 		key: 'naming',
 		icon: icons.naming,
 		items: namingNodes.map(
+			node =>
+				new PanelItem({
+					type: node.type,
+					text: node.title,
+					description: node.description,
+					docs: ''
+				})
+		)
+	})
+);
+
+panelItems.groups.push(
+	new PanelGroup({
+		title: 'Figma',
+		key: 'figma',
+		icon: <DatabaseScript />,
+		items: figmaNodes.map(
 			node =>
 				new PanelItem({
 					type: node.type,

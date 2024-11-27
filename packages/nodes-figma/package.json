@@ -1,0 +1,68 @@
+{
+  "name": "@tokens-studio/graph-engine-nodes-figma",
+  "version": "0.0.1",
+  "description": "Figma-specific nodes for the graph engine",
+  "license": "MPL-2.0",
+  "author": "andrew@hyma.io",
+  "type": "module",
+  "exports": {
+    "./*": {
+      "import": "./dist/*",
+      "types": "./dist/*",
+      "style": "./dist/*"
+    },
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tspc  -p tsconfig.prod.json",
+    "dev": "tspc  -p tsconfig.prod.json --watch",
+    "docs": "typedoc",
+    "format": "npm run format:eslint && npm run format:prettier",
+    "format:eslint": "eslint . --fix",
+    "format:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --write",
+    "lint": "npm run lint:prettier && npm run lint:eslint",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --check",
+    "release": "npm run build && changeset publish",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@tokens-studio/types": "^0.4.0",
+    "@tokens-studio/ui": "^0.6.9",
+    "dot-prop": "^8.0.2"
+  },
+  "peerDependencies": {
+    "@tokens-studio/graph-editor": "*",
+    "@tokens-studio/graph-engine": "*",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.21.5",
+    "@changesets/cli": "^2.26.0",
+    "@tokens-studio/eslint-config-custom": "*",
+    "@tokens-studio/prettier-config-custom": "*",
+    "@tokens-studio/graph-editor": "*",
+    "@tokens-studio/graph-engine": "*",
+    "@tokens-studio/graph-engine-nodes-design-tokens": "*",
+    "@types/node": "^18.15.11",
+    "ts-node": "^10.9.1",
+    "typescript-transform-paths": "^3.5.1",
+    "typedoc": "^0.24.7",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  },
+  "keywords": [
+    "studio",
+    "tokens",
+    "ui"
+  ]
+}

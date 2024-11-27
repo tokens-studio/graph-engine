@@ -10,6 +10,7 @@ import deltaE from './deltaE.js';
 import distance from './distance.js';
 import flattenAlpha from './flattenAlpha.js';
 import lighten from './lighten.js';
+import matchAlpha from './matchAlpha.js';
 import mix from './mix.js';
 import name from './name.js';
 import poline from './poline.js';
@@ -28,6 +29,7 @@ export const nodes = [
 	distance,
 	deltaE,
 	flattenAlpha,
+	matchAlpha,
 	name,
 	poline,
 	scale,

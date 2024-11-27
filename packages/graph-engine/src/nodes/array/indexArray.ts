@@ -50,7 +50,7 @@ export default class NodeDefinition<T> extends Node {
 		const array = this.inputs.array;
 		const { index } = this.getAllInputs();
 		//Get the value
-		const calculated = array.value[index];
+		const calculated = array.value.at(index)!;
 		//Extract the type
 		//We assume that the array has a single defined item
 
