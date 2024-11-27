@@ -1,10 +1,10 @@
 import { Button, DropdownMenu } from '@tokens-studio/ui';
-import { NavArrowRight } from 'iconoir-react';
 import { getViewports } from '@/components/hotKeys/index.js';
 import { savedViewports } from '@/annotations/index.js';
 import { useLocalGraph } from '@/hooks/index.js';
 import { useReactFlow, useViewport } from 'reactflow';
 import { useToast } from '@/hooks/useToast.js';
+import NavArrowRight from '@tokens-studio/icons/NavArrowRight.js';
 import React, { useCallback } from 'react';
 
 export const ZoomDropdown = () => {

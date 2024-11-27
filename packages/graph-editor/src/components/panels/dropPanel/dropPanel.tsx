@@ -1,12 +1,12 @@
 import { Accordion, Box, Stack, Text, TextInput } from '@tokens-studio/ui';
 import { DragItem } from './DragItem.js';
 import { DropPanelStore } from './data.js';
-import { IconoirProvider, NavArrowRight } from 'iconoir-react';
 import { NodeEntry } from './NodeEntry.js';
 import { observer } from 'mobx-react-lite';
 import { panelItemsSelector } from '@/redux/selectors/registry.js';
 import { styled } from '@/lib/stitches/index.js';
 import { useSelector } from 'react-redux';
+import NavArrowRight from '@tokens-studio/icons/NavArrowRight.js';
 import React, { useState } from 'react';
 
 const StyledAccordionTrigger = styled(Accordion.Trigger, {
@@ -138,26 +138,22 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
                     width="full"
                     css={{ padding: '$3 0' }}
                   >
-                    <IconoirProvider
-                      iconProps={{ width: '0.875em', height: '0.875em' }}
+                    <Stack gap={3} align="center">
+                      {value.icon}
+                      <Text size="xsmall" bold css={{ textAlign: 'left' }}>
+                        {value.title}
+                      </Text>
+                    </Stack>
+                    <Box
+                      css={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '$5',
+                      }}
                     >
-                      <Stack gap={3} align="center">
-                        {value.icon}
-                        <Text size="xsmall" bold css={{ textAlign: 'left' }}>
-                          {value.title}
-                        </Text>
-                      </Stack>
-                      <Box
-                        css={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          width: '$5',
-                        }}
-                      >
-                        <StyledChevron />
-                      </Box>
-                    </IconoirProvider>
+                      <StyledChevron />
+                    </Box>
                   </Stack>
                 </StyledAccordionTrigger>
                 <Accordion.Content>

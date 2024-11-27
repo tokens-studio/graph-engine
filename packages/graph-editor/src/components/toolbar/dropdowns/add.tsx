@@ -1,11 +1,12 @@
 import { Button, DropdownMenu, Stack, Tooltip } from '@tokens-studio/ui';
-import { NavArrowRight, Plus } from 'iconoir-react';
 import { panelItemsSelector } from '@/redux/selectors/index.js';
 import { useAction } from '@/editor/actions/provider.js';
 import { useDispatch } from '@/hooks/index.js';
 import { useReactFlow } from 'reactflow';
 import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
 import { useSelector } from 'react-redux';
+import NavArrowRight from '@tokens-studio/icons/NavArrowRight.js';
+import Plus from '@tokens-studio/icons/Plus.js';
 import React, { useCallback } from 'react';
 
 const scrollbarStyle = {

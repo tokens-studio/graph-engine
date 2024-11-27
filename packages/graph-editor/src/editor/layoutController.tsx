@@ -22,9 +22,11 @@ import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
 import { FindDialog } from '@/components/dialogs/findDialog.js';
 import { IconButton, Stack, Tooltip } from '@tokens-studio/ui';
 import { MAIN_GRAPH_ID } from '@/constants.js';
-import { Maximize, Reduce, Xmark } from 'iconoir-react';
 import { OutputSheet } from '@/components/panels/output/index.js';
+import Maximize from '@tokens-studio/icons/Maximize.js';
 import React, { MutableRefObject, useEffect, useMemo } from 'react';
+import Reduce from '@tokens-studio/icons/Reduce.js';
+import Xmark from '@tokens-studio/icons/Xmark.js';
 
 OutputSheet;
 

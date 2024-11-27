@@ -1,5 +1,4 @@
 import * as Toolbar from '@radix-ui/react-toolbar';
-import { IconoirProvider } from 'iconoir-react';
 import { ToolBarButtonsSelector } from '@/redux/selectors/index.js';
 import { blackA } from '@radix-ui/colors';
 import { styled } from '@stitches/react';
@@ -8,11 +7,7 @@ import React from 'react';
 
 export const GraphToolbar = () => {
   const toolbarButtons = useSelector(ToolBarButtonsSelector);
-  return (
-    <IconoirProvider iconProps={{ width: '1.5em', height: '1.5em' }}>
-      <ToolbarRoot>{toolbarButtons}</ToolbarRoot>
-    </IconoirProvider>
-  );
+  return <ToolbarRoot>{toolbarButtons}</ToolbarRoot>;
 };
 
 const ToolbarRoot = styled(Toolbar.Root, {

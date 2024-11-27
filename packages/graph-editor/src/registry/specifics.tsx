@@ -5,7 +5,6 @@ import { ColorSwatch } from '@/components/preview/swatch.js';
 import { CurveField } from '@/components/controls/curve.js';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
-import { EyeSolid } from 'iconoir-react';
 import { GraphEditor } from '@/editor/graphEditor.js';
 import { ImperativeEditorRef } from '../index.js';
 import { MathExpression } from '@/components/preview/mathExpression.js';
@@ -14,6 +13,7 @@ import { title as annotatedTitle } from '@/annotations/index.js';
 import { dockerSelector } from '@/redux/selectors/refs.js';
 import { observer } from 'mobx-react-lite';
 import { useSelector } from 'react-redux';
+import Eye from '@tokens-studio/icons/Eye.js';
 import React, { useCallback } from 'react';
 
 const SubgraphExplorer = ({ node }) => {
@@ -61,7 +61,7 @@ const SubgraphExplorer = ({ node }) => {
   }, [dockerRef, node._innerGraph, node.annotations]);
 
   return (
-    <Button variant="primary" icon={<EyeSolid />} onClick={onToggle}>
+    <Button variant="primary" icon={<Eye />} onClick={onToggle}>
       Subgraph Explorer
     </Button>
   );

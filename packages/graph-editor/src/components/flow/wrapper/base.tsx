@@ -1,5 +1,4 @@
 import { Box, Spinner, Stack, Text } from '@tokens-studio/ui';
-import { IconoirProvider } from 'iconoir-react';
 import { styled } from '@stitches/react';
 import React, { useMemo } from 'react';
 
@@ -90,13 +89,7 @@ export const BaseNodeWrapper = (props: NodeProps) => {
               }}
             >
               <Stack direction="row" gap={2} align="center">
-                {icon && (
-                  <IconoirProvider
-                    iconProps={{ width: '0.875em', height: '0.875em' }}
-                  >
-                    {icon}
-                  </IconoirProvider>
-                )}
+                {icon}
                 <Stack direction="column">
                   <Text
                     css={{

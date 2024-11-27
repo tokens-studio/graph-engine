@@ -1,23 +1,21 @@
 import {
-  AlignHorizontalCenters,
-  AlignVerticalCenters,
-  CompAlignBottom,
-  CompAlignBottomSolid,
-  CompAlignLeft,
-  CompAlignRight,
-  CompAlignTop,
-  CompAlignTopSolid,
-} from 'iconoir-react';
-import {
   AlignHorizontalCentersSolid,
   AlignVerticalCentersSolid,
+  CompAlignBottomSolid,
   CompAlignLeftSolid,
   CompAlignRightSolid,
+  CompAlignTopSolid,
 } from 'iconoir-react';
 import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
 import { Node } from 'reactflow';
 import { graphEditorSelector } from '@/redux/selectors/index.js';
 import { useSelector } from 'react-redux';
+import AlignHorizontalCenters from '@tokens-studio/icons/AlignHorizontalCenters.js';
+import AlignVerticalCenters from '@tokens-studio/icons/AlignVerticalCenters.js';
+import CompAlignBottom from '@tokens-studio/icons/CompAlignBottom.js';
+import CompAlignLeft from '@tokens-studio/icons/CompAlignLeft.js';
+import CompAlignRight from '@tokens-studio/icons/CompAlignRight.js';
+import CompAlignTop from '@tokens-studio/icons/CompAlignTop.js';
 import React from 'react';
 
 const partitionSelectedNodes = (nodes: Node[]) => {
