@@ -1,11 +1,11 @@
 import { IconButton, Label, Stack, TextInput } from '@tokens-studio/ui';
 import React, { useState } from 'react';
 
-import { FloppyDisk } from 'iconoir-react';
 import { JSONTree } from 'react-json-tree';
 import { description, title } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
 import { useGraph } from '@/hooks/useGraph.js';
+import FloppyDisk from '@tokens-studio/icons/FloppyDisk.js';
 
 export function GraphPanel() {
   const graph = useGraph();

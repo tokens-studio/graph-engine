@@ -1,7 +1,9 @@
-import { BatteryCharging, JournalPage, PagePlus } from 'iconoir-react';
 import { Button, EmptyState, Stack } from '@tokens-studio/ui';
 import { useCallback } from 'react';
 import { useDispatch } from '@tokens-studio/graph-editor';
+import BatteryCharging from '@tokens-studio/icons/BatteryCharging.js';
+import JournalPage from '@tokens-studio/icons/JournalPage.js';
+import PagePlus from '@tokens-studio/icons/PagePlus.js';
 import React from 'react';
 import globalState from '@/mobx/index.tsx';
 

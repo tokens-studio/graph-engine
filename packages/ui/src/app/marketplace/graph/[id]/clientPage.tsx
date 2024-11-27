@@ -9,10 +9,12 @@ import {
 	Tabs,
 	Text
 } from '@tokens-studio/ui';
-import { Download, Heart } from 'iconoir-react';
+import { ImageHolder, PreviewImage } from '../../clientPage.tsx';
 import { client } from '@/api/sdk/index.ts';
 import { useErrorToast } from '@/hooks/useToast.tsx';
 import { useParams, useRouter } from 'next/navigation.js';
+import Download from '@tokens-studio/icons/Download.js';
+import Heart from '@tokens-studio/icons/Heart.js';
 import MDEditor from '@uiw/react-md-editor';
 import styles from './clientPage.module.css';
 

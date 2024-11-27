@@ -1,8 +1,10 @@
 import { IconButton } from '@tokens-studio/ui';
-import { Pause, Play, Square } from 'iconoir-react';
 import { playStateSelector } from '@/redux/selectors/index.js';
 import { useDispatch, useSelector } from 'react-redux';
+import Pause from '@tokens-studio/icons/Pause.js';
+import Play from '@tokens-studio/icons/Play.js';
 import React from 'react';
+import Square from '@tokens-studio/icons/Square.js';
 
 enum PlayState {
   PLAYING = 'playing',

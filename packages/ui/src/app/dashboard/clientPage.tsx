@@ -1,34 +1,22 @@
 'use client';
 
-import {
-	Book,
-	Download,
-	EditPencil,
-	GraphUp,
-	MoreVert,
-	Plus,
-	Search,
-	Upload,
-	Xmark
-} from 'iconoir-react';
-import {
-	Button,
-	DropdownMenu,
-	Heading,
-	IconButton,
-	Spinner,
-	Stack,
-	Text,
-	TextInput
-} from '@tokens-studio/ui';
 import { Graph } from '@tokens-studio/graph-engine';
 import { ShareButton } from '@/components/editor/toolbar.tsx';
 import { client } from '@/api/sdk/index.ts';
 import { useErrorToast, useToast } from '@/hooks/useToast.tsx';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation.js';
+import Book from '@tokens-studio/icons/Book.js';
+import Download from '@tokens-studio/icons/Download.js';
+import EditPencil from '@tokens-studio/icons/EditPencil.js';
+import GraphUp from '@tokens-studio/icons/GraphUp.js';
 import Link from 'next/link.js';
+import MoreVert from '@tokens-studio/icons/MoreVert.js';
+import Plus from '@tokens-studio/icons/Plus.js';
 import React, { useCallback, useEffect, useState } from 'react';
+import Search from '@tokens-studio/icons/Search.js';
+import Upload from '@tokens-studio/icons/Upload.js';
+import Xmark from '@tokens-studio/icons/Xmark.js';
 import ago from 's-ago';
 import styles from './clientPage.module.css';
 

@@ -1,11 +1,11 @@
 import { BaseNodeWrapper } from '../wrapper/base.js';
-import { EditPencil } from 'iconoir-react';
 import { IconButton, Textarea } from '@tokens-studio/ui';
 import { Node } from '@tokens-studio/graph-engine';
 import { NodeProps, NodeResizer } from 'reactflow';
 import { description, title } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
 import { useLocalGraph } from '@/context/graph.js';
+import EditPencil from '@tokens-studio/icons/EditPencil.js';
 import Markdown from 'react-markdown';
 import React from 'react';
 import styles from './noteNode.module.css';

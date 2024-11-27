@@ -6,11 +6,14 @@ import {
 	Stack,
 	Tooltip
 } from '@tokens-studio/ui';
-import { GitMerge, Home, Settings, ShoppingBag } from 'iconoir-react';
 import { client } from '@/api/sdk/index.ts';
+import GitMerge from '@tokens-studio/icons/GitMerge.js';
+import Home from '@tokens-studio/icons/Home.js';
 import Image from 'next/image.js';
 import Link from 'next/link.js';
 import React from 'react';
+import Settings from '@tokens-studio/icons/Settings.js';
+import ShoppingBag from '@tokens-studio/icons/ShoppingBag.js';
 import TokensStudio from '@/assets/svgs/tokensstudio-logo.svg';
 
 interface RailItem {

@@ -1,7 +1,8 @@
 import * as Popover from '@radix-ui/react-popover';
-import { Copy, Xmark } from 'iconoir-react';
 import { IconButton, Label, Stack, TextInput } from '@tokens-studio/ui';
+import Copy from '@tokens-studio/icons/Copy.js';
 import React from 'react';
+import Xmark from '@tokens-studio/icons/Xmark.js';
 import copy from 'copy-to-clipboard';
 import styles from './index.module.css';
 

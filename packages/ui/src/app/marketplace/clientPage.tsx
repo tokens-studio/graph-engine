@@ -9,6 +9,8 @@ import {
 } from '@tokens-studio/ui';
 import { client } from '@/api/sdk/index.ts';
 import { useErrorToast } from '@/hooks/useToast.tsx';
+import Download from '@tokens-studio/icons/Download.js';
+import Heart from '@tokens-studio/icons/Heart.js';
 import Link from 'next/link.js';
 import styles from './clientPage.module.css';
 

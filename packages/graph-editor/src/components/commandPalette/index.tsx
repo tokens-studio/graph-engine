@@ -8,13 +8,13 @@ import { Heading, Stack, Text } from '@tokens-studio/ui';
 import { Node } from '@tokens-studio/graph-engine';
 import { NodeRequest } from '@/editor/actions/createNode.js';
 import { Node as ReactFlowNode, useReactFlow } from 'reactflow';
-import { Search } from 'iconoir-react';
 import { isActiveElementTextEditable } from '@/utils/isActiveElementTextEditable.js';
 import { observer } from 'mobx-react-lite';
 import { showNodesCmdPaletteSelector } from '@/redux/selectors/ui.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
 import React from 'react';
+import Search from '@tokens-studio/icons/Search.js';
 import styles from './index.module.css';
 
 export interface ICommandMenu {

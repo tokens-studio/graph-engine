@@ -11,8 +11,8 @@ import { client } from '@/api/sdk/index.ts';
 import { useParams, useRouter } from 'next/navigation.js';
 import MDEditor from '@uiw/react-md-editor';
 //Add rehype to prevent any client of injecting malicious code
-import { Upload } from 'iconoir-react';
 import { useState } from 'react';
+import Upload from '@tokens-studio/icons/Upload.js';
 import rehypeSanitize from 'rehype-sanitize';
 
 const Page = () => {

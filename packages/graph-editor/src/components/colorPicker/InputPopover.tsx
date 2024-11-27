@@ -1,6 +1,6 @@
 import * as Popover from '@radix-ui/react-popover';
-import { Xmark } from 'iconoir-react';
 import React from 'react';
+import Xmark from '@tokens-studio/icons/Xmark.js';
 import styles from './InputPopover.module.css';
 
 interface IInputPopover {

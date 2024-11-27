@@ -1,4 +1,3 @@
-import { IconoirProvider } from 'iconoir-react';
 import { Spinner, Stack, Text } from '@tokens-studio/ui';
 import React, { useMemo } from 'react';
 import styles from './base.module.css';
@@ -47,13 +46,7 @@ export const BaseNodeWrapper = (props: NodeProps) => {
               className={styles.header}
             >
               <Stack direction="row" gap={2} align="center">
-                {icon && (
-                  <IconoirProvider
-                    iconProps={{ width: '0.875em', height: '0.875em' }}
-                  >
-                    {icon}
-                  </IconoirProvider>
-                )}
+                {icon}
                 <Stack direction="column">
                   <Text className={styles.title}>
                     {title}
