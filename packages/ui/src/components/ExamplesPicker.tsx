@@ -44,7 +44,12 @@ const ExamplesPicker = ({ open, onClose, loadExample }) => {
 							<Text style={{ font: 'var(--typegraphy-body-sm)' }}>
 								{example.title}
 							</Text>
-							<Text style={{ color: 'var(--color-neutral-canvas-default-fg-subtle)', font: 'var(--typegraphy-body-sm)' }}>
+							<Text
+								style={{
+									color: 'var(--color-neutral-canvas-default-fg-subtle)',
+									font: 'var(--typegraphy-body-sm)'
+								}}
+							>
 								{example.description}
 							</Text>
 						</Stack>

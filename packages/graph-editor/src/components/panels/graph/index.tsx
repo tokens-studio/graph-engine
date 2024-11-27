@@ -18,7 +18,12 @@ export function GraphPanel() {
     <Stack
       direction="column"
       gap={4}
-      style={{ height: '100%', flex: 1, padding: 'var(--component-spacing-md)', overflow: 'auto' }}
+      style={{
+        height: '100%',
+        flex: 1,
+        padding: 'var(--component-spacing-md)',
+        overflow: 'auto',
+      }}
     >
       <div style={{ padding: 'var(--component-spacing-md)' }}>
         <Settings annotations={graph.annotations} />

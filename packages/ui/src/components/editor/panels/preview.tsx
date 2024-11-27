@@ -144,7 +144,13 @@ export const Preview = () => {
 	const [previewId] = useState(id || uuid());
 
 	return (
-		<Stack direction='column' gap={2} style={{ padding: 'var(--component-spacing-md) var(--component-spacing-md)' }}>
+		<Stack
+			direction='column'
+			gap={2}
+			style={{
+				padding: 'var(--component-spacing-md) var(--component-spacing-md)'
+			}}
+		>
 			<Listener previewId={previewId} />
 			<Heading>Choose a framework</Heading>
 			<Stack direction='row' gap={3} wrap>

@@ -9,12 +9,6 @@ import NavArrowRight from '@tokens-studio/icons/NavArrowRight.js';
 import Plus from '@tokens-studio/icons/Plus.js';
 import React, { useCallback } from 'react';
 
-const scrollbarStyle = {
-  overflowY: 'auto',
-  scrollbarColor: 'var(--colors-bgSubtle) transparent',
-  scrollbarWidth: 'thin',
-};
-
 export const AddDropdown = () => {
   const data = useSelector(panelItemsSelector);
   const createNode = useAction('createNode');
@@ -74,10 +68,7 @@ export const AddDropdown = () => {
             </DropdownMenu.TrailingVisual>
           </DropdownMenu.SubTrigger>
           <DropdownMenu.Portal>
-            <DropdownMenu.SubContent
-              sideOffset={2}
-              alignOffset={-5}
-            >
+            <DropdownMenu.SubContent sideOffset={2} alignOffset={-5}>
               {group.items.map((item) => (
                 <DropdownMenu.Item
                   key={item.type}

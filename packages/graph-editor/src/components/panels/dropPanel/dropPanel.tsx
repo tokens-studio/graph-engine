@@ -57,15 +57,14 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
         <Stack
           direction="column"
           gap={2}
-          style={{ padding: '0 var(--component-spacing-md)', paddingTop: 'var(--component-spacing-lg)' }}
+          style={{
+            padding: '0 var(--component-spacing-md)',
+            paddingTop: 'var(--component-spacing-lg)',
+          }}
         >
           <TextInput placeholder="Search…" value={search} onChange={onSearch} />
         </Stack>
-        <Accordion
-          type="multiple"
-          value={opened}
-          onValueChange={setOpened}
-        >
+        <Accordion type="multiple" value={opened} onValueChange={setOpened}>
           {data.groups.map((value) => {
             const filteredValues = value.items
               .filter((item) =>
@@ -100,9 +99,7 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
                   <NavArrowRight className={styles.chevron} />
                 </Accordion.Trigger>
                 <Accordion.Content>
-                  <Stack direction="column">
-                    {filteredValues}
-                  </Stack>
+                  <Stack direction="column">{filteredValues}</Stack>
                 </Accordion.Content>
               </Accordion.Item>
             );

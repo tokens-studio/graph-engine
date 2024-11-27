@@ -7,7 +7,11 @@ export const Typography = ({ value, text }) => {
 	return (
 		<>
 			<Separator orientation='horizontal' />
-			<Stack direction='column' gap={2} style={{ padding: 'var(--component-spacing-md)' }}>
+			<Stack
+				direction='column'
+				gap={2}
+				style={{ padding: 'var(--component-spacing-md)' }}
+			>
 				{value.map((token, index) => {
 					const value = token.value;
 					let css = {};

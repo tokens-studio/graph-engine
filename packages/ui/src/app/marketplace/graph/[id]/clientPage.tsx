@@ -9,7 +9,6 @@ import {
 	Tabs,
 	Text
 } from '@tokens-studio/ui';
-import { ImageHolder, PreviewImage } from '../../clientPage.tsx';
 import { client } from '@/api/sdk/index.ts';
 import { useErrorToast } from '@/hooks/useToast.tsx';
 import { useParams, useRouter } from 'next/navigation.js';

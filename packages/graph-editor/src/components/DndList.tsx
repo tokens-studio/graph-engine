@@ -25,21 +25,41 @@ interface ISortableContainer extends SortableContainerProps {
 
 export const DndTrigger: React.ComponentClass<ISortableHandleElement, unknown> =
   SortableHandle(
-    ({ children, className }: { children: React.ReactNode; className?: string }) => (
+    ({
+      children,
+      className,
+    }: {
+      children: React.ReactNode;
+      className?: string;
+    }) => (
       <div className={`${styles.trigger} ${className || ''}`}>{children}</div>
     ),
   );
 
 export const DndItem: React.ComponentClass<ISortableItem, unknown> =
   SortableElement(
-    ({ children, className }: { children: React.ReactNode; className?: string }) => (
-      <div className={`${styles.item} ${className || ''}`}>{children}</div>
-    ),
+    ({
+      children,
+      className,
+    }: {
+      children: React.ReactNode;
+      className?: string;
+    }) => <div className={`${styles.item} ${className || ''}`}>{children}</div>,
   );
 
 export const DndList: React.ComponentClass<ISortableContainer, unknown> =
   SortableContainer(
-    ({ children, className }: { children: React.ReactNode; className?: string }) => {
-      return <div className={`${styles.container} ${className || ''}`}>{children}</div>;
+    ({
+      children,
+      className,
+    }: {
+      children: React.ReactNode;
+      className?: string;
+    }) => {
+      return (
+        <div className={`${styles.container} ${className || ''}`}>
+          {children}
+        </div>
+      );
     },
   );

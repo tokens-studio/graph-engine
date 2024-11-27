@@ -1,4 +1,4 @@
-import { Stack, Text } from '@tokens-studio/ui';
+import { Text } from '@tokens-studio/ui';
 import React from 'react';
 
 export const NodeEntry = ({

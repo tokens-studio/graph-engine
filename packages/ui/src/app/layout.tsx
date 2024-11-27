@@ -5,13 +5,13 @@ import '@tokens-studio/tokens/css/base.css';
 import '@tokens-studio/tokens/css/light.css';
 import '@tokens-studio/ui/normalize.css';
 
-import "@fontsource/geist-mono/400.css";
-import "@fontsource/geist-mono/500.css";
-import "@fontsource/geist-mono/700.css";
+import '@fontsource/geist-mono/400.css';
+import '@fontsource/geist-mono/500.css';
+import '@fontsource/geist-mono/700.css';
 
-import "@fontsource/geist-sans/400.css";
-import "@fontsource/geist-sans/500.css";
-import "@fontsource/geist-sans/700.css";
+import '@fontsource/geist-sans/400.css';
+import '@fontsource/geist-sans/500.css';
+import '@fontsource/geist-sans/700.css';
 
 import { headers } from 'next/headers.js';
 import type { Viewport } from 'next';
@@ -88,9 +88,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='en'>
-			<body className='dark'>
-				{children}
-			</body>
+			<body className='dark'>{children}</body>
 		</html>
 	);
 }

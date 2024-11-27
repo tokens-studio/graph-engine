@@ -89,7 +89,11 @@ const TimelinePlayer = (props: TimelinePlayerProps) => {
   };
 
   return (
-    <Stack align="center" gap={2} style={{ padding: 'var(--component-spacing-md)' }}>
+    <Stack
+      align="center"
+      gap={2}
+      style={{ padding: 'var(--component-spacing-md)' }}
+    >
       <IconButton
         icon={isPlaying ? <Pause /> : <Play />}
         onClick={handlePlayOrPause}

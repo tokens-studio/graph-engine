@@ -49,7 +49,11 @@ const NodeHoverCard = ({
     >
       <HoverCard.Trigger asChild>{children}</HoverCard.Trigger>
       <HoverCard.Portal>
-        <HoverCard.Content className={styles.hoverCardContent} side="right" sideOffset={5}>
+        <HoverCard.Content
+          className={styles.hoverCardContent}
+          side="right"
+          sideOffset={5}
+        >
           <Stack direction="column" gap={3}>
             <Stack direction="row" gap={2} align="center">
               {icon}

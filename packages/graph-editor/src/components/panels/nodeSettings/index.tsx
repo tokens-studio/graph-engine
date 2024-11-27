@@ -1,10 +1,4 @@
-import {
-  Label,
-  Stack,
-  Text,
-  TextInput,
-  Textarea,
-} from '@tokens-studio/ui';
+import { Label, Stack, Text, TextInput, Textarea } from '@tokens-studio/ui';
 import React, { useCallback, useMemo } from 'react';
 
 import { Node } from '@tokens-studio/graph-engine';
@@ -27,7 +21,12 @@ export const NodeSettingsPanel = () => {
     <Stack
       direction="column"
       gap={4}
-      style={{ height: '100%', flex: 1, padding: 'var(--component-spacing-md)', overflow: 'auto' }}
+      style={{
+        height: '100%',
+        flex: 1,
+        padding: 'var(--component-spacing-md)',
+        overflow: 'auto',
+      }}
     >
       <div style={{ padding: 'var(--component-spacing-md)' }}>
         <NodeSettings
@@ -91,10 +90,7 @@ const NodeTitle = observer(({ selectedNode }: { selectedNode: Node }) => {
   return (
     <Stack direction="column" gap={2}>
       <Label>Title</Label>
-      <TextInput
-        onChange={onChangeTitle}
-        value={localTitle}
-      />
+      <TextInput onChange={onChangeTitle} value={localTitle} />
     </Stack>
   );
 });

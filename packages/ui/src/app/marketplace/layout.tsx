@@ -23,7 +23,9 @@ export default function Layout({ children }) {
 						}}
 						justify='center'
 					>
-						<div style={{ padding: 'var(--component-spacing-2xl)', width: '80%' }}>
+						<div
+							style={{ padding: 'var(--component-spacing-2xl)', width: '80%' }}
+						>
 							{children}
 						</div>
 					</Stack>

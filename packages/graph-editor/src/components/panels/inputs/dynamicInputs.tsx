@@ -87,10 +87,7 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
         />
       </Stack>
       {/* @ts-ignore */}
-      <Select
-        value={inputType}
-        onValueChange={setInputType}
-      >
+      <Select value={inputType} onValueChange={setInputType}>
         <Select.Trigger label="Type" value={inputType} />
         <Select.Content>
           <Scroll height="200">

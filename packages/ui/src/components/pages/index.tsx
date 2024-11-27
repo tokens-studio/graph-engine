@@ -13,7 +13,11 @@ export default function Index() {
 			justify='center'
 		>
 			<div
-				style={{ background: 'var(--color-neutral-canvas-minimal-bg)', padding: 'var(--component-spacing-xl)', borderRadius: 'var(--component-radii-sm)' }}
+				style={{
+					background: 'var(--color-neutral-canvas-minimal-bg)',
+					padding: 'var(--component-spacing-xl)',
+					borderRadius: 'var(--component-radii-sm)'
+				}}
 			>
 				<Stack
 					direction='column'

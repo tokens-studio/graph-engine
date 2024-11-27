@@ -32,17 +32,9 @@ export const withVariadicField = (WrappedComponent) => {
     };
 
     return (
-      <DndList
-        lockAxis="y"
-        onSortEnd={onSortEnd}
-        className={styles.dndList}
-      >
+      <DndList lockAxis="y" onSortEnd={onSortEnd} className={styles.dndList}>
         {port._edges.map((edge, i) => (
-          <DndItem
-            key={`input-${i}`}
-            index={i}
-            className={styles.dndItem}
-          >
+          <DndItem key={`input-${i}`} index={i} className={styles.dndItem}>
             <DndTrigger>
               <GrabberIcon />
             </DndTrigger>

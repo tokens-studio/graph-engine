@@ -10,5 +10,8 @@ export const GraphToolbar = () => {
 };
 
 export const ToolbarSeparator = ({ className = '', ...props }) => (
-  <Toolbar.Separator className={`${styles.separator} ${className}`} {...props} />
+  <Toolbar.Separator
+    className={`${styles.separator} ${className}`}
+    {...props}
+  />
 );

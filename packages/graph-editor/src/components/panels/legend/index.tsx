@@ -30,7 +30,13 @@ export const LegendInner = ({ iconsRegistry }: ILegendInner) => {
 
         return (
           <Stack gap={3} align="center" key={key}>
-            <div style={{ ...cols, borderRadius: 'var(--border-radius-sm)', padding: 'var(--component-spacing-sm)' }}>
+            <div
+              style={{
+                ...cols,
+                borderRadius: 'var(--border-radius-sm)',
+                padding: 'var(--component-spacing-sm)',
+              }}
+            >
               {value}
             </div>
             <Text>{name}</Text>

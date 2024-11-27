@@ -19,15 +19,14 @@ export const Collapser = ({ children, collapsed }) => {
 
   return (
     <div className={isCollapsed ? styles.collapserContainer : ''}>
-      <div className={styles.collapserContent}>
-        {children}
-      </div>
+      <div className={styles.collapserContent}>{children}</div>
     </div>
   );
 };
 
 export const BaseNodeWrapper = (props: NodeProps) => {
-  const { icon, title, subtitle, error, isAsync, children, controls, ...rest } = props;
+  const { icon, title, subtitle, error, isAsync, children, controls, ...rest } =
+    props;
 
   return (
     <div className={`${styles.nodeWrapper} ${error ? styles.error : ''}`}>
@@ -48,13 +47,9 @@ export const BaseNodeWrapper = (props: NodeProps) => {
               <Stack direction="row" gap={2} align="center">
                 {icon}
                 <Stack direction="column">
-                  <Text className={styles.title}>
-                    {title}
-                  </Text>
+                  <Text className={styles.title}>{title}</Text>
                   {subtitle && (
-                    <Text className={styles.subtitle}>
-                      {subtitle}
-                    </Text>
+                    <Text className={styles.subtitle}>{subtitle}</Text>
                   )}
                 </Stack>
                 {isAsync && <Spinner />}

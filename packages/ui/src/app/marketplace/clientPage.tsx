@@ -1,19 +1,12 @@
 'use client';
 import { Download, Heart } from 'iconoir-react';
-import {
-	Heading,
-	Separator,
-	Spinner,
-	Stack,
-	Text
-} from '@tokens-studio/ui';
+import { Heading, Separator, Spinner, Stack, Text } from '@tokens-studio/ui';
 import { client } from '@/api/sdk/index.ts';
 import { useErrorToast } from '@/hooks/useToast.tsx';
 import Download from '@tokens-studio/icons/Download.js';
 import Heart from '@tokens-studio/icons/Heart.js';
 import Link from 'next/link.js';
 import styles from './clientPage.module.css';
-
 
 const Page = () => {
 	const { isLoading, data, error } = client.marketplace.listGraphs.useQuery([
@@ -36,10 +29,11 @@ const Page = () => {
 								<Link href={`/marketplace/graph/${graph.id}`}>
 									<div>
 										<div className={styles.imageHolder}>
-                    <img
-                      className={styles.previewImage}
-                      src={graph.thumbnail || '/thumbnail.png'}
-                      alt='Display picture of Token Studio Resolver Sandbox' />
+											<img
+												className={styles.previewImage}
+												src={graph.thumbnail || '/thumbnail.png'}
+												alt='Display picture of Token Studio Resolver Sandbox'
+											/>
 										</div>
 										<div className={styles.itemPadding}>
 											<Text>{graph.name}</Text>

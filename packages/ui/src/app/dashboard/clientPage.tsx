@@ -209,10 +209,7 @@ const Page = () => {
 	useErrorToast(error);
 
 	return (
-		<Stack
-			className={styles.pageContainer}
-			justify='center'
-		>
+		<Stack className={styles.pageContainer} justify='center'>
 			<div style={{ padding: 'var(--component-spacing-xl)', width: '80%' }}>
 				<Stack direction='column' gap={4}>
 					<Stack justify='between'>

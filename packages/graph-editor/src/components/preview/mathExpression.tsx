@@ -5,7 +5,12 @@ export const MathExpression = ({ value }) => {
   return (
     <>
       {value && (
-        <Text style={{ font: 'var(--typography-body-xl)', padding: 'var(--component-spacing-xl)' }}>
+        <Text
+          style={{
+            font: 'var(--typography-body-xl)',
+            padding: 'var(--component-spacing-xl)',
+          }}
+        >
           {value}
         </Text>
       )}

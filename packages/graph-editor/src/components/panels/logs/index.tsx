@@ -37,7 +37,11 @@ export function LogsPanel() {
     <Stack
       direction="column"
       gap={2}
-      style={{ height: '100%', flex: 1, padding: 'var(--component-spacing-md)' }}
+      style={{
+        height: '100%',
+        flex: 1,
+        padding: 'var(--component-spacing-md)',
+      }}
     >
       <Stack direction="row" gap={2} justify="end">
         <TextInput
@@ -48,17 +52,33 @@ export function LogsPanel() {
         <IconButton onClick={clearLogs} icon={<Trash />} />
       </Stack>
 
-      <div style={{ padding: 'var(--component-spacing-xs)', overflow: 'auto', fontSize: 'smaller' }}>
+      <div
+        style={{
+          padding: 'var(--component-spacing-xs)',
+          overflow: 'auto',
+          fontSize: 'smaller',
+        }}
+      >
         <Stack direction="column" gap={2}>
           {logs.map((log, index) => (
             <div
               key={index}
-              style={{ border: '1px solid var(--color-neutral-stroke-subtle)', padding: 'var(--component-spacing-sm)' }}
+              style={{
+                border: '1px solid var(--color-neutral-stroke-subtle)',
+                padding: 'var(--component-spacing-sm)',
+              }}
             >
               <Stack direction="column" gap={2}>
                 <Stack direction="row" gap={2}>
-                  <Text style={{ font: 'var(--typography-body-sm)' }}>{log.type}</Text>
-                  <Text style={{ font: 'var(--typography-body-md)', color: 'var(--color-neutral-1500)' }}>
+                  <Text style={{ font: 'var(--typography-body-sm)' }}>
+                    {log.type}
+                  </Text>
+                  <Text
+                    style={{
+                      font: 'var(--typography-body-md)',
+                      color: 'var(--color-neutral-1500)',
+                    }}
+                  >
                     {log.time.toUTCString()}
                   </Text>
                 </Stack>

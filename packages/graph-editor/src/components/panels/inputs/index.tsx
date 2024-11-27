@@ -1,4 +1,4 @@
-import { Heading, IconButton, Stack } from '@tokens-studio/ui';
+import { Heading, Stack } from '@tokens-studio/ui';
 import React, { useMemo } from 'react';
 
 import { DynamicInputs } from './dynamicInputs.js';
@@ -9,7 +9,6 @@ import { editable } from '@/annotations/index.js';
 import { inputControls } from '@/redux/selectors/registry.js';
 import { useGraph } from '@/hooks/useGraph.js';
 import { useSelector } from 'react-redux';
-import InfoCircle from '@tokens-studio/icons/InfoCircle.js';
 
 export function Inputsheet() {
   const graph = useGraph();
@@ -31,7 +30,7 @@ export function Inputsheet() {
 
   const dynamicInputs = Boolean(
     selectedNode.annotations[annotatedDynamicInputs] &&
-    selectedNode.annotations[editable] !== false
+      selectedNode.annotations[editable] !== false,
   );
 
   return (
@@ -48,7 +47,11 @@ export function Inputsheet() {
       <Stack
         direction="column"
         gap={4}
-        style={{ height: '100%', flex: 1, padding: 'var(--component-spacing-md)' }}
+        style={{
+          height: '100%',
+          flex: 1,
+          padding: 'var(--component-spacing-md)',
+        }}
       >
         <Stack direction="column" gap={3}>
           <Stack gap={2} align="start" justify="between">
@@ -60,7 +63,13 @@ export function Inputsheet() {
           {dynamicInputs && <DynamicInputs node={selectedNode} />}
 
           {SpecificInput ? <SpecificInput node={selectedNode} /> : null}
-          <Stack width="full" style={{ paddingTop: 'var(--component-spacing-md)', paddingBottom: 'var(--component-spacing-md)' }}>
+          <Stack
+            width="full"
+            style={{
+              paddingTop: 'var(--component-spacing-md)',
+              paddingBottom: 'var(--component-spacing-md)',
+            }}
+          >
             {/* The purpose of the key is to invalidate the port panel if the selected node changes */}
             <PortPanel ports={selectedNode?.inputs} key={selectedNode.id} />
           </Stack>

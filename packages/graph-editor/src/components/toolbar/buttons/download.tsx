@@ -23,11 +23,7 @@ export const DownloadToolbarButton = () => {
 
   return (
     <Tooltip label="Download" side="bottom">
-      <IconButton
-        emphasis="low"
-        onClick={onDownload}
-        icon={<Download />}
-      />
+      <IconButton emphasis="low" onClick={onDownload} icon={<Download />} />
     </Tooltip>
   );
 };

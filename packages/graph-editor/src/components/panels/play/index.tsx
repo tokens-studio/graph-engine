@@ -17,7 +17,11 @@ export function PlayPanel() {
       <Stack
         direction="row"
         gap={4}
-        style={{ height: '100%', flex: 1, padding: 'var(--component-spacing-md)' }}
+        style={{
+          height: '100%',
+          flex: 1,
+          padding: 'var(--component-spacing-md)',
+        }}
       >
         <PlayControls />
       </Stack>

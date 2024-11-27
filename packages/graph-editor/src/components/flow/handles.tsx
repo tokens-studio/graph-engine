@@ -1,5 +1,5 @@
 import { Position, Handle as RawHandle } from 'reactflow';
-import { Stack, Text, Tooltip } from '@tokens-studio/ui';
+import { Stack, Tooltip } from '@tokens-studio/ui';
 import { useIsValidConnection } from '../../hooks/useIsValidConnection.js';
 import React, { createContext, useContext } from 'react';
 import styles from './handles.module.css';
@@ -85,7 +85,6 @@ export const Handle = (props: HandleProps) => {
     color,
     isArray,
     type: dataType,
-    isConnected,
     backgroundColor,
     variadic,
     isAnchor,
@@ -103,16 +102,20 @@ export const Handle = (props: HandleProps) => {
     isArray && styles.isArray,
     shouldHideHandles && styles.shouldHideHandles,
     variadic && styles.variadic,
-  ].filter(Boolean).join(' ');
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   const holderClasses = [
     styles.handleHolder,
     (collapsed || shouldHide) && styles.collapsed,
     isAnchor && styles.isAnchor,
-  ].filter(Boolean).join(' ');
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
-    <div 
+    <div
       className={holderClasses}
       style={{
         flexDirection: type === 'target' ? 'row' : 'row-reverse',

@@ -103,7 +103,11 @@ const NodeWrap = observer(({ node, icon }: INodeWrap) => {
       style={{ minWidth: '200px' }}
     >
       <Stack direction="column" gap={2}>
-        <Stack direction="column" gap={3} style={{ padding: 'var(--component-spacing-md) 0' }}>
+        <Stack
+          direction="column"
+          gap={3}
+          style={{ padding: 'var(--component-spacing-md) 0' }}
+        >
           <HandleContainer type="source" className={'source'} full>
             <PortArray ports={node.outputs} />
             {isInput && <DynamicOutput />}
@@ -210,7 +214,7 @@ export const InlineTypeLabel = ({ port }: { port: Port }) => {
   const handleInformation = useHandle();
 
   return (
-    <div 
+    <div
       className={`${styles.inlineTypeLabel} ${styles[handleInformation.type]}`}
     >
       {typeName}
@@ -246,7 +250,12 @@ const getColorPreview = (color: Color, showValue = false) => {
     <Stack direction="row" gap={2} justify="center" align="center">
       {colorSwatch}
       {showValue ? (
-        <Text style={{ font: 'var(--typography-body-small)', color: 'var(--color-neutral-1500)' }}>
+        <Text
+          style={{
+            font: 'var(--typography-body-small)',
+            color: 'var(--color-neutral-1500)',
+          }}
+        >
           {hex.toUpperCase()}
         </Text>
       ) : null}
@@ -268,7 +277,10 @@ const getValuePreview = (value, type) => {
             {value.length > 5 ? (
               <>
                 {value.slice(0, 5).map((val) => getColorPreview(val))}
-                <Text size="xsmall" style={{ color: 'var(--color-neutral-1200)' }}>
+                <Text
+                  size="xsmall"
+                  style={{ color: 'var(--color-neutral-1200)' }}
+                >
                   +{value.length - 5}
                 </Text>
               </>
@@ -343,7 +355,12 @@ const InputHandle = observer(
                     }}
                   >
                     {inlineValuesValue && (
-                      <Text style={{ font: 'var(--typography-body-md)', color: 'var(--color-neutral-1200)' }}>
+                      <Text
+                        style={{
+                          font: 'var(--typography-body-md)',
+                          color: 'var(--color-neutral-1200)',
+                        }}
+                      >
                         {getValuePreview(input.value[i], input.type.items)}
                       </Text>
                     )}
@@ -376,11 +393,21 @@ const InputHandle = observer(
                 handleInformation.type === 'source' ? 'row-reverse' : 'row',
             }}
           >
-            <Text style={{ font: 'var(--typography-body-sm)', color: 'var(--color-neutral-1500)' }}>
+            <Text
+              style={{
+                font: 'var(--typography-body-sm)',
+                color: 'var(--color-neutral-1500)',
+              }}
+            >
               {input.name}
             </Text>
             {inlineValuesValue && (
-              <Text style={{ font: 'var(--typography-body-xs)', color: 'var(--color-neutral-1200)' }}>
+              <Text
+                style={{
+                  font: 'var(--typography-body-xs)',
+                  color: 'var(--color-neutral-1200)',
+                }}
+              >
                 {getValuePreview(input.value, input.type)}
               </Text>
             )}

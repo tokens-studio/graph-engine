@@ -24,12 +24,18 @@ export const ErrorBoundaryContent: React.FunctionComponent = () => {
 
   return (
     <Stack
-      style={{ width: '100%', height: '100%', padding: 'var(--component-spacing-lg)' }}
+      style={{
+        width: '100%',
+        height: '100%',
+        padding: 'var(--component-spacing-lg)',
+      }}
       align="center"
       justify="center"
     >
       <Stack direction="column" gap={4} align="center" justify="center">
-        <Text style={{ font: 'var(--typography-body-xl)', textAlign: 'center' }}>
+        <Text
+          style={{ font: 'var(--typography-body-xl)', textAlign: 'center' }}
+        >
           Uh-oh, something went wrong!
         </Text>
         {graphRef ? (

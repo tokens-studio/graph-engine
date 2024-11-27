@@ -42,9 +42,7 @@ const CommandItem = observer(
         value={item.text.toLowerCase()}
       >
         <Stack direction="row" gap={2} align="center">
-          <div className={styles.icon}>
-            {item.icon}
-          </div>
+          <div className={styles.icon}>{item.icon}</div>
           {item.text}
         </Stack>
       </Command.Item>
@@ -192,11 +190,14 @@ const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
 
 function NodePreview({ title, description, docs }) {
   return (
-    <Stack direction="column" justify="center" gap={3} className={styles.previewContainer}>
+    <Stack
+      direction="column"
+      justify="center"
+      gap={3}
+      className={styles.previewContainer}
+    >
       <Stack direction="column" gap={5}>
-        <Heading className={styles.previewTitle}>
-          {title}
-        </Heading>
+        <Heading className={styles.previewTitle}>{title}</Heading>
       </Stack>
       <Text size="small" muted className={styles.previewDescription}>
         {description}
