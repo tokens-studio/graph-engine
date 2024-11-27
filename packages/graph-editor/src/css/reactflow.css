@@ -79,6 +79,12 @@
     stroke-opacity: 0.5;
 
 }
+.react-flow__edge-path-back
+{
+    stroke-width: 8px !important;
+    stroke: var(--colors-graphBg) !important;
+    fill: none;
+}
 .react-flow__edge-path,
 .react-flow__connection-path {
     stroke-width: 4px !important;

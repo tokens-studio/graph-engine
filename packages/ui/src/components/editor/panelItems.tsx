@@ -23,6 +23,7 @@ import {
 } from '@tokens-studio/graph-editor';
 import { nodeLookup as audioLookup } from '@tokens-studio/graph-engine-nodes-audio';
 import { nodes as designNodes } from '@tokens-studio/graph-engine-nodes-design-tokens';
+import { nodes as figmaNodes } from '@tokens-studio/graph-engine-nodes-figma';
 
 const icons = {
 	accessibility: <Accessibility />,
@@ -98,6 +99,23 @@ panelItems.groups.push(
 		key: 'naming',
 		icon: icons.naming,
 		items: namingNodes.map(
+			node =>
+				new PanelItem({
+					type: node.type,
+					text: node.title,
+					description: node.description,
+					docs: ''
+				})
+		)
+	})
+);
+
+panelItems.groups.push(
+	new PanelGroup({
+		title: 'Figma',
+		key: 'figma',
+		icon: <DatabaseScript />,
+		items: figmaNodes.map(
 			node =>
 				new PanelItem({
 					type: node.type,
