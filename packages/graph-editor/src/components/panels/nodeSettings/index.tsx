@@ -15,7 +15,7 @@ import { observer } from 'mobx-react-lite';
 import { useGraph } from '@/hooks/useGraph.js';
 import { useSelector } from 'react-redux';
 
-export const NodeSettingsPanel = observer(() => {
+export const NodeSettingsPanel = () => {
   const graph = useGraph();
   const nodeID = useSelector(currentNode);
   const selectedNode = useMemo(() => graph?.getNode(nodeID), [graph, nodeID]);
@@ -39,7 +39,7 @@ export const NodeSettingsPanel = observer(() => {
       </Box>
     </Stack>
   );
-});
+};
 
 const Annotations = observer(({ annotations }: Record<string, unknown>) => {
   return (
