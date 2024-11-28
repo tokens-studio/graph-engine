@@ -1,0 +1,16 @@
+.wrapper {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+.card {
+  background: var(--color-neutral-canvas-minimal-bg);
+  padding: var(--component-spacing-xl);
+  border-radius: var(--component-radii-xl);
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--component-spacing-xl);
+}

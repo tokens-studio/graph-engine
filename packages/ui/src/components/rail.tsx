@@ -79,7 +79,7 @@ export const Rail = () => {
 			<Stack gap={3} direction='column' align='center'>
 				<Tooltip label={'Tokens Studio'}>
 					<Link href='https://tokens.studio'>
-						<Image src={TokensStudio} alt='logo' />
+						<Image src={TokensStudio} alt='logo' width={24} />
 					</Link>
 				</Tooltip>
 				{railItemsStart.map(item => (
