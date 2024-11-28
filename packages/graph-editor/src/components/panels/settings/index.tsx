@@ -1,14 +1,5 @@
-import {
-  Button,
-  Checkbox,
-  DropdownMenu,
-  Label,
-  Stack,
-  Text,
-  Tooltip,
-} from '@tokens-studio/ui';
+import { Checkbox, Label, Select, Stack, Text } from '@tokens-studio/ui';
 import { EdgeType, LayoutType } from '@/redux/models/settings.js';
-import { InfoCircleSolid } from 'iconoir-react';
 import {
   connectOnClickSelector,
   delayedUpdateSelector,
@@ -47,194 +38,148 @@ export const Settings = () => {
         flex: 1,
         display: 'flex',
         overflow: 'auto',
-        padding: 'var(--component-spacing-md)',
+        padding: 'var(--ui-spacing-md)',
         flexDirection: 'column',
       }}
     >
-      <Stack direction="column" gap={3}>
-        <Stack direction="column" gap={2} justify="between">
-          <Stack direction="row" gap={2} justify="between">
-            <Label>Show inline types</Label>
-            <Tooltip
-              label={
-                'Adds additional labels to help differentiate types for colorblind users'
-              }
-            >
-              <div>
-                <Text>
-                  <InfoCircleSolid />
-                </Text>
-              </div>
-            </Tooltip>
-          </Stack>
+      <Stack direction="column" gap={5}>
+        <Stack direction="row" gap={2} justify="start">
           <Checkbox
             onCheckedChange={(checked) =>
               dispatch.settings.setInlineTypes(Boolean(checked))
             }
             checked={inlineTypesValue}
           />
-        </Stack>
-        <Stack direction="column" gap={2} justify="between">
-          <Stack direction="row" gap={2} justify="between">
-            <Label>Show inline values</Label>
-            <Tooltip
-              label={
-                'Shows values directly on the node. Useful for debugging but can be cluttered'
-              }
-            >
-              <div>
-                <Text>
-                  <InfoCircleSolid />
-                </Text>
-              </div>
-            </Tooltip>
+          <Stack direction="column" gap={1} justify="start">
+            <Label>Show inline types</Label>
+            <Text size="xsmall" muted>
+              Adds additional labels to help differentiate types for colorblind
+              users.
+            </Text>
           </Stack>
+        </Stack>
+        <Stack direction="row" gap={2} justify="start">
           <Checkbox
             onCheckedChange={(checked) =>
               dispatch.settings.setInlineValues(Boolean(checked))
             }
             checked={inlineValuesValue}
           />
-        </Stack>
-        <Stack direction="column" gap={2} justify="between">
-          <Stack direction="row" gap={2} justify="between">
-            <Label>Use delayed interaction</Label>
-            <Tooltip label={'Forces a user to click save to update port '}>
-              <div>
-                <Text>
-                  <InfoCircleSolid />
-                </Text>
-              </div>
-            </Tooltip>
+          <Stack direction="column" gap={1} justify="start">
+            <Label>Show inline values</Label>
+            <Text size="xsmall" muted>
+              Shows values directly on the node. Useful for debugging but can be
+              cluttered.
+            </Text>
           </Stack>
+        </Stack>
+        <Stack direction="row" gap={2} justify="start">
           <Checkbox
             onCheckedChange={(checked) =>
               dispatch.settings.setDelayedUpdate(Boolean(checked))
             }
             checked={delayedUpdateValue}
           />
-        </Stack>
-        <Stack direction="column" gap={2} justify="between">
-          <Stack direction="row" gap={2} justify="between">
-            <Label>Click to connect</Label>
-            <Tooltip
-              label={
-                'Allows you to quick connect nodes by clicking on the 2 port'
-              }
-            >
-              <div>
-                <Text>
-                  <InfoCircleSolid />
-                </Text>
-              </div>
-            </Tooltip>
+          <Stack direction="column" gap={1} justify="start">
+            <Label>Use delayed interaction</Label>
+            <Text size="xsmall" muted>
+              Forces a user to click save to update port.
+            </Text>
           </Stack>
+        </Stack>
+        <Stack direction="row" gap={2} justify="start">
           <Checkbox
             onCheckedChange={(checked) =>
               dispatch.settings.setConnectOnClick(Boolean(checked))
             }
             checked={connectOnClick}
           />
-        </Stack>
-        <Stack direction="column" gap={2} justify="between">
-          <Stack direction="row" gap={2} justify="between">
-            <Label>Show execution time</Label>
-            <Tooltip label={'Shows how long it takes for a node to process'}>
-              <div>
-                <Text>
-                  <InfoCircleSolid />
-                </Text>
-              </div>
-            </Tooltip>
+          <Stack direction="column" gap={1} justify="start">
+            <Label>Click to connect</Label>
+            <Text size="xsmall" muted>
+              Allows you to quick connect nodes by clicking on the 2 port.
+            </Text>
           </Stack>
+        </Stack>
+        <Stack direction="row" gap={2} justify="start">
           <Checkbox
             onCheckedChange={(checked) =>
               dispatch.settings.setShowTimings(Boolean(checked))
             }
             checked={showTimingsValue}
           />
-        </Stack>
-        <Stack direction="column" gap={2} justify="between">
-          <Stack direction="row" gap={2} justify="between">
-            <Label>Show Minimap</Label>
-            <Tooltip label={'Shows the minimap in the graph editing area'}>
-              <div>
-                <Text>
-                  <InfoCircleSolid />
-                </Text>
-              </div>
-            </Tooltip>
+          <Stack direction="column" gap={1} justify="start">
+            <Label>Show execution time</Label>
+            <Text size="xsmall" muted>
+              Shows how long it takes for a node to process.
+            </Text>
           </Stack>
+        </Stack>
+        <Stack direction="row" gap={2} justify="start">
           <Checkbox
             onCheckedChange={(checked) =>
               dispatch.settings.setShowMinimap(Boolean(checked))
             }
             checked={showMinimap}
           />
-        </Stack>
-        <Stack direction="column" gap={2} justify="between">
-          <Stack direction="row" gap={2} justify="between">
-            <Label>Enable Context Menus</Label>
-            <Tooltip label={'Provides right click context menus'}>
-              <div>
-                <Text>
-                  <InfoCircleSolid />
-                </Text>
-              </div>
-            </Tooltip>
+          <Stack direction="column" gap={1} justify="start">
+            <Label>Show Minimap</Label>
+            <Text size="xsmall" muted>
+              Shows the minimap in the graph editing area
+            </Text>
           </Stack>
+        </Stack>
+        <Stack direction="row" gap={2} justify="start">
           <Checkbox
             onCheckedChange={(checked) =>
               dispatch.ui.setContextMenus(Boolean(checked))
             }
             checked={contextMenus}
           />
+          <Stack direction="column" gap={1} justify="start">
+            <Label>Enable Context Menus</Label>
+            <Text size="xsmall" muted>
+              Provides right click context menus.
+            </Text>
+          </Stack>
         </Stack>
-        <Stack direction="column" gap={2} justify="between">
-          <Label>Edge Type</Label>
-          <DropdownMenu>
-            <DropdownMenu.Trigger asChild>
-              <Button asDropdown size="small">
-                {edgeTypeValue}
-              </Button>
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Content side="top">
-              {EdgeValues.map((value, index) => {
-                return (
-                  <DropdownMenu.Item
-                    key={index}
-                    onClick={() => dispatch.settings.setEdgeType(value)}
-                  >
-                    {value}
-                  </DropdownMenu.Item>
-                );
-              })}
-              <DropdownMenu.Item></DropdownMenu.Item>
-            </DropdownMenu.Content>
-          </DropdownMenu>
-        </Stack>
-        <Stack direction="column" gap={2} justify="between">
-          <Label>Layout type</Label>
-          <DropdownMenu>
-            <DropdownMenu.Trigger asChild>
-              <Button asDropdown size="small">
-                {layoutTypeValue}
-              </Button>
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Content side="top">
-              {LayoutValues.map((value, index) => {
-                return (
-                  <DropdownMenu.Item
-                    key={index}
-                    onClick={() => dispatch.settings.setLayoutType(value)}
-                  >
-                    {value}
-                  </DropdownMenu.Item>
-                );
-              })}
-              <DropdownMenu.Item></DropdownMenu.Item>
-            </DropdownMenu.Content>
-          </DropdownMenu>
+        <Stack direction="column" gap={6}>
+          <Stack direction="row" gap={2} justify="start">
+            <div style={{ width: 'var(--component-spacing-md)' }}></div>
+            <Select
+              value={edgeTypeValue}
+              onValueChange={(value) => dispatch.settings.setEdgeType(value)}
+            >
+              <Select.Trigger label="Edge Type" value={edgeTypeValue} />
+              <Select.Content>
+                {EdgeValues.map((value, index) => {
+                  return (
+                    <Select.Item value={value!} key={index}>
+                      {value}
+                    </Select.Item>
+                  );
+                })}
+              </Select.Content>
+            </Select>
+          </Stack>
+          <Stack direction="row" gap={2} justify="start">
+            <div style={{ width: 'var(--component-spacing-md)' }}></div>
+            <Select
+              value={layoutTypeValue}
+              onValueChange={(value) => dispatch.settings.setLayoutType(value)}
+            >
+              <Select.Trigger label="Layout Type" value={layoutTypeValue} />
+              <Select.Content>
+                {LayoutValues.map((value, index) => {
+                  return (
+                    <Select.Item value={value!} key={index}>
+                      {value}
+                    </Select.Item>
+                  );
+                })}
+              </Select.Content>
+            </Select>
+          </Stack>
         </Stack>
       </Stack>
     </div>
