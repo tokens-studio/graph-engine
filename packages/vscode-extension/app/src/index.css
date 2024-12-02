@@ -5,5 +5,5 @@ body {
 
 #graph-editor {
     height: 100vh;
-    background: var(--colors-bgCanvas)
+    background: var(--color-neutral-canvas-minimal-bg)
 }

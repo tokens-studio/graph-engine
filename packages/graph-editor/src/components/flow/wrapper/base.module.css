@@ -20,9 +20,9 @@
 }
 
 .nodeWrapper.error {
-  --nodeBorderColor: var(--colors-dangerFg);
-  --nodeBgColor: var(--colors-dangerBg);
-  --nodeTextColor: var(--colors-dangerFg);
+  --nodeBorderColor: var(--color-danger-surface-base-idle-fg-default);
+  --nodeBgColor: var(--color-danger-surface-base-idle-bg);
+  --nodeTextColor: var(--color-danger-surface-base-idle-fg-default);
 }
 
 .nodeContent {
@@ -30,9 +30,9 @@
 }
 
 .header {
-  padding: var(--space-1) var(--space-3);
+  padding: var(--component-spacing-3xs) var(--component-spacing-sm);
   background-color: var(--colors-gray6);
-  border-radius: var(--radii-medium);
+  border-radius: var(--component-radii-md);
 }
 
 .title {

@@ -9,7 +9,7 @@
   color: var(--color-neutral-surface-default-idle-fg-default);
   padding: var(--component-spacing-sm);
   font: var(--typography-code-xs);
-  border-radius: var(--radii-small);
+  border-radius: var(--component-radii-sm);
   text-transform: uppercase;
 }
 
@@ -24,7 +24,7 @@
 .colorSwatch {
   width: 16px;
   height: 16px;
-  border-radius: var(--radii-medium);
+  border-radius: var(--component-radii-md);
 }
 
 .portText {

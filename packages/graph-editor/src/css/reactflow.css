@@ -55,10 +55,10 @@
 }
 .react-flow__node.selectable.selected,
 .react-flow__node.selectable:focus {
-    --nodeBorderColor: var(--colors-borderDefault);
+    --nodeBorderColor: var(--color-neutral-stroke-default);
     --nodeBgColor: var(--colors-nodeBg);
-    --nodeTextColor: var(--colors-fgDefault);
-    outline: 2px solid var(--colors-fgDefault);
+    --nodeTextColor: var(--color-neutral-canvas-default-fg-default);
+    outline: 2px solid var(--color-neutral-canvas-default-fg-default);
     outline-offset: 5px;
     border-radius: var(--radii-medium, 8px);
 }
@@ -68,11 +68,11 @@
 }
 
 .react-flow__minimap {
-    background: var(--colors-bgSubtle);
+    background: var(--color-neutral-canvas-subtle-bg);
 }
 
 .react-flow__minimap-mask {
-    fill: var(--colors-bgDefault) !important;
+    fill: var(--color-neutral-canvas-default-bg) !important;
 }
 
 .react-flow__edge {

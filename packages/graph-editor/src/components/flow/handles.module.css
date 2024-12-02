@@ -2,7 +2,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: var(--space-2) var(--space-4);
+  padding: var(--component-spacing-2xs) var(--component-spacing-md);
 }
 
 .handleHolder.collapsed {
@@ -13,17 +13,17 @@
 }
 
 .handleHolder.isAnchor {
-  padding: var(--space-2) var(--space-2);
+  padding: var(--component-spacing-2xs) var(--component-spacing-2xs);
 }
 
 .handleText {
   font-size: var(--fontSizes-xxsmall);
-  color: var(--colors-fgDefault);
+  color: var(--color-neutral-canvas-default-fg-default);
   white-space: nowrap;
 }
 
 .handleText.secondary {
-  color: var(--colors-fgDefault);
+  color: var(--color-neutral-canvas-default-fg-default);
 }
 
 .handleText.caseSensitive {
@@ -35,8 +35,8 @@
 }
 
 .rawHandle.error {
-  background: var(--colors-dangerFg);
-  border-color: var(--colors-dangerBorder);
+  background: var(--color-danger-surface-base-idle-fg-default);
+  border-color: var(--color-danger-stroke-base);
 }
 
 .rawHandle.hide {
@@ -65,7 +65,7 @@
   margin-top: 0;
   height: 8px;
   width: 8px;
-  background: var(--colors-accentOnAccent);
+  background: var(--color-accent-surface-base-idle-fg-default);
   border-radius: 50%;
   opacity: 0.7;
 }
