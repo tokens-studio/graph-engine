@@ -88,8 +88,8 @@ export type SubscriptionLookup = {
 export type ListenerType<T> = [T] extends [(...args: infer U) => any]
 	? U
 	: [T] extends [void]
-		? []
-		: [T];
+	? []
+	: [T];
 
 export type SubscriptionExecutor<T extends keyof SubscriptionLookup> = (
 	data: SubscriptionLookup[T]

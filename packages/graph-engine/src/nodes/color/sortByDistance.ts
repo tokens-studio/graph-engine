@@ -10,10 +10,10 @@ import { arrayOf } from '../../schemas/utils.js';
 import { sortTokens } from './lib/sortColors.js';
 
 export default class SortByDistanceNode extends Node {
-	static title = 'Sort Colors by';
+	static title = 'Sort Colors By Distance';
 	static type = 'studio.tokens.color.sortColorsBy';
 	static description =
-		'Sorts Colors by constrast, distance, hue, lightness, or saturation to a Color';
+		'Sorts Colors by contrast, distance, hue, lightness, or saturation to a Color';
 
 	declare inputs: ToInput<{
 		colors: Color[];
