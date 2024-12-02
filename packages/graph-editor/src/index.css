@@ -5,6 +5,7 @@
 @import url('rc-menu/assets/index.css');
 @import url('./components/menubar/menubar.css');
 @import url('./components/debugger/index.scss');
+@import url('./css/base.css');
 @import url('./css/reactflow.css');
 @import url('./css/cmdk.css');
 @import url('./css/contextify.css');
@@ -24,12 +25,6 @@
 .dock-top .dock-bar {
     border-bottom: none;
 }
-
-
-
-
-
-
 
 .dock-panel.dock-style-main .dock-bar {
     border-bottom-color: var(--colors-borderDefault);

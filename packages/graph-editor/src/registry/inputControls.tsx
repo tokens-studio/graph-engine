@@ -1,4 +1,4 @@
-import { Button, Heading, Scroll, Select, Stack } from '@tokens-studio/ui';
+import { Button, Heading, Select, Stack } from '@tokens-studio/ui';
 import { Node } from '@tokens-studio/graph-engine';
 import { StringSchema } from '@tokens-studio/graph-engine';
 import { deletable } from '@/annotations/index.js';
@@ -33,13 +33,13 @@ const CSSMapSpecifics = observer(({ node }: { node: Node }) => {
       <Select value={inputName} onValueChange={setInputName}>
         <Select.Trigger label="Type" value={inputName} />
         <Select.Content>
-          <Scroll height="200">
+          <div style={{ height: '200px' }}>
             {CSSProperties.map((x) => (
               <Select.Item value={x} key={x}>
                 {x}
               </Select.Item>
             ))}
-          </Scroll>
+          </div>
         </Select.Content>
       </Select>
 

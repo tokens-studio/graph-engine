@@ -33,7 +33,7 @@ const DebuggerInner = observer<DebuggerProps>(
   /** @ts-expect-error observer not typed here...? */
   ({ data, domRef, timeline, scale }) => {
     return (
-      <Stack style={{ flex: 1 }}>
+      (<Stack style={{ flex: 1 }}>
         <div
           ref={domRef}
           style={{ overflow: 'auto' }}
@@ -45,17 +45,16 @@ const DebuggerInner = observer<DebuggerProps>(
         >
           {data.rows.map((item) => {
             return (
-              <div
+              (<div
                 className="timeline-list-item"
                 key={item.id}
-                style={{ padding: '$1' }}
+                style={{ padding: "var(--component-spacing-3xs)" }}
               >
                 <Text>{item.name}</Text>
-              </div>
+              </div>)
             );
           })}
         </div>
-
         <Timeline
           editorData={[...data.rows]}
           onChange={() => {}}
@@ -81,7 +80,7 @@ const DebuggerInner = observer<DebuggerProps>(
             );
           }}
         />
-      </Stack>
+      </Stack>)
     );
   },
 );

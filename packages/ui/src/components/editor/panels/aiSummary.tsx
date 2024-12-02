@@ -1,4 +1,4 @@
-import { Button, Scroll, Stack } from '@tokens-studio/ui';
+import { Button, Stack } from '@tokens-studio/ui';
 import {
 	ImperativeEditorRef,
 	mainGraphSelector
@@ -23,27 +23,27 @@ export const AISummary = () => {
 	};
 
 	return (
-		<div
-			style={{
-				padding: 'var(--component-spacing-md)',
-				height: '100%',
-				overflow: 'scroll'
-			}}
-		>
-			<Stack direction='column'>
+        (<div
+                    style={{
+                        padding: 'var(--component-spacing-md)',
+                        height: '100%',
+                        overflow: 'scroll'
+                    }}
+                >
+            <Stack direction='column'>
 				<div>
 					<Button emphasis='high' onClick={onSummarize} loading={isPending}>
 						Summarize
 					</Button>
 				</div>
-				<Scroll style={{ height: '100%' }}>
+				<div style={{ height: '100%' }}>
 					{data && (
 						<MDEditor.Markdown
 							source={data.body.summary.replace(/\\n/g, '\n')}
 						/>
 					)}
-				</Scroll>
+				</div>
 			</Stack>
-		</div>
-	);
+        </div>)
+    );
 };

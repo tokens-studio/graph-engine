@@ -1,0 +1,9 @@
+@layer graphEditor {
+    :root {
+        --colors-pageBg: var(--color-neutral-canvas-default-bg);
+        --colors-nodeBg: var(--color-neutral-canvas-default-bg);
+        --colors-nodeBorder: var(--color-neutral-stroke-subtle);
+        --colors-graphBg: var(--color-neutral-canvas-minimal-bg);
+        --colors-panelBg: var(--color-neutral-canvas-default-bg);
+    }
+}

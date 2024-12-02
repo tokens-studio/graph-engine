@@ -165,11 +165,12 @@ export const useHotkeys = () => {
           .filter((x) => x.selected)
           .map(
             (x) =>
-              ({
+              (({
                 //Its possible we are attempting to duplicate a note that does not exist in the engine
                 engine: graph.getNode(x.id)?.serialize(),
-                editor: reactFlowInstance.getNode(x.id),
-              }) as SerializedNode,
+
+                editor: reactFlowInstance.getNode(x.id)
+              }) as SerializedNode),
           );
         //get the values from the graph
         const values = {

@@ -5,40 +5,53 @@
     background: var(--color-neutral-canvas-minimal-bg);
 }
 
+.react-flow__node {
+    display: flex;
+    background: var(--colors-nodeBg);
+    &.filtered {
+        opacity: 0.25;
+    }
+}
+
 .react-flow__handle {
+
+    --handle-border-width: var(--component-border-width-lg);
+    --handle-core-size: var(--size-50);
+
     position: absolute;
     user-select: none;
     pointer-events: all;
     box-sizing: content-box;
     cursor: grab;
     padding: 0;
-    width: var(--sizes-4);
-    height: var(--sizes-4);
-    border: 4px solid var(--colors-graphBg);
-    border-radius: 99px;
+    width: var(--handle-core-size);
+    height: var(--handle-core-size);
+    border: var(--handle-border-width) solid var(--colors-graphBg);
+    border-radius: var(--component-radii-pill);
     box-shadow: var(--shadows-small);
-    outline: 2px solid transparent;
-    outline-offset: -4px;
     display: grid;
     place-items: center;
-}
-.react-flow__handle svg {
-    pointer-events: none;
+
+    &-right {
+        right: calc((var(--handle-border-width) + (var(--handle-core-size) / 2)) * -1);
+    }
+
+    &-left {
+        left: calc((var(--handle-border-width) + (var(--handle-core-size) / 2)) * -1);
+    }
+
+    &-valid	{
+        outline-color: var(--color-success-stroke-default);
+    }
+
+    svg {
+        pointer-events: none;
+    }
 }
 
-.react-flow__node.filtered {
-    opacity: 0.25;
-}
 
-.react-flow__node {
-    display: flex;
-    background: var(--color-neutral-surface-minimal-idle-bg);
-}
 .react-flow__edge.updating {
     stroke: var(--colors-graphBg);
-}
-.react-flow__handle-valid	{
-    outline-color: var(--colors-borderDefault);
 }
 .react-flow__node.selectable.selected,
 .react-flow__node.selectable:focus {
@@ -62,13 +75,6 @@
     fill: var(--colors-bgDefault) !important;
 }
 
-.react-flow__handle-right {
-    right: -12px;
-}
-
-.react-flow__handle-left {
-    left: -12px;
-}
 .react-flow__edge {
     stroke-width: 1 !important;
     stroke-opacity: 1;

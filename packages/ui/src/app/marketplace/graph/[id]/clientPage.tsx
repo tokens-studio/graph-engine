@@ -63,9 +63,9 @@ const Page = () => {
 	};
 
 	return (
-		<Stack direction='column' width='full' gap={3}>
-			{isLoading && <Spinner />}
-			{!isLoading && data && (
+        (<Stack direction='column' width='full' gap={3}>
+            {isLoading && <Spinner />}
+            {!isLoading && data && (
 				<>
 					<Stack
 						direction='row'
@@ -137,8 +137,8 @@ const Page = () => {
 					</Tabs>
 				</>
 			)}
-		</Stack>
-	);
+        </Stack>)
+    );
 };
 
 export default Page;

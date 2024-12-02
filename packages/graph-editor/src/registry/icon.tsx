@@ -21,12 +21,12 @@ import Text from '@tokens-studio/icons/Text.js';
  * These icons are used to represent the different types of custom types in the graph editor
  */
 export const icons = () =>
-  ({
+  (({
     [COLOR]: <Droplet />,
     [CURVE]: <EaseCurveControlPoints />,
     [STRING]: <Text />,
     [BOOLEAN]: <InputOutput />,
     [NUMBER]: <Hashtag />,
     [OBJECT]: <Cube />,
-    [ANY]: <SelectPoint3d />,
-  }) as Record<string, React.ReactNode>;
+    [ANY]: <SelectPoint3d />
+  }) as Record<string, React.ReactNode>);

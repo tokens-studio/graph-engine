@@ -16,13 +16,13 @@ const Page = () => {
 	useErrorToast(error);
 
 	return (
-		<Stack direction='column' width='full' gap={3}>
-			<Heading size='large'>Showcase</Heading>
-			<Separator orientation='horizontal' />
-			{isLoading && <Spinner />}
-			{!isLoading && (
+        (<Stack direction='column' width='full' gap={3}>
+            <Heading size='large'>Showcase</Heading>
+            <Separator orientation='horizontal' />
+            {isLoading && <Spinner />}
+            {!isLoading && (
 				<>
-					<Stack style={{ flexWrap: 'wrap', padding: '$3' }}>
+					<Stack style={{ flexWrap: 'wrap', padding: "var(--component-spacing-sm)" }}>
 						{data?.body.graphs.map(graph => (
 							<div className={styles.wrapper} key={graph.id}>
 								<Link href={`/marketplace/graph/${graph.id}`}>
@@ -63,8 +63,8 @@ const Page = () => {
 					</Stack>
 				</>
 			)}
-		</Stack>
-	);
+        </Stack>)
+    );
 };
 
 export default Page;

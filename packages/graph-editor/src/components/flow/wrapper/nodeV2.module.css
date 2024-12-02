@@ -8,7 +8,7 @@
   background: var(--color-neutral-surface-default-idle-bg);
   color: var(--color-neutral-surface-default-idle-fg-default);
   padding: var(--component-spacing-sm);
-  font: var(--typography-label-xs);
+  font: var(--typography-code-xs);
   border-radius: var(--radii-small);
   text-transform: uppercase;
 }

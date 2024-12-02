@@ -88,7 +88,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='en'>
-			<body className='dark'>{children}</body>
+			<body className='ts-theme-light'>{children}</body>
 		</html>
 	);
 }
