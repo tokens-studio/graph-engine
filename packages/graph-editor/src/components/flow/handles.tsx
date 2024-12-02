@@ -2,6 +2,7 @@ import { Position, Handle as RawHandle } from 'reactflow';
 import { Stack, Tooltip } from '@tokens-studio/ui';
 import { useIsValidConnection } from '../../hooks/useIsValidConnection.js';
 import React, { createContext, useContext } from 'react';
+import clsx from 'clsx';
 import styles from './handles.module.css';
 
 type HandleProps = {
@@ -95,27 +96,21 @@ export const Handle = (props: HandleProps) => {
 
   const shouldHide = !visible;
 
-  const handleClasses = [
-    styles.rawHandle,
-    error && styles.error,
-    shouldHide && styles.hide,
-    isArray && styles.isArray,
-    shouldHideHandles && styles.shouldHideHandles,
-    variadic && styles.variadic,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const handleClasses = clsx(styles.rawHandle, {
+    [styles.error]: error,
+    [styles.hide]: shouldHide,
+    [styles.isArray]: isArray,
+    [styles.shouldHideHandles]: shouldHideHandles,
+    [styles.variadic]: variadic,
+  });
 
-  const holderClasses = [
-    styles.handleHolder,
-    (collapsed || shouldHide) && styles.collapsed,
-    isAnchor && styles.isAnchor,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const holderClasses = clsx(styles.handleHolder, {
+    [styles.collapsed]: collapsed || shouldHide,
+    [styles.isAnchor]: isAnchor,
+  });
 
   return (
-    (<div
+    <div
       className={holderClasses}
       style={{
         flexDirection: type === 'target' ? 'row' : 'row-reverse',
@@ -150,6 +145,6 @@ export const Handle = (props: HandleProps) => {
       >
         {children}
       </Stack>
-    </div>)
+    </div>
   );
 };
