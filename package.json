@@ -29,7 +29,9 @@
     "test:recent": "turbo run test --filter=[HEAD^1] ",
     "test-e2e": "turbo run test-e2e ",
     "turbo": "turbo",
-    "version-packages": "changeset version"
+    "version-packages": "changeset version",
+    "transform-tsx": "find . -type f \\( -name \"*.tsx\" -o -name \"*.jsx\" -o -name \"*.js\" \\) -not -path \"*/node_modules/*\" -not -path \"*/.next/*\" | xargs jscodeshift -t transform.cjs",
+    "transform-css": "node transform-css.cjs"
   },
   "workspaces": {
     "packages": [
