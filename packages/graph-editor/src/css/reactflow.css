@@ -2,7 +2,7 @@
 
 
 .react-flow {
-    background: var(--colors-graphBg);
+    background: var(--color-neutral-canvas-minimal-bg);
 }
 
 .react-flow__handle {
@@ -32,6 +32,7 @@
 
 .react-flow__node {
     display: flex;
+    background: var(--color-neutral-surface-minimal-idle-bg);
 }
 .react-flow__edge.updating {
     stroke: var(--colors-graphBg);

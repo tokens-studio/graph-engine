@@ -1,5 +1,4 @@
 'use client';
-import { Download, Heart } from 'iconoir-react';
 import { Heading, Separator, Spinner, Stack, Text } from '@tokens-studio/ui';
 import { client } from '@/api/sdk/index.ts';
 import { useErrorToast } from '@/hooks/useToast.tsx';
