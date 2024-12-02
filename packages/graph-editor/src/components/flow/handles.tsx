@@ -136,8 +136,8 @@ export const Handle = (props: HandleProps) => {
         style={{
           flex: 1,
           justifyContent: type === 'target' ? 'start' : 'end',
-          paddingLeft: shouldHideHandles ? 0 : "var(--component-spacing-2xs)",
-          paddingRight: shouldHideHandles ? 0 : "var(--component-spacing-2xs)",
+          paddingLeft: shouldHideHandles ? 0 : 'var(--component-spacing-2xs)',
+          paddingRight: shouldHideHandles ? 0 : 'var(--component-spacing-2xs)',
           fontFamily: 'var(--fonts-mono)',
           fontSize: 'var(--fontSizes-xxsmall)',
           flexDirection: type === 'target' ? 'row' : 'row-reverse',

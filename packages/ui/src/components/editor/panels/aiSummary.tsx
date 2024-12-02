@@ -23,14 +23,14 @@ export const AISummary = () => {
 	};
 
 	return (
-        (<div
-                            style={{
-                                padding: 'var(--component-spacing-md)',
-                                height: '100%',
-                                overflow: 'scroll'
-                            }}
-                        >
-            <Stack direction='column'>
+		<div
+			style={{
+				padding: 'var(--component-spacing-md)',
+				height: '100%',
+				overflow: 'scroll'
+			}}
+		>
+			<Stack direction='column'>
 				<div>
 					<Button emphasis='high' onClick={onSummarize} loading={isPending}>
 						Summarize
@@ -44,6 +44,6 @@ export const AISummary = () => {
 					)}
 				</div>
 			</Stack>
-        </div>)
-    );
+		</div>
+	);
 };

@@ -56,7 +56,7 @@ const StyledThemeBlock = styled('div', {
   width: '50%',
   bottom: 0,
   overflow: 'auto',
-  background: "var(--color-neutral-canvas-minimal-bg)",
+  background: 'var(--color-neutral-canvas-minimal-bg)',
   display: 'flex',
   variants: {
     fill: {

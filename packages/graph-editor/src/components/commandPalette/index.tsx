@@ -59,10 +59,14 @@ const CommandMenuGroup = observer(
     handleSelectItem: (PanelItem) => void;
   }) => {
     return (
-      (<Command.Group
+      <Command.Group
         key={group.key}
         heading={
-          <Stack align="center" gap={2} style={{ color: "var(--color-neutral-canvas-default-fg-subtle)" }}>
+          <Stack
+            align="center"
+            gap={2}
+            style={{ color: 'var(--color-neutral-canvas-default-fg-subtle)' }}
+          >
             {group.icon}
             {group.title}
           </Stack>
@@ -71,7 +75,7 @@ const CommandMenuGroup = observer(
         {group.items.map((item) => (
           <CommandItem item={item} handleSelectItem={handleSelectItem} />
         ))}
-      </Command.Group>)
+      </Command.Group>
     );
   },
 );
