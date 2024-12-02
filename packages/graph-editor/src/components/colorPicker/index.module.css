@@ -1,6 +1,6 @@
 .colorPickerTrigger {
   cursor: pointer;
-  border-radius: var(--component-border-radius-small);
+  border-radius: var(--component-border-radius-sm);
   width: var(--size-150);
   height: var(--size-150);
   flex-shrink: 0;
