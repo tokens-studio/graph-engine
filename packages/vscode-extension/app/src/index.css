@@ -1,3 +1,18 @@
+:root
+{
+    --colors-bgCanvas: 'var(--vscode-editor-background)';
+    --colors-bgDefault: 'var(--vscode-editor-background)';
+    --colors-bgEmphasis: 'var(--vscode-editor-background)';
+    --colors-bgSubtle: '#373737';
+    --colors-bgSurface: '#292929';
+    --colors-borderDefault: '#636363';
+    --colors-borderMuted: '#2e2e2e';
+    --colors-borderSubtle: '#454545';
+    --colors-fgSubtle: '#8a8a8a';
+    --colors-inputBg: 'var(--vscode-input-background)';
+    --colors-inputBorderRest: 'var(--vscode-input-border)';
+}
+
 body {
     margin: 0;
     padding:0 !important;
@@ -7,3 +22,4 @@ body {
     height: 100vh;
     background: var(--colors-bgCanvas)
 }
+
