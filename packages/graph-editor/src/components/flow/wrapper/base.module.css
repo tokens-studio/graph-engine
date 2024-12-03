@@ -30,18 +30,17 @@
 }
 
 .header {
-  padding: var(--component-spacing-3xs) var(--component-spacing-sm);
-  background-color: var(--colors-gray6);
+  padding: var(--component-spacing-xs) var(--component-spacing-sm);
+  background-color: var(--color-neutral-canvas-minimal-bg);
   border-radius: var(--component-radii-md);
 }
 
 .title {
-  font-size: var(--fontSizes-medium);
-  font-weight: var(--fontWeights-bold);
-  color: var(--nodeTextColor, var(--colors-gray12));
+  font: var(--typography-body-sm);
+  color: var(--color-neutral-canvas-minimal-fg-default);
 }
 
 .subtitle {
-  font-size: var(--fontSizes-xsmall);
-  color: var(--nodeTextColor, var(--colors-gray10));
+  font: var(--typography-body-xs);
+  color: var(--color-neutral-canvas-minimal-fg-subtle);
 }
