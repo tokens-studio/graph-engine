@@ -35,6 +35,8 @@
 }
 
 [cmdk-input] {
+    background-color: var(--color-neutral-canvas-default-bg);
+    color: var(--color-neutral-canvas-default-fg-default);
     border: none;
     width: 100%;
     cursor: text;
