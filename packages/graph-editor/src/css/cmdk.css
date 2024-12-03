@@ -21,12 +21,12 @@
 }
 
 [cmdk-root] {
-    background-color: var(--colors-bgDefault);
-    border-radius: var(--radii-medium);
+    background-color: var(--color-neutral-canvas-default-bg);
+    border-radius: var(--component-radii-md);
     box-shadow: var(--shadows-contextMenu);
-    border: 1px solid var(--colors-borderSubtle);
+    border: 1px solid var(--color-neutral-stroke-subtle);
     font-size: var(--fontSizes-small);
-    color: var(--colors-fgDefault);
+    color: var(--color-neutral-canvas-default-fg-default);
     width: 100%;
     max-width: 640px;
     max-height: 70vh;
@@ -35,6 +35,8 @@
 }
 
 [cmdk-input] {
+    background-color: var(--color-neutral-canvas-default-bg);
+    color: var(--color-neutral-canvas-default-fg-default);
     border: none;
     width: 100%;
     cursor: text;
@@ -46,19 +48,19 @@
 
 [cmdk-item] {
     font-size: var(--fontSizes-small);
-    padding: var(--space-3) var(--space-5);
+    padding: var(--component-spacing-sm) var(--component-spacing-lg);
     border-radius: 0px
 }
 
 [cmdk-group-heading] {
-    padding: var(--space-1) var(--space-5);
+    padding: var(--component-spacing-3xs) var(--component-spacing-lg);
     font-weight: var(--fontWeights-sansMedium);
-    color: var(--colors-fgDefault);
+    color: var(--color-neutral-canvas-default-fg-default);
     font-size: var(--fontSizes-xxsmall);
 }
 
 [cmdk-item][data-selected="true"] {
-    background-color: var(--colors-bgSubtle);
+    background-color: var(--color-neutral-canvas-subtle-bg);
 }
 
 
@@ -66,7 +68,7 @@
     width: 1px;
     border: 0;
     margin-right: 8px;
-    background: var(--colors-borderDefault);
+    background: var(--color-neutral-stroke-default);
 }
 
 [cmdk-framer-right] {

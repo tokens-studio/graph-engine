@@ -5,6 +5,7 @@
 @import url('rc-menu/assets/index.css');
 @import url('./components/menubar/menubar.css');
 @import url('./components/debugger/index.scss');
+@import url('./css/base.css');
 @import url('./css/reactflow.css');
 @import url('./css/cmdk.css');
 @import url('./css/contextify.css');
@@ -25,27 +26,21 @@
     border-bottom: none;
 }
 
-
-
-
-
-
-
 .dock-panel.dock-style-main .dock-bar {
-    border-bottom-color: var(--colors-borderDefault);
+    border-bottom-color: var(--color-neutral-stroke-default);
 }
 
 .dock-content-holder {
-    scrollbar-color: var(--colors-bgSubtle) transparent;
+    scrollbar-color: var(--color-neutral-canvas-subtle-bg) transparent;
     scrollbar-width: thin;
-    border-bottom: 1px solid var(--colors-borderDefault);
+    border-bottom: 1px solid var(--color-neutral-stroke-default);
 }
 
 .dock-top .dock-ink-bar {
-    background: var(--colors-bgDefault);
+    background: var(--color-neutral-canvas-default-bg);
     z-index: 0;
     height: 100%;
-    border-radius: var(--radii-small);
+    border-radius: var(--component-radii-sm);
 }
 
 

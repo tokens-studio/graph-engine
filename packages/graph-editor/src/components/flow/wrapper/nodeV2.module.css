@@ -7,24 +7,26 @@
   position: absolute;
   background: var(--color-neutral-surface-default-idle-bg);
   color: var(--color-neutral-surface-default-idle-fg-default);
-  padding: var(--component-spacing-sm);
-  font: var(--typography-label-xs);
-  border-radius: var(--radii-small);
+  padding: var(--component-spacing-2xs);
+  font: var(--typography-code-xs);
+  border-radius: var(--component-radii-sm);
   text-transform: uppercase;
+
+  &.source {
+    left: calc(100% + 16px);
+  }
+  
+  &.target {
+    right: calc(100% + 16px);
+  }
 }
 
-.inlineTypeLabel.source {
-  left: calc(100% + 16px);
-}
 
-.inlineTypeLabel.target {
-  right: calc(100% + 16px);
-}
 
 .colorSwatch {
   width: 16px;
   height: 16px;
-  border-radius: var(--radii-medium);
+  border-radius: var(--component-radii-md);
 }
 
 .portText {

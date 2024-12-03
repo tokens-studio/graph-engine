@@ -3,7 +3,6 @@ import {
   Checkbox,
   Heading,
   Label,
-  Scroll,
   Select,
   Stack,
   TextInput,
@@ -90,13 +89,13 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
       <Select value={inputType} onValueChange={setInputType}>
         <Select.Trigger label="Type" value={inputType} />
         <Select.Content>
-          <Scroll height="200">
+          <div style={{ height: '200px' }}>
             {schemas.map((x, i) => (
               <Select.Item value={x.$id!} key={i}>
                 {x.title || x.$id}
               </Select.Item>
             ))}
-          </Scroll>
+          </div>
         </Select.Content>
       </Select>
 

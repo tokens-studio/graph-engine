@@ -48,14 +48,13 @@ const DebuggerInner = observer<DebuggerProps>(
               <div
                 className="timeline-list-item"
                 key={item.id}
-                style={{ padding: '$1' }}
+                style={{ padding: 'var(--component-spacing-3xs)' }}
               >
                 <Text>{item.name}</Text>
               </div>
             );
           })}
         </div>
-
         <Timeline
           editorData={[...data.rows]}
           onChange={() => {}}

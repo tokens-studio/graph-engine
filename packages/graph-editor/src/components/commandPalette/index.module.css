@@ -1,48 +1,48 @@
 .searchContainer {
-  color: var(--colors-fgDefault);
+  color: var(--color-neutral-canvas-default-fg-default);
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 1px;
-  padding: var(--space-4);
-  border-bottom: 1px solid var(--colors-borderSubtle);
+  padding: var(--component-spacing-md);
+  border-bottom: 1px solid var(--color-neutral-stroke-subtle);
 }
 
 .emptyState {
-  padding: var(--space-4);
+  padding: var(--component-spacing-md);
 }
 
 .scrollContainer {
   overflow-y: scroll;
   max-height: 450px;
-  scrollbar-color: var(--colors-bgSubtle) transparent;
+  scrollbar-color: var(--color-neutral-canvas-subtle-bg) transparent;
   scrollbar-width: thin;
 }
 
 .leftPanel {
   width: 50%;
-  padding: var(--space-4);
+  padding: var(--component-spacing-md);
 }
 
 .rightPanel {
   display: flex;
   flex-direction: column;
-  margin: var(--space-5);
+  margin: var(--component-spacing-lg);
   width: 50%;
-  background: var(--colors-bgCanvas);
-  border-radius: var(--radii-medium);
+  background: var(--color-neutral-canvas-minimal-bg);
+  border-radius: var(--component-radii-md);
   position: sticky;
-  top: var(--space-5);
+  top: var(--component-spacing-lg);
 }
 
 .previewContainer {
-  padding: var(--space-6);
+  padding: var(--component-spacing-xl);
 }
 
 .previewTitle {
   font-size: var(--fontSizes-small);
   font-weight: var(--fontWeights-sansMedium);
-  color: var(--colors-fgDefault);
+  color: var(--color-neutral-canvas-default-fg-default);
 }
 
 .previewDescription {
@@ -50,7 +50,7 @@
 }
 
 .link {
-  color: var(--colors-accentDefault);
+  color: var(--color-accent-surface-base-idle-fg-default);
   text-decoration: none;
   font-weight: var(--fontWeights-sansMedium);
 }

@@ -22,7 +22,9 @@ const Page = () => {
 			{isLoading && <Spinner />}
 			{!isLoading && (
 				<>
-					<Stack style={{ flexWrap: 'wrap', padding: '$3' }}>
+					<Stack
+						style={{ flexWrap: 'wrap', padding: 'var(--component-spacing-sm)' }}
+					>
 						{data?.body.graphs.map(graph => (
 							<div className={styles.wrapper} key={graph.id}>
 								<Link href={`/marketplace/graph/${graph.id}`}>

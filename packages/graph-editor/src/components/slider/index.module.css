@@ -1,5 +1,5 @@
 .track {
-  background-color: var(--colors-borderDefault);
+  background-color: var(--color-neutral-stroke-default);
   position: relative;
   flex-grow: 1;
   border-radius: 9999px;
@@ -34,5 +34,5 @@
 .range {
   position: absolute;
   height: 100%;
-  background-color: var(--colors-accentDefault);
+  background-color: var(--color-accent-surface-base-idle-fg-default);
 }

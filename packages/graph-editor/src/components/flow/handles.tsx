@@ -2,6 +2,7 @@ import { Position, Handle as RawHandle } from 'reactflow';
 import { Stack, Tooltip } from '@tokens-studio/ui';
 import { useIsValidConnection } from '../../hooks/useIsValidConnection.js';
 import React, { createContext, useContext } from 'react';
+import clsx from 'clsx';
 import styles from './handles.module.css';
 
 type HandleProps = {
@@ -82,12 +83,12 @@ export const Handle = (props: HandleProps) => {
     visible,
     shouldHideHandles = false,
     error,
-    color,
+    backgroundColor,
     isArray,
     type: dataType,
-    backgroundColor,
     variadic,
     isAnchor,
+    isConnected,
   } = props;
   const { position, type } = useHandle();
   const isValidConnection = useIsValidConnection();
@@ -95,24 +96,21 @@ export const Handle = (props: HandleProps) => {
 
   const shouldHide = !visible;
 
-  const handleClasses = [
-    styles.rawHandle,
-    error && styles.error,
-    shouldHide && styles.hide,
-    isArray && styles.isArray,
-    shouldHideHandles && styles.shouldHideHandles,
-    variadic && styles.variadic,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const handleClasses = clsx(styles.rawHandle, {
+    [styles.error]: error,
+    [styles.hide]: shouldHide,
+    [styles.isArray]: isArray,
+    [styles.shouldHideHandles]: shouldHideHandles,
+    [styles.variadic]: variadic,
+    [styles.source]: type === 'source',
+    [styles.target]: type === 'target',
+    [styles.connected]: isConnected,
+  });
 
-  const holderClasses = [
-    styles.handleHolder,
-    (collapsed || shouldHide) && styles.collapsed,
-    isAnchor && styles.isAnchor,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const holderClasses = clsx(styles.handleHolder, {
+    [styles.collapsed]: collapsed || shouldHide,
+    [styles.isAnchor]: isAnchor,
+  });
 
   return (
     <div
@@ -124,11 +122,7 @@ export const Handle = (props: HandleProps) => {
       <Tooltip label={dataType} side="top">
         <RawHandle
           className={handleClasses}
-          style={{
-            color: color,
-            backgroundColor: backgroundColor,
-            outlineColor: backgroundColor,
-          }}
+          style={{ '--handle-color': backgroundColor } as React.CSSProperties}
           id={id}
           type={type}
           position={position}
@@ -141,8 +135,8 @@ export const Handle = (props: HandleProps) => {
         style={{
           flex: 1,
           justifyContent: type === 'target' ? 'start' : 'end',
-          paddingLeft: shouldHideHandles ? 0 : 'var(--space-2)',
-          paddingRight: shouldHideHandles ? 0 : 'var(--space-2)',
+          paddingLeft: shouldHideHandles ? 0 : 'var(--component-spacing-2xs)',
+          paddingRight: shouldHideHandles ? 0 : 'var(--component-spacing-2xs)',
           fontFamily: 'var(--fonts-mono)',
           fontSize: 'var(--fontSizes-xxsmall)',
           flexDirection: type === 'target' ? 'row' : 'row-reverse',

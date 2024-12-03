@@ -20,9 +20,9 @@
 }
 
 .nodeWrapper.error {
-  --nodeBorderColor: var(--colors-dangerFg);
-  --nodeBgColor: var(--colors-dangerBg);
-  --nodeTextColor: var(--colors-dangerFg);
+  --nodeBorderColor: var(--color-danger-surface-base-idle-fg-default);
+  --nodeBgColor: var(--color-danger-surface-base-idle-bg);
+  --nodeTextColor: var(--color-danger-surface-base-idle-fg-default);
 }
 
 .nodeContent {
@@ -30,18 +30,17 @@
 }
 
 .header {
-  padding: var(--space-1) var(--space-3);
-  background-color: var(--colors-gray6);
-  border-radius: var(--radii-medium);
+  padding: var(--component-spacing-xs) var(--component-spacing-sm);
+  background-color: var(--color-neutral-canvas-minimal-bg);
+  border-radius: var(--component-radii-md);
 }
 
 .title {
-  font-size: var(--fontSizes-medium);
-  font-weight: var(--fontWeights-bold);
-  color: var(--nodeTextColor, var(--colors-gray12));
+  font: var(--typography-body-sm);
+  color: var(--color-neutral-canvas-minimal-fg-default);
 }
 
 .subtitle {
-  font-size: var(--fontSizes-xsmall);
-  color: var(--nodeTextColor, var(--colors-gray10));
+  font: var(--typography-body-xs);
+  color: var(--color-neutral-canvas-minimal-fg-subtle);
 }

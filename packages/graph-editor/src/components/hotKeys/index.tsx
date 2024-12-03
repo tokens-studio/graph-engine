@@ -168,6 +168,7 @@ export const useHotkeys = () => {
               ({
                 //Its possible we are attempting to duplicate a note that does not exist in the engine
                 engine: graph.getNode(x.id)?.serialize(),
+
                 editor: reactFlowInstance.getNode(x.id),
               }) as SerializedNode,
           );

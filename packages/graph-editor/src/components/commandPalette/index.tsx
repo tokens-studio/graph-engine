@@ -62,7 +62,11 @@ const CommandMenuGroup = observer(
       <Command.Group
         key={group.key}
         heading={
-          <Stack align="center" gap={2} style={{ color: '$fgMuted' }}>
+          <Stack
+            align="center"
+            gap={2}
+            style={{ color: 'var(--color-neutral-canvas-default-fg-subtle)' }}
+          >
             {group.icon}
             {group.title}
           </Stack>
