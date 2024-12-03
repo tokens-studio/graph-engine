@@ -8,12 +8,14 @@ import {
 } from '@tokens-studio/ui';
 import { client } from '@/api/sdk/index.ts';
 import GitMerge from '@tokens-studio/icons/GitMerge.js';
+import HalfMoon from '@tokens-studio/icons/HalfMoon.js';
 import Home from '@tokens-studio/icons/Home.js';
 import Image from 'next/image.js';
 import Link from 'next/link.js';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Settings from '@tokens-studio/icons/Settings.js';
 import ShoppingBag from '@tokens-studio/icons/ShoppingBag.js';
+import SunLight from '@tokens-studio/icons/SunLight.js';
 import TokensStudio from '@/assets/svgs/tokensstudio-logo.svg';
 
 interface RailItem {
@@ -43,6 +45,35 @@ const RailItem = ({ icon, label, link }: RailItem) => {
 					icon={icon}
 				/>
 			</Link>
+		</Tooltip>
+	);
+};
+
+const ThemeToggle = () => {
+	const [isDark, setIsDark] = useState(false);
+
+	useEffect(() => {
+		// Check initial theme on mount
+		const isDarkMode = document.body.classList.contains('ts-theme-dark');
+		setIsDark(isDarkMode);
+	}, []);
+
+	const toggleTheme = () => {
+		const newIsDark = !isDark;
+		setIsDark(newIsDark);
+
+		document.body.classList.remove(newIsDark ? 'ts-theme-light' : 'ts-theme-dark');
+		document.body.classList.add(newIsDark ? 'ts-theme-dark' : 'ts-theme-light');
+	};
+
+	return (
+		<Tooltip label={isDark ? 'Light Mode' : 'Dark Mode'}>
+			<IconButton
+				emphasis='low'
+				style={{ padding: 'var(--component-spacing-sm)' }}
+				onClick={toggleTheme}
+				icon={isDark ? <SunLight /> : <HalfMoon />}
+			/>
 		</Tooltip>
 	);
 };
@@ -101,6 +132,7 @@ export const Rail = () => {
 						link={item.link}
 					/>
 				))}
+				<ThemeToggle />
 				<Separator orientation='horizontal' />
 				<Avatar src={data?.body?.user?.image ?? ''} />
 			</Stack>
