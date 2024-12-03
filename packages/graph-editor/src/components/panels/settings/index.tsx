@@ -148,7 +148,9 @@ export const Settings = () => {
             <div style={{ width: 'var(--component-spacing-md)' }}></div>
             <Select
               value={edgeTypeValue}
-              onValueChange={(value) => dispatch.settings.setEdgeType(value)}
+              onValueChange={(value: EdgeType) =>
+                dispatch.settings.setEdgeType(value)
+              }
             >
               <Select.Trigger label="Edge Type" value={edgeTypeValue} />
               <Select.Content>
@@ -166,7 +168,9 @@ export const Settings = () => {
             <div style={{ width: 'var(--component-spacing-md)' }}></div>
             <Select
               value={layoutTypeValue}
-              onValueChange={(value) => dispatch.settings.setLayoutType(value)}
+              onValueChange={(value: LayoutType) =>
+                dispatch.settings.setLayoutType(value)
+              }
             >
               <Select.Trigger label="Layout Type" value={layoutTypeValue} />
               <Select.Content>
