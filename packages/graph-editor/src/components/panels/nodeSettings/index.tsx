@@ -90,7 +90,10 @@ const NodeTitle = observer(({ selectedNode }: { selectedNode: Node }) => {
   return (
     <Stack direction="column" gap={2}>
       <Label>Title</Label>
-      <TextInput onChange={onChangeTitle} value={selectedNode.factory.title ?? ''} />
+      <TextInput
+        onChange={onChangeTitle}
+        value={selectedNode.factory.title ?? ''}
+      />
     </Stack>
   );
 });

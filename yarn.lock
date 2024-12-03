@@ -6629,11 +6629,6 @@
   dependencies:
     deepmerge-ts "^7.0.3"
 
-"@tokens-studio/tokens@^0.0.24":
-  version "0.0.24"
-  resolved "https://registry.yarnpkg.com/@tokens-studio/tokens/-/tokens-0.0.24.tgz#1063825e87cd07492b2aedd6dcd6ffb207ac3e7c"
-  integrity sha512-0fuuYAmR5LuaMQelsliuPAvBJ29Aa7pw5fCF6WJd0wpOoLqSV3ttap0D6YRbi67cCmWsKH57mM7jn0jAbEqm4A==
-
 "@tokens-studio/types@^0.2.3":
   version "0.2.5"
   resolved "https://registry.npmjs.org/@tokens-studio/types/-/types-0.2.5.tgz"
