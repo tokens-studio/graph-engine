@@ -1,5 +1,5 @@
 @layer graphEditor {
-    :root {
+    .graph-editor {
         --colors-pageBg: var(--color-neutral-canvas-default-bg);
         --colors-nodeBg: var(--color-neutral-canvas-default-bg);
         --colors-nodeBorder: var(--color-neutral-stroke-subtle);

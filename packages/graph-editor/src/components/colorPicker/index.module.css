@@ -1,9 +1,11 @@
 .colorPickerTrigger {
   cursor: pointer;
-  border-radius: var(--component-border-radius-sm);
+  border-radius: var(--component-radii-sm);
+  border: 1px solid var(--color-neutral-stroke-subtle);
   width: var(--size-150);
   height: var(--size-150);
   flex-shrink: 0;
+  padding: 0;
 
   &:hover {
     outline: 1px solid var(--color-neutral-stroke-default);

@@ -28,6 +28,7 @@ import { title } from '@/annotations/index.js';
 import { useLocalGraph } from '@/context/graph.js';
 import { useSelector } from 'react-redux';
 import React from 'react';
+import clsx from 'clsx';
 import colors from '@/tokens/colors.js';
 import styles from './nodeV2.module.css';
 
@@ -136,7 +137,6 @@ const NodeWrap = observer(({ node, icon }: INodeWrap) => {
     </BaseNodeWrapper>
   );
 });
-
 export interface IPortArray {
   ports: Record<string, Port>;
   hideNames?: boolean;
@@ -215,7 +215,7 @@ export const InlineTypeLabel = ({ port }: { port: Port }) => {
 
   return (
     <div
-      className={`${styles.inlineTypeLabel} ${styles[handleInformation.type]}`}
+    className={clsx(styles.inlineTypeLabel, styles[handleInformation.type])}
     >
       {typeName}
     </div>
@@ -355,14 +355,14 @@ const InputHandle = observer(
                     }}
                   >
                     {inlineValuesValue && (
-                      <Text
+                      <span
                         style={{
-                          font: 'var(--typography-body-md)',
+                          font: 'var(--typography-code-md)',
                           color: 'var(--color-neutral-1200)',
                         }}
                       >
                         {getValuePreview(input.value[i], input.type.items)}
-                      </Text>
+                      </span>
                     )}
                   </div>
                 )}
@@ -393,23 +393,23 @@ const InputHandle = observer(
                 handleInformation.type === 'source' ? 'row-reverse' : 'row',
             }}
           >
-            <Text
+            <span
               style={{
-                font: 'var(--typography-body-sm)',
+                font: 'var(--typography-code-sm)',
                 color: 'var(--color-neutral-1500)',
               }}
             >
               {input.name}
-            </Text>
+            </span>
             {inlineValuesValue && (
-              <Text
+              <span
                 style={{
-                  font: 'var(--typography-body-xs)',
+                  font: 'var(--typography-code-xs)',
                   color: 'var(--color-neutral-1200)',
                 }}
               >
                 {getValuePreview(input.value, input.type)}
-              </Text>
+              </span>
             )}
           </Stack>
         )}
@@ -418,3 +418,4 @@ const InputHandle = observer(
     );
   },
 );
+

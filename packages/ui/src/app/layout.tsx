@@ -1,17 +1,19 @@
 import '@/styles/styles.scss';
 import '@tokens-studio/graph-editor/index.css';
 
+import '@tokens-studio/tokens/css/ts-theme-dark.css';
+import '@tokens-studio/tokens/css/ts-theme-light.css';
+
 import '@tokens-studio/tokens/css/base.css';
-import '@tokens-studio/tokens/css/light.css';
 import '@tokens-studio/ui/normalize.css';
 
 import '@fontsource/geist-mono/400.css';
 import '@fontsource/geist-mono/500.css';
-import '@fontsource/geist-mono/700.css';
+import '@fontsource/geist-mono/600.css';
 
 import '@fontsource/geist-sans/400.css';
 import '@fontsource/geist-sans/500.css';
-import '@fontsource/geist-sans/700.css';
+import '@fontsource/geist-sans/600.css';
 
 import { headers } from 'next/headers.js';
 import type { Viewport } from 'next';
@@ -88,7 +90,9 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='en'>
-			<body className='ts-theme-light'>{children}</body>
+			<body className='ts-theme-light graph-editor'>
+        {children}
+      </body>
 		</html>
 	);
 }

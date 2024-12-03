@@ -8,43 +8,9 @@
 .react-flow__node {
     display: flex;
     background: var(--colors-nodeBg);
+    border-radius: var(--component-radii-lg);
     &.filtered {
         opacity: 0.25;
-    }
-}
-
-.react-flow__handle {
-    --handle-border-width: var(--component-border-width-lg);
-    --handle-core-size: var(--size-50);
-
-    position: absolute;
-    user-select: none;
-    pointer-events: all;
-    box-sizing: content-box;
-    cursor: grab;
-    padding: 0;
-    width: var(--handle-core-size);
-    height: var(--handle-core-size);
-    border: var(--handle-border-width) solid var(--colors-graphBg);
-    border-radius: var(--component-radii-pill);
-    box-shadow: var(--shadows-small);
-    display: grid;
-    place-items: center;
-
-    &-right {
-        right: calc((var(--handle-border-width) + (var(--handle-core-size) / 2)) * -1);
-    }
-
-    &-left {
-        left: calc((var(--handle-border-width) + (var(--handle-core-size) / 2)) * -1);
-    }
-
-    &-valid	{
-        outline-color: var(--color-success-stroke-default);
-    }
-
-    svg {
-        pointer-events: none;
     }
 }
 

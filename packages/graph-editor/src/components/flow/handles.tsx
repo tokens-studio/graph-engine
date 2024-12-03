@@ -83,12 +83,12 @@ export const Handle = (props: HandleProps) => {
     visible,
     shouldHideHandles = false,
     error,
-    color,
+    backgroundColor,
     isArray,
     type: dataType,
-    backgroundColor,
     variadic,
     isAnchor,
+    isConnected,
   } = props;
   const { position, type } = useHandle();
   const isValidConnection = useIsValidConnection();
@@ -102,6 +102,9 @@ export const Handle = (props: HandleProps) => {
     [styles.isArray]: isArray,
     [styles.shouldHideHandles]: shouldHideHandles,
     [styles.variadic]: variadic,
+    [styles.source]: type === 'source',
+    [styles.target]: type === 'target',
+    [styles.connected]: isConnected,
   });
 
   const holderClasses = clsx(styles.handleHolder, {
@@ -119,11 +122,7 @@ export const Handle = (props: HandleProps) => {
       <Tooltip label={dataType} side="top">
         <RawHandle
           className={handleClasses}
-          style={{
-            color: color,
-            backgroundColor: backgroundColor,
-            outlineColor: backgroundColor,
-          }}
+          style={{ '--handle-color': backgroundColor } as React.CSSProperties}
           id={id}
           type={type}
           position={position}
