@@ -52,7 +52,7 @@ export const ColorCompare = ({ colors }) => {
               >
                 <Text
                   style={{
-                    font: 'var(--typography-body-xl)',
+                    font: 'var(--font-body-xl)',
                     color: contrastingColor(col),
                   }}
                 >

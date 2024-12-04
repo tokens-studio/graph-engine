@@ -38,7 +38,7 @@ export const ColorContrast = ({ value }) => {
           >
             <Text
               style={{
-                font: 'var(--typography-body-xl)',
+                font: 'var(--font-body-xl)',
                 color: contrastingColor(toColor(value)),
               }}
             >

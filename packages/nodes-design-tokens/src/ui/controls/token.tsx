@@ -28,7 +28,7 @@ export const PreviewToken = ({ token, hideName }: PreviewProps) => (
 				{!hideName && (
 					<div
 						style={{
-							font: 'var(--typography-body-xs)',
+							font: 'var(--font-body-xs)',
 							color: 'var(--color-neutral-canvas-default-fg-default)',
 							overflow: 'hidden',
 							whiteSpace: 'nowrap',
@@ -100,7 +100,7 @@ export const Token = ({ token }) => {
 			<div
 				title={getToolTipData(token)}
 				style={{
-					font: 'var(--typography-body-xs)',
+					font: 'var(--font-body-xs)',
 					color: 'var(--color-neutral-canvas-default-fg-muted)',
 					whiteSpace: 'nowrap',
 					overflow: 'hidden',

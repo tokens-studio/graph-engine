@@ -252,7 +252,7 @@ const getColorPreview = (color: Color, showValue = false) => {
       {showValue ? (
         <Text
           style={{
-            font: 'var(--typography-body-small)',
+            font: 'var(--font-body-small)',
             color: 'var(--color-neutral-1500)',
           }}
         >
@@ -357,7 +357,7 @@ const InputHandle = observer(
                     {inlineValuesValue && (
                       <span
                         style={{
-                          font: 'var(--typography-code-md)',
+                          font: 'var(--font-code-md)',
                           color: 'var(--color-neutral-1200)',
                         }}
                       >
@@ -395,7 +395,7 @@ const InputHandle = observer(
           >
             <span
               style={{
-                font: 'var(--typography-code-sm)',
+                font: 'var(--font-code-sm)',
                 color: 'var(--color-neutral-1500)',
               }}
             >
@@ -404,7 +404,7 @@ const InputHandle = observer(
             {inlineValuesValue && (
               <span
                 style={{
-                  font: 'var(--typography-code-xs)',
+                  font: 'var(--font-code-xs)',
                   color: 'var(--color-neutral-1200)',
                 }}
               >

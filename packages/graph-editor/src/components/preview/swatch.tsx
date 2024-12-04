@@ -43,7 +43,7 @@ export const ColorSwatch = ({ value }) => {
               padding: 'var(--component-spacing-xl)',
             }}
           >
-            <Text style={{ font: 'var(--typography-body-xl)', color }}>
+            <Text style={{ font: 'var(--font-body-xl)', color }}>
               {hex}
             </Text>
           </div>

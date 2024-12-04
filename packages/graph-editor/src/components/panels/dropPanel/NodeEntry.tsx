@@ -19,7 +19,7 @@ export const NodeEntry = ({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            font: 'var(--typography-body-sm)',
+            font: 'var(--font-body-sm)',
           }}
         >
           {icon}

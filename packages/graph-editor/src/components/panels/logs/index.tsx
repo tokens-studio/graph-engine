@@ -70,12 +70,12 @@ export function LogsPanel() {
             >
               <Stack direction="column" gap={2}>
                 <Stack direction="row" gap={2}>
-                  <Text style={{ font: 'var(--typography-body-sm)' }}>
+                  <Text style={{ font: 'var(--font-body-sm)' }}>
                     {log.type}
                   </Text>
                   <Text
                     style={{
-                      font: 'var(--typography-body-md)',
+                      font: 'var(--font-body-md)',
                       color: 'var(--color-neutral-1500)',
                     }}
                   >

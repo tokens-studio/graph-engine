@@ -34,7 +34,7 @@ export const ErrorBoundaryContent: React.FunctionComponent = () => {
     >
       <Stack direction="column" gap={4} align="center" justify="center">
         <Text
-          style={{ font: 'var(--typography-body-xl)', textAlign: 'center' }}
+          style={{ font: 'var(--font-body-xl)', textAlign: 'center' }}
         >
           Uh-oh, something went wrong!
         </Text>

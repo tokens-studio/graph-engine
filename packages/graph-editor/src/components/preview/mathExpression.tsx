@@ -7,7 +7,7 @@ export const MathExpression = ({ value }) => {
       {value && (
         <Text
           style={{
-            font: 'var(--typography-body-xl)',
+            font: 'var(--font-body-xl)',
             padding: 'var(--component-spacing-xl)',
           }}
         >

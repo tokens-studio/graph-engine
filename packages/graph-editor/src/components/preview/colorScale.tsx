@@ -38,7 +38,7 @@ export const ColorScale = ({ scale }) => {
               >
                 <Text
                   style={{
-                    font: 'var(--typography-body-xl)',
+                    font: 'var(--font-body-xl)',
                     color: contrastingColor(hex),
                   }}
                 >
