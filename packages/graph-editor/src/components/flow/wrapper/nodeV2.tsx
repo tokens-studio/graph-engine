@@ -215,7 +215,7 @@ export const InlineTypeLabel = ({ port }: { port: Port }) => {
 
   return (
     <div
-    className={clsx(styles.inlineTypeLabel, styles[handleInformation.type])}
+      className={clsx(styles.inlineTypeLabel, styles[handleInformation.type])}
     >
       {typeName}
     </div>
@@ -418,4 +418,3 @@ const InputHandle = observer(
     );
   },
 );
-
