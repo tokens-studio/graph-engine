@@ -105,7 +105,7 @@ const NumberPreview = observer(({ node }: { node: Node }) => {
       style={{
         backgroundColor: 'var(--color-neutral-surface-minimal-idle-bg)',
         color: 'var(--color-neutral-surface-minimal-idle-fg-default)',
-        font: 'var(--typography-body-xl)',
+        font: 'var(--font-body-xl)',
         padding: 'var(--component-spacing-xl)',
         textAlign: 'center',
       }}

@@ -6627,10 +6627,10 @@
     postcss-calc-ast-parser "^0.1.4"
     style-dictionary "^4.0.0-prerelease.22"
 
-"@tokens-studio/tokens@0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@tokens-studio/tokens/-/tokens-0.3.1.tgz#c709c0708c9b4ad259491ea647398c51cc590aaf"
-  integrity sha512-zhR2vmr/2NpBCe5k0qiRgkb9kKaZ/LQFjqeBiPoQzgA6VgEtIiAyNO+uaVi1lTJ0bSmP3rMXXEh4eS+8OvtOTA==
+"@tokens-studio/tokens@0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@tokens-studio/tokens/-/tokens-0.3.2.tgz#fe37da704cd2029c06b156cd970ecd69aa7ce508"
+  integrity sha512-ju/kNcrQ4x4iFCPBhlHLl0m4YaPgxTo+4I07/bUA8M82KTA9X1xj9jqj+tGR5W9rs9fmAF9Mt1MarnFK4IMF8g==
   dependencies:
     deepmerge-ts "^7.0.3"
 
@@ -6673,7 +6673,7 @@
     "@radix-ui/react-toggle-group" "^1.0.2"
     "@radix-ui/react-tooltip" "^1.0.4"
 
-"@tokens-studio/ui@^1.0.0":
+"@tokens-studio/ui@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@tokens-studio/ui/-/ui-1.0.1.tgz#5ebbe1d8dbd49e6a334babd6cf826981cb9ed1d6"
   integrity sha512-oiOlPqGAC4TKWiD9H8V6XUIxs1oS1H+aEA0mYZmkH5Hcb8n19kV64Ugn3Pa/1On22uROdDvnGH8UXLQQNRj2TQ==

@@ -36,11 +36,11 @@
 }
 
 .title {
-  font: var(--typography-body-sm);
+  font: var(--font-body-sm);
   color: var(--color-neutral-canvas-minimal-fg-default);
 }
 
 .subtitle {
-  font: var(--typography-body-xs);
+  font: var(--font-body-xs);
   color: var(--color-neutral-canvas-minimal-fg-subtle);
 }
