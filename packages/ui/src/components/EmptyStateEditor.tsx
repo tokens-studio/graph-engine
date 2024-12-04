@@ -21,7 +21,7 @@ export function EmptyStateEditor({ onLoadExamples }) {
 	);
 }
 
-function EmptyStateInner({ onLoadExamples, showNodesPanel }: IEmptyStateProps) {
+function EmptyStateInner({ onLoadExamples }: IEmptyStateProps) {
 	const dispatch = useDispatch();
 
 	const handleTriggerAddNode = useCallback(() => {
@@ -38,8 +38,7 @@ function EmptyStateInner({ onLoadExamples, showNodesPanel }: IEmptyStateProps) {
 				width: '100%',
 				height: '100%',
 				position: 'relative',
-				zIndex: 100,
-				paddingLeft: showNodesPanel ? 'var(--globals-drop-panel-width)' : '0'
+				zIndex: 100
 			}}
 		>
 			<EmptyState
