@@ -90,9 +90,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='en'>
-			<body className='ts-theme-light graph-editor'>
-        {children}
-      </body>
+			<body className='ts-theme-light graph-editor'>{children}</body>
 		</html>
 	);
 }

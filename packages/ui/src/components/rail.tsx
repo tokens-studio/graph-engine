@@ -62,7 +62,9 @@ const ThemeToggle = () => {
 		const newIsDark = !isDark;
 		setIsDark(newIsDark);
 
-		document.body.classList.remove(newIsDark ? 'ts-theme-light' : 'ts-theme-dark');
+		document.body.classList.remove(
+			newIsDark ? 'ts-theme-light' : 'ts-theme-dark'
+		);
 		document.body.classList.add(newIsDark ? 'ts-theme-dark' : 'ts-theme-light');
 	};
 
