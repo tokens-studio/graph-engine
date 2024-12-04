@@ -19,7 +19,6 @@ import {
 } from '@tokens-studio/graph-engine-nodes-fs';
 import { nodeTypes } from './data/nodeTypes';
 import { panelItems } from './data/panelItems';
-import { vscodeTheme } from './data/theme';
 
 const nexus = new MessageHandler();
 const loader = new Loader(nexus);
@@ -81,7 +80,7 @@ const Inner = () => {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <div id="graph-editor" className={vscodeTheme.toString()}>
+    <div id="graph-editor">
       <Inner />
     </div>
   </React.StrictMode>,
