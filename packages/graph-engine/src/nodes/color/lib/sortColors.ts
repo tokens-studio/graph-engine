@@ -2,9 +2,8 @@ import { Color } from '@/types.js';
 import { toColor } from './utils.js';
 
 export const compareFunctions = {
-	Contrast: (foreground, background, algorithm) => {
-		Math.abs(background.contrast(foreground, algorithm));
-	},
+	Contrast: (foreground, background, algorithm) =>
+		Math.abs(background.contrast(foreground, algorithm)),
 	Hue: (foreground, background) =>
 		Math.abs(foreground.hsl[0] - background.hsl[0]),
 	Lightness: (foreground, background) =>
