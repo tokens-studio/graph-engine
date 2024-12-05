@@ -1,5 +1,51 @@
 # @tokens-studio/graph-engine-ui
 
+## 3.2.0
+
+### Minor Changes
+
+- 917632a: Add a T-Shirt size naming node to help with scale naming. You can choose between 3 schemas.
+- 2f2e130: Index Array node now accepts negative index values
+- 8b34189: Introduce new figma nodes that help with scoping variables, adding code syntax and hidding them from being published.
+
+### Patch Changes
+
+- 8e207c5: Fixed centering of EmptyStateEditor
+- 8e207c5: Improved settings panel UI.
+- Updated dependencies [ca67761]
+- Updated dependencies [ca67761]
+- Updated dependencies [9ab88a2]
+- Updated dependencies [3bea85f]
+- Updated dependencies [89d2dd0]
+- Updated dependencies [902df8c]
+- Updated dependencies [917632a]
+- Updated dependencies [9ff1317]
+- Updated dependencies [8e207c5]
+- Updated dependencies [ca67761]
+- Updated dependencies [8bc1646]
+- Updated dependencies [2f2e130]
+- Updated dependencies [f90f677]
+- Updated dependencies [9f72ce5]
+- Updated dependencies [be053ca]
+- Updated dependencies [aa21dae]
+- Updated dependencies [befed71]
+- Updated dependencies [b60c9d0]
+- Updated dependencies [8e207c5]
+- Updated dependencies [c4edd77]
+- Updated dependencies [3dd0c82]
+- Updated dependencies [7519a23]
+- Updated dependencies [89d2dd0]
+- Updated dependencies [18f41d3]
+- Updated dependencies [9ab88a2]
+- Updated dependencies [a986fde]
+- Updated dependencies [ca67761]
+  - @tokens-studio/graph-engine-nodes-design-tokens@6.0.0
+  - @tokens-studio/graph-engine@4.1.0
+  - @tokens-studio/graph-editor@4.3.1
+  - @tokens-studio/graph-engine-nodes-audio@6.0.0
+  - @tokens-studio/graph-engine-nodes-figma@1.0.0
+  - @tokens-studio/graph-engine-nodes-image@5.0.0
+
 ## 3.1.0
 
 ### Minor Changes
