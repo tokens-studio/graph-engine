@@ -8,18 +8,15 @@ import {
 import React from 'react';
 import styles from './DndList.module.css';
 
-interface ISortableHandleElement {
-  children: React.ReactNode;
+interface ISortableHandleElement extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-interface ISortableItem extends SortableElementProps {
-  children: React.ReactNode;
+interface ISortableItem extends SortableElementProps, React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-interface ISortableContainer extends SortableContainerProps {
-  children: React.ReactNode;
+interface ISortableContainer extends SortableContainerProps, React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
@@ -28,10 +25,7 @@ export const DndTrigger: React.ComponentClass<ISortableHandleElement, unknown> =
     ({
       children,
       className,
-    }: {
-      children: React.ReactNode;
-      className?: string;
-    }) => (
+    }: React.HTMLAttributes<HTMLDivElement>) => (
       <div className={`${styles.trigger} ${className || ''}`}>{children}</div>
     ),
   );
@@ -41,10 +35,9 @@ export const DndItem: React.ComponentClass<ISortableItem, unknown> =
     ({
       children,
       className,
-    }: {
-      children: React.ReactNode;
-      className?: string;
-    }) => <div className={`${styles.item} ${className || ''}`}>{children}</div>,
+    }: React.HTMLAttributes<HTMLDivElement>) => (
+      <div className={`${styles.item} ${className || ''}`}>{children}</div>
+    ),
   );
 
 export const DndList: React.ComponentClass<ISortableContainer, unknown> =
@@ -52,10 +45,7 @@ export const DndList: React.ComponentClass<ISortableContainer, unknown> =
     ({
       children,
       className,
-    }: {
-      children: React.ReactNode;
-      className?: string;
-    }) => {
+    }: React.HTMLAttributes<HTMLDivElement>) => {
       return (
         <div className={`${styles.container} ${className || ''}`}>
           {children}
