@@ -1,5 +1,30 @@
 # @tokens-studio/graph-engine
 
+## 4.1.0
+
+### Minor Changes
+
+- 9ff1317: Created the Match Alpha node which finds the alpha value that can be used to composite two colors to match a reference third color.
+- 8bc1646: Add a parseNumber node that lets you parse a string into a number.
+- 2f2e130: Index Array node now accepts negative index values
+- f90f677: Add Alternating, Fibonacci, Linear and Power series.
+- 9f72ce5: Add indicies to sort tokens by, which helps you to select the right items.
+- be053ca: Add inverse linear node.
+- aa21dae: Add Sample Array from Float Curve node that gives you n values from your float curve.
+- befed71: Add a new node for css clamp function that outputs your accessible css clamp function for fluid dimensions.
+- b60c9d0: Add Flip Float Curve node, this lets you change the curves as needed for light, dark mode for example.
+- c4edd77: An Array Length node was added to get the length of an array.
+- 3dd0c82: Add distance node to math, to calculate the distance between two numbers.
+- 18f41d3: Add Closest Number node that allows you to get the closest number from an array of numbers.
+- a986fde: Add exponantial distribution node to spread a number over a length of items, with adjusting the decay.
+
+### Patch Changes
+
+- 9ab88a2: Fixing the issue of min and max size being mixed up in the fluid node, this wasn't resolving before.
+- 3bea85f: Fix Nan values in color deconstruct if the channel doesn't output something.
+- 7519a23: Fixed Sort Colors By node not working with Contrast.
+- 9ab88a2: Fix issue on accessible clamp node that would break on mixed up min and max values.
+
 ## 4.0.0
 
 ### Major Changes

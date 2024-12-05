@@ -1,5 +1,44 @@
 # @tokens-studio/graph-engine
 
+## 6.0.0
+
+### Minor Changes
+
+- ca67761: Add Alphabetic and Alphanumeric nodes for A, B, C and A7, B14, C21 naming.
+- ca67761: Add Greek Letter node to get alpha, beta, gamma, ... names.
+- 917632a: Add a T-Shirt size naming node to help with scale naming. You can choose between 3 schemas.
+- ca67761: Add numeric naming node. Lets you do naming like level-1 or scale-100x
+- ca67761: Added Hierachy Level node that lets you use primary, secondary, ... names
+
+### Patch Changes
+
+- 8e207c5: Fixed centering of EmptyStateEditor
+- 8e207c5: Improved settings panel UI.
+- Updated dependencies [9ab88a2]
+- Updated dependencies [3bea85f]
+- Updated dependencies [89d2dd0]
+- Updated dependencies [902df8c]
+- Updated dependencies [9ff1317]
+- Updated dependencies [8e207c5]
+- Updated dependencies [8bc1646]
+- Updated dependencies [2f2e130]
+- Updated dependencies [f90f677]
+- Updated dependencies [9f72ce5]
+- Updated dependencies [be053ca]
+- Updated dependencies [aa21dae]
+- Updated dependencies [befed71]
+- Updated dependencies [b60c9d0]
+- Updated dependencies [8e207c5]
+- Updated dependencies [c4edd77]
+- Updated dependencies [3dd0c82]
+- Updated dependencies [7519a23]
+- Updated dependencies [89d2dd0]
+- Updated dependencies [18f41d3]
+- Updated dependencies [9ab88a2]
+- Updated dependencies [a986fde]
+  - @tokens-studio/graph-engine@4.1.0
+  - @tokens-studio/graph-editor@4.3.1
+
 ## 5.0.0
 
 ### Major Changes

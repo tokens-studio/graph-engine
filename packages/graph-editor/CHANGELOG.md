@@ -1,5 +1,33 @@
 # @tokens-studio/graph-editor
 
+## 4.3.1
+
+### Patch Changes
+
+- 89d2dd0: Fixes an issue where the node title was not updating correctly and only changing the last character
+- 902df8c: node edges now have background-colored outlines for visual clarity at edge intersections
+- 8e207c5: Fixed centering of EmptyStateEditor
+- 8e207c5: Improved settings panel UI.
+- 89d2dd0: fix token title not changes
+- Updated dependencies [9ab88a2]
+- Updated dependencies [3bea85f]
+- Updated dependencies [9ff1317]
+- Updated dependencies [8bc1646]
+- Updated dependencies [2f2e130]
+- Updated dependencies [f90f677]
+- Updated dependencies [9f72ce5]
+- Updated dependencies [be053ca]
+- Updated dependencies [aa21dae]
+- Updated dependencies [befed71]
+- Updated dependencies [b60c9d0]
+- Updated dependencies [c4edd77]
+- Updated dependencies [3dd0c82]
+- Updated dependencies [7519a23]
+- Updated dependencies [18f41d3]
+- Updated dependencies [9ab88a2]
+- Updated dependencies [a986fde]
+  - @tokens-studio/graph-engine@4.1.0
+
 ## 4.3.0
 
 ### Minor Changes
