@@ -1,4 +1,4 @@
-import { Box, Button } from '@tokens-studio/ui';
+import { Button } from '@tokens-studio/ui';
 import { ColorCompare } from '@/components/preview/colorCompare.js';
 import { ColorScale } from '@/components/preview/colorScale.js';
 import { ColorSwatch } from '@/components/preview/swatch.js';
@@ -61,7 +61,7 @@ const SubgraphExplorer = ({ node }) => {
   }, [dockerRef, node._innerGraph, node.annotations]);
 
   return (
-    <Button variant="primary" icon={<Eye />} onClick={onToggle}>
+    <Button emphasis="high" icon={<Eye />} onClick={onToggle}>
       Subgraph Explorer
     </Button>
   );
@@ -101,18 +101,17 @@ const NumberPreview = observer(({ node }: { node: Node }) => {
   const number = Math.round(value * shift) / shift;
 
   return (
-    <Box
-      css={{
-        backgroundColor: '$bgEmphasis',
-        color: '$fgOnEmphasis',
-        fontFamily: '$mono',
-        fontSize: '64px',
-        padding: '$5',
+    <div
+      style={{
+        backgroundColor: 'var(--color-neutral-surface-minimal-idle-bg)',
+        color: 'var(--color-neutral-surface-minimal-idle-fg-default)',
+        font: 'var(--font-body-xl)',
+        padding: 'var(--component-spacing-xl)',
         textAlign: 'center',
       }}
     >
       {number}
-    </Box>
+    </div>
   );
 });
 

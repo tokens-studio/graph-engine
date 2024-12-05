@@ -9,12 +9,6 @@ import NavArrowRight from '@tokens-studio/icons/NavArrowRight.js';
 import Plus from '@tokens-studio/icons/Plus.js';
 import React, { useCallback } from 'react';
 
-const scrollbarStyle = {
-  overflowY: 'auto',
-  scrollbarColor: 'var(--colors-bgSubtle) transparent',
-  scrollbarWidth: 'thin',
-};
-
 export const AddDropdown = () => {
   const data = useSelector(panelItemsSelector);
   const createNode = useAction('createNode');
@@ -74,11 +68,7 @@ export const AddDropdown = () => {
             </DropdownMenu.TrailingVisual>
           </DropdownMenu.SubTrigger>
           <DropdownMenu.Portal>
-            <DropdownMenu.SubContent
-              sideOffset={2}
-              alignOffset={-5}
-              css={{ ...scrollbarStyle, maxHeight: '300px' }}
-            >
+            <DropdownMenu.SubContent sideOffset={2} alignOffset={-5}>
               {group.items.map((item) => (
                 <DropdownMenu.Item
                   key={item.type}
@@ -98,19 +88,13 @@ export const AddDropdown = () => {
     <DropdownMenu onOpenChange={onDropdownOpenChange}>
       <Tooltip label="Add node" side="bottom">
         <DropdownMenu.Trigger asChild>
-          <Button variant="primary">
+          <Button emphasis="high">
             <Plus />
           </Button>
         </DropdownMenu.Trigger>
       </Tooltip>
       <DropdownMenu.Portal>
-        <DropdownMenu.Content
-          css={{
-            minWidth: '200px',
-            maxHeight: '500px',
-            ...scrollbarStyle,
-          }}
-        >
+        <DropdownMenu.Content>
           <DropdownMenu.Item onSelect={openQuickSearch}>
             Quick Search...
             <DropdownMenu.TrailingVisual>⇧K</DropdownMenu.TrailingVisual>

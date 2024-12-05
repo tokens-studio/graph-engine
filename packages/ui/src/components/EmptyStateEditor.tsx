@@ -1,4 +1,4 @@
-import { Box, Button, EmptyState, Stack } from '@tokens-studio/ui';
+import { Button, EmptyState, Stack } from '@tokens-studio/ui';
 import { useCallback } from 'react';
 import { useDispatch } from '@tokens-studio/graph-editor';
 import BatteryCharging from '@tokens-studio/icons/BatteryCharging.js';
@@ -21,7 +21,7 @@ export function EmptyStateEditor({ onLoadExamples }) {
 	);
 }
 
-function EmptyStateInner({ onLoadExamples, showNodesPanel }: IEmptyStateProps) {
+function EmptyStateInner({ onLoadExamples }: IEmptyStateProps) {
 	const dispatch = useDispatch();
 
 	const handleTriggerAddNode = useCallback(() => {
@@ -29,8 +29,8 @@ function EmptyStateInner({ onLoadExamples, showNodesPanel }: IEmptyStateProps) {
 	}, []);
 
 	return (
-		<Box
-			css={{
+		<div
+			style={{
 				display: 'flex',
 				alignItems: 'center',
 				justifyContent: 'center',
@@ -38,8 +38,7 @@ function EmptyStateInner({ onLoadExamples, showNodesPanel }: IEmptyStateProps) {
 				width: '100%',
 				height: '100%',
 				position: 'relative',
-				zIndex: 100,
-				paddingLeft: showNodesPanel ? 'var(--globals-drop-panel-width)' : '0'
+				zIndex: 100
 			}}
 		>
 			<EmptyState
@@ -47,12 +46,13 @@ function EmptyStateInner({ onLoadExamples, showNodesPanel }: IEmptyStateProps) {
 				title='Build scalable and flexible design systems.'
 				description='Add your first node to get started or load an example'
 			>
-				<Stack direction='row' gap={3} css={{ pointerEvents: 'all' }}>
+				<Stack direction='row' gap={3} style={{ pointerEvents: 'all' }}>
 					<Button onClick={onLoadExamples} icon={<PagePlus />}>
 						Load example
 					</Button>
 					<Button
-						variant='primary'
+						emphasis='high'
+						appearance='accent'
 						onClick={handleTriggerAddNode}
 						icon={<JournalPage />}
 					>
@@ -60,6 +60,6 @@ function EmptyStateInner({ onLoadExamples, showNodesPanel }: IEmptyStateProps) {
 					</Button>
 				</Stack>
 			</EmptyState>
-		</Box>
+		</div>
 	);
 }

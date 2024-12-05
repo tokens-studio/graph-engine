@@ -1,7 +1,6 @@
 'use client';
 import {
 	Avatar,
-	Box,
 	Button,
 	Heading,
 	IconButton,
@@ -10,13 +9,13 @@ import {
 	Tabs,
 	Text
 } from '@tokens-studio/ui';
-import { ImageHolder, PreviewImage } from '../../clientPage.tsx';
 import { client } from '@/api/sdk/index.ts';
 import { useErrorToast } from '@/hooks/useToast.tsx';
 import { useParams, useRouter } from 'next/navigation.js';
 import Download from '@tokens-studio/icons/Download.js';
 import Heart from '@tokens-studio/icons/Heart.js';
 import MDEditor from '@uiw/react-md-editor';
+import styles from './clientPage.module.css';
 
 const Page = () => {
 	const router = useRouter();
@@ -74,10 +73,10 @@ const Page = () => {
 						align='center'
 						justify='between'
 						width='full'
-						css={{ padding: '$6' }}
+						className={styles.headerStack}
 					>
-						<Box css={{ padding: '$6' }}>
-							<Stack direction='column' gap={3} css={{ padding: '$6' }}>
+						<div className={styles.contentBox}>
+							<Stack direction='column' gap={3}>
 								<Stack gap={2} align='center'>
 									<Avatar src={data.body.user.image} />
 									<Text>{data.body.user.name}</Text>
@@ -96,7 +95,7 @@ const Page = () => {
 									<Button
 										loading={isCopying}
 										size='large'
-										variant='primary'
+										emphasis='high'
 										onClick={onUseGraph}
 									>
 										Use graph
@@ -109,15 +108,16 @@ const Page = () => {
 									/>
 								</Stack>
 							</Stack>
-						</Box>
-						<Box css={{ width: '40%' }}>
-							<ImageHolder>
-								<PreviewImage
+						</div>
+						<div className={styles.imageContainer}>
+							<div className={styles.imageHolder}>
+								<img
+									className={styles.previewImage}
 									src={data?.body.thumbnail || '/thumbnail.png'}
-									alt='Graph preview iamge'
+									alt='Graph preview image'
 								/>
-							</ImageHolder>
-						</Box>
+							</div>
+						</div>
 					</Stack>
 					<Tabs defaultValue='about'>
 						<Tabs.List>
@@ -126,13 +126,13 @@ const Page = () => {
 							<Tabs.Trigger value='versions'>Versions</Tabs.Trigger>
 						</Tabs.List>
 						<Tabs.Content value='about'>
-							<Box css={{ padding: '$3' }}>
+							<div className={styles.aboutContent}>
 								<Stack direction='column' gap={2}>
 									<MDEditor.Markdown
 										source={data.body.description.replace(/\\n/g, '\n')}
 									/>
 								</Stack>
-							</Box>
+							</div>
 						</Tabs.Content>
 					</Tabs>
 				</>

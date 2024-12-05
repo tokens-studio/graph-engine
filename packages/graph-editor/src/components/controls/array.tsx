@@ -152,7 +152,7 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
                 <IconButton
                   title="Remove item"
                   size="small"
-                  variant="invisible"
+                  emphasis="low"
                   icon={<Minus />}
                   onClick={() => removeItem(index)}
                 />
@@ -211,7 +211,7 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
       <Stack direction="column" gap={3}>
         <Select value={selectItemsType} onValueChange={setSelectItemsType}>
           <Select.Trigger label="Type" value={selectItemsType} />
-          <Select.Content css={{ maxHeight: '200px' }} position="popper">
+          <Select.Content>
             {AllSchemas.map((x, i) => (
               <Select.Item value={x.$id!} key={i}>
                 {x.title || x.$id}
@@ -220,7 +220,7 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
           </Select.Content>
         </Select>
         <Stack direction="row" justify="end">
-          <Button variant="primary" onClick={setType}>
+          <Button emphasis="high" onClick={setType}>
             Set type
           </Button>
         </Stack>
@@ -241,10 +241,10 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
         gap={3}
         align="center"
         wrap
-        css={{
-          background: '$bgCanvas',
-          padding: '$3',
-          borderRadius: '$medium',
+        style={{
+          background: 'var(--color-neutral-canvas-minimal-bg)',
+          padding: 'var(--component-spacing-md)',
+          borderRadius: 'var(--component-radii-md)',
         }}
       >
         {itemList}

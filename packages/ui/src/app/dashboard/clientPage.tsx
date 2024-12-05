@@ -1,7 +1,5 @@
 'use client';
-
 import {
-	Box,
 	Button,
 	DropdownMenu,
 	Heading,
@@ -29,6 +27,7 @@ import Search from '@tokens-studio/icons/Search.js';
 import Upload from '@tokens-studio/icons/Upload.js';
 import Xmark from '@tokens-studio/icons/Xmark.js';
 import ago from 's-ago';
+import styles from './clientPage.module.css';
 
 const GraphItem = ({ id, name, updatedAt }) => {
 	const { mutateAsync: deleteGraph, isPending } =
@@ -87,29 +86,21 @@ const GraphItem = ({ id, name, updatedAt }) => {
 	return (
 		<Stack width='full' direction='row' align='center'>
 			<Stack
-				css={{
-					flex: 1,
-					'&:hover': {
-						background: '$gray3'
-					},
-					borderRadius: '$medium',
-					borderColor: '$border',
-					padding: '$4'
-				}}
+				className={styles.graphContainer}
 				direction='row'
 				gap={3}
 				align='center'
 			>
-				<Box
-					css={{
-						color: '$fgDefault',
-						padding: '$3',
-						borderRadius: '$medium',
-						background: '$gray2'
+				<div
+					style={{
+						color: 'var(--color-neutral-canvas-minimal-fg-default)',
+						padding: 'var(--component-spacing-md)',
+						borderRadius: 'var(--component-radii-md)',
+						background: 'var(--color-neutral-canvas-minimal-bg)'
 					}}
 				>
 					<GraphUp />
-				</Box>
+				</div>
 
 				<Stack direction='column'>
 					<Link href={`/editor/${id}`}>
@@ -122,14 +113,14 @@ const GraphItem = ({ id, name, updatedAt }) => {
 			</Stack>
 			<Stack gap={2}>
 				<Link href={`/dashboard/graph/edit/${id}`}>
-					<IconButton icon={<EditPencil />} variant='invisible' />
+					<IconButton icon={<EditPencil />} emphasis='low' />
 				</Link>
 				<ShareButton id={id} />
-				{loading && <IconButton variant='invisible' icon={<Spinner />} />}
+				{loading && <IconButton emphasis='low' icon={<Spinner />} />}
 				{!loading && (
 					<DropdownMenu>
 						<DropdownMenu.Trigger asChild>
-							<IconButton variant='invisible' icon={<MoreVert />} />
+							<IconButton emphasis='low' icon={<MoreVert />} />
 						</DropdownMenu.Trigger>
 						<DropdownMenu.Portal>
 							<DropdownMenu.Content>
@@ -227,18 +218,8 @@ const Page = () => {
 	useErrorToast(error);
 
 	return (
-		<Stack
-			css={{
-				position: 'relative',
-				width: '100%',
-				height: '100%',
-				overflow: 'auto',
-				background: '$gray1',
-				paddingTop: '$6'
-			}}
-			justify='center'
-		>
-			<Box css={{ padding: '$5', width: '80%' }}>
+		<Stack className={styles.pageContainer} justify='center'>
+			<div style={{ padding: 'var(--component-spacing-xl)', width: '80%' }}>
 				<Stack direction='column' gap={4}>
 					<Stack justify='between'>
 						<Heading size='large'>Graphs</Heading>
@@ -246,7 +227,6 @@ const Page = () => {
 							<Button
 								loading={isPending}
 								onClick={importGraph}
-								variant='secondary'
 								icon={<Upload />}
 							>
 								Import a graph
@@ -254,7 +234,7 @@ const Page = () => {
 							<Button
 								loading={isPending}
 								onClick={createGraph}
-								variant='primary'
+								emphasis='high'
 								icon={<Plus />}
 							>
 								Create graph
@@ -269,7 +249,7 @@ const Page = () => {
 						onChange={e => setSearch(e.target.value)}
 					/>
 				</Stack>
-				<Box css={{ padding: '$2' }}>
+				<div style={{ padding: 'var(--component-spacing-sm)' }}>
 					{isLoading && <Spinner />}
 					{!isLoading && (
 						<Stack direction='column' gap={2}>
@@ -289,8 +269,8 @@ const Page = () => {
 									})}
 						</Stack>
 					)}
-				</Box>
-			</Box>
+				</div>
+			</div>
 		</Stack>
 	);
 };

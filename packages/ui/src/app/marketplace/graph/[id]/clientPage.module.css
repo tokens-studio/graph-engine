@@ -1,0 +1,27 @@
+.contentBox {
+  padding: var(--component-spacing-2xl);
+}
+
+.headerStack {
+  padding: var(--component-spacing-2xl);
+}
+
+.imageContainer {
+  width: 40%;
+}
+
+.aboutContent {
+  padding: var(--component-spacing-md);
+}
+
+.imageHolder {
+  padding-bottom: 50%;
+  position: relative;
+}
+
+.previewImage {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: block;
+}

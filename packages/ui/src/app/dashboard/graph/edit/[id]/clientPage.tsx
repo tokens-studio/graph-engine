@@ -1,7 +1,6 @@
 'use client';
 
 import {
-	Box,
 	Button,
 	Heading,
 	Label,
@@ -80,17 +79,17 @@ const Page = () => {
 
 	return (
 		<Stack
-			css={{
+			style={{
 				position: 'relative',
 				width: '100%',
 				height: '100%',
 				overflow: 'auto',
-				background: '$gray1',
-				paddingTop: '$6'
+				background: 'var(--color-neutral-canvas-minimal-bg)',
+				paddingTop: 'var(--component-spacing-2xl)'
 			}}
 			justify='center'
 		>
-			<Box css={{ padding: '$5', width: '80%' }}>
+			<div style={{ padding: 'var(--component-spacing-xl)', width: '80%' }}>
 				<Heading size='large'>Edit Graph details</Heading>
 				{isLoading && <Spinner />}
 				{!isLoading && (
@@ -108,19 +107,19 @@ const Page = () => {
 									rehypePlugins: [[rehypeSanitize]]
 								}}
 							/>
-							<Box>
+							<div>
 								<Button loading={isSummarizing} onClick={onSummarize}>
 									Summarize with AI
 								</Button>
-							</Box>
+							</div>
 						</Stack>
 						<br />
-						<Button onClick={onUpdate} loading={isPending} variant='primary'>
+						<Button onClick={onUpdate} loading={isPending} emphasis='high'>
 							Save
 						</Button>
 					</>
 				)}
-			</Box>
+			</div>
 		</Stack>
 	);
 };

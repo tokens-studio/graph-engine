@@ -1,4 +1,3 @@
-import { Box } from '@tokens-studio/ui';
 import {
   Menu as MenuData,
   MenuItem as MenuItemData,
@@ -48,10 +47,14 @@ export const MenuBar = observer(({ menu }: IMenuBar) => {
   );
 
   return (
-    <Box css={{ padding: '$2 $3' }}>
+    <div
+      style={{
+        padding: 'var(--component-spacing-sm) var(--component-spacing-md)',
+      }}
+    >
       {/** @ts-expect-error not a valid JSX element apparently */}
       <Menu mode={'horizontal'}>{items}</Menu>
-    </Box>
+    </div>
   );
 });
 

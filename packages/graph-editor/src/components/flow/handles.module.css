@@ -1,0 +1,112 @@
+.handleHolder {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: var(--component-spacing-2xs) var(--component-spacing-md);
+
+  &.collapsed {
+    height: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+  }
+
+  &.isAnchor {
+    padding: var(--component-spacing-2xs) var(--component-spacing-2xs);
+  }
+}
+
+
+.handleText {
+  font-size: var(--fontSizes-xxsmall);
+  color: var(--color-neutral-canvas-default-fg-default);
+  white-space: nowrap;
+
+  &.secondary {
+    color: var(--color-neutral-canvas-default-fg-default);
+  }
+  
+  &.caseSensitive {
+    text-transform: none;
+  }
+}
+
+
+.rawHandle {
+  --handle-border-width: var(--component-border-width-lg);
+  --handle-core-size: var(--size-50);
+
+  background-color: var(--colors-graphBg);
+  position: absolute;
+  user-select: none;
+  pointer-events: all;
+  box-sizing: content-box;
+  cursor: grab;
+  padding: 0;
+  width: var(--handle-core-size);
+  height: var(--handle-core-size);
+  border: var(--handle-border-width) solid var(--handle-color);
+  border-radius: var(--component-radii-pill);
+  box-shadow: var(--shadows-small);
+  display: grid;
+  place-items: center;
+
+  &.source {
+      right: calc((var(--handle-border-width) + (var(--handle-core-size) / 2)) * -1);
+  }
+
+  &.target {
+      left: calc((var(--handle-border-width) + (var(--handle-core-size) / 2)) * -1);
+  }
+
+  &.connected {
+    background-color: var(--handle-color);
+  }
+
+  &-valid	{
+      outline-color: var(--color-success-stroke-default);
+  }
+  
+  &.error {
+    background: var(--color-danger-surface-base-idle-fg-default);
+    border-color: var(--color-danger-stroke-base);
+  }
+
+  &.hide {
+    opacity: 0;
+  }
+
+  &.isArray {
+    border-radius: 0;
+    width: calc(var(--handle-core-size) - var(--handle-border-width));
+    height: calc(var(--handle-core-size) - var(--handle-border-width));
+  }
+
+  &.shouldHideHandles {
+    pointer-events: none;
+    display: none;
+  }
+  
+  &.variadic svg {
+    margin-top: auto;
+  }
+  
+  &.variadic::after {
+    position: absolute;
+    content: '';
+    margin-right: 0;
+    margin-top: 0;
+    height: 8px;
+    width: 8px;
+    background: var(--color-accent-surface-base-idle-fg-default);
+    border-radius: 50%;
+    opacity: 0.7;
+  }
+
+  svg {
+      pointer-events: none;
+  }
+}
+
+
+

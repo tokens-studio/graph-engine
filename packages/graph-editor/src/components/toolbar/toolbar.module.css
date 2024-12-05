@@ -1,0 +1,17 @@
+.root {
+  display: flex;
+  padding: var(--component-spacing-sm);
+  gap: var(--component-spacing-sm);
+  width: auto;
+  min-width: max-content;
+  border-radius: var(--component-radii-lg);
+  background-color: var(--color-neutral-canvas-subtle-bg);
+  color: var(--color-neutral-canvas-subtle-fg-default);
+  box-shadow: 0 2px 10px var(--color-neutral-800);
+}
+
+.separator {
+  width: 1px;
+  background-color: var(--color-neutral-stroke-default);
+  margin: 0 var(--component-spacing-sm);
+}

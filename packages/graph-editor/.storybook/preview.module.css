@@ -1,0 +1,29 @@
+.themeBlock {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 50%;
+  bottom: 0;
+  overflow: auto;
+  background: var(--colors-bgCanvas);
+  display: flex;
+}
+
+.themeBlock.fill {
+  left: 0;
+  width: 100%;
+}
+
+.themeBlock.left {
+  border-right: 1px solid #202020;
+  right: 50%;
+  left: 0;
+}
+
+.inner {
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}

@@ -1,0 +1,46 @@
+.timingText {
+  position: absolute;
+  bottom: -1.5em;
+}
+
+.inlineTypeLabel {
+  position: absolute;
+  background: var(--color-neutral-surface-default-idle-bg);
+  color: var(--color-neutral-surface-default-idle-fg-default);
+  padding: var(--component-spacing-2xs);
+  font: var(--font-code-xs);
+  border-radius: var(--component-radii-sm);
+  text-transform: uppercase;
+
+  &.source {
+    left: calc(100% + 16px);
+  }
+  
+  &.target {
+    right: calc(100% + 16px);
+  }
+}
+
+
+
+.colorSwatch {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--component-radii-md);
+}
+
+.portText {
+  font-size: var(--fontSizes-small);
+  color: var(--colors-gray12);
+}
+
+.portValueText {
+  font-size: var(--fontSizes-xxsmall);
+  color: var(--colors-gray10);
+}
+
+.portContainer {
+  display: grid;
+  justify-content: center;
+  direction: row;
+}

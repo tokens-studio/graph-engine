@@ -1,6 +1,5 @@
 'use client';
 import {
-	Box,
 	Button,
 	Heading,
 	Label,
@@ -75,7 +74,7 @@ const Page = () => {
 		<Stack direction='column' width='full' gap={3}>
 			<Heading size='large'>Publish</Heading>
 			<Separator orientation='horizontal' />
-			<Box css={{ padding: '$2' }}>
+			<div style={{ padding: 'var(--component-spacing-2xl)' }}>
 				<form>
 					<Stack direction='column' gap={3}>
 						<Stack direction='column' gap={2}>
@@ -101,25 +100,25 @@ const Page = () => {
 								rehypePlugins: [[rehypeSanitize]]
 							}}
 						/>
-						<Box>
+						<div>
 							<Button loading={isSummarizing} onClick={onSummarize}>
 								Summarize with AI
 							</Button>
-						</Box>
+						</div>
 						<br />
-						<Box>
+						<div>
 							<Button
 								onClick={onPublish}
 								loading={isPending}
-								variant='primary'
+								emphasis='high'
 								icon={<Upload />}
 							>
 								Update
 							</Button>
-						</Box>
+						</div>
 					</Stack>
 				</form>
-			</Box>
+			</div>
 		</Stack>
 	);
 };

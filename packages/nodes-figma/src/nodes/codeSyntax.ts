@@ -6,7 +6,7 @@ import {
   ToOutput,
 } from "@tokens-studio/graph-engine";
 import { SingleToken } from "@tokens-studio/types";
-import { TokenSchema } from "@tokens-studio/graph-engine-nodes-design-tokens";
+import { TokenSchema } from "@tokens-studio/graph-engine-nodes-design-tokens/schemas/index.js";
 import { mergeTokenExtensions } from "../utils/tokenMerge.js";
 
 export default class NodeDefinition extends Node {

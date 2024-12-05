@@ -34,7 +34,7 @@ export const UploadToolbarButton = () => {
 
   return (
     <Tooltip label="Upload" side="bottom">
-      <IconButton variant="invisible" onClick={onUpload} icon={<Upload />} />
+      <IconButton emphasis="low" onClick={onUpload} icon={<Upload />} />
     </Tooltip>
   );
 };

@@ -6,6 +6,7 @@ import { arrayMoveImmutable } from 'array-move';
 import { observer } from 'mobx-react-lite';
 import { useGraph } from '@/hooks/index.js';
 import React from 'react';
+import styles from './withVariadicField.module.css';
 
 export const withVariadicField = (WrappedComponent) => {
   return observer(({ port }: IField) => {
@@ -31,17 +32,9 @@ export const withVariadicField = (WrappedComponent) => {
     };
 
     return (
-      <DndList
-        lockAxis="y"
-        onSortEnd={onSortEnd}
-        css={{ display: 'flex', flexDirection: 'column', gap: '$3' }}
-      >
+      <DndList lockAxis="y" onSortEnd={onSortEnd} className={styles.dndList}>
         {port._edges.map((edge, i) => (
-          <DndItem
-            key={`input-${i}`}
-            index={i}
-            css={{ display: 'flex', gap: '$2', alignItems: 'center' }}
-          >
+          <DndItem key={`input-${i}`} index={i} className={styles.dndItem}>
             <DndTrigger>
               <GrabberIcon />
             </DndTrigger>

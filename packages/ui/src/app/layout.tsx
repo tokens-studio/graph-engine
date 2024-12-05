@@ -1,14 +1,21 @@
 import '@/styles/styles.scss';
 import '@tokens-studio/graph-editor/index.css';
-import 'sanitize.css';
-import 'sanitize.css/assets.css';
-import 'sanitize.css/forms.css';
-import 'sanitize.css/system-ui.css';
-import 'sanitize.css/typography.css';
-import 'sanitize.css/ui-monospace.css';
+
+import '@tokens-studio/tokens/css/ts-theme-dark.css';
+import '@tokens-studio/tokens/css/ts-theme-light.css';
+
+import '@tokens-studio/tokens/css/base.css';
+import '@tokens-studio/ui/normalize.css';
+
+import '@fontsource/geist-mono/400.css';
+import '@fontsource/geist-mono/500.css';
+import '@fontsource/geist-mono/600.css';
+
+import '@fontsource/geist-sans/400.css';
+import '@fontsource/geist-sans/500.css';
+import '@fontsource/geist-sans/600.css';
 
 import { headers } from 'next/headers.js';
-import StitchesProvider from './registry.tsx';
 import type { Viewport } from 'next';
 
 export const viewport: Viewport = {
@@ -83,9 +90,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='en'>
-			<body className='dark'>
-				<StitchesProvider>{children}</StitchesProvider>
-			</body>
+			<body className='ts-theme-light graph-editor'>{children}</body>
 		</html>
 	);
 }

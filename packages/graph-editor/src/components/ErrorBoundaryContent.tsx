@@ -24,22 +24,26 @@ export const ErrorBoundaryContent: React.FunctionComponent = () => {
 
   return (
     <Stack
-      css={{ width: '100%', height: '100%', padding: '$4' }}
+      style={{
+        width: '100%',
+        height: '100%',
+        padding: 'var(--component-spacing-lg)',
+      }}
       align="center"
       justify="center"
     >
       <Stack direction="column" gap={4} align="center" justify="center">
-        <Text css={{ fontSize: '$large', textAlign: 'center' }}>
+        <Text style={{ font: 'var(--font-body-xl)', textAlign: 'center' }}>
           Uh-oh, something went wrong!
         </Text>
         {graphRef ? (
-          <Text css={{ textAlign: 'center' }}>
+          <Text style={{ textAlign: 'center' }}>
             It looks like an error occurred. You can download your current
             progress and contact support.
           </Text>
         ) : (
           <>
-            <Text css={{ textAlign: 'center' }}>
+            <Text style={{ textAlign: 'center' }}>
               It looks like an error occurred. Try reloading the page.
             </Text>
             <Button

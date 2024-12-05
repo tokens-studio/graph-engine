@@ -1,4 +1,4 @@
-import { Button, Heading, Scroll, Select, Stack } from '@tokens-studio/ui';
+import { Button, Heading, Select, Stack } from '@tokens-studio/ui';
 import { Node } from '@tokens-studio/graph-engine';
 import { StringSchema } from '@tokens-studio/graph-engine';
 import { deletable } from '@/annotations/index.js';
@@ -32,19 +32,19 @@ const CSSMapSpecifics = observer(({ node }: { node: Node }) => {
       <Heading size="small">Expose Property</Heading>
       <Select value={inputName} onValueChange={setInputName}>
         <Select.Trigger label="Type" value={inputName} />
-        <Select.Content css={{ maxHeight: '300px' }} position="popper">
-          <Scroll height="200">
+        <Select.Content>
+          <div style={{ height: '200px' }}>
             {CSSProperties.map((x) => (
               <Select.Item value={x} key={x}>
                 {x}
               </Select.Item>
             ))}
-          </Scroll>
+          </div>
         </Select.Content>
       </Select>
 
       <Stack justify="end">
-        <Button variant="primary" disabled={isDisabled} onClick={onClick}>
+        <Button emphasis="high" disabled={isDisabled} onClick={onClick}>
           Add Input
         </Button>
       </Stack>

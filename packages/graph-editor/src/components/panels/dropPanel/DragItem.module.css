@@ -1,0 +1,26 @@
+.button {
+  cursor: grab;
+  padding: var(--component-spacing-xs) var(--component-spacing-sm);
+  border: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  background-color: var(--color-neutral-surface-ghost-idle-bg);
+  color: var(--color-neutral-surface-ghost-idle-fg-default);
+}
+
+.grabber {
+  opacity: 0;
+  color: var(--color-neutral-surface-ghost-idle-fg-default);
+  display: flex;
+  align-items: center;
+}
+
+.button:hover {
+  background: var(--color-neutral-surface-ghost-hover-bg);
+}
+
+.button:hover .grabber {
+  opacity: 1;
+}

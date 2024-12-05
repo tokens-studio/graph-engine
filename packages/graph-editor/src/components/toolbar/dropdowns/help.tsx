@@ -6,11 +6,11 @@ export const HelpDropdown = () => (
   <DropdownMenu>
     <Tooltip label="Help" side="bottom">
       <DropdownMenu.Trigger asChild>
-        <IconButton variant="invisible" icon={<ChatBubbleQuestion />} />
+        <IconButton emphasis="low" icon={<ChatBubbleQuestion />} />
       </DropdownMenu.Trigger>
     </Tooltip>
     <DropdownMenu.Portal>
-      <DropdownMenu.Content css={{ minWidth: '200px' }}>
+      <DropdownMenu.Content style={{ minWidth: '200px' }}>
         <a
           href="https://tokensstudio.featurebase.app/?b=664d1020ebad3462b914aecb"
           target="_blank"

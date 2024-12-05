@@ -1,7 +1,7 @@
 import { GrabberIcon } from '@/components/icons/GrabberIcon.js';
 import { NodeHoverCard } from '@/components/NodeHoverCard.js';
-import { styled } from '@/lib/stitches/index.js';
 import React, { useCallback } from 'react';
+import styles from './DragItem.module.css';
 
 type DragItemProps = {
   data?: unknown;
@@ -12,39 +12,6 @@ type DragItemProps = {
   docs?: string;
   icon?: React.ReactNode | string;
 };
-
-const StyledWrapper = styled('div', {
-  userSelect: 'none',
-});
-
-const StyledGrabber = styled('span', {
-  opacity: 0,
-  color: '$fgSubtle',
-  position: 'absolute',
-  left: '$1',
-  top: 0,
-  height: '100%',
-  display: 'flex',
-  alignItems: 'center',
-});
-
-const StyledButton = styled('button', {
-  cursor: 'grab',
-  padding: '$1 $3',
-  paddingLeft: '$5',
-  borderRadius: '$small',
-  border: 'none',
-  width: '100%',
-  position: 'relative',
-
-  '&:hover': {
-    background: '$bgSubtle',
-    [`& ${StyledGrabber}`]: {
-      opacity: 1,
-    },
-  },
-  backgroundColor: '$buttonSecondaryBgHover',
-});
 
 export const DragItem = ({
   data,
@@ -77,7 +44,8 @@ export const DragItem = ({
   }, []);
 
   return (
-    <StyledWrapper
+    <div
+      className={styles.wrapper}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       draggable="true"
@@ -90,13 +58,13 @@ export const DragItem = ({
         docs={docs}
         icon={icon}
       >
-        <StyledButton type="button">
-          <StyledGrabber>
+        <button type="button" className={styles.button}>
+          <span className={styles.grabber}>
             <GrabberIcon />
-          </StyledGrabber>
+          </span>
           {children}
-        </StyledButton>
+        </button>
       </NodeHoverCard>
-    </StyledWrapper>
+    </div>
   );
 };

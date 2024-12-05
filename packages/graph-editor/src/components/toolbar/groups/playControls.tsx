@@ -35,19 +35,19 @@ export const PlayControls = () => {
   return (
     <>
       <IconButton
-        variant="invisible"
+        emphasis="low"
         onClick={onPlay}
         disabled={!(state === PlayState.STOPPED)}
         icon={<Play />}
       />
       <IconButton
-        variant={state === PlayState.PAUSED ? 'secondary' : 'invisible'}
+        emphasis={state === PlayState.PAUSED ? 'medium' : 'low'}
         onClick={onPause}
         disabled={state === PlayState.STOPPED}
         icon={<Pause />}
       />
       <IconButton
-        variant="invisible"
+        emphasis="low"
         onClick={onStop}
         disabled={state === PlayState.STOPPED}
         style={{ paddingLeft: '0', paddingRight: '0' }}

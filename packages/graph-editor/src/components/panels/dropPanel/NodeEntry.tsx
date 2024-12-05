@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from '@tokens-studio/ui';
+import { Text } from '@tokens-studio/ui';
 import React from 'react';
 
 export const NodeEntry = ({
@@ -9,33 +9,26 @@ export const NodeEntry = ({
   text: string;
 }) => {
   return (
-    <Stack
-      direction="row"
-      gap={2}
-      justify="start"
-      align="center"
-      css={{ paddingLeft: '$3', height: '24px' }}
-    >
+    <>
       {icon && (
-        <Box
-          css={{
-            color: '$fgSubtle',
-            width: '24px',
-            height: '24px',
+        <div
+          style={{
+            color: 'var(--color-neutral-canvas-default-fg-subtle)',
+            width: 'var(--size-150)',
+            height: 'var(--size-150)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '$xxsmall',
+            font: 'var(--font-body-sm)',
           }}
         >
           {icon}
-        </Box>
+        </div>
       )}
 
       <Text
         size="xsmall"
-        css={{
-          color: '$fgMuted',
+        style={{
           whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',
           overflow: 'hidden',
@@ -43,6 +36,6 @@ export const NodeEntry = ({
       >
         {text}
       </Text>
-    </Stack>
+    </>
   );
 };

@@ -1,5 +1,4 @@
-import { Box, Heading, IconButton, Stack } from '@tokens-studio/ui';
-import { InfoCircleSolid } from 'iconoir-react';
+import { Heading, Stack } from '@tokens-studio/ui';
 import { Node } from '@tokens-studio/graph-engine';
 import { PortPanel } from '@/components/portPanel/index.js';
 import { currentNode } from '@/redux/selectors/graph.js';
@@ -24,8 +23,8 @@ export function OutputSheet() {
  */
 const OutputSheetObserver = observer(({ node }: { node: Node }) => {
   return (
-    <Box
-      css={{
+    <div
+      style={{
         height: '100%',
         width: '100%',
         flex: 1,
@@ -37,24 +36,30 @@ const OutputSheetObserver = observer(({ node }: { node: Node }) => {
       <Stack
         direction="column"
         gap={4}
-        css={{ height: '100%', flex: 1, padding: '$3' }}
+        style={{
+          height: '100%',
+          flex: 1,
+          padding: 'var(--component-spacing-md)',
+        }}
       >
         <Stack direction="column" gap={3}>
           <Stack gap={2} align="start" justify="between">
             <Heading size="large"> {node.factory.title}</Heading>
-            <IconButton
-              tooltip={node.factory.description}
-              icon={<InfoCircleSolid />}
-            />
           </Stack>
         </Stack>
 
-        <Box css={{ padding: '$3' }}>
-          <Stack width="full" css={{ paddingTop: '$3', paddingBottom: '$3' }}>
+        <div style={{ padding: 'var(--component-spacing-md)' }}>
+          <Stack
+            width="full"
+            style={{
+              paddingTop: 'var(--component-spacing-md)',
+              paddingBottom: 'var(--component-spacing-md)',
+            }}
+          >
             <PortPanel ports={node?.outputs} readOnly key={node.id} />
           </Stack>
-        </Box>
+        </div>
       </Stack>
-    </Box>
+    </div>
   );
 });

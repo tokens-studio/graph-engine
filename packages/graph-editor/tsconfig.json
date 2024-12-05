@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "include": ["src", "package.json"],
+  "include": ["src", "src/**/*.css", "package.json"],
   "exclude": ["cypress.config.ts", "cypress", "node_modules"],
   "compilerOptions": {
     "composite": false,
@@ -32,6 +32,7 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "types": ["node"]
   }
 }

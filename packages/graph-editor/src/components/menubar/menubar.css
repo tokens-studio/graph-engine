@@ -1,5 +1,5 @@
 .rc-menu {
-    color: var(--colors-fgDefault);
+    color: var(--color-neutral-canvas-default-fg-default);
     border: none;
     font-size: var(--fontSizes-small);
     box-shadow: var(--shadows-focus);
@@ -9,10 +9,10 @@
 
 .rc-menu-horizontal {
     margin: 0;
-    background-color: var(--colors-bgCanvas);
-    color: var(--colors-fgDefault);
+    background-color: var(--color-neutral-canvas-minimal-bg);
+    color: var(--color-neutral-canvas-default-fg-default);
     border-radius: 0;
-    border-bottom: 1px solid var(--colors-borderSubtle);
+    border-bottom: 1px solid var(--color-neutral-stroke-subtle);
     box-shadow: none;
 
 }
@@ -35,18 +35,18 @@
 .rc-menu-horizontal>.rc-menu-submenu-active,
 .rc-menu-horizontal>.rc-menu-item-active {
     border-bottom: 2px solid #2db7f5;
-    background-color: var(--colors-accentBg);
+    background-color: var(--color-accent-surface-minimal-idle-bg);
     color: #2baee9;
 }
 
 
 .rc-menu-submenu>.rc-menu {
-    background-color: var(--colors-bgDefault);
+    background-color: var(--color-neutral-canvas-default-bg);
 }
 
 .rc-menu-item-active,
 .rc-menu-submenu-active>.rc-menu-submenu-title {
-    background-color: var(--colors-accentBg);
+    background-color: var(--color-accent-surface-minimal-idle-bg);
 }
 
 .rc-menu-vertical>.rc-menu-item,
@@ -62,5 +62,5 @@
 }
 
 .rc-menu-item-divider{
-    background-color: var(--colors-borderSubtle);
+    background-color: var(--color-neutral-stroke-subtle);
 }

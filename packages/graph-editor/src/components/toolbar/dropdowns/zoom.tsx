@@ -73,7 +73,7 @@ export const ZoomDropdown = () => {
         <Button>{~~(zoom * 100)}%</Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
-        <DropdownMenu.Content css={{ minWidth: '200px' }}>
+        <DropdownMenu.Content style={{ minWidth: '200px' }}>
           <DropdownMenu.Item data-value={0.1} onClick={onSetZoom}>
             10%
           </DropdownMenu.Item>

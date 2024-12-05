@@ -1,0 +1,46 @@
+.collapserContainer {
+  height: 0;
+  overflow: hidden;
+}
+
+.collapserContent {
+  position: relative;
+  padding: var(--component-spacing-xs);
+  padding-bottom: var(--component-spacing-md);
+}
+
+.nodeWrapper {
+  position: relative;
+  box-shadow: var(--shadows-contextMenu);
+  border-radius: var(--component-radii-md);
+  background: var(--color-neutral-surface-default-idle-bg);
+  border: 2px solid var(--color-neutral-stroke-subtle);
+  flex: 1;
+  display: flex;
+}
+
+.nodeWrapper.error {
+  --nodeBorderColor: var(--color-danger-surface-base-idle-fg-default);
+  --nodeBgColor: var(--color-danger-surface-base-idle-bg);
+  --nodeTextColor: var(--color-danger-surface-base-idle-fg-default);
+}
+
+.nodeContent {
+  flex: 1;
+}
+
+.header {
+  padding: var(--component-spacing-xs) var(--component-spacing-sm);
+  background-color: var(--color-neutral-canvas-minimal-bg);
+  border-radius: var(--component-radii-md);
+}
+
+.title {
+  font: var(--font-body-sm);
+  color: var(--color-neutral-canvas-minimal-fg-default);
+}
+
+.subtitle {
+  font: var(--font-body-xs);
+  color: var(--color-neutral-canvas-minimal-fg-subtle);
+}

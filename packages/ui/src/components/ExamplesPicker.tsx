@@ -1,6 +1,6 @@
-import { Box, Stack, Text } from '@tokens-studio/ui';
 import { Command } from 'cmdk';
 import { IExample } from '../types/IExample.tsx';
+import { Stack, Text } from '@tokens-studio/ui';
 import { examples } from '../data/examples/examples.tsx';
 import React from 'react';
 import Search from '@tokens-studio/icons/Search.js';
@@ -17,19 +17,19 @@ const ExamplesPicker = ({ open, onClose, loadExample }) => {
 			label='Load an example'
 			onOpenChange={() => onClose()}
 		>
-			<Box
-				css={{
-					color: '$fgSubtle',
+			<div
+				style={{
+					color: 'var(--color-neutral-canvas-default-fg-default)',
 					display: 'flex',
 					flexDirection: 'row',
 					gap: 1,
-					marginBottom: '$3',
-					padding: '0 $4'
+					marginBottom: 'var(--component-spacing-md)',
+					padding: '0 var(--component-spacing-lg)'
 				}}
 			>
 				<Search />
 				<Command.Input placeholder='Find an example to load…' />
-			</Box>
+			</div>
 			<Command.List>
 				<Command.Empty>No results found.</Command.Empty>
 
@@ -41,10 +41,15 @@ const ExamplesPicker = ({ open, onClose, loadExample }) => {
 						style={{ cursor: 'pointer' }}
 					>
 						<Stack direction='column' gap={2} align='start'>
-							<Text css={{ fontWeight: '$sansMedium', fontSize: '$xsmall' }}>
+							<Text style={{ font: 'var(--typegraphy-body-sm)' }}>
 								{example.title}
 							</Text>
-							<Text css={{ color: '$fgMuted', fontSize: '$xxsmall' }}>
+							<Text
+								style={{
+									color: 'var(--color-neutral-canvas-default-fg-subtle)',
+									font: 'var(--typegraphy-body-sm)'
+								}}
+							>
 								{example.description}
 							</Text>
 						</Stack>

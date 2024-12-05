@@ -1,42 +1,13 @@
-import { Accordion, Box, Stack, Text, TextInput } from '@tokens-studio/ui';
+import { Accordion, Stack, TextInput } from '@tokens-studio/ui';
 import { DragItem } from './DragItem.js';
 import { DropPanelStore } from './data.js';
 import { NodeEntry } from './NodeEntry.js';
 import { observer } from 'mobx-react-lite';
 import { panelItemsSelector } from '@/redux/selectors/registry.js';
-import { styled } from '@/lib/stitches/index.js';
 import { useSelector } from 'react-redux';
 import NavArrowRight from '@tokens-studio/icons/NavArrowRight.js';
 import React, { useState } from 'react';
-
-const StyledAccordionTrigger = styled(Accordion.Trigger, {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '$2',
-  justifyContent: 'flex-start',
-  width: '100%',
-  padding: '$1 $3',
-  borderRadius: '$small',
-  cursor: 'pointer',
-  '&:hover': {
-    background: '$bgSubtle',
-  },
-});
-
-const StyledAccordion = styled(Accordion, {
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  padding: '$2',
-  boxSizing: 'border-box',
-});
-
-const StyledChevron = styled(NavArrowRight, {
-  transition: 'all ease 0.3s',
-  '[data-state="open"] &': {
-    transform: 'rotate(90deg)',
-  },
-});
+import styles from './dropPanel.module.css';
 
 export type ImperativeDropPanelRef = {
   /**
@@ -63,7 +34,6 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
 
   const onSearch = (e) => {
     setSearch(e.target.value);
-
     if (!e.target.value) {
       setOpened([]);
     } else {
@@ -72,22 +42,12 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
   };
 
   return (
-    <Box
-      css={{
-        height: '100%',
-        width: '100%',
-        flex: 1,
-        display: 'flex',
-        overflow: 'auto',
-        flexDirection: 'column',
-      }}
-      id="drop-panel"
-    >
+    <div className={styles.container} id="drop-panel">
       <Stack
         direction="column"
         gap={3}
-        css={{
-          paddingTop: '$1',
+        style={{
+          paddingTop: 'var(--component-spacing-xs)',
           width: '100%',
           flex: 1,
           overflow: 'auto',
@@ -97,16 +57,14 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
         <Stack
           direction="column"
           gap={2}
-          css={{ padding: '0 $3', paddingTop: '$4' }}
+          style={{
+            padding: '0 var(--component-spacing-md)',
+            paddingTop: 'var(--component-spacing-lg)',
+          }}
         >
           <TextInput placeholder="Search…" value={search} onChange={onSearch} />
         </Stack>
-        <StyledAccordion
-          type="multiple"
-          defaultValue={[]}
-          value={opened}
-          onValueChange={setOpened}
-        >
+        <Accordion type="multiple" value={opened} onValueChange={setOpened}>
           {data.groups.map((value) => {
             const filteredValues = value.items
               .filter((item) =>
@@ -131,44 +89,23 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
 
             return (
               <Accordion.Item value={value.key} key={value.key}>
-                <StyledAccordionTrigger>
-                  <Stack
-                    align="center"
-                    justify="between"
-                    width="full"
-                    css={{ padding: '$3 0' }}
-                  >
-                    <Stack gap={3} align="center">
-                      {value.icon}
-                      <Text size="xsmall" bold css={{ textAlign: 'left' }}>
-                        {value.title}
-                      </Text>
-                    </Stack>
-                    <Box
-                      css={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '$5',
-                      }}
-                    >
-                      <StyledChevron />
-                    </Box>
-                  </Stack>
-                </StyledAccordionTrigger>
+                <Accordion.Trigger className={styles.accordionTrigger}>
+                  <div className={styles.accordionTriggerIcon}>
+                    {value.icon}
+                  </div>
+                  <div className={styles.accordionTriggerTitle}>
+                    {value.title}
+                  </div>
+                  <NavArrowRight className={styles.chevron} />
+                </Accordion.Trigger>
                 <Accordion.Content>
-                  <Stack
-                    direction="column"
-                    css={{ padding: 0, marginBottom: '$4' }}
-                  >
-                    {filteredValues}
-                  </Stack>
+                  <Stack direction="column">{filteredValues}</Stack>
                 </Accordion.Content>
               </Accordion.Item>
             );
           })}
-        </StyledAccordion>
+        </Accordion>
       </Stack>
-    </Box>
+    </div>
   );
 });

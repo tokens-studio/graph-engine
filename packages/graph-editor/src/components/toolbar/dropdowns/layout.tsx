@@ -48,11 +48,11 @@ export const LayoutDropdown = () => {
     <DropdownMenu>
       <Tooltip label="Layout" side="bottom">
         <DropdownMenu.Trigger asChild>
-          <IconButton variant="invisible" icon={<LayoutLeft />} />
+          <IconButton emphasis="low" icon={<LayoutLeft />} />
         </DropdownMenu.Trigger>
       </Tooltip>
       <DropdownMenu.Portal>
-        <DropdownMenu.Content css={{ minWidth: '200px' }}>
+        <DropdownMenu.Content style={{ minWidth: '200px' }}>
           <DropdownMenu.Item onSelect={() => onClick('inputs')}>
             Input
           </DropdownMenu.Item>

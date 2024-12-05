@@ -34,8 +34,8 @@ const DockButton = (rest) => {
   return (
     <IconButton
       size="small"
-      variant="invisible"
-      css={{ padding: '$2' }}
+      emphasis="low"
+      style={{ padding: 'var(--component-spacing-sm)' }}
       {...rest}
     />
   );
@@ -316,7 +316,7 @@ export const LayoutController = React.forwardRef<
 
   return (
     <ExternalLoaderProvider externalLoader={externalLoader}>
-      <Stack direction="column" css={{ height: '100%' }}>
+      <Stack direction="column" style={{ height: '100%' }}>
         {props.showMenu && <MenuBar menu={menuItems} />}
         <Tooltip.Provider>
           <DockLayout

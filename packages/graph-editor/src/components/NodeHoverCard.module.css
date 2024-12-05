@@ -1,0 +1,87 @@
+@keyframes slideUpAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideRightAndFade {
+  from {
+    opacity: 0;
+    transform: translateX(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideDownAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideLeftAndFade {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.hoverCardContent {
+  border-radius: var(--component-radii-md);
+  border: 1px solid var(--color-neutral-stroke-subtle);
+  padding: var(--component-spacing-lg);
+  width: 300px;
+  background-color: var(--color-neutral-canvas-minimal-bg);
+  box-shadow: var(--shadows-contextMenu);
+  animation-duration: 200ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.hoverCardContent[data-state="open"][data-side="top"] {
+  animation-name: slideDownAndFade;
+}
+
+.hoverCardContent[data-state="open"][data-side="right"] {
+  animation-name: slideLeftAndFade;
+}
+
+.hoverCardContent[data-state="open"][data-side="bottom"] {
+  animation-name: slideUpAndFade;
+}
+
+.hoverCardContent[data-state="open"][data-side="left"] {
+  animation-name: slideRightAndFade;
+}
+
+.styledLink {
+  color: var(--color-accent-surface-base-idle-fg-default);
+  text-decoration: none;
+  font-weight: var(--fontWeights-sansMedium);
+}
+
+.heading {
+  font-size: var(--fontSizes-small);
+  font-weight: var(--fontWeights-sansMedium);
+  color: var(--color-neutral-canvas-default-fg-default);
+}
+
+.description {
+  line-height: 150%;
+}

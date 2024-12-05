@@ -1,9 +1,9 @@
 'use client';
 
-import { Box, Spinner } from '@tokens-studio/ui';
 import { Editor } from '@tokens-studio/graph-editor';
 import { EmptyStateEditor } from '../EmptyStateEditor.tsx';
 import { ExamplesPicker } from '../ExamplesPicker.tsx';
+import { Spinner } from '@tokens-studio/ui';
 import {
 	capabilities,
 	controls,
@@ -36,7 +36,7 @@ export const EditorTab = observer(
 		}, []);
 
 		return (
-			<Box css={{ position: 'relative', width: '100%', height: '100%' }}>
+			<div style={{ position: 'relative', width: '100%', height: '100%' }}>
 				<Editor
 					id={''}
 					// @ts-ignore
@@ -62,14 +62,14 @@ export const EditorTab = observer(
 					/>
 				}
 				{loading && (
-					<Box
-						css={{
+					<div
+						style={{
 							position: 'absolute',
 							top: 0,
 							left: 0,
 							width: '100%',
 							height: '100%',
-							backgroundColor: '$gray1',
+							backgroundColor: 'var(--color-neutral-canvas-minimal-bg)',
 							opacity: 0.5,
 							zIndex: 1000,
 							display: 'flex',
@@ -78,9 +78,9 @@ export const EditorTab = observer(
 						}}
 					>
 						<Spinner />
-					</Box>
+					</div>
 				)}
-			</Box>
+			</div>
 		);
 	},
 	{

@@ -1,11 +1,4 @@
-import {
-  Box,
-  Label,
-  Stack,
-  Text,
-  TextInput,
-  Textarea,
-} from '@tokens-studio/ui';
+import { Label, Stack, Text, TextInput, Textarea } from '@tokens-studio/ui';
 import React, { useCallback, useMemo } from 'react';
 
 import { Node } from '@tokens-studio/graph-engine';
@@ -28,15 +21,20 @@ export const NodeSettingsPanel = () => {
     <Stack
       direction="column"
       gap={4}
-      css={{ height: '100%', flex: 1, padding: '$3', overflow: 'auto' }}
+      style={{
+        height: '100%',
+        flex: 1,
+        padding: 'var(--component-spacing-md)',
+        overflow: 'auto',
+      }}
     >
-      <Box css={{ padding: '$3' }}>
+      <div style={{ padding: 'var(--component-spacing-md)' }}>
         <NodeSettings
           selectedNode={selectedNode}
           annotations={selectedNode.annotations}
           key={nodeID}
         />
-      </Box>
+      </div>
     </Stack>
   );
 };
@@ -94,7 +92,7 @@ const NodeTitle = observer(({ selectedNode }: { selectedNode: Node }) => {
       <Label>Title</Label>
       <TextInput
         onChange={onChangeTitle}
-        value={selectedNode.annotations[title] as string}
+        value={selectedNode.factory.title ?? ''}
       />
     </Stack>
   );

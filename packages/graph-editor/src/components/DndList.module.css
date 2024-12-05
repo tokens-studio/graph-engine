@@ -1,0 +1,11 @@
+.trigger {
+  cursor: pointer;
+}
+
+.item {
+  display: block;
+}
+
+.container {
+  display: block;
+}

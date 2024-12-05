@@ -13,8 +13,8 @@ const VariadicTokensUI = ({ port, edge }: { port: Port; edge: Edge }) => {
 			gap={2}
 			align='center'
 			title={`${port.name} - ${edge.annotations['engine.index']}`}
-			css={{
-				padding: '$3',
+			style={{
+				padding: 'var(--component-spacing-md)',
 				maxWidth: '200px',
 				overflow: 'hidden',
 				textOverflow: 'ellipsis'

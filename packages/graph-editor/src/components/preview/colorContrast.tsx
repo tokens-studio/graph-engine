@@ -1,5 +1,5 @@
-import { Box, Text } from '@tokens-studio/ui';
 import { ContrastAlgorithmType, toColor } from '@tokens-studio/graph-engine';
+import { Text } from '@tokens-studio/ui';
 import { castToHex } from '@/utils/index.js';
 import Color from 'colorjs.io';
 import React from 'react';
@@ -27,8 +27,8 @@ export const ColorContrast = ({ value }) => {
     <>
       {value && (
         <>
-          <Box
-            css={{
+          <div
+            style={{
               display: 'grid',
               placeItems: 'center',
               width: '100%',
@@ -37,15 +37,14 @@ export const ColorContrast = ({ value }) => {
             }}
           >
             <Text
-              css={{
-                fontFamily: '$mono',
-                fontSize: 'xx-large',
+              style={{
+                font: 'var(--font-body-xl)',
                 color: contrastingColor(toColor(value)),
               }}
             >
               {col}
             </Text>
-          </Box>
+          </div>
         </>
       )}
     </>

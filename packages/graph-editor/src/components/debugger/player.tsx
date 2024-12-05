@@ -89,11 +89,15 @@ const TimelinePlayer = (props: TimelinePlayerProps) => {
   };
 
   return (
-    <Stack align="center" gap={2} css={{ padding: '$2' }}>
+    <Stack
+      align="center"
+      gap={2}
+      style={{ padding: 'var(--component-spacing-md)' }}
+    >
       <IconButton
         icon={isPlaying ? <Pause /> : <Play />}
         onClick={handlePlayOrPause}
-        variant={'primary'}
+        emphasis="high"
       ></IconButton>
       <Select onValueChange={handleRateChange}>
         <Select.Trigger label="Speed" value={rate + 'x'} />

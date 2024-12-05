@@ -6,7 +6,7 @@ import {
   CompAlignRightSolid,
   CompAlignTopSolid,
 } from 'iconoir-react';
-import { Box, IconButton, Stack, Text } from '@tokens-studio/ui';
+import { IconButton, Stack, Text } from '@tokens-studio/ui';
 import { Node } from 'reactflow';
 import { graphEditorSelector } from '@/redux/selectors/index.js';
 import { useSelector } from 'react-redux';
@@ -133,12 +133,12 @@ export function AlignmentPanel() {
   const updateNodes = handleChange(graphEditor);
 
   return (
-    <Box
-      css={{
+    <div
+      style={{
         height: '100%',
         width: '100%',
         flex: 1,
-        padding: '$2',
+        padding: 'var(--component-spacing-sm)',
         display: 'flex',
         overflow: 'auto',
         flexDirection: 'column',
@@ -146,7 +146,7 @@ export function AlignmentPanel() {
     >
       <Stack gap={2} direction="column">
         <Text size="small">Align</Text>
-        <Stack direction="row" gap={4} css={{ height: '100%', flex: 1 }}>
+        <Stack direction="row" gap={4} style={{ height: '100%', flex: 1 }}>
           <IconButton
             title="Align X Left"
             onClick={() => updateNodes(align(ALIGNMENT.START))}
@@ -180,7 +180,7 @@ export function AlignmentPanel() {
           />
         </Stack>
         <Text size="small">Distribute</Text>
-        <Stack direction="row" gap={4} css={{ height: '100%', flex: 1 }}>
+        <Stack direction="row" gap={4} style={{ height: '100%', flex: 1 }}>
           <IconButton
             title="Distribute horizontally left"
             onClick={() => updateNodes(distribute(ALIGNMENT.START))}
@@ -213,6 +213,6 @@ export function AlignmentPanel() {
           />
         </Stack>
       </Stack>
-    </Box>
+    </div>
   );
 }

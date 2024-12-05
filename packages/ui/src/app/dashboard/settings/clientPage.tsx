@@ -1,6 +1,5 @@
 'use client';
 import {
-	Box,
 	Button,
 	Heading,
 	Label,
@@ -42,7 +41,7 @@ const Page = () => {
 		<Stack direction='column' width='full' gap={3}>
 			<Heading size='large'>Public profile</Heading>
 			<Separator />
-			<Box css={{ padding: '$2' }}>
+			<div style={{ padding: 'var(--component-spacing-sm)' }}>
 				{isLoading && <Spinner></Spinner>}
 				{!isLoading && (
 					<>
@@ -53,17 +52,17 @@ const Page = () => {
 							</Stack>
 						</Stack>
 						<br />
-						<Button onClick={onUpdate} loading={isPending} variant='primary'>
+						<Button onClick={onUpdate} loading={isPending} emphasis='high'>
 							Update
 						</Button>
 					</>
 				)}
-			</Box>
+			</div>
 
 			<Heading size='large'>Actions</Heading>
 			<Separator />
 			<Link href='/api/auth/signout'>
-				<Button variant='secondary'>Sign out</Button>
+				<Button>Sign out</Button>
 			</Link>
 		</Stack>
 	);

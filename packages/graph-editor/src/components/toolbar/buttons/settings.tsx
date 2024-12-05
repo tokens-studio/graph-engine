@@ -8,7 +8,7 @@ export const SettingsToolbarButton = () => {
   return (
     <Tooltip label="Settings" side="bottom">
       <IconButton
-        variant="invisible"
+        emphasis="low"
         onClick={() => onClick('settings')}
         icon={<Settings />}
       />

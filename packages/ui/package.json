@@ -41,8 +41,8 @@
     "@tokens-studio/graph-engine-nodes-figma": "*",
     "@tokens-studio/graph-engine-nodes-image": "*",
     "@tokens-studio/icons": "0.1.4",
-    "@tokens-studio/tokens": "0.0.24",
-    "@tokens-studio/ui": "0.6.9",
+    "@tokens-studio/tokens": "0.3.2",
+    "@tokens-studio/ui": "^1.0.1",
     "@ts-rest/core": "3.51.0",
     "@ts-rest/open-api": "^3.51.0",
     "@ts-rest/react-query": "^3.51.0",
@@ -90,6 +90,8 @@
     "zod": "3.23.8"
   },
   "devDependencies": {
+    "@fontsource/geist-mono": "^5.1.0",
+    "@fontsource/geist-sans": "^5.1.0",
     "@next/bundle-analyzer": "^14.2.3",
     "@svgr/webpack": "^8.1.0",
     "@tokens-studio/eslint-config-custom": "*",
