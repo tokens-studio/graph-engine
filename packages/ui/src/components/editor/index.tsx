@@ -23,7 +23,7 @@ export const EditorTab = observer(
 		{
 			loading,
 			toolbarButtons
-		}: { loading?: boolean; toolbarButtons?: ReactElement[] },
+		}: { loading?: boolean; toolbarButtons?: ReactElement },
 		ref
 	) => {
 		const { loadExample } = useGetEditor();

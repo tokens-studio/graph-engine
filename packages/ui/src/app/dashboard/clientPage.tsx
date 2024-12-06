@@ -167,7 +167,7 @@ const Page = () => {
 		const newGraph = await mutateAsync({
 			body: {
 				name: 'New graph',
-				graph: serialized
+				graph: serialized as any
 			}
 		});
 		router.push(`/editor/${newGraph.body.id}`);

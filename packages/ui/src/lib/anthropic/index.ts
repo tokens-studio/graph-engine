@@ -1,5 +1,6 @@
 import { SerializedGraph } from '@tokens-studio/graph-engine';
 import Anthropic from '@anthropic-ai/sdk';
+import type { TextBlock } from '@anthropic-ai/sdk/resources/messages.mjs';
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || 'claude-3-opus-20240229';
@@ -23,5 +24,5 @@ export const summarizeGraph = async (graph: SerializedGraph) => {
 		model: ANTHROPIC_MODEL
 	});
 
-	return message.content[0].text;
+	return (message.content[0] as TextBlock).text;
 };

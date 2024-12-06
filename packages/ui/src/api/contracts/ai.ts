@@ -1,8 +1,10 @@
-import { AppRouteMutation, AppRouteQuery } from '@ts-rest/core';
 import { SerializedGraph } from '../schemas/graph.ts';
+import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
 
-export const aiContract: Record<string, AppRouteMutation | AppRouteQuery> = {
+const c = initContract();
+
+export const aiContract = c.router({
 	getAISummary: {
 		method: 'POST',
 		path: '/ai/summarize',
@@ -15,4 +17,4 @@ export const aiContract: Record<string, AppRouteMutation | AppRouteQuery> = {
 			})
 		}
 	}
-};
+});

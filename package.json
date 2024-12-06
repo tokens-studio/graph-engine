@@ -41,8 +41,8 @@
     ]
   },
   "dependencies": {
-    "ts-patch": "^3.2.1",
-    "patch-package": "^8.0.0"
+    "patch-package": "^8.0.0",
+    "ts-patch": "^3.3.0"
   },
   "devDependencies": {
     "husky": "^8.0.3",

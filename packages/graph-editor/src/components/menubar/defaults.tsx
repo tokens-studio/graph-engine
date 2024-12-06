@@ -203,7 +203,6 @@ export const defaultMenuDataFactory = (): Menu =>
           new Seperator(),
           new MenuItem({
             name: 'find',
-            /** @ts-expect-error key does not exist on the type, the type interface has not been specified besides `{}` */
             render: ({ key, ...rest }) => {
               // eslint-disable-next-line react-hooks/rules-of-hooks
               const dispatch = useDispatch();

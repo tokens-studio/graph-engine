@@ -93,6 +93,7 @@ export const Rail = () => {
 		['getWhoAmI'],
 		{},
 		{
+			queryKey: ['getWhoAmI'],
 			staleTime: 1000 * 60 * 5
 		}
 	);

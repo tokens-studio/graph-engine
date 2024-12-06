@@ -1,7 +1,9 @@
 import { action, observable } from 'mobx';
+
 export type IMenuItem = {
   name: string;
-  render: (rest: object) => React.ReactNode | JSX.Element;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  render: (rest: { [key: string]: any }) => React.ReactNode | JSX.Element;
 };
 
 export type ISubMenu = {

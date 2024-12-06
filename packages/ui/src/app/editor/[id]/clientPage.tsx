@@ -34,6 +34,8 @@ const Page = observer(({ id, refs }: { id: string; refs: RefState }) => {
 			}
 		},
 		{
+			// TODO this is stupid that this needs to be repeated
+			queryKey: ['getGraph', id],
 			//Do not allow reloading during development
 			staleTime: Infinity
 		}

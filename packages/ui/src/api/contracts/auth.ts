@@ -1,7 +1,8 @@
-import { AppRouteMutation, AppRouteQuery } from '@ts-rest/core';
+import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
 
-export const contract: Record<string, AppRouteMutation | AppRouteQuery> = {
+const c = initContract();
+export const contract = c.router({
 	getWhoAmI: {
 		method: 'GET',
 		path: '/auth/whoami',
@@ -31,4 +32,4 @@ export const contract: Record<string, AppRouteMutation | AppRouteQuery> = {
 			401: z.any()
 		}
 	}
-};
+});

@@ -9,8 +9,8 @@ import {
 import { Control } from '../types/controls.js';
 import { DropPanelStore } from '@/components/panels/dropPanel/index.js';
 import { Edge, Node, ReactFlowInstance } from 'reactflow';
-import { LayoutBase } from 'rc-dock';
 import { Menu } from '@/components/menubar/data.js';
+import type { LayoutBase } from 'rc-dock';
 
 export interface EditorProps {
   id?: string;
@@ -66,7 +66,7 @@ export interface EditorProps {
   /**
    * Additional specifics to display in the editor for custom types
    */
-  specifics?: Record<string, React.FC<{ node: Node }>>;
+  specifics?: Record<string, React.FC<{ node: GraphNode }>>;
 
   /**
    * An initial layout to use

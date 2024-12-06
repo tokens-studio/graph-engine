@@ -8,10 +8,24 @@ export const router = tsr.router<typeof contract, Context>(contract, {
 	getWhoAmI: {
 		middleware: [authMiddleware],
 		handler: async (_, { request }) => {
+			const user = request.session.user;
+			if (!user || !user.id) {
+				return {
+					status: 401,
+					body: {
+						message: 'Unauthorized'
+					}
+				};
+			}
 			return {
 				status: 200,
 				body: {
-					user: request.session.user
+					user: {
+						id: user.id ?? null,
+						name: user.name ?? null,
+						email: user.email ?? null,
+						image: user.image ?? null
+					}
 				}
 			};
 		}
