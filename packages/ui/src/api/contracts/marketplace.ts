@@ -38,6 +38,7 @@ export const marketplaceContract = c.router({
 				description: z.string().nullable(),
 				versions: z.number(),
 				downloads: z.number(),
+				thumbnail: z.string().nullable(),
 				user: z.object({
 					id: z.string(),
 					name: z.string(),

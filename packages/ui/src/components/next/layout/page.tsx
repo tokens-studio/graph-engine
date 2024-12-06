@@ -11,7 +11,7 @@ const PageLayout = observer(
 		children: React.ReactNode;
 		theme: GlobalState['ui']['theme'];
 	}) => {
-		const theTheme = theme.get();
+		const theTheme = theme;
 		useEffect(() => {
 			if (theTheme) {
 				document.body.className = theTheme + '-theme';

@@ -1,6 +1,5 @@
 import { Context } from '../utils/types.ts';
 import { Prisma } from '@prisma/client';
-import { SerializedGraph } from '@tokens-studio/graph-engine';
 import { authMiddleware } from '../middleware.ts/auth.ts';
 import { graphContract } from '../contracts/graph.ts';
 import { prisma } from '@/lib/prisma/index.ts';
@@ -19,7 +18,7 @@ export const router = tsr.router<typeof graphContract, Context>(graphContract, {
 				take: query.take,
 				skip: query.skip,
 				where: {
-					owner: owner
+					owner: owner ?? null
 				},
 				select: {
 					name: true,
@@ -38,14 +37,14 @@ export const router = tsr.router<typeof graphContract, Context>(graphContract, {
 				graphs.length > 0 ? graphs[graphs.length - 1].id : undefined;
 
 			return {
-				status: 200,
+				status: 200 as const,
 				body: {
 					token,
 					graphs: graphs.map(g => {
 						return {
 							id: g.id,
 							name: g.name,
-							graph: g.graph as unknown as SerializedGraph,
+							graph: g.graph as any,
 							updatedAt: g.updatedAt.getTime(),
 							public: g.public
 						};
@@ -63,7 +62,7 @@ export const router = tsr.router<typeof graphContract, Context>(graphContract, {
 			const newGraph = await prisma.graph.create({
 				data: {
 					name: name,
-					graph: graph,
+					graph: graph as unknown as string,
 					owner
 				}
 			});
@@ -115,7 +114,7 @@ export const router = tsr.router<typeof graphContract, Context>(graphContract, {
 					id: graph.id,
 					name: graph.name,
 					description: graph.description,
-					graph: graph.graph as unknown as SerializedGraph,
+					graph: graph.graph as any,
 					updatedAt: graph.updatedAt.getTime(),
 					public: graph.public
 				}

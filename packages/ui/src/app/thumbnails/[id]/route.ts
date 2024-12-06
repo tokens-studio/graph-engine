@@ -16,9 +16,7 @@ export const GET = async (req, { params }) => {
 	});
 
 	if (!thumbnail) {
-		return {
-			status: 404
-		};
+		return new NextResponse('Thumbnail not found', { status: 404 });
 	}
 
 	const response = new NextResponse(thumbnail.data);

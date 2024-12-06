@@ -17,7 +17,8 @@ export const AISummary = () => {
 
 		mutateAsync({
 			body: {
-				graph: raw
+				// TODO this typing is correct but not showing correctly
+				graph: raw as any
 			}
 		});
 	};
@@ -38,6 +39,7 @@ export const AISummary = () => {
 				</div>
 				<div style={{ height: '100%' }}>
 					{data && (
+						// @ts-ignore TODO convert to Tiptap
 						<MDEditor.Markdown
 							source={data.body.summary.replace(/\\n/g, '\n')}
 						/>

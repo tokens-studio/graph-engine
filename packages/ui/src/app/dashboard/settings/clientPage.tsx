@@ -21,7 +21,7 @@ const Page = () => {
 
 	useEffect(() => {
 		if (data?.body) {
-			setName(data?.body.user.name);
+			setName(data?.body.user.name || '');
 		}
 	}, [data]);
 

@@ -1,4 +1,5 @@
 import { Context } from '../utils/types.ts';
+import { SerializedGraph } from '@tokens-studio/graph-engine';
 import { aiContract } from '../contracts/ai.ts';
 import { authMiddleware } from '../middleware.ts/auth.ts';
 import { summarizeGraph } from '@/lib/anthropic/index.ts';
@@ -10,7 +11,7 @@ export const router = tsr.router<typeof aiContract, Context>(aiContract, {
 		middleware: [authMiddleware, rateLimitMiddleware],
 		handler: async ({ body }) => {
 			const { graph } = body;
-			const summary = await summarizeGraph(graph);
+			const summary = await summarizeGraph(graph as SerializedGraph);
 			return {
 				status: 200,
 				body: {

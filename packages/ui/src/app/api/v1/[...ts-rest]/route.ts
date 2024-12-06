@@ -1,5 +1,5 @@
+import { TsRestResponse, createNextHandler } from '@ts-rest/serverless/next';
 import { contract } from '@/api/contracts/index.ts';
-import { createNextHandler } from '@ts-rest/serverless/next';
 import { root } from '@/api/controllers/index.ts';
 
 const handler = createNextHandler(contract, root, {
@@ -7,11 +7,12 @@ const handler = createNextHandler(contract, root, {
 	jsonQuery: true,
 	responseValidation: true,
 	handlerType: 'app-router',
-	errorHandler: (error, req, res) => {
+	errorHandler: error => {
 		console.error(error);
-		res.status(500).json({
-			error: 'Internal Server Error'
-		});
+		return TsRestResponse.fromJson(
+			{ error: 'Internal Server Error' },
+			{ status: 500 }
+		);
 	}
 });
 

@@ -425,7 +425,7 @@ export const router = tsr.router<typeof marketplaceContract, Context>(
 				const newGraph = await prisma.graph.create({
 					data: {
 						name: graph.name,
-						graph: latestVersion.graph,
+						graph: latestVersion.graph as string,
 						owner
 					}
 				});

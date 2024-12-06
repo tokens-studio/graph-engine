@@ -42,8 +42,7 @@ const Page = () => {
 		const res = await copyGraph({
 			params: {
 				id
-			},
-			body: undefined
+			}
 		});
 		const graphId = res.body.id;
 		router.push(`/editor/${graphId}`);
@@ -78,7 +77,7 @@ const Page = () => {
 						<div className={styles.contentBox}>
 							<Stack direction='column' gap={3}>
 								<Stack gap={2} align='center'>
-									<Avatar src={data.body.user.image} />
+									<Avatar src={data.body.user.image!} />
 									<Text>{data.body.user.name}</Text>
 								</Stack>
 
@@ -128,8 +127,9 @@ const Page = () => {
 						<Tabs.Content value='about'>
 							<div className={styles.aboutContent}>
 								<Stack direction='column' gap={2}>
+									{/* @ts-ignore Move to tiptap */}
 									<MDEditor.Markdown
-										source={data.body.description.replace(/\\n/g, '\n')}
+										source={data.body.description?.replace(/\\n/g, '\n')}
 									/>
 								</Stack>
 							</div>

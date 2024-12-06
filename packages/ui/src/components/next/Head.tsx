@@ -20,6 +20,7 @@ export const Head = <T extends ElementType = 'body'>({
 
 	return (
 		<>
+			{/* @ts-expect-error  */}
 			<NextHead>
 				<meta charSet='utf-8' />
 				<title>{title}</title>

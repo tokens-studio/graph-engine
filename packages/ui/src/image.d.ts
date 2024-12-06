@@ -3,6 +3,8 @@ declare module 'next/image.js' {
 	interface ImageProps {
 		src: unknown;
 		alt?: string;
+		width?: number;
+		height?: number;
 	}
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	export = (props: ImageProps) => JSX.Element;

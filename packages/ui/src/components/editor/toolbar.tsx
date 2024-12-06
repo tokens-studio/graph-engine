@@ -51,7 +51,7 @@ export const SaveButton = ({ id }) => {
 				id
 			},
 			body: {
-				graph: saved
+				graph: saved as any
 			}
 		});
 	};
@@ -124,7 +124,7 @@ export const AiSummary = () => {
 				emphasis='low'
 				onClick={() =>
 					toggle({
-						title: 'Artificial intelligence',
+						title: <span>Artificial intelligence</span>,
 						id: 'ai',
 						content: <AISummary />
 					})
@@ -143,8 +143,9 @@ export const PreviewButton = () => {
 				emphasis='low'
 				onClick={() =>
 					toggle({
+						// @ts-expect-error Fix this grouping
 						group: 'popout',
-						title: 'Preview',
+						title: <span>Preview</span>,
 						id: 'preview',
 						content: <Preview />
 					})

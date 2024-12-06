@@ -84,7 +84,7 @@ panelItems.groups.push(
 			node =>
 				new PanelItem({
 					type: node.type,
-					text: node.title,
+					text: node.title!,
 					description: node.description,
 					docs: ''
 				})
@@ -100,7 +100,7 @@ panelItems.groups.push(
 			node =>
 				new PanelItem({
 					type: node.type,
-					text: node.title,
+					text: node.title!,
 					description: node.description,
 					docs: ''
 				})

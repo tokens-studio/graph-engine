@@ -18,6 +18,7 @@ import rehypeSanitize from 'rehype-sanitize';
 const Page = () => {
 	const params = useParams();
 	const { id } = params;
+	const graphID = id as string;
 
 	const { mutateAsync, isPending } =
 		client.marketplace.publishGraph.useMutation({
@@ -33,18 +34,18 @@ const Page = () => {
 		}
 	});
 
-	const [name, setName] = useState(data.body.name);
+	const [name, setName] = useState(data?.body.name || '');
 	const [thumbnail, setThumbnail] = useState<File | null>(null);
 
-	const [description, setDescription] = useState(data.body.description || '');
+	const [description, setDescription] = useState(data?.body.description || '');
 	const router = useRouter();
 	const { isPending: isSummarizing, mutateAsync: getAISummary } =
 		client.ai.getAISummary.useMutation();
 	const onSummarize = async () => {
-		if (!data?.body.graph) {
+		if (data?.body.graph) {
 			const response = await getAISummary({
 				body: {
-					graph: data?.body.graph
+					graph: data.body.graph
 				}
 			});
 
@@ -61,7 +62,7 @@ const Page = () => {
 
 		mutateAsync({
 			params: {
-				id
+				id: graphID
 			},
 			body: {
 				thumbnail,
@@ -93,6 +94,7 @@ const Page = () => {
 						/>
 
 						<Label>Description</Label>
+						{/* @ts-ignore Move to Tiptap */}
 						<MDEditor
 							value={description}
 							onChange={setDescription}
