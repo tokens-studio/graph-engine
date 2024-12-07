@@ -3,7 +3,7 @@
 import { Editor } from '@tokens-studio/graph-editor';
 import { EmptyStateEditor } from '../EmptyStateEditor.tsx';
 import { ExamplesPicker } from '../ExamplesPicker.tsx';
-import { Spinner } from '@tokens-studio/ui';
+import { Spinner } from '@tokens-studio/ui/Spinner.js';
 import {
 	capabilities,
 	controls,
@@ -15,8 +15,9 @@ import {
 } from './data.ts';
 import { observer } from 'mobx-react-lite';
 import { useGetEditor } from '@/hooks/useGetEditor.ts';
-import React, { ReactElement, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import globalState from '@/mobx/index.tsx';
+import type { ReactElement } from 'react';
 
 export const EditorTab = observer(
 	(

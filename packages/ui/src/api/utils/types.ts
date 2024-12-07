@@ -1,4 +1,4 @@
-import { Session } from 'next-auth';
+import { type Session } from 'next-auth';
 import { TsRestRequest } from '@ts-rest/serverless';
 
 export type Context = {

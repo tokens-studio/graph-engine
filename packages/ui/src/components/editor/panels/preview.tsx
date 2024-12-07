@@ -103,10 +103,10 @@ export const Listener = ({ previewId }) => {
 
 					// Add reactions for new outputs
 					outputKeys.forEach(key => {
-						output[key] = node.inputs[key].value;
+						output[key] = node.inputs[key]?.value;
 						if (!disposers.has(key)) {
 							const disposer = reaction(
-								() => node.inputs[key].value,
+								() => node.inputs[key]?.value,
 								value => {
 									output[key] = value;
 									serialize();

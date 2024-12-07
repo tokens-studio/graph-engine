@@ -4,7 +4,7 @@ import { createToolbarButtons } from '@/components/editor/toolbar.tsx';
 import { observer } from 'mobx-react-lite';
 import { useJourney } from '@/components/journeys/basic.tsx';
 import Editor from '@/components/editor/index.tsx';
-import Joyride, { CallBackProps, STATUS } from 'react-joyride';
+import Joyride, { type CallBackProps, STATUS } from 'react-joyride';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import globalState, { RefState } from '@/mobx/index.tsx';
 

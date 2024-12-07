@@ -5,7 +5,7 @@ import {
 	SandpackLayout,
 	SandpackPreview,
 	SandpackProvider,
-	SandpackProviderProps,
+	type SandpackProviderProps,
 	useSandpack
 } from '@codesandbox/sandpack-react';
 import { SandpackFileExplorer } from 'sandpack-file-explorer';

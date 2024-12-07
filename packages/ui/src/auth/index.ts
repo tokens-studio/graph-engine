@@ -1,7 +1,7 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from '@/lib/prisma/index.ts';
 import GitHub from 'next-auth/providers/github';
-import NextAuth from 'next-auth';
+import NextAuth, { type Session } from 'next-auth';
 
 const adapter = NextAuth({
 	adapter: PrismaAdapter(prisma),
@@ -18,4 +18,6 @@ const adapter = NextAuth({
 	}
 });
 
-export const { handlers, auth, signIn, signOut } = adapter;
+export const handlers = adapter.handlers;
+export const signOut = adapter.signOut;
+export const auth = adapter.auth as () => Promise<Session | undefined>;

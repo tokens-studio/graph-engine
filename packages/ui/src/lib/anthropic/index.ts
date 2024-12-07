@@ -1,5 +1,5 @@
-import { SerializedGraph } from '@tokens-studio/graph-engine';
 import Anthropic from '@anthropic-ai/sdk';
+import type { SerializedGraph } from '@tokens-studio/graph-engine';
 import type { TextBlock } from '@anthropic-ai/sdk/resources/messages.mjs';
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;

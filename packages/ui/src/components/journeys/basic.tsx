@@ -1,5 +1,5 @@
-import { Step } from 'react-joyride';
-import { Text } from '@tokens-studio/ui';
+import { type Step } from 'react-joyride';
+import { Text } from '@tokens-studio/ui/Text.js';
 import { useSetState } from 'react-use';
 
 interface State {

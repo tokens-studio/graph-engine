@@ -16,6 +16,7 @@ import '@fontsource/geist-sans/500.css';
 import '@fontsource/geist-sans/600.css';
 
 import { headers } from 'next/headers.js';
+import Contexts from './contexts.tsx';
 import type { Viewport } from 'next';
 
 export const viewport: Viewport = {
@@ -90,7 +91,9 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='en'>
-			<body className='ts-theme-dark graph-editor'>{children}</body>
+			<body className='ts-theme-dark graph-editor'>
+				<Contexts>{children}</Contexts>
+			</body>
 		</html>
 	);
 }

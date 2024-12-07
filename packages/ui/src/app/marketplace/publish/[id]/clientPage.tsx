@@ -1,12 +1,5 @@
 'use client';
-import {
-	Button,
-	Heading,
-	Label,
-	Separator,
-	Stack,
-	TextInput
-} from '@tokens-studio/ui';
+import { Button, Label, Stack, TextInput } from '@tokens-studio/ui';
 import { client } from '@/api/sdk/index.ts';
 import { useParams, useRouter } from 'next/navigation.js';
 import MDEditor from '@uiw/react-md-editor';
@@ -72,56 +65,50 @@ const Page = () => {
 		});
 	};
 	return (
-		<Stack direction='column' width='full' gap={3}>
-			<Heading size='large'>Publish</Heading>
-			<Separator orientation='horizontal' />
-			<div style={{ padding: 'var(--component-spacing-2xl)' }}>
-				<form>
-					<Stack direction='column' gap={3}>
-						<Stack direction='column' gap={2}>
-							<Label>Name</Label>
-							<TextInput
-								onChange={e => setName(e.target.value)}
-								value={name}
-							></TextInput>
-						</Stack>
+		<form onSubmit={onPublish}>
+			<Stack direction='column' gap={3}>
+				<Stack direction='column' gap={2}>
+					<Label>Name</Label>
+					<TextInput
+						onChange={e => setName(e.target.value)}
+						value={name}
+					></TextInput>
+				</Stack>
 
-						<Label>Thumbnail</Label>
-						<input
-							multiple={false}
-							type='file'
-							onChange={e => setThumbnail(e.target.files?.[0] || null)}
-						/>
+				<Label>Thumbnail</Label>
+				<input
+					multiple={false}
+					type='file'
+					onChange={e => setThumbnail(e.target.files?.[0] || null)}
+				/>
 
-						<Label>Description</Label>
-						{/* @ts-ignore Move to Tiptap */}
-						<MDEditor
-							value={description}
-							onChange={setDescription}
-							previewOptions={{
-								rehypePlugins: [[rehypeSanitize]]
-							}}
-						/>
-						<div>
-							<Button loading={isSummarizing} onClick={onSummarize}>
-								Summarize with AI
-							</Button>
-						</div>
-						<br />
-						<div>
-							<Button
-								onClick={onPublish}
-								loading={isPending}
-								emphasis='high'
-								icon={<Upload />}
-							>
-								Update
-							</Button>
-						</div>
-					</Stack>
-				</form>
-			</div>
-		</Stack>
+				<Label>Description</Label>
+				{/* @ts-ignore Move to Tiptap */}
+				<MDEditor
+					value={description}
+					onChange={setDescription}
+					previewOptions={{
+						rehypePlugins: [[rehypeSanitize]]
+					}}
+				/>
+				<div>
+					<Button loading={isSummarizing} onClick={onSummarize}>
+						Summarize with AI
+					</Button>
+				</div>
+				<br />
+				<div>
+					<Button
+						type='submit'
+						loading={isPending}
+						emphasis='high'
+						icon={<Upload />}
+					>
+						Update
+					</Button>
+				</div>
+			</Stack>
+		</form>
 	);
 };
 

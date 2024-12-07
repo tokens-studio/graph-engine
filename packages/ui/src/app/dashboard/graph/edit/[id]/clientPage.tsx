@@ -1,13 +1,6 @@
 'use client';
 
-import {
-	Button,
-	Heading,
-	Label,
-	Spinner,
-	Stack,
-	TextInput
-} from '@tokens-studio/ui';
+import { Button, Label, Spinner, Stack, TextInput } from '@tokens-studio/ui';
 import { client } from '@/api/sdk/index.ts';
 import { useErrorToast } from '@/hooks/useToast.tsx';
 import React, { useCallback, useEffect } from 'react';
@@ -79,52 +72,37 @@ const Page = () => {
 	useErrorToast(error);
 
 	return (
-		<Stack
-			style={{
-				position: 'relative',
-				width: '100%',
-				height: '100%',
-				overflow: 'auto',
-				background: 'var(--color-neutral-canvas-minimal-bg)',
-				paddingTop: 'var(--component-spacing-2xl)'
-			}}
-			justify='center'
-		>
-			<div style={{ padding: 'var(--component-spacing-xl)', width: '80%' }}>
-				<Stack gap={6} direction='column'>
-					<Heading size='large'>Edit Graph details</Heading>
-					{isLoading && <Spinner />}
-					{!isLoading && (
-						<>
-							<Stack gap={2} direction='column'>
-								<Label>Graph ID</Label>
-								<TextInput value={graphID} disabled></TextInput>
-								<Label>Name</Label>
-								<TextInput onChange={onNameChange} value={name}></TextInput>
-								<Label>Description</Label>
-								{/* @ts-ignore We will move to tiptap soon */}
-								<MDEditor
-									value={description}
-									onChange={setDescription}
-									previewOptions={{
-										rehypePlugins: [[rehypeSanitize]]
-									}}
-								/>
-								<div>
-									<Button loading={isSummarizing} onClick={onSummarize}>
-										Summarize with AI
-									</Button>
-								</div>
-							</Stack>
-							<br />
-							<Button onClick={onUpdate} loading={isPending} emphasis='high'>
-								Save
+		<>
+			{isLoading && <Spinner />}
+			{!isLoading && (
+				<>
+					<Stack gap={2} direction='column'>
+						<Label>Graph ID</Label>
+						<TextInput value={graphID} disabled></TextInput>
+						<Label>Name</Label>
+						<TextInput onChange={onNameChange} value={name}></TextInput>
+						<Label>Description</Label>
+						{/* @ts-ignore We will move to tiptap soon */}
+						<MDEditor
+							value={description}
+							onChange={setDescription}
+							previewOptions={{
+								rehypePlugins: [[rehypeSanitize]]
+							}}
+						/>
+						<div>
+							<Button loading={isSummarizing} onClick={onSummarize}>
+								Summarize with AI
 							</Button>
-						</>
-					)}
-				</Stack>
-			</div>
-		</Stack>
+						</div>
+					</Stack>
+					<br />
+					<Button onClick={onUpdate} loading={isPending} emphasis='high'>
+						Save
+					</Button>
+				</>
+			)}
+		</>
 	);
 };
 

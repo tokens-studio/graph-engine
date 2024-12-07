@@ -3,6 +3,7 @@ import {
 	PanelItem,
 	defaultPanelGroupsFactory
 } from '@tokens-studio/graph-editor';
+import { audioEnabled } from '@/lib/featureFlags.ts';
 import { nodeLookup as audioLookup } from '@tokens-studio/graph-engine-nodes-audio';
 import { nodes as designNodes } from '@tokens-studio/graph-engine-nodes-design-tokens';
 import { nodes as figmaNodes } from '@tokens-studio/graph-engine-nodes-figma';
@@ -59,22 +60,24 @@ panelItems.groups.forEach(group => {
 	group.icon = icons[group.key];
 });
 
-panelItems.groups.push(
-	new PanelGroup({
-		title: 'Audio',
-		key: 'audio',
-		icon: <SoundHigh />,
-		items: Object.values(audioLookup).map(
-			node =>
-				new PanelItem({
-					type: node.type,
-					text: node.title,
-					description: node.description,
-					docs: ''
-				})
-		)
-	})
-);
+if (audioEnabled) {
+	panelItems.groups.push(
+		new PanelGroup({
+			title: 'Audio',
+			key: 'audio',
+			icon: <SoundHigh />,
+			items: Object.values(audioLookup).map(
+				node =>
+					new PanelItem({
+						type: node.type,
+						text: node.title,
+						description: node.description,
+						docs: ''
+					})
+			)
+		})
+	);
+}
 panelItems.groups.push(
 	new PanelGroup({
 		title: 'Design Tokens',

@@ -1,4 +1,6 @@
+import { Heading } from '@tokens-studio/ui/Heading.js';
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
+import { Stack } from '@tokens-studio/ui/Stack.js';
 import { router as auth } from '@/api/controllers/auth.ts';
 import { getServerClient } from '@/api/sdk/getServerClient.ts';
 import { router as graphs } from '@/api/controllers/graph.ts';
@@ -25,7 +27,10 @@ const Page = async ({ params }) => {
 
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>
-			<Inner />
+			<Stack gap={6} direction='column'>
+				<Heading size='large'>Edit Graph details</Heading>
+				<Inner />
+			</Stack>
 		</HydrationBoundary>
 	);
 };

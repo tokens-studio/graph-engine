@@ -1,8 +1,10 @@
-import { ExtendedRequest } from '../utils/types.ts';
+import { type ExtendedRequest } from '../utils/types.ts';
 
 const rateLimitMap = new Map();
 
-export default function rateLimitMiddleware(req: ExtendedRequest) {
+export default function rateLimitMiddleware(
+	req: ExtendedRequest
+): Response | void {
 	const user = req.user;
 	const limit = 5; // Limiting requests to 5 per minute per user
 	const windowMs = 60 * 1000; // 1 minute

@@ -1,5 +1,5 @@
-import { SerializedGraph } from '@tokens-studio/graph-engine';
 import globalState from '@/mobx/index.tsx';
+import type { SerializedGraph } from '@tokens-studio/graph-engine';
 
 export function useGetEditor() {
 	async function loadExample(file) {

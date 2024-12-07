@@ -1,4 +1,4 @@
-import { QueryFunction } from '@tanstack/react-query';
+import { type QueryFunction } from '@tanstack/react-query';
 import { auth } from '@/auth/index.ts';
 
 export const runContract = (contractExecutor, opts: object = {}) => {

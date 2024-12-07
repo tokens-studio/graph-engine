@@ -1,4 +1,4 @@
-import { SerializedGraph } from '@tokens-studio/graph-engine';
+import type { SerializedGraph } from '@tokens-studio/graph-engine';
 export interface IExample {
 	title: string;
 	description: string;
