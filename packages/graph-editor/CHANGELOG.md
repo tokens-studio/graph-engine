@@ -1,5 +1,11 @@
 # @tokens-studio/graph-editor
 
+## 4.3.3
+
+### Patch Changes
+
+- 5ee8483: Removes incorrect geist packages that were being imported
+
 ## 4.3.2
 
 ### Patch Changes

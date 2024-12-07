@@ -1,6 +1,6 @@
 {
   "name": "@tokens-studio/graph-editor",
-  "version": "4.3.2",
+  "version": "4.3.3",
   "description": "UI for the graph engine",
   "author": "andrew@hyma.io",
   "type": "module",
