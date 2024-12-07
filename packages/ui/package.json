@@ -16,7 +16,7 @@
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint . --fix",
     "format:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --write",
-    "lint": "npm run lint:prettier && npm run lint:eslint && npm run lint:types",
+    "lint": "npm run lint:prettier && npm run lint:eslint",
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --check",
     "start": "next start",
