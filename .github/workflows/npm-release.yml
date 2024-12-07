@@ -56,14 +56,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ steps.secrets.outputs.NPM_TOKEN }}
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
-        if: steps.changesets.outputs.published == 'true'
-        env:
-          SLACK_CHANNEL: proj-resolvers-generators
-          SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
-          SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_MESSAGE: 'New version of the graph-engine has been release'
-          SLACK_TITLE: "@tokens-studio/graph-engine"
-          SLACK_USERNAME: "Studio Bot"
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

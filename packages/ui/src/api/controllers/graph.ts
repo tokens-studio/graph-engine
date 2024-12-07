@@ -1,10 +1,10 @@
-import { Context } from '../utils/types.ts';
 import { Prisma } from '@prisma/client';
 import { authMiddleware } from '../middleware.ts/auth.ts';
 import { graphContract } from '../contracts/graph.ts';
 import { prisma } from '@/lib/prisma/index.ts';
 import { tsr } from '@ts-rest/serverless/next';
 import { withCursor } from '../utils/common.ts';
+import type { Context } from '../utils/types.ts';
 
 export const router = tsr.router<typeof graphContract, Context>(graphContract, {
 	listGraphs: {
@@ -34,7 +34,7 @@ export const router = tsr.router<typeof graphContract, Context>(graphContract, {
 			});
 
 			const token =
-				graphs.length > 0 ? graphs[graphs.length - 1].id : undefined;
+				graphs.length > 0 ? graphs?.[graphs.length - 1]?.id : undefined;
 
 			return {
 				status: 200 as const,

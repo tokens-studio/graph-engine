@@ -1,12 +1,12 @@
-import { Button, Stack } from '@tokens-studio/ui';
+import { Button } from '@tokens-studio/ui/Button.js';
 import {
-	ImperativeEditorRef,
+	type ImperativeEditorRef,
 	mainGraphSelector
 } from '@tokens-studio/graph-editor';
+import { Stack } from '@tokens-studio/ui/Stack.js';
 import { client } from '@/api/sdk/index.ts';
 import { useSelector } from 'react-redux';
 import MDEditor from '@uiw/react-md-editor';
-import React from 'react';
 
 export const AISummary = () => {
 	const mainGraph = useSelector(mainGraphSelector);

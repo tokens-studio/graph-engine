@@ -1,16 +1,7 @@
 'use client';
-import {
-	Button,
-	Heading,
-	Label,
-	Separator,
-	Spinner,
-	Stack,
-	TextInput
-} from '@tokens-studio/ui';
+import { Button, Label, Spinner, Stack, TextInput } from '@tokens-studio/ui';
 import { client } from '@/api/sdk/index.ts';
 import { useEffect, useState } from 'react';
-import Link from 'next/link.js';
 
 const Page = () => {
 	const { data, isLoading } = client.auth.getWhoAmI.useQuery(['getWhoAmI']);
@@ -38,33 +29,23 @@ const Page = () => {
 	};
 
 	return (
-		<Stack direction='column' width='full' gap={3}>
-			<Heading size='large'>Public profile</Heading>
-			<Separator />
-			<div style={{ padding: 'var(--component-spacing-sm)' }}>
-				{isLoading && <Spinner></Spinner>}
-				{!isLoading && (
-					<>
-						<Stack direction='column' gap={3}>
-							<Stack direction='column' gap={2}>
-								<Label>Username</Label>
-								<TextInput onChange={onNameChange} value={name}></TextInput>
-							</Stack>
+		<div style={{ padding: 'var(--component-spacing-sm)' }}>
+			{isLoading && <Spinner></Spinner>}
+			{!isLoading && (
+				<>
+					<Stack direction='column' gap={3}>
+						<Stack direction='column' gap={2}>
+							<Label>Username</Label>
+							<TextInput onChange={onNameChange} value={name}></TextInput>
 						</Stack>
-						<br />
-						<Button onClick={onUpdate} loading={isPending} emphasis='high'>
-							Update
-						</Button>
-					</>
-				)}
-			</div>
-
-			<Heading size='large'>Actions</Heading>
-			<Separator />
-			<Link href='/api/auth/signout'>
-				<Button>Sign out</Button>
-			</Link>
-		</Stack>
+					</Stack>
+					<br />
+					<Button onClick={onUpdate} loading={isPending} emphasis='high'>
+						Update
+					</Button>
+				</>
+			)}
+		</div>
 	);
 };
 

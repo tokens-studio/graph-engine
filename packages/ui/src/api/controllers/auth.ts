@@ -1,8 +1,8 @@
-import { Context } from '../utils/types.ts';
 import { authMiddleware } from '../middleware.ts/auth.ts';
 import { contract } from '../contracts/auth.ts';
 import { prisma } from '@/lib/prisma/index.ts';
 import { tsr } from '@ts-rest/serverless/next';
+import type { Context } from '../utils/types.ts';
 
 export const router = tsr.router<typeof contract, Context>(contract, {
 	getWhoAmI: {

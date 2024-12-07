@@ -8,17 +8,6 @@
 		".next/types/**/*.ts"
 	],
 	"exclude": ["node_modules"],
-	"ts-node": {
-		"require": ["tsconfig-paths/register"],
-		// "experimentalSpecifierResolution": "node",
-		// "esm": true,
-		// these options are overrides used only by ts-node
-		// same as our --compilerOptions flag and our TS_NODE_COMPILER_OPTIONS environment variable
-		"compilerOptions": {
-			"module": "es2020",
-			"moduleResolution": "bundler"
-		}
-	},
 	"compilerOptions": {
 		"target": "esnext",
 		"noImplicitAny": false,
@@ -42,7 +31,6 @@
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
 		"types": ["node"],
-		"typeRoots": ["node_modules/@types"],
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["src/*"],

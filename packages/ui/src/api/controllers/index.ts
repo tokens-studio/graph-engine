@@ -1,10 +1,10 @@
-import { Context } from '../utils/types.ts';
 import { router as ai } from './ai.ts';
 import { router as auth } from './auth.ts';
 import { contract } from '../contracts/index.ts';
 import { router as graph } from './graph.ts';
 import { router as marketplace } from './marketplace.ts';
 import { tsr } from '@ts-rest/serverless/next';
+import type { Context } from '../utils/types.ts';
 
 export const root = tsr.router<typeof contract, Context>(contract, {
 	ai,

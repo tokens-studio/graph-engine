@@ -4,7 +4,7 @@ import {
 	ShareButton,
 	createToolbarButtons
 } from '@/components/editor/toolbar.tsx';
-import { SerializedGraph } from '@tokens-studio/graph-engine';
+import { type SerializedGraph } from '@tokens-studio/graph-engine';
 import { client } from '@/api/sdk/index.ts';
 import { observer } from 'mobx-react-lite';
 import { useCallback, useEffect, useMemo, useState } from 'react';

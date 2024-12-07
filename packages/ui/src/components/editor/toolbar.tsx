@@ -3,7 +3,7 @@ import {
 	AlignDropdown,
 	DownloadToolbarButton,
 	HelpDropdown,
-	ImperativeEditorRef,
+	type ImperativeEditorRef,
 	LayoutDropdown,
 	PlayControls,
 	SettingsToolbarButton,

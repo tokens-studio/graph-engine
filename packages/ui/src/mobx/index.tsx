@@ -1,6 +1,6 @@
-import { ImperativeEditorRef } from '@tokens-studio/graph-editor';
 import { action, makeAutoObservable, makeObservable, observable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
+import type { ImperativeEditorRef } from '@tokens-studio/graph-editor';
 
 class UIState {
 	theme: string;

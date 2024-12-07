@@ -1,5 +1,7 @@
 'use client';
-import { Heading, Separator, Spinner, Stack, Text } from '@tokens-studio/ui';
+import { Spinner } from '@tokens-studio/ui/Spinner.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
 import { client } from '@/api/sdk/index.ts';
 import { useErrorToast } from '@/hooks/useToast.tsx';
 import Download from '@tokens-studio/icons/Download.js';
@@ -16,15 +18,11 @@ const Page = () => {
 	useErrorToast(error);
 
 	return (
-		<Stack direction='column' width='full' gap={3}>
-			<Heading size='large'>Showcase</Heading>
-			<Separator orientation='horizontal' />
+		<>
 			{isLoading && <Spinner />}
 			{!isLoading && (
 				<>
-					<Stack
-						style={{ flexWrap: 'wrap', padding: 'var(--component-spacing-sm)' }}
-					>
+					<Stack wrap style={{ padding: 'var(--component-spacing-sm)' }}>
 						{data?.body.graphs.map(graph => (
 							<div className={styles.wrapper} key={graph.id}>
 								<Link href={`/marketplace/graph/${graph.id}`}>
@@ -65,7 +63,7 @@ const Page = () => {
 					</Stack>
 				</>
 			)}
-		</Stack>
+		</>
 	);
 };
 

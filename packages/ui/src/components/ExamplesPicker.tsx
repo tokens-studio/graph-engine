@@ -1,9 +1,10 @@
 import { Command } from 'cmdk';
-import { IExample } from '../types/IExample.tsx';
-import { Stack, Text } from '@tokens-studio/ui';
+import { Stack } from '@tokens-studio/ui/Stack.js';
+import { Text } from '@tokens-studio/ui/Text.js';
 import { examples } from '../data/examples/examples.tsx';
 import React from 'react';
 import Search from '@tokens-studio/icons/Search.js';
+import type { IExample } from '../types/IExample.tsx';
 
 const ExamplesPicker = ({ open, onClose, loadExample }) => {
 	const handleSelectItem = (example: IExample) => {

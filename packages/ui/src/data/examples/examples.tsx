@@ -1,5 +1,4 @@
-import { IExample } from '@/types/IExample.tsx';
-import { SerializedGraph } from '@tokens-studio/graph-engine';
+import { audioEnabled } from '@/lib/featureFlags.ts';
 import audio from './audio.json';
 import basic from './basic.json';
 import colorCurves from './colorCurves.json';
@@ -8,6 +7,8 @@ import dynamicNaming from './dynamicNaming.json';
 import dynamicValidation from './dynamicValidation.json';
 import leonardo from './leonardo.json';
 import typescale from './typescale.json';
+import type { IExample } from '@/types/IExample.tsx';
+import type { SerializedGraph } from '@tokens-studio/graph-engine';
 
 export const examples: IExample[] = [
 	{
@@ -59,4 +60,9 @@ export const examples: IExample[] = [
 		file: audio as unknown as SerializedGraph,
 		key: 'audio'
 	}
-];
+].filter(example => {
+	if (example.key === 'audio' && !audioEnabled) {
+		return false;
+	}
+	return true;
+});

@@ -1,15 +1,16 @@
-import { CapabilityFactory, Node } from '@tokens-studio/graph-engine';
 import { Volume } from 'memfs';
 import {
 	WebAudioCapability,
 	icons as audioIcons
 } from '@tokens-studio/graph-engine-nodes-audio';
+import { audioEnabled } from '@/lib/featureFlags.ts';
 import { defaultControls, defaultSpecifics } from '@tokens-studio/graph-editor';
 import {
 	controls as designControls,
 	icons as designIcons,
 	specifics as designSpecifics
 } from '@tokens-studio/graph-engine-nodes-design-tokens';
+import type { CapabilityFactory, Node } from '@tokens-studio/graph-engine';
 
 export const fs = Volume.fromJSON({
 	'/files/readme.md': 'Hello World'
@@ -29,7 +30,7 @@ export const capabilities: CapabilityFactory[] = [
 ];
 
 export const icons = {
-	...audioIcons,
+	...(audioEnabled ? audioIcons : {}),
 	...designIcons
 };
 

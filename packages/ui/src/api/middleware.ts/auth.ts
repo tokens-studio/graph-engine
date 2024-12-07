@@ -1,7 +1,9 @@
-import { ExtendedRequest } from '../utils/types.ts';
+import { type ExtendedRequest } from '../utils/types.ts';
 import { auth } from '@/auth/index.ts';
 
-export const authMiddleware = async (req: ExtendedRequest) => {
+export const authMiddleware = async (
+	req: ExtendedRequest
+): Promise<Response | void> => {
 	const session = await auth();
 	if (!session) {
 		return Response.json(

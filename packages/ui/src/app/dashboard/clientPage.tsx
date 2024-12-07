@@ -218,60 +218,54 @@ const Page = () => {
 	useErrorToast(error);
 
 	return (
-		<Stack className={styles.pageContainer} justify='center'>
-			<div style={{ padding: 'var(--component-spacing-xl)', width: '80%' }}>
-				<Stack direction='column' gap={4}>
-					<Stack justify='between'>
-						<Heading size='large'>Graphs</Heading>
-						<Stack gap={3}>
-							<Button
-								loading={isPending}
-								onClick={importGraph}
-								icon={<Upload />}
-							>
-								Import a graph
-							</Button>
-							<Button
-								loading={isPending}
-								onClick={createGraph}
-								emphasis='high'
-								icon={<Plus />}
-							>
-								Create graph
-							</Button>
-						</Stack>
+		<>
+			<Stack direction='column' gap={4}>
+				<Stack justify='between'>
+					<Heading size='large'>Graphs</Heading>
+					<Stack gap={3}>
+						<Button loading={isPending} onClick={importGraph} icon={<Upload />}>
+							Import a graph
+						</Button>
+						<Button
+							loading={isPending}
+							onClick={createGraph}
+							emphasis='high'
+							icon={<Plus />}
+						>
+							Create graph
+						</Button>
 					</Stack>
-					<TextInput
-						value={search}
-						placeholder='Filter…'
-						type='search'
-						leadingVisual={<Search />}
-						onChange={e => setSearch(e.target.value)}
-					/>
 				</Stack>
-				<div style={{ padding: 'var(--component-spacing-sm)' }}>
-					{isLoading && <Spinner />}
-					{!isLoading && (
-						<Stack direction='column' gap={2}>
-							{data?.body &&
-								data.body.graphs.length > 0 &&
-								data.body.graphs
-									.filter(x => x.name.includes(search))
-									.map(graph => {
-										return (
-											<GraphItem
-												key={graph.id}
-												id={graph.id}
-												name={graph.name}
-												updatedAt={graph.updatedAt}
-											/>
-										);
-									})}
-						</Stack>
-					)}
-				</div>
+				<TextInput
+					value={search}
+					placeholder='Filter…'
+					type='search'
+					leadingVisual={<Search />}
+					onChange={e => setSearch(e.target.value)}
+				/>
+			</Stack>
+			<div style={{ padding: 'var(--component-spacing-sm)' }}>
+				{isLoading && <Spinner />}
+				{!isLoading && (
+					<Stack direction='column' gap={2}>
+						{data?.body &&
+							data.body.graphs.length > 0 &&
+							data.body.graphs
+								.filter(x => x.name.includes(search))
+								.map(graph => {
+									return (
+										<GraphItem
+											key={graph.id}
+											id={graph.id}
+											name={graph.name}
+											updatedAt={graph.updatedAt}
+										/>
+									);
+								})}
+					</Stack>
+				)}
 			</div>
-		</Stack>
+		</>
 	);
 };
 

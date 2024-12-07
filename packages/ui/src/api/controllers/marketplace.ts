@@ -1,4 +1,3 @@
-import { Context } from '../utils/types.ts';
 import { Prisma } from '@prisma/client';
 import { authMiddleware } from '../middleware.ts/auth.ts';
 import { marketplaceContract } from '../contracts/marketplace.ts';
@@ -6,6 +5,7 @@ import { prisma } from '@/lib/prisma/index.ts';
 import { randomUUID } from 'crypto';
 import { tsr } from '@ts-rest/serverless/next';
 import { withCursor } from '../utils/common.ts';
+import type { Context } from '../utils/types.ts';
 
 const FiveMeg = 5 * 1024 * 1024;
 
@@ -346,7 +346,7 @@ export const router = tsr.router<typeof marketplaceContract, Context>(
 			});
 
 			const token =
-				graphs.length > 0 ? graphs[graphs.length - 1].id : undefined;
+				graphs.length > 0 ? graphs?.[graphs.length - 1]?.id : undefined;
 
 			return {
 				status: 200,
