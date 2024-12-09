@@ -20,9 +20,9 @@
 }
 
 .nodeWrapper.error {
-  --nodeBorderColor: var(--color-danger-surface-base-idle-fg-default);
-  --nodeBgColor: var(--color-danger-surface-base-idle-bg);
-  --nodeTextColor: var(--color-danger-surface-base-idle-fg-default);
+  --nodeBorderColor: var(--color-danger-surface-default-idle-fg-default);
+  --nodeBgColor: var(--color-danger-surface-default-idle-bg);
+  --nodeTextColor: var(--color-danger-surface-default-idle-fg-default);
 }
 
 .nodeContent {
