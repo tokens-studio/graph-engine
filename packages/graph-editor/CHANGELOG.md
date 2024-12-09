@@ -1,5 +1,11 @@
 # @tokens-studio/graph-editor
 
+## 4.3.4
+
+### Patch Changes
+
+- 2be64bf: The editor was missing the require `graph-editor` className that is used to create CSS layers for correct injectio of css vars
+
 ## 4.3.3
 
 ### Patch Changes
