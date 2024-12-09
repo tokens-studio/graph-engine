@@ -5,7 +5,6 @@ import postcssNested from 'postcss-nested';
 import postcssPresetEnv from 'postcss-preset-env';
 
 export default {
-  parser: 'postcss-scss',
   plugins: [
     postcssImport({
       filter: (url) => {

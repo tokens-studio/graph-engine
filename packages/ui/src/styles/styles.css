@@ -17,8 +17,8 @@ a {
 
 body {
   height: 100vh;
-  color: var(--colors-fgDefault);
-  background: var(--colors-pageBg);
+  color: var(--color-neutral-canvas-default-fg-default);
+  background: var(--color-neutral-canvas-default-bg);
 }
 
 
