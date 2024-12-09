@@ -311,12 +311,15 @@ export const LayoutController = React.forwardRef<
       //Get the active Id to find the currently selected graph
       dispatch.graph.setCurrentPanel(graphContainer.activeId!);
     }
-    // dispatch.
   };
 
   return (
     <ExternalLoaderProvider externalLoader={externalLoader}>
-      <Stack direction="column" style={{ height: '100%' }}>
+      <Stack
+        className="graph-editor"
+        direction="column"
+        style={{ height: '100%' }}
+      >
         {props.showMenu && <MenuBar menu={menuItems} />}
         <Tooltip.Provider>
           <DockLayout
