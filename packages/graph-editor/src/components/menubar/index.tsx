@@ -1,3 +1,4 @@
+import './menubar.css';
 import {
   Menu as MenuData,
   MenuItem as MenuItemData,

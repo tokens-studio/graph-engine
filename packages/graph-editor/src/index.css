@@ -1,20 +1,28 @@
-@import url("mafs/core.css");
+@layer lib {
+    @import url("mafs/core.css");
+    @import url('rc-dock/dist/rc-dock.css');
+    @import url('./css/rc-dock.css');
+    @import url('rc-menu/assets/index.css');
+    @import url('./css/reactflow.css');
+    @import url('./css/cmdk.css');
+    @import url('./css/contextify.css');
+    @import url('./components/curveEditor/override.css');
+}
 
-@import url('rc-dock/dist/rc-dock.css');
-@import url('./css/rc-dock.css');
-@import url('rc-menu/assets/index.css');
-@import url('./components/menubar/menubar.css');
-@import url('./components/debugger/index.scss');
-@import url('./css/base.css');
-@import url('./css/reactflow.css');
-@import url('./css/cmdk.css');
-@import url('./css/contextify.css');
-@import url('./components/curveEditor/override.css');
-@import '@radix-ui/colors/gray-dark.css';
+@layer graphEditor {
+    .graph-editor {
+        --colors-pageBg: var(--color-neutral-canvas-default-bg);
+        --colors-nodeBg: var(--color-neutral-canvas-default-bg);
+        --colors-nodeBorder: var(--color-neutral-stroke-subtle);
+        --colors-graphBg: var(--color-neutral-canvas-minimal-bg);
+        --colors-panelBg: var(--color-neutral-canvas-default-bg);
+    }
+}
 
 :root {
     --globals-drop-panel-width: 240px;
 }
+
 
 #drop-panel {
     margin: 0;

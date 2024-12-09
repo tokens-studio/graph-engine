@@ -32,7 +32,7 @@
 }
 
 
-.rawHandle {
+.handleHolder .rawHandle {
   --handle-border-width: var(--component-border-width-lg);
   --handle-core-size: var(--size-50);
 
