@@ -129,7 +129,6 @@
     "postcss-modules": "^6.0.0",
     "postcss-nested": "^6.2.0",
     "postcss-preset-env": "^10.0.5",
-    "postcss-scss": "^4.0.9",
     "resp": "^0.1.1",
     "resq": "^1.11.0",
     "start-server-and-test": "^2.0.4",

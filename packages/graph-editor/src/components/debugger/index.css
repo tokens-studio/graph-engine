@@ -1,0 +1,89 @@
+.timeline-editor-time-unit-scale {
+    color: var(--color-neutral-canvas-default-fg-default) !important
+}
+
+.timeline-editor-time-unit {
+    border-right: 1px solid var(--color-neutral-stroke-subtle);
+}
+
+.timeline-editor-action {
+    background-color: unset;
+}
+
+.timeline-editor-time-area  .ReactVirtualized__Grid{
+    overflow: hidden !important;
+}
+
+.timeline-editor {
+    font-family: var(--font-body-md) !important;
+    height: 100% !important;
+    width: unset !important;
+    flex: 1;
+    background-color: inherit !important;
+}
+
+.timeline-editor-edit-row {
+    background: var(--color-neutral-canvas-minimal-bg);
+}
+
+.timeline-player {
+    height: 32px;
+
+    padding: 0 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #3a3a3a;
+    color: #ddd;
+}
+
+.timeline-player .play-control {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    display: flex;
+    background-color: #666;
+    justify-content: center;
+    align-items: center;
+}
+
+.timeline-player .time {
+    font-size: 12px;
+    margin: 0 20px;
+    width: 70px;
+}
+
+.timeline-player.rate-control {
+    justify-self: flex-end;
+}
+
+
+.timeline-list {
+    min-width: 150px;
+    margin-top: 42px;
+    height: 258px;
+    flex: 0 1 auto;
+    overflow-y: auto;
+    box-sizing: border-box;
+    overflow-x: clip;
+}
+
+.timeline-list-item {
+    height: 32px;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.timeline-list-item:hover {
+    background-color: var(--colors-focus);
+}
+
+.timeline-list-item .text {
+    height: 28px;
+    width: 100%;
+    padding-left: 10px;
+    border-radius: 4px;
+}

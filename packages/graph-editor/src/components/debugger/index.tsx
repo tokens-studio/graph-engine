@@ -1,3 +1,4 @@
+import './index.css';
 import { DebugInfo, debugInfo } from './data.js';
 import { Stack, Text } from '@tokens-studio/ui';
 import {

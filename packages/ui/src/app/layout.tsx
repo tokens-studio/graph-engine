@@ -1,4 +1,4 @@
-import '@/styles/styles.scss';
+import '@/styles/styles.css';
 import '@tokens-studio/graph-editor/index.css';
 
 import '@tokens-studio/tokens/css/ts-theme-dark.css';
