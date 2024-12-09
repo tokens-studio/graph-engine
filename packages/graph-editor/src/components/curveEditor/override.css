@@ -1,7 +1,7 @@
 .MafsView {
 
 
-    --mafs-fg: var(--color-accent-stroke-base);
+    --mafs-fg: var(--color-accent-stroke-default);
     --mafs-bg: var(--color-neutral-canvas-subtle-bg);
     --mafs-origin-color: var(--color-neutral-canvas-minimal-fg-default);
     --mafs-line-color: var(--color-neutral-stroke-default);
