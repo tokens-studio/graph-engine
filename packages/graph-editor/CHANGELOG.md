@@ -1,5 +1,11 @@
 # @tokens-studio/graph-editor
 
+## 4.3.5
+
+### Patch Changes
+
+- 67dd600: Prep for DS update
+
 ## 4.3.4
 
 ### Patch Changes
