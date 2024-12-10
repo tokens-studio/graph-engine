@@ -1,5 +1,11 @@
 # @tokens-studio/graph-editor
 
+## 4.3.6
+
+### Patch Changes
+
+- 9ce6fa7: Fix colors
+
 ## 4.3.5
 
 ### Patch Changes
