@@ -20,7 +20,7 @@
 }
 .react-flow__node.selectable.selected,
 .react-flow__node.selectable:focus {
-    --nodeBorderColor: var(--color-neutral-stroke-default);
+    --nodeBorderColor: var(--color-accent-stroke-subtle);
     --nodeBgColor: var(--colors-nodeBg);
     --nodeTextColor: var(--color-neutral-canvas-default-fg-default);
     outline: 2px solid var(--color-neutral-canvas-default-fg-default);
@@ -67,7 +67,7 @@
 .react-flow__edge:focus .react-flow__edge-path,
 .react-flow__edge:focus-visible .react-flow__edge-path {
     stroke-width: 4px !important;
-    stroke: white !important;
+    stroke: var(--color-neutral-canvas-default-fg-default) !important;
 }
 
 .react-flow__handle-connecting:not(.react-flow__handle-valid) {

@@ -29,16 +29,6 @@
   border-radius: var(--component-radii-md);
 }
 
-.portText {
-  font-size: var(--fontSizes-small);
-  color: var(--colors-gray12);
-}
-
-.portValueText {
-  font-size: var(--fontSizes-xxsmall);
-  color: var(--colors-gray10);
-}
-
 .portContainer {
   display: grid;
   justify-content: center;
