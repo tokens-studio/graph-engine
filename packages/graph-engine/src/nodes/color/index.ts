@@ -14,6 +14,7 @@ import matchAlpha from './matchAlpha.js';
 import mix from './mix.js';
 import name from './name.js';
 import poline from './poline.js';
+import range from './range.js';
 import scale from './scale.js';
 import sortByDistance from './sortByDistance.js';
 import stringToCol from './stringToColor.js';
@@ -32,6 +33,7 @@ export const nodes = [
 	matchAlpha,
 	name,
 	poline,
+	range,
 	scale,
 	wheel,
 	mix,
