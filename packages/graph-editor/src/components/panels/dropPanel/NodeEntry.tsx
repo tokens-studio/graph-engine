@@ -14,8 +14,8 @@ export const NodeEntry = ({
         <div
           style={{
             color: 'var(--color-neutral-canvas-default-fg-subtle)',
-            width: 'var(--size-150)',
-            height: 'var(--size-150)',
+            width: 'var(--size-100)',
+            height: 'var(--size-100)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',

@@ -13,7 +13,7 @@
   position: relative;
   box-shadow: var(--shadows-contextMenu);
   border-radius: var(--component-radii-md);
-  background: var(--color-neutral-surface-default-idle-bg);
+  background: var(--color-neutral-canvas-default-bg);
   border: 2px solid var(--color-neutral-stroke-subtle);
   flex: 1;
   display: flex;

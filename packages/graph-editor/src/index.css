@@ -35,13 +35,13 @@
 }
 
 .dock-panel.dock-style-main .dock-bar {
-    border-bottom-color: var(--color-neutral-stroke-default);
+    border-bottom-color: var(--color-neutral-stroke-subtle);
 }
 
 .dock-content-holder {
     scrollbar-color: var(--color-neutral-canvas-subtle-bg) transparent;
     scrollbar-width: thin;
-    border-bottom: 1px solid var(--color-neutral-stroke-default);
+    border-bottom: var(--component-border-width-md) solid var(--color-neutral-stroke-subtle);
 }
 
 .dock-top .dock-ink-bar {

@@ -842,7 +842,7 @@ export const EditorApp = React.forwardRef<
             >
               {showGridValue && (
                 <Background
-                  color="var(--color-neutral-stroke-default)"
+                  color="var(--color-neutral-stroke-subtle)"
                   gap={16}
                   size={2}
                   variant={BackgroundVariant.Dots}

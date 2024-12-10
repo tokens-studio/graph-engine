@@ -53,11 +53,11 @@
 .dock-panel,
 .dock-top .dock-bar,
 .dock-tab {
-    background: var(--color-neutral-canvas-subtle-bg);
+    background: var(--color-neutral-canvas-default-bg);
 }
 
 .dock-tab {
-    background: var(--color-neutral-canvas-subtle-bg);
+    background: var(--color-neutral-canvas-default-bg);
 }
 
 .dock-panel.dock-style-main .dock-bar {
