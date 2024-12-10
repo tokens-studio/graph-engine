@@ -50,7 +50,7 @@
 }
 
 .link {
-  color: var(--color-accent-surface-base-idle-fg-default);
+  color: var(--color-accent-surface-default-idle-fg-default);
   text-decoration: none;
   font-weight: var(--fontWeights-sansMedium);
 }

@@ -34,5 +34,5 @@
 .range {
   position: absolute;
   height: 100%;
-  background-color: var(--color-accent-surface-base-idle-fg-default);
+  background-color: var(--color-accent-surface-default-idle-fg-default);
 }
