@@ -1,4 +1,5 @@
 import { nodes as naming } from './naming/index.js';
+import { nodes as shadows } from './shadow/index.js';
 import CreateBorderNode from './createBorder.js';
 import CreateBorderTokenNode from './createBorderToken.js';
 import CreateBoxShadowNode from './createBoxShadow.js';
@@ -21,6 +22,7 @@ import SetToArrayNode from './setToArray.js';
 import UngroupNode from './ungroup.js';
 import arrayToSet from './arrayToSet.js';
 import create from './create.js';
+
 import type { Node } from '@tokens-studio/graph-engine';
 
 /**
@@ -51,7 +53,8 @@ export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
 	LeonardoColorNode,
 	LeonardoThemeNode,
 	SetToArrayNode,
-	naming
+	naming,
+	shadows
 );
 
 /**
