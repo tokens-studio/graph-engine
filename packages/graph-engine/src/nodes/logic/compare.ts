@@ -1,15 +1,7 @@
 import { AnySchema, BooleanSchema, StringSchema } from '../../schemas/index.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
-
-export enum Operator {
-	EQUAL = '==',
-	NOT_EQUAL = '!=',
-	GREATER_THAN = '>',
-	LESS_THAN = '<',
-	GREATER_THAN_OR_EQUAL = '>=',
-	LESS_THAN_OR_EQUAL = '<='
-}
+import { Operator } from '../../schemas/operators.js';
 
 export default class NodeDefinition<T> extends Node {
 	static title = 'Compare';
