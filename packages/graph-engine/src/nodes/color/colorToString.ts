@@ -29,7 +29,9 @@ export default class NodeDefinition extends Node {
 		this.addInput('space', {
 			type: {
 				...StringSchema,
-				enum: ColorSpaces,
+				// insert 'hex' into its alphabetical position
+				// to match how color.js orders ColorSpaces
+				enum: ['hex', ...ColorSpaces].toSorted(),
 				default: 'hex'
 			},
 			visible: false
