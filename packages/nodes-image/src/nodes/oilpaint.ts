@@ -44,7 +44,7 @@ export class Oilpaint extends BaseNode {
       image.write((data) =>
         this.outputs.image.set({
           data,
-        }),
+        })
       );
     });
   }

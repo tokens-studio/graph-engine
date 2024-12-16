@@ -30,7 +30,7 @@ export class AutoOrient extends BaseNode {
       image.write((data) =>
         this.outputs.image.set({
           data,
-        }),
+        })
       );
     });
   }

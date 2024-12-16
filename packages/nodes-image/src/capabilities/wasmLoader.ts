@@ -8,7 +8,7 @@ export type Options = {
 //Note this has to be hardcoded otherwise it breaks some bundlers and compilers
 const filePath = new URL(
   "@imagemagick/magick-wasm/magick.wasm",
-  import.meta.url,
+  import.meta.url
 ).href;
 const _scriptDir = import.meta.url;
 const ENVIRONMENT_IS_WEB = typeof window == "object";
@@ -46,7 +46,7 @@ async function setup() {
       process.release.name !== "node"
     )
       throw new Error(
-        "not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)",
+        "not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)"
       );
 
     const nodeVersion = process.versions.node;
@@ -56,7 +56,7 @@ async function setup() {
       throw new Error(
         "This emscripten-generated code requires node v16.0.0 (detected v" +
           nodeVersion +
-          ")",
+          ")"
       );
     }
 
@@ -140,13 +140,13 @@ async function setup() {
       } else {
         scriptDirectory = scriptDirectory.substr(
           0,
-          scriptDirectory.replace(/[?#].*/, "").lastIndexOf("/") + 1,
+          scriptDirectory.replace(/[?#].*/, "").lastIndexOf("/") + 1
         );
       }
 
       if (!(typeof window == "object" || typeof importScripts == "function"))
         throw new Error(
-          "not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)",
+          "not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)"
         );
 
       // Differentiate the Web Worker from the Node Worker case, as reading must
@@ -225,7 +225,7 @@ function getBinaryPromise(opts: Options) {
           binaryFile,
           (response) =>
             resolve(new Uint8Array(/** @type{!ArrayBuffer} */ response)),
-          reject,
+          reject
         );
       });
     }

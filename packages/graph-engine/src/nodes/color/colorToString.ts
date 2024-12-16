@@ -29,7 +29,9 @@ export default class NodeDefinition extends Node {
 		this.addInput('space', {
 			type: {
 				...StringSchema,
-				enum: ColorSpaces,
+				// ColorSpaces comes from color.js mostly sorted, so it makes
+				// sense to insert 'hex' into the right alphabetical spot
+				enum: ['hex', ...ColorSpaces].toSorted(),
 				default: 'hex'
 			},
 			visible: false

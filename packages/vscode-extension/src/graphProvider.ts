@@ -221,9 +221,12 @@ export class TSGraphProvider
    */
   private getHtmlForWebview(webview: vscode.Webview): string {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const manifest = require(
-      path.join(this._context.extensionPath, PREFIX, '.vite', 'manifest.json'),
-    );
+    const manifest = require(path.join(
+      this._context.extensionPath,
+      PREFIX,
+      '.vite',
+      'manifest.json',
+    ));
     const mainScript = manifest['index.html']['file'];
 
     const styles = manifest['index.html']['css']
@@ -265,7 +268,11 @@ export class TSGraphProvider
 
 
 				<title>Graph</title>
-                 <base href="${webview.asWebviewUri(vscode.Uri.file(path.join(this._context.extensionPath, PREFIX)))}">
+                 <base href="${webview.asWebviewUri(
+                   vscode.Uri.file(
+                     path.join(this._context.extensionPath, PREFIX),
+                   ),
+                 )}">
 			</head>
 			<body>
 	            <noscript>You need to enable JavaScript to run this app.</noscript>

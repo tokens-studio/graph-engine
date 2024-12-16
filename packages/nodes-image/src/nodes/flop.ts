@@ -29,7 +29,7 @@ export class FlopNode extends BaseNode {
       image.write((data) =>
         this.outputs.image.set({
           data,
-        }),
+        })
       );
     });
   }

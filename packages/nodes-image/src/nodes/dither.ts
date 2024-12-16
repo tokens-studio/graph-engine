@@ -113,7 +113,7 @@ export class Dither extends BaseNode {
       image.write((data) =>
         this.outputs.image.set({
           data,
-        }),
+        })
       );
     });
   }

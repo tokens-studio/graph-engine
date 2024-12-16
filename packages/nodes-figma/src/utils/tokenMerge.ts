@@ -13,7 +13,7 @@ interface FigmaExtension {
 
 export function mergeTokenExtensions(
   token: SingleToken,
-  figmaExtension: DeepPartial<FigmaExtension>,
+  figmaExtension: DeepPartial<FigmaExtension>
 ): SingleToken {
   const existingExtensions = token.$extensions || {};
   const existingFigmaExt = existingExtensions["com.figma"] || {};

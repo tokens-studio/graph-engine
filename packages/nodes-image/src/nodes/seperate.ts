@@ -56,10 +56,10 @@ export class SeperateNode extends BaseNode {
           collection.at(0)?.write(image.format, (data) =>
             this.outputs.image.set({
               data,
-            }),
+            })
           );
         });
-      },
+      }
     );
   }
 }

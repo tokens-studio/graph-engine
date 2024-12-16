@@ -96,7 +96,7 @@ describe("nodes/codeSyntax", () => {
     await node.execute();
 
     expect(
-      node.outputs.token.value?.$extensions?.["com.figma"]?.codeSyntax,
+      node.outputs.token.value?.$extensions?.["com.figma"]?.codeSyntax
     ).toEqual({});
   });
 });

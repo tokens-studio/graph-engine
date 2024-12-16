@@ -109,17 +109,14 @@ async function processGraph(path: string) {
 	//Otherwise look for the ports on the input node and generate a meta file
 	const ports = input.inputs;
 
-	const meta = Object.entries(ports).reduce(
-		(acc, [name, port]) => {
-			const type = port.type;
-			//We only care about strings that are enumerable
-			if (type.$id == STRING && type.enum) {
-				acc[name] = type;
-			}
-			return acc;
-		},
-		{} as Record<string, SchemaObject>
-	);
+	const meta = Object.entries(ports).reduce((acc, [name, port]) => {
+		const type = port.type;
+		//We only care about strings that are enumerable
+		if (type.$id == STRING && type.enum) {
+			acc[name] = type;
+		}
+		return acc;
+	}, {} as Record<string, SchemaObject>);
 
 	const combinationKeys = Object.keys(meta);
 	const inputCombinations = getCombinations(

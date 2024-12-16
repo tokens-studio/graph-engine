@@ -170,7 +170,7 @@ export const useHotkeys = () => {
                 engine: graph.getNode(x.id)?.serialize(),
 
                 editor: reactFlowInstance.getNode(x.id),
-              }) as SerializedNode,
+              } as SerializedNode),
           );
         //get the values from the graph
         const values = {
