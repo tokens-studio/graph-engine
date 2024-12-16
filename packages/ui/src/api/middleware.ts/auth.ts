@@ -15,9 +15,10 @@ export const authMiddleware = async (
 	}
 	req.session = session;
 	req.user = session.user!.id!;
+	
 
 	//Ensure that the id can never be falsy
-	if (req.user) {
+	if (!req.user) {
 		return Response.json(
 			{},
 			{
