@@ -56,16 +56,16 @@ export default class NodeDefinition extends Node {
 	execute(): void | Promise<void> {
 		const { string, type, delimiters } = this.getAllInputs();
 
-		// Create a RegExp from the delimiters string
-		const delimiterRegex = new RegExp(`[${delimiters}]`, 'g');
+		// Replace each delimiter with a space
+		const processedString = delimiters
+			.split('')
+			.reduce((result, char) => result.replaceAll(char, ' '), string);
 
 		// First normalize the string by splitting on word boundaries
-		const words = string
-			// Add space before capitals in camelCase/PascalCase, but handle consecutive capitals
-			.replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
-			.replace(/([a-z\d])([A-Z])/g, '$1 $2')
-			// Replace delimiters with spaces using the custom regex
-			.replace(delimiterRegex, ' ')
+		const words = processedString
+			// Add space before capitals in camelCase/PascalCase
+			.split(/([A-Z][a-z]+)/)
+			.join(' ')
 			// Remove extra spaces and convert to lowercase
 			.trim()
 			.toLowerCase()

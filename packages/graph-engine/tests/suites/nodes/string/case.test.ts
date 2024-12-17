@@ -54,7 +54,6 @@ describe('string/case', () => {
 
 		expect(node.outputs.string.value).toBe('HelloWorldTestCase');
 	});
-
 	test('should handle empty delimiters string', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
