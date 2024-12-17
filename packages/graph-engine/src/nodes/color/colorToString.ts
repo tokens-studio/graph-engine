@@ -1,6 +1,6 @@
 import { Black, toColor } from './lib/utils.js';
 import { ColorSchema, StringSchema } from '../../schemas/index.js';
-import { ColorSpaces } from './lib/spaces.js';
+import { type ColorSpace, ColorSpaces } from './lib/spaces.js';
 import { Color as ColorType } from '../../types.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
@@ -12,7 +12,7 @@ export default class NodeDefinition extends Node {
 
 	declare inputs: ToInput<{
 		color: ColorType;
-		space: ['hex', ...typeof ColorSpaces];
+		space: ColorSpace | 'hex';
 	}>;
 	declare outputs: ToOutput<{
 		value: string;
