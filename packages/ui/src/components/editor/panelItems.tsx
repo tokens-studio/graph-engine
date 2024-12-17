@@ -17,6 +17,7 @@ import EaseCurveControlPoints from '@tokens-studio/icons/EaseCurveControlPoints.
 import EditPencil from '@tokens-studio/icons/EditPencil.js';
 import Eye from '@tokens-studio/icons/Eye.js';
 import FillColor from '@tokens-studio/icons/FillColor.js';
+import Search from '@tokens-studio/icons/Search.js';
 import SigmaFunction from '@tokens-studio/icons/SigmaFunction.js';
 import SoundHigh from '@tokens-studio/icons/SoundHigh.js';
 import Star from '@tokens-studio/icons/Star.js';
@@ -35,6 +36,7 @@ const icons = {
 	logic: <CodeBrackets />,
 	math: <Calculator />,
 	preview: <Eye />,
+	search: <Search />,
 	series: <SigmaFunction />,
 	string: <Text />,
 	typing: <Type />,
