@@ -30,6 +30,11 @@ export type InputDefinition = {
 };
 
 export type GraphExecuteOptions = {
+	/**
+	 * Throws an error if the input/output nodes are not found
+	 */
+	strict?: boolean;
+
 	inputs?: Record<string, InputDefinition>;
 	/**
 	 * Whether to track and emit stats as part of the execution
@@ -149,6 +154,7 @@ export interface BatchExecution {
 const defaultGraphOpts: IGraph = {
 	annotations: {}
 };
+
 /**
  * This is our internal graph representation that we use to perform transformations on
  */
@@ -643,7 +649,7 @@ export class Graph {
 			const input = Object.values(this.nodes).find(
 				x => x.factory.type === 'studio.tokens.generic.input'
 			);
-			if (!input) {
+			if (opts?.strict && !input) {
 				throw new Error('No input node found');
 			}
 
@@ -659,7 +665,7 @@ export class Graph {
 				}
 
 				//Its possible that there is no input with the name
-				input.inputs[key]?.setValue(value.value, opts);
+				input?.inputs[key]?.setValue(value.value, opts);
 			});
 		}
 
