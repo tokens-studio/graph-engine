@@ -8,6 +8,7 @@ import { nodes as gradient } from './gradient/index.js';
 import { nodes as logic } from './logic/index.js';
 import { nodes as math } from './math/index.js';
 import { nodes as preview } from './preview/index.js';
+import { nodes as search } from './search/index.js';
 import { nodes as series } from './series/index.js';
 import { nodes as string } from './string/index.js';
 import { nodes as typing } from './typing/index.js';
@@ -29,11 +30,12 @@ export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
 	logic,
 	math,
 	preview,
+	search,
 	series,
 	string,
 	typing,
-	vector2,
-	typography
+	typography,
+	vector2
 );
 
 /**
