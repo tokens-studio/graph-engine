@@ -44,7 +44,7 @@ describe('search/findFirst', () => {
 
 		await node.execute();
 
-		expect(node.outputs.value.value).toBe(null);
+		expect(node.outputs.value.value).toBe(undefined);
 		expect(node.outputs.index.value).toBe(-1);
 		expect(node.outputs.found.value).toBe(false);
 	});
@@ -59,7 +59,7 @@ describe('search/findFirst', () => {
 
 		await node.execute();
 
-		expect(node.outputs.value.value).toBe(null);
+		expect(node.outputs.value.value).toBe(undefined);
 		expect(node.outputs.index.value).toBe(-1);
 		expect(node.outputs.found.value).toBe(false);
 	});
