@@ -12,7 +12,7 @@ export default class NodeDefinition extends Node {
 
 	declare inputs: ToInput<{
 		color: ColorType;
-		space: string;
+		space: ['hex', ...typeof ColorSpaces];
 	}>;
 	declare outputs: ToOutput<{
 		value: string;
@@ -29,10 +29,9 @@ export default class NodeDefinition extends Node {
 		this.addInput('space', {
 			type: {
 				...StringSchema,
-				enum: ['hex', ...ColorSpaces].toSorted(),
+				enum: ['hex', ...ColorSpaces],
 				default: 'hex'
-			},
-			visible: false
+			}
 		});
 		this.addOutput('value', {
 			type: StringSchema
@@ -43,7 +42,7 @@ export default class NodeDefinition extends Node {
 		// eslint-disable-next-line prefer-const
 		const { color, space } = this.getAllInputs();
 
-		let adjustedSpace: string = space;
+		let adjustedSpace: string = space as string;
 		let format: { format: string } | undefined = undefined;
 
 		if (space == 'hex') {
