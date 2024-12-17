@@ -12,7 +12,7 @@ export default class NodeDefinition extends Node {
 
 	declare inputs: ToInput<{
 		color: ColorType;
-		space: 'srgb' | 'hsl' | 'hex';
+		space: string;
 	}>;
 	declare outputs: ToOutput<{
 		value: string;
@@ -29,7 +29,7 @@ export default class NodeDefinition extends Node {
 		this.addInput('space', {
 			type: {
 				...StringSchema,
-				enum: ColorSpaces,
+				enum: ['hex', ...ColorSpaces].toSorted(),
 				default: 'hex'
 			},
 			visible: false
