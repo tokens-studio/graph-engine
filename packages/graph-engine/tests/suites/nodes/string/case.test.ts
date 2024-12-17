@@ -67,4 +67,16 @@ describe('string/case', () => {
 		// Should only split on spaces and handle camelCase conversion
 		expect(node.outputs.string.value).toBe('hello-world_test');
 	});
+	test('should handle multiple occurrences of delimiters', async () => {
+		const graph = new Graph();
+		const node = new Node({ graph });
+
+		node.inputs.string.setValue('hello--world..test__case.test-hello_world');
+		node.inputs.type.setValue(CaseType.CAMEL);
+		node.inputs.delimiters.setValue('-_.');
+
+		await node.execute();
+
+		expect(node.outputs.string.value).toBe('helloWorldTestCaseTestHelloWorld');
+	});
 });
