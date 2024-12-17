@@ -1,5 +1,19 @@
 # @tokens-studio/graph-engine
 
+## 4.3.0
+
+### Minor Changes
+
+- 79b16d7: Add find First and linear search nodes.
+- 6d9b5c3: Added new string manipulation nodes:
+  - Case Convert: Transform strings between camelCase, snake_case, kebab-case, and PascalCase
+  - Replace: Simple string replacement without regex
+  - Normalize: String normalization with accent removal options
+
+### Patch Changes
+
+- df74698: Add hex to color space selector
+
 ## 4.2.0
 
 ### Minor Changes

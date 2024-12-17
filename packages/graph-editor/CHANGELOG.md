@@ -1,5 +1,15 @@
 # @tokens-studio/graph-editor
 
+## 4.3.8
+
+### Patch Changes
+
+- 3f12ab0: Fix bug with visibility on ports
+- Updated dependencies [79b16d7]
+- Updated dependencies [6d9b5c3]
+- Updated dependencies [df74698]
+  - @tokens-studio/graph-engine@4.3.0
+
 ## 4.3.7
 
 ### Patch Changes
