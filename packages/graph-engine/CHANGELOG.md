@@ -1,5 +1,15 @@
 # @tokens-studio/graph-engine
 
+## 4.2.0
+
+### Minor Changes
+
+- 7253355: Add Color Range node that lets you create a gradient between two colors and sample steps on it.
+
+### Patch Changes
+
+- 87b0016: Fixes an issue with loading not working , relaxes restriction on requiring an input nodes as part of execution via options
+
 ## 4.1.0
 
 ### Minor Changes
