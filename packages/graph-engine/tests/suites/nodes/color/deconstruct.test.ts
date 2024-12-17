@@ -19,7 +19,7 @@ describe('color/deconstruct', () => {
 		expect(node.outputs.a.value).to.equal(255);
 		expect(node.outputs.b.value).to.equal(128);
 		expect(node.outputs.c.value).to.equal(64);
-		expect(node.outputs.alpha.value).to.equal(1);
+		expect(node.outputs.alpha!.value).to.equal(1);
 	});
 
 	test('deconstructs an HSL color correctly', async () => {
@@ -38,7 +38,7 @@ describe('color/deconstruct', () => {
 		expect(node.outputs.a.value).to.equal(180);
 		expect(node.outputs.b.value).to.equal(0.5);
 		expect(node.outputs.c.value).to.equal(0.5);
-		expect(node.outputs.alpha.value).to.equal(0.8);
+		expect(node.outputs.alpha!.value).to.equal(0.8);
 	});
 
 	test('handles a color without alpha correctly', async () => {
@@ -56,13 +56,14 @@ describe('color/deconstruct', () => {
 		expect(node.outputs.a.value).to.equal(50);
 		expect(node.outputs.b.value).to.equal(10);
 		expect(node.outputs.c.value).to.equal(-20);
-		expect(node.outputs.alpha.value).to.be.undefined;
+		expect(node.outputs.alpha!.value).to.be.undefined;
 	});
 
 	test('throws an error for invalid color input', async () => {
 		const graph = new Graph();
 		const node = new DestructColorNode({ graph });
 
+		//@ts-ignore
 		node.inputs.color.setValue(null);
 
 		try {
@@ -90,7 +91,7 @@ describe('color/deconstruct', () => {
 		expect(node.outputs.a.value).to.equal(0);
 		expect(node.outputs.b.value).to.equal(0);
 		expect(node.outputs.c.value).to.equal(0);
-		expect(node.outputs.alpha.value).to.equal(0);
+		expect(node.outputs.alpha!.value).to.equal(0);
 	});
 
 	test('handles NaN values in OKHSL color space', async () => {
@@ -109,6 +110,6 @@ describe('color/deconstruct', () => {
 		expect(node.outputs.a.value).toBe(0.5);
 		expect(node.outputs.b.value).toBe(0);
 		expect(node.outputs.c.value).toBe(0);
-		expect(node.outputs.alpha.value).toBe(1);
+		expect(node.outputs.alpha!.value).toBe(1);
 	});
 });

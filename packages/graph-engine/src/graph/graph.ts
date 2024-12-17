@@ -1,5 +1,6 @@
 import { AnySchema, GraphSchema } from '../schemas/index.js';
 import { Edge, VariadicEdgeData } from '../programmatic/edge.js';
+import { ILogger, baseLogger } from './interfaces.js';
 import { ISetValue, Input } from '../programmatic/input.js';
 import { Node } from '../programmatic/node.js';
 import { Output } from '../programmatic/output.js';
@@ -166,6 +167,8 @@ export class Graph {
 	nodes: Record<string, Node>;
 	edges: Record<string, Edge>;
 	capabilities: Record<string, any> = {};
+
+	logger: ILogger = baseLogger;
 
 	messageQueue: {
 		eventName: string;

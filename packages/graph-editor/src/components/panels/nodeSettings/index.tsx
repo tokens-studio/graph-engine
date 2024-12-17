@@ -92,7 +92,8 @@ const NodeTitle = observer(({ selectedNode }: { selectedNode: Node }) => {
       <Label>Title</Label>
       <TextInput
         onChange={onChangeTitle}
-        value={selectedNode.factory.title ?? ''}
+        placeholder={selectedNode.factory.title}
+        value={(selectedNode.annotations[title] as string) ?? ''}
       />
     </Stack>
   );
