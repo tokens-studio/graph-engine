@@ -20,6 +20,11 @@ export default class NodeDefinition extends Node {
 	declare inputs: ToInput<{
 		string: string;
 		type: CaseType;
+		/**
+		 * Characters to be replaced with spaces. Default: -_.
+		 * @default "-_."
+		 */
+		delimiters: string;
 	}>;
 	declare outputs: ToOutput<{
 		string: string;
@@ -37,21 +42,30 @@ export default class NodeDefinition extends Node {
 				default: CaseType.CAMEL
 			}
 		});
+		this.addInput('delimiters', {
+			type: {
+				...StringSchema,
+				default: '-_.'
+			}
+		});
 		this.addOutput('string', {
 			type: StringSchema
 		});
 	}
 
 	execute(): void | Promise<void> {
-		const { string, type } = this.getAllInputs();
+		const { string, type, delimiters } = this.getAllInputs();
+
+		// Create a RegExp from the delimiters string
+		const delimiterRegex = new RegExp(`[${delimiters}]`, 'g');
 
 		// First normalize the string by splitting on word boundaries
 		const words = string
 			// Add space before capitals in camelCase/PascalCase, but handle consecutive capitals
 			.replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
 			.replace(/([a-z\d])([A-Z])/g, '$1 $2')
-			// Replace common delimiters with spaces
-			.replace(/[-_.]/g, ' ')
+			// Replace delimiters with spaces using the custom regex
+			.replace(delimiterRegex, ' ')
 			// Remove extra spaces and convert to lowercase
 			.trim()
 			.toLowerCase()

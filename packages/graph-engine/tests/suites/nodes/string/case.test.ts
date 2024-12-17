@@ -3,63 +3,69 @@ import { describe, expect, test } from 'vitest';
 import Node, { CaseType } from '../../../../src/nodes/string/case.js';
 
 describe('string/case', () => {
-	test('should convert to camelCase', async () => {
+	test('should convert to camelCase with default delimiters', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		node.inputs.string.setValue('hello world test');
+		node.inputs.string.setValue('hello-world.test_case');
 		node.inputs.type.setValue(CaseType.CAMEL);
+		node.inputs.delimiters.setValue('-_.');
 
 		await node.execute();
 
-		expect(node.outputs.string.value).toBe('helloWorldTest');
+		expect(node.outputs.string.value).toBe('helloWorldTestCase');
 	});
 
-	test('should convert to snake_case', async () => {
+	test('should convert to snake_case with custom delimiters', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		node.inputs.string.setValue('Hello World Test');
+		node.inputs.string.setValue('Hello@World#Test');
 		node.inputs.type.setValue(CaseType.SNAKE);
+		node.inputs.delimiters.setValue('@#');
 
 		await node.execute();
 
 		expect(node.outputs.string.value).toBe('hello_world_test');
 	});
 
-	test('should convert to kebab-case', async () => {
+	test('should convert to kebab-case with single delimiter', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		node.inputs.string.setValue('HelloWorld test');
+		node.inputs.string.setValue('HelloWorld+test');
 		node.inputs.type.setValue(CaseType.KEBAB);
+		node.inputs.delimiters.setValue('+');
 
 		await node.execute();
 
 		expect(node.outputs.string.value).toBe('hello-world-test');
 	});
 
-	test('should convert to PascalCase', async () => {
+	test('should convert to PascalCase with multiple custom delimiters', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		node.inputs.string.setValue('hello_world_test');
+		node.inputs.string.setValue('hello|world$test%case');
 		node.inputs.type.setValue(CaseType.PASCAL);
+		node.inputs.delimiters.setValue('|$%');
 
 		await node.execute();
 
-		expect(node.outputs.string.value).toBe('HelloWorldTest');
+		expect(node.outputs.string.value).toBe('HelloWorldTestCase');
 	});
 
-	test('should handle mixed input formats', async () => {
+	test('should handle empty delimiters string', async () => {
 		const graph = new Graph();
 		const node = new Node({ graph });
 
-		node.inputs.string.setValue('some-mixed_FORMAT test');
+		node.inputs.string.setValue('hello-world_test');
 		node.inputs.type.setValue(CaseType.CAMEL);
+		node.inputs.delimiters.setValue('');
 
 		await node.execute();
 
-		expect(node.outputs.string.value).toBe('someMixedFormatTest');
+		// Should only split on spaces and handle camelCase conversion
+		expect(node.outputs.string.value).toBe('hello-world_test');
 	});
 });
