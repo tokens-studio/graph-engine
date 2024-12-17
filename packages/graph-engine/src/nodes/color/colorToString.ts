@@ -1,6 +1,6 @@
 import { Black, toColor } from './lib/utils.js';
 import { ColorSchema, StringSchema } from '../../schemas/index.js';
-import { ColorSpaces } from './lib/spaces.js';
+import { type ColorSpace, ColorSpaces } from './lib/spaces.js';
 import { Color as ColorType } from '../../types.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
@@ -12,7 +12,7 @@ export default class NodeDefinition extends Node {
 
 	declare inputs: ToInput<{
 		color: ColorType;
-		space: 'srgb' | 'hsl' | 'hex';
+		space: ColorSpace | 'hex';
 	}>;
 	declare outputs: ToOutput<{
 		value: string;
@@ -29,10 +29,9 @@ export default class NodeDefinition extends Node {
 		this.addInput('space', {
 			type: {
 				...StringSchema,
-				enum: ColorSpaces,
+				enum: ['hex', ...ColorSpaces],
 				default: 'hex'
-			},
-			visible: false
+			}
 		});
 		this.addOutput('value', {
 			type: StringSchema
@@ -43,7 +42,7 @@ export default class NodeDefinition extends Node {
 		// eslint-disable-next-line prefer-const
 		const { color, space } = this.getAllInputs();
 
-		let adjustedSpace: string = space;
+		let adjustedSpace: string = space as string;
 		let format: { format: string } | undefined = undefined;
 
 		if (space == 'hex') {
