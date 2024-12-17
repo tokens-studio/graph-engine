@@ -1,5 +1,17 @@
 # @tokens-studio/graph-engine-nodes-figma
 
+## 2.0.0
+
+### Patch Changes
+
+- fe1ae29: fix prettier
+- 6f239b9: Add new node to add a variables scope by the token type.
+- Updated dependencies [87b0016]
+- Updated dependencies [fe1ae29]
+- Updated dependencies [7253355]
+  - @tokens-studio/graph-engine@4.2.0
+  - @tokens-studio/graph-editor@4.3.7
+
 ## 1.0.0
 
 ### Patch Changes
