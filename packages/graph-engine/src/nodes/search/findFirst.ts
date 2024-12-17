@@ -84,7 +84,7 @@ export default class NodeDefinition extends Node {
 
 		const index = array.findIndex(comparisonFn);
 		const found = index !== -1;
-		const value = found ? array[index] : null;
+		const value = found ? array[index] : undefined;
 
 		this.outputs.value.set(value);
 		this.outputs.index.set(index);
