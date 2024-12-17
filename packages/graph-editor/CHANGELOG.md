@@ -1,5 +1,14 @@
 # @tokens-studio/graph-editor
 
+## 4.3.7
+
+### Patch Changes
+
+- fe1ae29: fix prettier
+- Updated dependencies [87b0016]
+- Updated dependencies [7253355]
+  - @tokens-studio/graph-engine@4.2.0
+
 ## 4.3.6
 
 ### Patch Changes
