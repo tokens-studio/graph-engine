@@ -198,48 +198,6 @@ export const EditorApp = React.forwardRef<
       return serialized;
     });
 
-    const valueDetecterDisposer = graph.on('valueSent', (edges) => {
-      edges;
-      const edgeLookup = edges.reduce((acc, edge) => {
-        acc[edge.id] = edge;
-        return acc;
-      }, {});
-      const index = Date.now();
-      setEdges((edges) => {
-        return edges.map((ed) => {
-          if (edgeLookup[ed.id]) {
-            return {
-              ...ed,
-              animated: true,
-              data: {
-                ...ed.data,
-                animationIndex: index,
-              },
-            };
-          }
-          return ed;
-        });
-      });
-      setTimeout(() => {
-        setEdges((edges) => {
-          return edges.map((ed) => {
-            //We use the index to ensure that we are only removing the edges that we added
-            if (edgeLookup[ed.id] && ed.data?.animationIndex == index) {
-              return {
-                ...ed,
-                animated: false,
-                data: {
-                  ...(ed.data || {}),
-                  animationIndex: undefined,
-                },
-              };
-            }
-            return ed;
-          });
-        });
-      }, 400);
-    });
-
     const EdgeUpdaterDisposer = graph.on('edgeIndexUpdated', (edge) => {
       setEdges((eds) => {
         return eds.map((ed) => {
@@ -258,7 +216,6 @@ export const EditorApp = React.forwardRef<
     });
 
     return () => {
-      valueDetecterDisposer();
       EdgeUpdaterDisposer();
     };
   }, [graph]);

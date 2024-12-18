@@ -181,7 +181,7 @@ export class Node {
 			await this.execute();
 			this.error = null;
 		} catch (err) {
-			console.log(err);
+			this._graph.logger.error(err);
 			this.error = err as Error;
 		}
 		const end = performance.now();
