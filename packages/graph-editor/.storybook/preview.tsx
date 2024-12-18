@@ -1,8 +1,6 @@
 // .storybook/preview.tsx
 import React from 'react';
 import { Decorator } from '@storybook/react';
-import { darkTheme } from '@tokens-studio/tokens';
-import { Tooltip } from '@tokens-studio/ui';
 import { ReduxProvider } from '../src/redux/index.js';
 import {
   Title,
@@ -15,7 +13,7 @@ import {
 } from '@storybook/blocks';
 
 import '../src/index.scss';
-import styles from './preview.module.scss';
+import styles from './preview.module.css';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -45,8 +43,8 @@ export const parameters = {
 
 const ThemeBlock = ({ children, fill, left, ...props }) => {
   return (
-    <div 
-      className={`${styles.themeBlock} ${fill ? styles.fill : ''} ${left ? styles.left : ''}`} 
+    <div
+      className={`${styles.themeBlock} ${fill ? styles.fill : ''} ${left ? styles.left : ''}`}
       {...props}
     >
       <div className={styles.inner}>{children}</div>
