@@ -1,6 +1,6 @@
 {
   "name": "@tokens-studio/graph-engine",
-  "version": "4.3.0",
+  "version": "4.4.0",
   "description": "An execution engine to handle Token Studios generators and resolvers",
   "license": "MPL-2.0",
   "author": "andrew@hyma.io",
