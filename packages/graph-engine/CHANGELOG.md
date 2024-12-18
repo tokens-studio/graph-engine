@@ -1,5 +1,15 @@
 # @tokens-studio/graph-engine
 
+## 4.4.0
+
+### Minor Changes
+
+- ad8ec49: Adds a logger interface to stop direct console access
+
+### Patch Changes
+
+- ad8ec49: Correctly sets ports visibility if explicitly set to false
+
 ## 4.3.0
 
 ### Minor Changes
