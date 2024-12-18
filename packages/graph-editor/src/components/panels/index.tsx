@@ -9,3 +9,4 @@ export * from './nodeSettings/index.js';
 export * from './output/index.js';
 export * from './play/index.js';
 export * from './settings/index.js';
+export * from './navigator/index.js';
