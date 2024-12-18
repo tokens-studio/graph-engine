@@ -16,9 +16,10 @@ import { useSelector } from 'react-redux';
 import Eye from '@tokens-studio/icons/Eye.js';
 import React, { useCallback } from 'react';
 
-const SubgraphExplorer = ({ node }) => {
+export const useSubgraphExplorerCallback = (node) => {
   const dockerRef = useSelector(dockerSelector);
-  const onToggle = useCallback(() => {
+
+  const callback = useCallback(() => {
     if (!dockerRef?.current) {
       return;
     }
@@ -30,17 +31,16 @@ const SubgraphExplorer = ({ node }) => {
       node.annotations[annotatedTitle] ||
       innerGraph.annotations['engine.title'] ||
       'Subgraph';
-    //Find the container
     const existing = dockerRef.current.find(graphId);
 
-    const ref = (o: ImperativeEditorRef) => {
-      if (o && !oneShot) {
-        o.load(innerGraph);
-        oneShot = true;
-      }
-    };
-
     if (!existing) {
+      const ref = (o: ImperativeEditorRef) => {
+        if (o && !oneShot) {
+          o.load(innerGraph);
+          oneShot = true;
+        }
+      };
+
       const newTab = {
         cached: true,
         closable: true,
@@ -53,15 +53,20 @@ const SubgraphExplorer = ({ node }) => {
           </ErrorBoundary>
         ),
       };
-
       dockerRef.current.dockMove(newTab, 'graphs', 'middle');
     } else {
       dockerRef.current.updateTab(graphId, null, true);
     }
   }, [dockerRef, node._innerGraph, node.annotations]);
 
+  return callback;
+};
+
+const SubgraphExplorer = ({ node }: { node: Node }) => {
+  const onClick = useSubgraphExplorerCallback(node);
+
   return (
-    <Button emphasis="high" icon={<Eye />} onClick={onToggle}>
+    <Button emphasis="high" icon={<Eye />} onClick={onClick}>
       Subgraph Explorer
     </Button>
   );
