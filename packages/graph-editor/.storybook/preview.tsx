@@ -1,9 +1,6 @@
 // .storybook/preview.tsx
 import React from 'react';
 import { Decorator } from '@storybook/react';
-import { createTheme, styled } from '../src/lib/stitches/index';
-import { darkTheme } from '@tokens-studio/tokens';
-import { Tooltip } from '@tokens-studio/ui';
 import { ReduxProvider } from '../src/redux/index.js';
 import {
   Title,
@@ -16,11 +13,7 @@ import {
 } from '@storybook/blocks';
 
 import '../src/index.scss';
-
-const darkThemeMode = createTheme('dark-theme', {
-  colors: darkTheme.colors,
-  shadows: darkTheme.shadows,
-});
+import styles from './preview.module.css';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -48,88 +41,48 @@ export const parameters = {
   },
 };
 
-const StyledThemeBlock = styled('div', {
-  position: 'absolute',
-  top: 0,
-  right: 0,
-  height: '100%',
-  width: '50%',
-  bottom: 0,
-  overflow: 'auto',
-  background: 'var(--color-neutral-canvas-minimal-bg)',
-  display: 'flex',
-  variants: {
-    fill: {
-      true: {
-        left: 0,
-        width: '100%',
-      },
-      false: {
-        left: '50%',
-      },
-    },
-    left: {
-      true: {
-        borderRight: '1px solid #202020',
-        right: '50%',
-        left: 0,
-      },
-    },
-  },
-});
-
-const StyledInner = styled('div', {
-  padding: '1rem',
-  display: 'flex',
-  alignItems: 'flex-start',
-  width: '100%',
-});
-
-const ThemeBlock = ({ children, ...props }) => {
+const ThemeBlock = ({ children, fill, left, ...props }) => {
   return (
-    <StyledThemeBlock {...props}>
-      <StyledInner>{children}</StyledInner>
-    </StyledThemeBlock>
+    <div
+      className={`${styles.themeBlock} ${fill ? styles.fill : ''} ${left ? styles.left : ''}`}
+      {...props}
+    >
+      <div className={styles.inner}>{children}</div>
+    </div>
   );
 };
-
-const Wrapper = ({ children }) => (
-  <ReduxProvider>
-    <Tooltip.Provider>{children}</Tooltip.Provider>
-  </ReduxProvider>
-);
 
 const withTheme: Decorator = (StoryFn, context) => {
   const theme = context.parameters.theme || context.globals.theme;
 
   if (context.viewMode === 'docs') {
     return (
-      <Wrapper>
+      <ReduxProvider>
         <StoryFn />
-      </Wrapper>
+      </ReduxProvider>
     );
   }
 
   switch (theme) {
     case 'side-by-side': {
       return (
-        <Wrapper>
-          <ThemeBlock left>
+        <ReduxProvider>
+          <div className={styles.left}>
             <StoryFn />
-          </ThemeBlock>
-          <ThemeBlock className={darkThemeMode}>
+          </div>
+          <div className={styles.right}>
             <StoryFn />
-          </ThemeBlock>
-        </Wrapper>
+          </div>
+        </ReduxProvider>
       );
     }
     default: {
       return (
-        <Wrapper>
-          <ThemeBlock fill className={theme === 'dark' ? darkThemeMode : ''}>
+        <ReduxProvider>
+          <div className={styles.fill}>
             <StoryFn />
-          </ThemeBlock>
-        </Wrapper>
+          </div>
+        </ReduxProvider>
       );
     }
   }

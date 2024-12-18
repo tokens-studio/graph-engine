@@ -33,7 +33,6 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@stitches/react": "^1.2.8",
     "@tokens-studio/sd-transforms": "^0.15.2",
     "chokidar": "^3.6.0",
     "fbp-client": "^0.4.3",
