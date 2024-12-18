@@ -34,8 +34,8 @@ export const Navigator = () => {
     >
       <div style={{ padding: 'var(--component-spacing-md)' }}>
         <ul>
-          {Object.values(nodes).map((node) => {
-            if (!node._innerGraph) return null;
+          {Object.values(nodes || {}).map((node) => {
+            if (!node['_innerGraph']) return null;
             return <SubgraphNodeItem key={node.id} node={node} />;
           })}
         </ul>
