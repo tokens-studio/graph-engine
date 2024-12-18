@@ -25,7 +25,7 @@ export const useSubgraphExplorerCallback = (node) => {
     }
 
     let oneShot = false;
-    const innerGraph = node._innerGraph;
+    const innerGraph = node['_innerGraph'];
     const graphId = innerGraph.annotations['engine.id'];
     const title =
       node.annotations[annotatedTitle] ||
@@ -57,7 +57,7 @@ export const useSubgraphExplorerCallback = (node) => {
     } else {
       dockerRef.current.updateTab(graphId, null, true);
     }
-  }, [dockerRef, node._innerGraph, node.annotations]);
+  }, [dockerRef, node['_innerGraph'], node.annotations]);
 
   return callback;
 };

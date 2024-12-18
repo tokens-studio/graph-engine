@@ -20,9 +20,9 @@ export const mainGraphSelector = createSelector(
 );
 
 const collectNodes = function (graph: Graph, coll: Record<string, Node> = {}) {
-  for (let id in graph.nodes) {
-    const node = graph.nodes[id];
-    const innerGraph = node._innerGraph;
+  for (const id in graph.nodes) {
+    const node: Node = graph.nodes[id];
+    const innerGraph = node['_innerGraph'];
     coll[id] = node;
 
     if (innerGraph) {
