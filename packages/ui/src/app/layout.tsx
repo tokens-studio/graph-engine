@@ -5,7 +5,7 @@ import '@tokens-studio/tokens/css/ts-theme-dark.css';
 import '@tokens-studio/tokens/css/ts-theme-light.css';
 
 import '@tokens-studio/tokens/css/base.css';
-import '@tokens-studio/ui/normalize.css';
+import '@tokens-studio/ui/css/normalize.css';
 
 import '@fontsource/geist-mono/400.css';
 import '@fontsource/geist-mono/500.css';

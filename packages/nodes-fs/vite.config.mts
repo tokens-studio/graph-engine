@@ -4,6 +4,12 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
 	test: {
 		include: ['tests/**/*.test.[jt]s?(x)'],
-		globals: true
+		globals: true,
+		server: {
+			deps: {
+				// to ensure importing CSS files is working
+				inline: ['@tokens-studio/ui']
+			}
+		}
 	}
 });
