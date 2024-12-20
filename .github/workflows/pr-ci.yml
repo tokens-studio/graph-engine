@@ -1,6 +1,8 @@
 name: CI
 
-on: pull_request
+on: 
+  pull_request:
+    types: [opened, synchronize]
 
 env:
   HUSKY: 0
@@ -105,7 +107,7 @@ jobs:
           cache: "yarn"
 
       - name: Install turbo
-        run: yarn global add turbo@1.9.8
+        run: yarn global add turbo@1.13.3
       - name: prune
         run: turbo prune ${{ needs.changes.outputs.flat }} 
         working-directory: ./
