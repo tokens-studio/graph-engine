@@ -89,11 +89,7 @@ export const TOKEN_SET = 'https://schemas.tokens.studio/tokenSet.json';
 export const TokenSetSchema: SchemaObject = {
 	$id: TOKEN_SET,
 	title: 'Token Set',
-	type: 'object',
-	properties: {
-		name: StringSchema,
-		token: StringSchema
-	}
+	type: 'object'
 };
 
 export const LEONARDO_COLOR =

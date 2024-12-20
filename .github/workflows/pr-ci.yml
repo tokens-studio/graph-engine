@@ -1,6 +1,8 @@
 name: CI
 
-on: pull_request
+on: 
+  pull_request:
+    types: [opened, synchronize]
 
 env:
   HUSKY: 0
@@ -16,9 +18,82 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+
+  
+  changes:
+    runs-on: ubuntu-latest
+    env:
+      TURBO_RUN_FILTER: ${{ github.event_name == 'pull_request' && '...[origin/master]' || '...[HEAD^]' }}
+    # Required permissions
+    permissions:
+      pull-requests: read
+    # Set job outputs to values from filter step
+    outputs:
+      flat: ${{ steps.flat.outputs.result }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          lfs: true
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          cache: 'npm'
+          node-version: 20
+      - name: Install turbo@1.13.3 & glob
+        run: |
+          npm i -g turbo@1.13.3 glob
+          echo "PATH=$(npm config get config):$PATH" >> $GITHUB_ENV
+
+      - name: Verify turbo installation
+        shell: bash
+        run: |
+          source $GITHUB_ENV
+          turbo --version
+      - name: Debug TURBO_RUN_FILTER
+        run: echo "TURBO_RUN_FILTER is $TURBO_RUN_FILTER"
+      - name: Validate JSON Output
+        run: |
+          content=$(turbo build --filter=$TURBO_RUN_FILTER --dry-run=json)
+          echo $content | jq .
+      - name: Debug turbo command
+        run: |
+          set -x
+          turbo build --filter=$TURBO_RUN_FILTER --dry-run=json
+          set +x
+      - name: Verify turbo installation
+        run: which turbo
+      
+      - name: Debug content
+        run: |
+          content=`turbo build --filter=$TURBO_RUN_FILTER --dry-run=json`
+          echo "Content is: $content"
+      - name: Changeset
+        id: changeset
+        run: |
+          content=`turbo build --filter=$TURBO_RUN_FILTER --dry-run=json`
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          echo "::set-output name=result::$content"
+      - name: Flat output
+        id: flat
+        run: |
+          filteredPkgs=`turbo build --filter=$TURBO_RUN_FILTER --dry-run=json | node ./scripts/diff.js`
+          echo "::set-output name=result::$filteredPkgs"
+          echo "$filteredPkgs"
+
+
   verify:
     name: Verify changes
+    needs: changes
     runs-on: ubuntu-latest
+    if: ${{ needs.changes.outputs.flat != '[]' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./out
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -32,7 +107,10 @@ jobs:
           cache: "yarn"
 
       - name: Install turbo
-        run: yarn global add turbo@1.9.8
+        run: yarn global add turbo@1.13.3
+      - name: prune
+        run: turbo prune ${{ needs.changes.outputs.flat }} 
+        working-directory: ./
 
       - name: Turbo Cache
         id: turbo-cache
