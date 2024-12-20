@@ -1,26 +1,38 @@
-import { Stack } from '@tokens-studio/ui';
 import React from 'react';
 
+import { Stack, IconButton, Tooltip } from '@tokens-studio/ui';
 import { MAIN_GRAPH_ID } from '@/constants.js';
 import { dockerSelector } from '@/redux/selectors/refs.js';
-import { graphNodesSelector } from '@/redux/selectors/graph.js';
-import { useDispatch } from '@/hooks/useDispatch.js';
+import { graphNodesSelector, TreeNode } from '@/redux/selectors/graph.js';
 import { useSelector } from 'react-redux';
 import { useSubgraphExplorerCallback } from '@/hooks/useSubgraphExplorerCallback.js';
 import { currentPanelIdSelector } from '@/redux/selectors/graph.js';
 import styles from './index.module.css';
 import { get, size, flow } from 'lodash-es';
+import ArrowsUpFromLine from '@tokens-studio/icons/ArrowsUpFromLine.js';
 
-const ListItem = function ({ label, count, isSelected, onClick, depth }) {
+type ListItemProps = {
+  label: string;
+  count?: number;
+  isSelected?: boolean;
+  onClick?: () => void;
+  depth?: number;
+};
+
+const ListItem = function ({
+  label,
+  count,
+  isSelected,
+  onClick,
+  depth = 0,
+}: ListItemProps) {
+  const style = {
+    '--tree-depth': depth,
+    fontWeight: isSelected && 'bold',
+  } as React.CSSProperties;
+
   return (
-    <li
-      className={styles.listItem}
-      onClick={onClick}
-      style={{
-        fontWeight: isSelected && 'bold',
-        '--tree-depth': depth || 0,
-      }}
-    >
+    <li className={styles.listItem} onClick={onClick} style={style}>
       <span>{label}</span>
       {count && <span className={styles.listItemCount}>({count})</span>}
     </li>
@@ -63,8 +75,6 @@ export const NavigationPanel = () => {
   const nodes = useSelector(graphNodesSelector);
   const activeGraphId = useSelector(currentPanelIdSelector);
 
-  const dispatch = useDispatch();
-
   return (
     <Stack
       direction="column"
@@ -79,7 +89,7 @@ export const NavigationPanel = () => {
       <div style={{ padding: 'var(--component-spacing-md)' }}>
         <ul className={styles.listWrapper}>
           <RootGraphNodeItem />
-          {Object.values(nodes || {}).map(({ node, depth }) => {
+          {Object.values(nodes || {}).map(({ node, depth }: TreeNode) => {
             const innerGraph = node['_innerGraph'];
             if (!innerGraph) return null;
             return (
