@@ -77,6 +77,9 @@ export const LayoutDropdown = () => {
           <DropdownMenu.Item onSelect={() => onClick('dropPanel')}>
             Nodes
           </DropdownMenu.Item>
+          <DropdownMenu.Item onSelect={() => onClick('navigationPanel')}>
+            Navigator
+          </DropdownMenu.Item>
 
           <DropdownMenu.Separator />
           <DropdownMenu.Item onSelect={saveLayout}>
