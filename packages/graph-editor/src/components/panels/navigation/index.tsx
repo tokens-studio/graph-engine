@@ -4,7 +4,7 @@ import React from 'react';
 import { graphNodesSelector } from '@/redux/selectors/graph.js';
 import { useDispatch } from '@/hooks/useDispatch.js';
 import { useSelector } from 'react-redux';
-import { useSubgraphExplorerCallback } from '@/registry/specifics.js';
+import { useSubgraphExplorerCallback } from '@/hooks/useSubgraphExplorerCallback.js';
 
 const SubgraphNodeItem = function ({ node }) {
   const nodeType = node.nodeType();
@@ -17,7 +17,7 @@ const SubgraphNodeItem = function ({ node }) {
   );
 };
 
-export const Navigator = () => {
+export const NavigationPanel = () => {
   const nodes = useSelector(graphNodesSelector);
   const dispatch = useDispatch();
 

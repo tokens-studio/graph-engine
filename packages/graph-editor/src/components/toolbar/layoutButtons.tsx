@@ -5,7 +5,7 @@ import { Inputsheet } from '../panels/inputs/index.js';
 import { Legend } from '../panels/legend/index.js';
 import { LogsPanel } from '../panels/logs/index.js';
 import { NodeSettingsPanel } from '../panels/nodeSettings/index.js';
-import { Navigator } from '../panels/navigator/index.js';
+import { NavigationPanel } from '../panels/navigation/index.js';
 import { OutputSheet } from '../panels/output/index.js';
 import { Settings } from '../panels/settings/index.js';
 import React from 'react';
@@ -56,10 +56,10 @@ export const layoutButtons = {
     title: 'Nodes',
     content: <DropPanel />,
   },
-  navigator: {
-    id: 'navigator',
-    title: 'Navigator',
-    content: <Navigator />,
+  navigationPanel: {
+    id: 'navigationPanel',
+    title: 'Navigation',
+    content: <NavigationPanel />,
   },
 };
 
