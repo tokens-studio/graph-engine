@@ -10,24 +10,32 @@ import { useSubgraphExplorerCallback } from '@/hooks/useSubgraphExplorerCallback
 import { currentPanelIdSelector } from '@/redux/selectors/graph.js';
 import styles from './index.module.css';
 
-const ListItem = function ({ label, isSelected, onClick }) {
+const ListItem = function ({ label, isSelected, onClick, depth }) {
   return (
     <li
       className={styles.listItem}
       onClick={onClick}
-      style={{ fontWeight: isSelected && 'bold' }}
+      style={{
+        fontWeight: isSelected && 'bold',
+        '--tree-depth': depth || 0,
+      }}
     >
       <span>{label}</span>
     </li>
   );
 };
 
-const SubgraphNodeItem = function ({ node, isSelected }) {
-  const nodeType = node.nodeType();
+const SubgraphNodeItem = function ({ node, isSelected, depth }) {
+  const nodeType = node.factory.title || node.nodeType();
   const onNodeClick = useSubgraphExplorerCallback(node);
 
   return (
-    <ListItem label={nodeType} onClick={onNodeClick} isSelected={isSelected} />
+    <ListItem
+      label={nodeType}
+      onClick={onNodeClick}
+      isSelected={isSelected}
+      depth={depth}
+    />
   );
 };
 
@@ -64,7 +72,7 @@ export const NavigationPanel = () => {
       <div style={{ padding: 'var(--component-spacing-md)' }}>
         <ul className={styles.listWrapper}>
           <RootGraphNodeItem />
-          {Object.values(nodes || {}).map((node) => {
+          {Object.values(nodes || {}).map(({ node, depth }) => {
             const innerGraph = node['_innerGraph'];
             if (!innerGraph) return null;
             return (
@@ -74,6 +82,7 @@ export const NavigationPanel = () => {
                   activeGraphId === innerGraph?.annotations['engine.id']
                 }
                 node={node}
+                depth={depth}
               />
             );
           })}
