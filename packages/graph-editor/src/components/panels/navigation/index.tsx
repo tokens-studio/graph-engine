@@ -1,27 +1,46 @@
 import { Stack } from '@tokens-studio/ui';
 import React from 'react';
 
+import { MAIN_GRAPH_ID } from '@/constants.js';
 import { dockerSelector } from '@/redux/selectors/refs.js';
 import { graphNodesSelector } from '@/redux/selectors/graph.js';
 import { useDispatch } from '@/hooks/useDispatch.js';
 import { useSelector } from 'react-redux';
 import { useSubgraphExplorerCallback } from '@/hooks/useSubgraphExplorerCallback.js';
 import { currentPanelIdSelector } from '@/redux/selectors/graph.js';
+import styles from './index.module.css';
+
+const ListItem = function ({ label, isSelected, onClick }) {
+  return (
+    <li
+      className={styles.listItem}
+      onClick={onClick}
+      style={{ fontWeight: isSelected && 'bold' }}
+    >
+      <span>{label}</span>
+    </li>
+  );
+};
 
 const SubgraphNodeItem = function ({ node, isSelected }) {
   const nodeType = node.nodeType();
   const onNodeClick = useSubgraphExplorerCallback(node);
 
-  console.log(isSelected);
+  return (
+    <ListItem label={nodeType} onClick={onNodeClick} isSelected={isSelected} />
+  );
+};
+
+const RootGraphNodeItem = function ({}) {
+  const dockerRef = useSelector(dockerSelector);
+  const activeGraphId = useSelector(currentPanelIdSelector);
 
   return (
-    <li
-      key={node.id}
-      onClick={onNodeClick}
-      style={{ fontWeight: isSelected && 'bold' }}
-    >
-      <span>{nodeType}</span>
-    </li>
+    <ListItem
+      label={'Root'}
+      isSelected={activeGraphId === MAIN_GRAPH_ID}
+      onClick={() => dockerRef.current.updateTab(MAIN_GRAPH_ID, null, true)}
+    />
   );
 };
 
@@ -43,11 +62,11 @@ export const NavigationPanel = () => {
       }}
     >
       <div style={{ padding: 'var(--component-spacing-md)' }}>
-        <ul>
+        <ul className={styles.listWrapper}>
+          <RootGraphNodeItem />
           {Object.values(nodes || {}).map((node) => {
             const innerGraph = node['_innerGraph'];
             if (!innerGraph) return null;
-            console.log('HEY', activeGraphId, node.id, node);
             return (
               <SubgraphNodeItem
                 key={node.id}
