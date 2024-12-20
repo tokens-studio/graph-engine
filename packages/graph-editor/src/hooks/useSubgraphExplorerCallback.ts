@@ -31,8 +31,6 @@ export const useSubgraphExplorerCallback = (node) => {
         }
       };
 
-      console.log(window['newGraphEditor']());
-
       const newTab = {
         cached: true,
         closable: true,
