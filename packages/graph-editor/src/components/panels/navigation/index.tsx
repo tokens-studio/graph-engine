@@ -9,8 +9,9 @@ import { useSelector } from 'react-redux';
 import { useSubgraphExplorerCallback } from '@/hooks/useSubgraphExplorerCallback.js';
 import { currentPanelIdSelector } from '@/redux/selectors/graph.js';
 import styles from './index.module.css';
+import { get, size, flow } from 'lodash-es';
 
-const ListItem = function ({ label, isSelected, onClick, depth }) {
+const ListItem = function ({ label, count, isSelected, onClick, depth }) {
   return (
     <li
       className={styles.listItem}
@@ -21,6 +22,7 @@ const ListItem = function ({ label, isSelected, onClick, depth }) {
       }}
     >
       <span>{label}</span>
+      {count && <span className={styles.listItemCount}>({count})</span>}
     </li>
   );
 };
@@ -28,6 +30,10 @@ const ListItem = function ({ label, isSelected, onClick, depth }) {
 const SubgraphNodeItem = function ({ node, isSelected, depth }) {
   const nodeType = node.factory.title || node.nodeType();
   const onNodeClick = useSubgraphExplorerCallback(node);
+  const childNodesCount = flow(
+    (x) => get(x, ['_innerGraph', 'nodes'], []),
+    size,
+  )(node);
 
   return (
     <ListItem
@@ -35,6 +41,7 @@ const SubgraphNodeItem = function ({ node, isSelected, depth }) {
       onClick={onNodeClick}
       isSelected={isSelected}
       depth={depth}
+      count={childNodesCount > 0 && childNodesCount}
     />
   );
 };
