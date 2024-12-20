@@ -87,6 +87,7 @@ jobs:
     name: Verify changes
     needs: changes
     runs-on: ubuntu-latest
+    if: ${{ needs.changes.outputs.flat != '[]' }}
     defaults:
       run:
         shell: bash
