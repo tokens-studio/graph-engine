@@ -21,7 +21,7 @@ export const GraphEditor = React.forwardRef<
 
 // HACK: Workaround for circular dependency not allowed for nextjs
 // E.g.: when trying to create a new graph editor instance as a tab
-if (!!window) {
+if (typeof window !== 'undefined') {
   window['newGraphEditor'] = function (ref, id) {
     return (
       <ErrorBoundary fallback={<ErrorBoundaryContent />}>
