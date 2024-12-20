@@ -19,14 +19,23 @@ export const mainGraphSelector = createSelector(
   (state) => state.panels[MAIN_GRAPH_ID],
 );
 
-const collectNodes = function (graph: Graph, coll: Record<string, Node> = {}) {
+export type TreeNode = {
+  node: Node;
+  depth: number;
+};
+
+const collectNodes = function (
+  graph: Graph,
+  coll: Record<string, Node> = {},
+  depth = 1,
+): TreeNode {
   for (const id in graph.nodes) {
     const node: Node = graph.nodes[id];
     const innerGraph = node['_innerGraph'];
-    coll[id] = node;
+    coll[id] = { node, depth } as TreeNode;
 
     if (innerGraph) {
-      collectNodes(innerGraph, coll);
+      collectNodes(innerGraph, coll, ++depth);
     }
   }
   return coll;
