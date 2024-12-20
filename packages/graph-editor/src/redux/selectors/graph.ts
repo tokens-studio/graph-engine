@@ -26,9 +26,9 @@ export type TreeNode = {
 
 const collectNodes = function (
   graph: Graph,
-  coll: Record<string, Node> = {},
+  coll: Record<string, TreeNode> = {},
   depth = 1,
-): TreeNode {
+): Record<string, TreeNode> {
   for (const id in graph.nodes) {
     const node: Node = graph.nodes[id];
     const innerGraph = node['_innerGraph'];
