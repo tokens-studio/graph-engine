@@ -1,0 +1,18 @@
+.menuContainer {
+  position: fixed;
+  z-index: 1000;
+  background: var(--color-neutral-surface-default-idle-bg);
+  border-radius: var(--component-radii-md);
+  box-shadow: var(--shadow-lg);
+  min-width: 200px;
+}
+
+.portIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--component-radii-sm);
+  font-size: var(--font-size-sm);
+} 

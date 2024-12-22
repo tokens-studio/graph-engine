@@ -42,6 +42,14 @@ import noteNode from '../components/flow/nodes/noteNode.js';
 
 import { ActionProvider } from './actions/provider.js';
 import { BatchRunError, Graph } from '@tokens-studio/graph-engine';
+import {
+  CapabilityFactory,
+  ExternalLoader,
+  Node as GraphNode,
+  Port,
+  SchemaObject,
+  SerializedGraph,
+} from '@tokens-studio/graph-engine';
 import { CommandMenu } from '@/components/commandPalette/index.js';
 import { EdgeContextMenu } from '../components/contextMenus/edgeContextMenu.js';
 import { GraphContextProvider } from '@/context/graph.js';
@@ -53,6 +61,8 @@ import { NodeContextMenu } from '../components/contextMenus/nodeContextMenu.js';
 import { NodeV2 } from '@/components/index.js';
 import { PaneContextMenu } from '../components/contextMenus/paneContextMenu.js';
 import { PassthroughNode } from '@/components/flow/nodes/passthroughNode.js';
+import { PortInfo, PortRegistry } from '@/services/PortRegistry.js';
+import { PortSuggestionMenu } from '@/components/flow/portSuggestionMenu.js';
 import { SelectionContextMenu } from '@/components/contextMenus/selectionContextMenu.js';
 import {
   capabilitiesSelector,
@@ -249,45 +259,80 @@ export const EditorApp = React.forwardRef<
     [showPane],
   );
 
-  const [isHoldingDownOption, setIsHoldingDownOption] = React.useState(false);
+  const [dragStartPort, setDragStartPort] = useState<{
+    port: Port;
+  } | null>(null);
 
-  useEffect(() => {
-    const down = (e) => {
-      if (e.altKey) {
-        e.preventDefault();
+  const [draggedPort, setDraggedPort] = useState<{
+    port: Port;
+    position: { x: number; y: number };
+    flowPosition?: XYPosition;
+  } | null>(null);
 
-        setIsHoldingDownOption(true);
-      } else {
-        setIsHoldingDownOption(false);
-      }
-    };
+  const onConnectStart = useCallback(
+    (event: React.MouseEvent | TouchEvent, { nodeId, handleId }) => {
+      if (!nodeId || !handleId) return;
 
-    document.addEventListener('keydown', down);
-    return () => document.removeEventListener('keydown', down);
-  }, [dispatch.ui]);
+      const node = graph.getNode(nodeId);
+      if (!node) return;
+
+      const port = node.outputs[handleId];
+      if (!port) return;
+
+      // Just store which port we started dragging from
+      setDragStartPort({ port });
+      // Clear any existing draggedPort state
+      setDraggedPort(null);
+    },
+    [graph]
+  );
 
   const onConnectEnd = useCallback(
-    (event) => {
-      if (!isHoldingDownOption) {
-        return;
-      }
+    (event: MouseEvent | TouchEvent) => {
+      if (!dragStartPort) return;
 
-      const targetIsPane = event.target.classList.contains('react-flow__pane');
+      console.log('onConnectEnd triggered', { dragStartPort });
+
+      // Handle both mouse and touch events
+      const clientX = 'clientX' in event ? event.clientX : event.touches[0].clientX;
+      const clientY = 'clientY' in event ? event.clientY : event.touches[0].clientY;
+
+      // Check if we're on the pane or any of its children
+      const target = event.target as Element;
+      const targetIsPane = target.closest('.react-flow__pane') !== null;
+
+      console.log('Target and position check:', { targetIsPane, clientX, clientY, target });
 
       if (targetIsPane) {
-        dispatch.ui.setShowNodesCmdPalette(true);
-
-        const position = reactFlowInstance?.screenToFlowPosition({
-          x: event.clientX,
-          y: event.clientY,
+        // Convert screen coordinates to flow coordinates
+        const flowPosition = reactFlowInstance.screenToFlowPosition({
+          x: clientX,
+          y: clientY,
         });
-        dispatch.ui.setNodeInsertPosition(position);
 
-        // TODO: After dropping the node we should try to connect the node if it has 1 handler only
+        console.log('Setting draggedPort with positions:', { clientX, clientY, flowPosition });
+
+        // Only now set the draggedPort with the position
+        setDraggedPort({
+          port: dragStartPort.port,
+          position: {
+            x: clientX,
+            y: clientY
+          },
+          flowPosition
+        });
       }
+      
+      // Clear the start port state
+      setDragStartPort(null);
     },
-    [dispatch.ui, isHoldingDownOption, reactFlowInstance],
+    [dragStartPort, reactFlowInstance]
   );
+
+  // Add a debug effect to monitor draggedPort changes
+  useEffect(() => {
+    console.log('draggedPort changed:', draggedPort);
+  }, [draggedPort]);
 
   const handleEdgeContextMenu = useCallback(
     (event, edge) => {
@@ -730,6 +775,75 @@ export const EditorApp = React.forwardRef<
     [handleSelectNewNodeType, reactFlowInstance],
   );
   const nodeCount = nodes.length;
+
+  const portRegistry = useMemo(() => {
+    return new PortRegistry(fullNodeLookup);
+  }, [fullNodeLookup]);
+
+  const compatiblePorts = useMemo(() => {
+    console.log('Computing compatible ports for:', draggedPort);
+    if (!draggedPort) return [];
+    const ports = portRegistry.findCompatiblePorts(draggedPort.port);
+    console.log('Found compatible ports:', ports.length, ports);
+    return ports;
+  }, [draggedPort, portRegistry]);
+
+  const onPortSelect = useCallback(
+    (portInfo: PortInfo) => {
+      if (!draggedPort || !draggedPort.flowPosition) return;
+
+      // Create the node at the flow position
+      const result = handleSelectNewNodeType({
+        type: portInfo.nodeType,
+        position: draggedPort.flowPosition,
+      });
+
+      if (!result) return;
+
+      // Connect the ports
+      const sourceNode = graph.getNode(draggedPort.port.node.id);
+      const targetNode = result.graphNode;
+
+      if (!sourceNode || !targetNode) return;
+
+      const sourcePort = sourceNode.outputs[draggedPort.port.name];
+      const targetPort = targetNode.inputs[portInfo.portName];
+
+      if (!sourcePort || !targetPort) return;
+
+      // Create the connection in the graph engine
+      const graphEdge = graph.connect(sourceNode, sourcePort, targetNode, targetPort);
+
+      // Create the visual edge for ReactFlow
+      const newEdge = {
+        id: graphEdge.id,
+        source: sourceNode.id,
+        target: targetNode.id,
+        sourceHandle: draggedPort.port.name,
+        targetHandle: portInfo.portName,
+        type: 'custom'
+      };
+
+      // Add the edge to ReactFlow
+      setEdges(eds => [...eds, newEdge]);
+
+      // Clear the dragged port state
+      setDraggedPort(null);
+    },
+    [draggedPort, graph, handleSelectNewNodeType, setEdges]
+  );
+
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.altKey) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener('keydown', down);
+    return () => document.removeEventListener('keydown', down);
+  }, [dispatch.ui]);
+
   return (
     <GraphContextProvider graph={graph}>
       <ActionProvider
@@ -748,6 +862,8 @@ export const EditorApp = React.forwardRef<
             display: 'flex',
             flexDirection: 'row',
             flexGrow: 1,
+            position: 'relative',
+            overflow: 'visible'
           }}
         >
           <HotKeys>
@@ -771,21 +887,15 @@ export const EditorApp = React.forwardRef<
               onNodeDrag={onNodeDrag}
               onConnect={onConnect}
               onDrop={onDrop}
+              onConnectStart={onConnectStart}
               onConnectEnd={onConnectEnd}
               selectNodesOnDrag={true}
               defaultEdgeOptions={defaultEdgeOptions}
               panOnScroll={true}
-              //Note that we cannot use pan on drag or it will affect the context menu
               onPaneContextMenu={contextMenus ? handleContextMenu : undefined}
-              onEdgeContextMenu={
-                contextMenus ? handleEdgeContextMenu : undefined
-              }
-              onNodeContextMenu={
-                contextMenus ? handleNodeContextMenu : undefined
-              }
-              onSelectionContextMenu={
-                contextMenus ? handleSelectionContextMenu : undefined
-              }
+              onEdgeContextMenu={contextMenus ? handleEdgeContextMenu : undefined}
+              onNodeContextMenu={contextMenus ? handleNodeContextMenu : undefined}
+              onSelectionContextMenu={contextMenus ? handleSelectionContextMenu : undefined}
               selectionMode={SelectionMode.Partial}
               onDragOver={onDragOver}
               selectionOnDrag={true}
@@ -827,6 +937,14 @@ export const EditorApp = React.forwardRef<
               </div>
               {props.children}
             </ReactFlow>
+            {draggedPort && compatiblePorts.length > 0 && (
+              <PortSuggestionMenu
+                sourcePort={draggedPort.port}
+                compatiblePorts={compatiblePorts}
+                position={draggedPort.position}
+                onSelect={onPortSelect}
+              />
+            )}
           </HotKeys>
         </div>
         {showMinimap && <MiniMap />}
