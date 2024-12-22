@@ -62,16 +62,20 @@ export class PortRegistry {
     const sourceType = sourcePort.type;
     const compatiblePorts: PortInfo[] = [];
 
-    console.log('Finding compatible ports for:', { sourceType, availableTypes: Array.from(this.portsByType.keys()) });
+    // Get the type ID we want to match
+    const typeId = sourceType.$id;
+    if (!typeId) {
+      // For arrays, check the item type
+      if (sourceType.type === 'array' && sourceType.items.$id) {
+        const arrayPorts = this.portsByType.get(sourceType.items.$id) || [];
+        compatiblePorts.push(...arrayPorts);
+      }
+      return compatiblePorts;
+    }
 
-    this.portsByType.forEach((ports, typeId) => {
-      ports.forEach((portInfo) => {
-        if (canConvertSchemaTypes(sourceType, portInfo.portType)) {
-          console.log('Found compatible port:', portInfo);
-          compatiblePorts.push(portInfo);
-        }
-      });
-    });
+    // Get ports that match our exact type
+    const matchingPorts = this.portsByType.get(typeId) || [];
+    compatiblePorts.push(...matchingPorts);
 
     return compatiblePorts;
   }
