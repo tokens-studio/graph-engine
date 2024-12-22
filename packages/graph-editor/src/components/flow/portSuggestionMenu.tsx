@@ -2,8 +2,7 @@ import { Port } from '@tokens-studio/graph-engine';
 import { PortInfo } from '../../services/PortRegistry.js';
 import { createPortal } from 'react-dom';
 import { observer } from 'mobx-react-lite';
-import React, { useCallback } from 'react';
-import styles from './portSuggestionMenu.module.css';
+import React, { useCallback, useState } from 'react';
 
 interface PortSuggestionMenuProps {
   sourcePort: Port;
@@ -13,7 +12,9 @@ interface PortSuggestionMenuProps {
 }
 
 export const PortSuggestionMenu = observer(
-  ({ sourcePort, compatiblePorts, position, onSelect }: PortSuggestionMenuProps) => {
+  ({ compatiblePorts, position, onSelect }: PortSuggestionMenuProps) => {
+    const [searchTerm, setSearchTerm] = useState('');
+
     const handleSelect = useCallback(
       (portInfo: PortInfo) => {
         onSelect(portInfo);
@@ -25,7 +26,14 @@ export const PortSuggestionMenu = observer(
       return null;
     }
 
-    const groupedPorts = compatiblePorts.reduce<Record<string, PortInfo[]>>(
+    // Filter ports based on search term
+    const filteredPorts = compatiblePorts.filter(port => 
+      port.portName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      port.nodeTitle.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    // Group ports by node type
+    const groupedPorts = filteredPorts.reduce<Record<string, PortInfo[]>>(
       (acc, port) => {
         if (!acc[port.nodeTitle]) {
           acc[port.nodeTitle] = [];
@@ -43,37 +51,61 @@ export const PortSuggestionMenu = observer(
           left: position.x,
           top: position.y,
           zIndex: 9999,
-          background: 'white',
-          padding: '20px',
-          border: '2px solid red',
-          borderRadius: '8px',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-          minWidth: '200px'
+          background: '#1e1e1e',
+          padding: '8px',
+          borderRadius: '4px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+          minWidth: '300px',
+          color: '#fff',
+          fontFamily: 'system-ui, -apple-system, sans-serif'
         }}
       >
-        <div style={{ marginBottom: '10px', fontWeight: 'bold' }}>
-          Compatible Ports ({compatiblePorts.length})
+        <div style={{ padding: '8px 4px' }}>
+          <input
+            type="text"
+            placeholder="Search ports..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{
+              width: '100%',
+              padding: '8px',
+              background: '#333',
+              border: '1px solid #444',
+              borderRadius: '4px',
+              color: '#fff',
+              outline: 'none'
+            }}
+            autoFocus
+          />
         </div>
-        {Object.entries(groupedPorts).map(([nodeTitle, ports]) => (
-          <div key={nodeTitle} style={{ marginBottom: '10px' }}>
-            <div style={{ fontWeight: 'bold', color: '#666' }}>{nodeTitle}</div>
-            {ports.map((portInfo) => (
-              <div
-                key={`${portInfo.nodeType}-${portInfo.portName}`}
-                onClick={() => handleSelect(portInfo)}
-                style={{
-                  padding: '8px',
-                  margin: '4px 0',
-                  cursor: 'pointer',
-                  background: '#f5f5f5',
-                  borderRadius: '4px'
-                }}
-              >
-                {portInfo.portName}
-              </div>
-            ))}
-          </div>
-        ))}
+        <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+          {Object.entries(groupedPorts).map(([nodeTitle, ports]) => (
+            <div key={nodeTitle} style={{ marginBottom: '8px' }}>
+              {ports.map((portInfo) => (
+                <div
+                  key={`${portInfo.nodeType}-${portInfo.portName}`}
+                  onClick={() => handleSelect(portInfo)}
+                  style={{
+                    padding: '8px 12px',
+                    cursor: 'pointer',
+                    borderRadius: '4px',
+                    transition: 'background-color 0.2s'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#2a2a2a';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                  }}
+                >
+                  <span style={{ color: '#4a9eff' }}>{portInfo.portName}</span>
+                  <span style={{ color: '#666' }}> ▸ </span>
+                  <span style={{ color: '#aaa' }}>{portInfo.nodeTitle}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>,
       document.body
     );
