@@ -1,11 +1,7 @@
 import { Port } from '@tokens-studio/graph-engine';
 import { PortInfo } from '../../services/PortRegistry.js';
 import { createPortal } from 'react-dom';
-import { extractTypeIcon } from './wrapper/nodeV2.js';
-import { icons } from '../../redux/selectors/registry.js';
 import { observer } from 'mobx-react-lite';
-import { useAction } from '../../editor/actions/provider.js';
-import { useSelector } from 'react-redux';
 import React, { useCallback } from 'react';
 import styles from './portSuggestionMenu.module.css';
 
@@ -18,51 +14,31 @@ interface PortSuggestionMenuProps {
 
 export const PortSuggestionMenu = observer(
   ({ sourcePort, compatiblePorts, position, onSelect }: PortSuggestionMenuProps) => {
-    console.log('PortSuggestionMenu render attempt:', { 
-      sourcePort, 
-      compatiblePortsCount: compatiblePorts.length,
-      position 
-    });
-
-    const iconTypeRegistry = useSelector(icons);
-    const createNode = useAction('createNode');
-
     const handleSelect = useCallback(
       (portInfo: PortInfo) => {
-        console.log('Port selected:', portInfo);
-        // Create the node
-        const result = createNode({
-          type: portInfo.nodeType,
-          position: position,
-        });
-
-        if (result) {
-          onSelect(portInfo);
-        }
+        onSelect(portInfo);
       },
-      [createNode, onSelect, position]
+      [onSelect]
     );
 
     if (compatiblePorts.length === 0) {
-      console.log('No compatible ports, not rendering menu');
       return null;
     }
 
-    // Group ports by node type
-    const groupedPorts = compatiblePorts.reduce<Record<string, PortInfo[]>>((acc, port) => {
-      if (!acc[port.nodeTitle]) {
-        acc[port.nodeTitle] = [];
-      }
-      acc[port.nodeTitle].push(port);
-      return acc;
-    }, {});
+    const groupedPorts = compatiblePorts.reduce<Record<string, PortInfo[]>>(
+      (acc, port) => {
+        if (!acc[port.nodeTitle]) {
+          acc[port.nodeTitle] = [];
+        }
+        acc[port.nodeTitle].push(port);
+        return acc;
+      },
+      {}
+    );
 
-    console.log('Rendering menu with groups:', Object.keys(groupedPorts));
-
-    // Create a more visible test menu first
     return createPortal(
       <div
-        style={{ 
+        style={{
           position: 'fixed',
           left: position.x,
           top: position.y,
