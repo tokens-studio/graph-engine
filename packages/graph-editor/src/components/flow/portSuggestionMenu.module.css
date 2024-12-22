@@ -1,18 +1,62 @@
 .menuContainer {
   position: fixed;
-  z-index: 1000;
-  background: var(--color-neutral-surface-default-idle-bg);
+  z-index: 9999;
+  background: var(--color-neutral-canvas-minimal-bg);
+  color: var(--color-neutral-canvas-minimal-fg);
+  padding: var(--component-spacing-xs);
   border-radius: var(--component-radii-md);
-  box-shadow: var(--shadow-lg);
-  min-width: 200px;
+  box-shadow: var(--shadow);
+  min-width: 300px;
+  font: var(--font-body-md-default);
 }
 
-.portIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: var(--component-radii-sm);
-  font-size: var(--font-size-sm);
+.searchContainer {
+  padding: var(--size-100);
+}
+
+.searchInput {
+  width: 100%;
+  padding: var(--size-100);
+  background: var(--color-neutral-surface-sunken);
+  border: 1px solid var(--color-neutral-stroke-subtle);
+  border-radius: var(--radius-small);
+  color: var(--color-neutral-foreground-default);
+  outline: none;
+}
+
+.searchInput:focus {
+  border-color: var(--color-accent-stroke-focus);
+}
+
+.portList {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.portGroup {
+  margin-bottom: var(--size-100);
+}
+
+.portItem {
+  padding: var(--component-spacing-xs);
+  cursor: pointer;
+  border-radius: var(--radius-small);
+  transition: background-color 0.2s;
+}
+
+.portItem:hover {
+  background-color: var(--color-neutral-surface-hover);
+}
+
+.portName {
+  color: var(--color-accent-foreground-default);
+}
+
+.separator {
+  color: var(--color-neutral-foreground-subtle);
+  margin: 0 var(--size-50);
+}
+
+.nodeTitle {
+  color: var(--color-neutral-canvas-minimal-fg-subtle);
 } 

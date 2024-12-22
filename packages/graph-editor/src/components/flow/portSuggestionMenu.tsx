@@ -3,6 +3,8 @@ import { PortInfo } from '../../services/PortRegistry.js';
 import { createPortal } from 'react-dom';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback, useState } from 'react';
+import clsx from 'clsx';
+import styles from './portSuggestionMenu.module.css';
 
 interface PortSuggestionMenuProps {
   sourcePort: Port;
@@ -46,64 +48,39 @@ export const PortSuggestionMenu = observer(
 
     return createPortal(
       <div
+        className={clsx(styles.menuContainer, 'canvas')}
+        data-appearance="neutral"
+        data-emphasis="minimal"
         style={{
-          position: 'fixed',
           left: position.x,
           top: position.y,
-          zIndex: 9999,
-          background: '#1e1e1e',
-          padding: '8px',
-          borderRadius: '4px',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-          minWidth: '300px',
-          color: '#fff',
-          fontFamily: 'system-ui, -apple-system, sans-serif'
         }}
       >
-        <div style={{ padding: '8px 4px' }}>
+        <div className={styles.searchContainer}>
           <input
             type="text"
             placeholder="Search ports..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '8px',
-              background: '#333',
-              border: '1px solid #444',
-              borderRadius: '4px',
-              color: '#fff',
-              outline: 'none'
-            }}
+            className={styles.searchInput}
             autoFocus
           />
         </div>
-        <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+        <div className={styles.portList}>
           {Object.entries(groupedPorts).map(([nodeTitle, ports]) => (
-            <div key={nodeTitle} style={{ marginBottom: '8px' }}>
+            <>
               {ports.map((portInfo) => (
                 <div
                   key={`${portInfo.nodeType}-${portInfo.portName}`}
                   onClick={() => handleSelect(portInfo)}
-                  style={{
-                    padding: '8px 12px',
-                    cursor: 'pointer',
-                    borderRadius: '4px',
-                    transition: 'background-color 0.2s'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#2a2a2a';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                  }}
+                  className={styles.portItem}
                 >
-                  <span style={{ color: '#4a9eff' }}>{portInfo.portName}</span>
-                  <span style={{ color: '#666' }}> ▸ </span>
-                  <span style={{ color: '#aaa' }}>{portInfo.nodeTitle}</span>
+                  <span className={styles.portName}>{portInfo.portName}</span>
+                  <span className={styles.separator}>▸</span>
+                  <span className={styles.nodeTitle}>{portInfo.nodeTitle}</span>
                 </div>
               ))}
-            </div>
+            </>
           ))}
         </div>
       </div>,
