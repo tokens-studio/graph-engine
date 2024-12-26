@@ -16,7 +16,11 @@ export function mergeTokenExtensions(
 	figmaExtension: DeepPartial<FigmaExtension>
 ): SingleToken {
 	const existingExtensions = token.$extensions || {};
-	const existingFigmaExt = existingExtensions['com.figma'] || {};
+	const existingFigmaExt = (existingExtensions['com.figma'] || {}) as Record<
+		string,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		any
+	>;
 
 	const mergedFigmaExt = {
 		...existingFigmaExt,

@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@bundled-es-modules/deepmerge": "^4.3.1",
-    "@tokens-studio/types": "^0.3.0",
+    "@tokens-studio/types": "^0.5.1",
     "ajv": "^8.17.1",
     "color-blind-esm": "^0.1.4",
     "colorjs.io": "^0.5.2",
@@ -51,9 +51,6 @@
     "postcss-value-parser-esm": "^4.2.0",
     "uuid": "^9.0.1",
     "z-schema-esm": "^6.0.1"
-  },
-  "peerDependencies": {
-    "@tokens-studio/types": "^0.3.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.21.5",
