@@ -6147,10 +6147,10 @@
   resolved "https://registry.yarnpkg.com/@tokens-studio/types/-/types-0.5.1.tgz#5037e58c4b2c306762f12e8d9685e9aeebb21685"
   integrity sha512-LdCF9ZH5ej4Gb6n58x5fTkhstxjXDZc1SWteMWY6EiddLQJVONMIgYOrWrf1extlkSLjagX8WS0B63bAqeltnA==
 
-"@tokens-studio/ui@^1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@tokens-studio/ui/-/ui-1.0.10.tgz#8529bfaae9f663e6d0683b03ae2b5f0135c643f2"
-  integrity sha512-FJCzMg9geaYWWpfxsGRTxGyDDE+IIExAE05ek78ljz3R5BftgGafnS3plLx5sMBPLN61k2aMUBiJah2bW1PBIQ==
+"@tokens-studio/ui@^1.0.13":
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/@tokens-studio/ui/-/ui-1.0.13.tgz#e4e7356b2cbfa506f871227d4b21a35607fd09b1"
+  integrity sha512-KvFBpWpWtShnsXXPyLU4xsMYI3Hws1A9N4IIbqOMbv7hpihcixktF81yq44txPkvn8JNw1xob9ZhofqDa1cwwg==
   dependencies:
     "@radix-ui/react-accordion" "^1.1.2"
     "@radix-ui/react-avatar" "^1.0.2"
@@ -6169,7 +6169,6 @@
     "@radix-ui/react-toast" "^1.1.3"
     "@radix-ui/react-toggle-group" "^1.0.2"
     "@radix-ui/react-tooltip" "^1.0.4"
-    "@tokens-studio/icons" "^0.1.4"
     clsx "^2.1.1"
 
 "@trysound/sax@0.2.0":

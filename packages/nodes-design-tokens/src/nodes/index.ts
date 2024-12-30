@@ -1,3 +1,4 @@
+import { nodes as arrays } from './arrays/index.js';
 import { nodes as naming } from './naming/index.js';
 import CreateBorderNode from './createBorder.js';
 import CreateBorderTokenNode from './createBorderToken.js';
@@ -51,7 +52,8 @@ export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
 	LeonardoColorNode,
 	LeonardoThemeNode,
 	SetToArrayNode,
-	naming
+	naming,
+	arrays
 );
 
 /**

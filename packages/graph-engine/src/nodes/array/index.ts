@@ -8,6 +8,7 @@ import indexArray from './indexArray.js';
 import inject from './inject.js';
 import length from './length.js';
 import push from './push.js';
+import remove from './remove.js';
 import replace from './replace.js';
 import reverse from './reverse.js';
 import slice from './slice.js';
@@ -24,6 +25,7 @@ export const nodes = [
 	inject,
 	length,
 	push,
+	remove,
 	replace,
 	reverse,
 	slice,
