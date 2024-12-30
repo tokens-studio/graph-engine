@@ -57,7 +57,7 @@
     "@tokens-studio/graph-engine": "*",
     "@tokens-studio/icons": "^0.1.4",
     "@tokens-studio/types": "^0.5.1",
-    "@tokens-studio/ui": "^1.0.10",
+    "@tokens-studio/ui": "^1.0.13",
     "@xzdarcy/react-timeline-editor": "^0.1.9",
     "array-move": "^4.0.0",
     "classnames": "^2.3.2",
