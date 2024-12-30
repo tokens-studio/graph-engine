@@ -1,5 +1,34 @@
 # @tokens-studio/graph-editor
 
+## 4.3.9
+
+### Patch Changes
+
+- ad8ec49: Fixes an issue with the observer on the node title for node settings
+- ad8ec49: Removes the animated edge watcher which was no longer being used
+- Updated dependencies [ad8ec49]
+- Updated dependencies [ad8ec49]
+  - @tokens-studio/graph-engine@4.4.0
+
+## 4.3.8
+
+### Patch Changes
+
+- 3f12ab0: Fix bug with visibility on ports
+- Updated dependencies [79b16d7]
+- Updated dependencies [6d9b5c3]
+- Updated dependencies [df74698]
+  - @tokens-studio/graph-engine@4.3.0
+
+## 4.3.7
+
+### Patch Changes
+
+- fe1ae29: fix prettier
+- Updated dependencies [87b0016]
+- Updated dependencies [7253355]
+  - @tokens-studio/graph-engine@4.2.0
+
 ## 4.3.6
 
 ### Patch Changes

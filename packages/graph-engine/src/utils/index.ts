@@ -37,7 +37,7 @@ export const flatten = (
 			acc.push({
 				name: [...keyPath, key].join('.'),
 				value: leaf.value,
-				type: leaf.type,
+				type: leaf.type!,
 				description: leaf.description
 			});
 			return acc;

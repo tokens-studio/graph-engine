@@ -33,12 +33,11 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@stitches/react": "^1.2.8",
-    "@tokens-studio/sd-transforms": "^0.15.2",
+    "@tokens-studio/sd-transforms": "^1.2.9",
     "chokidar": "^3.6.0",
     "fbp-client": "^0.4.3",
     "fs-extra": "^11.2.0",
     "storybook": "^8.0.10",
-    "style-dictionary": "^4.0.0-prerelease.38"
+    "style-dictionary": "^4.3.0"
   }
 }

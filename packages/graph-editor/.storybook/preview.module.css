@@ -6,7 +6,7 @@
   width: 50%;
   bottom: 0;
   overflow: auto;
-  background: var(--colors-bgCanvas);
+  background: var(--color-neutral-canvas-default-bg);
   display: flex;
 }
 
@@ -16,7 +16,7 @@
 }
 
 .themeBlock.left {
-  border-right: 1px solid #202020;
+  border-right: 1px solid var(--color-neutral-stroke-subtle);
   right: 50%;
   left: 0;
 }

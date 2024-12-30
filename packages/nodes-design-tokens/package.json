@@ -1,6 +1,6 @@
 {
   "name": "@tokens-studio/graph-engine-nodes-design-tokens",
-  "version": "6.0.0",
+  "version": "7.0.0",
   "description": "Design token support for the graph engine",
   "license": "MPL-2.0",
   "author": "andrew@hyma.io",
@@ -37,8 +37,8 @@
   },
   "dependencies": {
     "@adobe/leonardo-contrast-colors": "^1.0.0",
-    "@tokens-studio/types": "^0.4.0",
-    "@tokens-studio/ui": "^1.0.7",
+    "@tokens-studio/types": "^0.5.1",
+    "@tokens-studio/ui": "^1.0.10",
     "colorjs.io": "^0.5.2",
     "dot-prop": "^8.0.2",
     "lodash.orderby": "^4.6.0",

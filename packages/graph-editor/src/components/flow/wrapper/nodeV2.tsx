@@ -146,7 +146,7 @@ export const PortArray = observer(({ ports, hideNames }: IPortArray) => {
   return (
     <>
       {entries
-        .filter((x) => x.visible || x.isConnected)
+        .filter((x) => x.visible != false || x.isConnected)
         .map((input) => (
           <InputHandle port={input} hideName={hideNames} />
         ))}

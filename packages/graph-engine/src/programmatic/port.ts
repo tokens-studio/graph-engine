@@ -32,7 +32,7 @@ export class Port<T = any> {
 
 	constructor(props: IPort<T>) {
 		this.name = props.name;
-		this.visible = props.visible ?? false;
+		this.visible = props.visible == false ? false : true;
 		this.node = props.node;
 		this._type = props.type;
 		this._value = props.value;

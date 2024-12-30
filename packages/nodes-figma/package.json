@@ -1,6 +1,6 @@
 {
   "name": "@tokens-studio/graph-engine-nodes-figma",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Figma-specific nodes for the graph engine",
   "license": "MPL-2.0",
   "author": "andrew@hyma.io",
@@ -36,8 +36,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@tokens-studio/types": "^0.4.0",
-    "@tokens-studio/ui": "^1.0.7",
+    "@tokens-studio/types": "^0.5.1",
+    "@tokens-studio/ui": "^1.0.10",
     "dot-prop": "^8.0.2"
   },
   "peerDependencies": {

@@ -1,5 +1,36 @@
 # @tokens-studio/graph-engine-ui
 
+## 3.3.0
+
+### Minor Changes
+
+- 79b16d7: Add find First and linear search nodes.
+
+### Patch Changes
+
+- Updated dependencies [3f12ab0]
+- Updated dependencies [79b16d7]
+- Updated dependencies [6d9b5c3]
+- Updated dependencies [df74698]
+  - @tokens-studio/graph-editor@4.3.8
+  - @tokens-studio/graph-engine@4.3.0
+
+## 3.2.1
+
+### Patch Changes
+
+- fe1ae29: fix prettier
+- Updated dependencies [87b0016]
+- Updated dependencies [fe1ae29]
+- Updated dependencies [6f239b9]
+- Updated dependencies [7253355]
+  - @tokens-studio/graph-engine@4.2.0
+  - @tokens-studio/graph-editor@4.3.7
+  - @tokens-studio/graph-engine-nodes-figma@2.0.0
+  - @tokens-studio/graph-engine-nodes-audio@7.0.0
+  - @tokens-studio/graph-engine-nodes-design-tokens@7.0.0
+  - @tokens-studio/graph-engine-nodes-image@6.0.0
+
 ## 3.2.0
 
 ### Minor Changes

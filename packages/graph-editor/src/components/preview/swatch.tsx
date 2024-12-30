@@ -1,4 +1,4 @@
-import { Text } from '@tokens-studio/ui';
+import { Text } from '@tokens-studio/ui/Text.js';
 import { castToHex } from '@/utils/index.js';
 import Color from 'colorjs.io';
 import React, { useMemo } from 'react';
@@ -23,7 +23,6 @@ export const ColorSwatch = ({ value }) => {
     try {
       return contrastingColor(castToHex(value));
     } catch (error) {
-      console.log(error);
       return '';
     }
   }, [value]);

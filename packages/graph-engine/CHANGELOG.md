@@ -1,5 +1,39 @@
 # @tokens-studio/graph-engine
 
+## 4.4.0
+
+### Minor Changes
+
+- ad8ec49: Adds a logger interface to stop direct console access
+
+### Patch Changes
+
+- ad8ec49: Correctly sets ports visibility if explicitly set to false
+
+## 4.3.0
+
+### Minor Changes
+
+- 79b16d7: Add find First and linear search nodes.
+- 6d9b5c3: Added new string manipulation nodes:
+  - Case Convert: Transform strings between camelCase, snake_case, kebab-case, and PascalCase
+  - Replace: Simple string replacement without regex
+  - Normalize: String normalization with accent removal options
+
+### Patch Changes
+
+- df74698: Add hex to color space selector
+
+## 4.2.0
+
+### Minor Changes
+
+- 7253355: Add Color Range node that lets you create a gradient between two colors and sample steps on it.
+
+### Patch Changes
+
+- 87b0016: Fixes an issue with loading not working , relaxes restriction on requiring an input nodes as part of execution via options
+
 ## 4.1.0
 
 ### Minor Changes
