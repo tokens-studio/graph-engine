@@ -1,3 +1,4 @@
+
 import { Volume } from 'memfs';
 import {
 	WebAudioCapability,
@@ -10,6 +11,7 @@ import {
 	icons as designIcons,
 	specifics as designSpecifics
 } from '@tokens-studio/graph-engine-nodes-design-tokens';
+import { specifics as previewSpecifics } from '@tokens-studio/graph-engine-nodes-preview';
 import type { CapabilityFactory, Node } from '@tokens-studio/graph-engine';
 
 export const fs = Volume.fromJSON({
@@ -36,9 +38,11 @@ export const icons = {
 
 export const controls = [...designControls, ...defaultControls];
 
+
 export const specifics = {
 	...defaultSpecifics,
-	...designSpecifics
+	...designSpecifics,
+	...previewSpecifics
 } as Record<string, React.FC<{ node: Node }>>;
 
 export { menu } from './menu.tsx';

@@ -207,9 +207,8 @@ export class Node {
 	 * @param data
 	 */
 	async load(uri: string, data?: unknown) {
-		this._graph?.loadResource(uri, this, data);
+		return this._graph?.loadResource(uri, this, data);
 	}
-
 	get isRunning() {
 		return !!this.annotations[annotatedNodeRunning];
 	}

@@ -1,5 +1,5 @@
 import { GlobalState } from '@/mobx/index.tsx';
-import { Stack } from '@tokens-studio/ui';
+import { Stack } from '@tokens-studio/ui/Stack.js';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 

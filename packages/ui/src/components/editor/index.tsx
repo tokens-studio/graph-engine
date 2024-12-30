@@ -12,7 +12,7 @@ import {
 	nodeTypes,
 	panelItems,
 	specifics
-} from './data.ts';
+} from './data.tsx';
 import { observer } from 'mobx-react-lite';
 import { useGetEditor } from '@/hooks/useGetEditor.ts';
 import React, { useCallback } from 'react';
@@ -43,6 +43,8 @@ export const EditorTab = observer(
 					// @ts-ignore
 					ref={ref}
 					showMenu={false}
+
+
 					menuItems={menu}
 					panelItems={panelItems}
 					nodeTypes={nodeTypes}

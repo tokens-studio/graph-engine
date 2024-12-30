@@ -1,4 +1,4 @@
-import { Button } from '@tokens-studio/ui';
+import { Button } from '@tokens-studio/ui/Button.js';
 import { ColorCompare } from '@/components/preview/colorCompare.js';
 import { ColorScale } from '@/components/preview/colorScale.js';
 import { ColorSwatch } from '@/components/preview/swatch.js';
@@ -22,6 +22,8 @@ const SubgraphExplorer = ({ node }) => {
     if (!dockerRef?.current) {
       return;
     }
+
+    
 
     let oneShot = false;
     const innerGraph = node._innerGraph;

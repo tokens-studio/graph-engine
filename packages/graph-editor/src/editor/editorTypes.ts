@@ -10,10 +10,12 @@ import { Control } from '../types/controls.js';
 import { DropPanelStore } from '@/components/panels/dropPanel/index.js';
 import { Edge, Node, ReactFlowInstance } from 'reactflow';
 import { Menu } from '@/components/menubar/data.js';
-import type { LayoutBase } from 'rc-dock';
+import type { LayoutBase, TabBase, TabData } from 'rc-dock';
 
 export interface EditorProps {
   id?: string;
+
+  tabLoader?: (tab: TabBase) => TabData | undefined;
 
   /**
    * A lookup of the custom node types to display in the editor.

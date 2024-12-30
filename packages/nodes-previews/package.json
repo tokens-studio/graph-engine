@@ -1,7 +1,7 @@
 {
-  "name": "@tokens-studio/graph-engine-nodes-fs",
-  "version": "5.0.0",
-  "description": "File system manipulation nodes for the graph engine",
+  "name": "@tokens-studio/graph-engine-nodes-preview",
+  "version": "1.0.0",
+  "description": "Panel based preview nodes",
   "license": "MPL-2.0",
   "author": "andrew@hyma.io",
   "type": "module",
@@ -31,13 +31,15 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@tokens-studio/ui": "^1.0.7",
     "mobx-react-lite": "^4.0.5"
   },
   "peerDependencies": {
+    "@tokens-studio/icons": "^0.1.4",
+    "@tokens-studio/ui": "^1.0.7",
     "@tokens-studio/graph-editor": "*",
     "@tokens-studio/graph-engine": "*",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "colorjs.io": "^0.5.2"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.0",

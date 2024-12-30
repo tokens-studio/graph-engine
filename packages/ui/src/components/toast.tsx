@@ -1,4 +1,4 @@
-import { Toast } from '@tokens-studio/ui';
+import { Toast } from '@tokens-studio/ui/Toast.js';
 import React from 'react';
 
 export interface TriggeredToastProps {
