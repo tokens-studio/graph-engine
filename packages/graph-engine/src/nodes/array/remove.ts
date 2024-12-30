@@ -38,18 +38,12 @@ export default class NodeDefinition<T> extends Node {
 		const { index, array } = this.getAllInputs();
 		const arrayType = this.inputs.array.type;
 
-		// Create a copy of the array value
+		// Create a copy and remove item if index is valid
 		const result = [...array];
-		let removedItem: T | undefined;
-
-		if (index >= 0 && index < result.length) {
-			// Remove item at positive index
-			[removedItem] = result.splice(index, 1);
-		} else if (index < 0 && Math.abs(index) <= result.length) {
-			// Handle negative indices by counting from the end
-			const actualIndex = result.length + index;
-			[removedItem] = result.splice(actualIndex, 1);
-		}
+		const [removedItem] =
+			index >= -result.length && index < result.length
+				? result.splice(index, 1)
+				: [];
 
 		// Set the outputs
 		this.outputs.array.set(result, arrayType);
