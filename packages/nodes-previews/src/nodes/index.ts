@@ -1,4 +1,4 @@
-import ColorScale from './colorScale.js';
+import ColorScale from './color/colorScale.js';
 import type { Node } from '@tokens-studio/graph-engine';
 
 /**

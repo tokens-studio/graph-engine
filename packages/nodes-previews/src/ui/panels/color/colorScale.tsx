@@ -1,9 +1,10 @@
 import { Text } from '@tokens-studio/ui/Text.js';
-import { castToHex } from '../../utils/index.js';
+import { castToHex } from '../../../utils/index.js';
 import { observer } from 'mobx-react-lite';
 import Color from 'colorjs.io';
-import ColorScale from '../../nodes/colorScale.js';
+import ColorScale from '../../../nodes/color/colorScale.js';
 import React from 'react';
+import styles from './colorScale.module.css';
 
 function contrastingColor(value: string) {
 	const black = new Color('srgb', [0, 0, 0]);
@@ -23,28 +24,15 @@ function contrastingColor(value: string) {
 export const ColorScalePreview = observer(
 	({ inputs }: { inputs: ColorScale['inputs'] }) => {
 		return (
-			<>
+			<div className={styles.scale}>
 				{inputs.scale && (
 					<>
 						{inputs.scale.value.map(color => {
 							const hex = castToHex(color);
 
 							return (
-								<div
-									style={{
-										display: 'grid',
-										placeItems: 'center',
-										width: '100%',
-										minHeight: '100px',
-										backgroundColor: hex
-									}}
-								>
-									<Text
-										style={{
-											font: 'var(--font-body-xl)',
-											color: contrastingColor(hex)
-										}}
-									>
+								<div className={styles.swatch} style={{ backgroundColor: hex }}>
+									<Text size='large' style={{ color: contrastingColor(hex) }}>
 										{hex}
 									</Text>
 								</div>
@@ -52,7 +40,7 @@ export const ColorScalePreview = observer(
 						})}
 					</>
 				)}
-			</>
+			</div>
 		);
 	}
 );
