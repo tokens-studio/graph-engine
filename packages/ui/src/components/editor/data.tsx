@@ -1,4 +1,3 @@
-
 import { Volume } from 'memfs';
 import {
 	WebAudioCapability,
@@ -37,7 +36,6 @@ export const icons = {
 };
 
 export const controls = [...designControls, ...defaultControls];
-
 
 export const specifics = {
 	...defaultSpecifics,

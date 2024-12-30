@@ -7,6 +7,7 @@ import { audioEnabled } from '@/lib/featureFlags.ts';
 import { nodeLookup as audioLookup } from '@tokens-studio/graph-engine-nodes-audio';
 import { nodes as designNodes } from '@tokens-studio/graph-engine-nodes-design-tokens';
 import { nodes as figmaNodes } from '@tokens-studio/graph-engine-nodes-figma';
+import { nodes as previewNodes } from '@tokens-studio/graph-engine-nodes-preview';
 import Accessibility from '@tokens-studio/icons/Accessibility.js';
 import Calculator from '@tokens-studio/icons/Calculator.js';
 import CodeBrackets from '@tokens-studio/icons/CodeBrackets.js';
@@ -123,6 +124,23 @@ panelItems.groups.push(
 				new PanelItem({
 					type: node.type,
 					text: node.title,
+					description: node.description,
+					docs: ''
+				})
+		)
+	})
+);
+
+panelItems.groups.push(
+	new PanelGroup({
+		title: 'Previews',
+		key: 'previews',
+		icon: <Eye />,
+		items: previewNodes.map(
+			node =>
+				new PanelItem({
+					type: node.type,
+					text: node.title!,
 					description: node.description,
 					docs: ''
 				})

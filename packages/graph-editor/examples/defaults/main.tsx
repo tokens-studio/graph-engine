@@ -6,7 +6,6 @@ import '@fontsource/geist-sans/400.css';
 import '@fontsource/geist-sans/500.css';
 import '@fontsource/geist-sans/600.css';
 
-
 import './index.css';
 import '@tokens-studio/graph-editor/index.css';
 
@@ -23,7 +22,7 @@ const panelItems = defaultPanelGroupsFactory();
 
 ReactDOM.createRoot(document.getElementById('__cy_root')!).render(
   <React.StrictMode>
-    <div className='ts-theme-dark' id="graph-editor">
+    <div className="ts-theme-dark" id="graph-editor">
       <Editor panelItems={panelItems} />
     </div>
   </React.StrictMode>,

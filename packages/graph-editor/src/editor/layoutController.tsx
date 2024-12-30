@@ -27,10 +27,14 @@ import { MAIN_GRAPH_ID } from '@/constants.js';
 import { OutputSheet } from '@/components/panels/output/index.js';
 import ArrowUpRight from '@tokens-studio/icons/ArrowUpRight.js';
 import Maximize from '@tokens-studio/icons/Maximize.js';
-import React, { MutableRefObject, useCallback, useEffect, useMemo } from 'react';
+import React, {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react';
 import Reduce from '@tokens-studio/icons/Reduce.js';
 import Xmark from '@tokens-studio/icons/Xmark.js';
-
 
 const DockButton = (rest) => {
   return (
@@ -175,7 +179,7 @@ const layoutDataFactory = (props, ref): LayoutData => {
                             {
                               id: 'dropPanel',
                               title: '',
-                              content: <></>
+                              content: <></>,
                             },
                           ],
                         },
@@ -209,7 +213,6 @@ const layoutDataFactory = (props, ref): LayoutData => {
                                 </ErrorBoundary>
                               ),
                             },
-
                           ],
                         },
                       ],
@@ -225,7 +228,7 @@ const layoutDataFactory = (props, ref): LayoutData => {
                             {
                               id: 'input',
                               title: '',
-                              content: <></>
+                              content: <></>,
                             },
                           ],
                         },
@@ -235,7 +238,7 @@ const layoutDataFactory = (props, ref): LayoutData => {
                             {
                               id: 'outputs',
                               title: '',
-                              content: <></>
+                              content: <></>,
                             },
                           ],
                         },
@@ -252,11 +255,9 @@ const layoutDataFactory = (props, ref): LayoutData => {
   };
 };
 
-
 const layoutLoader = (tab: TabBase): TabData => {
   const { id } = tab;
   switch (id) {
-
     case 'input':
       return {
         closable: true,
@@ -265,9 +266,7 @@ const layoutLoader = (tab: TabBase): TabData => {
         id: 'input',
         title: 'Inputs',
         content: (
-          <ErrorBoundary
-            fallback={<ErrorBoundaryContent />}
-          >
+          <ErrorBoundary fallback={<ErrorBoundaryContent />}>
             <Inputsheet />
           </ErrorBoundary>
         ),
@@ -280,13 +279,11 @@ const layoutLoader = (tab: TabBase): TabData => {
         id: 'outputs',
         title: 'Outputs',
         content: (
-          <ErrorBoundary
-            fallback={<ErrorBoundaryContent />}
-          >
+          <ErrorBoundary fallback={<ErrorBoundaryContent />}>
             <OutputSheet />
           </ErrorBoundary>
         ),
-      }
+      };
 
     case 'dropPanel':
       return {
@@ -294,9 +291,7 @@ const layoutLoader = (tab: TabBase): TabData => {
         id: 'dropPanel',
         title: 'Nodes',
         content: (
-          <ErrorBoundary
-            fallback={<ErrorBoundaryContent />}
-          >
+          <ErrorBoundary fallback={<ErrorBoundaryContent />}>
             <DropPanel />
           </ErrorBoundary>
         ),
@@ -305,9 +300,8 @@ const layoutLoader = (tab: TabBase): TabData => {
 
     default:
       return tab as TabData;
-
   }
-}
+};
 
 export const LayoutController = React.forwardRef<
   ImperativeEditorRef,
@@ -325,20 +319,20 @@ export const LayoutController = React.forwardRef<
 
   const dockerRef = useSelector(dockerSelector) as MutableRefObject<DockLayout>;
 
-  const loadTab = useCallback((tab): TabData => {
+  const loadTab = useCallback(
+    (tab): TabData => {
+      if (!tabLoader) {
+        return layoutLoader(tab);
+      }
 
-    if (!tabLoader) {
-      return layoutLoader(tab);
-    }
-
-    const loaded = tabLoader(tab);
-    if (!loaded) {
-      return layoutLoader(tab);
-    }
-    return loaded;
-
-  }, [tabLoader]);
-
+      const loaded = tabLoader(tab);
+      if (!loaded) {
+        return layoutLoader(tab);
+      }
+      return loaded;
+    },
+    [tabLoader],
+  );
 
   //Generate once
   const defaultDockLayout: LayoutData = useMemo(
@@ -377,7 +371,6 @@ export const LayoutController = React.forwardRef<
             groups={groups}
             loadTab={loadTab}
             style={{ flex: 1 }}
-
             onLayoutChange={onLayoutChange}
           />
           <FindDialog />

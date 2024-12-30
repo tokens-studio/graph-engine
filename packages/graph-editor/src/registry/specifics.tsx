@@ -23,8 +23,6 @@ const SubgraphExplorer = ({ node }) => {
       return;
     }
 
-    
-
     let oneShot = false;
     const innerGraph = node._innerGraph;
     const graphId = innerGraph.annotations['engine.id'];

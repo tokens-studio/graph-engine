@@ -43,8 +43,6 @@ export const EditorTab = observer(
 					// @ts-ignore
 					ref={ref}
 					showMenu={false}
-
-
 					menuItems={menu}
 					panelItems={panelItems}
 					nodeTypes={nodeTypes}
