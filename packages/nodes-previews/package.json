@@ -19,7 +19,7 @@
   },
   "scripts": {
     "build": "tspc -p tsconfig.prod.json && postcss \"src/**/*.css\" --base src --dir dist",
-    "dev": "concurrently \"tspc -p tsconfig.prod.json --watch\" \"postcss 'src/**/*.css' --base src --dir dist --watch\"",
+    "dev": "tspc -p tsconfig.prod.json --watch",
     "docs": "typedoc",
     "format": "npm run format:eslint && npm run format:prettier",
     "format:eslint": "eslint . --fix",
