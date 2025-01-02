@@ -1,5 +1,15 @@
 # @tokens-studio/graph-engine
 
+## 4.5.0
+
+### Minor Changes
+
+- e306901: Adds a new array node that removes an item at a specified index and returns both the modified array and the removed item. Supports both positive and negative indices for flexible array manipulation.
+
+### Patch Changes
+
+- 809ef95: Upgrade @tokens-studio dependencies to latest, to avoid un-dedupable shared deps with Studio App and stitches styles from old UI leaking through.
+
 ## 4.4.0
 
 ### Minor Changes
