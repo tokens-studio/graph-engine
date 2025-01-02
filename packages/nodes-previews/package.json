@@ -36,8 +36,8 @@
   "peerDependencies": {
     "@tokens-studio/graph-editor": "*",
     "@tokens-studio/graph-engine": "*",
+    "@tokens-studio/graph-engine-nodes-design-tokens": "*",
     "@tokens-studio/icons": "^0.1.4",
-    "@tokens-studio/nodes-design-tokens": "*",
     "@tokens-studio/ui": "^1.0.7",
     "colorjs.io": "^0.5.2",
     "react": "^18.2.0"
