@@ -6,8 +6,8 @@ import ColorSwatchNode from './color/swatch/node.js';
 import type { Node } from '@tokens-studio/graph-engine';
 
 export const specifics = {
-	'studio.tokens.previews.colorScale': ColorScale,
-	'studio.tokens.previews.colorSwatch': ColorSwatch
+	'studio.tokens.previews.color.scale': ColorScale,
+	'studio.tokens.previews.color.swatch': ColorSwatch
 };
 
 /**
