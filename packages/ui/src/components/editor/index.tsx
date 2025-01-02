@@ -11,6 +11,7 @@ import {
 	menu,
 	nodeTypes,
 	panelItems,
+	previewItems,
 	specifics
 } from './data.tsx';
 import { observer } from 'mobx-react-lite';
@@ -45,6 +46,7 @@ export const EditorTab = observer(
 					showMenu={false}
 					menuItems={menu}
 					panelItems={panelItems}
+					previewItems={previewItems}
 					nodeTypes={nodeTypes}
 					capabilities={capabilities}
 					controls={controls}

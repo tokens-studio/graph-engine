@@ -45,4 +45,5 @@ export const specifics = {
 
 export { menu } from './menu.tsx';
 export { panelItems } from './panelItems.tsx';
+export { previewItems } from './previewItem.tsx';
 export { nodeTypes } from './nodeTypes.tsx';

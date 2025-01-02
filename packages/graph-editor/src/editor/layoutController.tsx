@@ -181,6 +181,11 @@ const layoutDataFactory = (props, ref): LayoutData => {
                               title: '',
                               content: <></>,
                             },
+                            {
+                              id: 'previewNodesPanel',
+                              title: '',
+                              content: <></>,
+                            },
                           ],
                         },
                       ],
@@ -289,6 +294,19 @@ const layoutLoader = (tab: TabBase): TabData => {
       return {
         group: 'popout',
         id: 'dropPanel',
+        title: 'Nodes',
+        content: (
+          <ErrorBoundary fallback={<ErrorBoundaryContent />}>
+            <DropPanel />
+          </ErrorBoundary>
+        ),
+        closable: true,
+      };
+
+    case 'previewNodesPanel':
+      return {
+        group: 'popout',
+        id: 'previewNodesPanel',
         title: 'Nodes',
         content: (
           <ErrorBoundary fallback={<ErrorBoundaryContent />}>

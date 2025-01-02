@@ -3,7 +3,7 @@ import { arrayOf } from '../../utils/index.js';
 
 export default class NodeDefinition extends Node {
 	static title = 'Color Scale';
-	static type = 'studio.tokens.previews.colorScale';
+	static type = 'studio.tokens.previews.color.scale';
 
 	static description = 'Previews a color scale';
 

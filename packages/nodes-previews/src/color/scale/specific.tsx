@@ -1,10 +1,10 @@
 import { Button } from '@tokens-studio/ui/Button.js';
 import { useOpenPanel } from '@tokens-studio/graph-editor';
-import ColorScalePreview from '../panels/color/colorScale.js';
+import ColorScalePreview from './panel.js';
 import Eye from '@tokens-studio/icons/Eye.js';
 import React from 'react';
 
-const ColorScale = ({ node }) => {
+export const ColorScale = ({ node }) => {
 	const { toggle } = useOpenPanel();
 
 	return (
@@ -24,8 +24,4 @@ const ColorScale = ({ node }) => {
 			Toggle Preview
 		</Button>
 	);
-};
-
-export const specifics = {
-	'studio.tokens.previews.colorScale': ColorScale
 };

@@ -1,10 +1,10 @@
 import { Text } from '@tokens-studio/ui/Text.js';
-import { castToHex } from '../../../utils/index.js';
+import { castToHex } from '../../utils/index.js';
 import { observer } from 'mobx-react-lite';
 import Color from 'colorjs.io';
-import ColorScale from '../../../nodes/color/colorScale.js';
 import React from 'react';
-import styles from './colorScale.module.css';
+import styles from './panel.module.css';
+import type ColorScale from './node.js';
 
 function contrastingColor(value: string) {
 	const black = new Color('srgb', [0, 0, 0]);
