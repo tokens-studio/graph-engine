@@ -22,8 +22,14 @@ export const ColorSwatchPreview = observer(
 		return (
 			<div className={styles.container}>
 				{inputs.color && (
-					<div className={styles.swatch} style={{ backgroundColor: castToHex(inputs.color.value) }}>
-						<Text size='large' style={{ color: contrastingColor(castToHex(inputs.color.value)) }}>
+					<div
+						className={styles.swatch}
+						style={{ backgroundColor: castToHex(inputs.color.value) }}
+					>
+						<Text
+							size='large'
+							style={{ color: contrastingColor(castToHex(inputs.color.value)) }}
+						>
 							{castToHex(inputs.color.value)}
 						</Text>
 					</div>
@@ -33,4 +39,4 @@ export const ColorSwatchPreview = observer(
 	}
 );
 
-export default ColorSwatchPreview; 
+export default ColorSwatchPreview;

@@ -17,7 +17,3 @@ export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
 	ColorScaleNode,
 	ColorSwatchNode
 );
-
-
-
-

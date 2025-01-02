@@ -12,4 +12,4 @@ export default class NodeDefinition extends Node {
 			type: ColorSchema
 		});
 	}
-} 
+}

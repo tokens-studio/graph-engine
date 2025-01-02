@@ -17,6 +17,7 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const {
       panelItems = defaultPanelGroupsFactory(),
       capabilities,
+      previewPanelItems,
       toolbarButtons,
       schemas,
       nodeTypes = defaultNodeLookup,
@@ -30,6 +31,7 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
       <ToastProvider>
         <ReduxProvider
           icons={icons}
+          previewPanelItems={previewPanelItems}
           schemas={schemas}
           controls={controls}
           panelItems={panelItems}

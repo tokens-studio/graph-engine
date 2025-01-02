@@ -24,4 +24,4 @@ export const ColorSwatch = ({ node }) => {
 			Toggle Preview
 		</Button>
 	);
-}; 
+};

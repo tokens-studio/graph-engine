@@ -37,6 +37,8 @@ export const EditorTab = observer(
 			globalState.ui.showExamplePicker = true;
 		}, []);
 
+		console.log(previewItems);
+
 		return (
 			<div style={{ position: 'relative', width: '100%', height: '100%' }}>
 				<Editor
@@ -46,7 +48,7 @@ export const EditorTab = observer(
 					showMenu={false}
 					menuItems={menu}
 					panelItems={panelItems}
-					previewItems={previewItems}
+					previewPanelItems={previewItems}
 					nodeTypes={nodeTypes}
 					capabilities={capabilities}
 					controls={controls}
