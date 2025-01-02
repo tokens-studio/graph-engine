@@ -1,5 +1,16 @@
 # @tokens-studio/graph-engine
 
+## 7.1.0
+
+### Minor Changes
+
+- 8b95696: Added array group/ungroup nodes for token arrays
+
+### Patch Changes
+
+- 809ef95: Upgrade @tokens-studio dependencies to latest, to avoid un-dedupable shared deps with Studio App and stitches styles from old UI leaking through.
+- 433ddb5: Fixes the incorrectly typed Tokenset Schema
+
 ## 7.0.0
 
 ### Patch Changes
