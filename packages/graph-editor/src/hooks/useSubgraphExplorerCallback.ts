@@ -37,7 +37,6 @@ export const useSubgraphExplorerCallback = (node) => {
         title,
         content: window && window['newGraphEditor'](ref, graphId),
       };
-      console.log(newTab);
       dockerRef.current.dockMove(newTab, 'graphs', 'middle');
     } else {
       dockerRef.current.updateTab(graphId, null, true);
