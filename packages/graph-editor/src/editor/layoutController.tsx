@@ -17,7 +17,10 @@ import { useDispatch } from '@/hooks/useDispatch.js';
 import { useRegisterRef } from '@/hooks/useRegisterRef.js';
 import { useSelector } from 'react-redux';
 
-import { DropPanel } from '@/components/panels/dropPanel/dropPanel.js';
+import {
+  DropPanel,
+  PreviewDropPanel,
+} from '@/components/panels/dropPanel/dropPanel.js';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
@@ -181,6 +184,11 @@ const layoutDataFactory = (props, ref): LayoutData => {
                               title: '',
                               content: <></>,
                             },
+                            {
+                              id: 'previewNodesPanel',
+                              title: '',
+                              content: <></>,
+                            },
                           ],
                         },
                       ],
@@ -293,6 +301,19 @@ const layoutLoader = (tab: TabBase): TabData => {
         content: (
           <ErrorBoundary fallback={<ErrorBoundaryContent />}>
             <DropPanel />
+          </ErrorBoundary>
+        ),
+        closable: true,
+      };
+
+    case 'previewNodesPanel':
+      return {
+        group: 'popout',
+        id: 'previewNodesPanel',
+        title: 'Preview',
+        content: (
+          <ErrorBoundary fallback={<ErrorBoundaryContent />}>
+            <PreviewDropPanel />
           </ErrorBoundary>
         ),
         closable: true,

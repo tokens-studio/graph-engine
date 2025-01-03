@@ -1,14 +1,16 @@
-import { IconButton } from '@tokens-studio/ui/IconButton.js';
+import { Button } from '@tokens-studio/ui/Button.js';
 import { useOpenPanel } from '@tokens-studio/graph-editor';
-import ColorScalePreview from '../panels/colorScale.js';
+import ColorScalePreview from './panel.js';
 import Eye from '@tokens-studio/icons/Eye.js';
 import React from 'react';
 
-const ColorScale = ({ node }) => {
+export const ColorScale = ({ node }) => {
 	const { toggle } = useOpenPanel();
 
 	return (
-		<IconButton
+		<Button
+			fullWidth
+			emphasis='high'
 			onClick={() => {
 				toggle({
 					group: 'popout',
@@ -18,11 +20,8 @@ const ColorScale = ({ node }) => {
 				});
 			}}
 			icon={<Eye />}
-			tooltip='Toggle Preview'
-		/>
+		>
+			Toggle Preview
+		</Button>
 	);
-};
-
-export const specifics = {
-	'studio.tokens.previews.colorScale': ColorScale
 };

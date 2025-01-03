@@ -55,6 +55,8 @@ export interface EditorProps {
    */
   panelItems: DropPanelStore;
 
+  previewPanelItems: DropPanelStore;
+
   /**
    * Customize the controls that are displayed in the editor
    */
