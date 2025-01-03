@@ -1,0 +1,23 @@
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--fontSizes-small);
+  gap: var(--component-spacing-xs);
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+.listItem {
+  cursor: pointer;
+  display: inline-flex;
+  gap: 0.5ch;
+  padding-left: 0;
+  padding-left: calc(var(--tree-depth, 0) * var(--component-spacing-xs, 1));
+}
+
+.listItemCount {
+  opacity: 0.5;
+  font-weight: normal;
+}

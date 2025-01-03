@@ -4,6 +4,7 @@ import { GraphPanel } from '../panels/graph/index.js';
 import { Inputsheet } from '../panels/inputs/index.js';
 import { Legend } from '../panels/legend/index.js';
 import { LogsPanel } from '../panels/logs/index.js';
+import { NavigationPanel } from '../panels/navigation/index.js';
 import { NodeSettingsPanel } from '../panels/nodeSettings/index.js';
 import { OutputSheet } from '../panels/output/index.js';
 import { Settings } from '../panels/settings/index.js';
@@ -54,6 +55,11 @@ export const layoutButtons = {
     id: 'dropPanel',
     title: 'Nodes',
     content: <DropPanel />,
+  },
+  navigationPanel: {
+    id: 'navigationPanel',
+    title: 'Navigation',
+    content: <NavigationPanel />,
   },
 };
 
