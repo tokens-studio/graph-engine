@@ -1,15 +1,14 @@
 import React from 'react';
 
-import { Stack, IconButton, Tooltip } from '@tokens-studio/ui';
 import { MAIN_GRAPH_ID } from '@/constants.js';
+import { Stack } from '@tokens-studio/ui';
+import { TreeNode, graphNodesSelector } from '@/redux/selectors/graph.js';
+import { currentPanelIdSelector } from '@/redux/selectors/graph.js';
 import { dockerSelector } from '@/redux/selectors/refs.js';
-import { graphNodesSelector, TreeNode } from '@/redux/selectors/graph.js';
+import { flow, get, size } from 'lodash-es';
 import { useSelector } from 'react-redux';
 import { useSubgraphExplorerCallback } from '@/hooks/useSubgraphExplorerCallback.js';
-import { currentPanelIdSelector } from '@/redux/selectors/graph.js';
 import styles from './index.module.css';
-import { get, size, flow } from 'lodash-es';
-import ArrowsUpFromLine from '@tokens-studio/icons/ArrowsUpFromLine.js';
 
 type ListItemProps = {
   label: string;
@@ -58,7 +57,7 @@ const SubgraphNodeItem = function ({ node, isSelected, depth }) {
   );
 };
 
-const RootGraphNodeItem = function ({}) {
+const RootGraphNodeItem = function () {
   const dockerRef = useSelector(dockerSelector);
   const activeGraphId = useSelector(currentPanelIdSelector);
 

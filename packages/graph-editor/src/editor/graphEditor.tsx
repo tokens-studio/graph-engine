@@ -1,8 +1,8 @@
 import { EditorApp } from './graph.js';
-import { GraphEditorProps, ImperativeEditorRef } from './editorTypes.js';
-import { ReactFlowProvider } from 'reactflow';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
+import { GraphEditorProps, ImperativeEditorRef } from './editorTypes.js';
+import { ReactFlowProvider } from 'reactflow';
 import React from 'react';
 
 /**

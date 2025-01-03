@@ -1,10 +1,8 @@
-import { ErrorBoundary } from 'react-error-boundary';
-import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
 import { ImperativeEditorRef } from '../index.js';
 import { title as annotatedTitle } from '@/annotations/index.js';
 import { dockerSelector } from '@/redux/selectors/refs.js';
+import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import React, { useCallback } from 'react';
 
 export const useSubgraphExplorerCallback = (node) => {
   const dockerRef = useSelector(dockerSelector);
