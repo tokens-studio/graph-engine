@@ -28,7 +28,6 @@
 .fontName {
   font-size: 14px;
   font-weight: 600;
-  color: var(--ts-color-foreground-neutral-emphasis);
 }
 
 .fontSample {
@@ -36,7 +35,6 @@
   align-items: center;
   justify-content: center;
   min-height: var(--component-size-500);
-  background-color: var(--ts-color-surface-neutral);
   border-radius: var(--component-radii-md);
 }
 
