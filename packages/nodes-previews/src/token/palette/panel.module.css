@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--component-spacing-md);
+  padding: var(--component-spacing-md);
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--component-spacing-sm);
+}
+
+.groupName {
+  font: var(--font-body-sm);
+  color: var(--color-neutral-canvas-default-fg-default);
+}
+
+.swatches {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: var(--component-spacing-sm);
+  width: 100%;
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  border-radius: var(--component-radii-md);
+  overflow: hidden;
+  border: var(--component-border-width-sm) solid var(--stroke-subtle);
+}
+
+.colorInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--component-spacing-xs);
+  padding: var(--component-spacing-sm);
+}
+
+.color {
+  width: 100%;
+  height: var(--size-300);
+}
+
+.colorValue {
+  font: var(--font-code-md);
+}
