@@ -1,6 +1,6 @@
 import { IField } from './interface.js';
 import { Input } from '@tokens-studio/graph-engine';
-import { Select } from '@tokens-studio/ui';
+import { Select } from '@tokens-studio/ui/Select.js';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback } from 'react';
 

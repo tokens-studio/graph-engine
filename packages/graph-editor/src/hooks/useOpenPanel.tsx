@@ -5,8 +5,9 @@ import React, { MutableRefObject, useCallback } from 'react';
 import type { DockLayout } from 'rc-dock';
 
 export type PanelFactory = {
+  group: string;
   id: string;
-  title: React.ReactElement;
+  title: React.ReactElement | string;
   content: React.ReactElement;
 };
 

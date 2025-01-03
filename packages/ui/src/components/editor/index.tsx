@@ -11,8 +11,9 @@ import {
 	menu,
 	nodeTypes,
 	panelItems,
+	previewItems,
 	specifics
-} from './data.ts';
+} from './data.tsx';
 import { observer } from 'mobx-react-lite';
 import { useGetEditor } from '@/hooks/useGetEditor.ts';
 import React, { useCallback } from 'react';
@@ -36,6 +37,8 @@ export const EditorTab = observer(
 			globalState.ui.showExamplePicker = true;
 		}, []);
 
+		console.log(previewItems);
+
 		return (
 			<div style={{ position: 'relative', width: '100%', height: '100%' }}>
 				<Editor
@@ -45,6 +48,7 @@ export const EditorTab = observer(
 					showMenu={false}
 					menuItems={menu}
 					panelItems={panelItems}
+					previewPanelItems={previewItems}
 					nodeTypes={nodeTypes}
 					capabilities={capabilities}
 					controls={controls}

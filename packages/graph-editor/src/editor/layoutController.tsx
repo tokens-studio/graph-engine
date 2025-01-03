@@ -4,6 +4,8 @@ import {
   LayoutBase,
   LayoutData,
   PanelBase,
+  TabBase,
+  TabData,
   TabGroup,
 } from 'rc-dock';
 import { ExternalLoaderProvider } from '@/context/ExternalLoaderContext.js';
@@ -15,7 +17,10 @@ import { useDispatch } from '@/hooks/useDispatch.js';
 import { useRegisterRef } from '@/hooks/useRegisterRef.js';
 import { useSelector } from 'react-redux';
 
-import { DropPanel } from '@/components/panels/dropPanel/dropPanel.js';
+import {
+  DropPanel,
+  PreviewDropPanel,
+} from '@/components/panels/dropPanel/dropPanel.js';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
@@ -23,12 +28,16 @@ import { FindDialog } from '@/components/dialogs/findDialog.js';
 import { IconButton, Stack, Tooltip } from '@tokens-studio/ui';
 import { MAIN_GRAPH_ID } from '@/constants.js';
 import { OutputSheet } from '@/components/panels/output/index.js';
+import ArrowUpRight from '@tokens-studio/icons/ArrowUpRight.js';
 import Maximize from '@tokens-studio/icons/Maximize.js';
-import React, { MutableRefObject, useEffect, useMemo } from 'react';
+import React, {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react';
 import Reduce from '@tokens-studio/icons/Reduce.js';
 import Xmark from '@tokens-studio/icons/Xmark.js';
-
-OutputSheet;
 
 const DockButton = (rest) => {
   return (
@@ -60,15 +69,14 @@ const groups: Record<string, TabGroup> = {
             onClick={() => context.dockMove(panelData, null, 'maximize')}
           ></DockButton>,
         );
-        //@todo fix. Caused by stitches not working when moved across to popup
-        // buttons.push(
-        //   <DockButton
-        //     key="new-window"
-        //     title="Open in new window"
-        //     icon={<ArrowUpRightIcon />}
-        //     onClick={() => context.dockMove(panelData, null, 'new-window')}
-        //   ></DockButton>,
-        // );
+        buttons.push(
+          <DockButton
+            key="new-window"
+            title="Open in new window"
+            icon={<ArrowUpRight />}
+            onClick={() => context.dockMove(panelData, null, 'new-window')}
+          ></DockButton>,
+        );
       }
       buttons.push(
         <DockButton
@@ -172,17 +180,14 @@ const layoutDataFactory = (props, ref): LayoutData => {
                         {
                           tabs: [
                             {
-                              group: 'popout',
                               id: 'dropPanel',
-                              title: 'Nodes',
-                              content: (
-                                <ErrorBoundary
-                                  fallback={<ErrorBoundaryContent />}
-                                >
-                                  <DropPanel />
-                                </ErrorBoundary>
-                              ),
-                              closable: true,
+                              title: '',
+                              content: <></>,
+                            },
+                            {
+                              id: 'previewNodesPanel',
+                              title: '',
+                              content: <></>,
                             },
                           ],
                         },
@@ -229,18 +234,9 @@ const layoutDataFactory = (props, ref): LayoutData => {
                           size: 12,
                           tabs: [
                             {
-                              closable: true,
-                              cached: true,
-                              group: 'popout',
                               id: 'input',
-                              title: 'Inputs',
-                              content: (
-                                <ErrorBoundary
-                                  fallback={<ErrorBoundaryContent />}
-                                >
-                                  <Inputsheet />
-                                </ErrorBoundary>
-                              ),
+                              title: '',
+                              content: <></>,
                             },
                           ],
                         },
@@ -248,18 +244,9 @@ const layoutDataFactory = (props, ref): LayoutData => {
                           size: 12,
                           tabs: [
                             {
-                              closable: true,
-                              cached: true,
-                              group: 'popout',
                               id: 'outputs',
-                              title: 'Outputs',
-                              content: (
-                                <ErrorBoundary
-                                  fallback={<ErrorBoundaryContent />}
-                                >
-                                  <OutputSheet />
-                                </ErrorBoundary>
-                              ),
+                              title: '',
+                              content: <></>,
                             },
                           ],
                         },
@@ -276,11 +263,73 @@ const layoutDataFactory = (props, ref): LayoutData => {
   };
 };
 
+const layoutLoader = (tab: TabBase): TabData => {
+  const { id } = tab;
+  switch (id) {
+    case 'input':
+      return {
+        closable: true,
+        cached: true,
+        group: 'popout',
+        id: 'input',
+        title: 'Inputs',
+        content: (
+          <ErrorBoundary fallback={<ErrorBoundaryContent />}>
+            <Inputsheet />
+          </ErrorBoundary>
+        ),
+      };
+    case 'outputs':
+      return {
+        closable: true,
+        cached: true,
+        group: 'popout',
+        id: 'outputs',
+        title: 'Outputs',
+        content: (
+          <ErrorBoundary fallback={<ErrorBoundaryContent />}>
+            <OutputSheet />
+          </ErrorBoundary>
+        ),
+      };
+
+    case 'dropPanel':
+      return {
+        group: 'popout',
+        id: 'dropPanel',
+        title: 'Nodes',
+        content: (
+          <ErrorBoundary fallback={<ErrorBoundaryContent />}>
+            <DropPanel />
+          </ErrorBoundary>
+        ),
+        closable: true,
+      };
+
+    case 'previewNodesPanel':
+      return {
+        group: 'popout',
+        id: 'previewNodesPanel',
+        title: 'Preview',
+        content: (
+          <ErrorBoundary fallback={<ErrorBoundaryContent />}>
+            <PreviewDropPanel />
+          </ErrorBoundary>
+        ),
+        closable: true,
+      };
+
+    default:
+      return tab as TabData;
+  }
+};
+
 export const LayoutController = React.forwardRef<
   ImperativeEditorRef,
   EditorProps
 >((props: EditorProps, ref) => {
   const {
+    tabLoader,
     externalLoader,
     initialLayout,
     menuItems = defaultMenuDataFactory(),
@@ -290,6 +339,21 @@ export const LayoutController = React.forwardRef<
   const dispatch = useDispatch();
 
   const dockerRef = useSelector(dockerSelector) as MutableRefObject<DockLayout>;
+
+  const loadTab = useCallback(
+    (tab): TabData => {
+      if (!tabLoader) {
+        return layoutLoader(tab);
+      }
+
+      const loaded = tabLoader(tab);
+      if (!loaded) {
+        return layoutLoader(tab);
+      }
+      return loaded;
+    },
+    [tabLoader],
+  );
 
   //Generate once
   const defaultDockLayout: LayoutData = useMemo(
@@ -326,6 +390,7 @@ export const LayoutController = React.forwardRef<
             ref={registerDocker}
             defaultLayout={defaultDockLayout}
             groups={groups}
+            loadTab={loadTab}
             style={{ flex: 1 }}
             onLayoutChange={onLayoutChange}
           />

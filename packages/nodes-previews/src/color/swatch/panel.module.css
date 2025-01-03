@@ -1,0 +1,28 @@
+.swatch {
+  --text-light: hsl(from var(--color) h s 95%);
+  --text-dark: hsl(from var(--color) h s 10%);
+
+  color: color-contrast(var(--color) vs var(--text-light), var(--text-dark));
+	display: flex;
+	flex-direction: column;
+  justify-content: space-between;
+	width: 100%;
+	height: 100%;
+  padding: var(--ui-spacing-xl);
+
+} 
+
+.colorName {
+  font: var(--font-display-lg);
+}
+
+.info {
+  dt {
+    font: var(--font-body-sm-bold);
+    text-transform: uppercase;
+  }
+  dd {
+    font: var(--font-code-md);
+    font-size: var(--size-150);
+  }
+}
