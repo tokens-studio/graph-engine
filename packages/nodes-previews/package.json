@@ -48,6 +48,7 @@
     "@tokens-studio/eslint-config-custom": "*",
     "@tokens-studio/graph-editor": "*",
     "@tokens-studio/graph-engine": "*",
+    "@tokens-studio/graph-engine-nodes-design-tokens": "*",
     "@tokens-studio/prettier-config-custom": "*",
     "autoprefixer": "^10.4.20",
     "cssnano": "^7.0.6",
