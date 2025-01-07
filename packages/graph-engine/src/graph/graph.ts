@@ -229,34 +229,119 @@ export class Graph {
 		sourceHandle: Output,
 		target: Node,
 		targetHandle: Input,
-		variadicIndex: number = -1
+		variadicIndex = -1
 	): Edge {
-		//If its variadic we need to check the existing edges
-		let annotations = {};
 		if (targetHandle.variadic) {
-			const edges = this.inEdges(target.id, targetHandle.name);
-			//The number of edges is the new index
-			annotations = {
-				[annotatedVariadicIndex]:
-					variadicIndex == -1 ? edges.length : variadicIndex
-			} as VariadicEdgeData;
-		}
-		//Check to see if there is already a connection on the target
-		if (targetHandle._edges.length > 0 && !targetHandle.variadic) {
-			throw new Error(
-				`Input ${targetHandle.name} on node ${target.id} is already connected`
-			);
-		}
+			// negative => error (except -1 which means append)
+			if (variadicIndex < -1) {
+				throw new Error('Invalid variadic index');
+			}
+			// existing edges
+			const existingEdges = this.inEdges(target.id, targetHandle.name);
+			// sort
+			existingEdges.sort((a, b) => {
+				const av = a.annotations[annotatedVariadicIndex] ?? 0;
+				const bv = b.annotations[annotatedVariadicIndex] ?? 0;
+				return av - bv;
+			});
+			// if -1 => append
+			if (variadicIndex === -1) {
+				variadicIndex = existingEdges.length;
+			}
+			// if larger => fill placeholders
+			while (existingEdges.length < variadicIndex) {
+				const placeholderIndex = existingEdges.length;
+				const placeholderEdge = new Edge({
+					id: uuid(),
+					source: '__placeholder__',
+					sourceHandle: '',
+					target: target.id,
+					targetHandle: targetHandle.name,
+					annotations: {
+						[annotatedVariadicIndex]: placeholderIndex
+					}
+				});
+				// create placeholder
+				existingEdges.push(placeholderEdge);
+				targetHandle._edges.push(placeholderEdge);
+				// fill the array with 0
+				const arr = Array.isArray(targetHandle.value)
+					? [...targetHandle.value]
+					: [];
+				arr[placeholderIndex] = 0;
+				targetHandle.setValue(arr, { noPropagate: true });
+			}
+			// shift existing edges >= variadicIndex
+			existingEdges.forEach(e => {
+				const idx = e.annotations[annotatedVariadicIndex] ?? 0;
+				if (idx >= variadicIndex) {
+					e.annotations[annotatedVariadicIndex] = idx + 1;
+					this.emit('edgeIndexUpdated', e);
+				}
+			});
 
-		//TODO validation of type
-		return this.createEdge({
-			id: uuid(),
-			source: source.id,
-			target: target.id,
-			sourceHandle: sourceHandle.name,
-			targetHandle: targetHandle.name,
-			annotations
-		});
+			// Create the new edge first
+			const annotations: VariadicEdgeData = {
+				index: variadicIndex
+			};
+			const newEdge = this.createEdge({
+				id: uuid(),
+				source: source.id,
+				target: target.id,
+				sourceHandle: sourceHandle.name,
+				targetHandle: targetHandle.name,
+				annotations: {
+					[annotatedVariadicIndex]: annotations.index
+				},
+				noPropagate: true // Important: prevent double array update
+			});
+
+			// Now update the array values - do this only once
+			const arr = Array.isArray(targetHandle.value)
+				? [...targetHandle.value]
+				: [];
+			// Make space for the new value by shifting values right
+			for (let i = arr.length - 1; i >= variadicIndex; i--) {
+				arr[i + 1] = arr[i];
+			}
+			// Insert the new value
+			arr[variadicIndex] = sourceHandle.value;
+			targetHandle.setValue(arr, {
+				noPropagate: true,
+				type: {
+					type: 'array',
+					items: sourceHandle.type
+				}
+			});
+
+			// resort and done
+			targetHandle._edges.sort((a, b) => {
+				const av = a.annotations[annotatedVariadicIndex] ?? 0;
+				const bv = b.annotations[annotatedVariadicIndex] ?? 0;
+				return av - bv;
+			});
+
+			// Now we can propagate
+			this.propagate(source.id);
+
+			return newEdge;
+		} else {
+			// if not variadic, only 1
+			if (targetHandle._edges.length > 0) {
+				throw new Error(
+					`Input ${targetHandle.name} on node ${target.id} is already connected`
+				);
+			}
+			// create normal edge
+			const newEdge = this.createEdge({
+				id: uuid(),
+				source: source.id,
+				target: target.id,
+				sourceHandle: sourceHandle.name,
+				targetHandle: targetHandle.name
+			});
+			return newEdge;
+		}
 	}
 
 	/**
@@ -319,59 +404,85 @@ export class Graph {
 		return true;
 	}
 
-	removeEdge(edgeId: string) {
-		const edge = this.edges[edgeId];
-		if (!edge) {
-			return;
+	removeEdge(edgeId: string): boolean {
+		const e = this.edges[edgeId];
+		if (!e) return false;
+		const sourceNode = this.getNode(e.source);
+		const targetNode = this.getNode(e.target);
+
+		if (sourceNode && this.successorNodes[e.source]) {
+			this.successorNodes[e.source] = this.successorNodes[e.source].filter(
+				x => x !== e.target
+			);
 		}
 
-		//Get the node
-		const target = this.getNode(edge.target);
-		if (target) {
-			const index = edge.annotations[annotatedVariadicIndex]!;
-			const input = target.inputs[edge.targetHandle];
+		// remove from target
+		if (targetNode) {
+			const input = targetNode.inputs[e.targetHandle];
 			if (input) {
-				//Note that the edges might not be in order
-				input._edges = input._edges.reduce((acc, x) => {
-					//Excluded the edge
-					if (x.id === edgeId) {
-						return acc;
+				if (input.variadic) {
+					// find removed index
+					const removedIndex = e.annotations[annotatedVariadicIndex] ?? 0;
+					// sort edges first
+					input._edges.sort((a, b) => {
+						const av = a.annotations[annotatedVariadicIndex] ?? 0;
+						const bv = b.annotations[annotatedVariadicIndex] ?? 0;
+						return av - bv;
+					});
+					// remove
+					input._edges = input._edges.filter(ed => ed.id !== edgeId);
+					// remove from array
+					const arr = Array.isArray(input.value) ? [...input.value] : [];
+					if (removedIndex < arr.length) {
+						arr.splice(removedIndex, 1);
+						// Get type from remaining edges
+						const remainingEdge = input._edges[0];
+						const type = remainingEdge
+							? this.getNode(remainingEdge.source)?.outputs[
+									remainingEdge.sourceHandle
+								].type
+							: input.type?.items || AnySchema;
+						input.setValue(arr, {
+							noPropagate: true,
+							type: {
+								type: 'array',
+								items: type
+							}
+						});
 					}
-					if (x.annotations[annotatedVariadicIndex]! > index) {
-						//Update the index
-						x.annotations[annotatedVariadicIndex] =
-							x.annotations[annotatedVariadicIndex] - 1;
-						this.emit('edgeIndexUpdated', x);
-					}
-					return acc.concat(x);
-				}, [] as Edge[]);
+					// shift indexes > removedIndex
+					input._edges.forEach(ed => {
+						const idx = ed.annotations[annotatedVariadicIndex] ?? 0;
+						if (idx > removedIndex) {
+							ed.annotations[annotatedVariadicIndex] = idx - 1;
+							this.emit('edgeIndexUpdated', ed);
+						}
+					});
+					input._edges.sort((a, b) => {
+						const av = a.annotations[annotatedVariadicIndex] ?? 0;
+						const bv = b.annotations[annotatedVariadicIndex] ?? 0;
+						return av - bv;
+					});
+				} else {
+					input._edges = input._edges.filter(x => x.id !== edgeId);
+				}
 			}
-			//We need to check if its pointing to a variadic input and compact it if needed
-			if (input.variadic) {
-				//Remove the index
-				const newVal = [...(input.value || [])];
-				newVal.splice(index, 1);
-				input.setValue(newVal, {
-					noPropagate: true
-				});
+		}
+		// remove from source
+		if (sourceNode) {
+			const outp = sourceNode.outputs[e.sourceHandle];
+			if (outp) {
+				outp._edges = outp._edges.filter(x => x.id !== edgeId);
 			}
 		}
 
-		// Get the sources, there might be multiple, and we should not set the output to be disconnected if there are multiple
-		const source = this.getNode(edge.source);
-		if (source) {
-			const output = source.outputs[edge.sourceHandle];
-			if (output) {
-				output._edges = output._edges.filter(x => x.id !== edgeId);
-			}
-		}
-
-		//Remove from the lookup
 		delete this.edges[edgeId];
-
-		//We do not update the value or recalculate here since that might result in a lot of unnecessary updates
-
 		this.emit('edgeRemoved', edgeId);
+		// optionally propagate from the source
+		if (sourceNode) {
+			this.propagate(sourceNode.id);
+		}
+		return true;
 	}
 	/**
 	 * Retrieves a flat list of all the nodes ids in the graph
@@ -898,48 +1009,25 @@ export class Graph {
 	 * @param data
 	 */
 	createEdge(opts: EdgeOpts): Edge {
-		const { source, target, sourceHandle, targetHandle, id } = opts;
-		const edge = new Edge(opts);
+		const e = new Edge(opts);
+		const srcNode = this.getNode(opts.source);
+		const tgtNode = this.getNode(opts.target);
+		if (!srcNode) throw new Error(`Source node ${opts.source} does not exist`);
+		if (!tgtNode) throw new Error(`Target node ${opts.target} does not exist`);
+		this.successorNodes[opts.source] ||= [];
+		this.successorNodes[opts.source].push(opts.target);
+		this.edges[opts.id] = e;
 
-		//Validate that the targets exist. This helps to prevent ghost edges
-		const sourceNode = this.getNode(source);
-		const targetNode = this.getNode(target);
+		const inPort = tgtNode.inputs[opts.targetHandle];
+		const outPort = srcNode.outputs[opts.sourceHandle];
+		inPort._edges.push(e);
+		outPort._edges.push(e);
 
-		if (!sourceNode) {
-			throw new Error(`Source node ${source} does not exist`);
+		this.emit('edgeAdded', e);
+		if (!opts.noPropagate) {
+			this.propagate(opts.source);
 		}
-		if (!targetNode) {
-			throw new Error(`Target node ${target} does not exist`);
-		}
-
-		//Initialize the successors
-		this.successorNodes[source] = this.successorNodes[source] || [];
-		this.successorNodes[source].push(target);
-		//Store the edge
-		this.edges[id] = edge;
-
-		const targetPort = targetNode.inputs[targetHandle];
-		const sourcePort = sourceNode.outputs[sourceHandle];
-
-		//Then update the connection on the ports
-		targetPort._edges.push(edge);
-
-		if (targetPort.variadic) {
-			//Extend the variadic array
-			targetPort.setValue((targetPort.value || []).concat([sourcePort.value]), {
-				//TODO
-				// Note that this is a quick fix and that we should probably restrict the update of the typing so that it cannot be overriden later
-				type: {
-					type: 'array',
-					items: sourcePort.type
-				}
-			});
-		}
-
-		sourcePort?._edges.push(edge);
-		this.emit('edgeAdded', edge);
-		this.propagate(source);
-		return edge;
+		return e;
 	}
 	/**
 	 * Return all edges that point into the nodes inputs.
