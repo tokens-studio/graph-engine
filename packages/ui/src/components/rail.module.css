@@ -1,0 +1,4 @@
+.stack {
+    padding: var(--component-spacing-md);
+    border-radius: var(--component-radii-md);
+  }

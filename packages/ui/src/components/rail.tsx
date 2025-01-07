@@ -17,7 +17,8 @@ import Settings from '@tokens-studio/icons/Settings.js';
 import ShoppingBag from '@tokens-studio/icons/ShoppingBag.js';
 import SunLight from '@tokens-studio/icons/SunLight.js';
 import TokensStudio from '@/assets/svgs/tokensstudio-logo.svg';
-
+import clsx from 'clsx';
+import styles from './rail.module.css';
 interface RailItem {
 	icon: React.ReactNode;
 	label: string;
@@ -101,14 +102,9 @@ export const Rail = () => {
 		<Stack
 			justify='between'
 			direction='column'
-			style={{
-				background: 'var(--color-neutral-canvas-minimal-bg)',
-				borderRight: '1px solid var(--color-neutral-stroke-default)',
-				color: 'var(--color-neutral-canvas-minimal-fg-default)',
-				height: '100%',
-				padding:
-					'var(--component-spacing-xl) var(--component-spacing-md) var(--component-spacing-md)'
-			}}
+			className={clsx(styles.rail, 'ts-canvas')}
+			data-appearance='neutral'
+			data-emphasis='minimal'
 		>
 			<Stack gap={3} direction='column' align='center'>
 				<Tooltip label={'Tokens Studio'}>
