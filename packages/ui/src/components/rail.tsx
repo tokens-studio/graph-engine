@@ -19,6 +19,7 @@ import SunLight from '@tokens-studio/icons/SunLight.js';
 import TokensStudio from '@/assets/svgs/tokensstudio-logo.svg';
 import clsx from 'clsx';
 import styles from './rail.module.css';
+
 interface RailItem {
 	icon: React.ReactNode;
 	label: string;
@@ -102,9 +103,10 @@ export const Rail = () => {
 		<Stack
 			justify='between'
 			direction='column'
-			className={clsx(styles.rail, 'ts-canvas')}
+			className={clsx(styles.stack, 'ts-canvas')}
 			data-appearance='neutral'
 			data-emphasis='minimal'
+
 		>
 			<Stack gap={3} direction='column' align='center'>
 				<Tooltip label={'Tokens Studio'}>
