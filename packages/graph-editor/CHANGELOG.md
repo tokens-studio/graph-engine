@@ -1,5 +1,11 @@
 # @tokens-studio/graph-editor
 
+## 4.3.11
+
+### Patch Changes
+
+- 92d599c: Fix background on context menu.
+
 ## 4.3.10
 
 ### Patch Changes
