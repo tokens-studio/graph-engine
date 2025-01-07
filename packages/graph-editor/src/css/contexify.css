@@ -1,0 +1,16 @@
+@import url('react-contexify/ReactContexify.css');
+.contexify {
+    --contexify-menu-bgColor: var(--color-neutral-canvas-default-bg);
+    --contexify-separator-color: var(--color-neutral-stroke-subtle);
+    --contexify-item-color: var(--color-neutral-canvas-default-fg-default);
+    --contexify-activeItem-color: var(--color-neutral-surface-ghost-idle-fg-default);
+    --contexify-activeItem-bgColor: var(--color-neutral-surface-ghost-idle-bg);
+    --contexify-rightSlot-color: var(--color-neutral-canvas-default-fg-subtle);
+    --contexify-activeRightSlot-color: var(--color-neutral-surface-ghost-idle-fg-subtle);
+    --contexify-arrow-color: var(--color-neutral-canvas-default-fg-subtle);
+    --contexify-activeArrow-color: var(--color-neutral-canvas-default-fg-default);
+    --shadow-color: 0deg 0% 0%;
+    --contexify-menu-shadow: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.14),
+    1.3px 2.6px 3.3px -1.2px hsl(var(--shadow-color) / 0.14),
+    5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.14);;
+}
