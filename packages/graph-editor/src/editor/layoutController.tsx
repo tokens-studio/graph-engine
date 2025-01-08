@@ -43,7 +43,7 @@ const DockButton = (rest) => {
 
 const groups: Record<string, TabGroup> = {
   popout: {
-    animated: true,
+    animated: false,
     floatable: true,
 
     panelExtra: (panelData, context) => {
@@ -85,7 +85,7 @@ const groups: Record<string, TabGroup> = {
    * Note that the graph has a huge issue when ran in a popout window, as such we disable it for now
    */
   graph: {
-    animated: true,
+    animated: false,
     floatable: true,
     panelExtra: (panelData, context) => {
       const buttons: React.ReactElement[] = [];
