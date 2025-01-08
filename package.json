@@ -48,7 +48,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.2.1",
     "listr2": "5.0.8",
-    "turbo": "^1.9.8"
+    "turbo": "^1.13.3"
   },
   "packageManager": "yarn@1.22.19"
 }
