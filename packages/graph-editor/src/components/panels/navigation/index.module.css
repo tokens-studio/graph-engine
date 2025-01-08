@@ -33,6 +33,6 @@
 }
 
 .listItemCount {
-  opacity: 0.5;
+  color: var(--fg-subtle);
   font-weight: normal;
 }
