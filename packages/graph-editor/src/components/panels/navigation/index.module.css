@@ -1,7 +1,18 @@
+.scrollWrapper {
+  height: 100%;
+  flex: 1;
+  padding: var(--component-spacing-md);
+  overflow: auto;
+}
+
+.componentSpacingWrapper {
+  padding: var(--component-spacing-md);
+}
+
 .listWrapper {
   display: flex;
   flex-direction: column;
-  font-size: var(--fontSizes-small);
+  font-size: var(--font-body-small-default);
   gap: var(--component-spacing-xs);
   list-style-type: none;
   margin: 0;
@@ -12,9 +23,13 @@
 .listItem {
   cursor: pointer;
   display: inline-flex;
-  gap: 0.5ch;
+  gap: var(--component-spacing-sm);
   padding-left: 0;
-  padding-left: calc(var(--tree-depth, 0) * var(--component-spacing-xs, 1));
+  padding-left: calc(var(--tree-depth, 0px) * var(--component-spacing-xs, 1px));
+}
+
+.listItemSelected {
+  font-weight: bold;
 }
 
 .listItemCount {

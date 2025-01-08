@@ -8,6 +8,7 @@ import { dockerSelector } from '@/redux/selectors/refs.js';
 import { flow, get, size } from 'lodash-es';
 import { useSelector } from 'react-redux';
 import { useSubgraphExplorerCallback } from '@/hooks/useSubgraphExplorerCallback.js';
+import cx from 'classnames';
 import styles from './index.module.css';
 
 type ListItemProps = {
@@ -27,11 +28,16 @@ const ListItem = function ({
 }: ListItemProps) {
   const style = {
     '--tree-depth': depth,
-    fontWeight: isSelected && 'bold',
   } as React.CSSProperties;
 
   return (
-    <li className={styles.listItem} onClick={onClick} style={style}>
+    <li
+      className={cx(styles.listItem, {
+        [styles.listItemSelected]: isSelected,
+      })}
+      onClick={onClick}
+      style={style}
+    >
       <span>{label}</span>
       {count && <span className={styles.listItemCount}>({count})</span>}
     </li>
@@ -75,17 +81,8 @@ export const NavigationPanel = () => {
   const activeGraphId = useSelector(currentPanelIdSelector);
 
   return (
-    <Stack
-      direction="column"
-      gap={4}
-      style={{
-        height: '100%',
-        flex: 1,
-        padding: 'var(--component-spacing-md)',
-        overflow: 'auto',
-      }}
-    >
-      <div style={{ padding: 'var(--component-spacing-md)' }}>
+    <Stack direction="column" gap={4} className={styles.scrollWrapper}>
+      <div className={styles.componentSpacingWrapper}>
         <ul className={styles.listWrapper}>
           <RootGraphNodeItem />
           {Object.values(nodes || {}).map(({ node, depth }: TreeNode) => {
