@@ -53,7 +53,12 @@ const ColorGroup: React.FC<ColorGroupProps> = ({ name, tokens }) => {
 	// Sort tokens into colors and subgroups
 	Object.entries(tokens).forEach(([key, value]) => {
 		if (value && typeof value === 'object') {
-			if ('type' in value && value.type === 'color' && 'value' in value) {
+			if (
+				'type' in value &&
+				value.type === 'color' &&
+				'value' in value &&
+				typeof value.value === 'string'
+			) {
 				colorTokens.push({
 					name: key,
 					value: value.value
