@@ -52,7 +52,7 @@
     "@ts-rest/serverless": "^3.51.0",
     "@uiw/react-md-editor": "4.0.4",
     "@vercel/otel": "1.8.1",
-    "classnames": "2.3.2",
+    "clsx": "^2.1.1",
     "copy-to-clipboard": "3.3.3",
     "critters": "0.0.16",
     "cross-env": "7.0.3",

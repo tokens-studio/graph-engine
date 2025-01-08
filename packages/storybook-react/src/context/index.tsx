@@ -1,5 +1,5 @@
 import React from 'react';
-import cx from 'classnames';
+import clsx from 'clsx';
 export const ContextProvider = React.createContext({});
 
 export const ThemeProvider = ({ children, ...rest }) => {
@@ -29,5 +29,5 @@ export const useStyledClass = (
 
 	const klass = `${baseClass}--${theme}`;
 
-	return cx(baseClass, klass);
+	return clsx(baseClass, klass);
 };
