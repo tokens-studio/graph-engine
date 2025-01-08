@@ -26,15 +26,15 @@
     "@docusaurus/preset-classic": "^3.2.1",
     "@docusaurus/theme-mermaid": "^3.2.1",
     "@mdx-js/react": "^3.0.0",
+    "@tokens-studio/tokens": "*",
+    "@tokens-studio/ui": "*",
     "clsx": "^2.0.0",
     "prism-react-renderer": "^2.3.0",
     "@tokens-studio/graph-editor": "*"
   },
   "peerDependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@tokens-studio/tokens": "^0.3.7",
-    "@tokens-studio/ui": "^1.0.13"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/plugin-syntax-import-attributes": "^7.24.7",
