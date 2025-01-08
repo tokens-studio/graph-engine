@@ -5,7 +5,7 @@ import { ContextConsumer } from '@lit/context';
 import { ContextProvider } from '@lit/context';
 import { createContext } from '@lit/context';
 import { customElement, property } from 'lit/decorators.js';
-import cx from 'classnames';
+import clsx from 'clsx';
 
 export type ContextDefaults = Record<string, string>;
 
@@ -27,7 +27,7 @@ export const useStyledClass =
 
 		const klass = `${baseClass}--${theme}`;
 
-		return cx(baseClass, klass);
+		return clsx(baseClass, klass);
 	};
 
 export const themeContext = createContext<Theme>('theme');

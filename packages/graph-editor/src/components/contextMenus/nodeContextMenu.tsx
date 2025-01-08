@@ -6,7 +6,7 @@ import { useCanDeleteNode } from '@/hooks/useCanDeleteNode.js';
 import { useLocalGraph } from '@/hooks/index.js';
 import { useToast } from '@/hooks/useToast.js';
 import React, { useCallback } from 'react';
-import classNames from 'classnames/dedupe.js';
+import clsx from 'clsx';
 
 export interface INodeContextMenuProps {
   id: string;
@@ -54,12 +54,12 @@ const applyFilters = (
       if (!lookup[x.id]) {
         return {
           ...x,
-          className: classNames(x.className, 'filtered'),
+          className: clsx(x.className, 'filtered'),
         };
       }
       return {
         ...x,
-        className: classNames(x.className, {
+        className: clsx(x.className, {
           filtered: false,
         }),
       };
@@ -136,7 +136,7 @@ export const NodeContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
         //Remove filtering
         return {
           ...x,
-          className: classNames(x.className, {
+          className: clsx(x.className, {
             filtered: false,
           }),
         };
