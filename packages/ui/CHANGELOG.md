@@ -1,5 +1,20 @@
 # @tokens-studio/graph-engine-ui
 
+## 3.3.1
+
+### Patch Changes
+
+- 2d8ceac: Add utils css to fix visuals
+- 809ef95: Upgrade @tokens-studio dependencies to latest, to avoid un-dedupable shared deps with Studio App and stitches styles from old UI leaking through.
+- Updated dependencies [809ef95]
+- Updated dependencies [e306901]
+- Updated dependencies [8b95696]
+- Updated dependencies [433ddb5]
+  - @tokens-studio/graph-engine-nodes-design-tokens@7.1.0
+  - @tokens-studio/graph-editor@4.3.10
+  - @tokens-studio/graph-engine@4.5.0
+  - @tokens-studio/graph-engine-nodes-figma@2.0.1
+
 ## 3.3.0
 
 ### Minor Changes
