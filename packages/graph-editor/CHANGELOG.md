@@ -1,5 +1,20 @@
 # @tokens-studio/graph-editor
 
+## 4.3.11
+
+### Patch Changes
+
+- 92d599c: Fix background on context menu.
+
+## 4.3.10
+
+### Patch Changes
+
+- 809ef95: Upgrade @tokens-studio dependencies to latest, to avoid un-dedupable shared deps with Studio App and stitches styles from old UI leaking through.
+- Updated dependencies [809ef95]
+- Updated dependencies [e306901]
+  - @tokens-studio/graph-engine@4.5.0
+
 ## 4.3.9
 
 ### Patch Changes
