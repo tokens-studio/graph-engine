@@ -51,22 +51,22 @@ const ColorGroup: React.FC<ColorGroupProps> = ({ name, tokens }) => {
 	const groups: { name: string; tokens: NestedTokens }[] = [];
 
 	// Sort tokens into colors and subgroups
-	Object.entries(tokens).forEach(([key, value]) => {
-		if (value && typeof value === 'object') {
+	Object.entries(tokens).forEach(([key, token]) => {
+		if (token && typeof token === 'object') {
 			if (
-				'type' in value &&
-				value.type === 'color' &&
-				'value' in value &&
-				typeof value.value === 'string'
+				'type' in token &&
+				token.type === 'color' &&
+				'value' in token &&
+				typeof token.value === 'string'
 			) {
 				colorTokens.push({
 					name: key,
-					value: value.value
+					value: token.value
 				});
-			} else if (!('type' in value)) {
+			} else if (!('type' in token)) {
 				groups.push({
 					name: key,
-					tokens: value as NestedTokens
+					tokens: token as NestedTokens
 				});
 			}
 		}
