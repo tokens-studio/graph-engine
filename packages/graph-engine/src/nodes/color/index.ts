@@ -9,6 +9,7 @@ import deconstruct from './deconstruct.js';
 import deltaE from './deltaE.js';
 import distance from './distance.js';
 import flattenAlpha from './flattenAlpha.js';
+import harmonies from './harmonies.js';
 import lighten from './lighten.js';
 import matchAlpha from './matchAlpha.js';
 import mix from './mix.js';
@@ -21,25 +22,26 @@ import stringToCol from './stringToColor.js';
 import wheel from './wheel.js';
 
 export const nodes = [
+	colorToString,
 	contrast,
 	contrasting,
 	contrastingAlpha,
-	create,
 	convert,
+	create,
+	darken,
 	deconstruct,
-	distance,
 	deltaE,
+	distance,
 	flattenAlpha,
+	harmonies,
+	lighten,
 	matchAlpha,
+	mix,
 	name,
 	poline,
 	range,
 	scale,
-	wheel,
-	mix,
-	colorToString,
-	lighten,
-	darken,
 	sortByDistance,
-	stringToCol
+	stringToCol,
+	wheel
 ];
