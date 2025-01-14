@@ -821,6 +821,7 @@ export const EditorApp = React.forwardRef<
                   display: 'grid',
                   placeItems: 'center',
                   zIndex: '99',
+                  pointerEvents: 'none',
                 }}
               >
                 <GraphToolbar />

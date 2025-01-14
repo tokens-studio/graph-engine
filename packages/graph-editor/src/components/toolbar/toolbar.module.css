@@ -8,6 +8,7 @@
   background-color: var(--color-neutral-canvas-default-bg);
   color: var(--color-neutral-canvas-subtle-fg-default);
   box-shadow: 0 2px 10px var(--color-neutral-800);
+  pointer-events: auto;
 }
 
 .separator {
