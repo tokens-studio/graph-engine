@@ -10,7 +10,7 @@ import { flatten } from '../utils/index.js';
 import type { DeepKeyTokenMap, SingleToken } from '@tokens-studio/types';
 
 export default class SetToArrayNode extends Node {
-	static title = 'Token set to token aray ';
+	static title = 'Token set to token array ';
 	static type = 'studio.tokens.design.setToArray';
 	static description = 'Converts a token set to an array of tokens';
 
