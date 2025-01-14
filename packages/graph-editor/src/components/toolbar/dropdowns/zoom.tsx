@@ -70,7 +70,9 @@ export const ZoomDropdown = () => {
   return (
     <DropdownMenu>
       <DropdownMenu.Trigger asChild>
-        <Button>{~~(zoom * 100)}%</Button>
+        <Button style={{ fontVariantNumeric: 'tabular-nums' }}>
+          {~~(zoom * 100)}%
+        </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content style={{ minWidth: '200px' }}>
