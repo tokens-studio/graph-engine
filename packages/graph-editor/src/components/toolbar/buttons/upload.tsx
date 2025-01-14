@@ -35,15 +35,19 @@ export const UploadToolbarButton = () => {
     }
   };
 
-  const onSave = async () => {
+  const onDownload = async () => {
     if (!graphRef) return;
-    await saveGraph(
+
+    const saved = await saveGraph(
       graphRef,
-      graph,
       (graph.annotations[title] || 'graph').toLowerCase().replace(/\s+/g, '-'),
     );
+
     setIsDialogOpen(false);
-    loadGraph(graphRef, graph, reactFlowInstance);
+
+    if (saved) {
+      loadGraph(graphRef, graph, reactFlowInstance);
+    }
   };
 
   const onDiscard = () => {
@@ -66,9 +70,10 @@ export const UploadToolbarButton = () => {
         <Dialog.Overlay />
         <Dialog.Content>
           <Stack direction="column" gap={4}>
-            <Dialog.Title>Save Current Graph?</Dialog.Title>
+            <Dialog.Title>Download Current Graph?</Dialog.Title>
             <Text>
-              Do you want to save the current graph before uploading a new one?
+              Do you want to download the current graph before uploading a new
+              one?
             </Text>
             <Stack direction="row" gap={2} justify="end">
               <Dialog.Close asChild>
@@ -76,8 +81,8 @@ export const UploadToolbarButton = () => {
                   Discard
                 </Button>
               </Dialog.Close>
-              <Button emphasis="high" onClick={onSave}>
-                Save
+              <Button emphasis="high" onClick={onDownload}>
+                Download
               </Button>
             </Stack>
           </Stack>

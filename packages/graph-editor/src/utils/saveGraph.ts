@@ -1,24 +1,30 @@
-import { Graph } from '@tokens-studio/graph-engine';
 import { ImperativeEditorRef } from '@/editor/editorTypes.js';
 
-export function saveGraph(
+export async function saveGraph(
   graphRef: ImperativeEditorRef,
-  graph: Graph,
   filename: string,
-) {
+): Promise<boolean> {
   const saved = graphRef.save();
-
   const blob = new Blob([JSON.stringify(saved)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
 
-  const link = document.createElement('a');
-  link.href = url;
+  try {
+    const handle = await globalThis.showSaveFilePicker({
+      suggestedName: filename + '.json',
+      types: [
+        {
+          description: 'JSON Files',
+          accept: { 'application/json': ['.json'] },
+        },
+      ],
+    });
 
-  link.download = filename + '.json';
-  document.body.appendChild(link);
-
-  link.click();
-
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+    const writable = await handle.createWritable();
+    await writable.write(blob);
+    await writable.close();
+    // we need to return a result so the caller can make decisions based on it
+    return true;
+  } catch (err) {
+    // do nothing if picker fails or is cancelled
+    return false;
+  }
 }
