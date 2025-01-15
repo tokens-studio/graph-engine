@@ -124,6 +124,7 @@ export const AiSummary = () => {
 				emphasis='low'
 				onClick={() =>
 					toggle({
+						group: 'popout',
 						title: <span>Artificial intelligence</span>,
 						id: 'ai',
 						content: <AISummary />
@@ -143,7 +144,6 @@ export const PreviewButton = () => {
 				emphasis='low'
 				onClick={() =>
 					toggle({
-						// @ts-expect-error Fix this grouping
 						group: 'popout',
 						title: <span>Preview</span>,
 						id: 'preview',
