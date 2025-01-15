@@ -1,5 +1,11 @@
 # @tokens-studio/react-storybook-graph-engine
 
+## 1.0.2
+
+### Patch Changes
+
+- f08f85f: Fix clsx and remove classnames.
+
 ## 1.0.1
 
 ### Patch Changes

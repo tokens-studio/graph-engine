@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 7.1.1
+
+### Patch Changes
+
+- d428728: Fixed spelling mistake
+
 ## 7.1.0
 
 ### Minor Changes
