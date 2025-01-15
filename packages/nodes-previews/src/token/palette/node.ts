@@ -4,7 +4,7 @@ import { TokenSetSchema } from '@tokens-studio/graph-engine-nodes-design-tokens'
 
 export default class NodeDefinition extends Node {
 	static title = 'Color Palette';
-	static type = 'studio.tokens.previews.token.palette';
+	static type = 'studio.tokens.previews.tokens.palette';
 	static description = 'Displays a color palette with grouped swatches';
 
 	constructor(props) {

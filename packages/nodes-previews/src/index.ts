@@ -21,7 +21,7 @@ export const specifics = {
 	'studio.tokens.previews.color.scale': ColorScale,
 	'studio.tokens.previews.color.swatch': ColorSwatch,
 	'studio.tokens.previews.dimension.scale': DimensionScale,
-	'studio.tokens.previews.token.palette': Palette,
+	'studio.tokens.previews.tokens.palette': Palette,
 	'studio.tokens.previews.tokens.table': TokenTable,
 	'studio.tokens.previews.tokens.typography': Typography
 };
