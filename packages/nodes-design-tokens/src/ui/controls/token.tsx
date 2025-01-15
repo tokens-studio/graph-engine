@@ -1,7 +1,7 @@
 import { IField } from '@tokens-studio/graph-editor';
 import { PreviewColor } from './preview/color.js';
+import { SingleToken, TokenTypes } from '@tokens-studio/types';
 import { Stack } from '@tokens-studio/ui';
-import { TokenTypes } from '@tokens-studio/types';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
@@ -16,7 +16,7 @@ export const getPreview = tokenData => {
 
 type PreviewProps = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	token: any;
+	token: SingleToken;
 	hideName?: boolean;
 };
 

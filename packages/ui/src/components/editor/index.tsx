@@ -1,8 +1,7 @@
 'use client';
 
-import { DropPanelInner, Editor } from '@tokens-studio/graph-editor';
+import { Editor } from '@tokens-studio/graph-editor';
 import { EmptyStateEditor } from '../EmptyStateEditor.tsx';
-import { ErrorBoundary } from 'react-error-boundary';
 import { ExamplesPicker } from '../ExamplesPicker.tsx';
 import {
 	capabilities,
@@ -11,10 +10,8 @@ import {
 	menu,
 	nodeTypes,
 	panelItems,
-	previewItems,
 	specifics
 } from './data.tsx';
-import { defaultLayout } from './layout.ts';
 import { loadCompounds } from '@/data/compounds/index.tsx';
 import { observer } from 'mobx-react-lite';
 import { tabLoader } from './tabLoader.tsx';
@@ -26,25 +23,7 @@ import initialLayout from '@/data/layout/default.json';
 import styles from './styles.module.css';
 import type { LayoutBase } from 'rc-dock';
 import type { ReactElement } from 'react';
-import type { TabBase, TabData } from 'rc-dock';
 
-const tabLoader = (tab: TabBase): TabData | undefined => {
-	const { id } = tab;
-	switch (id) {
-		case 'previewNodesPanel':
-			return {
-				group: 'popout',
-				id: 'previewNodesPanel',
-				title: 'Preview',
-				content: (
-					<ErrorBoundary fallback={<div />}>
-						<DropPanelInner data={previewItems} />
-					</ErrorBoundary>
-				),
-				closable: true
-			};
-	}
-};
 
 export const EditorTab = observer(
 	(
@@ -78,8 +57,6 @@ export const EditorTab = observer(
 					capabilities={capabilities}
 					tabLoader={tabLoader}
 					controls={controls}
-					initialLayout={defaultLayout}
-					tabLoader={tabLoader}
 					specifics={specifics}
 					icons={icons}
 					toolbarButtons={toolbarButtons}

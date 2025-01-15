@@ -1,5 +1,5 @@
 import { Accordion, Button, Separator, Stack } from '@tokens-studio/ui';
-import { IField, flatTokensRestoreToMap } from '@tokens-studio/graph-editor';
+import { IField, IResolvedToken, flatTokensRestoreToMap } from '@tokens-studio/graph-editor';
 import { Token } from './token.js';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
@@ -8,7 +8,11 @@ export const TokenArrayField = ({ port }: IField) => {
 	return <TokenArrayFieldInner value={port.value} />;
 };
 
-export const TokenArrayFieldInner = observer(({ value }) => {
+interface TokenArrayFieldInnerProps {
+	value: IResolvedToken[];
+}
+
+export const TokenArrayFieldInner = observer(({ value }: TokenArrayFieldInnerProps) => {
 	const downloadTokens = () => {
 		const element = document.createElement('a');
 		const asObj = flatTokensRestoreToMap(value);
