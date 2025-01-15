@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 export const copyNodeAction = (
   reactFlowInstance: ReactFlowInstance,
   graph,
-  nodeLookup,
+  nodeLoader,
 ) => {
   return async (nodes: SerializedNode[]) => {
     const { addNodes } = await nodes.reduce(
@@ -19,7 +19,7 @@ export const copyNodeAction = (
               ...node.engine,
               id: newID,
             },
-            nodeLookup,
+            nodeLoader,
           );
 
           graph.addNode(newGraphNode);

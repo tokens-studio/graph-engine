@@ -17,7 +17,7 @@ import { makeObservable, observable, toJS } from 'mobx';
 import { topologicalSort } from './topologicSort.js';
 import { v4 as uuid } from 'uuid';
 import type { ExternalLoader, NodeRun, NodeStart } from '../types.js';
-import type { NodeFactory, SerializedGraph } from './types.js';
+import type { NodeLoader, SerializedGraph } from './types.js';
 
 export type CapabilityFactory = {
 	name: string;
@@ -456,7 +456,7 @@ export class Graph {
 	 */
 	async deserialize(
 		serialized: SerializedGraph,
-		lookup: Record<string, NodeFactory>
+		lookup: NodeLoader
 	): Promise<Graph> {
 		const version =
 			(serialized.annotations && serialized.annotations['engine.version']) ||
@@ -484,7 +484,7 @@ export class Graph {
 
 		await Promise.all(
 			serialized.nodes.map(async node => {
-				const factory = lookup[node.type];
+				const factory = await lookup(node.type);
 				return await factory.deserialize({
 					serialized: node,
 					graph: this,

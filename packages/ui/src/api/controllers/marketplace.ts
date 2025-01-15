@@ -318,9 +318,96 @@ export const router = tsr.router<typeof marketplaceContract, Context>(
 				}
 			};
 		},
-		listGraphs: async ({ query }) => {
+
+		retrieveGraph: async ({ params }) => {
+			const { id } = params;
+			const graph = await prisma.publishedGraph.findFirst({
+				where: {
+					id
+				},
+				include: {
+					versions: true
+				}
+			});
+
+			if (!graph) {
+				return {
+					status: 404,
+					body: {
+						message: 'Graph not found'
+					}
+				};
+			}
+
+			//Check for versions
+			const latestVersion = graph.versions[0];
+
+			if (!latestVersion) {
+				return {
+					status: 404,
+					body: {
+						message: 'Graph not found'
+					}
+				};
+			}
+
+			return {
+				status: 201,
+				body: {
+					id: latestVersion.id,
+					graph: latestVersion.graph,
+					verison: latestVersion.version
+				}
+			};
+		},
+
+		searchGraphs: async ({ query }) => {
 			const cursorAdd = withCursor(query.token);
 
+			const where: Prisma.PublishedGraphWhereInput = {
+				name: {
+					contains: query.name,
+					mode: 'insensitive'
+				}
+			};
+
+			const graphs = await prisma.publishedGraph.findMany({
+				where,
+				take: query.take,
+				skip: query.skip,
+				orderBy: [
+					// If searching, prioritize exact matches and then partial matches
+					{
+						_relevance: {
+							fields: ['name'],
+							search: query.name,
+							sort: 'desc'
+						}
+					},
+					{ updatedAt: 'desc' }
+				],
+				select: {
+					name: true,
+					id: true,
+					description: true
+				},
+				...cursorAdd
+			});
+
+			const token =
+				graphs.length > 0 ? graphs?.[graphs.length - 1]?.id : undefined;
+
+			return {
+				status: 200,
+				body: {
+					token,
+					graphs: graphs
+				}
+			};
+		},
+
+		listGraphs: async ({ query }) => {
+			const cursorAdd = withCursor(query.token);
 			const graphs = await prisma.publishedGraph.findMany({
 				take: query.take,
 				skip: query.skip,

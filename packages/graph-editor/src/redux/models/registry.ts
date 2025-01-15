@@ -2,6 +2,7 @@ import {
   AllSchemas,
   CapabilityFactory,
   Node,
+  NodeLoader,
   SchemaObject,
 } from '@tokens-studio/graph-engine';
 import { Control } from '@/types/controls.js';
@@ -24,7 +25,7 @@ export interface RegistryState {
   icons: Record<string, React.ReactNode>;
   inputControls: Record<string, React.FC<{ node: Node }>>;
   controls: Control[];
-  nodeTypes: Record<string, typeof Node>;
+  nodeTypes: NodeLoader;
   panelItems: DropPanelStore;
   capabilities: CapabilityFactory[];
   toolbarButtons: ReactElement[];
@@ -38,7 +39,9 @@ export const registryState = createModel<RootModel>()({
     inputControls: { ...inputControls },
     controls: [...(defaultControls as Control[])],
     panelItems: defaultPanelGroupsFactory(),
-    nodeTypes: {},
+    nodeTypes: async () => {
+      throw new Error('Node type not found');
+    },
     capabilities: [],
     toolbarButtons: DefaultToolbarButtons(),
     schemas: AllSchemas,
@@ -56,31 +59,31 @@ export const registryState = createModel<RootModel>()({
         toolbarButtons,
       };
     },
-    setCapabilities(state, payload: CapabilityFactory[]) {
+    setCapabilities(state, capabilities: CapabilityFactory[]) {
       return {
         ...state,
-        capabilities: payload,
+        capabilities,
       };
     },
-    setNodeTypes: (state, payload: Record<string, typeof Node>) => {
+    setNodeTypes: (state, nodeTypes: NodeLoader) => {
       return {
         ...state,
-        nodeTypes: payload,
+        nodeTypes,
       };
     },
     setSpecifics: (
       state,
-      payload: Record<string, React.FC<{ node: Node }>>,
+      nodeSpecifics: Record<string, React.FC<{ node: Node }>>,
     ) => {
       return {
         ...state,
-        nodeSpecifics: payload,
+        nodeSpecifics,
       };
     },
-    setControls(state, payload: Control[]) {
+    setControls(state, controls: Control[]) {
       return {
         ...state,
-        controls: payload,
+        controls,
       };
     },
     registerIcons(state, payload: Record<string, React.ReactNode>) {

@@ -74,7 +74,7 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
     });
   }, [nodes, reactFlowInstance, selectedNodeIds, store]);
 
-  const onCreateSubgraph = useCallback(() => {
+  const onCreateSubgraph = useCallback(async () => {
     //We need to work out which nodes do not have parents in the selection
 
     const lookup = new Set(selectedNodeIds);
@@ -96,7 +96,7 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
       y: position.y / selectedNodes.length,
     };
 
-    const nodes = createNode({
+    const nodes = await createNode({
       type: 'studio.tokens.generic.subgraph',
       position: finalPosition,
     });

@@ -1,0 +1,2801 @@
+{
+	"nodes": [
+		{
+			"id": "acc83d6c-bb42-45a0-9574-944fc6a18916",
+			"type": "studio.tokens.generic.input",
+			"inputs": [
+				{
+					"name": "layers",
+					"value": 5,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number"
+					},
+					"visible": false,
+					"annotations": { "ui.deletable": true }
+				},
+				{
+					"name": "finalTransparency",
+					"value": 0.11,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number"
+					},
+					"visible": false,
+					"annotations": { "ui.deletable": true }
+				},
+				{
+					"name": "transparencyCurve",
+					"value": {
+						"controlPoints": [
+							[
+								[0.14219337573716578, 0.7274187304710118],
+								[0.81242438670312, 0.3426880696053026]
+							]
+						],
+						"segments": [
+							[0, 0],
+							[1, 1]
+						]
+					},
+					"type": {
+						"$id": "https://schemas.tokens.studio/floatCurve.json",
+						"title": "Float curve",
+						"type": "object",
+						"default": {
+							"controlPoints": [
+								[
+									[0.25, 0.25],
+									[0.75, 0.75]
+								]
+							],
+							"segments": [
+								[0, 0],
+								[1, 1]
+							]
+						},
+						"properties": {
+							"segments": {
+								"type": "array",
+								"items": {
+									"type": "array",
+									"items": {
+										"type": "array",
+										"items": [{ "type": "number" }, { "type": "number" }]
+									}
+								}
+							},
+							"controlPoints": {
+								"type": "array",
+								"items": {
+									"type": "array",
+									"items": [{ "type": "number" }, { "type": "number" }]
+								}
+							}
+						}
+					},
+					"visible": false,
+					"annotations": { "ui.deletable": true }
+				},
+				{
+					"name": "horizontalDistance",
+					"value": 8,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number"
+					},
+					"visible": false,
+					"annotations": { "ui.deletable": true }
+				},
+				{
+					"name": "verticalDistance",
+					"value": 8,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number"
+					},
+					"visible": false,
+					"annotations": { "ui.deletable": true }
+				},
+				{
+					"name": "distanceCurve",
+					"value": {
+						"controlPoints": [
+							[
+								[0.17052797122027868, 0.6089303215977628],
+								[0.8822099930827179, 0.3961354099429192]
+							]
+						],
+						"segments": [
+							[0, 0],
+							[1, 1]
+						]
+					},
+					"type": {
+						"$id": "https://schemas.tokens.studio/floatCurve.json",
+						"title": "Float curve",
+						"type": "object",
+						"default": {
+							"controlPoints": [
+								[
+									[0.25, 0.25],
+									[0.75, 0.75]
+								]
+							],
+							"segments": [
+								[0, 0],
+								[1, 1]
+							]
+						},
+						"properties": {
+							"segments": {
+								"type": "array",
+								"items": {
+									"type": "array",
+									"items": {
+										"type": "array",
+										"items": [{ "type": "number" }, { "type": "number" }]
+									}
+								}
+							},
+							"controlPoints": {
+								"type": "array",
+								"items": {
+									"type": "array",
+									"items": [{ "type": "number" }, { "type": "number" }]
+								}
+							}
+						}
+					},
+					"visible": false,
+					"annotations": { "ui.deletable": true }
+				},
+				{
+					"name": "blur",
+					"value": 20,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number"
+					},
+					"visible": false,
+					"annotations": { "ui.deletable": true }
+				},
+				{
+					"name": "blurCurve",
+					"value": {
+						"controlPoints": [
+							[
+								[0.8627544900645381, 0.07411938476562502],
+								[1, 0.05392041015624993]
+							]
+						],
+						"segments": [
+							[0, 0],
+							[1, 1]
+						]
+					},
+					"type": {
+						"$id": "https://schemas.tokens.studio/floatCurve.json",
+						"title": "Float curve",
+						"type": "object",
+						"default": {
+							"controlPoints": [
+								[
+									[0.25, 0.25],
+									[0.75, 0.75]
+								]
+							],
+							"segments": [
+								[0, 0],
+								[1, 1]
+							]
+						},
+						"properties": {
+							"segments": {
+								"type": "array",
+								"items": {
+									"type": "array",
+									"items": {
+										"type": "array",
+										"items": [{ "type": "number" }, { "type": "number" }]
+									}
+								}
+							},
+							"controlPoints": {
+								"type": "array",
+								"items": {
+									"type": "array",
+									"items": [{ "type": "number" }, { "type": "number" }]
+								}
+							}
+						}
+					},
+					"visible": false,
+					"annotations": { "ui.deletable": true }
+				},
+				{
+					"name": "reduceSpread",
+					"value": 2,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number"
+					},
+					"visible": false,
+					"annotations": { "ui.deletable": true }
+				},
+				{
+					"name": "color",
+					"value": {
+						"space": "srgb",
+						"channels": [0.7215686274509804, 0, 0],
+						"alpha": 1
+					},
+					"type": {
+						"$id": "https://schemas.tokens.studio/color.json",
+						"title": "Color",
+						"type": "object",
+						"properties": {
+							"channels": {
+								"type": "array",
+								"items": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								}
+							},
+							"space": {
+								"$id": "https://schemas.tokens.studio/string.json",
+								"title": "String",
+								"type": "string"
+							},
+							"alpha": {
+								"$id": "https://schemas.tokens.studio/number.json",
+								"title": "Number",
+								"type": "number"
+							}
+						},
+						"default": { "channels": [0, 0, 0], "space": "srgb" },
+						"required": ["channels", "space"]
+					},
+					"visible": false,
+					"annotations": { "ui.deletable": true }
+				}
+			],
+			"annotations": {
+				"engine.singleton": true,
+				"engine.dynamicInputs": true,
+				"xpos": 378.648681640625,
+				"ypos": 427.8787865953998,
+				"ui.position.x": 86.64868164062489,
+				"ui.position.y": 501.21211992873316
+			}
+		},
+		{
+			"id": "b5a484f5-1e3b-4a11-9530-680f6d8e0dde",
+			"type": "studio.tokens.series.linear",
+			"inputs": [
+				{
+					"name": "start",
+					"value": 0,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 0
+					}
+				},
+				{
+					"name": "stop",
+					"value": 1,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 1
+					}
+				},
+				{
+					"name": "length",
+					"value": 5,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 5
+					}
+				},
+				{
+					"name": "precision",
+					"value": 2,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number",
+						"default": 2
+					}
+				}
+			],
+			"annotations": {
+				"xpos": 575.9820149739584,
+				"ypos": 412.6666633143571,
+				"ui.position.x": 493.31534830729174,
+				"ui.position.y": 343.9999966476904
+			}
+		},
+		{
+			"id": "be3cbc58-94c8-4fd9-b3c6-fdc5e2ed1020",
+			"type": "tokens.studio.array.map",
+			"inputs": [
+				{
+					"name": "finalTransparency",
+					"value": 0.11,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number"
+					}
+				},
+				{
+					"name": "transparencyCurve",
+					"value": {
+						"controlPoints": [
+							[
+								[0.14219337573716578, 0.7274187304710118],
+								[0.81242438670312, 0.3426880696053026]
+							]
+						],
+						"segments": [
+							[0, 0],
+							[1, 1]
+						]
+					},
+					"type": {
+						"$id": "https://schemas.tokens.studio/floatCurve.json",
+						"title": "Float curve",
+						"type": "object",
+						"default": {
+							"controlPoints": [
+								[
+									[0.25, 0.25],
+									[0.75, 0.75]
+								]
+							],
+							"segments": [
+								[0, 0],
+								[1, 1]
+							]
+						},
+						"properties": {
+							"segments": {
+								"type": "array",
+								"items": {
+									"type": "array",
+									"items": {
+										"type": "array",
+										"items": [{ "type": "number" }, { "type": "number" }]
+									}
+								}
+							},
+							"controlPoints": {
+								"type": "array",
+								"items": {
+									"type": "array",
+									"items": [{ "type": "number" }, { "type": "number" }]
+								}
+							}
+						}
+					}
+				},
+				{
+					"name": "horizontalDistance",
+					"value": 8,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number"
+					}
+				},
+				{
+					"name": "verticalDistance",
+					"value": 8,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number"
+					}
+				},
+				{
+					"name": "distanceCurve",
+					"value": {
+						"controlPoints": [
+							[
+								[0.17052797122027868, 0.6089303215977628],
+								[0.8822099930827179, 0.3961354099429192]
+							]
+						],
+						"segments": [
+							[0, 0],
+							[1, 1]
+						]
+					},
+					"type": {
+						"$id": "https://schemas.tokens.studio/floatCurve.json",
+						"title": "Float curve",
+						"type": "object",
+						"default": {
+							"controlPoints": [
+								[
+									[0.25, 0.25],
+									[0.75, 0.75]
+								]
+							],
+							"segments": [
+								[0, 0],
+								[1, 1]
+							]
+						},
+						"properties": {
+							"segments": {
+								"type": "array",
+								"items": {
+									"type": "array",
+									"items": {
+										"type": "array",
+										"items": [{ "type": "number" }, { "type": "number" }]
+									}
+								}
+							},
+							"controlPoints": {
+								"type": "array",
+								"items": {
+									"type": "array",
+									"items": [{ "type": "number" }, { "type": "number" }]
+								}
+							}
+						}
+					}
+				},
+				{
+					"name": "blur",
+					"value": 20,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number"
+					}
+				},
+				{
+					"name": "blurCurve",
+					"value": {
+						"controlPoints": [
+							[
+								[0.8627544900645381, 0.07411938476562502],
+								[1, 0.05392041015624993]
+							]
+						],
+						"segments": [
+							[0, 0],
+							[1, 1]
+						]
+					},
+					"type": {
+						"$id": "https://schemas.tokens.studio/floatCurve.json",
+						"title": "Float curve",
+						"type": "object",
+						"default": {
+							"controlPoints": [
+								[
+									[0.25, 0.25],
+									[0.75, 0.75]
+								]
+							],
+							"segments": [
+								[0, 0],
+								[1, 1]
+							]
+						},
+						"properties": {
+							"segments": {
+								"type": "array",
+								"items": {
+									"type": "array",
+									"items": {
+										"type": "array",
+										"items": [{ "type": "number" }, { "type": "number" }]
+									}
+								}
+							},
+							"controlPoints": {
+								"type": "array",
+								"items": {
+									"type": "array",
+									"items": [{ "type": "number" }, { "type": "number" }]
+								}
+							}
+						}
+					}
+				},
+				{
+					"name": "reduceSpread",
+					"value": 2,
+					"type": {
+						"$id": "https://schemas.tokens.studio/number.json",
+						"title": "Number",
+						"type": "number"
+					}
+				},
+				{
+					"name": "color",
+					"value": {
+						"space": "srgb",
+						"channels": [0.7215686274509804, 0, 0],
+						"alpha": 1
+					},
+					"type": {
+						"$id": "https://schemas.tokens.studio/color.json",
+						"title": "Color",
+						"type": "object",
+						"properties": {
+							"channels": {
+								"type": "array",
+								"items": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								}
+							},
+							"space": {
+								"$id": "https://schemas.tokens.studio/string.json",
+								"title": "String",
+								"type": "string"
+							},
+							"alpha": {
+								"$id": "https://schemas.tokens.studio/number.json",
+								"title": "Number",
+								"type": "number"
+							}
+						},
+						"default": { "channels": [0, 0, 0], "space": "srgb" },
+						"required": ["channels", "space"]
+					}
+				},
+				{
+					"name": "array",
+					"value": [0, 0.25, 0.5, 0.75, 1],
+					"type": {
+						"title": "Any[]",
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/any.json",
+							"title": "Any"
+						},
+						"default": []
+					},
+					"dynamicType": {
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/number.json",
+							"title": "Number",
+							"type": "number"
+						}
+					},
+					"annotations": { "ui.editable": false }
+				}
+			],
+			"annotations": {
+				"xpos": 741.3153483072916,
+				"ypos": 459.3333299810238,
+				"ui.position.x": 907.3153483072914,
+				"ui.position.y": 421.3333299810238
+			},
+			"innergraph": {
+				"nodes": [
+					{
+						"id": "063f5476-ca80-4609-b2db-fde8e87be84f",
+						"type": "studio.tokens.generic.input",
+						"inputs": [
+							{
+								"name": "value",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/any.json",
+									"title": "Any"
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"visible": false,
+								"annotations": {
+									"ui.editable": false,
+									"ui.hidden": true,
+									"engine.hideFromParentSubgraph": true
+								}
+							},
+							{
+								"name": "index",
+								"value": 4,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"visible": false,
+								"annotations": {
+									"ui.editable": false,
+									"engine.hideFromParentSubgraph": true
+								}
+							},
+							{
+								"name": "length",
+								"value": 5,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"visible": false,
+								"annotations": {
+									"ui.editable": false,
+									"engine.hideFromParentSubgraph": true
+								}
+							},
+							{
+								"name": "finalTransparency",
+								"value": 0.11,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"visible": false,
+								"annotations": { "ui.deletable": true }
+							},
+							{
+								"name": "transparencyCurve",
+								"value": {
+									"controlPoints": [
+										[
+											[0.14219337573716578, 0.7274187304710118],
+											[0.81242438670312, 0.3426880696053026]
+										]
+									],
+									"segments": [
+										[0, 0],
+										[1, 1]
+									]
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/floatCurve.json",
+									"title": "Float curve",
+									"type": "object",
+									"default": {
+										"controlPoints": [
+											[
+												[0.25, 0.25],
+												[0.75, 0.75]
+											]
+										],
+										"segments": [
+											[0, 0],
+											[1, 1]
+										]
+									},
+									"properties": {
+										"segments": {
+											"type": "array",
+											"items": {
+												"type": "array",
+												"items": {
+													"type": "array",
+													"items": [{ "type": "number" }, { "type": "number" }]
+												}
+											}
+										},
+										"controlPoints": {
+											"type": "array",
+											"items": {
+												"type": "array",
+												"items": [{ "type": "number" }, { "type": "number" }]
+											}
+										}
+									}
+								},
+								"visible": false,
+								"annotations": { "ui.deletable": true }
+							},
+							{
+								"name": "horizontalDistance",
+								"value": 8,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"visible": false,
+								"annotations": { "ui.deletable": true }
+							},
+							{
+								"name": "verticalDistance",
+								"value": 8,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"visible": false,
+								"annotations": { "ui.deletable": true }
+							},
+							{
+								"name": "distanceCurve",
+								"value": {
+									"controlPoints": [
+										[
+											[0.17052797122027868, 0.6089303215977628],
+											[0.8822099930827179, 0.3961354099429192]
+										]
+									],
+									"segments": [
+										[0, 0],
+										[1, 1]
+									]
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/floatCurve.json",
+									"title": "Float curve",
+									"type": "object",
+									"default": {
+										"controlPoints": [
+											[
+												[0.25, 0.25],
+												[0.75, 0.75]
+											]
+										],
+										"segments": [
+											[0, 0],
+											[1, 1]
+										]
+									},
+									"properties": {
+										"segments": {
+											"type": "array",
+											"items": {
+												"type": "array",
+												"items": {
+													"type": "array",
+													"items": [{ "type": "number" }, { "type": "number" }]
+												}
+											}
+										},
+										"controlPoints": {
+											"type": "array",
+											"items": {
+												"type": "array",
+												"items": [{ "type": "number" }, { "type": "number" }]
+											}
+										}
+									}
+								},
+								"visible": false,
+								"annotations": { "ui.deletable": true }
+							},
+							{
+								"name": "blur",
+								"value": 20,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"visible": false,
+								"annotations": { "ui.deletable": true }
+							},
+							{
+								"name": "blurCurve",
+								"value": {
+									"controlPoints": [
+										[
+											[0.8627544900645381, 0.07411938476562502],
+											[1, 0.05392041015624993]
+										]
+									],
+									"segments": [
+										[0, 0],
+										[1, 1]
+									]
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/floatCurve.json",
+									"title": "Float curve",
+									"type": "object",
+									"default": {
+										"controlPoints": [
+											[
+												[0.25, 0.25],
+												[0.75, 0.75]
+											]
+										],
+										"segments": [
+											[0, 0],
+											[1, 1]
+										]
+									},
+									"properties": {
+										"segments": {
+											"type": "array",
+											"items": {
+												"type": "array",
+												"items": {
+													"type": "array",
+													"items": [{ "type": "number" }, { "type": "number" }]
+												}
+											}
+										},
+										"controlPoints": {
+											"type": "array",
+											"items": {
+												"type": "array",
+												"items": [{ "type": "number" }, { "type": "number" }]
+											}
+										}
+									}
+								},
+								"visible": false,
+								"annotations": { "ui.deletable": true }
+							},
+							{
+								"name": "reduceSpread",
+								"value": 2,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								},
+								"visible": false,
+								"annotations": { "ui.deletable": true }
+							},
+							{
+								"name": "color",
+								"value": {
+									"space": "srgb",
+									"channels": [0.7215686274509804, 0, 0],
+									"alpha": 1
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/color.json",
+									"title": "Color",
+									"type": "object",
+									"properties": {
+										"channels": {
+											"type": "array",
+											"items": {
+												"$id": "https://schemas.tokens.studio/number.json",
+												"title": "Number",
+												"type": "number"
+											}
+										},
+										"space": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"alpha": {
+											"$id": "https://schemas.tokens.studio/number.json",
+											"title": "Number",
+											"type": "number"
+										}
+									},
+									"default": { "channels": [0, 0, 0], "space": "srgb" },
+									"required": ["channels", "space"]
+								},
+								"visible": false,
+								"annotations": { "ui.deletable": true }
+							}
+						],
+						"annotations": {
+							"engine.singleton": true,
+							"engine.dynamicInputs": true,
+							"engine.deletable": false,
+							"ui.position.x": -220.66666666666669,
+							"ui.position.y": 41.33333333333334
+						}
+					},
+					{
+						"id": "74e08d59-feb7-42a1-987e-4c580747f725",
+						"type": "studio.tokens.generic.output",
+						"inputs": [
+							{
+								"name": "value",
+								"value": {
+									"x": "8",
+									"y": "0.1",
+									"blur": "20",
+									"spread": "-2",
+									"color": "hsl(0 100% 36.078% / 0.11)",
+									"type": "dropShadow"
+								},
+								"type": {
+									"type": "array",
+									"items": {
+										"$id": "https://schemas.tokens.studio/any.json",
+										"title": "Any"
+									}
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/tokenBoxShadow.json",
+									"title": "Box Shadow Token",
+									"type": "object",
+									"properties": {
+										"x": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"y": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"blur": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"spread": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"type": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										}
+									}
+								},
+								"annotations": { "ui.editable": false }
+							}
+						],
+						"annotations": {
+							"engine.singleton": true,
+							"engine.deletable": false,
+							"ui.position.x": 3221.5582649975045,
+							"ui.position.y": 187.97309108029617
+						}
+					},
+					{
+						"id": "5487309d-011e-4586-96bd-4e9f4846b0ef",
+						"type": "studio.tokens.curve.sampleFloat",
+						"inputs": [
+							{
+								"name": "curve",
+								"value": {
+									"controlPoints": [
+										[
+											[0.14219337573716578, 0.7274187304710118],
+											[0.81242438670312, 0.3426880696053026]
+										]
+									],
+									"segments": [
+										[0, 0],
+										[1, 1]
+									]
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/floatCurve.json",
+									"title": "Float curve",
+									"type": "object",
+									"default": {
+										"controlPoints": [
+											[
+												[0.25, 0.25],
+												[0.75, 0.75]
+											]
+										],
+										"segments": [
+											[0, 0],
+											[1, 1]
+										]
+									},
+									"properties": {
+										"segments": {
+											"type": "array",
+											"items": {
+												"type": "array",
+												"items": {
+													"type": "array",
+													"items": [{ "type": "number" }, { "type": "number" }]
+												}
+											}
+										},
+										"controlPoints": {
+											"type": "array",
+											"items": {
+												"type": "array",
+												"items": [{ "type": "number" }, { "type": "number" }]
+											}
+										}
+									}
+								}
+							},
+							{
+								"name": "x",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"minimum": 0,
+									"maximum": 1,
+									"default": 0
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 442.648681640625,
+							"ypos": -11.999998728434244,
+							"ui.position.x": 589.1610428070996,
+							"ui.position.y": -278.4090119107178
+						}
+					},
+					{
+						"id": "2f75505a-951e-4ed0-b312-5a1a3c579fc3",
+						"type": "studio.tokens.curve.sampleFloat",
+						"inputs": [
+							{
+								"name": "curve",
+								"value": {
+									"controlPoints": [
+										[
+											[0.17052797122027868, 0.6089303215977628],
+											[0.8822099930827179, 0.3961354099429192]
+										]
+									],
+									"segments": [
+										[0, 0],
+										[1, 1]
+									]
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/floatCurve.json",
+									"title": "Float curve",
+									"type": "object",
+									"default": {
+										"controlPoints": [
+											[
+												[0.25, 0.25],
+												[0.75, 0.75]
+											]
+										],
+										"segments": [
+											[0, 0],
+											[1, 1]
+										]
+									},
+									"properties": {
+										"segments": {
+											"type": "array",
+											"items": {
+												"type": "array",
+												"items": {
+													"type": "array",
+													"items": [{ "type": "number" }, { "type": "number" }]
+												}
+											}
+										},
+										"controlPoints": {
+											"type": "array",
+											"items": {
+												"type": "array",
+												"items": [{ "type": "number" }, { "type": "number" }]
+											}
+										}
+									}
+								}
+							},
+							{
+								"name": "x",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"minimum": 0,
+									"maximum": 1,
+									"default": 0
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 527.3153483072916,
+							"ypos": 247.33333460489908,
+							"ui.position.x": 567.3153483072915,
+							"ui.position.y": 200.6666679382324
+						}
+					},
+					{
+						"id": "b52df2df-ea97-4734-8300-b2c7d202c6f6",
+						"type": "studio.tokens.curve.sampleFloat",
+						"inputs": [
+							{
+								"name": "curve",
+								"value": {
+									"controlPoints": [
+										[
+											[0.8627544900645381, 0.07411938476562502],
+											[1, 0.05392041015624993]
+										]
+									],
+									"segments": [
+										[0, 0],
+										[1, 1]
+									]
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/floatCurve.json",
+									"title": "Float curve",
+									"type": "object",
+									"default": {
+										"controlPoints": [
+											[
+												[0.25, 0.25],
+												[0.75, 0.75]
+											]
+										],
+										"segments": [
+											[0, 0],
+											[1, 1]
+										]
+									},
+									"properties": {
+										"segments": {
+											"type": "array",
+											"items": {
+												"type": "array",
+												"items": {
+													"type": "array",
+													"items": [{ "type": "number" }, { "type": "number" }]
+												}
+											}
+										},
+										"controlPoints": {
+											"type": "array",
+											"items": {
+												"type": "array",
+												"items": [{ "type": "number" }, { "type": "number" }]
+											}
+										}
+									}
+								}
+							},
+							{
+								"name": "x",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"minimum": 0,
+									"maximum": 1,
+									"default": 0
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 553.3153483072916,
+							"ypos": 472.00000127156574,
+							"ui.position.x": 557.8268444628663,
+							"ui.position.y": 514.8390550935214
+						}
+					},
+					{
+						"id": "2dda05f1-037a-460e-ad6f-5da38201df00",
+						"type": "studio.tokens.generic.passthrough",
+						"inputs": [
+							{
+								"name": "value",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/any.json",
+									"title": "Any"
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								}
+							}
+						],
+						"annotations": {
+							"ui.nodeType": "studio.tokens.generic.passthrough",
+							"ui.position.x": 291.9820149739583,
+							"ui.position.y": 95.3333346048991
+						}
+					},
+					{
+						"id": "4308b66f-87fc-4042-a041-5e466c9c64b6",
+						"type": "studio.tokens.math.dataMapping",
+						"inputs": [
+							{
+								"name": "inputValue",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 5
+								}
+							},
+							{
+								"name": "inputMin",
+								"value": 0,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							},
+							{
+								"name": "inputMax",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 100
+								}
+							},
+							{
+								"name": "outputMin",
+								"value": 0,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							},
+							{
+								"name": "outputMax",
+								"value": 0.11,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 1
+								}
+							},
+							{
+								"name": "clamp",
+								"value": true,
+								"type": {
+									"$id": "https://schemas.tokens.studio/boolean.json",
+									"title": "Boolean",
+									"type": "boolean",
+									"default": true
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 947.3153483072916,
+							"ypos": 8.000001271565756,
+							"ui.position.x": 1057.4710371782862,
+							"ui.position.y": -314.50738288261266
+						}
+					},
+					{
+						"id": "c16a6788-d13d-4eae-9178-217100d218ab",
+						"type": "studio.tokens.math.dataMapping",
+						"inputs": [
+							{
+								"name": "inputValue",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 5
+								}
+							},
+							{
+								"name": "inputMin",
+								"value": 0,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							},
+							{
+								"name": "inputMax",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 100
+								}
+							},
+							{
+								"name": "outputMin",
+								"value": 0,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							},
+							{
+								"name": "outputMax",
+								"value": 8,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 1
+								}
+							},
+							{
+								"name": "clamp",
+								"value": true,
+								"type": {
+									"$id": "https://schemas.tokens.studio/boolean.json",
+									"title": "Boolean",
+									"type": "boolean",
+									"default": true
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1135.6379758865478,
+							"ypos": 166.62821458505226,
+							"ui.position.x": 1058.4885810424078,
+							"ui.position.y": -15.396138875340455
+						}
+					},
+					{
+						"id": "b026c32c-e9ba-46c9-829d-077d56125962",
+						"type": "studio.tokens.math.dataMapping",
+						"inputs": [
+							{
+								"name": "inputValue",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 5
+								}
+							},
+							{
+								"name": "inputMin",
+								"value": 0,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							},
+							{
+								"name": "inputMax",
+								"value": 100,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 100
+								}
+							},
+							{
+								"name": "outputMin",
+								"value": 0,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							},
+							{
+								"name": "outputMax",
+								"value": 8,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 1
+								}
+							},
+							{
+								"name": "clamp",
+								"value": true,
+								"type": {
+									"$id": "https://schemas.tokens.studio/boolean.json",
+									"title": "Boolean",
+									"type": "boolean",
+									"default": true
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1185.0618069585748,
+							"ypos": 367.93991675647993,
+							"ui.position.x": 1056.0776624535285,
+							"ui.position.y": 294.40689979565906
+						}
+					},
+					{
+						"id": "f0b19249-c392-45cc-b3c4-2345ed22948d",
+						"type": "studio.tokens.math.dataMapping",
+						"inputs": [
+							{
+								"name": "inputValue",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 5
+								}
+							},
+							{
+								"name": "inputMin",
+								"value": 0,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							},
+							{
+								"name": "inputMax",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 100
+								}
+							},
+							{
+								"name": "outputMin",
+								"value": 0,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							},
+							{
+								"name": "outputMax",
+								"value": 20,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 1
+								}
+							},
+							{
+								"name": "clamp",
+								"value": true,
+								"type": {
+									"$id": "https://schemas.tokens.studio/boolean.json",
+									"title": "Boolean",
+									"type": "boolean",
+									"default": true
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1154.9253245975829,
+							"ypos": 596.9771827000204,
+							"ui.position.x": 1056.0776624535285,
+							"ui.position.y": 598.1826419944601
+						}
+					},
+					{
+						"id": "764fd8d6-0206-4bd1-92c0-f520393d55a3",
+						"type": "studio.tokens.math.lerp",
+						"inputs": [
+							{
+								"name": "a",
+								"value": 0,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							},
+							{
+								"name": "b",
+								"value": -2,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							},
+							{
+								"name": "t",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1071.7486332812443,
+							"ypos": 967.0531860930042,
+							"ui.position.x": 1053.666743864649,
+							"ui.position.y": 962.2313489152456
+						}
+					},
+					{
+						"id": "3f17b8b8-9eaf-4fc7-aba4-87a372bc8068",
+						"type": "studio.tokens.math.multiply",
+						"inputs": [
+							{
+								"name": "a",
+								"value": 2,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								}
+							},
+							{
+								"name": "b",
+								"value": -1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 617.2904792774825,
+							"ypos": 917.6293550209771,
+							"ui.position.x": 617.2904792774825,
+							"ui.position.y": 917.6293550209771
+						}
+					},
+					{
+						"id": "b8f3b6ec-f48d-4e3d-b413-ed9df98906bd",
+						"type": "studio.tokens.design.createBoxShadow",
+						"inputs": [
+							{
+								"name": "x",
+								"value": "8",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							},
+							{
+								"name": "y",
+								"value": "0.1",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							},
+							{
+								"name": "blur",
+								"value": "20",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							},
+							{
+								"name": "spread",
+								"value": "-2",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							},
+							{
+								"name": "color",
+								"value": "hsl(0 100% 36.078% / 0.11)",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							},
+							{
+								"name": "type",
+								"value": "dropShadow",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1978.2540226998892,
+							"ypos": 226.9011793070364,
+							"ui.position.x": 2787.1172092689194,
+							"ui.position.y": 182.29918541276794
+						}
+					},
+					{
+						"id": "02a399e7-eea0-4cc0-b868-88fb2d3d6036",
+						"type": "studio.tokens.color.colorToString",
+						"inputs": [
+							{
+								"name": "color",
+								"value": {
+									"space": "srgb",
+									"channels": [0.7215686274509804, 0, 0],
+									"alpha": 0.11
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/color.json",
+									"title": "Color",
+									"type": "object",
+									"properties": {
+										"channels": {
+											"type": "array",
+											"items": {
+												"$id": "https://schemas.tokens.studio/number.json",
+												"title": "Number",
+												"type": "number"
+											}
+										},
+										"space": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"alpha": {
+											"$id": "https://schemas.tokens.studio/number.json",
+											"title": "Number",
+											"type": "number"
+										}
+									},
+									"default": { "space": "srgb", "channels": [0, 0, 0] },
+									"required": ["channels", "space"]
+								}
+							},
+							{
+								"name": "space",
+								"value": "hsl",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string",
+									"enum": [
+										"hex",
+										"a98rgb",
+										"a98rgb-linear",
+										"acescc",
+										"acescg",
+										"cam16-jmh",
+										"hct",
+										"hpluv",
+										"hsl",
+										"hsluv",
+										"hsv",
+										"hwb",
+										"ictcp",
+										"jzczhz",
+										"jzazbz",
+										"lch",
+										"lchuv",
+										"lab",
+										"lab-d65",
+										"luv",
+										"oklch",
+										"oklab",
+										"p3",
+										"p3-linear",
+										"prophoto",
+										"prophoto-linear",
+										"rec2020",
+										"rec2020-linear",
+										"rec2100hlg",
+										"rec2100pq",
+										"xyz-abs-d65",
+										"xyz-d50",
+										"xyz-d65",
+										"xyz",
+										"srgb",
+										"srgb-linear"
+									],
+									"default": "hex"
+								},
+								"visible": false
+							}
+						],
+						"annotations": {
+							"xpos": 1903.5155464446286,
+							"ypos": 612.6481535277361,
+							"ui.position.x": 2056.6088768384693,
+							"ui.position.y": -439.71781051811047
+						}
+					},
+					{
+						"id": "ac97665c-d4cf-475d-9f56-1ac096223ba2",
+						"type": "studio.tokens.string.stringify",
+						"inputs": [
+							{
+								"name": "value",
+								"value": 8,
+								"type": {
+									"$id": "https://schemas.tokens.studio/any.json",
+									"title": "Any"
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1605.7671007180259,
+							"ypos": 76.21876750207554,
+							"ui.position.x": 1643.1363388456564,
+							"ui.position.y": -14.190679580901019
+						}
+					},
+					{
+						"id": "67e3e464-063c-4e39-b379-d83b654ad69e",
+						"type": "studio.tokens.string.stringify",
+						"inputs": [
+							{
+								"name": "value",
+								"value": 0.1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/any.json",
+									"title": "Any"
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1553.9323510571194,
+							"ypos": 349.8580273398844,
+							"ui.position.x": 1651.5745539067339,
+							"ui.position.y": 314.89970780113356
+						}
+					},
+					{
+						"id": "6724cc7f-c073-40ea-83dc-b1387b03b410",
+						"type": "studio.tokens.typing.passUnit",
+						"inputs": [
+							{
+								"name": "value",
+								"value": "8",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							},
+							{
+								"name": "fallback",
+								"value": "px",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string",
+									"default": "px"
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1811.9006400672124,
+							"ypos": 7.507587719013392,
+							"ui.position.x": 1967.404889049932,
+							"ui.position.y": -17.807057464220065
+						}
+					},
+					{
+						"id": "e9d1ba3b-25d9-4a62-bc5d-56b4acdf155b",
+						"type": "studio.tokens.typing.passUnit",
+						"inputs": [
+							{
+								"name": "value",
+								"value": "0.1",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							},
+							{
+								"name": "fallback",
+								"value": "px",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string",
+									"default": "px"
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1809.489721478333,
+							"ypos": 469.1984974894134,
+							"ui.position.x": 1985.4867784665273,
+							"ui.position.y": 289.5850626179
+						}
+					},
+					{
+						"id": "b91d221e-d577-48c5-a918-99192a6d1f3d",
+						"type": "studio.tokens.color.create",
+						"inputs": [
+							{
+								"name": "space",
+								"value": "srgb",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string",
+									"enum": [
+										"a98rgb",
+										"a98rgb-linear",
+										"acescc",
+										"acescg",
+										"cam16-jmh",
+										"hct",
+										"hpluv",
+										"hsl",
+										"hsluv",
+										"hsv",
+										"hwb",
+										"ictcp",
+										"jzczhz",
+										"jzazbz",
+										"lch",
+										"lchuv",
+										"lab",
+										"lab-d65",
+										"luv",
+										"oklch",
+										"oklab",
+										"p3",
+										"p3-linear",
+										"prophoto",
+										"prophoto-linear",
+										"rec2020",
+										"rec2020-linear",
+										"rec2100hlg",
+										"rec2100pq",
+										"xyz-abs-d65",
+										"xyz-d50",
+										"xyz-d65",
+										"xyz",
+										"srgb",
+										"srgb-linear"
+									],
+									"default": "srgb"
+								}
+							},
+							{
+								"name": "a",
+								"value": 0.7215686274509804,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": "0"
+								}
+							},
+							{
+								"name": "b",
+								"value": 0,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": "0"
+								}
+							},
+							{
+								"name": "c",
+								"value": 0,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": "0"
+								}
+							},
+							{
+								"name": "alpha",
+								"value": 0.11,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 2032.499690949675,
+							"ypos": -344.48652625737526,
+							"ui.position.x": 1682.9164955621657,
+							"ui.position.y": -660.3168614005731
+						}
+					},
+					{
+						"id": "97968a5a-3db3-473b-b190-d95de246a79f",
+						"type": "studio.tokens.color.deconstruct",
+						"inputs": [
+							{
+								"name": "color",
+								"value": {
+									"space": "srgb",
+									"channels": [0.7215686274509804, 0, 0],
+									"alpha": 1
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/color.json",
+									"title": "Color",
+									"type": "object",
+									"properties": {
+										"channels": {
+											"type": "array",
+											"items": {
+												"$id": "https://schemas.tokens.studio/number.json",
+												"title": "Number",
+												"type": "number"
+											}
+										},
+										"space": {
+											"$id": "https://schemas.tokens.studio/string.json",
+											"title": "String",
+											"type": "string"
+										},
+										"alpha": {
+											"$id": "https://schemas.tokens.studio/number.json",
+											"title": "Number",
+											"type": "number"
+										}
+									},
+									"default": { "channels": [0, 0, 0], "space": "srgb" },
+									"required": ["channels", "space"]
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 712.521763538218,
+							"ypos": -526.510879717768,
+							"ui.position.x": 589.56491550537,
+							"ui.position.y": -631.3858383340207
+						}
+					},
+					{
+						"id": "b5f61ef4-62c6-4c60-ba2f-e7fdfcbae835",
+						"type": "studio.tokens.string.stringify",
+						"inputs": [
+							{
+								"name": "value",
+								"value": 20,
+								"type": {
+									"$id": "https://schemas.tokens.studio/any.json",
+									"title": "Any"
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1475.5774969185397,
+							"ypos": 662.0719845997631,
+							"ui.position.x": 1645.5472574345356,
+							"ui.position.y": 596.9771827000201
+						}
+					},
+					{
+						"id": "c40c042e-a542-4bb5-b577-80d2d447db4e",
+						"type": "studio.tokens.string.stringify",
+						"inputs": [
+							{
+								"name": "value",
+								"value": -2,
+								"type": {
+									"$id": "https://schemas.tokens.studio/any.json",
+									"title": "Any"
+								},
+								"dynamicType": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number"
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1535.8504616405241,
+							"ypos": 980.3132383318405,
+							"ui.position.x": 1658.8073096733722,
+							"ui.position.y": 944.1494594986499
+						}
+					},
+					{
+						"id": "a8f473f0-b522-4950-99e6-10774353eb1c",
+						"type": "studio.tokens.typing.passUnit",
+						"inputs": [
+							{
+								"name": "value",
+								"value": "20",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							},
+							{
+								"name": "fallback",
+								"value": "px",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string",
+									"default": "px"
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1829.9825294838076,
+							"ypos": 640.3737172998489,
+							"ui.position.x": 1984.2813191720877,
+							"ui.position.y": 594.5662641111408
+						}
+					},
+					{
+						"id": "3885e04e-89ce-4a1e-8096-d7e1b7b8c264",
+						"type": "studio.tokens.typing.passUnit",
+						"inputs": [
+							{
+								"name": "value",
+								"value": "-2",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							},
+							{
+								"name": "fallback",
+								"value": "px",
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string",
+									"default": "px"
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1840.8316631337648,
+							"ypos": 980.3132383318405,
+							"ui.position.x": 1996.3359121164845,
+							"ui.position.y": 947.7658373819689
+						}
+					},
+					{
+						"id": "6310ca41-409c-41f4-baaf-cb0374025842",
+						"type": "studio.tokens.math.round",
+						"inputs": [
+							{
+								"name": "value",
+								"value": 8,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							},
+							{
+								"name": "precision",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1397.2226427799599,
+							"ypos": 67.7805524409976,
+							"ui.position.x": 1340.5660559412947,
+							"ui.position.y": -11.779760992021721
+						}
+					},
+					{
+						"id": "6130d9f4-adad-4424-8878-f425dba0173b",
+						"type": "studio.tokens.math.round",
+						"inputs": [
+							{
+								"name": "value",
+								"value": 0.08,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							},
+							{
+								"name": "precision",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1443.0300959686679,
+							"ypos": 339.0088936899271,
+							"ui.position.x": 1351.4151895912519,
+							"ui.position.y": 318.51608568445243
+						}
+					},
+					{
+						"id": "913ef632-19d9-493c-b1be-10e77f19cd56",
+						"type": "studio.tokens.math.round",
+						"inputs": [
+							{
+								"name": "value",
+								"value": 20,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							},
+							{
+								"name": "precision",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1421.3318286687536,
+							"ypos": 628.3191243554519,
+							"ui.position.x": 1345.3878931190532,
+							"ui.position.y": 595.7717234055802
+						}
+					},
+					{
+						"id": "176f4789-42fb-4ba8-831a-7d49aedab6cf",
+						"type": "studio.tokens.math.round",
+						"inputs": [
+							{
+								"name": "value",
+								"value": -2,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							},
+							{
+								"name": "precision",
+								"value": 1,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1417.7154507854345,
+							"ypos": 958.6149710319261,
+							"ui.position.x": 1367.0861604189677,
+							"ui.position.y": 945.3549187930895
+						}
+					},
+					{
+						"id": "0a45843b-26f8-4466-8f1c-52d199088d97",
+						"type": "studio.tokens.math.round",
+						"inputs": [
+							{
+								"name": "value",
+								"value": 0.11,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							},
+							{
+								"name": "precision",
+								"value": 2,
+								"type": {
+									"$id": "https://schemas.tokens.studio/number.json",
+									"title": "Number",
+									"type": "number",
+									"default": 0
+								}
+							}
+						],
+						"annotations": {
+							"xpos": 1430.9755030242711,
+							"ypos": -369.8011714406087,
+							"ui.position.x": 1381.551671952244,
+							"ui.position.y": -405.96495027379933
+						}
+					}
+				],
+				"edges": [
+					{
+						"id": "c84a3c31-80f9-438b-9a69-809b625537c7",
+						"source": "063f5476-ca80-4609-b2db-fde8e87be84f",
+						"sourceHandle": "value",
+						"target": "2dda05f1-037a-460e-ad6f-5da38201df00",
+						"targetHandle": "value"
+					},
+					{
+						"id": "72a6c104-126c-4e18-a0d9-4ee5fe8ff412",
+						"source": "2dda05f1-037a-460e-ad6f-5da38201df00",
+						"sourceHandle": "value",
+						"target": "5487309d-011e-4586-96bd-4e9f4846b0ef",
+						"targetHandle": "x"
+					},
+					{
+						"id": "954f11c5-9294-4e00-aa5a-f79fc874e0d0",
+						"source": "2dda05f1-037a-460e-ad6f-5da38201df00",
+						"sourceHandle": "value",
+						"target": "2f75505a-951e-4ed0-b312-5a1a3c579fc3",
+						"targetHandle": "x"
+					},
+					{
+						"id": "8214be91-ea06-44fb-b781-703fff416262",
+						"source": "2dda05f1-037a-460e-ad6f-5da38201df00",
+						"sourceHandle": "value",
+						"target": "b52df2df-ea97-4734-8300-b2c7d202c6f6",
+						"targetHandle": "x"
+					},
+					{
+						"id": "5a8a3879-5040-413c-8bb2-f8e120a6b09e",
+						"source": "063f5476-ca80-4609-b2db-fde8e87be84f",
+						"sourceHandle": "transparencyCurve",
+						"target": "5487309d-011e-4586-96bd-4e9f4846b0ef",
+						"targetHandle": "curve"
+					},
+					{
+						"id": "d4e43d6b-b078-4234-a1e9-0ff0581013f2",
+						"source": "063f5476-ca80-4609-b2db-fde8e87be84f",
+						"sourceHandle": "distanceCurve",
+						"target": "2f75505a-951e-4ed0-b312-5a1a3c579fc3",
+						"targetHandle": "curve"
+					},
+					{
+						"id": "1cc948a2-e811-4863-9f37-539b1d1763eb",
+						"source": "063f5476-ca80-4609-b2db-fde8e87be84f",
+						"sourceHandle": "blurCurve",
+						"target": "b52df2df-ea97-4734-8300-b2c7d202c6f6",
+						"targetHandle": "curve"
+					},
+					{
+						"id": "0d63d070-27c9-4656-a704-745323cfa36b",
+						"source": "5487309d-011e-4586-96bd-4e9f4846b0ef",
+						"sourceHandle": "y",
+						"target": "4308b66f-87fc-4042-a041-5e466c9c64b6",
+						"targetHandle": "inputValue"
+					},
+					{
+						"id": "4f61a0dc-735e-4042-8b76-aec614f12d72",
+						"source": "063f5476-ca80-4609-b2db-fde8e87be84f",
+						"sourceHandle": "finalTransparency",
+						"target": "4308b66f-87fc-4042-a041-5e466c9c64b6",
+						"targetHandle": "outputMax"
+					},
+					{
+						"id": "d21751f5-9671-4202-be45-1ae0183a210f",
+						"source": "2f75505a-951e-4ed0-b312-5a1a3c579fc3",
+						"sourceHandle": "y",
+						"target": "c16a6788-d13d-4eae-9178-217100d218ab",
+						"targetHandle": "inputValue"
+					},
+					{
+						"id": "91c131df-4912-4c57-a1eb-243598af67aa",
+						"source": "063f5476-ca80-4609-b2db-fde8e87be84f",
+						"sourceHandle": "horizontalDistance",
+						"target": "c16a6788-d13d-4eae-9178-217100d218ab",
+						"targetHandle": "outputMax"
+					},
+					{
+						"id": "678dc4a8-2938-40e7-b3c6-e04962d14e13",
+						"source": "2f75505a-951e-4ed0-b312-5a1a3c579fc3",
+						"sourceHandle": "y",
+						"target": "b026c32c-e9ba-46c9-829d-077d56125962",
+						"targetHandle": "inputValue"
+					},
+					{
+						"id": "290dd078-24e7-4ef7-bf94-9f6058a055a2",
+						"source": "063f5476-ca80-4609-b2db-fde8e87be84f",
+						"sourceHandle": "verticalDistance",
+						"target": "b026c32c-e9ba-46c9-829d-077d56125962",
+						"targetHandle": "outputMax"
+					},
+					{
+						"id": "a3eb7be2-f343-4a38-b963-be17cbcb3429",
+						"source": "063f5476-ca80-4609-b2db-fde8e87be84f",
+						"sourceHandle": "blur",
+						"target": "f0b19249-c392-45cc-b3c4-2345ed22948d",
+						"targetHandle": "outputMax"
+					},
+					{
+						"id": "9c868e49-d1b2-4fd8-a486-8d865efc7f16",
+						"source": "b52df2df-ea97-4734-8300-b2c7d202c6f6",
+						"sourceHandle": "y",
+						"target": "f0b19249-c392-45cc-b3c4-2345ed22948d",
+						"targetHandle": "inputValue"
+					},
+					{
+						"id": "f762ae20-2936-4ed9-8476-d6291b2f64a0",
+						"source": "063f5476-ca80-4609-b2db-fde8e87be84f",
+						"sourceHandle": "value",
+						"target": "764fd8d6-0206-4bd1-92c0-f520393d55a3",
+						"targetHandle": "t"
+					},
+					{
+						"id": "1e379a71-98e5-4202-955b-b15715d86e0a",
+						"source": "063f5476-ca80-4609-b2db-fde8e87be84f",
+						"sourceHandle": "reduceSpread",
+						"target": "3f17b8b8-9eaf-4fc7-aba4-87a372bc8068",
+						"targetHandle": "a"
+					},
+					{
+						"id": "a7511bdd-7e2b-4b84-8ad9-1b90922a4056",
+						"source": "3f17b8b8-9eaf-4fc7-aba4-87a372bc8068",
+						"sourceHandle": "value",
+						"target": "764fd8d6-0206-4bd1-92c0-f520393d55a3",
+						"targetHandle": "b"
+					},
+					{
+						"id": "b8c17ef4-da5f-4061-a0bb-82a530503f11",
+						"source": "02a399e7-eea0-4cc0-b868-88fb2d3d6036",
+						"sourceHandle": "value",
+						"target": "b8f3b6ec-f48d-4e3d-b413-ed9df98906bd",
+						"targetHandle": "color"
+					},
+					{
+						"id": "9ff8cdf9-9507-4268-b691-24e4b4c635c8",
+						"source": "ac97665c-d4cf-475d-9f56-1ac096223ba2",
+						"sourceHandle": "value",
+						"target": "6724cc7f-c073-40ea-83dc-b1387b03b410",
+						"targetHandle": "value"
+					},
+					{
+						"id": "46cdd19d-3501-42c3-b250-043627734554",
+						"source": "67e3e464-063c-4e39-b379-d83b654ad69e",
+						"sourceHandle": "value",
+						"target": "e9d1ba3b-25d9-4a62-bc5d-56b4acdf155b",
+						"targetHandle": "value"
+					},
+					{
+						"id": "1ffd8770-ace9-4bb5-804c-0485f6d120fa",
+						"source": "063f5476-ca80-4609-b2db-fde8e87be84f",
+						"sourceHandle": "color",
+						"target": "97968a5a-3db3-473b-b190-d95de246a79f",
+						"targetHandle": "color"
+					},
+					{
+						"id": "1ce2e5d0-5c53-4370-a7c5-b2f0eb39360a",
+						"source": "97968a5a-3db3-473b-b190-d95de246a79f",
+						"sourceHandle": "space",
+						"target": "b91d221e-d577-48c5-a918-99192a6d1f3d",
+						"targetHandle": "space"
+					},
+					{
+						"id": "30c049f2-cebb-4956-885e-e17459745484",
+						"source": "97968a5a-3db3-473b-b190-d95de246a79f",
+						"sourceHandle": "a",
+						"target": "b91d221e-d577-48c5-a918-99192a6d1f3d",
+						"targetHandle": "a"
+					},
+					{
+						"id": "8e924bb1-b7b6-43e1-9970-3134f9f5f22a",
+						"source": "97968a5a-3db3-473b-b190-d95de246a79f",
+						"sourceHandle": "b",
+						"target": "b91d221e-d577-48c5-a918-99192a6d1f3d",
+						"targetHandle": "b"
+					},
+					{
+						"id": "3ad06e62-7966-4116-99a1-bdd9248af934",
+						"source": "97968a5a-3db3-473b-b190-d95de246a79f",
+						"sourceHandle": "c",
+						"target": "b91d221e-d577-48c5-a918-99192a6d1f3d",
+						"targetHandle": "c"
+					},
+					{
+						"id": "de168b8f-af97-486b-b648-9da1542ab857",
+						"source": "b5f61ef4-62c6-4c60-ba2f-e7fdfcbae835",
+						"sourceHandle": "value",
+						"target": "a8f473f0-b522-4950-99e6-10774353eb1c",
+						"targetHandle": "value"
+					},
+					{
+						"id": "f26504e4-5a77-493a-878a-51b303b69c86",
+						"source": "c40c042e-a542-4bb5-b577-80d2d447db4e",
+						"sourceHandle": "value",
+						"target": "3885e04e-89ce-4a1e-8096-d7e1b7b8c264",
+						"targetHandle": "value"
+					},
+					{
+						"id": "e0bafaa0-e425-494a-81c5-c8af459beab1",
+						"source": "b8f3b6ec-f48d-4e3d-b413-ed9df98906bd",
+						"sourceHandle": "value",
+						"target": "74e08d59-feb7-42a1-987e-4c580747f725",
+						"targetHandle": "value"
+					},
+					{
+						"id": "8a5b8efc-e9df-48e9-9c43-719e9c201454",
+						"source": "c16a6788-d13d-4eae-9178-217100d218ab",
+						"sourceHandle": "mappedValue",
+						"target": "6310ca41-409c-41f4-baaf-cb0374025842",
+						"targetHandle": "value"
+					},
+					{
+						"id": "c32a0856-9113-4e56-a755-3e516d01f77c",
+						"source": "6310ca41-409c-41f4-baaf-cb0374025842",
+						"sourceHandle": "value",
+						"target": "ac97665c-d4cf-475d-9f56-1ac096223ba2",
+						"targetHandle": "value"
+					},
+					{
+						"id": "b31cb2f6-9698-4d3b-8e63-bb16d01ba438",
+						"source": "b026c32c-e9ba-46c9-829d-077d56125962",
+						"sourceHandle": "mappedValue",
+						"target": "6130d9f4-adad-4424-8878-f425dba0173b",
+						"targetHandle": "value"
+					},
+					{
+						"id": "5eedb3c9-d3a1-4bce-ab4f-60502bbb6bcf",
+						"source": "6130d9f4-adad-4424-8878-f425dba0173b",
+						"sourceHandle": "value",
+						"target": "67e3e464-063c-4e39-b379-d83b654ad69e",
+						"targetHandle": "value"
+					},
+					{
+						"id": "6c2f12a2-c7bf-414c-8c41-c0e239642031",
+						"source": "f0b19249-c392-45cc-b3c4-2345ed22948d",
+						"sourceHandle": "mappedValue",
+						"target": "913ef632-19d9-493c-b1be-10e77f19cd56",
+						"targetHandle": "value"
+					},
+					{
+						"id": "90e7715e-aae1-4848-8cf3-28694b1cb906",
+						"source": "913ef632-19d9-493c-b1be-10e77f19cd56",
+						"sourceHandle": "value",
+						"target": "b5f61ef4-62c6-4c60-ba2f-e7fdfcbae835",
+						"targetHandle": "value"
+					},
+					{
+						"id": "a4f0cad9-2d55-4af1-b20c-b0806ca5e050",
+						"source": "764fd8d6-0206-4bd1-92c0-f520393d55a3",
+						"sourceHandle": "value",
+						"target": "176f4789-42fb-4ba8-831a-7d49aedab6cf",
+						"targetHandle": "value"
+					},
+					{
+						"id": "14119e35-e93e-4936-9188-d310c344f78d",
+						"source": "176f4789-42fb-4ba8-831a-7d49aedab6cf",
+						"sourceHandle": "value",
+						"target": "c40c042e-a542-4bb5-b577-80d2d447db4e",
+						"targetHandle": "value"
+					},
+					{
+						"id": "698b0c92-8f69-41c6-9677-61bede4d8ac5",
+						"source": "ac97665c-d4cf-475d-9f56-1ac096223ba2",
+						"sourceHandle": "value",
+						"target": "b8f3b6ec-f48d-4e3d-b413-ed9df98906bd",
+						"targetHandle": "x"
+					},
+					{
+						"id": "925fb64c-d549-499b-ad09-84983187064c",
+						"source": "67e3e464-063c-4e39-b379-d83b654ad69e",
+						"sourceHandle": "value",
+						"target": "b8f3b6ec-f48d-4e3d-b413-ed9df98906bd",
+						"targetHandle": "y"
+					},
+					{
+						"id": "78d0cd7f-70ef-4446-bd13-20581dcb65a8",
+						"source": "b5f61ef4-62c6-4c60-ba2f-e7fdfcbae835",
+						"sourceHandle": "value",
+						"target": "b8f3b6ec-f48d-4e3d-b413-ed9df98906bd",
+						"targetHandle": "blur"
+					},
+					{
+						"id": "844cbfc7-b8a2-47c6-a799-38d951dc0257",
+						"source": "c40c042e-a542-4bb5-b577-80d2d447db4e",
+						"sourceHandle": "value",
+						"target": "b8f3b6ec-f48d-4e3d-b413-ed9df98906bd",
+						"targetHandle": "spread"
+					},
+					{
+						"id": "625c5dd1-82a2-41ba-b680-2257351d5380",
+						"source": "4308b66f-87fc-4042-a041-5e466c9c64b6",
+						"sourceHandle": "mappedValue",
+						"target": "0a45843b-26f8-4466-8f1c-52d199088d97",
+						"targetHandle": "value"
+					},
+					{
+						"id": "245bf699-de9f-458a-acea-bd89022545c8",
+						"source": "0a45843b-26f8-4466-8f1c-52d199088d97",
+						"sourceHandle": "value",
+						"target": "b91d221e-d577-48c5-a918-99192a6d1f3d",
+						"targetHandle": "alpha"
+					},
+					{
+						"id": "ada57503-6af2-4547-acfc-27a5c211300b",
+						"source": "b91d221e-d577-48c5-a918-99192a6d1f3d",
+						"sourceHandle": "value",
+						"target": "02a399e7-eea0-4cc0-b868-88fb2d3d6036",
+						"targetHandle": "color"
+					}
+				],
+				"annotations": {
+					"engine.id": "cb60a496-0d56-403c-bdc4-775d270b0792",
+					"ui.viewports": [
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null
+					],
+					"engine.capabilities.web-audio": "0.0.0",
+					"engine.capabilities.fs": "0.0.0",
+					"engine.version": "0.12.0"
+				}
+			}
+		},
+		{
+			"id": "94647d04-0cbe-4c7d-9316-93fecb8d9efa",
+			"type": "studio.tokens.generic.output",
+			"inputs": [
+				{
+					"name": "tokens",
+					"value": [
+						{
+							"x": "0",
+							"y": "0",
+							"blur": "0",
+							"spread": "0",
+							"color": "hsl(0 100% 36.078% / 0)",
+							"type": "dropShadow"
+						},
+						{
+							"x": "2.6",
+							"y": "0",
+							"blur": "1.1",
+							"spread": "-0.5",
+							"color": "hsl(0 100% 36.078% / 0.04)",
+							"type": "dropShadow"
+						},
+						{
+							"x": "4",
+							"y": "0",
+							"blur": "3.5",
+							"spread": "-1",
+							"color": "hsl(0 100% 36.078% / 0.06)",
+							"type": "dropShadow"
+						},
+						{
+							"x": "5.4",
+							"y": "0.1",
+							"blur": "9.1",
+							"spread": "-1.5",
+							"color": "hsl(0 100% 36.078% / 0.07)",
+							"type": "dropShadow"
+						},
+						{
+							"x": "8",
+							"y": "0.1",
+							"blur": "20",
+							"spread": "-2",
+							"color": "hsl(0 100% 36.078% / 0.11)",
+							"type": "dropShadow"
+						}
+					],
+					"type": {
+						"$id": "https://schemas.tokens.studio/any.json",
+						"title": "Any"
+					},
+					"dynamicType": {
+						"title": "Box Shadow Token",
+						"type": "array",
+						"items": {
+							"$id": "https://schemas.tokens.studio/tokenBoxShadow.json",
+							"title": "Box Shadow Token",
+							"type": "object",
+							"properties": {
+								"x": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"y": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"blur": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"spread": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								},
+								"type": {
+									"$id": "https://schemas.tokens.studio/string.json",
+									"title": "String",
+									"type": "string"
+								}
+							}
+						}
+					},
+					"annotations": { "ui.deletable": true }
+				}
+			],
+			"annotations": {
+				"engine.singleton": true,
+				"engine.dynamicInputs": true,
+				"xpos": 2583.2903973414855,
+				"ypos": 565.3989406064055,
+				"ui.position.x": 1350.6084987559905,
+				"ui.position.y": 432.4138203887596
+			}
+		}
+	],
+	"edges": [
+		{
+			"id": "f7f01cd1-bfb2-451f-bdb5-bd76a3c7a799",
+			"source": "acc83d6c-bb42-45a0-9574-944fc6a18916",
+			"sourceHandle": "layers",
+			"target": "b5a484f5-1e3b-4a11-9530-680f6d8e0dde",
+			"targetHandle": "length"
+		},
+		{
+			"id": "b7b37ddb-7231-489c-8107-64a2ee6b73b4",
+			"source": "b5a484f5-1e3b-4a11-9530-680f6d8e0dde",
+			"sourceHandle": "array",
+			"target": "be3cbc58-94c8-4fd9-b3c6-fdc5e2ed1020",
+			"targetHandle": "array"
+		},
+		{
+			"id": "80a33ddd-8957-406f-8f04-083e1a84777d",
+			"source": "acc83d6c-bb42-45a0-9574-944fc6a18916",
+			"sourceHandle": "finalTransparency",
+			"target": "be3cbc58-94c8-4fd9-b3c6-fdc5e2ed1020",
+			"targetHandle": "finalTransparency"
+		},
+		{
+			"id": "de39957c-e63f-4f01-88e4-7d177410b0cb",
+			"source": "acc83d6c-bb42-45a0-9574-944fc6a18916",
+			"sourceHandle": "transparencyCurve",
+			"target": "be3cbc58-94c8-4fd9-b3c6-fdc5e2ed1020",
+			"targetHandle": "transparencyCurve"
+		},
+		{
+			"id": "c3a39c25-0355-449a-a687-6c2e7b3405d7",
+			"source": "acc83d6c-bb42-45a0-9574-944fc6a18916",
+			"sourceHandle": "horizontalDistance",
+			"target": "be3cbc58-94c8-4fd9-b3c6-fdc5e2ed1020",
+			"targetHandle": "horizontalDistance"
+		},
+		{
+			"id": "fce77eaa-a1d1-4c8f-a2fb-4bf3c206e0ea",
+			"source": "acc83d6c-bb42-45a0-9574-944fc6a18916",
+			"sourceHandle": "verticalDistance",
+			"target": "be3cbc58-94c8-4fd9-b3c6-fdc5e2ed1020",
+			"targetHandle": "verticalDistance"
+		},
+		{
+			"id": "14b87b10-c47f-47be-ad93-16c9017e1ae4",
+			"source": "acc83d6c-bb42-45a0-9574-944fc6a18916",
+			"sourceHandle": "distanceCurve",
+			"target": "be3cbc58-94c8-4fd9-b3c6-fdc5e2ed1020",
+			"targetHandle": "distanceCurve"
+		},
+		{
+			"id": "e3a9fc6b-023c-453f-a492-2048e25286a8",
+			"source": "acc83d6c-bb42-45a0-9574-944fc6a18916",
+			"sourceHandle": "blur",
+			"target": "be3cbc58-94c8-4fd9-b3c6-fdc5e2ed1020",
+			"targetHandle": "blur"
+		},
+		{
+			"id": "ca41f137-e2f5-425b-bc44-0ca82b634663",
+			"source": "acc83d6c-bb42-45a0-9574-944fc6a18916",
+			"sourceHandle": "blurCurve",
+			"target": "be3cbc58-94c8-4fd9-b3c6-fdc5e2ed1020",
+			"targetHandle": "blurCurve"
+		},
+		{
+			"id": "3ed28d7b-a3a8-4f60-9bb0-820394dc74cb",
+			"source": "acc83d6c-bb42-45a0-9574-944fc6a18916",
+			"sourceHandle": "reduceSpread",
+			"target": "be3cbc58-94c8-4fd9-b3c6-fdc5e2ed1020",
+			"targetHandle": "reduceSpread"
+		},
+		{
+			"id": "f64803b4-238c-4d4d-84f5-3912bc61c9b6",
+			"source": "acc83d6c-bb42-45a0-9574-944fc6a18916",
+			"sourceHandle": "color",
+			"target": "be3cbc58-94c8-4fd9-b3c6-fdc5e2ed1020",
+			"targetHandle": "color"
+		},
+		{
+			"id": "5bb76efd-f840-46c4-94c6-70c4340c2192",
+			"source": "be3cbc58-94c8-4fd9-b3c6-fdc5e2ed1020",
+			"sourceHandle": "value",
+			"target": "94647d04-0cbe-4c7d-9316-93fecb8d9efa",
+			"targetHandle": "tokens"
+		}
+	],
+	"annotations": {
+		"engine.id": "67114c77-244d-4c48-9087-634bfd37782b",
+		"engine.version": "0.12.0",
+		"ui.viewports": [null, null, null, null, null, null, null, null, null],
+		"ui.viewport": {
+			"x": -537.6583873800437,
+			"y": -93.3409458248409,
+			"zoom": 0.75
+		},
+		"ui.version": "4.3.9"
+	}
+}

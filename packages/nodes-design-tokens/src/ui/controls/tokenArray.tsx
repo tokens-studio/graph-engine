@@ -1,14 +1,17 @@
 import { Accordion, Button, Separator, Stack } from '@tokens-studio/ui';
-import { IField } from '@tokens-studio/graph-editor';
+import { IField, flatTokensRestoreToMap } from '@tokens-studio/graph-editor';
 import { Token } from './token.js';
-import { flatten } from '../../utils/index.js';
 import { observer } from 'mobx-react-lite';
-import React, { useMemo } from 'react';
+import React from 'react';
 
-export const TokenSetField = observer(({ port }: IField) => {
+export const TokenArrayField = ({ port }: IField) => {
+	return <TokenArrayFieldInner value={port.value} />;
+};
+
+export const TokenArrayFieldInner = observer(({ value }) => {
 	const downloadTokens = () => {
 		const element = document.createElement('a');
-		const asObj = port.value;
+		const asObj = flatTokensRestoreToMap(value);
 		const file = new Blob([JSON.stringify(asObj)], {
 			type: 'application/json'
 		});
@@ -17,8 +20,6 @@ export const TokenSetField = observer(({ port }: IField) => {
 		document.body.appendChild(element);
 		element.click();
 	};
-
-	const tokens = useMemo(() => flatten(port.value || {}), []);
 
 	return (
 		<Stack gap={4} direction='column' align='center'>
@@ -33,7 +34,7 @@ export const TokenSetField = observer(({ port }: IField) => {
 							align='center'
 							style={{ padding: 'var(--component-spacing-md)' }}
 						>
-							{tokens.map(token => (
+							{(value || []).map(token => (
 								<Token token={token} key={token.name} />
 							))}
 						</Stack>

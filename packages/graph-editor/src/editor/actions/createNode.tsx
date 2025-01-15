@@ -1,5 +1,5 @@
 import { Dispatch } from '@/redux/store.js';
-import { Graph, Node, NodeFactory } from '@tokens-studio/graph-engine';
+import { Graph, Node, NodeLoader } from '@tokens-studio/graph-engine';
 import { ReactFlowInstance, Node as ReactFlowNode } from 'reactflow';
 
 export type NodeRequest = {
@@ -11,7 +11,7 @@ export type NodeRequest = {
 export interface ICreateNode {
   reactFlowInstance: ReactFlowInstance;
   graph: Graph;
-  nodeLookup: Record<string, NodeFactory>;
+  nodeLoader: NodeLoader;
   iconLookup: Record<string, string>;
   /**
    * If a customized node would be created in the editor, it would be created using this UI lookup.
@@ -25,13 +25,13 @@ export interface ICreateNode {
 export const createNode = ({
   reactFlowInstance,
   graph,
-  nodeLookup,
+  nodeLoader,
   iconLookup,
   customUI,
   dropPanelPosition,
   dispatch,
 }: ICreateNode) => {
-  return (nodeRequest: NodeRequest) => {
+  return async (nodeRequest: NodeRequest) => {
     const position = nodeRequest.position || {
       x: dropPanelPosition.x,
       y: dropPanelPosition.y,
@@ -59,12 +59,13 @@ export const createNode = ({
     }
 
     //Lookup the node type
-    const Factory = nodeLookup[nodeRequest.type];
+    const Factory = await nodeLoader(nodeRequest.type);
 
     //Generate the new node
-    const node = new Factory({
+    const node = await new Factory({
       graph: graph,
     });
+
     graph.addNode(node);
 
     const finalPos = position || { x: 0, y: 0 };

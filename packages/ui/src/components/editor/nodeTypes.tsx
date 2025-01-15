@@ -10,8 +10,7 @@ const flatten = nodes =>
 		return acc;
 	}, {});
 
-//These are all the nodes that are available in the editor
-export const nodeTypes = {
+const defaultNodes = {
 	//Default
 	...nodeLookup,
 	//Audio
@@ -20,3 +19,6 @@ export const nodeTypes = {
 	...flatten(figmaNodes),
 	...flatten(previewNodes)
 };
+
+//These are all the nodes that are available in the editor
+export const nodeTypes = defaultNodes;

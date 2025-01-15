@@ -5,7 +5,7 @@ import { Node } from '../programmatic/node.js';
 export interface SerializedInput {
 	name: string;
 	value?: any;
-	visible: boolean;
+	visible?: boolean;
 	variadic?: boolean;
 	type: TypeDefinition;
 	dynamicType?: GraphSchema;
@@ -37,7 +37,9 @@ export interface SerializedGraph {
 export type IDeserializeOpts = {
 	serialized: SerializedNode;
 	graph: Graph;
-	lookup: Record<string, NodeFactory>;
+	lookup: NodeLoader;
 };
 
 export type NodeFactory = typeof Node;
+
+export type NodeLoader = (type: string) => Promise<NodeFactory> | NodeFactory;

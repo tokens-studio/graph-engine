@@ -37,7 +37,7 @@ export const AddDropdown = () => {
   }, [dispatch.ui]);
 
   const addNode = useCallback(
-    (type: string) => {
+    async (type: string) => {
       const newNode = {
         type,
         position: reactFlowInstance.screenToFlowPosition(
@@ -45,7 +45,7 @@ export const AddDropdown = () => {
         ),
       };
 
-      const node = createNode(newNode);
+      const node = await createNode(newNode);
 
       if (node) {
         selectAddedNodes([node.flowNode]);

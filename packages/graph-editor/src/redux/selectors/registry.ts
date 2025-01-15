@@ -23,7 +23,7 @@ export const capabilitiesSelector = createSelector(
   (state) => state.capabilities,
 );
 
-export const nodeTypesSelector = createSelector(
+export const nodeLoaderSelector = createSelector(
   registry,
   (state) => state.nodeTypes,
 );

@@ -19,4 +19,3 @@ export * from './registry/control.js';
 export * from './registry/specifics.js';
 export * from './registry/toolbar.js';
 export * from './types/index.js';
-export { DropPanelStore } from './components/panels/dropPanel/data.js';

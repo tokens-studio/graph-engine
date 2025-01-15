@@ -3,6 +3,7 @@ import {
   ExternalLoader,
   Graph,
   Node as GraphNode,
+  NodeLoader,
   SchemaObject,
   SerializedGraph,
 } from '@tokens-studio/graph-engine';
@@ -15,6 +16,7 @@ import type { LayoutBase, TabBase, TabData } from 'rc-dock';
 export interface EditorProps {
   id?: string;
 
+  nodeLoader?: NodeLoader;
   tabLoader?: (tab: TabBase) => TabData | undefined;
 
   /**

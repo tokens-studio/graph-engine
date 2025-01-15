@@ -1,4 +1,5 @@
 import { GrabberIcon } from '@/components/icons/GrabberIcon.js';
+import { NodeEntry } from './NodeEntry.js';
 import { NodeHoverCard } from '@/components/NodeHoverCard.js';
 import React, { useCallback } from 'react';
 import styles from './DragItem.module.css';
@@ -6,8 +7,7 @@ import styles from './DragItem.module.css';
 type DragItemProps = {
   data?: unknown;
   type: string;
-  children: React.ReactNode;
-  title?: string;
+  title: string;
   description?: string;
   docs?: string;
   icon?: React.ReactNode | string;
@@ -20,7 +20,6 @@ export const DragItem = ({
   description,
   icon,
   docs,
-  children,
   ...rest
 }: DragItemProps) => {
   const [isDragging, setIsDragging] = React.useState(false);
@@ -62,7 +61,7 @@ export const DragItem = ({
           <span className={styles.grabber}>
             <GrabberIcon />
           </span>
-          {children}
+          <NodeEntry icon={icon} text={title} />
         </button>
       </NodeHoverCard>
     </div>

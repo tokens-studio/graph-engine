@@ -13,18 +13,19 @@ import { observer } from 'mobx-react-lite';
 import { showNodesCmdPaletteSelector } from '@/redux/selectors/ui.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
-import React from 'react';
+import React, { useCallback } from 'react';
 import Search from '@tokens-studio/icons/Search.js';
 import styles from './index.module.css';
 
 export interface ICommandMenu {
   items: DropPanelStore;
-  handleSelectNewNodeType: (node: NodeRequest) =>
+  handleSelectNewNodeType: (node: NodeRequest) => Promise<
     | {
         graphNode: Node;
         flowNode: ReactFlowNode;
       }
-    | undefined;
+    | undefined
+  >;
 }
 
 const CommandItem = observer(
@@ -80,7 +81,10 @@ const CommandMenuGroup = observer(
   },
 );
 
-const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
+export const CommandMenu = ({
+  items,
+  handleSelectNewNodeType,
+}: ICommandMenu) => {
   const showNodesCmdPalette = useSelector(showNodesCmdPaletteSelector);
   const dispatch = useDispatch();
   const cursorPositionRef = React.useRef<{ x: number; y: number }>({
@@ -91,8 +95,8 @@ const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
   const reactflow = useReactFlow();
   const selectAddedNodes = useSelectAddedNodes();
 
-  const handleSelectItem = (item) => {
-    const newNode = handleSelectNewNodeType({
+  const handleSelectItem = async (item) => {
+    const newNode = await handleSelectNewNodeType({
       position: reactflow.screenToFlowPosition(cursorPositionRef.current),
       ...item,
     });
@@ -132,13 +136,16 @@ const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
   }, [dispatch.ui, showNodesCmdPalette]);
 
   // Close the menu when Escape key is pressed inside the input
-  const handleKeyDown = (e) => {
-    if (e.key === 'Escape') {
-      e.preventDefault();
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
 
-      dispatch.ui.setShowNodesCmdPalette(false);
-    }
-  };
+        dispatch.ui.setShowNodesCmdPalette(false);
+      }
+    },
+    [dispatch.ui],
+  );
 
   return (
     <Command.Dialog
@@ -216,5 +223,3 @@ function NodePreview({ title, description, docs }) {
     </Stack>
   );
 }
-
-export { CommandMenu };

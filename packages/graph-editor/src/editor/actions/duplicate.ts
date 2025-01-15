@@ -1,16 +1,10 @@
 import { Edge, Node, ReactFlowInstance } from 'reactflow';
-import {
-  Graph,
-  NodeFactory,
-  Port,
-  annotatedSingleton,
-} from '@tokens-studio/graph-engine';
+import { Graph, Port, annotatedSingleton } from '@tokens-studio/graph-engine';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface IDuplicate {
   reactFlowInstance: ReactFlowInstance;
   graph: Graph;
-  nodeLookup: Record<string, NodeFactory>;
 }
 
 /**

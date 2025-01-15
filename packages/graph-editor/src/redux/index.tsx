@@ -34,6 +34,7 @@ export const ReduxProvider = ({
   }, [controls]);
 
   useEffect(() => {
+    console.log(nodeTypes);
     store.dispatch.registry.setNodeTypes(nodeTypes);
   }, [nodeTypes]);
 

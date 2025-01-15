@@ -1,6 +1,7 @@
-import { TOKEN } from '../../schemas/index.js';
-import { TokenArrayField } from './tokenSet.js';
+import { TOKEN, TOKEN_SET } from '../../schemas/index.js';
+import { TokenArrayField } from './tokenArray.js';
 import { TokenField } from './token.js';
+import { TokenSetField } from './tokenSet.js';
 import { VariadicTokenSet } from './variadicTokenSet.js';
 import { variadicMatcher } from '@tokens-studio/graph-editor';
 import type { Input, Port } from '@tokens-studio/graph-engine';
@@ -17,6 +18,12 @@ export const controls = [
 		},
 		component: TokenArrayField
 	},
+
+	{
+		matcher: (port: Port) => port.type.$id === TOKEN_SET,
+		component: TokenSetField
+	},
+
 	{
 		matcher: (port: Port) => port.type.$id === TOKEN,
 		component: TokenField

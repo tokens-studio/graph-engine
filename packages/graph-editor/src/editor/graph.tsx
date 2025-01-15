@@ -57,7 +57,7 @@ import { PassthroughNode } from '@/components/flow/nodes/passthroughNode.js';
 import { SelectionContextMenu } from '@/components/contextMenus/selectionContextMenu.js';
 import {
   capabilitiesSelector,
-  nodeTypesSelector,
+  nodeLoaderSelector,
   panelItemsSelector,
 } from '@/redux/selectors/registry.js';
 import { clear } from './actions/clear.js';
@@ -113,7 +113,7 @@ export const EditorApp = React.forwardRef<
   GraphEditorProps
 >((props: GraphEditorProps, ref) => {
   const panelItems = useSelector(panelItemsSelector);
-  const fullNodeLookup = useSelector(nodeTypesSelector);
+  const nodeLoader = useSelector(nodeLoaderSelector);
   const { id, customNodeUI = {}, children } = props;
 
   const externalLoader = useExternalLoader();
@@ -397,7 +397,7 @@ export const EditorApp = React.forwardRef<
       createNode({
         reactFlowInstance,
         graph,
-        nodeLookup: fullNodeLookup,
+        nodeLoader,
         iconLookup,
         customUI: customNodeMap,
         dropPanelPosition,
@@ -406,7 +406,7 @@ export const EditorApp = React.forwardRef<
     [
       reactFlowInstance,
       graph,
-      fullNodeLookup,
+      nodeLoader,
       iconLookup,
       customNodeMap,
       dropPanelPosition,
@@ -429,7 +429,7 @@ export const EditorApp = React.forwardRef<
       },
       loadRaw: async (serializedGraph) => {
         if (internalRef.current) {
-          await graph.deserialize(serializedGraph, fullNodeLookup);
+          await graph.deserialize(serializedGraph, nodeLoader);
           internalRef?.current.load(graph);
         }
       },
@@ -510,7 +510,7 @@ export const EditorApp = React.forwardRef<
     [
       reactFlowInstance,
       graph,
-      fullNodeLookup,
+      nodeLoader,
       setNodes,
       setEdges,
       dispatch.graph,
@@ -589,15 +589,16 @@ export const EditorApp = React.forwardRef<
   );
 
   const onEdgeDblClick = useCallback(
-    (event, clickedEdge) => {
+    async (event, clickedEdge) => {
       event.stopPropagation();
 
       const position = reactFlowInstance?.screenToFlowPosition({
         x: event.clientX,
         y: event.clientY,
       });
+      const PassthroughFactory = await nodeLoader(PASSTHROUGH);
 
-      const newNode = new fullNodeLookup[PASSTHROUGH]({
+      const newNode = new PassthroughFactory({
         graph,
       });
 
@@ -657,7 +658,7 @@ export const EditorApp = React.forwardRef<
         return [...filtered, newEdge, newEdge2];
       });
     },
-    [fullNodeLookup, graph, reactFlowInstance, setEdges, setNodes],
+    [nodeLoader, graph, reactFlowInstance, setEdges, setNodes],
   );
 
   const onNodeDrag = useCallback(
@@ -698,10 +699,9 @@ export const EditorApp = React.forwardRef<
   const duplicateNodesAction = duplicateNodes({
     graph,
     reactFlowInstance,
-    nodeLookup: fullNodeLookup,
   });
 
-  const copyNodes = copyNodeAction(reactFlowInstance, graph, fullNodeLookup);
+  const copyNodes = copyNodeAction(reactFlowInstance, graph, nodeLoader);
   const selectAddedNodes = useSelectAddedNodes();
 
   const onDrop = useCallback(
@@ -721,12 +721,15 @@ export const EditorApp = React.forwardRef<
       });
 
       //Some of the nodes might be invalid, so remember to filter them out
-      const newNodes = positionUpdated
-        .map((nodeRequest) => handleSelectNewNodeType(nodeRequest))
-        .filter((x) => !!x)
-        .map((x) => x?.flowNode ?? ({} as Node));
+      const newNodes = await Promise.all(
+        positionUpdated.map((nodeRequest) =>
+          handleSelectNewNodeType(nodeRequest),
+        ),
+      );
 
-      selectAddedNodes(newNodes);
+      selectAddedNodes(
+        newNodes.filter((x) => !!x).map((x) => x?.flowNode ?? ({} as Node)),
+      );
     },
     [handleSelectNewNodeType, reactFlowInstance],
   );

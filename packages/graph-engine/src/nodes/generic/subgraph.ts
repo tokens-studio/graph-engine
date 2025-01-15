@@ -14,7 +14,7 @@ import InputNode from './input.js';
 import OutputNode from './output.js';
 
 export interface SerializedSubgraphNode extends SerializedNode {
-	innergraph: SerializedGraph;
+	innergraph?: SerializedGraph;
 }
 export interface ISubgraphNode extends INodeDefinition {
 	innergraph?: Graph;
@@ -124,10 +124,12 @@ export default class SubgraphNode extends Node {
 	}
 
 	static override async deserialize(opts: IDeserializeOpts) {
-		const innergraph = await new Graph().deserialize(
-			(opts.serialized as SerializedSubgraphNode).innergraph,
-			opts.lookup
-		);
+		const serializedInner = (opts.serialized as SerializedSubgraphNode)
+			.innergraph;
+
+		const innergraph = serializedInner
+			? await new Graph().deserialize(serializedInner, opts.lookup)
+			: undefined;
 
 		const node = (await super.deserialize({
 			...opts,

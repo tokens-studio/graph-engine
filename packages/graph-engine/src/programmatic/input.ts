@@ -10,7 +10,7 @@ export interface IInputProps<T = any> {
 	name: string;
 	type: GraphSchema;
 	value: T;
-	visible: boolean;
+	visible?: boolean;
 	node: Node;
 	variadic?: boolean;
 	annotations?: Record<string, any>;

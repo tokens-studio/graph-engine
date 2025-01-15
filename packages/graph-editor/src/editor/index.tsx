@@ -3,7 +3,6 @@ import { LayoutController } from './layoutController.js';
 import { ReduxProvider } from '../redux/index.js';
 import { ToastProvider } from '@/hooks/useToast.js';
 import { defaultControls } from '@/registry/control.js';
-import { nodeLookup as defaultNodeLookup } from '@tokens-studio/graph-engine';
 import { defaultPanelGroupsFactory } from '@/components/index.js';
 import { defaultSpecifics } from '@/registry/specifics.js';
 import React from 'react';
@@ -20,7 +19,7 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
 
       toolbarButtons,
       schemas,
-      nodeTypes = defaultNodeLookup,
+      nodeLoader,
       controls = [...defaultControls],
       specifics = defaultSpecifics,
       icons,
@@ -34,7 +33,7 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
           schemas={schemas}
           controls={controls}
           panelItems={panelItems}
-          nodeTypes={nodeTypes}
+          nodeTypes={nodeLoader}
           specifics={specifics}
           capabilities={capabilities}
           toolbarButtons={toolbarButtons}
