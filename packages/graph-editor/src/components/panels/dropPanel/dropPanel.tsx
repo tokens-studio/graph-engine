@@ -3,10 +3,7 @@ import { DragItem } from './DragItem.js';
 import { DropPanelStore } from './data.js';
 import { NodeEntry } from './NodeEntry.js';
 import { observer } from 'mobx-react-lite';
-import {
-  panelItemsSelector,
-  previewItemsSelector,
-} from '@/redux/selectors/registry.js';
+import { panelItemsSelector } from '@/redux/selectors/registry.js';
 import { useSelector } from 'react-redux';
 import NavArrowRight from '@tokens-studio/icons/NavArrowRight.js';
 import React, { useState } from 'react';
@@ -28,12 +25,6 @@ export interface IDropPanel {
 
 export const DropPanel = () => {
   const data = useSelector(panelItemsSelector);
-  return <DropPanelInner data={data} />;
-};
-
-export const PreviewDropPanel = () => {
-  const data = useSelector(previewItemsSelector);
-  console.log(data);
   return <DropPanelInner data={data} />;
 };
 

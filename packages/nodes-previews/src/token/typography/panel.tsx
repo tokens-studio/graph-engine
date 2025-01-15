@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useMemo } from 'react';
 import clsx from 'clsx';
 import styles from './panel.module.css';
 import type TypographyNode from './node.js';
@@ -52,25 +52,29 @@ const FontFamilyPreview = ({ fontFamily, weights }) => (
 
 export const TypographyPreview = observer(
 	({ inputs }: { inputs: TypographyNode['inputs'] }) => {
-		const tokens = inputs.tokens?.value || [];
-		const typographyTokens = tokens.filter(
-			token => token.type === 'typography'
-		);
+		const { typographyTokens, fontFamilies } = useMemo(() => {
+			const tokens = inputs.tokens?.value || [];
+			const typographyTokens = tokens.filter(
+				token => token.type === 'typography'
+			);
 
-		// Extract unique font families and their weights
-		const fontFamilies = new Map();
-		typographyTokens.forEach(token => {
-			const fontFamily = token.value?.fontFamily;
-			const weight = token.value?.fontWeight;
-			if (fontFamily) {
-				if (!fontFamilies.has(fontFamily)) {
-					fontFamilies.set(fontFamily, new Set());
+			// Extract unique font families and their weights
+			const fontFamilies = new Map();
+			typographyTokens.forEach(token => {
+				const fontFamily = token.value?.fontFamily;
+				const weight = token.value?.fontWeight;
+				if (fontFamily) {
+					if (!fontFamilies.has(fontFamily)) {
+						fontFamilies.set(fontFamily, new Set());
+					}
+					if (weight) {
+						fontFamilies.get(fontFamily).add(weight);
+					}
 				}
-				if (weight) {
-					fontFamilies.get(fontFamily).add(weight);
-				}
-			}
-		});
+			});
+
+			return { typographyTokens, fontFamilies };
+		}, [inputs.tokens?.value]);
 
 		return (
 			<div className={styles.container}>
@@ -98,14 +102,14 @@ export const TypographyPreview = observer(
 						</tr>
 					</thead>
 					<tbody>
-						{typographyTokens.map((token, index) => (
-							<tr key={`${token.name}-${index}`}>
+						{typographyTokens.map(token => (
+							<tr key={token.name}>
 								<td>
 									<div
 										className={styles.preview}
 										style={getTypographyStyle(token)}
 									>
-										The quick brown fox
+										The quick brown fox jumped over the lazy dog
 									</div>
 								</td>
 								<td>{token.name || 'Unnamed'}</td>

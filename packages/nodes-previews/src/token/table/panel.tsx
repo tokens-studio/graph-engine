@@ -31,9 +31,9 @@ export const TokenTablePreview = observer(
 						</tr>
 					</thead>
 					<tbody>
-						{tokens.map((token, index) => (
+						{tokens.map(token => (
 							<tr
-								key={`${token.name}-${index}`}
+								key={token.name}
 								className='ts-surface'
 								data-appearance='neutral'
 								data-emphasis='ghost'

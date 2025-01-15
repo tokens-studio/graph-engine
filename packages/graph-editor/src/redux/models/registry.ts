@@ -26,7 +26,6 @@ export interface RegistryState {
   controls: Control[];
   nodeTypes: Record<string, typeof Node>;
   panelItems: DropPanelStore;
-  previewItems: DropPanelStore;
   capabilities: CapabilityFactory[];
   toolbarButtons: ReactElement[];
   schemas: SchemaObject[];
@@ -39,7 +38,6 @@ export const registryState = createModel<RootModel>()({
     inputControls: { ...inputControls },
     controls: [...(defaultControls as Control[])],
     panelItems: defaultPanelGroupsFactory(),
-    previewItems: new DropPanelStore([]),
     nodeTypes: {},
     capabilities: [],
     toolbarButtons: DefaultToolbarButtons(),
@@ -110,12 +108,6 @@ export const registryState = createModel<RootModel>()({
       return {
         ...state,
         panelItems: payload,
-      };
-    },
-    setPreviewPanelItems(state, payload: DropPanelStore) {
-      return {
-        ...state,
-        previewItems: payload,
       };
     },
   },

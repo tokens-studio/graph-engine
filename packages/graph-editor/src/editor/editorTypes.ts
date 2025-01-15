@@ -54,9 +54,6 @@ export interface EditorProps {
    * Not populating this will result in the default items being displayed.
    */
   panelItems: DropPanelStore;
-
-  previewPanelItems: DropPanelStore;
-
   /**
    * Customize the controls that are displayed in the editor
    */

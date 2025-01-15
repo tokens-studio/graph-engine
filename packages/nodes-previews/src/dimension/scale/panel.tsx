@@ -6,16 +6,16 @@ import clsx from 'clsx';
 import styles from './panel.module.css';
 import type DimensionScale from './node.js';
 
+const filter = {
+	dimension: true,
+	sizing: true,
+	spacing: true
+};
+
 export const DimensionScalePreview = observer(
 	({ inputs }: { inputs: DimensionScale['inputs'] }) => {
 		const tokens = inputs.scale?.value || [];
-		const dimensionTokens = tokens.filter(token =>
-			['dimension', 'sizing', 'spacing'].includes(token.type)
-		);
-
-		console.log(inputs.scale.value);
-		console.log(dimensionTokens);
-
+		const dimensionTokens = tokens.filter(token => filter[token.type]);
 		return (
 			<Stack direction='column' className={styles.container} gap={2}>
 				<Stack direction='row' className={styles.stacked} gap={2} wrap>

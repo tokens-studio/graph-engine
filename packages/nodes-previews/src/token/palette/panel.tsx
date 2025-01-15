@@ -1,6 +1,6 @@
 import { Text } from '@tokens-studio/ui/Text.js';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useMemo } from 'react';
 import clsx from 'clsx';
 import styles from './panel.module.css';
 import type PaletteNode from './node.js';
@@ -47,30 +47,36 @@ interface ColorGroupProps {
 }
 
 const ColorGroup: React.FC<ColorGroupProps> = ({ name, tokens }) => {
-	const colorTokens: ColorSwatchProps[] = [];
-	const groups: { name: string; tokens: NestedTokens }[] = [];
-
-	// Sort tokens into colors and subgroups
-	Object.entries(tokens).forEach(([key, token]) => {
-		if (token && typeof token === 'object') {
-			if (
-				'type' in token &&
-				token.type === 'color' &&
-				'value' in token &&
-				typeof token.value === 'string'
-			) {
-				colorTokens.push({
-					name: key,
-					value: token.value
-				});
-			} else if (!('type' in token)) {
-				groups.push({
-					name: key,
-					tokens: token as NestedTokens
-				});
+	const { groups, colorTokens } = useMemo(() => {
+		const ret = Object.entries(tokens).reduce(
+			(acc, [key, token]) => {
+				if (token && typeof token === 'object') {
+					if (
+						'type' in token &&
+						token.type === 'color' &&
+						'value' in token &&
+						typeof token.value === 'string'
+					) {
+						acc.colorTokens.push({
+							name: key,
+							value: token.value
+						});
+					} else if (!('type' in token)) {
+						acc.groups.push({
+							name: key,
+							tokens: token as NestedTokens
+						});
+					}
+				}
+				return acc;
+			},
+			{
+				colorTokens: [] as ColorSwatchProps[],
+				groups: [] as { name: string; tokens: NestedTokens }[]
 			}
-		}
-	});
+		);
+		return ret;
+	}, [tokens]);
 
 	if (colorTokens.length === 0 && groups.length === 0) return null;
 

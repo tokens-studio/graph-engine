@@ -9,7 +9,6 @@ export const ReduxProvider = ({
   capabilities,
   icons,
   schemas,
-  previewPanelItems,
   controls,
   specifics,
   toolbarButtons,
@@ -25,12 +24,6 @@ export const ReduxProvider = ({
       store.dispatch.registry.setSchemas(schemas);
     }
   }, [schemas]);
-
-  useEffect(() => {
-    if (previewPanelItems) {
-      store.dispatch.registry.setPreviewPanelItems(previewPanelItems);
-    }
-  }, [previewPanelItems]);
 
   useEffect(() => {
     store.dispatch.registry.registerIcons(icons || {});

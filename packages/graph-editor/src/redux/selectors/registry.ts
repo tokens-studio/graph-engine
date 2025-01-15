@@ -18,11 +18,6 @@ export const panelItemsSelector = createSelector(
   (state) => state.panelItems,
 );
 
-export const previewItemsSelector = createSelector(
-  registry,
-  (state) => state.previewItems,
-);
-
 export const capabilitiesSelector = createSelector(
   registry,
   (state) => state.capabilities,
