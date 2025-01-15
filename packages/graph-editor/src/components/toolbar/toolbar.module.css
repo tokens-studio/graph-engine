@@ -11,6 +11,17 @@
   pointer-events: auto;
 }
 
+.wrapper {
+  position: absolute;
+  top: var(--size-250);
+  left: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  z-index: 99;
+  pointer-events: none;
+}
+
 .separator {
   width: 1px;
   background-color: var(--color-neutral-stroke-subtle);
