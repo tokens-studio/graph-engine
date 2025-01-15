@@ -4,7 +4,7 @@ import { arrayOf } from '../../utils/index.js';
 
 export default class NodeDefinition extends Node {
 	static title = 'Dimension Scale';
-	static type = 'studio.tokens.previews.dimension.scale';
+	static type = 'studio.tokens.previews.tokens.dimension';
 	static description = 'Previews a scale of dimension tokens';
 
 	constructor(props) {
