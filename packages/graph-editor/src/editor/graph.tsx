@@ -36,6 +36,7 @@ import React, {
   useState,
 } from 'react';
 import ReactFlow from 'reactflow';
+import toolbarStyles from '../components/toolbar/toolbar.module.css';
 
 import groupNode from '../components/flow/nodes/groupNode.js';
 import noteNode from '../components/flow/nodes/noteNode.js';
@@ -812,17 +813,7 @@ export const EditorApp = React.forwardRef<
                   handleSelectNewNodeType={handleSelectNewNodeType}
                 />
               )}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 'var(--size-250)',
-                  left: 0,
-                  right: 0,
-                  display: 'grid',
-                  placeItems: 'center',
-                  zIndex: '99',
-                }}
-              >
+              <div className={toolbarStyles.wrapper}>
                 <GraphToolbar />
               </div>
               {props.children}
