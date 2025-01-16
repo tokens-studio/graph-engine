@@ -5,10 +5,10 @@
 
 .inlineTypeLabel {
   position: absolute;
-  background: var(--color-neutral-surface-default-idle-bg);
+  background: rgba(from var(--color-neutral-surface-default-idle-bg) r g b / 0.65);
   color: var(--color-neutral-surface-default-idle-fg-default);
-  padding: var(--component-spacing-2xs);
-  font: var(--font-code-xs);
+  padding: var(--component-spacing-xs) var(--component-spacing-sm) var(--component-spacing-2xs) var(--component-spacing-sm);
+  font: var(--font-code-sm);
   border-radius: var(--component-radii-sm);
   text-transform: uppercase;
 
@@ -21,7 +21,10 @@
   }
 }
 
-
+:global(.ts-theme-dark) .inlineTypeLabel {
+    background: rgba(from var(--color-neutral-surface-default-idle-bg) r g b / 0.8);
+    font-weight: 800;
+}
 
 .colorSwatch {
   width: 16px;
