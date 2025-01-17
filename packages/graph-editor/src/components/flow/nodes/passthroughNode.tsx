@@ -25,6 +25,9 @@ export const PassthroughNode = (args) => {
       style={{
         background: 'var(--color-node-bg)',
         borderRadius: 'var(--component-radii-md)',
+        padding: 'var(--size-50)',
+        border: '2px solid var(--colors-nodeBorder)',
+        boxShadow: 'var(--shadows-contextMenu)',
       }}
     >
       {node && (
