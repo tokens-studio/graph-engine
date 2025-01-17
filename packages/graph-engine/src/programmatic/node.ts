@@ -209,7 +209,6 @@ export class Node {
 	async load(uri: string, data?: unknown) {
 		return this._graph?.loadResource(uri, this, data);
 	}
-
 	get isRunning() {
 		return !!this.annotations[annotatedNodeRunning];
 	}

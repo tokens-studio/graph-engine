@@ -17,6 +17,7 @@ export const Editor = React.forwardRef<ImperativeEditorRef, EditorProps>(
     const {
       panelItems = defaultPanelGroupsFactory(),
       capabilities,
+
       toolbarButtons,
       schemas,
       nodeTypes = defaultNodeLookup,

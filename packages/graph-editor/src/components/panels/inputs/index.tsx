@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 
 export function Inputsheet() {
   const graph = useGraph();
+
   const nodeID = useSelector(currentNode);
   const selectedNode = useMemo(() => graph?.getNode(nodeID), [graph, nodeID]);
 

@@ -1,0 +1,28 @@
+.container {
+	padding: 1rem;
+}
+
+.stacked {
+  .item {
+    flex-shrink: 0;
+    flex-grow: 0;
+    
+    .box {
+      display: block;
+      flex-shrink: 0;
+      flex-grow: 0;
+    }
+  }
+}
+
+.layered {
+  position: relative;
+
+  .item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    border: var(--component-border-width-sm) solid var(--stroke-subtle);
+  }
+}
