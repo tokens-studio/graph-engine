@@ -83,6 +83,7 @@ const CommandMenuGroup = observer(
 const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
   const showNodesCmdPalette = useSelector(showNodesCmdPaletteSelector);
   const dispatch = useDispatch();
+  const dialogRef = React.useRef<HTMLDivElement>(null);
   const cursorPositionRef = React.useRef<{ x: number; y: number }>({
     x: 0,
     y: 0,
@@ -140,8 +141,29 @@ const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
     }
   };
 
+  // add click outside handler
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dialogRef.current &&
+        !dialogRef.current.contains(event.target as HTMLElement)
+      ) {
+        dispatch.ui.setShowNodesCmdPalette(false);
+      }
+    };
+
+    if (showNodesCmdPalette) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showNodesCmdPalette, dispatch.ui]);
+
   return (
     <Command.Dialog
+      ref={dialogRef}
       open={showNodesCmdPalette}
       onOpenChange={() =>
         dispatch.ui.setShowNodesCmdPalette(!showNodesCmdPalette)
