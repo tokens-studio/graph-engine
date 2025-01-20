@@ -37,7 +37,7 @@ export default class InvertNode extends Node {
 		const inverted = value.map((x, i) => {
 			return {
 				...reversedValues[i],
-				name: x.name,
+				name: x.name
 			};
 		});
 
