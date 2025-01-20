@@ -32,15 +32,15 @@ export default class InvertNode extends Node {
 
 	execute(): void | Promise<void> {
 		const value = this.inputs.tokens.value;
+		const reversedValues = [...value].reverse();
 
 		const inverted = value.map((x, i) => {
-			const vals = inverted[inverted.length - i - 1];
 			return {
-				...vals,
+				...reversedValues[i],
 				name: x.name
 			};
 		});
 
-		this.outputs.tokens.set(value);
+		this.outputs.tokens.set(inverted);
 	}
 }
