@@ -1,5 +1,12 @@
 # @tokens-studio/graph-engine
 
+## 7.1.1
+
+### Patch Changes
+
+- cf7b567: Fixed inverted node error
+- d428728: Fixed spelling mistake
+
 ## 7.1.0
 
 ### Minor Changes

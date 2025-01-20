@@ -1,5 +1,15 @@
 # @tokens-studio/graph-editor
 
+## 4.3.12
+
+### Patch Changes
+
+- 7840d26: Fixed edge anchor styling
+- f08f85f: Fix clsx and remove classnames.
+- 71e6087: Set zoom value in toolbar to tabular so the button width doesn't jump around
+- d9af659: Remove slide animation
+- ec9f988: Fixed not being able to drag nodes at the same vertical position as the toolbar
+
 ## 4.3.11
 
 ### Patch Changes
