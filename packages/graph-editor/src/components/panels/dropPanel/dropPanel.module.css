@@ -7,6 +7,19 @@
   flex-direction: column;
 }
 
+.vertical {
+  padding-top: var(--component-spacing-xs);
+  width: 100%;
+  flex: 1;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+.search {
+  padding: 0 var(--component-spacing-md);
+  padding-top: var(--component-spacing-lg)
+}
+
 .accordion {
   width: 100%;
   display: flex;
@@ -17,10 +30,12 @@
     border: 0;
   }
 }
+
 .accordionItem {
   border: 0;
 
 }
+
 .accordionTrigger {
   display: flex;
   align-items: center;

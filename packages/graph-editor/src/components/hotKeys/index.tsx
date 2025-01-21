@@ -1,12 +1,6 @@
 import { HotKeys as HotKeysComp } from 'react-hotkeys';
 import { SerializedNode } from '@/types/serializedNode.js';
 import { annotatedDeleteable } from '@tokens-studio/graph-engine';
-import {
-  inlineTypes,
-  inlineValues,
-  showGrid,
-  snapGrid,
-} from '@/redux/selectors/settings.js';
 import { savedViewports } from '@/annotations/index.js';
 import { useAction } from '@/editor/actions/provider.js';
 import { useAutoLayout } from '@/editor/hooks/useAutolayout.js';
@@ -14,7 +8,7 @@ import { useDispatch } from '@/hooks/useDispatch.js';
 import { useLocalGraph } from '@/hooks/index.js';
 import { useMemo } from 'react';
 import { useReactFlow } from 'reactflow';
-import { useSelector } from 'react-redux';
+import { useSystem } from '@/system/hook.js';
 import { useToast } from '@/hooks/useToast.js';
 import React from 'react';
 import copy from 'copy-to-clipboard';
@@ -79,10 +73,7 @@ export const getViewports = (graph) => {
 };
 
 export const useHotkeys = () => {
-  const showGridValue = useSelector(showGrid);
-  const snapGridValue = useSelector(snapGrid);
-  const inlineTypesValue = useSelector(inlineTypes);
-  const inlineValuesValue = useSelector(inlineValues);
+  const system = useSystem();
   const duplicateNodes = useAction('duplicateNodes');
   const deleteNode = useAction('deleteNode');
   const copyNodes = useAction('copyNodes');
@@ -232,20 +223,20 @@ export const useHotkeys = () => {
       },
       TOGGLE_GRID: (event) => {
         event.preventDefault();
-        dispatch.settings.setShowGrid(!showGridValue);
+        system.settings.setShowGrid(!system.settings.showGrid);
       },
       FIND: (event) => {
         event.preventDefault();
         dispatch.settings.setShowSearch(true);
       },
       TOGGLE_SNAP_GRID: () => {
-        dispatch.settings.setSnapGrid(!snapGridValue);
+        system.settings.setSnapGrid(!system.settings.snapGrid);
       },
       TOGGLE_TYPES: () => {
-        dispatch.settings.setInlineTypes(!inlineTypesValue);
+        system.settings.setInlineTypes(!system.settings.inlineTypes);
       },
       TOGGLE_VALUES: () => {
-        dispatch.settings.setInlineValues(!inlineValuesValue);
+        dispatch.settings.setInlineValues(!system.settings.inlineValues);
       },
     }),
 
@@ -257,10 +248,7 @@ export const useHotkeys = () => {
       graph,
       layout,
       reactFlowInstance,
-      showGridValue,
-      snapGridValue,
-      inlineTypesValue,
-      inlineValuesValue,
+      system.settings,
       trigger,
     ],
   );

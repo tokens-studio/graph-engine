@@ -1,0 +1,73 @@
+{
+	"dockbox": {
+		"id": "+18",
+		"size": 200,
+		"mode": "horizontal",
+		"children": [
+			{
+				"id": "+22",
+				"size": 0.25,
+				"tabs": [
+					{
+						"id": "dropPanel"
+					},
+					{
+						"id": "previewNodesPanel"
+					},
+					{
+						"id": "marketplace"
+					}
+				],
+				"group": "popout",
+				"activeId": "dropPanel"
+			},
+			{
+				"id": "graphs",
+				"size": 1.4166666666666665,
+				"tabs": [
+					{
+						"id": "graph1"
+					}
+				],
+				"group": "graph",
+				"activeId": "graph1"
+			},
+			{
+				"id": "+24",
+				"size": 0.3333333333333333,
+				"mode": "vertical",
+				"children": [
+					{
+						"id": "+25",
+						"size": 12,
+						"tabs": [
+							{
+								"id": "unifiedPorts"
+							}
+						],
+						"group": "popout",
+						"activeId": "unifiedPorts"
+					}
+				]
+			}
+		]
+	},
+	"floatbox": {
+		"id": "+30",
+		"size": 1,
+		"mode": "float",
+		"children": []
+	},
+	"windowbox": {
+		"id": "+31",
+		"size": 1,
+		"mode": "window",
+		"children": []
+	},
+	"maxbox": {
+		"id": "+32",
+		"size": 1,
+		"mode": "maximize",
+		"children": []
+	}
+}

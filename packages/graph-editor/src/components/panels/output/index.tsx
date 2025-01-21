@@ -1,11 +1,12 @@
-import { Heading, Stack } from '@tokens-studio/ui';
 import { Node } from '@tokens-studio/graph-engine';
 import { PortPanel } from '@/components/portPanel/index.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
 import { currentNode } from '@/redux/selectors/graph.js';
 import { observer } from 'mobx-react-lite';
 import { useGraph } from '@/hooks/useGraph.js';
 import { useSelector } from 'react-redux';
 import React, { useMemo } from 'react';
+import styles from './styles.module.css';
 
 export function OutputSheet() {
   const graph = useGraph();
@@ -23,43 +24,10 @@ export function OutputSheet() {
  */
 const OutputSheetObserver = observer(({ node }: { node: Node }) => {
   return (
-    <div
-      style={{
-        height: '100%',
-        width: '100%',
-        flex: 1,
-        display: 'flex',
-        overflow: 'auto',
-        flexDirection: 'column',
-      }}
-    >
-      <Stack
-        direction="column"
-        gap={4}
-        style={{
-          height: '100%',
-          flex: 1,
-          padding: 'var(--component-spacing-md)',
-        }}
-      >
-        <Stack direction="column" gap={3}>
-          <Stack gap={2} align="start" justify="between">
-            <Heading size="large"> {node.factory.title}</Heading>
-          </Stack>
-        </Stack>
-
-        <div style={{ padding: 'var(--component-spacing-md)' }}>
-          <Stack
-            width="full"
-            style={{
-              paddingTop: 'var(--component-spacing-md)',
-              paddingBottom: 'var(--component-spacing-md)',
-            }}
-          >
-            <PortPanel ports={node?.outputs} readOnly key={node.id} />
-          </Stack>
-        </div>
+    <Stack direction="column" gap={4} className={styles.outer}>
+      <Stack width="full" className={styles.inner}>
+        <PortPanel ports={node?.outputs} readOnly key={node.id} />
       </Stack>
-    </div>
+    </Stack>
   );
 });

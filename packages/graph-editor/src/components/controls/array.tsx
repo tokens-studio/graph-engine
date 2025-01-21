@@ -21,10 +21,8 @@ import {
 import { ColorPickerPopover } from '../colorPicker/index.js';
 import { IField } from './interface.js';
 import { JSONTree } from 'react-json-tree';
-import { delayedUpdateSelector } from '@/redux/selectors/index.js';
 import { observer } from 'mobx-react-lite';
 import { toJS } from 'mobx';
-import { useSelector } from 'react-redux';
 import FloppyDisk from '@tokens-studio/icons/FloppyDisk.js';
 import Minus from '@tokens-studio/icons/Minus.js';
 import Plus from '@tokens-studio/icons/Plus.js';
@@ -40,7 +38,7 @@ const NEW_ITEM_DEFAULTS = {
   },
 };
 
-export const ArrayField = observer(({ port, readOnly }: IField) => {
+export const ArrayField = observer(({ port, readOnly, settings }: IField) => {
   const [value, setValue] = React.useState(port.value);
   const [selectItemsType, setSelectItemsType] = React.useState(
     port.type.items.$id,
@@ -49,7 +47,6 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
   const [autofocusIndex, setAutofocusIndex] = React.useState<number | null>(
     null,
   );
-  const useDelayed = useSelector(delayedUpdateSelector);
 
   React.useEffect(() => {
     setValue(port.value);
@@ -82,13 +79,13 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
 
       setValue(newValueArray);
 
-      if (useDelayed) {
+      if (settings.delayedUpdate) {
         return;
       }
 
       (port as Input).setValue(newValueArray);
     },
-    [port, useDelayed, value],
+    [port, settings.delayedUpdate, value],
   );
 
   const onColorChange = useCallback(
@@ -106,12 +103,12 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
 
     setAutofocusIndex(newValueArray.length - 1);
 
-    if (useDelayed) {
+    if (settings.delayedUpdate) {
       return;
     }
 
     (port as Input).setValue(newValueArray);
-  }, [itemsType, port, useDelayed, value]);
+  }, [itemsType, port, settings.delayedUpdate, value]);
 
   const removeItem = useCallback(
     (index: number) => {
@@ -121,13 +118,13 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
       setValue(newValueArray);
       setAutofocusIndex(null);
 
-      if (useDelayed) {
+      if (settings.delayedUpdate) {
         return;
       }
 
       (port as Input).setValue(newValueArray);
     },
-    [port, useDelayed, value],
+    [port, settings.delayedUpdate, value],
   );
 
   const itemList = React.useMemo(() => {
@@ -255,7 +252,7 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
           onClick={addItem}
         />
       </Stack>
-      {useDelayed && (
+      {settings.delayedUpdate && (
         <Stack justify="end">
           <IconButton
             icon={<FloppyDisk />}

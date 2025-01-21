@@ -1,20 +1,16 @@
+import { LayoutType } from '@/system/settings.js';
 import { useCallback } from 'react';
-import { useSelector } from 'react-redux';
-
-import { LayoutType } from '@/redux/models/settings.js';
-import { layoutType as layoutTypeSelector } from '@/redux/selectors/settings.js';
-
 import { useDagreLayout } from '@/layouts/dagre.js';
+import { useSystem } from '@/system/hook.js';
 
 export const useAutoLayout = () => {
+  const system = useSystem();
   const dagreAutoLayout = useDagreLayout();
-  const layoutType = useSelector(layoutTypeSelector);
-
   return useCallback(() => {
-    switch (layoutType) {
+    switch (system.settings.layoutType) {
       case LayoutType.dagre:
         dagreAutoLayout();
         break;
     }
-  }, [dagreAutoLayout, layoutType]);
+  }, [dagreAutoLayout, system.settings.layoutType]);
 };

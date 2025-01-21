@@ -1,39 +1,18 @@
-import { Text } from '@tokens-studio/ui';
+import { Text } from '@tokens-studio/ui/Text.js';
 import React from 'react';
+import styles from './nodeEntry.module.css';
 
-export const NodeEntry = ({
-  icon,
-  text,
-}: {
+export interface INodeEntry {
   icon?: React.ReactNode | string;
   text: string;
-}) => {
+}
+
+export const NodeEntry = ({ icon, text }: INodeEntry) => {
   return (
     <>
-      {icon && (
-        <div
-          style={{
-            color: 'var(--color-neutral-canvas-default-fg-subtle)',
-            width: 'var(--size-100)',
-            height: 'var(--size-100)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            font: 'var(--font-body-sm)',
-          }}
-        >
-          {icon}
-        </div>
-      )}
+      {icon && <div className={styles.icon}>{icon}</div>}
 
-      <Text
-        size="xsmall"
-        style={{
-          whiteSpace: 'nowrap',
-          textOverflow: 'ellipsis',
-          overflow: 'hidden',
-        }}
-      >
+      <Text size="xsmall" className={styles.title}>
         {text}
       </Text>
     </>

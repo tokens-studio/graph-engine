@@ -5,7 +5,7 @@ import { action, computed, makeObservable, observable } from 'mobx';
 
 export interface IPort<T = any> {
 	name: string;
-	visible: boolean;
+	visible?: boolean;
 	node: Node;
 	type: GraphSchema;
 	value: T;

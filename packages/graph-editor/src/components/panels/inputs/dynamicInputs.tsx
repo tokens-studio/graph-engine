@@ -1,7 +1,6 @@
 import {
   Button,
   Checkbox,
-  Heading,
   Label,
   Select,
   Stack,
@@ -77,7 +76,6 @@ export const DynamicInputs = observer(({ node }: { node: Node }) => {
 
   return (
     <Stack direction="column" gap={4}>
-      <Heading size="small">Add Input</Heading>
       <Stack direction="row" gap={3}>
         <TextInput
           onChange={onNameChange}

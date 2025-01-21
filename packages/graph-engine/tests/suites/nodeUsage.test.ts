@@ -4,6 +4,8 @@ import { describe, expect, test } from 'vitest';
 import InputNode from '../../src/nodes/generic/input.js';
 import OutputNode from '../../src/nodes/generic/output.js';
 
+const nodeLoader = key => nodeLookup[key];
+
 describe('nodeUsage', () => {
 	test('performs basic passthrough calculations', async () => {
 		const graph = new Graph();
@@ -113,7 +115,7 @@ describe('nodeUsage', () => {
 			}
 		]);
 
-		const newGraph = await new Graph().deserialize(serialized, nodeLookup);
+		const newGraph = await new Graph().deserialize(serialized, nodeLoader);
 		const deserializedOutput = await newGraph.execute();
 
 		expect(deserializedOutput.output).to.eql({

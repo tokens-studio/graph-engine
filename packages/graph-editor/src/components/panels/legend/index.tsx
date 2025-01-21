@@ -1,12 +1,11 @@
 import { Stack, Text } from '@tokens-studio/ui';
-import { icons } from '@/redux/selectors/registry.js';
-import { useSelector } from 'react-redux';
+import { useSystem } from '@/system/hook.js';
 import React, { useMemo } from 'react';
 import colors from '@/tokens/colors.js';
 
 export const Legend = () => {
-  const iconsRegistry = useSelector(icons);
-  return <LegendInner iconsRegistry={iconsRegistry} />;
+  const system = useSystem();
+  return <LegendInner iconsRegistry={system.icons} />;
 };
 
 export interface ILegendInner {

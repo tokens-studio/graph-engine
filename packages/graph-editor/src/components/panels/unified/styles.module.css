@@ -1,0 +1,14 @@
+.container {
+    height: 100%;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    overflow: auto;
+    flex-direction: column;
+}
+
+.inner {
+    height: 100%;
+    flex: 1;
+    padding: var(--component-spacing-md);
+}

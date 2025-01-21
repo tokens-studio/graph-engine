@@ -1,14 +1,14 @@
-import { EdgeType } from '../../../redux/models/settings.js';
+import { EdgeType, SystemSettings } from '@/system/settings.js';
 import { Port } from '@tokens-studio/graph-engine';
-import { edgeType as edgeTypeSelector } from '../../../redux/selectors/settings.js';
 import { getBetterBezierPath } from './offsetBezier.js';
 import {
   getSimpleBezierPath,
   getSmoothStepPath,
   getStraightPath,
 } from 'reactflow';
+import { observer } from 'mobx-react-lite';
 import { useLocalGraph } from '@/context/graph.js';
-import { useSelector } from 'react-redux';
+import { useSystem } from '@/system/hook.js';
 import React from 'react';
 import colors from '@/tokens/colors.js';
 
@@ -26,89 +26,112 @@ const extractColor = (port: Port) => {
   return { color, backgroundColor };
 };
 
-export default function CustomEdge({
-  id,
-  sourceX,
-  sourceY,
-  targetX,
-  targetY,
-  sourcePosition,
-  targetPosition,
-  style = {},
-  data,
-  markerEnd,
-}) {
-  const edgeType = useSelector(edgeTypeSelector);
-  const graph = useLocalGraph();
+export default (props) => {
+  const system = useSystem();
+  return <CustomEdgeInner {...props} settings={system.settings} />;
+};
 
-  const edge = graph.getEdge(id);
-  let col = undefined;
+export interface ICustomEdge {
+  settings: SystemSettings;
+  id: string;
+  sourceX: number;
+  sourceY: number;
+  targetX: number;
+  targetY: number;
+  sourcePosition: object;
+  targetPosition: object;
+  style: object;
+  data?: {
+    text: string;
+  };
+  markerEnd: string;
+}
 
-  if (edge) {
-    const sourceNode = graph.getNode(edge?.source);
-
-    const sourcePort = sourceNode?.outputs[edge?.sourceHandle];
-
-    if (sourcePort) {
-      const { backgroundColor } = extractColor(sourcePort as Port);
-      col = backgroundColor;
-    }
-  }
-
-  let edgeFn;
-  switch (edgeType) {
-    case EdgeType.bezier:
-      edgeFn = getBetterBezierPath;
-      break;
-    case EdgeType.simpleBezier:
-      edgeFn = getSimpleBezierPath;
-      break;
-    case EdgeType.smoothStep:
-      edgeFn = getSmoothStepPath;
-      break;
-    case EdgeType.straight:
-      edgeFn = getStraightPath;
-      break;
-    default:
-      edgeFn = getBetterBezierPath;
-  }
-
-  const [edgePath] = edgeFn({
+export const CustomEdgeInner = observer(
+  ({
+    settings,
+    id,
     sourceX,
     sourceY,
-    sourcePosition,
     targetX,
     targetY,
+    sourcePosition,
     targetPosition,
-  });
+    style = {},
+    data,
+    markerEnd,
+  }: ICustomEdge) => {
+    const graph = useLocalGraph();
 
-  return (
-    <>
-      <path className="react-flow__edge-path-back" d={edgePath} />
-      <path
-        id={id}
-        className="react-flow__edge-path"
-        d={edgePath}
-        style={{ ...style, stroke: col }}
-        markerEnd={markerEnd}
-      />
-      <path
-        d={edgePath}
-        fill="none"
-        strokeOpacity="0"
-        strokeWidth="20"
-        className="react-flow__edge-interaction"
-      />
-      <text>
-        <textPath
-          href={`#${id}`}
-          style={{ fontSize: 12 }}
-          startOffset="50%"
-          textAnchor="middle"
-        >
-          {data?.text}
-        </textPath>
-      </text>
-    </>
-  );
-}
+    const edge = graph.getEdge(id);
+    let col = undefined;
+
+    if (edge) {
+      const sourceNode = graph.getNode(edge?.source);
+
+      const sourcePort = sourceNode?.outputs[edge?.sourceHandle];
+
+      if (sourcePort) {
+        const { backgroundColor } = extractColor(sourcePort as Port);
+        col = backgroundColor;
+      }
+    }
+
+    let edgeFn;
+    switch (settings.edgeType) {
+      case EdgeType.bezier:
+        edgeFn = getBetterBezierPath;
+        break;
+      case EdgeType.simpleBezier:
+        edgeFn = getSimpleBezierPath;
+        break;
+      case EdgeType.smoothStep:
+        edgeFn = getSmoothStepPath;
+        break;
+      case EdgeType.straight:
+        edgeFn = getStraightPath;
+        break;
+      default:
+        edgeFn = getBetterBezierPath;
+    }
+
+    const [edgePath] = edgeFn({
+      sourceX,
+      sourceY,
+      sourcePosition,
+      targetX,
+      targetY,
+      targetPosition,
+    });
+
+    return (
+      <>
+        <path className="react-flow__edge-path-back" d={edgePath} />
+        <path
+          id={id}
+          className="react-flow__edge-path"
+          d={edgePath}
+          style={{ ...style, stroke: col }}
+          markerEnd={markerEnd}
+        />
+        <path
+          d={edgePath}
+          fill="none"
+          strokeOpacity="0"
+          strokeWidth="20"
+          className="react-flow__edge-interaction"
+        />
+        <text>
+          <textPath
+            href={`#${id}`}
+            style={{ fontSize: 12 }}
+            startOffset="50%"
+            textAnchor="middle"
+          >
+            {data?.text}
+          </textPath>
+        </text>
+      </>
+    );
+  },
+);

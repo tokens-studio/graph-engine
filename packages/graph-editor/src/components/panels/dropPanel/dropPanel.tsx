@@ -1,10 +1,8 @@
 import { Accordion, Stack, TextInput } from '@tokens-studio/ui';
 import { DragItem } from './DragItem.js';
 import { DropPanelStore } from './data.js';
-import { NodeEntry } from './NodeEntry.js';
 import { observer } from 'mobx-react-lite';
-import { panelItemsSelector } from '@/redux/selectors/registry.js';
-import { useSelector } from 'react-redux';
+import { useSystem } from '@/system/hook.js';
 import NavArrowRight from '@tokens-studio/icons/NavArrowRight.js';
 import React, { useState } from 'react';
 import styles from './dropPanel.module.css';
@@ -24,8 +22,8 @@ export interface IDropPanel {
 }
 
 export const DropPanel = () => {
-  const data = useSelector(panelItemsSelector);
-  return <DropPanelInner data={data} />;
+  const sys = useSystem();
+  return <DropPanelInner data={sys.panelItems} />;
 };
 
 export const DropPanelInner = observer(({ data }: IDropPanel) => {
@@ -43,25 +41,8 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
 
   return (
     <div className={styles.container} id="drop-panel">
-      <Stack
-        direction="column"
-        gap={3}
-        style={{
-          paddingTop: 'var(--component-spacing-xs)',
-          width: '100%',
-          flex: 1,
-          overflow: 'auto',
-          boxSizing: 'border-box',
-        }}
-      >
-        <Stack
-          direction="column"
-          gap={2}
-          style={{
-            padding: '0 var(--component-spacing-md)',
-            paddingTop: 'var(--component-spacing-lg)',
-          }}
-        >
+      <Stack direction="column" gap={3} className={styles.vertical}>
+        <Stack direction="column" gap={2} className={styles.search}>
           <TextInput placeholder="Search…" value={search} onChange={onSearch} />
         </Stack>
         <Accordion type="multiple" value={opened} onValueChange={setOpened}>
@@ -73,14 +54,13 @@ export const DropPanelInner = observer(({ data }: IDropPanel) => {
               .map((item) => (
                 <DragItem
                   type={item.type}
+                  icon={item.icon}
                   data={item.data || null}
                   key={item.text}
                   docs={item.docs}
                   description={item.description}
                   title={item.text}
-                >
-                  <NodeEntry icon={item.icon} text={item.text} />
-                </DragItem>
+                />
               ));
 
             if (filteredValues.length === 0) {

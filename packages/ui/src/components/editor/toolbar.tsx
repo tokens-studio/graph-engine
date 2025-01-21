@@ -14,9 +14,9 @@ import {
 	useOpenPanel
 } from '@tokens-studio/graph-editor';
 
-import { AISummary } from './panels/aiSummary.tsx';
+import { AISummary } from '../panels/aiSummary.tsx';
 import { IconButton, Tooltip } from '@tokens-studio/ui';
-import { Preview } from './panels/preview.tsx';
+import { Preview } from '../panels/preview.tsx';
 import { ShareAndroidSolid } from 'iconoir-react';
 import { SharePopover } from '../share/index.tsx';
 import { client } from '@/api/sdk/index.ts';
@@ -125,7 +125,7 @@ export const AiSummary = () => {
 				onClick={() =>
 					toggle({
 						group: 'popout',
-						title: <span>Artificial intelligence</span>,
+						title: 'Artificial intelligence',
 						id: 'ai',
 						content: <AISummary />
 					})
@@ -145,7 +145,7 @@ export const PreviewButton = () => {
 				onClick={() =>
 					toggle({
 						group: 'popout',
-						title: <span>Preview</span>,
+						title: 'Preview',
 						id: 'preview',
 						content: <Preview />
 					})

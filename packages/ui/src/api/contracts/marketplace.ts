@@ -1,3 +1,4 @@
+import { SerializedGraph } from '../schemas/graph.ts';
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
 
@@ -24,9 +25,9 @@ export const marketplaceContract = c.router({
 		}
 	},
 	getGraph: {
-		summary: 'Retrieves a graph',
+		summary: 'Gets a graphs metadata',
 		method: 'GET',
-		path: '/marketplace/graph/:id',
+		path: '/marketplace/graph/:id/meta',
 		pathParams: z.object({
 			id: z.string()
 		}),
@@ -48,6 +49,21 @@ export const marketplaceContract = c.router({
 			})
 		}
 	},
+	retrieveGraph: {
+		summary: 'Retrieves a graph',
+		method: 'GET',
+		path: '/marketplace/graph/:id/graph',
+		pathParams: z.object({
+			id: z.string()
+		}),
+		responses: {
+			200: z.object({
+				id: z.string(),
+				graph: SerializedGraph,
+				version: z.string()
+			})
+		}
+	},
 	likeGraph: {
 		summary: 'Likes a graph',
 		method: 'POST',
@@ -60,12 +76,38 @@ export const marketplaceContract = c.router({
 			200: z.object({})
 		}
 	},
+	searchGraphs: {
+		summary: 'Searches through marketplace graphs ',
+		method: 'GET',
+		path: '/marketplace/graphs/search',
+
+		query: z.object({
+			name: z.string(),
+			take: z.number().lte(20).gte(1).optional().default(10),
+			skip: z.number().gte(0).optional().default(0),
+			token: z.string().optional().describe('The token to use for pagination')
+		}),
+
+		responses: {
+			200: z.object({
+				graphs: z.array(
+					z.object({
+						name: z.string(),
+						id: z.string(),
+						description: z.string().nullable()
+					})
+				),
+				token: z.string().optional()
+			})
+		}
+	},
 	listGraphs: {
 		summary: 'Lists all public graphs ',
 		method: 'GET',
 		path: '/marketplace/graphs',
 
 		query: z.object({
+			containsText: z.string().optional(),
 			take: z.number().lte(50).gte(1).optional().default(10),
 			skip: z.number().gte(0).optional().default(0),
 			token: z.string().optional().describe('The token to use for pagination')
@@ -93,7 +135,6 @@ export const marketplaceContract = c.router({
 			})
 		}
 	},
-
 	editGraph: {
 		summary: 'Edits an existing graph',
 		method: 'PUT',

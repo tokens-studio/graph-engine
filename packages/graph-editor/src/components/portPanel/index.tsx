@@ -6,27 +6,30 @@ import {
   Tooltip,
 } from '@tokens-studio/ui';
 import { Port as GraphPort } from '@tokens-studio/graph-engine';
-import { Input } from '@tokens-studio/graph-engine';
-import { observer } from 'mobx-react-lite';
-import { useSelector } from 'react-redux';
-import React, { useCallback, useMemo } from 'react';
-
 import { IField } from '@/components/controls/interface.js';
 import { InlineTypeLabel } from '@/components/flow/index.js';
-import { controls } from '@/redux/selectors/registry.js';
+import { Input } from '@tokens-studio/graph-engine';
 import { deletable, hidden, resetable } from '@/annotations/index.js';
+import { observer } from 'mobx-react-lite';
 import { useGraph } from '@/hooks/useGraph.js';
+import { useSystem } from '@/system/hook.js';
 import Download from '@tokens-studio/icons/Download.js';
 import Eye from '@tokens-studio/icons/Eye.js';
 import EyeClosed from '@tokens-studio/icons/EyeClosed.js';
 import MoreVert from '@tokens-studio/icons/MoreVert.js';
 import Puzzle from '@tokens-studio/icons/Puzzle.js';
+import React, { useCallback, useMemo } from 'react';
 import Undo from '@tokens-studio/icons/Undo.js';
 import Xmark from '@tokens-studio/icons/Xmark.js';
 import copy from 'copy-to-clipboard';
 
 export interface IPortPanel {
   ports: Record<string, GraphPort>;
+  readOnly?: boolean;
+}
+
+export interface IPort {
+  port: GraphPort;
   readOnly?: boolean;
 }
 
@@ -44,22 +47,24 @@ export const PortPanel = observer(({ ports, readOnly }: IPortPanel) => {
   );
 });
 
-export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
+export const Port = observer(({ port, readOnly: isReadOnly }: IPort) => {
   const readOnly = isReadOnly || port.isConnected;
-  const controlSelector = useSelector(controls);
+  const sys = useSystem();
   const graph = useGraph();
   const isInput = 'studio.tokens.generic.input' === port.node.factory.type;
   const isDynamicInput = Boolean(port.annotations[deletable]);
   const resettable = Boolean(port.annotations[resetable]);
 
   const inner = useMemo(() => {
-    const field = controlSelector.find((x) => x.matcher(port, { readOnly }));
+    const field = sys.controls.find((x) => x.matcher(port, { readOnly }));
     const Component = field?.component as React.FC<IField>;
 
-    return <Component port={port} readOnly={readOnly} />;
+    return (
+      <Component port={port} readOnly={readOnly} settings={sys.settings} />
+    );
     //We use an explicit dependency on the type
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [controlSelector, port, readOnly, port.type]);
+  }, [sys.controls, port, readOnly, port.type]);
 
   const onClick = useCallback(() => {
     port.setVisible(!port.visible);

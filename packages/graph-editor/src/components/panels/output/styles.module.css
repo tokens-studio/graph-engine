@@ -1,0 +1,10 @@
+.outer {
+    height: 100%;
+    flex: 1;
+    padding: var(--component-spacing-md);
+}
+
+.inner {
+    padding-top: var(--component-spacing-md);
+    padding-bottom: var(--component-spacing-md);
+}

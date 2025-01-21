@@ -5,12 +5,13 @@ import React from 'react';
 import type { NodeRequest } from './createNode.js';
 
 export type Actions = {
-  createNode: (nodeRequest: NodeRequest) =>
+  createNode: (nodeRequest: NodeRequest) => Promise<
     | undefined
     | {
         graphNode: Node;
         flowNode: FlowNode;
-      };
+      }
+  >;
   deleteNode: (nodeId: string) => void;
   copyNodes: (nodes: SerializedNode[]) => void;
   duplicateNodes: (nodeIds: string[]) => void;

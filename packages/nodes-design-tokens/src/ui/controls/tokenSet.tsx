@@ -1,13 +1,14 @@
 import { Accordion, Button, Separator, Stack } from '@tokens-studio/ui';
-import { IField, flatTokensRestoreToMap } from '@tokens-studio/graph-editor';
+import { IField } from '@tokens-studio/graph-editor';
 import { Token } from './token.js';
+import { flatten } from '../../utils/index.js';
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useMemo } from 'react';
 
-export const TokenArrayField = observer(({ port }: IField) => {
+export const TokenSetField = observer(({ port }: IField) => {
 	const downloadTokens = () => {
 		const element = document.createElement('a');
-		const asObj = flatTokensRestoreToMap(port.value);
+		const asObj = port.value;
 		const file = new Blob([JSON.stringify(asObj)], {
 			type: 'application/json'
 		});
@@ -16,6 +17,8 @@ export const TokenArrayField = observer(({ port }: IField) => {
 		document.body.appendChild(element);
 		element.click();
 	};
+
+	const tokens = useMemo(() => flatten(port.value || {}), []);
 
 	return (
 		<Stack gap={4} direction='column' align='center'>
@@ -30,7 +33,7 @@ export const TokenArrayField = observer(({ port }: IField) => {
 							align='center'
 							style={{ padding: 'var(--component-spacing-md)' }}
 						>
-							{(port.value || []).map(token => (
+							{tokens.map(token => (
 								<Token token={token} key={token.name} />
 							))}
 						</Stack>
