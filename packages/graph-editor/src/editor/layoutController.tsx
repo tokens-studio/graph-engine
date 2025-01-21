@@ -247,7 +247,7 @@ const layoutLoader = (tab: TabBase, props, ref): TabData => {
             <GraphEditor {...props} id={MAIN_GRAPH_ID} ref={ref} />
           </ErrorBoundary>
         ),
-        ...tab
+        ...tab,
       };
 
     case 'input':
@@ -261,7 +261,7 @@ const layoutLoader = (tab: TabBase, props, ref): TabData => {
             <Inputsheet />
           </ErrorBoundary>
         ),
-        ...tab
+        ...tab,
       };
     case 'outputs':
       return {
@@ -274,7 +274,7 @@ const layoutLoader = (tab: TabBase, props, ref): TabData => {
             <OutputSheet />
           </ErrorBoundary>
         ),
-        ...tab
+        ...tab,
       };
 
     case 'dropPanel':
@@ -287,7 +287,7 @@ const layoutLoader = (tab: TabBase, props, ref): TabData => {
           </ErrorBoundary>
         ),
         closable: true,
-        ...tab
+        ...tab,
       };
 
     default:
