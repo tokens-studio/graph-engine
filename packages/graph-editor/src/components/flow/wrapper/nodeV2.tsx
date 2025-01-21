@@ -17,11 +17,11 @@ import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
 import { Node as GraphNode } from '@tokens-studio/graph-engine';
 import { Handle, HandleContainer, useHandle } from '../handles.js';
 import { Stack, Text } from '@tokens-studio/ui';
-import { SystemSettings } from '@/system/settings.js';
+import { SystemSettings } from '@/system/frame/settings.js';
 import { observer } from 'mobx-react-lite';
 import { title } from '@/annotations/index.js';
+import { useFrame } from '@/system/frame/hook.js';
 import { useLocalGraph } from '@/context/graph.js';
-import { useSystem } from '@/system/hook.js';
 import React from 'react';
 import clsx from 'clsx';
 import colors from '@/tokens/colors.js';
@@ -52,7 +52,7 @@ export const NodeV2 = (args) => {
   const { id } = args;
   const graph = useLocalGraph();
   const node = graph.getNode(id);
-  const system = useSystem();
+  const frame = useFrame();
 
   if (!node) {
     return <div>Node not found</div>;
@@ -63,7 +63,7 @@ export const NodeV2 = (args) => {
       <NodeWrap
         node={node}
         icon={args?.data?.icon}
-        settings={system.settings}
+        settings={frame.settings}
       />
     </ErrorBoundary>
   );
@@ -110,7 +110,7 @@ export const SpecificWrapper = observer(
 );
 
 const NodeWrap = observer(({ settings, node, icon }: INodeWrap) => {
-  const system = useSystem();
+  const frame = useFrame();
 
   //Check if the input allows for dynamic inputs
   const isInput = !!(
@@ -145,7 +145,7 @@ const NodeWrap = observer(({ settings, node, icon }: INodeWrap) => {
             <PortArray ports={node.inputs} />
           </HandleContainer>
         </Stack>
-        <SpecificWrapper specifics={system.specifics} node={node} />
+        <SpecificWrapper specifics={frame.specifics} node={node} />
       </Stack>
       {settings.showTimings && (
         <div className={styles.timingText}>
@@ -163,7 +163,7 @@ export interface IPortArray {
   hideNames?: boolean;
 }
 export const PortArray = observer(({ ports, hideNames }: IPortArray) => {
-  const system = useSystem();
+  const frame = useFrame();
   const entries = Object.values(ports).sort();
   return (
     <>
@@ -173,8 +173,8 @@ export const PortArray = observer(({ ports, hideNames }: IPortArray) => {
           <InputHandle
             port={input}
             hideName={hideNames}
-            inlineTypes={system.settings.inlineTypes}
-            inlineValues={system.settings.inlineValues}
+            inlineTypes={frame.settings.inlineTypes}
+            inlineValues={frame.settings.inlineValues}
           />
         ))}
     </>
@@ -349,8 +349,8 @@ export interface IInputHandle {
 
 const InputHandle = observer(
   ({ port, hideName, inlineTypes, inlineValues }: IInputHandle) => {
-    const system = useSystem();
-    const typeCol = extractTypeIcon(port, system.icons);
+    const frame = useFrame();
+    const typeCol = extractTypeIcon(port, frame.icons);
     const input = port as unknown as Input;
     const type = extractType(port.type);
     const handleInformation = useHandle();

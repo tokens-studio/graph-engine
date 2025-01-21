@@ -1,11 +1,11 @@
 import { Stack, Text } from '@tokens-studio/ui';
-import { useSystem } from '@/system/hook.js';
+import { useFrame } from '@/system/frame/hook.js';
 import React, { useMemo } from 'react';
 import colors from '@/tokens/colors.js';
 
 export const Legend = () => {
-  const system = useSystem();
-  return <LegendInner iconsRegistry={system.icons} />;
+  const frame = useFrame();
+  return <LegendInner iconsRegistry={frame.icons} />;
 };
 
 export interface ILegendInner {

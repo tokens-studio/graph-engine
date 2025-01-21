@@ -5,10 +5,10 @@ import { savedViewports } from '@/annotations/index.js';
 import { useAction } from '@/editor/actions/provider.js';
 import { useAutoLayout } from '@/editor/hooks/useAutolayout.js';
 import { useDispatch } from '@/hooks/useDispatch.js';
+import { useFrame } from '@/system/frame/hook.js';
 import { useLocalGraph } from '@/hooks/index.js';
 import { useMemo } from 'react';
 import { useReactFlow } from 'reactflow';
-import { useSystem } from '@/system/hook.js';
 import { useToast } from '@/hooks/useToast.js';
 import React from 'react';
 import copy from 'copy-to-clipboard';
@@ -73,7 +73,7 @@ export const getViewports = (graph) => {
 };
 
 export const useHotkeys = () => {
-  const system = useSystem();
+  const frame = useFrame();
   const duplicateNodes = useAction('duplicateNodes');
   const deleteNode = useAction('deleteNode');
   const copyNodes = useAction('copyNodes');
@@ -223,20 +223,20 @@ export const useHotkeys = () => {
       },
       TOGGLE_GRID: (event) => {
         event.preventDefault();
-        system.settings.setShowGrid(!system.settings.showGrid);
+        frame.settings.setShowGrid(!frame.settings.showGrid);
       },
       FIND: (event) => {
         event.preventDefault();
         dispatch.settings.setShowSearch(true);
       },
       TOGGLE_SNAP_GRID: () => {
-        system.settings.setSnapGrid(!system.settings.snapGrid);
+        frame.settings.setSnapGrid(!frame.settings.snapGrid);
       },
       TOGGLE_TYPES: () => {
-        system.settings.setInlineTypes(!system.settings.inlineTypes);
+        frame.settings.setInlineTypes(!frame.settings.inlineTypes);
       },
       TOGGLE_VALUES: () => {
-        dispatch.settings.setInlineValues(!system.settings.inlineValues);
+        dispatch.settings.setInlineValues(!frame.settings.inlineValues);
       },
     }),
 
@@ -248,7 +248,7 @@ export const useHotkeys = () => {
       graph,
       layout,
       reactFlowInstance,
-      system.settings,
+      frame.settings,
       trigger,
     ],
   );

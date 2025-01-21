@@ -1,4 +1,4 @@
-import { EdgeType, SystemSettings } from '@/system/settings.js';
+import { EdgeType, SystemSettings } from '@/system/frame/settings.js';
 import { Port } from '@tokens-studio/graph-engine';
 import { getBetterBezierPath } from './offsetBezier.js';
 import {
@@ -7,8 +7,8 @@ import {
   getStraightPath,
 } from 'reactflow';
 import { observer } from 'mobx-react-lite';
+import { useFrame } from '@/system/frame/hook.js';
 import { useLocalGraph } from '@/context/graph.js';
-import { useSystem } from '@/system/hook.js';
 import React from 'react';
 import colors from '@/tokens/colors.js';
 
@@ -27,8 +27,8 @@ const extractColor = (port: Port) => {
 };
 
 export default (props) => {
-  const system = useSystem();
-  return <CustomEdgeInner {...props} settings={system.settings} />;
+  const frame = useFrame();
+  return <CustomEdgeInner {...props} settings={frame.settings} />;
 };
 
 export interface ICustomEdge {

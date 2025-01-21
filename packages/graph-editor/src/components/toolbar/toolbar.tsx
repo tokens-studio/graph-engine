@@ -1,12 +1,12 @@
 import * as Toolbar from '@radix-ui/react-toolbar';
-import { useSystem } from '@/system/hook.js';
+import { useFrame } from '@/system/frame/hook.js';
 import React from 'react';
 import styles from './toolbar.module.css';
 
 export const GraphToolbar = () => {
-  const system = useSystem();
+  const frame = useFrame();
   return (
-    <Toolbar.Root className={styles.root}>{system.toolbarButtons}</Toolbar.Root>
+    <Toolbar.Root className={styles.root}>{frame.toolbarButtons}</Toolbar.Root>
   );
 };
 

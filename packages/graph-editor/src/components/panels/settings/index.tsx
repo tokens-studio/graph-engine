@@ -1,19 +1,19 @@
 import { Checkbox, Label, Select, Stack, Text } from '@tokens-studio/ui';
-import { EdgeType, LayoutType, SystemSettings } from '@/system/settings.js';
+import { EdgeType, LayoutType, SystemSettings } from '@/system/frame/settings.js';
 import { contextMenuSelector } from '@/redux/selectors/ui.js';
 import { observer } from 'mobx-react-lite';
 import { useDispatch } from '@/hooks/useDispatch.js';
+import { useFrame } from '@/system/frame/hook.js';
 import { useSelector } from 'react-redux';
-import { useSystem } from '@/system/hook.js';
 import React from 'react';
 
 const EdgeValues = Object.values(EdgeType);
 const LayoutValues = Object.values(LayoutType);
 
 export const Settings = () => {
-  const system = useSystem();
+  const frame = useFrame();
 
-  return <SettingsInner settings={system.settings} />;
+  return <SettingsInner settings={frame.settings} />;
 };
 
 export const SettingsInner = observer(

@@ -4,9 +4,9 @@ import { clear } from '../../editor/actions/clear.js';
 import { useAction } from '@/editor/actions/provider.js';
 import { useAutoLayout } from '../../editor/hooks/useAutolayout.js';
 import { useDispatch } from '@/hooks/index.js';
+import { useFrame } from '@/system/frame/hook.js';
 import { useLocalGraph } from '@/context/graph.js';
 import { useReactFlow } from 'reactflow';
-import { useSystem } from '@/system/hook.js';
 import React, { useCallback } from 'react';
 
 export interface IPaneContextMenu<T = unknown> {
@@ -17,7 +17,7 @@ export interface IPaneContextMenu<T = unknown> {
 export const PaneContextMenu = <T = unknown,>({ id }: IPaneContextMenu<T>) => {
   const reactFlowInstance = useReactFlow();
 
-  const system = useSystem();
+  const frame = useFrame();
   const dispatch = useDispatch();
   const graph = useLocalGraph();
   const createNode = useAction('createNode');
@@ -50,12 +50,12 @@ export const PaneContextMenu = <T = unknown,>({ id }: IPaneContextMenu<T>) => {
   }, [reactFlowInstance]);
 
   const setShowGrid = useCallback(() => {
-    system.settings.setShowGrid(!system.settings.showGrid);
-  }, [system.settings]);
+    frame.settings.setShowGrid(!frame.settings.showGrid);
+  }, [frame.settings]);
 
   const setSnapGrid = useCallback(() => {
-    system.settings.setSnapGrid(!system.settings.snapGrid);
-  }, [system.settings]);
+    frame.settings.setSnapGrid(!frame.settings.snapGrid);
+  }, [frame.settings]);
 
   const clearCallback = useCallback(() => {
     clear(reactFlowInstance, graph);
@@ -69,7 +69,7 @@ export const PaneContextMenu = <T = unknown,>({ id }: IPaneContextMenu<T>) => {
       <Separator />
       <ContextMenuItem onClick={layout}>Apply Layout</ContextMenuItem>
       <ContextMenuItem onClick={setShowGrid}>
-        {system.settings.showGrid ? 'Hide' : 'Show'} Grid
+        {frame.settings.showGrid ? 'Hide' : 'Show'} Grid
       </ContextMenuItem>
       <ContextMenuItem onClick={recenter}>Recenter</ContextMenuItem>
       <Separator />

@@ -2,7 +2,7 @@ import { Accordion, Stack, TextInput } from '@tokens-studio/ui';
 import { DragItem } from './DragItem.js';
 import { DropPanelStore } from './data.js';
 import { observer } from 'mobx-react-lite';
-import { useSystem } from '@/system/hook.js';
+import { useFrame } from '@/system/frame/hook.js';
 import NavArrowRight from '@tokens-studio/icons/NavArrowRight.js';
 import React, { useState } from 'react';
 import styles from './dropPanel.module.css';
@@ -22,8 +22,8 @@ export interface IDropPanel {
 }
 
 export const DropPanel = () => {
-  const sys = useSystem();
-  return <DropPanelInner data={sys.panelItems} />;
+  const frame = useFrame();
+  return <DropPanelInner data={frame.panelItems} />;
 };
 
 export const DropPanelInner = observer(({ data }: IDropPanel) => {

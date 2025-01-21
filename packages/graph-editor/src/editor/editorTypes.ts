@@ -1,5 +1,4 @@
 import {
-  ExternalLoader,
   Graph,
   Node as GraphNode,
   SchemaObject,
@@ -33,10 +32,6 @@ export interface EditorProps {
   children?: React.ReactNode;
   onOutputChange?: (output: Record<string, unknown>) => void;
   /**
-   * An external loader to use for loading the graphs or node data
-   */
-  externalLoader?: ExternalLoader;
-  /**
    * Whether or not to show the menu
    */
   showMenu?: boolean;
@@ -56,16 +51,10 @@ export interface EditorProps {
   schemas?: SchemaObject[];
 
   /**
-   * Additional buttons to display in the toolbar
-   */
-  toolbarButtons?: React.ReactElement;
-
-  /**
    * Additional colors to display in the editor for custom types
    */
   typeColors?: Record<string, { color: string; backgroundColor: string }>;
 
-  initialGraph?: Graph;
 }
 
 export interface GraphEditorProps {
@@ -83,7 +72,6 @@ export interface GraphEditorProps {
    */
   nodeTypes?: Record<string, typeof GraphNode>;
   children?: React.ReactNode;
-  initialGraph?: SerializedGraph;
 }
 
 export type ImperativeEditorRef = {

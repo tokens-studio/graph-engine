@@ -12,8 +12,8 @@ import { DropPanel } from '@/components/panels/dropPanel/dropPanel.js';
 import { EditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
-import { ExternalLoaderProvider } from '@/context/ExternalLoaderContext.js';
 import { FindDialog } from '@/components/dialogs/findDialog.js';
+import { FrameContext } from '@/system/frame/hook.js';
 import { GraphEditor } from './graphEditor.js';
 import { IconButton, Stack, Tooltip } from '@tokens-studio/ui';
 import { MAIN_GRAPH_ID } from '@/constants.js';
@@ -278,7 +278,6 @@ export const LayoutController = React.forwardRef<
   EditorProps
 >((props: EditorProps, ref) => {
   const {
-    externalLoader,
     initialLayout,
     menuItems = defaultMenuDataFactory(),
   } = props;
@@ -309,9 +308,7 @@ export const LayoutController = React.forwardRef<
 
   const onLayoutChange = (newLayout: LayoutBase) => {
     //We need to find the graph tab container in the newlayout
-    const graphContainer = findGraphPanel(newLayout);
-
-    console.log(graphContainer);
+    const graphContainer = findGraphPanel(newLayout)
 
     if (graphContainer?.activeId) {
       //Get the active Id to find the currently selected graph
@@ -320,7 +317,7 @@ export const LayoutController = React.forwardRef<
   };
 
   return (
-    <ExternalLoaderProvider externalLoader={externalLoader}>
+    <FrameContext.Provider value={system.frames[0]}>
       <Stack
         className="graph-editor"
         direction="column"
@@ -339,7 +336,7 @@ export const LayoutController = React.forwardRef<
           <FindDialog />
         </Tooltip.Provider>
       </Stack>
-    </ExternalLoaderProvider>
+    </FrameContext.Provider>
   );
 });
 LayoutController.displayName = 'LayoutController';

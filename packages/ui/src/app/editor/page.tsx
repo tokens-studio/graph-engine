@@ -1,6 +1,6 @@
 'use client';
 import { JoyrideTooltip } from '@/components/joyride/tooltip.tsx';
-import { createToolbarButtons } from '@/components/editor/toolbar.tsx';
+import { createToolbarButtons } from '@/components/editor/toolbar/index.tsx';
 import { observer } from 'mobx-react-lite';
 import { useJourney } from '@/components/journeys/basic.tsx';
 import Editor from '@/components/editor/index.tsx';

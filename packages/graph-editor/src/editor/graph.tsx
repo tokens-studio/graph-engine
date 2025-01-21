@@ -72,11 +72,10 @@ import {
 } from '@/annotations/index.js';
 import { duplicateNodes } from './actions/duplicate.js';
 import { useContextMenu } from 'react-contexify';
-import { useExternalLoader } from '@/context/ExternalLoaderContext.js';
+import { useFrame } from '@/system/frame/hook.js';
 import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
 import { useSelector } from 'react-redux';
 import { useSetCurrentNode } from '@/hooks/useSetCurrentNode.js';
-import { useSystem } from '@/system/hook.js';
 import { version } from '@/data/version.js';
 
 const snapGridCoords: SnapGrid = [16, 16];
@@ -102,42 +101,30 @@ export const EditorApp = React.forwardRef<
   ImperativeEditorRef,
   GraphEditorProps
 >((props: GraphEditorProps, ref) => {
-  const system = useSystem();
+  const frame = useFrame();
 
   const { id, children } = props;
 
-  const externalLoader = useExternalLoader();
   const contextMenus = useSelector(contextMenuSelector);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const reactFlowInstance = useReactFlow();
   const dispatch = useDispatch();
   const { getIntersectingNodes } = reactFlowInstance;
   const store = useStoreApi();
-  const initialGraph: Graph = useMemo(() => {
-    //Set defaults
-    const graph = new Graph();
-    graph.annotations[title] = 'Untitled Graph';
-    graph.annotations[description] = '';
-    return graph;
-  }, []);
-  const [graph, setTheGraph] = useState(initialGraph);
+
+  const [graph, setTheGraph] = useState(frame.graph);
 
   const internalRef = useRef<ImperativeEditorRef>(null);
   const activeGraphId = useSelector(currentPanelIdSelector);
 
-  //Update the external loader
-  useEffect(() => {
-    graph.externalLoader = externalLoader;
-  }, [graph, externalLoader]);
-
   const iconLookup = useMemo(() => {
-    return system.panelItems.groups.reduce((acc, group) => {
+    return frame.panelItems.groups.reduce((acc, group) => {
       group.items.forEach((item) => {
         acc[item.type] = item.icon || group.icon;
       });
       return acc;
     }, {});
-  }, [system.panelItems.groups]);
+  }, [frame.panelItems.groups]);
 
   const refProxy = useCallback(
     (v) => {
@@ -158,7 +145,7 @@ export const EditorApp = React.forwardRef<
 
   //Attach sideeffect listeners
   useEffect(() => {
-    system.capabilities.forEach((factory) => graph.registerCapability(factory));
+    frame.capabilities.forEach((factory) => graph.registerCapability(factory));
 
     graph.onFinalize('serialize', (serialized) => {
       const nodes = reactFlowInstance.getNodes();
@@ -355,7 +342,7 @@ export const EditorApp = React.forwardRef<
 
   // Create flow node types here, instead of the global scope to ensure that custom nodes added by the user are available in nodeTypes
   const fullNodeTypesRef = useRef({
-    ...system.customNodeUI,
+    ...frame.customNodeUI,
     GenericNode: NodeV2,
     [PASSTHROUGH]: PassthroughNode,
     [EditorNodeTypes.GROUP]: groupNode,
@@ -366,12 +353,12 @@ export const EditorApp = React.forwardRef<
     //Turn it into an O(1) lookup object
     return Object.fromEntries(
       Object.entries({
-        ...system.customNodeUI,
+        ...frame.customNodeUI,
         [NOTE]: NOTE,
         'studio.tokens.generic.preview': 'studio.tokens.generic.preview',
       }).map(([k]) => [k, k]),
     );
-  }, [system.customNodeUI]);
+  }, [frame.customNodeUI]);
 
   const handleDeleteNode = useMemo(() => {
     return deleteNode(graph, dispatch, reactFlowInstance);
@@ -382,7 +369,7 @@ export const EditorApp = React.forwardRef<
       createNode({
         reactFlowInstance,
         graph,
-        nodeLoader: system.nodeLoader,
+        nodeLoader: frame.nodeLoader,
         iconLookup,
         customUI: customNodeMap,
         dropPanelPosition,
@@ -391,7 +378,7 @@ export const EditorApp = React.forwardRef<
     [
       reactFlowInstance,
       graph,
-      system.nodeLoader,
+      frame.nodeLoader,
       iconLookup,
       customNodeMap,
       dropPanelPosition,
@@ -414,7 +401,7 @@ export const EditorApp = React.forwardRef<
       },
       loadRaw: async (serializedGraph) => {
         if (internalRef.current) {
-          await graph.deserialize(serializedGraph, system.nodeLoader);
+          await graph.deserialize(serializedGraph, frame.nodeLoader);
           internalRef?.current.load(graph);
         }
       },
@@ -495,7 +482,7 @@ export const EditorApp = React.forwardRef<
     [
       reactFlowInstance,
       graph,
-      system.nodeLoader,
+      frame.nodeLoader,
       setNodes,
       setEdges,
       dispatch.graph,
@@ -504,12 +491,6 @@ export const EditorApp = React.forwardRef<
   );
 
   useSetCurrentNode();
-
-  useEffect(() => {
-    if (props.initialGraph) {
-      internalRef.current?.loadRaw(props.initialGraph);
-    }
-  }, []);
 
   const onConnect = useMemo(
     () => connectNodes({ graph, setEdges, dispatch }),
@@ -581,7 +562,7 @@ export const EditorApp = React.forwardRef<
         x: event.clientX,
         y: event.clientY,
       });
-      const PassthroughFactory = await system.nodeLoader(PASSTHROUGH);
+      const PassthroughFactory = await frame.nodeLoader(PASSTHROUGH);
 
       const newNode = new PassthroughFactory({
         graph,
@@ -643,7 +624,7 @@ export const EditorApp = React.forwardRef<
         return [...filtered, newEdge, newEdge2];
       });
     },
-    [reactFlowInstance, system, graph, setNodes, setEdges],
+    [reactFlowInstance, frame, graph, setNodes, setEdges],
   );
 
   const onNodeDrag = useCallback(
@@ -686,7 +667,7 @@ export const EditorApp = React.forwardRef<
     reactFlowInstance,
   });
 
-  const copyNodes = copyNodeAction(reactFlowInstance, graph, system.nodeLoader);
+  const copyNodes = copyNodeAction(reactFlowInstance, graph, frame.nodeLoader);
   const selectAddedNodes = useSelectAddedNodes();
 
   const onDrop = useCallback(
@@ -750,10 +731,10 @@ export const EditorApp = React.forwardRef<
               onEdgeDoubleClick={onEdgeDblClick}
               onEdgesDelete={onEdgesDeleted}
               edges={edges}
-              connectOnClick={system.settings.connectOnClick}
+              connectOnClick={frame.settings.connectOnClick}
               elevateNodesOnSelect={true}
               onNodeDragStop={onNodeDragStop}
-              snapToGrid={system.settings.snapGrid}
+              snapToGrid={frame.settings.snapGrid}
               edgeTypes={edgeTypes}
               nodeTypes={fullNodeTypesRef.current}
               snapGrid={snapGridCoords}
@@ -786,7 +767,7 @@ export const EditorApp = React.forwardRef<
               maxZoom={Infinity}
               proOptions={proOptions}
             >
-              {system.settings.showGrid && (
+              {frame.settings.showGrid && (
                 <Background
                   color="var(--color-neutral-stroke-subtle)"
                   gap={16}
@@ -797,7 +778,7 @@ export const EditorApp = React.forwardRef<
               {nodeCount === 0 && props.emptyContent}
               {activeGraphId === id && (
                 <CommandMenu
-                  items={system.panelItems}
+                  items={frame.panelItems}
                   handleSelectNewNodeType={handleSelectNewNodeType}
                 />
               )}
@@ -808,7 +789,7 @@ export const EditorApp = React.forwardRef<
             </ReactFlow>
           </HotKeys>
         </div>
-        {system.settings.showMinimap && <MiniMap />}
+        {frame.settings.showMinimap && <MiniMap />}
 
         <PaneContextMenu
           id={props.id + '_pane'}

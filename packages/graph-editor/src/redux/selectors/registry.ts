@@ -6,10 +6,6 @@ export const inputControls = createSelector(
   (state) => state.inputControls,
 );
 
-export const ToolBarButtonsSelector = createSelector(
-  registry,
-  (state) => state.toolbarButtons,
-);
 
 export const SchemaSelector = createSelector(
   registry,

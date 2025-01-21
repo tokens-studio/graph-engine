@@ -11,8 +11,8 @@ import { InlineTypeLabel } from '@/components/flow/index.js';
 import { Input } from '@tokens-studio/graph-engine';
 import { deletable, hidden, resetable } from '@/annotations/index.js';
 import { observer } from 'mobx-react-lite';
+import { useFrame } from '@/system/frame/hook.js';
 import { useGraph } from '@/hooks/useGraph.js';
-import { useSystem } from '@/system/hook.js';
 import Download from '@tokens-studio/icons/Download.js';
 import Eye from '@tokens-studio/icons/Eye.js';
 import EyeClosed from '@tokens-studio/icons/EyeClosed.js';
@@ -49,22 +49,22 @@ export const PortPanel = observer(({ ports, readOnly }: IPortPanel) => {
 
 export const Port = observer(({ port, readOnly: isReadOnly }: IPort) => {
   const readOnly = isReadOnly || port.isConnected;
-  const sys = useSystem();
+  const frame = useFrame();
   const graph = useGraph();
   const isInput = 'studio.tokens.generic.input' === port.node.factory.type;
   const isDynamicInput = Boolean(port.annotations[deletable]);
   const resettable = Boolean(port.annotations[resetable]);
 
   const inner = useMemo(() => {
-    const field = sys.controls.find((x) => x.matcher(port, { readOnly }));
+    const field = frame.controls.find((x) => x.matcher(port, { readOnly }));
     const Component = field?.component as React.FC<IField>;
 
     return (
-      <Component port={port} readOnly={readOnly} settings={sys.settings} />
+      <Component port={port} readOnly={readOnly} settings={frame.settings} />
     );
     //We use an explicit dependency on the type
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sys.controls, port, readOnly, port.type]);
+  }, [frame.controls, port, readOnly, port.type]);
 
   const onClick = useCallback(() => {
     port.setVisible(!port.visible);

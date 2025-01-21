@@ -1,10 +1,10 @@
-import { LayoutType } from '@/system/settings.js';
+import { LayoutType } from '@/system/frame/settings.js';
 import { useCallback } from 'react';
 import { useDagreLayout } from '@/layouts/dagre.js';
-import { useSystem } from '@/system/hook.js';
+import { useFrame } from '@/system/frame/hook.js';
 
 export const useAutoLayout = () => {
-  const system = useSystem();
+  const system = useFrame();
   const dagreAutoLayout = useDagreLayout();
   return useCallback(() => {
     switch (system.settings.layoutType) {

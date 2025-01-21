@@ -1,9 +1,9 @@
 import { Button, Dialog, IconButton, Text, TextInput } from '@tokens-studio/ui';
 import { title as annotatedTitle } from '@/annotations/index.js';
 import { graphEditorSelector } from '@/redux/selectors/index.js';
+import { useFrame } from '@/system/frame/hook.js';
 import { useGraph } from '@/hooks/index.js';
 import { useSelector } from 'react-redux';
-import { useSystem } from '@/system/hook.js';
 import React from 'react';
 import Xmark from '@tokens-studio/icons/Xmark.js';
 
@@ -12,10 +12,10 @@ export const FindDialog = () => {
   const [title, setTitle] = React.useState('');
   const localGraph = useGraph();
   const graph = useSelector(graphEditorSelector);
-  const system = useSystem();
+  const frame = useFrame();
 
   const setOpen = (value: boolean) => {
-    system.settings.setShowSearch(value);
+    frame.settings.setShowSearch(value);
   };
 
   const onClick = () => {
@@ -62,7 +62,7 @@ export const FindDialog = () => {
   };
 
   return (
-    <Dialog open={system.settings.showSearch} onOpenChange={setOpen}>
+    <Dialog open={frame.settings.showSearch} onOpenChange={setOpen}>
       <Dialog.Portal>
         <Dialog.Overlay />
         <Dialog.Content>

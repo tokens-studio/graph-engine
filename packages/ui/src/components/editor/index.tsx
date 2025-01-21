@@ -1,8 +1,9 @@
 'use client';
 
-import { Editor, System } from '@tokens-studio/graph-editor';
+import { Editor, Frame, System } from '@tokens-studio/graph-editor';
 import { EmptyStateEditor } from '../EmptyStateEditor.tsx';
 import { ExamplesPicker } from '../ExamplesPicker.tsx';
+import { Graph } from '@tokens-studio/graph-engine';
 import {
 	capabilities,
 	controls,
@@ -41,15 +42,20 @@ export const EditorTab = observer(
 		}, []);
 
 		const sys = useMemo(() => {
+
+			const graph = new Graph();
 			return new System({
-				specifics,
-				panelItems,
-				tabLoader,
-				nodeLoader: loadCompounds,
-				capabilities,
-				controls,
-				icons,
-				toolbarButtons
+				frames: [new Frame({
+					graph,
+					specifics,
+					panelItems,
+					nodeLoader: loadCompounds,
+					capabilities,
+					controls,
+					icons,
+					toolbarButtons
+				})],
+				tabLoader
 			});
 		}, []);
 

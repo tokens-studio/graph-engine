@@ -1,5 +1,5 @@
 import { Port } from '@tokens-studio/graph-engine';
-import { SystemSettings } from '@/system/settings.js';
+import { SystemSettings } from '@/system/frame/settings.js';
 export interface IField {
   port: Port;
   readOnly?: boolean;
