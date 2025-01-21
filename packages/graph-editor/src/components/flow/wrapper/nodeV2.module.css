@@ -21,11 +21,6 @@
   }
 }
 
-:global(.ts-theme-dark) .inlineTypeLabel {
-    background: rgba(from var(--color-neutral-surface-default-idle-bg) r g b / 0.8);
-    font-weight: 800;
-}
-
 .colorSwatch {
   width: 16px;
   height: 16px;
