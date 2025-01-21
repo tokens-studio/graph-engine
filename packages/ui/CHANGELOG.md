@@ -1,5 +1,24 @@
 # @tokens-studio/graph-engine-ui
 
+## 3.3.2
+
+### Patch Changes
+
+- f08f85f: Fix clsx and remove classnames.
+- Updated dependencies [7840d26]
+- Updated dependencies [cf7b567]
+- Updated dependencies [f08f85f]
+- Updated dependencies [08d51d0]
+- Updated dependencies [71e6087]
+- Updated dependencies [485e01f]
+- Updated dependencies [d9af659]
+- Updated dependencies [ec9f988]
+- Updated dependencies [d428728]
+- Updated dependencies [ae83d50]
+  - @tokens-studio/graph-editor@4.3.12
+  - @tokens-studio/graph-engine-nodes-design-tokens@7.1.1
+  - @tokens-studio/graph-engine-nodes-preview@1.1.0
+
 ## 3.3.1
 
 ### Patch Changes

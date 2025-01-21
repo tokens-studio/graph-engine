@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@tokens-studio/graph-engine-ui",
-  "version": "3.3.1",
+  "version": "3.3.2",
   "description": "UI for the graph engine",
   "author": "andrew@hyma.io",
   "type": "module",
@@ -40,7 +40,7 @@
     "@tokens-studio/graph-editor": "*",
     "@tokens-studio/graph-engine": "*",
     "@tokens-studio/graph-engine-nodes-audio": "*",
-    "@tokens-studio/graph-engine-nodes-preview":"*",
+    "@tokens-studio/graph-engine-nodes-preview": "*",
     "@tokens-studio/graph-engine-nodes-design-tokens": "*",
     "@tokens-studio/graph-engine-nodes-figma": "*",
     "@tokens-studio/graph-engine-nodes-image": "*",
