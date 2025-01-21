@@ -16,14 +16,14 @@ import { ExternalLoaderProvider } from '@/context/ExternalLoaderContext.js';
 import { FindDialog } from '@/components/dialogs/findDialog.js';
 import { GraphEditor } from './graphEditor.js';
 import { IconButton, Stack, Tooltip } from '@tokens-studio/ui';
-import { Inputsheet } from '@/components/panels/inputs/index.js';
 import { MAIN_GRAPH_ID } from '@/constants.js';
 import { MenuBar, defaultMenuDataFactory } from '@/components/menubar/index.js';
-import { OutputSheet } from '@/components/panels/output/index.js';
+import { UnifiedSheet } from '@/components/panels/unified/index.js';
 import { dockerSelector } from '@/redux/selectors/refs.js';
 import { useDispatch } from '@/hooks/useDispatch.js';
 import { useRegisterRef } from '@/hooks/useRegisterRef.js';
 import { useSelector } from 'react-redux';
+import { useSystem } from '@/system/hook.js';
 import Maximize from '@tokens-studio/icons/Maximize.js';
 import React, { MutableRefObject, useCallback, useEffect } from 'react';
 import Reduce from '@tokens-studio/icons/Reduce.js';
@@ -200,15 +200,7 @@ const defaultLayout: LayoutBase = {
                         size: 12,
                         tabs: [
                           {
-                            id: 'input',
-                          },
-                        ],
-                      },
-                      {
-                        size: 12,
-                        tabs: [
-                          {
-                            id: 'outputs',
+                            id: 'unifiedPorts',
                           },
                         ],
                       },
@@ -225,20 +217,20 @@ const defaultLayout: LayoutBase = {
 };
 
 const layoutLoader = (tab: TabBase, props, ref): TabData => {
-  const { id, ...rest } = tab;
+  const { id } = tab;
 
   switch (id) {
     case 'graphs':
       return {
-        id: 'graphs',
+        ...tab,
         //@ts-expect-error
         size: 700,
         group: 'graph',
         panelLock: { panelStyle: 'graph' },
-        ...rest,
       };
     case MAIN_GRAPH_ID:
       return {
+        ...tab,
         closable: true,
         cached: true,
         group: 'graph',
@@ -250,37 +242,23 @@ const layoutLoader = (tab: TabBase, props, ref): TabData => {
         ),
       };
 
-    case 'input':
+    case 'unifiedPorts':
       return {
+        ...tab,
         closable: true,
         cached: true,
         group: 'popout',
-        id: 'input',
-        title: 'Inputs',
+        title: 'Ports',
         content: (
           <ErrorBoundary fallback={<ErrorBoundaryContent />}>
-            <Inputsheet />
+            <UnifiedSheet />
           </ErrorBoundary>
         ),
       };
-    case 'outputs':
-      return {
-        closable: true,
-        cached: true,
-        group: 'popout',
-        id: 'outputs',
-        title: 'Outputs',
-        content: (
-          <ErrorBoundary fallback={<ErrorBoundaryContent />}>
-            <OutputSheet />
-          </ErrorBoundary>
-        ),
-      };
-
     case 'dropPanel':
       return {
+        ...tab,
         group: 'popout',
-        id: 'dropPanel',
         title: 'Nodes',
         content: (
           <ErrorBoundary fallback={<ErrorBoundaryContent />}>
@@ -300,11 +278,12 @@ export const LayoutController = React.forwardRef<
   EditorProps
 >((props: EditorProps, ref) => {
   const {
-    tabLoader,
     externalLoader,
     initialLayout,
     menuItems = defaultMenuDataFactory(),
   } = props;
+
+  const system = useSystem();
 
   const registerDocker = useRegisterRef<DockLayout>('docker');
   const dispatch = useDispatch();
@@ -313,13 +292,13 @@ export const LayoutController = React.forwardRef<
 
   const loadTab = useCallback(
     (tab): TabData => {
-      const loaded = tabLoader?.(tab);
+      const loaded = system.tabLoader?.(tab);
       if (!loaded) {
         return layoutLoader(tab, props, ref);
       }
       return loaded;
     },
-    [tabLoader, props, ref],
+    [system, props, ref],
   );
 
   useEffect(() => {
@@ -331,6 +310,8 @@ export const LayoutController = React.forwardRef<
   const onLayoutChange = (newLayout: LayoutBase) => {
     //We need to find the graph tab container in the newlayout
     const graphContainer = findGraphPanel(newLayout);
+
+    console.log(graphContainer);
 
     if (graphContainer?.activeId) {
       //Get the active Id to find the currently selected graph

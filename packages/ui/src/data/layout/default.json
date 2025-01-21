@@ -42,22 +42,11 @@
 						"size": 12,
 						"tabs": [
 							{
-								"id": "input"
+								"id": "unifiedPorts"
 							}
 						],
 						"group": "popout",
-						"activeId": "input"
-					},
-					{
-						"id": "+26",
-						"size": 12,
-						"tabs": [
-							{
-								"id": "outputs"
-							}
-						],
-						"group": "popout",
-						"activeId": "outputs"
+						"activeId": "unifiedPorts"
 					}
 				]
 			}

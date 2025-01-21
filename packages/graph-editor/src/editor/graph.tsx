@@ -55,19 +55,8 @@ import { NodeV2 } from '@/components/index.js';
 import { PaneContextMenu } from '../components/contextMenus/paneContextMenu.js';
 import { PassthroughNode } from '@/components/flow/nodes/passthroughNode.js';
 import { SelectionContextMenu } from '@/components/contextMenus/selectionContextMenu.js';
-import {
-  capabilitiesSelector,
-  nodeLoaderSelector,
-  panelItemsSelector,
-} from '@/redux/selectors/registry.js';
 import { clear } from './actions/clear.js';
 import { connectNodes } from './actions/connect.js';
-import {
-  connectOnClickSelector,
-  showGrid,
-  showMinimapSelector,
-  snapGrid,
-} from '@/redux/selectors/settings.js';
 import { contextMenuSelector } from '@/redux/selectors/ui.js';
 import { copyNodeAction } from './actions/copyNodes.js';
 import { currentPanelIdSelector } from '@/redux/selectors/graph.js';
@@ -87,6 +76,7 @@ import { useExternalLoader } from '@/context/ExternalLoaderContext.js';
 import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
 import { useSelector } from 'react-redux';
 import { useSetCurrentNode } from '@/hooks/useSetCurrentNode.js';
+import { useSystem } from '@/system/hook.js';
 import { version } from '@/data/version.js';
 
 const snapGridCoords: SnapGrid = [16, 16];
@@ -112,15 +102,12 @@ export const EditorApp = React.forwardRef<
   ImperativeEditorRef,
   GraphEditorProps
 >((props: GraphEditorProps, ref) => {
-  const panelItems = useSelector(panelItemsSelector);
-  const nodeLoader = useSelector(nodeLoaderSelector);
-  const { id, customNodeUI = {}, children } = props;
+  const system = useSystem();
+
+  const { id, children } = props;
 
   const externalLoader = useExternalLoader();
-  const showMinimap = useSelector(showMinimapSelector);
-  const capabilities = useSelector(capabilitiesSelector);
   const contextMenus = useSelector(contextMenuSelector);
-  const connectOnClick = useSelector(connectOnClickSelector);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const reactFlowInstance = useReactFlow();
   const dispatch = useDispatch();
@@ -135,8 +122,6 @@ export const EditorApp = React.forwardRef<
   }, []);
   const [graph, setTheGraph] = useState(initialGraph);
 
-  const showGridValue = useSelector(showGrid);
-  const snapGridValue = useSelector(snapGrid);
   const internalRef = useRef<ImperativeEditorRef>(null);
   const activeGraphId = useSelector(currentPanelIdSelector);
 
@@ -146,13 +131,13 @@ export const EditorApp = React.forwardRef<
   }, [graph, externalLoader]);
 
   const iconLookup = useMemo(() => {
-    return panelItems.groups.reduce((acc, group) => {
+    return system.panelItems.groups.reduce((acc, group) => {
       group.items.forEach((item) => {
         acc[item.type] = item.icon || group.icon;
       });
       return acc;
     }, {});
-  }, [panelItems]);
+  }, [system.panelItems.groups]);
 
   const refProxy = useCallback(
     (v) => {
@@ -173,7 +158,7 @@ export const EditorApp = React.forwardRef<
 
   //Attach sideeffect listeners
   useEffect(() => {
-    capabilities.forEach((factory) => graph.registerCapability(factory));
+    system.capabilities.forEach((factory) => graph.registerCapability(factory));
 
     graph.onFinalize('serialize', (serialized) => {
       const nodes = reactFlowInstance.getNodes();
@@ -370,7 +355,7 @@ export const EditorApp = React.forwardRef<
 
   // Create flow node types here, instead of the global scope to ensure that custom nodes added by the user are available in nodeTypes
   const fullNodeTypesRef = useRef({
-    ...customNodeUI,
+    ...system.customNodeUI,
     GenericNode: NodeV2,
     [PASSTHROUGH]: PassthroughNode,
     [EditorNodeTypes.GROUP]: groupNode,
@@ -381,12 +366,12 @@ export const EditorApp = React.forwardRef<
     //Turn it into an O(1) lookup object
     return Object.fromEntries(
       Object.entries({
-        ...customNodeUI,
+        ...system.customNodeUI,
         [NOTE]: NOTE,
         'studio.tokens.generic.preview': 'studio.tokens.generic.preview',
       }).map(([k]) => [k, k]),
     );
-  }, [customNodeUI]);
+  }, [system.customNodeUI]);
 
   const handleDeleteNode = useMemo(() => {
     return deleteNode(graph, dispatch, reactFlowInstance);
@@ -397,7 +382,7 @@ export const EditorApp = React.forwardRef<
       createNode({
         reactFlowInstance,
         graph,
-        nodeLoader,
+        nodeLoader: system.nodeLoader,
         iconLookup,
         customUI: customNodeMap,
         dropPanelPosition,
@@ -406,7 +391,7 @@ export const EditorApp = React.forwardRef<
     [
       reactFlowInstance,
       graph,
-      nodeLoader,
+      system.nodeLoader,
       iconLookup,
       customNodeMap,
       dropPanelPosition,
@@ -429,7 +414,7 @@ export const EditorApp = React.forwardRef<
       },
       loadRaw: async (serializedGraph) => {
         if (internalRef.current) {
-          await graph.deserialize(serializedGraph, nodeLoader);
+          await graph.deserialize(serializedGraph, system.nodeLoader);
           internalRef?.current.load(graph);
         }
       },
@@ -510,7 +495,7 @@ export const EditorApp = React.forwardRef<
     [
       reactFlowInstance,
       graph,
-      nodeLoader,
+      system.nodeLoader,
       setNodes,
       setEdges,
       dispatch.graph,
@@ -596,7 +581,7 @@ export const EditorApp = React.forwardRef<
         x: event.clientX,
         y: event.clientY,
       });
-      const PassthroughFactory = await nodeLoader(PASSTHROUGH);
+      const PassthroughFactory = await system.nodeLoader(PASSTHROUGH);
 
       const newNode = new PassthroughFactory({
         graph,
@@ -658,7 +643,7 @@ export const EditorApp = React.forwardRef<
         return [...filtered, newEdge, newEdge2];
       });
     },
-    [nodeLoader, graph, reactFlowInstance, setEdges, setNodes],
+    [reactFlowInstance, system, graph, setNodes, setEdges],
   );
 
   const onNodeDrag = useCallback(
@@ -701,7 +686,7 @@ export const EditorApp = React.forwardRef<
     reactFlowInstance,
   });
 
-  const copyNodes = copyNodeAction(reactFlowInstance, graph, nodeLoader);
+  const copyNodes = copyNodeAction(reactFlowInstance, graph, system.nodeLoader);
   const selectAddedNodes = useSelectAddedNodes();
 
   const onDrop = useCallback(
@@ -765,10 +750,10 @@ export const EditorApp = React.forwardRef<
               onEdgeDoubleClick={onEdgeDblClick}
               onEdgesDelete={onEdgesDeleted}
               edges={edges}
-              connectOnClick={connectOnClick}
+              connectOnClick={system.settings.connectOnClick}
               elevateNodesOnSelect={true}
               onNodeDragStop={onNodeDragStop}
-              snapToGrid={snapGridValue}
+              snapToGrid={system.settings.snapGrid}
               edgeTypes={edgeTypes}
               nodeTypes={fullNodeTypesRef.current}
               snapGrid={snapGridCoords}
@@ -801,7 +786,7 @@ export const EditorApp = React.forwardRef<
               maxZoom={Infinity}
               proOptions={proOptions}
             >
-              {showGridValue && (
+              {system.settings.showGrid && (
                 <Background
                   color="var(--color-neutral-stroke-subtle)"
                   gap={16}
@@ -812,7 +797,7 @@ export const EditorApp = React.forwardRef<
               {nodeCount === 0 && props.emptyContent}
               {activeGraphId === id && (
                 <CommandMenu
-                  items={panelItems}
+                  items={system.panelItems}
                   handleSelectNewNodeType={handleSelectNewNodeType}
                 />
               )}
@@ -823,7 +808,7 @@ export const EditorApp = React.forwardRef<
             </ReactFlow>
           </HotKeys>
         </div>
-        {showMinimap && <MiniMap />}
+        {system.settings.showMinimap && <MiniMap />}
 
         <PaneContextMenu
           id={props.id + '_pane'}

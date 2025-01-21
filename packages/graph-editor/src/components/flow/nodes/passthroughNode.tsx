@@ -2,21 +2,20 @@ import { Handle } from '../handles.js';
 import { HandleContainer } from '../handles.js';
 import { Stack } from '@tokens-studio/ui';
 import { extractType, extractTypeIcon } from '../wrapper/nodeV2.js';
-import { icons } from '@/registry/icon.js';
 import { useLocalGraph } from '@/context/graph.js';
-import { useSelector } from 'react-redux';
+import { useSystem } from '@/system/hook.js';
 import React from 'react';
 
 export const PassthroughNode = (args) => {
   const { id } = args;
   const graph = useLocalGraph();
   const node = graph.getNode(id);
-  const iconTypeRegistry = useSelector(icons);
+  const system = useSystem();
 
   if (!node) return null;
 
   const port = node.inputs.value;
-  const typeCol = extractTypeIcon(port, iconTypeRegistry);
+  const typeCol = extractTypeIcon(port, system.icons);
   const type = extractType(port.type);
 
   return (

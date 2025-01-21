@@ -1,18 +1,16 @@
 import { IField } from './interface.js';
 import { IconButton, Stack, TextInput } from '@tokens-studio/ui';
 import { Input } from '@tokens-studio/graph-engine';
-import { delayedUpdateSelector } from '@/redux/selectors/index.js';
 import { observer } from 'mobx-react-lite';
-import { useSelector } from 'react-redux';
+
 import FloppyDisk from '@tokens-studio/icons/FloppyDisk.js';
 import React, { useCallback } from 'react';
 
-export const NumericField = observer(({ port, readOnly }: IField) => {
+export const NumericField = observer(({ port, readOnly, settings }: IField) => {
   const [intermediate, setIntermediate] = React.useState<string | undefined>(
     undefined,
   );
   const [hadErr, setHadErr] = React.useState<boolean>(false);
-  const useDelayed = useSelector(delayedUpdateSelector);
   const [val, setVal] = React.useState(port.value);
 
   React.useEffect(() => {
@@ -24,7 +22,7 @@ export const NumericField = observer(({ port, readOnly }: IField) => {
       if (!readOnly) {
         const number = Number.parseFloat(e.target.value);
         if (!Number.isNaN(number)) {
-          if (!useDelayed) {
+          if (!settings.delayedUpdate) {
             (port as Input).setValue(number);
           } else {
             setVal(number);
@@ -37,7 +35,7 @@ export const NumericField = observer(({ port, readOnly }: IField) => {
         setIntermediate(e.target.value);
       }
     },
-    [port, readOnly, useDelayed],
+    [readOnly, settings.delayedUpdate, port],
   );
 
   return (
@@ -49,7 +47,7 @@ export const NumericField = observer(({ port, readOnly }: IField) => {
         onChange={onChange}
         disabled={readOnly}
       />
-      {useDelayed && (
+      {settings.delayedUpdate && (
         <IconButton
           icon={<FloppyDisk />}
           onClick={() => (port as Input).setValue(val)}

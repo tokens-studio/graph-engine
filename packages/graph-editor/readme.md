@@ -83,3 +83,7 @@ In the example above, we use the useRef hook to create a reference to the Editor
 ## Development
 
 We need to force the cypress react selector to use a version of `resq` that supports 18.2.0. This is done through resolutions and by manually adding it as a dev dependency
+
+## Notes
+
+This project uses [CSS modules](https://github.com/css-modules/css-modules) to handle encapsulating css. We distribute this in the dist with imports to `*.module.css` files still remaining without transformation to the css files. We assume that the implementing system will handle this transformation and export of the mangled css classnames if needed.

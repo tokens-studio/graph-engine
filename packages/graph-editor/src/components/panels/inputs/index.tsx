@@ -1,14 +1,14 @@
-import { Heading, Stack } from '@tokens-studio/ui';
-import React, { useMemo } from 'react';
-
 import { DynamicInputs } from './dynamicInputs.js';
 import { PortPanel } from '@/components/portPanel/index.js';
+import { Stack } from '@tokens-studio/ui/Stack.js';
 import { annotatedDynamicInputs } from '@tokens-studio/graph-engine';
 import { currentNode } from '@/redux/selectors/graph.js';
 import { editable } from '@/annotations/index.js';
 import { inputControls } from '@/redux/selectors/registry.js';
 import { useGraph } from '@/hooks/useGraph.js';
 import { useSelector } from 'react-redux';
+import React, { useMemo } from 'react';
+import styles from '../output/styles.module.css';
 
 export function Inputsheet() {
   const graph = useGraph();
@@ -35,47 +35,14 @@ export function Inputsheet() {
   );
 
   return (
-    <div
-      style={{
-        height: '100%',
-        width: '100%',
-        flex: 1,
-        display: 'flex',
-        overflow: 'auto',
-        flexDirection: 'column',
-      }}
-    >
-      <Stack
-        direction="column"
-        gap={4}
-        style={{
-          height: '100%',
-          flex: 1,
-          padding: 'var(--component-spacing-md)',
-        }}
-      >
-        <Stack direction="column" gap={3}>
-          <Stack gap={2} align="start" justify="between">
-            <Heading size="large"> {selectedNode.factory.title}</Heading>
-          </Stack>
-        </Stack>
+    <Stack direction="column" gap={4} className={styles.outer}>
+      {dynamicInputs && <DynamicInputs node={selectedNode} />}
 
-        <div style={{ padding: 'var(--component-spacing-md)' }}>
-          {dynamicInputs && <DynamicInputs node={selectedNode} />}
-
-          {SpecificInput ? <SpecificInput node={selectedNode} /> : null}
-          <Stack
-            width="full"
-            style={{
-              paddingTop: 'var(--component-spacing-md)',
-              paddingBottom: 'var(--component-spacing-md)',
-            }}
-          >
-            {/* The purpose of the key is to invalidate the port panel if the selected node changes */}
-            <PortPanel ports={selectedNode?.inputs} key={selectedNode.id} />
-          </Stack>
-        </div>
+      {SpecificInput ? <SpecificInput node={selectedNode} /> : null}
+      <Stack width="full" className={styles.inner}>
+        {/* The purpose of the key is to invalidate the port panel if the selected node changes */}
+        <PortPanel ports={selectedNode?.inputs} key={selectedNode.id} />
       </Stack>
-    </div>
+    </Stack>
   );
 }

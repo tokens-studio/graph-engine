@@ -1,16 +1,15 @@
 import { Button, DropdownMenu, Stack, Tooltip } from '@tokens-studio/ui';
-import { panelItemsSelector } from '@/redux/selectors/index.js';
 import { useAction } from '@/editor/actions/provider.js';
 import { useDispatch } from '@/hooks/index.js';
 import { useReactFlow } from 'reactflow';
 import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
-import { useSelector } from 'react-redux';
+import { useSystem } from '@/system/hook.js';
 import NavArrowRight from '@tokens-studio/icons/NavArrowRight.js';
 import Plus from '@tokens-studio/icons/Plus.js';
 import React, { useCallback } from 'react';
 
 export const AddDropdown = () => {
-  const data = useSelector(panelItemsSelector);
+  const sys = useSystem();
   const createNode = useAction('createNode');
   const reactFlowInstance = useReactFlow();
   const dispatch = useDispatch();
@@ -55,7 +54,7 @@ export const AddDropdown = () => {
   );
 
   const nodes = React.useMemo(() => {
-    return data.groups.map((group) => {
+    return sys.panelItems.groups.map((group) => {
       return (
         <DropdownMenu.Sub key={group.key}>
           <DropdownMenu.SubTrigger>
@@ -82,7 +81,7 @@ export const AddDropdown = () => {
         </DropdownMenu.Sub>
       );
     });
-  }, [data.groups, addNode]);
+  }, [sys.panelItems.groups, addNode]);
 
   return (
     <DropdownMenu onOpenChange={onDropdownOpenChange}>

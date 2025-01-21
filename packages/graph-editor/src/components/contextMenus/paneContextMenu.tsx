@@ -1,13 +1,12 @@
 import { ContextMenuItem } from './ContextMenuStyles.js';
 import { Menu, Separator } from 'react-contexify';
 import { clear } from '../../editor/actions/clear.js';
-import { showGrid, snapGrid } from '@/redux/selectors/settings.js';
 import { useAction } from '@/editor/actions/provider.js';
 import { useAutoLayout } from '../../editor/hooks/useAutolayout.js';
 import { useDispatch } from '@/hooks/index.js';
 import { useLocalGraph } from '@/context/graph.js';
 import { useReactFlow } from 'reactflow';
-import { useSelector } from 'react-redux';
+import { useSystem } from '@/system/hook.js';
 import React, { useCallback } from 'react';
 
 export interface IPaneContextMenu<T = unknown> {
@@ -17,8 +16,8 @@ export interface IPaneContextMenu<T = unknown> {
 
 export const PaneContextMenu = <T = unknown,>({ id }: IPaneContextMenu<T>) => {
   const reactFlowInstance = useReactFlow();
-  const showGridValue = useSelector(showGrid);
-  const snapGridValue = useSelector(snapGrid);
+
+  const system = useSystem();
   const dispatch = useDispatch();
   const graph = useLocalGraph();
   const createNode = useAction('createNode');
@@ -51,12 +50,12 @@ export const PaneContextMenu = <T = unknown,>({ id }: IPaneContextMenu<T>) => {
   }, [reactFlowInstance]);
 
   const setShowGrid = useCallback(() => {
-    dispatch.settings.setShowGrid(!showGridValue);
-  }, [dispatch.settings, showGridValue]);
+    system.settings.setShowGrid(!system.settings.showGrid);
+  }, [system.settings]);
 
   const setSnapGrid = useCallback(() => {
-    dispatch.settings.setSnapGrid(!snapGridValue);
-  }, [dispatch.settings, snapGridValue]);
+    system.settings.setSnapGrid(!system.settings.snapGrid);
+  }, [system.settings]);
 
   const clearCallback = useCallback(() => {
     clear(reactFlowInstance, graph);
@@ -70,7 +69,7 @@ export const PaneContextMenu = <T = unknown,>({ id }: IPaneContextMenu<T>) => {
       <Separator />
       <ContextMenuItem onClick={layout}>Apply Layout</ContextMenuItem>
       <ContextMenuItem onClick={setShowGrid}>
-        {showGridValue ? 'Hide' : 'Show'} Grid
+        {system.settings.showGrid ? 'Hide' : 'Show'} Grid
       </ContextMenuItem>
       <ContextMenuItem onClick={recenter}>Recenter</ContextMenuItem>
       <Separator />

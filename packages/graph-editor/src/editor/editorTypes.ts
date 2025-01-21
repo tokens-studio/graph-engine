@@ -1,24 +1,23 @@
 import {
-  CapabilityFactory,
   ExternalLoader,
   Graph,
   Node as GraphNode,
-  NodeLoader,
   SchemaObject,
   SerializedGraph,
 } from '@tokens-studio/graph-engine';
-import { Control } from '../types/controls.js';
-import { DropPanelStore } from '@/components/panels/dropPanel/index.js';
+
 import { Edge, Node, ReactFlowInstance } from 'reactflow';
 import { Menu } from '@/components/menubar/data.js';
-import type { LayoutBase, TabBase, TabData } from 'rc-dock';
+import { System } from '@/system/index.js';
+import type { LayoutBase } from 'rc-dock';
 
 export interface EditorProps {
   id?: string;
 
-  nodeLoader?: NodeLoader;
-  tabLoader?: (tab: TabBase) => TabData | undefined;
-
+  /**
+   * The system to use for the editor
+   */
+  system: System;
   /**
    * A lookup of the custom node types to display in the editor.
    * Not populating this will result in the default items being displayed.
@@ -46,31 +45,6 @@ export interface EditorProps {
    * A custom menu to display in the editor.
    */
   menuItems?: Menu;
-
-  /**
-   * Capabilities to load into the graphs. Each factory is loaded into each graph individually
-   */
-  capabilities?: CapabilityFactory[];
-  /**
-   * Items to display in the drop panel.
-   * Not populating this will result in the default items being displayed.
-   */
-  panelItems: DropPanelStore;
-  /**
-   * Customize the controls that are displayed in the editor
-   */
-  controls?: Control[];
-
-  /**
-   * A lookup of the custom node ui types to display in the editor.
-   */
-  customNodeUI?: Record<string, React.ReactElement>;
-
-  /**
-   * Additional specifics to display in the editor for custom types
-   */
-  specifics?: Record<string, React.FC<{ node: GraphNode }>>;
-
   /**
    * An initial layout to use
    */
@@ -81,10 +55,6 @@ export interface EditorProps {
    */
   schemas?: SchemaObject[];
 
-  /**
-   * Additional icons to display in the editor for custom types
-   */
-  icons?: Record<string, React.ReactNode>;
   /**
    * Additional buttons to display in the toolbar
    */

@@ -17,16 +17,11 @@ import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
 import { Node as GraphNode } from '@tokens-studio/graph-engine';
 import { Handle, HandleContainer, useHandle } from '../handles.js';
 import { Stack, Text } from '@tokens-studio/ui';
-import { icons, nodeSpecifics } from '@/redux/selectors/registry.js';
-import {
-  inlineTypes,
-  inlineValues,
-  showTimings,
-} from '@/redux/selectors/settings.js';
+import { SystemSettings } from '@/system/settings.js';
 import { observer } from 'mobx-react-lite';
 import { title } from '@/annotations/index.js';
 import { useLocalGraph } from '@/context/graph.js';
-import { useSelector } from 'react-redux';
+import { useSystem } from '@/system/hook.js';
 import React from 'react';
 import clsx from 'clsx';
 import colors from '@/tokens/colors.js';
@@ -57,6 +52,7 @@ export const NodeV2 = (args) => {
   const { id } = args;
   const graph = useLocalGraph();
   const node = graph.getNode(id);
+  const system = useSystem();
 
   if (!node) {
     return <div>Node not found</div>;
@@ -64,7 +60,11 @@ export const NodeV2 = (args) => {
 
   return (
     <ErrorBoundary fallback={<ErrorBoundaryContent />}>
-      <NodeWrap node={node} icon={args?.data?.icon} />
+      <NodeWrap
+        node={node}
+        icon={args?.data?.icon}
+        settings={system.settings}
+      />
     </ErrorBoundary>
   );
 };
@@ -77,18 +77,46 @@ export interface INodeWrap {
   subtitle?: string;
   icon?: React.ReactNode;
   node: GraphNode;
+  settings: SystemSettings;
 }
-const NodeWrap = observer(({ node, icon }: INodeWrap) => {
-  const showTimingsValue = useSelector(showTimings);
-  const specifics = useSelector(nodeSpecifics);
+
+export interface ISpecificWrapper {
+  specifics: Record<
+    string,
+    React.FC<{
+      node: GraphNode;
+    }>
+  >;
+  node: GraphNode;
+}
+
+export const SpecificWrapper = observer(
+  ({ specifics, node }: ISpecificWrapper) => {
+    const Specific = specifics[node.factory.type];
+
+    if (!Specific) {
+      return null;
+    }
+    return (
+      <Stack
+        direction="column"
+        gap={3}
+        style={{ padding: 'var(--component-spacing-md)' }}
+      >
+        <Specific node={node} />
+      </Stack>
+    );
+  },
+);
+
+const NodeWrap = observer(({ settings, node, icon }: INodeWrap) => {
+  const system = useSystem();
 
   //Check if the input allows for dynamic inputs
   const isInput = !!(
     node.factory.type == 'studio.tokens.generic.input' &&
     node.annotations[annotatedDynamicInputs]
   );
-
-  const Specific = specifics[node.factory.type];
 
   return (
     <BaseNodeWrapper
@@ -117,17 +145,9 @@ const NodeWrap = observer(({ node, icon }: INodeWrap) => {
             <PortArray ports={node.inputs} />
           </HandleContainer>
         </Stack>
-        {Specific && (
-          <Stack
-            direction="column"
-            gap={3}
-            style={{ padding: 'var(--component-spacing-md)' }}
-          >
-            <Specific node={node} />
-          </Stack>
-        )}
+        <SpecificWrapper specifics={system.specifics} node={node} />
       </Stack>
-      {showTimingsValue && (
+      {settings.showTimings && (
         <div className={styles.timingText}>
           <Text size="xsmall" muted>
             {node.lastExecutedDuration}ms
@@ -137,18 +157,25 @@ const NodeWrap = observer(({ node, icon }: INodeWrap) => {
     </BaseNodeWrapper>
   );
 });
+
 export interface IPortArray {
   ports: Record<string, Port>;
   hideNames?: boolean;
 }
 export const PortArray = observer(({ ports, hideNames }: IPortArray) => {
+  const system = useSystem();
   const entries = Object.values(ports).sort();
   return (
     <>
       {entries
         .filter((x) => x.visible != false || x.isConnected)
         .map((input) => (
-          <InputHandle port={input} hideName={hideNames} />
+          <InputHandle
+            port={input}
+            hideName={hideNames}
+            inlineTypes={system.settings.inlineTypes}
+            inlineValues={system.settings.inlineValues}
+          />
         ))}
     </>
   );
@@ -313,12 +340,17 @@ const getValuePreview = (value, type) => {
     : valuePreview;
 };
 
+export interface IInputHandle {
+  port: Port;
+  hideName?: boolean;
+  inlineTypes: boolean;
+  inlineValues: boolean;
+}
+
 const InputHandle = observer(
-  ({ port, hideName }: { port: Port; hideName?: boolean }) => {
-    const inlineTypesValue = useSelector(inlineTypes);
-    const iconTypeRegistry = useSelector(icons);
-    const inlineValuesValue = useSelector(inlineValues);
-    const typeCol = extractTypeIcon(port, iconTypeRegistry);
+  ({ port, hideName, inlineTypes, inlineValues }: IInputHandle) => {
+    const system = useSystem();
+    const typeCol = extractTypeIcon(port, system.icons);
     const input = port as unknown as Input;
     const type = extractType(port.type);
     const handleInformation = useHandle();
@@ -334,7 +366,7 @@ const InputHandle = observer(
             variadic
           >
             {!hideName && <Text>{port.name} + </Text>}
-            {inlineTypesValue && <InlineTypeLabel port={port} />}
+            {inlineTypes && <InlineTypeLabel port={port} />}
           </Handle>
           {port._edges.map((edge, i) => {
             return (
@@ -354,7 +386,7 @@ const InputHandle = observer(
                       flexDirection: 'row',
                     }}
                   >
-                    {inlineValuesValue && (
+                    {inlineValues && (
                       <span
                         style={{
                           font: 'var(--font-code-md)',
@@ -366,7 +398,7 @@ const InputHandle = observer(
                     )}
                   </div>
                 )}
-                {inlineTypesValue && <InlineTypeLabel port={port} />}
+                {inlineTypes && <InlineTypeLabel port={port} />}
               </Handle>
             );
           })}
@@ -401,7 +433,7 @@ const InputHandle = observer(
             >
               {input.name}
             </span>
-            {inlineValuesValue && (
+            {inlineValues && (
               <span
                 style={{
                   font: 'var(--font-code-xs)',
@@ -413,7 +445,7 @@ const InputHandle = observer(
             )}
           </Stack>
         )}
-        {inlineTypesValue && <InlineTypeLabel port={port} />}
+        {inlineTypes && <InlineTypeLabel port={port} />}
       </Handle>
     );
   },

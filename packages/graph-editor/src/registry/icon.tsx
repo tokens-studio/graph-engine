@@ -20,7 +20,7 @@ import Text from '@tokens-studio/icons/Text.js';
  * Default icons for the graph editor
  * These icons are used to represent the different types of custom types in the graph editor
  */
-export const icons = () =>
+export const iconsFactory = () =>
   ({
     [COLOR]: <Droplet />,
     [CURVE]: <EaseCurveControlPoints />,
