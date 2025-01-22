@@ -1,5 +1,11 @@
 # @tokens-studio/graph-editor
 
+## 4.3.13
+
+### Patch Changes
+
+- a2ccbd2: Fixes an issue with the editor losing the reference to the graph frame when moving between frames
+
 ## 4.3.12
 
 ### Patch Changes
