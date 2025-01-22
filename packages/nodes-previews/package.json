@@ -1,6 +1,6 @@
 {
   "name": "@tokens-studio/graph-engine-nodes-preview",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Panel based preview nodes",
   "license": "MPL-2.0",
   "author": "andrew@hyma.io",

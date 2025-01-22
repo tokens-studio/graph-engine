@@ -225,17 +225,16 @@ const defaultLayout: LayoutBase = {
 };
 
 const layoutLoader = (tab: TabBase, props, ref): TabData => {
-  const { id, ...rest } = tab;
+  const { id } = tab;
 
   switch (id) {
     case 'graphs':
       return {
-        id: 'graphs',
         //@ts-expect-error
         size: 700,
         group: 'graph',
         panelLock: { panelStyle: 'graph' },
-        ...rest,
+        ...tab,
       };
     case MAIN_GRAPH_ID:
       return {
@@ -248,6 +247,7 @@ const layoutLoader = (tab: TabBase, props, ref): TabData => {
             <GraphEditor {...props} id={MAIN_GRAPH_ID} ref={ref} />
           </ErrorBoundary>
         ),
+        ...tab,
       };
 
     case 'input':
@@ -255,32 +255,31 @@ const layoutLoader = (tab: TabBase, props, ref): TabData => {
         closable: true,
         cached: true,
         group: 'popout',
-        id: 'input',
         title: 'Inputs',
         content: (
           <ErrorBoundary fallback={<ErrorBoundaryContent />}>
             <Inputsheet />
           </ErrorBoundary>
         ),
+        ...tab,
       };
     case 'outputs':
       return {
         closable: true,
         cached: true,
         group: 'popout',
-        id: 'outputs',
         title: 'Outputs',
         content: (
           <ErrorBoundary fallback={<ErrorBoundaryContent />}>
             <OutputSheet />
           </ErrorBoundary>
         ),
+        ...tab,
       };
 
     case 'dropPanel':
       return {
         group: 'popout',
-        id: 'dropPanel',
         title: 'Nodes',
         content: (
           <ErrorBoundary fallback={<ErrorBoundaryContent />}>
@@ -288,6 +287,7 @@ const layoutLoader = (tab: TabBase, props, ref): TabData => {
           </ErrorBoundary>
         ),
         closable: true,
+        ...tab,
       };
 
     default:
