@@ -15,7 +15,11 @@ export default class ExternalTokensNode extends Node {
 	constructor(props: INodeDefinition) {
 		super(props);
 		this.addInput('uri', {
-			type: StringSchema
+			type: {
+				...StringSchema,
+				enum: [],
+				enumNames: []
+			}
 		});
 		this.addOutput('tokenSet', {
 			type: arrayOf(TokenSchema)
