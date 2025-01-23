@@ -21,7 +21,7 @@ export class GrayscaleNode extends BaseNode {
 
   constructor(props: INodeDefinition) {
     super(props);
-    this.dataflow.addInput("image", {
+    this.addInput("image", {
       type: ImageSchema,
     });
 

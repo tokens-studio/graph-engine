@@ -7,12 +7,12 @@ import {
 	IDataflowNode,
 	INodeDefinition,
 	ObjectSchema,
-	StringSchema,
-	ToInput
+	StringSchema
 } from '../../index.js';
 import { Node } from '../../programmatic/nodes/node.js';
 import { ToControlInput } from '@/programmatic/controlflow/input.js';
 import { ToControlOutput } from '@/programmatic/controlflow/output.js';
+import { ToInput } from '@/programmatic/dataflow/input.js';
 import axios from 'axios';
 
 /**

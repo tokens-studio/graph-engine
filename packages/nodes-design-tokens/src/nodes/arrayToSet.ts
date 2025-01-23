@@ -16,7 +16,7 @@ export default class ArrayToSetNode extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('tokens', {
+		this.addInput('tokens', {
 			type: arrayOf(TokenSchema)
 		});
 		this.dataflow.addOutput('tokenSet', {

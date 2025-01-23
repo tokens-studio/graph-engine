@@ -3,8 +3,8 @@ import { DATAFLOW_PORT } from '@/programmatic/dataflow/base.js';
 import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { Graph, topologicalSort } from '../graph/index.js';
 import { GraphSchema } from '@/schemas/index.js';
-import { ISetValue, Output } from '@/programmatic/index.js';
-import { Input } from '@/programmatic/dataflow/input.js';
+import { ISetValue, Input } from '@/programmatic/dataflow/input.js';
+import { Output } from '@/programmatic/dataflow/output.js';
 import { annotatedVariadicIndex } from '@/annotations/index.js';
 import { dedupe } from '../utils/dedupe.js';
 
@@ -158,7 +158,7 @@ export const DataFlowCapabilityFactory: CapabilityFactory = {
 			const target = graph.getNode(edge.target);
 
 			//No sidefffects when not a dataflow node
-			if (!(target as DataflowNode).dataflow) {
+			if (!target || !(target as DataflowNode).dataflow) {
 				return;
 			}
 
@@ -184,7 +184,7 @@ export const DataFlowCapabilityFactory: CapabilityFactory = {
 		graph.onFinalize('edgeAdded', edge => {
 			const targetNode = graph.getNode(edge.target);
 			//No sidefffects when not a dataflow node
-			if ((targetNode as DataflowNode).dataflow) {
+			if (targetNode && (targetNode as DataflowNode).dataflow) {
 				const sourceNode = graph.getNode(edge.source);
 				const targetPort = targetNode.inputs[edge.targetHandle] as Input;
 				const sourcePort = sourceNode.outputs[edge.sourceHandle] as Output;
@@ -214,15 +214,14 @@ export type WithDataFlow = {
 	dataFlow: DataFlowCapability;
 };
 
-
 export type DataflowGraph = ApplyCapabilities<Graph, [WithDataFlow]>;
 
 /**
  * Executes the graph as a single batch. This will execute all the nodes in the graph and return the output of the output node
  * Note that this can have side effects and you should create a new instance of a graph between runs if you want to isolate the execution
- * 
+ *
  * Note that you can achieve the same effect by changing the inputs on the graph and calling the run method on the Input node.
- * 
+ *
  * The difference is that this method will provide additional metadata about the execution and allow for journaling to occur
  * @param opts
  * @throws {BatchRunError}
@@ -311,12 +310,13 @@ export const execute = async (
 			Object.entries(outputNode.inputs)
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				.filter(([_, v]) => v.pType == DATAFLOW_PORT)
-				.map(([key, value]: [string, Output]) => {
+				.map(([key, output]) => {
+					const { value, type } = output as Output;
 					return [
 						key,
 						{
-							value: value.value,
-							type: value.type
+							value,
+							type
 						}
 					];
 				})
@@ -332,4 +332,3 @@ export const execute = async (
 		output
 	};
 };
-

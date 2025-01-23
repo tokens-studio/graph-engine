@@ -33,11 +33,11 @@ export class SeperateNode extends BaseNode {
 
   constructor(props: INodeDefinition) {
     super(props);
-    this.dataflow.addInput("image", {
+    this.addInput("image", {
       type: ImageSchema,
     });
 
-    this.dataflow.addInput("channel", {
+    this.addInput("channel", {
       type: {
         ...StringSchema,
         enum: Object.keys(ChannelLookup),

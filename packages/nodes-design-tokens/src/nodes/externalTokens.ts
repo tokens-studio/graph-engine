@@ -14,7 +14,7 @@ export default class ExternalTokensNode extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('uri', {
+		this.addInput('uri', {
 			type: StringSchema
 		});
 		this.dataflow.addOutput('tokenSet', {

@@ -26,10 +26,10 @@ export default class ExtractTokenNode extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('tokens', {
+		this.addInput('tokens', {
 			type: arrayOf(TokenSchema)
 		});
-		this.dataflow.addInput('name', {
+		this.addInput('name', {
 			type: StringSchema
 		});
 		this.dataflow.addOutput('found', {

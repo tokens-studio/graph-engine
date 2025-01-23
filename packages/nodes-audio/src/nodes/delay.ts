@@ -26,7 +26,7 @@ export class AudioDelayNode extends AudioBaseNode {
 	static description = 'Modifies an audio source to provide delay.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('delay', {
+		this.addInput('delay', {
 			type: {
 				...NumberSchema,
 				default: 1,
@@ -38,7 +38,7 @@ export class AudioDelayNode extends AudioBaseNode {
 				'ui.control': 'slider'
 			}
 		});
-		this.dataflow.addInput('input', {
+		this.addInput('input', {
 			type: NodeSchema,
 			visible: true
 		});

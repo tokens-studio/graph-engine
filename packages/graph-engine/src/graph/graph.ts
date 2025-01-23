@@ -1,6 +1,8 @@
 import { AnySchema } from '@/schemas/index.js';
+import { CapabilityFactory } from '@/capabilities/interface.js';
 import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
 import { Edge, VariadicEdgeData } from '../programmatic/edge.js';
+import { ILogger, baseLogger } from './interfaces.js';
 import { Node } from '../programmatic/nodes/node.js';
 import { Port } from '@/programmatic/port.js';
 import { VERSION } from '../constants.js';
@@ -14,17 +16,6 @@ import { makeObservable, observable, toJS } from 'mobx';
 import { nanoid as uuid } from 'nanoid';
 import type { ExternalLoader, NodeRun, NodeStart } from '../types.js';
 import type { NodeLoader, SerializedGraph } from './types.js';
-
-	inputs?: Record<string, InputDefinition>;
-	/**
-	 * Whether to track and emit stats as part of the execution
-	 */
-	stats?: boolean;
-	/**
-	 * Whether to provide a journal of the execution
-	 */
-	journal?: boolean;
-};
 
 export type EdgeOpts = {
 	id: string;
@@ -158,11 +149,6 @@ export class Graph {
 	addNode(node: Node) {
 		this.nodes[node.id] = node;
 		this.emit('nodeAdded', node);
-
-		//Trigger the onStart event if the graph is in play mode
-		if (this.annotations[annotatedPlayState] === 'playing') {
-			node.onStart();
-		}
 	}
 	/**
 	 * Removes a node from the graph and disconnects all the edges.
@@ -249,23 +235,6 @@ export class Graph {
 		return Object.keys(this.nodes);
 	}
 
-		const node = this.nodes[nodeID];
-		if (!node) {
-			throw new Error(`No node found with id ${nodeID}`);
-		}
-
-		const res = await node.run();
-		//Don't propagate if there is an error
-		if (res.error) {
-			return;
-		}
-
-		if (noRecursive) {
-			return;
-		}
-
-		await this.propagate(node.id);
-	}
 	/**
 	 * Serialize the graph for transport
 	 * @returns
@@ -289,25 +258,6 @@ export class Graph {
 	}
 
 	/**
-	 * Extracts the nodes types from a serialized graph
-	 * @param graph
-	 */
-	static extractTypes(graph: SerializedGraph): string[] {
-		return Object.values(graph.nodes.map(x => x.type));
-	}
-
-	checkCapabilitites(annotations: Record<string, any>) {
-		Object.entries(annotations).forEach(([key]) => {
-			if (key.startsWith(annotatedCapabilityPrefix)) {
-				const capabilityName = key.replace(annotatedCapabilityPrefix, '');
-				if (!this.capabilities[capabilityName]) {
-					throw new Error(`Capability ${capabilityName} is missing`);
-				}
-			}
-		});
-	}
-
-	/**
 	 * Creates a graph from a serialized graph. Note that the types of the nodes must be present in the lookup.
 	 * @example
 	 * ```typescript
@@ -325,9 +275,7 @@ export class Graph {
 
 		//Previously graphs didn't contain the version
 		if (compareVersions(version || '0.0.0', VERSION) == -1) {
-			throw new Error(
-				`Graph version is older than engine version. This might cause unexpected behaviour. Graph version: ${version}, Engine version: ${VERSION}`
-			);
+			// throw new Error(Graph version is older than engine version. This might cause unexpected behaviour. Graph version: ${version}, Engine version: ${VERSION} `);
 		}
 
 		this.annotations = serialized.annotations;
@@ -453,7 +401,7 @@ export class Graph {
 		return clonedGraph;
 	}
 
-	private forEachNode(cb) {
+	forEachNode(cb) {
 		Object.values(this.nodes).forEach(cb);
 	}
 
@@ -533,130 +481,7 @@ export class Graph {
 
 		return dedup(out).map(x => this.nodes[x]);
 	}
-	/**
-	 * Triggers a ripple effect on the graph starting from the given edge
-	 * @returns
-	 */
-	ripple(output: Output) {
-		//Get the edges
-		const edges = output._edges;
 
-		const targets = edges.reduce((acc, edge) => {
-			const target = this.getNode(edge.target);
-			if (!target) {
-				return acc;
-			}
-			//Get the input
-			const input = target.inputs[edge.targetHandle];
-			if (!input) {
-				return acc;
-			}
-
-			//Check if setting the value would result in an execution
-			//If pure and the value is the same ignore
-			if (input.value === output.value) {
-				return acc;
-			}
-
-			if (input.variadic) {
-				//Don't attempt mutation of the original array
-				const newVal = [...(input.value || [])];
-				newVal[edge.annotations[annotatedVariadicIndex]!] = output.value;
-				//Extend the variadic array
-				input.setValue(newVal, {
-					//Create a new type assuming that the items will be of the same type
-					type: {
-						type: 'array',
-						items: output.type
-					},
-					//We are controlling propagation
-					noPropagate: true
-				});
-			} else {
-				input.setValue(output.value, {
-					type: output.type,
-					//We are controlling propagation
-					noPropagate: true
-				});
-			}
-
-			return acc.concat(target);
-		}, [] as Node[]);
-		//Cheaper to emit once
-		this.emit('valueSent', edges);
-
-		//Now we need to execute the targets. An output might be connected multiple times to the same target so we will need to dedup
-		dedup(targets.map(x => x.id)).forEach(x => this.update(x));
-	}
-
-	/**
-	 * Triggers the execution of the node and updates the successor nodes
-	 * @param nodeId
-	 * @param oneShot
-	 * @returns
-	 */
-	async propagate(nodeId: string, oneShot: boolean = false) {
-		const node = this.getNode(nodeId);
-		if (!node) {
-			return;
-		}
-		//Update all the outgoing edges
-		const outEdges = this.outEdges(node.id);
-		/**
-		 * This is a heuristic to not attempt to update nodes that don't have a detected port at the end-
-		 */
-		const affectedNodes = outEdges
-			.map(edge => {
-				const output = node.outputs[edge.sourceHandle] as Output;
-
-				//It might be dynamic
-				if (!output) {
-					return;
-				}
-				const value = node.outputs[edge.sourceHandle].value;
-				//write the value to the input port of the target
-				const target = this.getNode(edge.target);
-				if (!target) {
-					return;
-				}
-				const input = target.inputs[edge.targetHandle];
-				if (!input) {
-					return;
-				}
-
-				if (input.variadic) {
-					//Don't attempt mutation of the original array
-					const newVal = [...(input.value || [])];
-					newVal[edge.annotations[annotatedVariadicIndex]!] = output.value;
-					//Extend the variadic array
-					input.setValue(newVal, {
-						//We are controlling propagation
-						noPropagate: true
-					});
-				} else {
-					//Ignore
-					if (input.value === value) {
-						return;
-					}
-
-					input.setValue(value, {
-						type: node.outputs[edge.sourceHandle].type,
-						//We are controlling propagation
-						noPropagate: true
-					});
-				}
-
-				return edge.target;
-			})
-			//Remove holes
-			.filter(Boolean) as string[];
-
-		if (!oneShot) {
-			//These are the nodes to be update
-			const nodes = dedup(affectedNodes);
-			await Promise.all(nodes.map(x => this.update(x)));
-		}
-	}
 	/**
 	 * Creates an edge connection between two nodes
 	 * @param source
@@ -691,8 +516,8 @@ export class Graph {
 		targetPort._edges.push(edge);
 
 		sourcePort?._edges.push(edge);
-		this.emit('edgeAdded', finalEdge);
-		return finalEdge;
+		this.emit('edgeAdded', edge);
+		return edge;
 	}
 	/**
 	 * Return all edges that point into the nodes inputs.

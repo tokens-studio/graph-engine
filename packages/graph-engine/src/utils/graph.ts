@@ -1,5 +1,6 @@
 import { Graph } from '@/graph/graph.js';
-import { Node, Port } from '@/programmatic/index.js';
+import { Node } from '@/programmatic/nodes/node.js';
+import { Port } from '@/programmatic/index.js';
 import { SerializedGraph } from '@/graph/types.js';
 import { dedupe } from './dedupe.js';
 
@@ -17,7 +18,6 @@ export const hasConnectedInput = (
 	input: Port
 ): boolean => {
 	const edges = graph.inEdges(source.id);
-
 	return edges.some(x => x.targetHandle === input.name);
 };
 

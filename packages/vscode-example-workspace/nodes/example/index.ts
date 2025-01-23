@@ -16,13 +16,13 @@ export default class NodeDefinition extends DataflowNode {
   }>;
   constructor(props: INodeDefinition) {
     super(props);
-    this.dataflow.addInput("a", {
+    this.addInput("a", {
       type: NumberSchema,
     });
-    this.dataflow.addInput("b", {
+    this.addInput("b", {
       type: NumberSchema,
     });
-    this.dataflow.addOutput("value", {
+    this.addOutput("value", {
       type: NumberSchema,
     });
   }

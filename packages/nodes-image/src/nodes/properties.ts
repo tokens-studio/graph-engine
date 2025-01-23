@@ -31,7 +31,7 @@ export class ImageProperties extends BaseNode {
 
   constructor(props: INodeDefinition) {
     super(props);
-    this.dataflow.addInput("image", {
+    this.addInput("image", {
       type: ImageSchema,
     });
 

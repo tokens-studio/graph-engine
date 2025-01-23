@@ -1,5 +1,5 @@
 import { Annotated } from '../annotated.js';
-import { DATAFLOW_PORT } from '../dataflow/base.js';
+import { DATAFLOW_PORT, DataFlowPort } from '../dataflow/base.js';
 import { Graph } from '../../graph/index.js';
 import { GraphSchema } from '../../schemas/index.js';
 import { IDeserializeOpts, SerializedNode } from '../../graph/types.js';
@@ -73,10 +73,10 @@ export class Node extends Annotated {
 		makeObservable(this, {
 			inputs: observable.shallow,
 			outputs: observable.shallow,
-			addInput: action,
-			addOutput: action,
-			removeInput: action,
-			removeOutput: action
+			addInputPort: action,
+			addOutputPort: action,
+			removeInputPort: action,
+			removeOutputPort: action
 		});
 		//Defined nodes would be specified here
 	}
@@ -86,17 +86,17 @@ export class Node extends Annotated {
 	 * @param name
 	 * @param input
 	 */
-	addInput(name: string, port: Port) {
+	addInputPort(name: string, port: Port) {
 		this.inputs[name] = port;
 	}
-	addOutput(name: string, port: Port) {
+	addOutputPort(name: string, port: Port) {
 		this.outputs[name] = port;
 	}
 	/**
 	 * Removes a named input from the node. This should only be used for dynamic inputs
 	 * @param name
 	 */
-	removeInput(name: string) {
+	removeInputPort(name: string) {
 		if (this._graph) {
 			this._graph.inEdges(this.id, name).forEach(edge => {
 				if (edge.id) {
@@ -108,7 +108,7 @@ export class Node extends Annotated {
 		delete this.inputs[name];
 	}
 
-	removeOutput(name: string) {
+	removeOutputPort(name: string) {
 		if (this._graph) {
 			this._graph.outEdges(this.id, name).forEach(edge => {
 				if (edge.id) {
@@ -136,12 +136,12 @@ export class Node extends Annotated {
 		});
 
 		// Copy input values
-		Object.entries(this.inputs).forEach(([key, input]: [string, Input]) => {
+		Object.entries(this.inputs).forEach(([key, input]) => {
 			//TODO remove this. The dataflow cloning needs to be handled by the dataflow itself
 			if (input.variadic) return;
 			const targetInput = clonedNode.inputs[key] as Input;
 			if (targetInput && targetInput.pType === DATAFLOW_PORT) {
-				targetInput.setValue(input.value);
+				targetInput.setValue((input as DataFlowPort).value);
 				//Try handle dynamic inputs
 			} else {
 				clonedNode.inputs[key] = input.clone();

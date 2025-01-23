@@ -68,17 +68,17 @@ export class Dither extends BaseNode {
 
   constructor(props: INodeDefinition) {
     super(props);
-    this.dataflow.addInput("image", {
+    this.addInput("image", {
       type: ImageSchema,
     });
-    this.dataflow.addInput("colors", {
+    this.addInput("colors", {
       type: {
         ...NumberSchema,
         default: 32,
       },
     });
 
-    this.dataflow.addInput("colorSpace", {
+    this.addInput("colorSpace", {
       type: {
         ...StringSchema,
         enum: Object.keys(colorSpaceLookup),
@@ -86,7 +86,7 @@ export class Dither extends BaseNode {
       },
     });
 
-    this.dataflow.addInput("ditherMethod", {
+    this.addInput("ditherMethod", {
       type: {
         ...StringSchema,
         enum: Object.keys(ditherMethodLookup),

@@ -17,7 +17,7 @@ export class GetFileNode extends DataflowNode {
 	static description = 'Gets a file from the file system.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('path', {
+		this.addInput('path', {
 			type: StringSchema
 		});
 

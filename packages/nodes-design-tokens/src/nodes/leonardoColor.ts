@@ -28,17 +28,17 @@ export default class LeonardoColorNode extends DataflowNode {
 	static description = 'Creates a leonardo color';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('name', {
+		this.addInput('name', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('colorKeys', {
+		this.addInput('colorKeys', {
 			type: arrayOf(ColorSchema)
 		});
-		this.dataflow.addInput('ratios', {
+		this.addInput('ratios', {
 			type: arrayOf(NumberSchema)
 		});
 
-		this.dataflow.addInput('smooth', {
+		this.addInput('smooth', {
 			type: BooleanSchema
 		});
 		this.dataflow.addOutput('value', {

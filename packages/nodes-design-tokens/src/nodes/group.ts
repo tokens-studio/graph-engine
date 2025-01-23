@@ -24,10 +24,10 @@ export default class GroupNode extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('name', {
+		this.addInput('name', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('tokenSet', {
+		this.addInput('tokenSet', {
 			type: TokenSetSchema
 		});
 		this.dataflow.addOutput('tokenSet', {

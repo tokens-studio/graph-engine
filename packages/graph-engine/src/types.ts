@@ -1,6 +1,6 @@
 import { ContrastAlgorithm, ValueSnapMethod } from './types/index.js';
 import type { Graph } from './graph/graph.js';
-import type { Node } from './programmatic/node.js';
+import type { Node } from './programmatic/nodes/node.js';
 
 export type ExternalLoadOptions = {
 	/**

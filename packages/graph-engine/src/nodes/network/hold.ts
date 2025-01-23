@@ -2,8 +2,7 @@ import {
 	AnySchema,
 	Dataflow,
 	IDataflowNode,
-	INodeDefinition,
-	ToOutput
+	INodeDefinition
 } from '../../index.js';
 import {
 	ControlFlow,
@@ -11,6 +10,7 @@ import {
 } from '@/programmatic/nodes/controlflow.js';
 import { Node } from '../../programmatic/nodes/node.js';
 import { ToControlInput } from '@/programmatic/controlflow/input.js';
+import { ToOutput } from '@/programmatic/dataflow/output.js';
 
 /**
  * A node that passes through the input to the output.

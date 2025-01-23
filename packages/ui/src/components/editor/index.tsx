@@ -42,19 +42,20 @@ export const EditorTab = observer(
 		}, []);
 
 		const sys = useMemo(() => {
-
 			const graph = new Graph();
 			return new System({
-				frames: [new Frame({
-					graph,
-					specifics,
-					panelItems,
-					nodeLoader: loadCompounds,
-					capabilities,
-					controls,
-					icons,
-					toolbarButtons
-				})],
+				frames: [
+					new Frame({
+						graph,
+						specifics,
+						panelItems,
+						nodeLoader: loadCompounds,
+						capabilities,
+						controls,
+						icons,
+						toolbarButtons
+					})
+				],
 				tabLoader
 			});
 		}, []);

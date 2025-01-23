@@ -37,24 +37,24 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('name', {
+		this.addInput('name', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('type', {
+		this.addInput('type', {
 			type: {
 				...StringSchema,
 				enum: types
 			}
 		});
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: StringSchema
 		});
 
-		this.dataflow.addInput('description', {
+		this.addInput('description', {
 			type: StringSchema
 		});
 
-		this.dataflow.addInput('$extensions', {
+		this.addInput('$extensions', {
 			type: {
 				...ObjectSchema,
 				default: null

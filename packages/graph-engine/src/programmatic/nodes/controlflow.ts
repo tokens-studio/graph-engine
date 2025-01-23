@@ -18,6 +18,7 @@ export class ControlFlow<T extends Node & IControlFlowNode<T>> {
 	}
 
 	dispose() {
+		// @ts-ignore
 		this.node = null;
 	}
 

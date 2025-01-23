@@ -1,4 +1,5 @@
 import { DataFlowPort } from './base.js';
+import { DataflowNode } from '../nodes/dataflow.js';
 import { GraphSchema } from '../../schemas/index.js';
 import { Input } from './input.js';
 import { Node } from '../nodes/node.js';
@@ -19,7 +20,10 @@ export interface ConnectionStatus {
 	valid: boolean;
 }
 
-export class Output<V = any, T extends Node = Node> extends DataFlowPort<V, T> {
+export class Output<
+	V = any,
+	T extends DataflowNode = DataflowNode
+> extends DataFlowPort<V, T> {
 	constructor(props: IOutputProps<V, T>) {
 		super(props);
 		makeObservable(this, {
@@ -29,7 +33,7 @@ export class Output<V = any, T extends Node = Node> extends DataFlowPort<V, T> {
 
 	set(value: V, type?: GraphSchema) {
 		this._value = value;
-		this._dynamicType = type;
+		this._dynamicType = type ?? null;
 	}
 
 	connect(target: Input<V>) {

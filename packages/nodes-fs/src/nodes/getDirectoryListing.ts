@@ -17,7 +17,7 @@ export class GetDirectoryNode extends DataflowNode {
 	static description = 'Reads the directory of a path';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('path', {
+		this.addInput('path', {
 			type: StringSchema
 		});
 

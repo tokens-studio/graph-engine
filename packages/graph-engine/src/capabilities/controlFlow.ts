@@ -4,7 +4,6 @@ import { ControlFlowOutput } from '../programmatic/controlflow/output.js';
 import { Graph } from '../graph/index.js';
 import { GraphSchema } from '@/schemas/index.js';
 
-
 export interface ControlFlowCapability {
 	/**
 	 * Sends a message from an output to all connected inputs
@@ -18,7 +17,6 @@ export interface ControlFlowCapability {
 		type?: GraphSchema
 	) => void;
 }
-
 
 export const ControlFlowCapabilityFactory: CapabilityFactory = {
 	name: 'controlFlow',

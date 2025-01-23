@@ -1,18 +1,21 @@
 import { AnySchema, GraphSchema } from '../../schemas/index.js';
 import { IPort, Port } from '../port.js';
 import { computed, makeObservable, observable } from 'mobx';
-import type { Node } from '../index.js';
+import type { DataflowNode } from '../nodes/dataflow.js';
 
 export const DATAFLOW_PORT = 2;
 
-export interface IDataflowPort<V = any, T extends Node = Node>
+export interface IDataflowPort<V = any, T extends DataflowNode = DataflowNode>
 	extends IPort<T> {
 	value: V;
 	type: GraphSchema;
 }
-export class DataFlowPort<V = any, T extends Node = Node> extends Port<T> {
+export class DataFlowPort<
+	V = any,
+	T extends DataflowNode = DataflowNode
+> extends Port<T> {
 	//Note that we need null values for the observable to work
-	protected _dynamicType?: GraphSchema = null;
+	protected _dynamicType: GraphSchema | null = null;
 	protected _type: GraphSchema = AnySchema;
 	protected _value: V;
 	pType = DATAFLOW_PORT;
@@ -35,7 +38,7 @@ export class DataFlowPort<V = any, T extends Node = Node> extends Port<T> {
 
 	set(value: V, type?: GraphSchema) {
 		this._value = value;
-		this._dynamicType = type;
+		this._dynamicType = type ?? null;
 	}
 
 	get dynamicType() {

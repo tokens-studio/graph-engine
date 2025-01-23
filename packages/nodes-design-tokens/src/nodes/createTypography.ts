@@ -30,29 +30,29 @@ export default class CreateTypographyNode extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('fontFamily', {
+		this.addInput('fontFamily', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('fontWeight', {
+		this.addInput('fontWeight', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('fontSize', {
+		this.addInput('fontSize', {
 			type: StringSchema
 		});
 
-		this.dataflow.addInput('lineHeight', {
+		this.addInput('lineHeight', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('letterSpacing', {
+		this.addInput('letterSpacing', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('paragraphSpacing', {
+		this.addInput('paragraphSpacing', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('textDecoration', {
+		this.addInput('textDecoration', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('textCase', {
+		this.addInput('textCase', {
 			type: StringSchema
 		});
 

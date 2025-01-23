@@ -43,7 +43,7 @@ export default class CreateBorderNode extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('token', {
+		this.addInput('token', {
 			type: TokenSchema
 		});
 

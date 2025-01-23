@@ -1,6 +1,7 @@
 import { INodeDefinition, Node, TypeDefinition } from './node.js';
-import { Input, Output } from '../index.js';
+import { Input } from '../dataflow/input.js';
 import { NodeRun } from '@/types.js';
+import { Output } from '../dataflow/output.js';
 import { action, computed, makeObservable, observable } from 'mobx';
 import { annotatedNodeRunning } from '@/annotations/index.js';
 import getDefaults from 'json-schema-defaults-esm';
@@ -12,10 +13,10 @@ export interface IDataflowNode<
 	execute(): Promise<void> | void;
 }
 
-export class Dataflow<T extends Node & IDataflowNode<T>> {
+export class Dataflow<T extends IDataflowNode> {
 	node: T;
 	public lastExecutedDuration = 0;
-	public error?: Error = null;
+	public error: Error | null = null;
 
 	constructor(node: T) {
 		this.node = node;
@@ -29,6 +30,7 @@ export class Dataflow<T extends Node & IDataflowNode<T>> {
 	}
 
 	dispose() {
+		//@ts-ignore This is forcing manual cleanup
 		this.node = null;
 	}
 
@@ -37,8 +39,8 @@ export class Dataflow<T extends Node & IDataflowNode<T>> {
 	 * @param name
 	 * @param input
 	 */
-	addInput<T = unknown>(name: string, type: TypeDefinition) {
-		return this.node.addInput(
+	addInput<T = DataflowNode>(name: string, type: TypeDefinition) {
+		return this.node.addInputPort(
 			name,
 			new Input<T>({
 				name,
@@ -50,7 +52,7 @@ export class Dataflow<T extends Node & IDataflowNode<T>> {
 	}
 
 	addOutput<T = unknown>(name: string, type: TypeDefinition) {
-		this.node.addOutput(
+		this.node.addOutputPort(
 			name,
 			new Output<T>({
 				name,
@@ -77,15 +79,16 @@ export class Dataflow<T extends Node & IDataflowNode<T>> {
 	async run(): Promise<NodeRun> {
 		this.node.setAnnotation(annotatedNodeRunning, true);
 		const start = performance.now();
-		this.node.getGraph()?.emit('nodeStarted', {
+		const graph = this.node.getGraph();
+		graph?.emit('nodeStarted', {
 			node: this.node,
 			start
 		});
 		try {
 			await this.execute();
-			this.error = undefined;
+			this.error = null;
 		} catch (err) {
-			console.log(err);
+			graph.logger.error(err);
 			this.error = err as Error;
 		}
 		const end = performance.now();
@@ -99,7 +102,7 @@ export class Dataflow<T extends Node & IDataflowNode<T>> {
 			end
 		};
 
-		this.node.getGraph()?.emit('nodeExecuted', result);
+		graph?.emit('nodeExecuted', result);
 
 		return result;
 	}
@@ -116,6 +119,19 @@ export class DataflowNode extends Node implements IDataflowNode<DataflowNode> {
 	dataflow: Dataflow<DataflowNode> = new Dataflow<DataflowNode>(this);
 	constructor(props: INodeDefinition) {
 		super(props);
+	}
+
+	/**
+	 * Creates a new input and adds it to the node
+	 * @param name
+	 * @param input
+	 */
+	addInput(name: string, type: TypeDefinition) {
+		return this.addInput(name, type);
+	}
+
+	addOutput(name: string, type: TypeDefinition) {
+		return this.dataflow.addOutput(name, type);
 	}
 	execute() {}
 }

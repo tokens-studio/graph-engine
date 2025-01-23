@@ -29,25 +29,25 @@ export default class CreateBoxShadowNode extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('x', {
+		this.addInput('x', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('y', {
+		this.addInput('y', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('blur', {
+		this.addInput('blur', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('spread', {
+		this.addInput('spread', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('color', {
+		this.addInput('color', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('type', {
+		this.addInput('type', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('blendMode', {
+		this.addInput('blendMode', {
 			type: StringSchema
 		});
 		this.dataflow.addOutput('value', {

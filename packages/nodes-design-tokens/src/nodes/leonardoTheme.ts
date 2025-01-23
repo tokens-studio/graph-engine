@@ -19,19 +19,19 @@ export default class LeonardoThemeNode extends DataflowNode {
 	static description = 'Creates a leonardo theme';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('colors', {
+		this.addInput('colors', {
 			type: arrayOf(LeonardoColorSchema)
 		});
-		this.dataflow.addInput('contrast', {
+		this.addInput('contrast', {
 			type: NumberSchema
 		});
-		this.dataflow.addInput('lightness', {
+		this.addInput('lightness', {
 			type: NumberSchema
 		});
-		this.dataflow.addInput('saturation', {
+		this.addInput('saturation', {
 			type: NumberSchema
 		});
-		this.dataflow.addInput('backgroundColor', {
+		this.addInput('backgroundColor', {
 			type: LeonardoColorSchema
 		});
 

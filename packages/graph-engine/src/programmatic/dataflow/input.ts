@@ -1,5 +1,6 @@
 import { DataFlowCapability } from '@/capabilities/dataflow.js';
 import { DataFlowPort } from './base.js';
+import { DataflowNode } from '../nodes/dataflow.js';
 import { GraphSchema } from '../../schemas/index.js';
 import { Node } from '../nodes/node.js';
 import { Output } from './output.js';
@@ -23,7 +24,10 @@ export interface ISetValue {
 	type?: GraphSchema;
 }
 
-export class Input<V = any, T extends Node = Node> extends DataFlowPort<V, T> {
+export class Input<
+	V = any,
+	T extends DataflowNode = DataflowNode
+> extends DataFlowPort<V, T> {
 	constructor(props: IInputProps<V, T>) {
 		super(props);
 
@@ -60,7 +64,7 @@ export class Input<V = any, T extends Node = Node> extends DataFlowPort<V, T> {
 				) {
 					const graph = this.node.getGraph();
 					const sourceNodesOutputTypes = this._edges.map(edge => {
-						const outputs = graph.getNode(edge.source).outputs;
+						const outputs = graph.getNode(edge.source)!.outputs;
 						return (outputs[edge.sourceHandle] as Output).type;
 					});
 
@@ -77,7 +81,7 @@ export class Input<V = any, T extends Node = Node> extends DataFlowPort<V, T> {
 							items: sourceNodesOutputTypes[0]
 						};
 					} else {
-						this._dynamicType = undefined;
+						this._dynamicType = null;
 					}
 				} else {
 					this._dynamicType = opts.type;
@@ -95,7 +99,7 @@ export class Input<V = any, T extends Node = Node> extends DataFlowPort<V, T> {
 	 * Resets the value of the input to the default value
 	 */
 	reset() {
-		this._dynamicType = undefined;
+		this._dynamicType = null;
 		return (this._value = getDefaults(this._type) as V);
 	}
 
@@ -159,7 +163,7 @@ export class Input<V = any, T extends Node = Node> extends DataFlowPort<V, T> {
 
 	deserialize(serialized: SerializedInput) {
 		this.visible = serialized.visible ?? true;
-		this._dynamicType = serialized.dynamicType || undefined;
+		this._dynamicType = serialized.dynamicType ?? null;
 		this.annotations = serialized.annotations || {};
 		this._value = serialized.value;
 	}

@@ -4,8 +4,4 @@ export interface ILogger {
 	warn: (message: any) => void;
 }
 
-export const baseLogger: ILogger = {
-	log: () => {},
-	error: () => {},
-	warn: () => {}
-};
+export const baseLogger: ILogger = console;

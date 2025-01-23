@@ -1,7 +1,7 @@
 import { AnySchema, GraphSchema } from '@/schemas/index.js';
 import { ControlFlowNode } from '../nodes/controlflow.js';
 import { IPort, Port } from '../port.js';
-import type { Node, TypeDefinition } from '../index.js';
+import type { Node, TypeDefinition } from '../nodes/node.js';
 
 export const CONTROL_PORT = 1;
 
@@ -13,7 +13,7 @@ export class ControlFlowPort<
 	T extends ControlFlowNode = ControlFlowNode
 > extends Port<T> {
 	//Note that we need null values for the observable to work
-	protected _dynamicType?: GraphSchema = null;
+	protected _dynamicType: GraphSchema | null = null;
 	protected _type: GraphSchema;
 
 	pType = CONTROL_PORT;

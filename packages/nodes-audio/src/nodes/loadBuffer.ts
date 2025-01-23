@@ -23,7 +23,7 @@ export class AudioLoadBufferNode extends AudioBaseNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('resource', {
+		this.addInput('resource', {
 			type: AnySchema,
 			visible: true
 		});

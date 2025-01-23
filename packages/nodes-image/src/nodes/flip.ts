@@ -22,7 +22,7 @@ export class FlipNode extends BaseNode {
 
   constructor(props: INodeDefinition) {
     super(props);
-    this.dataflow.addInput("image", {
+    this.addInput("image", {
       type: ImageSchema,
     });
     this.dataflow.addOutput("image", {

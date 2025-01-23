@@ -1,4 +1,4 @@
-import { NodeFactory, SerializedGraph, nodeLookup } from '../../src/index.js';
+import { SerializedGraph, nodeLookup } from '../../src/index.js';
 import { describe, expect, test } from 'vitest';
 import basic from '../data/processed/basic.js';
 

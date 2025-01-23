@@ -6,12 +6,12 @@ import {
 	Dataflow,
 	IDataflowNode,
 	INodeDefinition,
-	NumberSchema,
-	ToInput
+	NumberSchema
 } from '../../index.js';
 import { Node } from '../../programmatic/nodes/node.js';
 import { ToControlInput } from '@/programmatic/controlflow/input.js';
 import { ToControlOutput } from '@/programmatic/controlflow/output.js';
+import { ToInput } from '@/programmatic/dataflow/input.js';
 
 /**
  * A node that passes through the input to the output.

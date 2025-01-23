@@ -8,13 +8,7 @@ import '@tokens-studio/tokens/css/base.css';
 import '@tokens-studio/ui/css/normalize.css';
 import '@tokens-studio/ui/css/utils.css';
 
-import '@fontsource/geist-mono/400.css';
-import '@fontsource/geist-mono/500.css';
-import '@fontsource/geist-mono/600.css';
-
-import '@fontsource/geist-sans/400.css';
-import '@fontsource/geist-sans/500.css';
-import '@fontsource/geist-sans/600.css';
+import '@fontsource/chakra-petch';
 
 import { headers } from 'next/headers.js';
 import Contexts from './contexts.tsx';

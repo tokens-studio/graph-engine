@@ -10,10 +10,10 @@ export default class NearestColorNode extends DataflowNode {
 	constructor(props) {
 		super(props);
 
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: arrayOf(TokenSchema)
 		});
-		this.dataflow.addInput('text', {
+		this.addInput('text', {
 			type: {
 				...StringSchema,
 				default: 'The quick brown fox jumps over the lazy dog'

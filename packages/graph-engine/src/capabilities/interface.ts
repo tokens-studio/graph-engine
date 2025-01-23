@@ -16,7 +16,9 @@ export type CombineCapabilities<
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
 	k: infer I
 ) => void
-	? I
+	? I extends Capabilities
+		? I
+		: never
 	: never;
 
 /**
