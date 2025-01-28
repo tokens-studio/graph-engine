@@ -1,14 +1,16 @@
-// New file: packages/nodes-design-tokens/src/ui/controls/externalTokenSet.tsx
-import { IField } from '@tokens-studio/graph-editor';
+import { EditorExternalSet, IField } from '@tokens-studio/graph-editor';
 import { Input } from '@tokens-studio/graph-engine';
 import { Select } from '@tokens-studio/ui';
 import { observer } from 'mobx-react-lite';
-import { useExternalData } from '@tokens-studio/graph-editor';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export const ExternalTokenSetField = observer(({ port, readOnly }: IField) => {
-	const { tokenSets } = useExternalData();
+	const [tokenSets, setTokenSets] = useState([]);
 
+	useEffect(() => {
+		port.node.load('', {listSets: true}).then(sets => setTokenSets(sets));
+	}, []);
+	
 	const onChange = (value: string) => {
 		if (!readOnly) {
 			(port as Input).setValue(value);
@@ -17,10 +19,10 @@ export const ExternalTokenSetField = observer(({ port, readOnly }: IField) => {
 
 	return (
 		<Select value={port.value || ''} onValueChange={onChange}>
-			<Select.Trigger />
+			<Select.Trigger value={port.value || ''} />
 			<Select.Content>
-				{tokenSets?.map(set => (
-					<Select.Item key={set.identifier} value={set.identifier}>
+				{tokenSets?.map((set: EditorExternalSet) => (
+					<Select.Item key={set.name} value={set.name}>
 						{set.name}
 					</Select.Item>
 				))}
