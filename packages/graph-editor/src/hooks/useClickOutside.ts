@@ -9,23 +9,16 @@ export default <T extends HTMLElement>(
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      //TODO: find a solution for this
-      if (
-        ref.current &&
-        !ref.current.contains(target) &&
-        target.nodeName !== 'BODY' &&
-        target.nodeName !== 'HTML'
-      ) {
-        if (
-          [...target.classList.values()].find((itm) =>
-            itm.includes('react-colorful'),
-          )
-        ) {
-          return;
-        }
 
-        callback();
+      if (
+        [...target.classList.values()].find((itm) =>
+          itm.includes('react-colorful'),
+        )
+      ) {
+        return;
       }
+
+      callback();
     };
 
     if (active) {
