@@ -17,7 +17,6 @@ export default <T extends HTMLElement>(
         target.nodeName !== 'HTML'
       ) {
         if (
-          target.classList.contains('mentions-item') ||
           [...target.classList.values()].find((itm) =>
             itm.includes('react-colorful'),
           )
