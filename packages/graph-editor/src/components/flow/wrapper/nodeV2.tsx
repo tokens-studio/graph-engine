@@ -395,7 +395,7 @@ const InputHandle = observer(
           >
             <span
               style={{
-                font: 'var(--font-code-sm)',
+                font: 'var(--font-code-lg)',
                 color: 'var(--color-neutral-1500)',
               }}
             >

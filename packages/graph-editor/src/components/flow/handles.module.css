@@ -3,12 +3,18 @@
   display: flex;
   align-items: center;
   padding: var(--component-spacing-2xs) var(--component-spacing-md);
+  margin-bottom: var(--component-spacing-xs);
+
+  &:not(:has(.handleText, span)) {
+    margin-bottom: var(--component-spacing-lg);
+  }
 
   &.collapsed {
     height: 0;
     overflow: hidden;
     position: absolute;
     top: 0;
+    margin-bottom: 0;
   }
 
   &.isAnchor {
@@ -34,7 +40,7 @@
 
 .handleHolder .rawHandle {
   --handle-border-width: var(--component-border-width-lg);
-  --handle-core-size: var(--size-50);
+  --handle-core-size: var(--size-75);
 
   background-color: var(--colors-graphBg);
   position: absolute;
