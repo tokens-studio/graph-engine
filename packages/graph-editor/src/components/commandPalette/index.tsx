@@ -16,6 +16,7 @@ import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
 import React from 'react';
 import Search from '@tokens-studio/icons/Search.js';
 import styles from './index.module.css';
+import useClickOutside from '@/hooks/useClickOutside.js';
 
 export interface ICommandMenu {
   items: DropPanelStore;
@@ -83,7 +84,6 @@ const CommandMenuGroup = observer(
 const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
   const showNodesCmdPalette = useSelector(showNodesCmdPaletteSelector);
   const dispatch = useDispatch();
-  const dialogRef = React.useRef<HTMLDivElement>(null);
   const cursorPositionRef = React.useRef<{ x: number; y: number }>({
     x: 0,
     y: 0,
@@ -91,6 +91,10 @@ const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
   const [selectedItem, setSelectedItem] = React.useState('input');
   const reactflow = useReactFlow();
   const selectAddedNodes = useSelectAddedNodes();
+
+  const dialogRef = useClickOutside<HTMLDivElement>(() => {
+    dispatch.ui.setShowNodesCmdPalette(!showNodesCmdPalette);
+  }, showNodesCmdPalette);
 
   const handleSelectItem = (item) => {
     const newNode = handleSelectNewNodeType({
@@ -140,26 +144,6 @@ const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
       dispatch.ui.setShowNodesCmdPalette(false);
     }
   };
-
-  // add click outside handler
-  React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dialogRef.current &&
-        !dialogRef.current.contains(event.target as HTMLElement)
-      ) {
-        dispatch.ui.setShowNodesCmdPalette(false);
-      }
-    };
-
-    if (showNodesCmdPalette) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [showNodesCmdPalette, dispatch.ui]);
 
   return (
     <Command.Dialog
