@@ -16,6 +16,7 @@ import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
 import React from 'react';
 import Search from '@tokens-studio/icons/Search.js';
 import styles from './index.module.css';
+import useClickOutside from '@/hooks/useClickOutside.js';
 
 export interface ICommandMenu {
   items: DropPanelStore;
@@ -91,6 +92,10 @@ const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
   const reactflow = useReactFlow();
   const selectAddedNodes = useSelectAddedNodes();
 
+  const dialogRef = useClickOutside<HTMLDivElement>(() => {
+    dispatch.ui.setShowNodesCmdPalette(!showNodesCmdPalette);
+  }, showNodesCmdPalette);
+
   const handleSelectItem = (item) => {
     const newNode = handleSelectNewNodeType({
       position: reactflow.screenToFlowPosition(cursorPositionRef.current),
@@ -142,6 +147,7 @@ const CommandMenu = ({ items, handleSelectNewNodeType }: ICommandMenu) => {
 
   return (
     <Command.Dialog
+      ref={dialogRef}
       open={showNodesCmdPalette}
       onOpenChange={() =>
         dispatch.ui.setShowNodesCmdPalette(!showNodesCmdPalette)
