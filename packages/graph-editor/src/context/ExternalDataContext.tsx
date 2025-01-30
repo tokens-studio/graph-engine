@@ -7,6 +7,7 @@ interface ExternalSetData {
 export interface EditorExternalSet {
   name: string;
   identifier: string;
+  containsThemeContextNode: boolean;
 }
 
 type ExternalDataContextType = {

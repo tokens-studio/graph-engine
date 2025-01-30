@@ -10,6 +10,10 @@ export const annotatedVariadicIndex = 'engine.index';
  * Identifies the current play state of the engine
  */
 export const annotatedPlayState = 'engine.playState';
+/**
+ * Identifies the presence of a theme context node in the graph
+ */
+export const annotatedContainsThemeContextNode = 'containsThemeContextNode';
 
 export const annotatedCapabilityPrefix = 'engine.capability.';
 

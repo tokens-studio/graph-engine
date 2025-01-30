@@ -7,6 +7,7 @@ import { Output } from '../programmatic/output.js';
 import { VERSION } from '../constants.js';
 import {
 	annotatedCapabilityPrefix,
+	annotatedContainsThemeContextNode,
 	annotatedId,
 	annotatedPlayState,
 	annotatedVariadicIndex,
@@ -414,7 +415,9 @@ export class Graph {
 		const annotations = {
 			...this.annotations,
 			//Ensure we update the version
-			[annotatedVersion]: VERSION
+			[annotatedVersion]: VERSION,
+			// store whether the graph contains a theme context node, this is used to determine if an external set can be loaded
+			[annotatedContainsThemeContextNode]: Object.values(this.nodes).some(x => x.factory.type === 'studio.tokens.design.themeContext')
 		};
 		//Make sure the playing state is not serialized. This would likely cause issues
 		delete annotations[annotatedPlayState];
