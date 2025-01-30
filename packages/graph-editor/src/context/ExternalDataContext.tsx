@@ -6,6 +6,7 @@ interface ExternalSetData {
 
 export interface EditorExternalSet {
   name: string;
+  type: 'Static' | 'Dynamic';
   identifier: string;
   containsThemeContextNode: boolean;
 }

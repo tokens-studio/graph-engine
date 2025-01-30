@@ -3,7 +3,10 @@ import { EditorExternalSet, IField } from '@tokens-studio/graph-editor';
 import { Input } from '@tokens-studio/graph-engine';
 import { observer } from 'mobx-react-lite';
 import { useLocalGraph } from '@tokens-studio/graph-editor/hooks/useLocalGraph.js';
+import EmptyPage from '@tokens-studio/icons/EmptyPage.js';
+import MathBook from '@tokens-studio/icons/MathBook.js';
 import React, { useEffect, useState } from 'react';
+
 
 export const ExternalTokenSetField = observer(({ port, readOnly }: IField) => {
 	const [tokenSets, setTokenSets] = useState<EditorExternalSet[]>([]);
@@ -52,11 +55,22 @@ export const ExternalTokenSetField = observer(({ port, readOnly }: IField) => {
 			<Select value={port.value || ''} onValueChange={onChange}>
 				<Select.Trigger value={port.value || ''} />
 				<Select.Content>
-					{tokenSets?.map((set: EditorExternalSet) => (
+					{tokenSets?.map((set: EditorExternalSet) => {
+						const nameParts = set.name.split('/');
+						const folderParts = nameParts.slice(0, -1);
+
+						return (
 						<Select.Item key={set.name} value={set.name}>
-							{set.name + (set.containsThemeContextNode ? ' ⚠️' : '')}
+							<Stack direction="row" gap={2}>
+								{set.type == 'Dynamic' ? <MathBook /> : <EmptyPage />}
+								<Stack direction="row">
+									{folderParts.map(part => <Text><b>{part}</b>/</Text>)}
+									<Text>{nameParts.at(-1)}</Text>
+									<Text>{set.containsThemeContextNode ? ' ⚠️' : ''}</Text>
+								</Stack>
+							</Stack>
 						</Select.Item>
-					))}
+					);})}
 				</Select.Content>
 			</Select>
 		</>
