@@ -10,6 +10,7 @@ import {
 	annotatedContainsThemeContextNode,
 	annotatedId,
 	annotatedPlayState,
+	annotatedReferencedDynamicSets,
 	annotatedVariadicIndex,
 	annotatedVersion
 } from '../annotations/index.js';
@@ -417,8 +418,14 @@ export class Graph {
 			//Ensure we update the version
 			[annotatedVersion]: VERSION,
 			// store whether the graph contains a theme context node, this is used to determine if an external set can be loaded
-			[annotatedContainsThemeContextNode]: Object.values(this.nodes).some(x => x.factory.type === 'studio.tokens.design.themeContext')
+			[annotatedContainsThemeContextNode]: Object.values(this.nodes).some(
+				node => node.factory.type === 'studio.tokens.design.themeContext'
+			),
+			[annotatedReferencedDynamicSets]: Object.values(this.nodes).filter(
+				node => node.factory.type === 'studio.tokens.design.externalSet'
+			).map(node => node.inputs['uri'].value).join(';')
 		};
+
 		//Make sure the playing state is not serialized. This would likely cause issues
 		delete annotations[annotatedPlayState];
 

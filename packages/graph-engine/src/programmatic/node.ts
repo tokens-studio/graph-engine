@@ -210,6 +210,7 @@ export class Node {
 		return this._graph?.loadResource(uri, this, data);
 	}
 	get isRunning() {
+		console.log('this.annotations[annotatedNodeRunning] =', this.annotations[annotatedNodeRunning]);
 		return !!this.annotations[annotatedNodeRunning];
 	}
 

@@ -8,7 +8,8 @@ export interface EditorExternalSet {
   name: string;
   type: 'Static' | 'Dynamic';
   identifier: string;
-  containsThemeContextNode: boolean;
+  containsThemeContextNode?: boolean;
+  referencedDynamicSets?: string;
 }
 
 type ExternalDataContextType = {

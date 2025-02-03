@@ -3,6 +3,7 @@ import NodeWrapper from '../wrapper/base.js';
 import React from 'react';
 
 export const LoadingNode = ({ id }) => {
+  console.log('loadingNode');
   return (
     <NodeWrapper id={id} title="loading...">
       <Stack

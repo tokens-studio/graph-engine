@@ -15,6 +15,11 @@ export const annotatedPlayState = 'engine.playState';
  */
 export const annotatedContainsThemeContextNode = 'containsThemeContextNode';
 
+/**
+ * Identifies all dynamic sets referenced by this graph
+ */
+export const annotatedReferencedDynamicSets = 'referencedDynamicSets';
+
 export const annotatedCapabilityPrefix = 'engine.capability.';
 
 /**
