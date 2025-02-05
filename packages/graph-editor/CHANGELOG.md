@@ -1,5 +1,11 @@
 # @tokens-studio/graph-editor
 
+## 4.4.0
+
+### Minor Changes
+
+- 315a7b0: Fix editor caching issue
+
 ## 4.3.13
 
 ### Patch Changes
