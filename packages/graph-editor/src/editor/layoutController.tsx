@@ -242,12 +242,12 @@ const layoutLoader = (tab: TabBase, props, ref): TabData => {
         cached: true,
         group: 'graph',
         title: 'Graph',
+        ...tab,
         content: (
           <ErrorBoundary fallback={<ErrorBoundaryContent />}>
             <GraphEditor {...props} id={MAIN_GRAPH_ID} ref={ref} />
           </ErrorBoundary>
         ),
-        ...tab,
       };
 
     case 'input':
@@ -256,12 +256,12 @@ const layoutLoader = (tab: TabBase, props, ref): TabData => {
         cached: true,
         group: 'popout',
         title: 'Inputs',
+        ...tab,
         content: (
           <ErrorBoundary fallback={<ErrorBoundaryContent />}>
             <Inputsheet />
           </ErrorBoundary>
         ),
-        ...tab,
       };
     case 'outputs':
       return {
@@ -269,25 +269,25 @@ const layoutLoader = (tab: TabBase, props, ref): TabData => {
         cached: true,
         group: 'popout',
         title: 'Outputs',
+        ...tab,
         content: (
           <ErrorBoundary fallback={<ErrorBoundaryContent />}>
             <OutputSheet />
           </ErrorBoundary>
         ),
-        ...tab,
       };
 
     case 'dropPanel':
       return {
         group: 'popout',
         title: 'Nodes',
+        ...tab,
         content: (
           <ErrorBoundary fallback={<ErrorBoundaryContent />}>
             <DropPanel />
           </ErrorBoundary>
         ),
         closable: true,
-        ...tab,
       };
 
     default:
