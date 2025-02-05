@@ -1,8 +1,5 @@
-import {
-	INodeDefinition,
-	Node,
-	StringSchema
-} from '@tokens-studio/graph-engine';
+import { EditorExternalSet } from '@tokens-studio/graph-editor/index.js';
+import { Graph, INodeDefinition, Node } from '@tokens-studio/graph-engine';
 import { TokenSchema } from '../schemas/index.js';
 import { arrayOf } from '../schemas/utils.js';
 
@@ -14,9 +11,6 @@ export default class ExternalTokensNode extends Node {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.addInput('uri', {
-			type: StringSchema
-		});
 		this.addOutput('tokenSet', {
 			type: arrayOf(TokenSchema)
 		});
@@ -24,16 +18,31 @@ export default class ExternalTokensNode extends Node {
 
 	async execute() {
 		const { uri } = this.getAllInputs();
+		const graph = this.getGraph();
+		const graphGeneratorId = (graph as Graph).annotations[
+			'graphGeneratorId'
+		] as string;
 
 		if (!uri) {
 			throw new Error('No uri specified');
 		}
 
-		const sets = await this.load(uri, { listSets: true });
+		const sets = await this.load('', { listSets: true });
 		const selectedSet = sets.find(set => set.name === uri);
+		const selectedSetData = this.annotations[
+			'selectedSetData'
+		] as EditorExternalSet;
 
 		if (selectedSet?.containsThemeContextNode) {
 			this.annotations['themeContextWarningSet'] = selectedSet.name;
+		}
+
+		if (selectedSetData) {
+			this.annotations['referencedDynamicSets'] = selectedSetData.generatorId;
+		}
+
+		if (graphGeneratorId) {
+			this.annotations['graphGeneratorId'] = graphGeneratorId;
 		}
 
 		const tokens = await this.load(uri);

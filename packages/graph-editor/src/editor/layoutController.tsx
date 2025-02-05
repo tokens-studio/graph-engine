@@ -15,6 +15,7 @@ import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
 import { ExternalLoaderProvider } from '@/context/ExternalLoaderContext.js';
 import { FindDialog } from '@/components/dialogs/findDialog.js';
 import { GraphEditor } from './graphEditor.js';
+import { GraphGeneratorIdProvider } from '@/context/GraphGeneratorIdContext.js';
 import { IconButton, Stack, Tooltip } from '@tokens-studio/ui';
 import { Inputsheet } from '@/components/panels/inputs/index.js';
 import { MAIN_GRAPH_ID } from '@/constants.js';
@@ -302,6 +303,7 @@ export const LayoutController = React.forwardRef<
   const {
     tabLoader,
     externalLoader,
+    graphGeneratorId,
     initialLayout,
     menuItems = defaultMenuDataFactory(),
   } = props;
@@ -340,24 +342,26 @@ export const LayoutController = React.forwardRef<
 
   return (
     <ExternalLoaderProvider externalLoader={externalLoader}>
-      <Stack
-        className="graph-editor"
-        direction="column"
-        style={{ height: '100%' }}
-      >
-        {props.showMenu && <MenuBar menu={menuItems} />}
-        <Tooltip.Provider>
-          <DockLayout
-            ref={registerDocker}
-            defaultLayout={defaultLayout as LayoutData}
-            groups={groups}
-            loadTab={loadTab}
-            style={{ flex: 1 }}
-            onLayoutChange={onLayoutChange}
-          />
-          <FindDialog />
-        </Tooltip.Provider>
-      </Stack>
+      <GraphGeneratorIdProvider graphGeneratorId={graphGeneratorId}>
+        <Stack
+          className="graph-editor"
+          direction="column"
+          style={{ height: '100%' }}
+        >
+          {props.showMenu && <MenuBar menu={menuItems} />}
+          <Tooltip.Provider>
+            <DockLayout
+              ref={registerDocker}
+              defaultLayout={defaultLayout as LayoutData}
+              groups={groups}
+              loadTab={loadTab}
+              style={{ flex: 1 }}
+              onLayoutChange={onLayoutChange}
+            />
+            <FindDialog />
+          </Tooltip.Provider>
+        </Stack>
+      </GraphGeneratorIdProvider>
     </ExternalLoaderProvider>
   );
 });

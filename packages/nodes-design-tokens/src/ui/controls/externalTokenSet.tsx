@@ -11,14 +11,18 @@ import WarningTriangle from '@tokens-studio/icons/WarningTriangle.js';
 
 export const ExternalTokenSetField = observer(({ port, readOnly }: IField) => {
 	const [tokenSets, setTokenSets] = useState<EditorExternalSet[]>([]);
-	const editorGraph = useLocalGraph();
-	const [previousValue, setPreviousValue] = useState(port.value || '');
+	const [prevSelectedSet, setPrevSelectedSet] = useState(port.value || '');
 	const [showForbidDialog, setShowForbidDialog] = useState(false);
 	const [showWarningDialog, setShowWarningDialog] = useState(false);
 	const [showBackLinkDialog, setShowBackLinkDialog] = useState(false);
+	const [themeContextWarningSet, setThemeContextWarningSet] = useState('');
 	const [selectedSet, setSelectedSet] = useState<EditorExternalSet | undefined>(
 		undefined
 	);
+
+	const editorGraph = useLocalGraph();
+	const graph = port.node.getGraph();
+	const graphGeneratorId = graph.annotations['graphGeneratorId'] as string;
 
 	useEffect(() => {
 		port.node.load('', { listSets: true }).then(sets => {
@@ -26,28 +30,44 @@ export const ExternalTokenSetField = observer(({ port, readOnly }: IField) => {
 		});
 	}, [editorGraph, port.node]);
 
-	// show warning dialog if a selected dynamic set now contains a Theme Context node
-	// (and didn't before when it was able to be selected)
+	// show warning dialog if the selected dynamic set now contains a Theme Context node
+	// (and didn't before, so it could be selected)
 	useEffect(() => {
 		if (port.node.annotations['themeContextWarningSet']) {
+			setThemeContextWarningSet(
+				port.node.annotations['themeContextWarningSet'] as string
+			);
 			setShowWarningDialog(true);
+
+			if (!readOnly) {
+				(port as Input).setValue('');
+			}
 		}
-	}, [port.node.annotations]);
+	}, [port.node.annotations, port, readOnly]);
 
 	const onChange = (value: string) => {
 		const _selectedSet = tokenSets.find(set => set.name === value);
 
 		if (_selectedSet?.containsThemeContextNode) {
-			// revert to previous selection
-			if (!readOnly) {
-				(port as Input).setValue(previousValue);
-			}
 			setShowForbidDialog(true);
+			if (!readOnly) {
+				// revert to previous selection
+				(port as Input).setValue(prevSelectedSet);
+			}
+		} else if (
+			_selectedSet &&
+			_selectedSet.referencedDynamicSets?.split(';').includes(graphGeneratorId)
+		) {
+			setShowBackLinkDialog(true);
+			if (!readOnly) {
+				// revert to previous selection
+				(port as Input).setValue(prevSelectedSet);
+			}
 		} else {
+			setPrevSelectedSet(value);
 			if (!readOnly) {
 				(port as Input).setValue(value);
 			}
-			setPreviousValue(value);
 		}
 
 		setSelectedSet(_selectedSet);
@@ -61,22 +81,37 @@ export const ExternalTokenSetField = observer(({ port, readOnly }: IField) => {
 			>
 				<Dialog.SimplePortal>
 					<Dialog.Title>
-						Welcome to the future of design systems!
+						You have reached the future of design systems! 😎
 					</Dialog.Title>
 					<Stack direction='column' gap={3}>
 						<Text>
 							There are currently technical limitations on the integration
-							platforms, but if you have reached this level, drop us a message!
-							😎
+							platforms, but since you are already here, drop us a message!
 						</Text>
 						<Separator />
 						<Text>
-							This set contains a <b>Theme Context</b> node, which may affect
-							token resolution.
+							This set <b>{selectedSet?.name}</b> contains a{' '}
+							<b>Theme Context</b> node which prevents token resolution. Please
+							select a different set or remove the <b>Theme Context</b> node
+							from <b>{selectedSet?.name}</b>.
 						</Text>
+					</Stack>
+				</Dialog.SimplePortal>
+			</Dialog>
+
+			<Dialog
+				open={showWarningDialog}
+				onOpenChange={open => setShowWarningDialog(open)}
+			>
+				<Dialog.SimplePortal>
+					<Dialog.Title>Warning</Dialog.Title>
+					<Stack direction='column' gap={3}>
 						<Text>
-							Please select a different set or remove the <b>Theme Context</b>{' '}
-							node from <b>{selectedSet?.name}</b>.
+							The selected external set <b>{themeContextWarningSet}</b> contains
+							a <b>Theme Context</b> node. This is currently not allowed, so the
+							set has been deselected. If you need to reference{' '}
+							<b>{themeContextWarningSet}</b>, first remove the{' '}
+							<b>Theme Context</b> node from it.
 						</Text>
 					</Stack>
 				</Dialog.SimplePortal>
@@ -93,31 +128,22 @@ export const ExternalTokenSetField = observer(({ port, readOnly }: IField) => {
 							Cannot reference <b>{selectedSet?.name}</b> because it already
 							references this graph, which would create a circular reference.
 						</Text>
-						<Separator />
 					</Stack>
 				</Dialog.SimplePortal>
 			</Dialog>
 
-			<Dialog
-				open={showWarningDialog}
-				onOpenChange={open => setShowWarningDialog(open)}
+			<Select
+				value={port.value || ''}
+				onValueChange={(value: string) => {
+					const set = tokenSets.find(s => s.name === value);
+
+					if (set) {
+						// store the full object in the node's annotations for later use
+						port.node.annotations['selectedSetData'] = set;
+						onChange(value);
+					}
+				}}
 			>
-				<Dialog.SimplePortal>
-					<Dialog.Title>Warning</Dialog.Title>
-					<Stack direction='column' gap={3}>
-						<Text>
-							The selected dynamic set <b>{selectedSet?.name}</b> now contains a{' '}
-							<b>Theme Context</b> node. This is not currently allowed, so the
-							set has been deselected. If you need to reference{' '}
-							<b>{selectedSet?.name}</b>, first remove the <b>Theme Context</b>{' '}
-							node from it.
-						</Text>
-						<Separator />
-					</Stack>
-				</Dialog.SimplePortal>
-			</Dialog>
-
-			<Select value={port.value || ''} onValueChange={onChange}>
 				<Select.Trigger value={port.value || 'Select token set'} />
 				<Select.Content>
 					{tokenSets?.map((set: EditorExternalSet) => {
@@ -125,7 +151,7 @@ export const ExternalTokenSetField = observer(({ port, readOnly }: IField) => {
 						const folderParts = nameParts.slice(0, -1);
 
 						return (
-							<Select.Item key={set.name} value={set.name}>
+							<Select.Item key={set.generatorId} value={set.name}>
 								<Stack direction='row' gap={2}>
 									{set.type == 'Dynamic' ? <MathBook /> : <EmptyPage />}
 									<Stack direction='row'>
@@ -135,7 +161,9 @@ export const ExternalTokenSetField = observer(({ port, readOnly }: IField) => {
 											</Text>
 										))}
 										<Text>{nameParts.at(-1)}</Text>
-										{set.referencedDynamicSets?.split(';').includes(set.name) ? (
+										{set.referencedDynamicSets
+											?.split(';')
+											.includes(graphGeneratorId) ? (
 											<Stack direction='row'>
 												<Link
 													style={{ marginLeft: 'var(--component-spacing-xs)' }}

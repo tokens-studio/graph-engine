@@ -26,7 +26,8 @@ function GraphContextProvider({
 }
 
 function useLocalGraph(): Graph {
-  return useContext(GraphContext).graph;
+  const graphContext = useContext(GraphContext);
+  return graphContext.graph;
 }
 
 export { GraphContextProvider, useLocalGraph };

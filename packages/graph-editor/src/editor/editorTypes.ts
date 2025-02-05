@@ -94,6 +94,11 @@ export interface EditorProps {
   typeColors?: Record<string, { color: string; backgroundColor: string }>;
 
   initialGraph?: Graph;
+
+  /**
+   * The generator id of the graph
+   */
+  graphGeneratorId?: string;
 }
 
 export interface GraphEditorProps {
@@ -112,6 +117,7 @@ export interface GraphEditorProps {
   nodeTypes?: Record<string, typeof GraphNode>;
   children?: React.ReactNode;
   initialGraph?: SerializedGraph;
+  graphGeneratorId?: string;
 }
 
 export type ImperativeEditorRef = {

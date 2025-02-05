@@ -84,6 +84,7 @@ import {
 import { duplicateNodes } from './actions/duplicate.js';
 import { useContextMenu } from 'react-contexify';
 import { useExternalLoader } from '@/context/ExternalLoaderContext.js';
+import { useGraphGeneratorId } from '@/context/GraphGeneratorIdContext.js';
 import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
 import { useSelector } from 'react-redux';
 import { useSetCurrentNode } from '@/hooks/useSetCurrentNode.js';
@@ -117,6 +118,7 @@ export const EditorApp = React.forwardRef<
   const { id, customNodeUI = {}, children } = props;
 
   const externalLoader = useExternalLoader();
+  const graphGeneratorId = useGraphGeneratorId();
   const showMinimap = useSelector(showMinimapSelector);
   const capabilities = useSelector(capabilitiesSelector);
   const contextMenus = useSelector(contextMenuSelector);
@@ -144,6 +146,12 @@ export const EditorApp = React.forwardRef<
   useEffect(() => {
     graph.externalLoader = externalLoader;
   }, [graph, externalLoader]);
+
+  // update the generator ID
+  useEffect(() => {
+    console.log('GRAPH graphGeneratorId', graphGeneratorId);
+    graph.annotations['graphGeneratorId'] = graphGeneratorId;
+  }, [graph.annotations, graphGeneratorId]);
 
   const iconLookup = useMemo(() => {
     return panelItems.groups.reduce((acc, group) => {

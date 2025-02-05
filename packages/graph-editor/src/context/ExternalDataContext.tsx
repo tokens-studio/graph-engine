@@ -10,6 +10,7 @@ export interface EditorExternalSet {
   identifier: string;
   containsThemeContextNode?: boolean;
   referencedDynamicSets?: string;
+  generatorId: string;
 }
 
 type ExternalDataContextType = {
