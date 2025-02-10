@@ -1,5 +1,5 @@
 import { AllSchemas, Input } from '@tokens-studio/graph-engine';
-import { Button, Select, Stack } from '@tokens-studio/ui';
+import { Button, Checkbox, Label, Select, Stack } from '@tokens-studio/ui';
 import { IField } from './interface.js';
 import { JSONTree } from 'react-json-tree';
 import { observer } from 'mobx-react-lite';
@@ -8,14 +8,23 @@ import React from 'react';
 
 export const AnyField = observer(({ port, readOnly }: IField) => {
   const [inputType, setInputType] = React.useState(port.type.$id!);
+  const [asArray, setAsArray] = React.useState(port.type.type === 'array');
 
   const onClick = () => {
     const schema = AllSchemas.find((x) => x.$id === inputType);
     if (!schema) {
       return;
     }
-    (port as Input).setValue(schema.default, {
-      type: schema,
+    let type = { ...schema };
+    if (asArray) {
+      type = {
+        type: 'array',
+        items: type,
+        default: [],
+      };
+    }
+    (port as Input).setValue(asArray ? [] : schema.default, {
+      type,
     });
     port.annotations[resetable] = true;
   };
@@ -38,6 +47,15 @@ export const AnyField = observer(({ port, readOnly }: IField) => {
           ))}
         </Select.Content>
       </Select>
+
+      <Stack gap={3} align="center">
+        <Label>Is an array?</Label>
+        <Checkbox
+          onCheckedChange={(v) => setAsArray(Boolean(v))}
+          checked={asArray}
+        />
+      </Stack>
+
       <Stack direction="row" justify="end">
         <Button emphasis="high" onClick={onClick}>
           Set type
