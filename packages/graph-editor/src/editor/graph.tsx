@@ -701,6 +701,14 @@ export const EditorApp = React.forwardRef<
     nodeLookup: fullNodeLookup,
   });
 
+  const onMouseDownCapture = (event) => {
+    if (event.button === 1) {
+      // MMB pan without selecting nodes or edges
+      event.preventDefault();
+      return false;
+    }
+  };
+
   const copyNodes = copyNodeAction(reactFlowInstance, graph, fullNodeLookup);
   const selectAddedNodes = useSelectAddedNodes();
 
@@ -757,6 +765,7 @@ export const EditorApp = React.forwardRef<
               ref={reactFlowWrapper}
               elevateEdgesOnSelect={true}
               nodes={nodes}
+              onMouseDownCapture={onMouseDownCapture}
               onNodesChange={managedNodesChange}
               onEdgesChange={managedEdgeChange}
               onEdgeDoubleClick={onEdgeDblClick}
