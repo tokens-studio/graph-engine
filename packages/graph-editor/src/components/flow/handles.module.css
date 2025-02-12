@@ -2,13 +2,17 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: var(--component-spacing-2xs) var(--component-spacing-md);
-  margin-bottom: var(--component-spacing-xs);
+  padding: 0 var(--component-spacing-md);
+  min-height: var(--component-spacing-md);
 
-  &:not(:has(.handleText, span)) {
-    margin-bottom: var(--component-spacing-lg);
+  & + & {
+    margin-top: var(--component-spacing-md);
   }
 
+  &:last-child:not(:first-child) {
+    margin-bottom: var(--component-spacing-md);
+  }
+  
   &.collapsed {
     height: 0;
     overflow: hidden;
