@@ -42,6 +42,11 @@ export default class ArraySubgraph<T, V> extends Node {
 		const existing = !!props.innerGraph;
 		this._innerGraph = props.innerGraph || new Graph();
 
+		// Automatically propagate the parent’s loader, if any
+		if (props.graph?.externalLoader) {
+			this._innerGraph.externalLoader = props.graph.externalLoader;
+		}
+
 		let input: InputNode;
 
 		if (!existing) {

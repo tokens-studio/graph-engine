@@ -33,6 +33,11 @@ export default class SubgraphNode extends Node {
 		const existing = !!props.innergraph;
 		this._innerGraph = props.innergraph || new Graph();
 
+		// Automatically propagate the parent’s loader, if any
+		if (props.graph?.externalLoader) {
+			this._innerGraph.externalLoader = props.graph.externalLoader;
+		}
+
 		//Pass capabilities down
 		this._innerGraph.capabilities = this.getGraph().capabilities;
 
