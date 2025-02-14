@@ -1,0 +1,9 @@
+dist/**
+coverage/**
+storybook-static/**
+docs
+site
+cypress
+cli
+.rollup.cache
+.turbo

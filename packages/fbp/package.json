@@ -1,0 +1,73 @@
+{
+  "name": "@tokens-studio/fbp-server-base",
+  "version": "0.0.1",
+  "description": "FBP wrapper for the graph engine",
+  "license": "MIT",
+  "author": "andrew@hyma.io",
+  "type": "module",
+  "exports": {
+    "./*": {
+      "import": "./dist/*",
+      "require": "./dist/*",
+      "types": "./dist/*"
+    },
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "docs": "typedoc",
+    "format": "npm run format:eslint && npm run format:prettier",
+    "format:eslint": "eslint --ext .tsx,.ts,.js,.html . --fix",
+    "format:prettier": "prettier \"**/*.{ts,js,md,json}\" --write",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "release": "npm run build && changeset publish",
+    "test": "jest --passWithNoTests"
+  },
+  "sideEffects": false,
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "debounce": "^2.1.0",
+    "fbp-client": "^0.4.3",
+    "flowtrace": "^0.1.10",
+    "mobx": "^6.12.5"
+  },
+  "peerDependencies": {
+    "@tokens-studio/graph-engine": "*"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.21.5",
+    "@changesets/cli": "2.26.0",
+    "@jest/globals": "^29.5.0",
+    "@tokens-studio/eslint-custom-config": "*",
+    "@tokens-studio/graph-editor": "*",
+    "@tokens-studio/graph-engine": "*",
+    "@types/jest": "28.1.0",
+    "@types/node": "^18.15.11",
+    "eslint": "8.57.0",
+    "jest": "28.1.0",
+    "jest-junit": "^15.0.0",
+    "ts-jest": "28.0.3",
+    "ts-jest-resolver": "^2.0.1",
+    "ts-node": "^10.9.1",
+    "tsup": "^8.0.2",
+    "typedoc": "^0.24.7",
+    "typescript": "4.8.4"
+  },
+  "keywords": [
+    "studio",
+    "tokens",
+    "ui"
+  ],
+  "jsnext:main": "./dist/index.js"
+}
