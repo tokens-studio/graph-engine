@@ -26,7 +26,8 @@ export default class ExternalTokensNode extends Node {
 		const { uri } = this.getAllInputs();
 
 		if (!uri) {
-			throw new Error('No uri specified');
+			this.outputs.tokenSet.set([]);
+			return;
 		}
 
 		const tokens = await this.load(uri);
