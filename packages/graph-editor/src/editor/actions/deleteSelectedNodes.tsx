@@ -14,14 +14,16 @@ export const deleteSelectedNodes = (
   trigger: (options: ToastOptions) => void,
 ) => {
   // Delete selected edges
-  const edges = reactFlowInstance.getEdges().filter((x) => x.selected);
+  const edges =
+    reactFlowInstance.getEdges().filter((node) => node.selected) || [];
   reactFlowInstance.deleteElements({ edges });
 
   // Get and delete selected nodes
-  const selectedNodes = reactFlowInstance
-    .getNodes()
-    .filter((x) => x.selected)
-    .map((x) => x.id);
+  const selectedNodes =
+    reactFlowInstance
+      .getNodes()
+      .filter((node) => node.selected)
+      .map((node) => node.id) || [];
 
   selectedNodes.forEach((id) => {
     const edgeNode = graph.getNode(id);

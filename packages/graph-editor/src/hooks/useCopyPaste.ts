@@ -67,17 +67,25 @@ function useCopyPaste() {
       try {
         const { nodes: sourceNodes, edges: sourceEdges } = JSON.parse(text);
 
-        // get target position in flow coordinates
-        const flowContainer = document.querySelector('.react-flow');
-        const flowBounds = flowContainer?.getBoundingClientRect() || {
-          width: window.innerWidth,
-          height: window.innerHeight,
-        };
+        if (!Array.isArray(sourceNodes) || !Array.isArray(sourceEdges)) {
+          toast({
+            title: 'Error',
+            description: 'Invalid clipboard data',
+          });
+          return;
+        }
 
-        const targetPosition = reactFlowInstance.project({
-          x: flowBounds.width / 2,
-          y: flowBounds.height / 2,
+        // get the center of the visible area in flow coordinates
+        const topLeft = reactFlowInstance.screenToFlowPosition({ x: 0, y: 0 });
+        const bottomRight = reactFlowInstance.screenToFlowPosition({
+          x: window.innerWidth,
+          y: window.innerHeight,
         });
+
+        const viewportCenter = {
+          x: (topLeft.x + bottomRight.x) / 2,
+          y: (topLeft.y + bottomRight.y) / 2,
+        };
 
         // calculate bounding box of source nodes (these are already in flow coordinates)
         const pasteBounds = sourceNodes.reduce(
@@ -86,13 +94,13 @@ function useCopyPaste() {
             minY: Math.min(acc.minY, node.annotations?.['ui.position.y'] || 0),
             maxX: Math.max(
               acc.maxX,
-              node.annotations?.['ui.position.x'] ||
-                0 + (node.annotations?.['ui.width'] || 200),
+              (node.annotations?.['ui.position.x'] || 0) +
+                (node.annotations?.['ui.width'] || 200),
             ),
             maxY: Math.max(
               acc.maxY,
-              node.annotations?.['ui.position.y'] ||
-                0 + (node.annotations?.['ui.height'] || 100),
+              (node.annotations?.['ui.position.y'] || 0) +
+                (node.annotations?.['ui.height'] || 100),
             ),
           }),
           {
@@ -103,10 +111,10 @@ function useCopyPaste() {
           },
         );
 
-        // Calculate offset from bounding box center to target position
+        // Calculate offset to center the pasted nodes
         const offset = {
-          x: targetPosition.x - (pasteBounds.minX + pasteBounds.maxX) / 2,
-          y: targetPosition.y - (pasteBounds.minY + pasteBounds.maxY) / 2,
+          x: viewportCenter.x - (pasteBounds.minX + pasteBounds.maxX) / 2,
+          y: viewportCenter.y - (pasteBounds.minY + pasteBounds.maxY) / 2,
         };
 
         // create new nodes with updated positions and IDs
