@@ -2,6 +2,7 @@ import colorToString from './colorToString.js';
 import contrast from './contrast.js';
 import contrasting from './contrasting.js';
 import contrastingAlpha from './contrastingAlpha.js';
+import contrastingFromArray from './contrastingFromArray.js';
 import convert from './convert.js';
 import create from './create.js';
 import darken from './darken.js';
@@ -23,6 +24,7 @@ import wheel from './wheel.js';
 export const nodes = [
 	contrast,
 	contrasting,
+	contrastingFromArray,
 	contrastingAlpha,
 	create,
 	convert,
