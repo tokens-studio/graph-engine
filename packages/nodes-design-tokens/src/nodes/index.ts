@@ -4,6 +4,7 @@ import CreateBorderNode from './createBorder.js';
 import CreateBorderTokenNode from './createBorderToken.js';
 import CreateBoxShadowNode from './createBoxShadow.js';
 import CreateBoxShadowTokenNode from './createBoxShadowToken.js';
+import CreateReferenceNode from './createReference.js';
 import CreateTypographyNode from './createTypography.js';
 import CreateTypographyTokenNode from './createTypographyToken.js';
 import DestructNode from './destructToken.js';
@@ -39,6 +40,7 @@ export const nodes: (typeof Node)[] = ([] as (typeof Node)[]).concat(
 	CreateBorderTokenNode,
 	CreateTypographyTokenNode,
 	create,
+	CreateReferenceNode,
 	DestructNode,
 	InlineTokenNode,
 	FlattenNode,
