@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 7.2.0
+
+### Minor Changes
+
+- 94c6d31: We added the Create Reference node which makes it easier to create a reference string from other strings, you are able to just add a string per segment and it wraps it in {} and adds the . as seperator
+
 ## 7.1.1
 
 ### Patch Changes
