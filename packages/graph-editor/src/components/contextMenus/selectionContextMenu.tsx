@@ -3,11 +3,14 @@ import { Item, Menu, Separator } from 'react-contexify';
 import { Node, getRectOfNodes, useReactFlow, useStoreApi } from 'reactflow';
 import { NodeTypes } from '../flow/types.js';
 import { deletable } from '@/annotations/index.js';
+import { deleteSelectedNodes } from '@/editor/actions/deleteSelectedNodes.js';
 import { getId } from '../flow/utils.js';
 import { useAction } from '@/editor/actions/provider.js';
 import { useLocalGraph } from '@/hooks/index.js';
+import { useToast } from '@/hooks/useToast.js';
 import { v4 as uuid } from 'uuid';
 import React, { useCallback } from 'react';
+import useCopyPaste from '@/hooks/useCopyPaste.js';
 
 export type INodeContextMenuProps = {
   id: string;
@@ -21,7 +24,10 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
   const graph = useLocalGraph();
   const store = useStoreApi();
   const createNode = useAction('createNode');
+  const deleteNode = useAction('deleteNode');
   const duplicateNodes = useAction('duplicateNodes');
+  const { copySelectedNodes } = useCopyPaste();
+  const trigger = useToast();
 
   //Note that we use a filter here to prevent getting nodes that have a parent node, ie are part of a group
   const selectedNodes = nodes.filter(
@@ -295,16 +301,28 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
     //We then need to find all the downstream nodes from those nodes for the output
   }, [createNode, graph, reactFlowInstance, selectedNodeIds, selectedNodes]);
 
+  const onCut = () => {
+    copySelectedNodes();
+    deleteSelectedNodes(reactFlowInstance, graph, deleteNode, trigger);
+  };
+
+  const onCopy = () => {
+    copySelectedNodes();
+  };
+
   const onDuplicate = () => {
     duplicateNodes(selectedNodeIds);
   };
 
   return (
     <Menu id={id}>
-      <Item onClick={onGroup}>Create group</Item>
-      <Item onClick={onCreateSubgraph}>Create Subgraph</Item>
+      <Item onClick={onCut}>Cut</Item>
+      <Item onClick={onCopy}>Copy</Item>
       <Separator />
       <Item onClick={onDuplicate}>Duplicate</Item>
+      <Separator />
+      <Item onClick={onGroup}>Create group</Item>
+      <Item onClick={onCreateSubgraph}>Create Subgraph</Item>
     </Menu>
   );
 };

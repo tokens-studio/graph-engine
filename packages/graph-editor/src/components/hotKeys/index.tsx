@@ -1,6 +1,5 @@
 import { HotKeys as HotKeysComp } from 'react-hotkeys';
-import { SerializedNode } from '@/types/serializedNode.js';
-import { annotatedDeleteable } from '@tokens-studio/graph-engine';
+import { deleteSelectedNodes } from '@/editor/actions/deleteSelectedNodes.js';
 import {
   inlineTypes,
   inlineValues,
@@ -17,10 +16,11 @@ import { useReactFlow } from 'reactflow';
 import { useSelector } from 'react-redux';
 import { useToast } from '@/hooks/useToast.js';
 import React from 'react';
-import copy from 'copy-to-clipboard';
+import useCopyPaste from '@/hooks/useCopyPaste.js';
 
 export const keyMap = {
   AUTO_LAYOUT: 'ctrl+alt+f',
+  CUT: ['command+x', 'ctrl+x'],
   COPY: ['command+c', 'ctrl+c'],
   PASTE: ['command+v', 'ctrl+v'],
   DELETE: ['delete', 'del', 'backspace'],
@@ -85,7 +85,7 @@ export const useHotkeys = () => {
   const inlineValuesValue = useSelector(inlineValues);
   const duplicateNodes = useAction('duplicateNodes');
   const deleteNode = useAction('deleteNode');
-  const copyNodes = useAction('copyNodes');
+  const { copySelectedNodes, pasteFromClipboard } = useCopyPaste();
   const layout = useAutoLayout();
 
   const dispatch = useDispatch();
@@ -134,64 +134,22 @@ export const useHotkeys = () => {
       AUTO_LAYOUT: layout,
       DELETE: (event) => {
         event.preventDefault();
-
-        const edges = reactFlowInstance.getEdges().filter((x) => x.selected);
-
-        reactFlowInstance.deleteElements({ edges });
-
-        const selectedNodes = reactFlowInstance
-          .getNodes()
-          .filter((x) => x.selected)
-          .map((x) => x.id);
-
-        selectedNodes.forEach((id) => {
-          const edgeNode = graph.getNode(id);
-          if (edgeNode?.annotations[annotatedDeleteable] === false) {
-            trigger({
-              title: 'Node not deletable',
-              description: `Node ${edgeNode.nodeType()} is not deletable`,
-            });
-            return;
-          }
-          deleteNode(id);
-        });
+        deleteSelectedNodes(reactFlowInstance, graph, deleteNode, trigger);
+      },
+      CUT: (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        copySelectedNodes();
+        deleteSelectedNodes(reactFlowInstance, graph, deleteNode, trigger);
       },
       COPY: (event) => {
         event.stopPropagation();
         event.preventDefault();
-
-        const nodes = reactFlowInstance
-          .getNodes()
-          .filter((x) => x.selected)
-          .map(
-            (x) =>
-              ({
-                //Its possible we are attempting to duplicate a note that does not exist in the engine
-                engine: graph.getNode(x.id)?.serialize(),
-
-                editor: reactFlowInstance.getNode(x.id),
-              }) as SerializedNode,
-          );
-        //get the values from the graph
-        const values = {
-          nodes,
-        };
-
-        copy(JSON.stringify(values, null, 4), {
-          debug: true,
-        });
+        copySelectedNodes();
       },
-      PASTE: async (event) => {
+      PASTE: (event) => {
         event.preventDefault();
-        try {
-          const text = await navigator.clipboard.readText();
-          const values = JSON.parse(text);
-          const nodes = values.nodes as SerializedNode[];
-
-          await copyNodes(nodes);
-        } catch (e) {
-          console.error(e);
-        }
+        pasteFromClipboard();
       },
       SELECT_ALL: (event) => {
         event.stopPropagation();
@@ -250,7 +208,6 @@ export const useHotkeys = () => {
     }),
 
     [
-      copyNodes,
       deleteNode,
       dispatch.settings,
       duplicateNodes,

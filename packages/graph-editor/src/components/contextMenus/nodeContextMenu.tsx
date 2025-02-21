@@ -1,12 +1,14 @@
 import { Graph } from 'graphlib';
 import { Item, Menu, Separator } from 'react-contexify';
 import { Node, ReactFlowInstance, useReactFlow } from 'reactflow';
+import { deleteSelectedNodes } from '@/editor/actions/deleteSelectedNodes.js';
 import { useAction } from '@/editor/actions/provider.js';
 import { useCanDeleteNode } from '@/hooks/useCanDeleteNode.js';
 import { useLocalGraph } from '@/hooks/index.js';
 import { useToast } from '@/hooks/useToast.js';
 import React, { useCallback } from 'react';
 import clsx from 'clsx';
+import useCopyPaste from '@/hooks/useCopyPaste.js';
 
 export interface INodeContextMenuProps {
   id: string;
@@ -72,6 +74,8 @@ export const NodeContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
   const reactFlowInstance = useReactFlow();
   const duplicateNodes = useAction('duplicateNodes');
   const graph = useLocalGraph();
+  const { copySelectedNodes } = useCopyPaste();
+  const deleteNode = useAction('deleteNode');
 
   const isDeletable = useCanDeleteNode(nodes?.[0]?.id);
 
@@ -144,6 +148,15 @@ export const NodeContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
     );
   }, [reactFlowInstance]);
 
+  const onCut = () => {
+    copySelectedNodes();
+    deleteSelectedNodes(reactFlowInstance, graph, deleteNode, trigger);
+  };
+
+  const onCopy = () => {
+    copySelectedNodes();
+  };
+
   const onDuplicate = useCallback(() => {
     duplicateNodes(nodes.map((x) => x.id));
   }, [duplicateNodes, nodes]);
@@ -161,7 +174,11 @@ export const NodeContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
 
   return (
     <Menu id={id}>
+      <Item onClick={onCut}>Cut</Item>
+      <Item onClick={onCopy}>Copy</Item>
+      <Separator />
       <Item onClick={onDuplicate}>Duplicate</Item>
+      <Separator />
       <Item onClick={focus}>Focus</Item>
       <Item onClick={forceExecution}>Force Execution</Item>
       <Separator />
