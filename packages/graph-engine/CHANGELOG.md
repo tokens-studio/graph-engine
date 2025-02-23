@@ -1,5 +1,16 @@
 # @tokens-studio/graph-engine
 
+## 4.6.0
+
+### Minor Changes
+
+- a4dbb41: We added a new node to get the contrasting color from an array of colors on a specified contrast algorithm.
+
+### Patch Changes
+
+- 016ec77: Use external loader in subgraphs (ThemeNode and Static sets will now load in subgraphs)
+- d27a09d: Added array option to Constant node
+
 ## 4.5.0
 
 ### Minor Changes
