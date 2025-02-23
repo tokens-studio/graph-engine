@@ -9,6 +9,7 @@ import { useLocalGraph } from '@/context/graph.js';
 import { useReactFlow } from 'reactflow';
 import { useSelector } from 'react-redux';
 import React, { useCallback } from 'react';
+import useCopyPaste from '@/hooks/useCopyPaste.js';
 
 export interface IPaneContextMenu<T = unknown> {
   id: string;
@@ -22,6 +23,7 @@ export const PaneContextMenu = <T = unknown,>({ id }: IPaneContextMenu<T>) => {
   const dispatch = useDispatch();
   const graph = useLocalGraph();
   const createNode = useAction('createNode');
+  const { pasteFromClipboard } = useCopyPaste();
 
   const handleTriggerAddNode = useCallback(() => {
     dispatch.ui.setShowNodesCmdPalette(true);
@@ -62,9 +64,15 @@ export const PaneContextMenu = <T = unknown,>({ id }: IPaneContextMenu<T>) => {
     clear(reactFlowInstance, graph);
   }, [graph, reactFlowInstance]);
 
+  const handlePaste = () => {
+    pasteFromClipboard();
+  };
+
   const layout = useAutoLayout();
   return (
     <Menu id={id}>
+      <ContextMenuItem onClick={handlePaste}>Paste</ContextMenuItem>
+      <Separator />
       <ContextMenuItem onClick={handleTriggerAddNode}>Add node</ContextMenuItem>
       <ContextMenuItem onClick={handleAddNote}>Add note</ContextMenuItem>
       <Separator />
