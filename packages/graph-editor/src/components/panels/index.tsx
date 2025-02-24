@@ -1,5 +1,4 @@
 export * from './alignment/index.js';
-export * from './debugger/index.js';
 export * from './dropPanel/index.js';
 export * from './graph/index.js';
 export * from './inputs/index.js';

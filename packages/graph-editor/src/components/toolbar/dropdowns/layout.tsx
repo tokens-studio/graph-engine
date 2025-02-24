@@ -68,9 +68,6 @@ export const LayoutDropdown = () => {
           <DropdownMenu.Item onSelect={() => onClick('legend')}>
             Legend
           </DropdownMenu.Item>
-          <DropdownMenu.Item onSelect={() => onClick('debugger')}>
-            Debugger
-          </DropdownMenu.Item>
           <DropdownMenu.Item onSelect={() => onClick('dropPanel')}>
             Nodes
           </DropdownMenu.Item>

@@ -1,5 +1,4 @@
 import { AlignmentPanel } from '../panels/alignment/index.js';
-import { DebugPanel } from '../panels/debugger/index.js';
 import { DropPanel } from '../panels/dropPanel/index.js';
 import { GraphPanel } from '../panels/graph/index.js';
 import { ImperativeEditorRef } from '@/editor/editorTypes.js';
@@ -259,12 +258,6 @@ export const defaultMenuDataFactory = (): Menu =>
             id: 'alignment',
             title: 'Alignment + Distribution',
             content: <AlignmentPanel />,
-          }),
-          windowButton({
-            name: 'debugger',
-            id: 'debugger',
-            title: 'Debugger',
-            content: <DebugPanel />,
           }),
           windowButton({
             name: 'settings',

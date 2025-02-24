@@ -1,0 +1,38 @@
+{
+    "summary":"Converts colors to perceived colors",
+    "description": "Converts provided colors to the colors as perceived by the specified color blindness type. The output is a hex color string. The color blindness types include protanopia, protanomaly, deuteranopia, deuteranomaly, tritanopia, tritanomaly, achromatopsia, and achromatomaly. The output is a hex color string.",
+    "title": "Color Blindness",
+    "type": "studio.tokens.accessibility.colorBlindness",
+    "inputs": [
+        {
+            "name":"color",
+            "description": "The color to convert",
+            "type": {
+                "name": "Color"
+            },
+            "requiredConnection": true
+        }
+    ],
+    "outputs": {
+        "value": {
+            "type": {
+                "channels": [
+                    0,
+                    0,
+                    0
+                ],
+                "space": "srgb"
+            }
+        }
+    },
+    "version": "1.0.0",
+    "changelog":[],
+    "licence": "MIT",
+    "author": {
+        "name": "SorsOps"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tokens-studio/graph-engine"
+    }
+}

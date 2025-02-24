@@ -1,6 +1,6 @@
-import { Annotated } from './annotated.js';
-import { SerializedEdge } from '../index.js';
+import { Annotated } from '../types/annotated.js';
 import { nanoid as uuid } from 'nanoid';
+import type { SerializedEdge } from '../index.js';
 
 /**
  * Additional data stored on an edge
@@ -33,9 +33,21 @@ export const cloneEdge = (edge: Edge): Edge => {
 
 export class Edge extends Annotated {
 	id: string;
+	/**
+	 * The ID of the source node, ie starting node
+	 */
 	source: string;
+	/**
+	 * The name of the port on the source node
+	 */
 	sourceHandle: string;
+	/**
+	 * The ID of the target node, ie ending node
+	 */
 	target: string;
+	/**
+	 * The name of the port on the target node
+	 */
 	targetHandle: string;
 
 	constructor(props: IEdge) {

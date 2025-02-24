@@ -1,14 +1,13 @@
 import { GraphSchema } from '../schemas/index.js';
 import { Input } from './input.js';
-import { Node } from './node.js';
 import { Port } from './port.js';
 import { action, makeObservable } from 'mobx';
+import type { Node } from './node.js';
 
 export interface IOutputProps<T = any> {
 	name: string;
 	type: GraphSchema;
 	value: T;
-	visible: boolean;
 	node: Node;
 }
 
@@ -19,7 +18,7 @@ export interface ConnectionStatus {
 	valid: boolean;
 }
 
-export class Output<T = any> extends Port<T> {
+export class Output<T = Node> extends Port<T> {
 	constructor(props: IOutputProps<T>) {
 		super(props);
 		makeObservable(this, {
@@ -57,7 +56,6 @@ export class Output<T = any> extends Port<T> {
 			name: this.name,
 			type: this.type,
 			value: this._value,
-			visible: this.visible,
 			node: this.node
 		});
 

@@ -1,7 +1,7 @@
-import { Annotated } from './annotated.js';
+import { Annotated } from '../types/annotated.js';
 import { Edge } from './edge.js';
-import { Node } from './nodes/node.js';
 import { action, computed, makeObservable, observable } from 'mobx';
+import type { Node } from './node.js';
 
 export interface IPort<T extends Node> {
 	name: string;

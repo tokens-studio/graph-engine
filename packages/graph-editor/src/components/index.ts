@@ -3,7 +3,6 @@ export * from './commandPalette/index.js';
 export * from './contextMenus/index.js';
 export * from './controls/index.js';
 export * from './curveEditor/index.js';
-export * from './debugger/index.js';
 export * from './dialogs/findDialog.js';
 export * from './flow/index.js';
 export * from './hotKeys/index.js';

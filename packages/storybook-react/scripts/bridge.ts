@@ -53,7 +53,7 @@ wss.on('connection', function connection(ws) {
 		);
 
 		const input = Object.values(graph.nodes).find(
-			x => x.nodeType() == 'studio.tokens.generic.input'
+			x => x.type == 'studio.tokens.generic.input'
 		);
 
 		if (!input) {

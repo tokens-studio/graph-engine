@@ -60,7 +60,6 @@
     "@tokens-studio/tokens": "^0.3.7",
     "@tokens-studio/types": "^0.5.1",
     "@tokens-studio/ui": "^1.0.13",
-    "@xzdarcy/react-timeline-editor": "^0.1.9",
     "array-move": "^4.0.0",
     "clsx": "^2.1.1",
     "cmdk": "^0.2.0",

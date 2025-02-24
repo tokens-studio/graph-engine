@@ -1,16 +1,14 @@
 import { GraphSchema } from '../schemas/index.js';
-import { Node } from './node.js';
 import { Port } from './port.js';
 import { SerializedInput } from '../graph/types.js';
-import { TypeDefinition } from './node.js';
 import { action, makeObservable } from 'mobx';
 import getDefaults from 'json-schema-defaults-esm';
+import type { Node, TypeDefinition } from './node.js';
 
 export interface IInputProps<T = any> {
 	name: string;
 	type: GraphSchema;
 	value: T;
-	visible?: boolean;
 	node: Node;
 	variadic?: boolean;
 	annotations?: Record<string, any>;
@@ -21,7 +19,7 @@ export interface ISetValue {
 	type?: GraphSchema;
 }
 
-export class Input<T = any> extends Port<T> {
+export class Input<T extends Node = Node> extends Port<T> {
 	/**
 	 * Expects to have connections to this node done by enqueing the edge
 	 */
@@ -113,7 +111,6 @@ export class Input<T = any> extends Port<T> {
 		const clonedInput = new this.factory({
 			name: this.name,
 			type: this.type,
-			visible: this.visible,
 			node: this.node,
 			variadic: this.variadic,
 			annotations: { ...this.annotations },
@@ -126,7 +123,6 @@ export class Input<T = any> extends Port<T> {
 	fullType(): TypeDefinition {
 		return {
 			type: this._type,
-			visible: this.visible,
 			variadic: this.variadic
 		};
 	}
@@ -147,10 +143,6 @@ export class Input<T = any> extends Port<T> {
 		if (type.variadic) {
 			serialized.variadic = true;
 		}
-		if (type.visible == false) {
-			serialized.visible = false;
-		}
-
 		if (Object.keys(this.annotations).length > 0) {
 			serialized.annotations = this.annotations;
 		}
@@ -159,7 +151,6 @@ export class Input<T = any> extends Port<T> {
 	}
 
 	deserialize(serialized: SerializedInput) {
-		this.visible = serialized.visible ?? true;
 		this._dynamicType = serialized.dynamicType || null;
 		this.annotations = serialized.annotations || {};
 		this._value = serialized.value;

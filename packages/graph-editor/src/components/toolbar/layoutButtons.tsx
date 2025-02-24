@@ -1,4 +1,3 @@
-import { DebugPanel } from '../panels/debugger/index.js';
 import { DropPanel } from '../panels/dropPanel/index.js';
 import { GraphPanel } from '../panels/graph/index.js';
 
@@ -45,11 +44,6 @@ export const layoutButtons = {
     id: 'legend',
     title: 'Legend',
     content: <Legend />,
-  },
-  debugger: {
-    id: 'debugger',
-    title: 'Debugger',
-    content: <DebugPanel />,
   },
   dropPanel: {
     id: 'dropPanel',

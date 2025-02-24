@@ -30,4 +30,4 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
 export type ApplyCapabilities<
 	T extends Graph,
 	CapabilityTypes extends Capabilities[]
-> = CombineCapabilities<T, UnionToIntersection<CapabilityTypes[number]>>;
+> = CombineCapabilities<T, UnionToIntersection<CapabilityTypes[number]> & Capabilities>;

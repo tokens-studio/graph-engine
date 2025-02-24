@@ -1,35 +1,18 @@
+import { Annotated } from '../types/annotated.js';
 import { Graph } from '../graph/index.js';
 import { GraphSchema } from '../schemas/index.js';
 import { IDeserializeOpts, SerializedNode } from '../graph/types.js';
 import { Input } from './input.js';
 import { Output } from './output.js';
-import { action, computed, makeObservable, observable } from 'mobx';
-import { annotatedNodeRunning } from '../annotations/index.js';
-import { v4 as uuid } from 'uuid';
-import getDefaults from 'json-schema-defaults-esm';
-import type { NodeRun } from '../types.js';
+import { Port } from './port.js';
+import { action, makeObservable, observable } from 'mobx';
+import { nanoid as uuid } from 'nanoid';
 
-export interface INodeDefinition {
-	graph: Graph;
+export interface INodeDefinition<GraphType = Graph, InputType = Input, OutputType = Output> {
+	graph: GraphType;
 	id?: string;
-	inputs?: Record<string, Input>;
-	outputs?: Record<string, Output>;
-	annotations?: Record<string, unknown>;
-}
-
-export interface TypeDefinition {
-	type: GraphSchema;
-	/**
-	 * When exposing an array of inputs or outputs, allow specific control for connecting each item
-	 */
-	variadic?: boolean;
-	/**
-	 * Whether the input is visible by default in the UI
-	 */
-	visible?: boolean;
-	/**
-	 * Additional annotations to store on the input
-	 */
+	inputs?: Record<string, InputType>;
+	outputs?: Record<string, OutputType>;
 	annotations?: Record<string, unknown>;
 }
 
@@ -45,34 +28,37 @@ type UnwrapInput<T> = Prettify<{
 	[K in keyof T]: InputValue<T[K]>;
 }>;
 
-export class Node {
+export interface TypeDefinition {
+	type: GraphSchema;
+	/**
+	 * When exposing an array of inputs or outputs, allow specific control for connecting each item
+	 */
+	variadic?: boolean;
+	/**
+	 * Additional annotations to store on the input
+	 */
+	annotations?: Record<string, unknown>;
+}
+
+export class Node<GraphType extends Graph = Graph, InputType extends Input = Input, OutputType extends Output = Output> extends Annotated {
 	/**
 	 * Unique instance specific identifier
 	 */
 	readonly id: string;
 	public static readonly description?: string;
 	public static readonly title?: string;
-	public static readonly annotations: Record<string, unknown> = {};
-	/**
-	 * The groups this node belongs to as a string array
-	 */
-	static groups?: string[];
 	static readonly type: string = 'unknown';
 
 	/**
 	 * This holds the definitions of the inputs and outputs
 	 */
-	public inputs: Record<string, Input> = {};
-	public outputs: Record<string, Output> = {};
-	public annotations: Record<string, unknown> = {};
+	public inputs: Record<string, Port> = {};
+	public outputs: Record<string, Port> = {};
 
-	public lastExecutedDuration = 0;
+	private _graph: GraphType;
 
-	private _graph: Graph;
-
-	public error: Error | null = null;
-
-	constructor(props: INodeDefinition) {
+	constructor(props: INodeDefinition<GraphType, InputType, OutputType>) {
+		super(props);
 		this.id = props.id || uuid();
 		this._graph = props.graph;
 		if (this._graph) {
@@ -82,15 +68,8 @@ export class Node {
 		makeObservable(this, {
 			inputs: observable.shallow,
 			outputs: observable.shallow,
-			error: observable.ref,
-			annotations: observable.shallow,
 			addInput: action,
-			isRunning: computed,
-			run: action,
-			execute: action,
 			addOutput: action,
-			clearOutputs: action,
-			setAnnotation: action,
 			removeInput: action,
 			removeOutput: action
 		});
@@ -102,29 +81,11 @@ export class Node {
 	 * @param name
 	 * @param input
 	 */
-	addInput<T = unknown>(name: string, type: TypeDefinition) {
-		//Extract the default value from the schema
-		return (this.inputs[name] = new Input<T>({
-			name,
-			...type,
-			visible: type.visible !== undefined ? type.visible : true,
-			value: getDefaults(type.type) as T,
-			node: this
-		}));
+	addInput(name: string, port: InputType) {
+		this.inputs[name] = port;
 	}
-	addOutput<T = unknown>(name: string, type: TypeDefinition) {
-		this.outputs[name] = new Output<T>({
-			name,
-			...type,
-			type: type.type,
-			visible: type.visible !== undefined ? type.visible : true,
-			value: getDefaults(type.type) as T,
-			node: this
-		});
-	}
-
-	setAnnotation(key: string, value: unknown) {
-		this.annotations[key] = value;
+	addOutput(name: string, port: OutputType) {
+		this.outputs[name] = port;
 	}
 	/**
 	 * Removes a named input from the node. This should only be used for dynamic inputs
@@ -140,11 +101,6 @@ export class Node {
 			});
 		}
 		delete this.inputs[name];
-
-		if (this._graph) {
-			//Ask to be recalculated
-			this._graph?.update(this.id);
-		}
 	}
 
 	removeOutput(name: string) {
@@ -157,67 +113,6 @@ export class Node {
 			});
 		}
 		delete this.outputs[name];
-		//We do not need to be recalculated
-	}
-
-	/**
-	 * This is the place to add applicate specific logic to execute the node.
-	 * This can be used directly, but you should preferably never call this and instead execute from the graph which will control the lifecycle of the node
-	 * @override
-	 */
-	execute(): Promise<void> | void {}
-
-	/**
-	 * Runs the node. Internally this calls the execute method, but the run entrypoint allows for additional tracking and lifecycle management
-	 */
-	async run(): Promise<NodeRun> {
-		this.annotations[annotatedNodeRunning] = true;
-		const start = performance.now();
-		this.getGraph()?.emit('nodeStarted', {
-			node: this,
-			start
-		});
-		try {
-			await this.execute();
-			this.error = null;
-		} catch (err) {
-			this._graph.logger.error(err);
-			this.error = err as Error;
-		}
-		const end = performance.now();
-		delete this.annotations[annotatedNodeRunning];
-		this.lastExecutedDuration = end - start;
-
-		const result = {
-			node: this,
-			error: this.error,
-			start,
-			end
-		};
-
-		this.getGraph()?.emit('nodeExecuted', result);
-
-		return result;
-	}
-
-	/**
-	 * Asks the controlling graph to load a resource.
-	 * This cannot be called if the node is not part of a graph
-	 * @param uri
-	 * @param data
-	 */
-	async load(uri: string, data?: unknown) {
-		return this._graph?.loadResource(uri, this, data);
-	}
-	get isRunning() {
-		return !!this.annotations[annotatedNodeRunning];
-	}
-
-	/**
-	 * Clears all the outputs
-	 */
-	clearOutputs() {
-		this.outputs = {};
 	}
 
 	public setGraph(graph: Graph) {
@@ -236,10 +131,13 @@ export class Node {
 		});
 
 		// Copy input values
-		Object.entries(this.inputs).forEach(([key, input]) => {
+		Object.entries(this.inputs).forEach(([key, input]: [string, Input]) => {
+			//TODO remove this. The dataflow cloning needs to be handled by the dataflow itself
 			if (input.variadic) return;
-			if (clonedNode.inputs[key]) {
-				clonedNode.inputs[key].setValue(input.value);
+			const targetInput = clonedNode.inputs[key] as Input;
+			if (targetInput && targetInput.pType === DATAFLOW_PORT) {
+				targetInput.setValue(input.value);
+				//Try handle dynamic inputs
 			} else {
 				clonedNode.inputs[key] = input.clone();
 			}
@@ -264,7 +162,7 @@ export class Node {
 	 * Get the type of the nodes
 	 * @returns
 	 */
-	public nodeType = () => {
+	public nodeType = (): string => {
 		//@ts-ignore
 		return this.constructor.type;
 	};
@@ -286,7 +184,9 @@ export class Node {
 			id: this.id,
 			type: this.nodeType(),
 			//Filter out any inputs that are connected as they will be serialized as part of the edge
-			inputs: Object.values(this.inputs).map(x => x.serialize())
+			inputs: Object.values(this.inputs)
+				.map(x => (x as Input).serialize?.())
+				.filter(x => !!x)
 		} as SerializedNode;
 		if (Object.keys(this.annotations).length > 0) {
 			serialized.annotations = this.annotations;
@@ -318,14 +218,13 @@ export class Node {
 					name: input.name,
 					type: input.type,
 					variadic: input.variadic,
-					visible: input.visible,
 					value: input.value,
 					node: newNode,
 					annotations: input.annotations
 				});
 			} else {
 				//Set the value from the saved value
-				foundInput.deserialize(input);
+				(foundInput as Input).deserialize?.(input);
 			}
 		});
 
@@ -338,7 +237,9 @@ export class Node {
 
 	getAllInputs = (): UnwrapInput<this['inputs']> => {
 		return Object.fromEntries(
-			Object.entries(this.inputs).map(([key, value]) => [key, value.value])
+			Object.entries(this.inputs as Record<string, Input>).map(
+				([key, value]) => [key, value.value]
+			)
 		) as UnwrapInput<this['inputs']>;
 	};
 
@@ -359,27 +260,9 @@ export class Node {
 	 *  // ...
 	 * }
 	 */
-	dispose = () => {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	dispose(params: any) {
 		//@ts-ignore This is forcing manual cleanup
 		this._graph = undefined;
-	};
-
-	/**
-	 * Function to call when the graph has been started.
-	 * This is only really necessary for nodes that need to do something when the graph is expected to be running continuously
-	 */
-	public onStart = () => {};
-	public onStop = () => {};
-	/**
-	 * By default, the node will stop when the graph is paused
-	 */
-	public onPause = () => {
-		this.onStop();
-	};
-	/**
-	 * By default, the node will start when the graph is resumed
-	 */
-	public onResume = () => {
-		this.onStart();
 	};
 }
