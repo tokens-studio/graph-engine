@@ -1,6 +1,6 @@
 {
   "name": "@tokens-studio/graph-engine",
-  "version": "4.5.0",
+  "version": "4.6.0",
   "description": "An execution engine to handle Token Studios generators and resolvers",
   "license": "MPL-2.0",
   "author": "andrew@hyma.io",
@@ -10,7 +10,7 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./nodes/*":{
+    "./nodes/*": {
       "import": "./dist/nodes/*",
       "types": "./dist/nodes/*"
     }
