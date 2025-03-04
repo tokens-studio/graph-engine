@@ -337,7 +337,7 @@ const InputHandle = observer(
               <span
                 style={{
                   font: 'var(--font-code-lg)',
-                  color: 'var(--color-neutral-1500)',
+                  color: 'var(--fg-default)',
                 }}
               >
                 {port.name} +
@@ -405,7 +405,7 @@ const InputHandle = observer(
             <span
               style={{
                 font: 'var(--font-code-lg)',
-                color: 'var(--color-neutral-1500)',
+                color: 'var(--fg-default)',
               }}
             >
               {input.name}
@@ -413,7 +413,7 @@ const InputHandle = observer(
             {inlineValuesValue && (
               <span
                 style={{
-                  font: 'var(--font-code-xs)',
+                  font: 'var(--font-code-md)',
                   color: 'var(--color-neutral-1200)',
                 }}
               >
