@@ -333,7 +333,16 @@ const InputHandle = observer(
             id={port.name}
             variadic
           >
-            {!hideName && <Text>{port.name} + </Text>}
+            {!hideName && (
+              <span
+                style={{
+                  font: 'var(--font-code-lg)',
+                  color: 'var(--color-neutral-1500)',
+                }}
+              >
+                {port.name} +
+              </span>
+            )}
             {inlineTypesValue && <InlineTypeLabel port={port} />}
           </Handle>
           {port._edges.map((edge, i) => {
