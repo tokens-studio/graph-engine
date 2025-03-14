@@ -23,7 +23,6 @@ export default class ExternalTokensNode extends Node {
 		});
 	}
 
-
 	override async execute() {
 		const { uri } = this.getAllInputs();
 
@@ -40,7 +39,7 @@ export default class ExternalTokensNode extends Node {
 				// set this so we can show an error in the graph editor input sheet
 				this.inputs['uri'].annotations[annotatedInputError] = {
 					message:
-						'Failed to load tokens. Check if the uri is valid and the set was not deleted or renamed.',
+						'Failed to load tokens. Check if the uri is valid and the set was not deleted or renamed.'
 				};
 			}
 		} else {
