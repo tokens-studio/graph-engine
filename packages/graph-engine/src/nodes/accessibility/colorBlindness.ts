@@ -75,29 +75,29 @@ export default class NodeDefinition extends Node {
 
 		switch (type) {
 			case ColorBlindnessTypes.TRITANOPIA:
-				processed = blinder.tritanopia(color);
+				processed = blinder.tritanopia(processed);
 				break;
 			case ColorBlindnessTypes.TRITANOMALY:
-				processed = blinder.tritanomaly(color);
+				processed = blinder.tritanomaly(processed);
 				break;
 			case ColorBlindnessTypes.DEUTERANOPIA:
-				processed = blinder.deuteranopia(color);
+				processed = blinder.deuteranopia(processed);
 				break;
 			case ColorBlindnessTypes.DEUTERANOMALY:
-				processed = blinder.deuteranomaly(color);
+				processed = blinder.deuteranomaly(processed);
 				break;
 
 			case ColorBlindnessTypes.PROTANOMALY:
-				processed = blinder.protanomaly(color);
+				processed = blinder.protanomaly(processed);
 				break;
 			case ColorBlindnessTypes.ACHROMATOPSIA:
-				processed = blinder.achromatopsia(color);
+				processed = blinder.achromatopsia(processed);
 				break;
 			case ColorBlindnessTypes.ACHROMATOMALY:
-				processed = blinder.achromatomaly(color);
+				processed = blinder.achromatomaly(processed);
 				break;
 			default:
-				processed = blinder.protanopia(color);
+				processed = blinder.protanopia(processed);
 				break;
 		}
 
