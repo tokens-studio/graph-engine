@@ -1,5 +1,19 @@
 # @tokens-studio/graph-editor
 
+## 4.4.1
+
+### Patch Changes
+
+- a23285a: Fixes an issue with the editor losing the reference to the graph frame when moving between frames
+- 19c4fd2: Fixed layout of handle names and live types
+- d27a09d: Added array option to Constant node
+- b153b0e: Fixed not being able to click out of Command Palette
+- 7c95ee1: Fixed MMB pan selecting nodes and edges
+- Updated dependencies [a4dbb41]
+- Updated dependencies [016ec77]
+- Updated dependencies [d27a09d]
+  - @tokens-studio/graph-engine@4.6.0
+
 ## 4.4.0
 
 ### Minor Changes
