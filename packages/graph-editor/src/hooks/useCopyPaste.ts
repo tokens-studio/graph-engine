@@ -4,6 +4,7 @@ import { useReactFlow } from 'reactflow';
 import { useSelector } from 'react-redux';
 import { useToast } from '@/hooks/useToast.js';
 import { v4 as uuidv4 } from 'uuid';
+import { xpos, ypos } from '@/annotations/index.js';
 
 function useCopyPaste() {
   const graphRef = useSelector(graphEditorSelector);
@@ -60,6 +61,49 @@ function useCopyPaste() {
       });
   }, [graphRef, toast]);
 
+  const updateNodeIdsRecursively = useCallback((node, idMapping) => {
+    const newId = uuidv4();
+    idMapping.set(node.id, newId);
+    
+    const updatedNode = {
+      ...node,
+      id: newId,
+    };
+    
+    // if this node has an innergraph, process it recursively
+    if (node.innergraph) {
+      const innerIdMapping = new Map();
+      
+      if (Array.isArray(node.innergraph.nodes)) {
+        updatedNode.innergraph = {
+          ...node.innergraph,
+          nodes: node.innergraph.nodes.map(innerNode => 
+            updateNodeIdsRecursively(innerNode, innerIdMapping)
+          ),
+          // update edge references in the subgraph
+          edges: Array.isArray(node.innergraph.edges) 
+            ? node.innergraph.edges.map(edge => ({
+                ...edge,
+                id: uuidv4(),
+                source: innerIdMapping.get(edge.source) || edge.source,
+                target: innerIdMapping.get(edge.target) || edge.target,
+              })) 
+            : []
+        };
+        
+        // update innergraph ID
+        if (node.innergraph.annotations && node.innergraph.annotations['engine.id']) {
+          updatedNode.innergraph.annotations = {
+            ...node.innergraph.annotations,
+            'engine.id': uuidv4(),
+          };
+        }
+      }
+    }
+    
+    return updatedNode;
+  }, []);
+
   const pasteFromClipboard = useCallback(() => {
     if (!graphRef) return;
 
@@ -90,16 +134,16 @@ function useCopyPaste() {
         // calculate bounding box of source nodes (these are already in flow coordinates)
         const pasteBounds = sourceNodes.reduce(
           (acc, node) => ({
-            minX: Math.min(acc.minX, node.annotations?.['ui.position.x'] || 0),
-            minY: Math.min(acc.minY, node.annotations?.['ui.position.y'] || 0),
+            minX: Math.min(acc.minX, node.annotations?.[xpos] || 0),
+            minY: Math.min(acc.minY, node.annotations?.[ypos] || 0),
             maxX: Math.max(
               acc.maxX,
-              (node.annotations?.['ui.position.x'] || 0) +
+              (node.annotations?.[xpos] || 0) +
                 (node.annotations?.['ui.width'] || 200),
             ),
             maxY: Math.max(
               acc.maxY,
-              (node.annotations?.['ui.position.y'] || 0) +
+              (node.annotations?.[ypos] || 0) +
                 (node.annotations?.['ui.height'] || 100),
             ),
           }),
@@ -111,7 +155,7 @@ function useCopyPaste() {
           },
         );
 
-        // Calculate offset to center the pasted nodes
+        // calculate offset to center the pasted nodes
         const offset = {
           x: viewportCenter.x - (pasteBounds.minX + pasteBounds.maxX) / 2,
           y: viewportCenter.y - (pasteBounds.minY + pasteBounds.maxY) / 2,
@@ -119,18 +163,19 @@ function useCopyPaste() {
 
         // create new nodes with updated positions and IDs
         const idMapping = new Map();
-        const nodes = sourceNodes.map((node) => {
-          const newId = uuidv4();
-          idMapping.set(node.id, newId);
+        const nodes = sourceNodes.map(node => {
+          // first update all node and subgraph IDs
+          const updatedNode = updateNodeIdsRecursively(node, idMapping);
+          
+          // then update positioning
           return {
-            ...node,
-            id: newId,
+            ...updatedNode,
             annotations: {
-              ...node.annotations,
-              'ui.position.x':
-                (node.annotations?.['ui.position.x'] || 0) + offset.x,
-              'ui.position.y':
-                (node.annotations?.['ui.position.y'] || 0) + offset.y,
+              ...updatedNode.annotations,
+              xpos:
+                (updatedNode.annotations?.[xpos] || 0) + offset.x,
+              ypos:
+                (updatedNode.annotations?.[ypos] || 0) + offset.y,
             },
           };
         });
@@ -184,7 +229,7 @@ function useCopyPaste() {
         });
       }
     });
-  }, [graphRef, reactFlowInstance, toast]);
+  }, [graphRef, reactFlowInstance, toast, updateNodeIdsRecursively]);
 
   return {
     copySelectedNodes,
