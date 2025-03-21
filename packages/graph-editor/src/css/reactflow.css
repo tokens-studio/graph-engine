@@ -3,6 +3,7 @@
 
 .react-flow {
     background: var(--color-neutral-canvas-minimal-bg);
+    overscroll-behavior-x: none; /* Prevent browser back/forward navigation */
 }
 
 .react-flow__node {
