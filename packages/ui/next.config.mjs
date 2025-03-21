@@ -3,7 +3,6 @@
 
 import analyzer from '@next/bundle-analyzer';
 
-const OTEL_ENABLED = process.env.OTEL_ENABLED === 'true';
 const ANALYZE = process.env.ANALYZE === 'true';
 
 const withBundleAnalyzer = analyzer({
@@ -32,8 +31,6 @@ export default withBundleAnalyzer({
     optimizePackageImports: ['iconoir-react', "lodash"],
     // esmExternals: 'loose',
     optimizeCss: process.env.NODE_ENV === 'production',
-    //Add Open telemetry support https://nextjs.org/docs/app/building-your-application/optimizing/open-telemetry
-    instrumentationHook: OTEL_ENABLED
   },
   compiler: {
   
