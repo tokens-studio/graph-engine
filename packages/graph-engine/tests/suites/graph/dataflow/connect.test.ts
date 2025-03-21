@@ -1,8 +1,8 @@
-import { Graph } from '../../../src/graph/graph.js';
+import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
-import Passthrough from '../../../src/nodes/generic/passthrough.js';
+import Passthrough from '../../../../src/engines/dataflow/nodes/generic/passthrough.js';
 
-describe('Graph/topologic', () => {
+describe('Graph/connect', () => {
 	test('should throw an error if a connection would result in multiple connections', async () => {
 		const graph = new Graph();
 

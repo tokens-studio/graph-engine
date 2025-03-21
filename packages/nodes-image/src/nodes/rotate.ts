@@ -24,13 +24,13 @@ export class RotateNode extends BaseNode {
 
   constructor(props: INodeDefinition) {
     super(props);
-    this.dataflow.addInput("image", {
+    this.addInput("image", {
       type: ImageSchema,
     });
-    this.dataflow.addInput("degrees", {
+    this.addInput("degrees", {
       type: NumberSchema,
     });
-    this.dataflow.addOutput("image", {
+    this.addOutput("image", {
       type: ImageSchema,
     });
   }

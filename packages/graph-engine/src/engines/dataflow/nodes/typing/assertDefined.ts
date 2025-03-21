@@ -1,5 +1,5 @@
 import { AnySchema } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 export default class NodeDefinition extends DataflowNode {
 	static title = 'Assert defined';
@@ -17,10 +17,10 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: AnySchema
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: AnySchema
 		});
 	}

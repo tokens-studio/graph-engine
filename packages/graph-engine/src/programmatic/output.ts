@@ -1,14 +1,13 @@
 import { GraphSchema } from '../schemas/index.js';
 import { Input } from './input.js';
 import { Port } from './port.js';
-import { action, makeObservable } from 'mobx';
 import type { Node } from './node.js';
 
-export interface IOutputProps<T = any> {
+export interface IOutputProps<NodeType extends Node = Node, V = any> {
 	name: string;
 	type: GraphSchema;
-	value: T;
-	node: Node;
+	value: V;
+	node: NodeType;
 }
 
 export interface ConnectionStatus {
@@ -18,25 +17,15 @@ export interface ConnectionStatus {
 	valid: boolean;
 }
 
-export class Output<T = Node> extends Port<T> {
-	constructor(props: IOutputProps<T>) {
+export class Output<T extends Node = Node, V = any> extends Port<T> {
+	constructor(props: IOutputProps<T, V>) {
 		super(props);
-		makeObservable(this, {
-			set: action
-		});
-	}
-
-	set(value: T, type?: GraphSchema) {
-		this._value = value;
-		this._dynamicType = type || null;
 	}
 
 	connect(target: Input) {
 		const graph = this.node.getGraph();
 		if (!graph) {
-			return {
-				valid: false
-			};
+			return null;
 		}
 
 		return graph.connect(this.node, this, target.node, target);
@@ -49,20 +38,6 @@ export class Output<T = Node> extends Port<T> {
 	get factory(): typeof Output {
 		//@ts-ignore
 		return this.constructor;
-	}
-
-	clone(): Output<T> {
-		const clonedOutput = new this.factory({
-			name: this.name,
-			type: this.type,
-			value: this._value,
-			node: this.node
-		});
-
-		clonedOutput._dynamicType = this._dynamicType;
-		clonedOutput._edges = [...this._edges];
-
-		return clonedOutput;
 	}
 }
 
@@ -78,5 +53,5 @@ export class Output<T = Node> extends Port<T> {
  * ```
  */
 export type ToOutput<T> = {
-	[P in keyof T]: Output<T[P]>;
+	[P in keyof T]: Output<Node, T[P]>;
 };

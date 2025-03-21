@@ -1,5 +1,5 @@
 import { ColorSchema } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 
 export default class NodeDefinition extends DataflowNode {
 	static title = 'Color Swatch';
@@ -10,7 +10,7 @@ export default class NodeDefinition extends DataflowNode {
 	constructor(props) {
 		super(props);
 
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: ColorSchema
 		});
 	}

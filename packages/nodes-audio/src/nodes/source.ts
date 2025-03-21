@@ -31,14 +31,14 @@ export class AudioSourceNode extends AudioBaseNode {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.dataflow.addInput('buffer', {
+		this.addInput('buffer', {
 			type: AudioBufferSchema,
 			visible: true
 		});
-		this.dataflow.addInput('loop', {
+		this.addInput('loop', {
 			type: BooleanSchema
 		});
-		this.dataflow.addOutput('node', {
+		this.addOutput('node', {
 			type: {
 				...NodeSchema,
 				description: 'The generated oscillator node'

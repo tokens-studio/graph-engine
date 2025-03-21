@@ -41,7 +41,7 @@ export default class NodeDefinition
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.dataflow.addInput('uri', {
+		this.addInput('uri', {
 			type: StringSchema
 		});
 

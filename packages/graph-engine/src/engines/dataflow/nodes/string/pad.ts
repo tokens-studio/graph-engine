@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { NumberSchema, StringSchema } from '../../schemas/index.js';
 
@@ -27,23 +27,23 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('string', {
+		this.addInput('string', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('length', {
+		this.addInput('length', {
 			type: NumberSchema
 		});
-		this.dataflow.addInput('character', {
+		this.addInput('character', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('position', {
+		this.addInput('position', {
 			type: {
 				...StringSchema,
 				enum: [Position.START, Position.END],
 				default: Position.START
 			}
 		});
-		this.dataflow.addOutput('string', {
+		this.addOutput('string', {
 			type: StringSchema
 		});
 	}

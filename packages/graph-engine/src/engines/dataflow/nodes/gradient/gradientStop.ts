@@ -3,7 +3,7 @@ import {
 	GradientStopSchema,
 	NumberSchema
 } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition } from '../../index.js';
 
 export default class NodeDefinition extends DataflowNode {
@@ -13,13 +13,13 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('color', {
+		this.addInput('color', {
 			type: ColorSchema
 		});
-		this.dataflow.addInput('position', {
+		this.addInput('position', {
 			type: NumberSchema
 		});
-		this.dataflow.addOutput('gradientStop', {
+		this.addOutput('gradientStop', {
 			type: GradientStopSchema
 		});
 	}

@@ -5,7 +5,7 @@ import {
 	StringSchema
 } from '../../schemas/index.js';
 import { Color, INodeDefinition } from '../../index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { Poline, PositionFunction, Vector3, positionFunctions } from 'poline';
 import { arrayOf } from '../../schemas/utils.js';
 import { toColor } from './lib/utils.js';
@@ -27,41 +27,41 @@ export default class NodeDefinition extends DataflowNode {
 	static description = '';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('anchorColors', {
+		this.addInput('anchorColors', {
 			type: arrayOf(ColorSchema)
 		});
-		this.dataflow.addInput('numPoints', {
+		this.addInput('numPoints', {
 			type: {
 				...NumberSchema,
 				default: 4
 			}
 		});
-		this.dataflow.addInput('invertedLightness', {
+		this.addInput('invertedLightness', {
 			type: BooleanSchema
 		});
-		this.dataflow.addInput('positionFnX', {
+		this.addInput('positionFnX', {
 			type: {
 				...StringSchema,
 				enum: positionFuncs
 			}
 		});
-		this.dataflow.addInput('positionFnY', {
+		this.addInput('positionFnY', {
 			type: {
 				...StringSchema,
 				enum: positionFuncs
 			}
 		});
-		this.dataflow.addInput('positionFnZ', {
+		this.addInput('positionFnZ', {
 			type: {
 				...StringSchema,
 				enum: positionFuncs
 			}
 		});
 
-		this.dataflow.addInput('hueShift', {
+		this.addInput('hueShift', {
 			type: NumberSchema
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: arrayOf(ColorSchema)
 		});
 	}

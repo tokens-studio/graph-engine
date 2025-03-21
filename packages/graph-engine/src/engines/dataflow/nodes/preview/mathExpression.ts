@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { StringSchema } from '../../schemas/index.js';
 
 export default class NodeDefinition extends DataflowNode {
@@ -10,7 +10,7 @@ export default class NodeDefinition extends DataflowNode {
 	constructor(props) {
 		super(props);
 
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: StringSchema
 		});
 	}

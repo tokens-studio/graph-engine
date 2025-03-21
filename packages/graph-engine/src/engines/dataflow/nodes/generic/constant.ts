@@ -1,5 +1,5 @@
 import { AnySchema } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 /**
  * @example
@@ -26,11 +26,11 @@ export default class NodeDefinition<T> extends DataflowNode {
 		'Constant node allows you to provide a constant value. You can use this node to set a constant value for a specific property.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: AnySchema,
 			visible: false
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: AnySchema
 		});
 	}

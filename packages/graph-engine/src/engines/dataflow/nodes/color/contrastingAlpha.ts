@@ -42,32 +42,32 @@ export default class NodeDefinition extends DataflowNode {
 		super(props);
 
 		// Inputs
-		this.dataflow.addInput('foreground', {
+		this.addInput('foreground', {
 			type: {
 				...ColorSchema,
 				default: Black
 			}
 		});
-		this.dataflow.addInput('background', {
+		this.addInput('background', {
 			type: {
 				...ColorSchema,
 				default: White
 			}
 		});
-		this.dataflow.addInput('algorithm', {
+		this.addInput('algorithm', {
 			type: {
 				...StringSchema,
 				enum: Object.values(ContrastAlgorithm),
 				default: ContrastAlgorithm.APCA
 			}
 		});
-		this.dataflow.addInput('threshold', {
+		this.addInput('threshold', {
 			type: {
 				...NumberSchema,
 				default: 60
 			}
 		});
-		this.dataflow.addInput('precision', {
+		this.addInput('precision', {
 			type: {
 				...NumberSchema,
 				default: 5
@@ -75,13 +75,13 @@ export default class NodeDefinition extends DataflowNode {
 		});
 
 		// Outputs
-		this.dataflow.addOutput('alpha', {
+		this.addOutput('alpha', {
 			type: NumberSchema
 		});
-		this.dataflow.addOutput('color', {
+		this.addOutput('color', {
 			type: ColorSchema
 		});
-		this.dataflow.addOutput('contrast', {
+		this.addOutput('contrast', {
 			type: NumberSchema
 		});
 	}

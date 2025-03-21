@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { Graph } from '../../graph/graph.js';
 import {
 	IDeserializeOpts,
@@ -74,7 +74,7 @@ export default class SubgraphNode extends DataflowNode {
 				//If the key doesn't exist in the existing inputs, add it
 				if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
 					//Always add it as visible
-					this.dataflow.addInput(key, {
+					this.addInput(key, {
 						type: value.type
 					});
 					this.inputs[key].setValue(value.value, {
@@ -99,7 +99,7 @@ export default class SubgraphNode extends DataflowNode {
 				//If the key doesn't exist in the existing inputs, add it
 				if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
 					//Always add it as visible
-					this.dataflow.addOutput(key, {
+					this.addOutput(key, {
 						type: value.type
 					});
 					this.outputs[key].set(value.value, value.type);

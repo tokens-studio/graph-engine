@@ -1,6 +1,6 @@
-import { Graph } from '../../../src/graph/graph.js';
+import { Graph } from '../../../../src/graph/graph.js';
 import { describe, expect, test } from 'vitest';
-import { topologicalSort } from '../../../src/graph/index.js';
+import { topologicalSort } from '../../../../src/engines/dataflow/topologicSort.js';
 import Passthrough from '../../../src/nodes/generic/passthrough.js';
 
 describe('Graph/topologic', () => {

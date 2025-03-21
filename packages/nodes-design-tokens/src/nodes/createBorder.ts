@@ -25,17 +25,17 @@ export default class CreateBorderNode extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('color', {
+		this.addInput('color', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('width', {
+		this.addInput('width', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('style', {
+		this.addInput('style', {
 			type: StringSchema
 		});
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: TokenBorderSchema
 		});
 	}

@@ -1,6 +1,6 @@
 import { Color } from '../../types.js';
 import { ColorSchema } from '../../schemas';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { ToInput } from '../../index.js';
 
 export default class NodeDefinition extends DataflowNode {
@@ -16,14 +16,14 @@ export default class NodeDefinition extends DataflowNode {
 	constructor(props) {
 		super(props);
 
-		this.dataflow.addInput('colorA', {
+		this.addInput('colorA', {
 			type: {
 				...ColorSchema,
 				default: '#ffffff'
 			}
 		});
 
-		this.dataflow.addInput('colorB', {
+		this.addInput('colorB', {
 			type: {
 				...ColorSchema,
 				default: '#000000'

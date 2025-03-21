@@ -17,11 +17,11 @@ export class GetJSONNode extends DataflowNode {
 		'Reads the context of a file from the file system as a JSON object.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('file', {
+		this.addInput('file', {
 			type: FileSchema
 		});
 
-		this.dataflow.addOutput('contents', {
+		this.addOutput('contents', {
 			type: ObjectSchema
 		});
 	}

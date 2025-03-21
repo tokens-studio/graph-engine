@@ -1,103 +1,35 @@
 import { GraphSchema } from '../schemas/index.js';
+import { ISerializable } from './serializable.js';
 import { Port } from './port.js';
-import { SerializedInput } from '../graph/types.js';
 import { action, makeObservable } from 'mobx';
-import getDefaults from 'json-schema-defaults-esm';
-import type { Node, TypeDefinition } from './node.js';
+import type { Node } from './node.js';
 
-export interface IInputProps<T = any> {
+export interface IInputProps<NodeType extends Node = Node, T = any> {
 	name: string;
 	type: GraphSchema;
 	value: T;
-	node: Node;
+	node: NodeType;
 	variadic?: boolean;
 	annotations?: Record<string, any>;
 }
 
-export interface ISetValue {
-	noPropagate?: boolean;
-	type?: GraphSchema;
+export interface SerializedInput {
+	name: string;
+	annotations?: Record<string, any>;
 }
 
-export class Input<T extends Node = Node> extends Port<T> {
-	/**
-	 * Expects to have connections to this node done by enqueing the edge
-	 */
-	public readonly variadic: boolean;
 
-	constructor(props: IInputProps<T>) {
+export class Input<T extends Node = Node, V = any> extends Port<T> implements ISerializable<SerializedInput> {
+
+
+	constructor(props: IInputProps<T, V>) {
 		super(props);
 
 		this.variadic = props.variadic || false;
 		makeObservable(this, {
-			setValue: action,
-			reset: action,
 			deserialize: action
 		});
 	}
-
-	/**
-	 * Sets the value without a side effect. This should only be used internally
-	 * @param value
-	 */
-	setValue(value: T, opts?: ISetValue) {
-		this._value = value;
-		// debugger;
-		if (opts?.type !== undefined) {
-			if (this._type?.$id !== undefined) {
-				if (this._type?.$id !== opts.type.$id) {
-					this._dynamicType = opts.type;
-				}
-			}
-			//Otherwise do a structural comparison
-			else if (JSON.stringify(this._type) !== JSON.stringify(opts.type)) {
-				const { variadic, _dynamicType } = this;
-
-				// for variadic ports, we need to set the dynamic type depending on all the other connected types
-				if (
-					variadic &&
-					_dynamicType &&
-					JSON.stringify(_dynamicType) !== JSON.stringify(opts.type)
-				) {
-					const graph = this.node.getGraph();
-					const sourceNodesOutputTypes = this._edges.map(edge => {
-						const outputs = graph.getNode(edge.source)!.outputs;
-						return outputs[edge.sourceHandle].type;
-					});
-
-					const firstNodeTypeStringValue = JSON.stringify(
-						sourceNodesOutputTypes[0]
-					);
-					if (
-						sourceNodesOutputTypes.every(
-							type => JSON.stringify(type) === firstNodeTypeStringValue
-						)
-					) {
-						this._dynamicType = {
-							type: 'array',
-							items: sourceNodesOutputTypes[0]
-						};
-					} else {
-						this._dynamicType = null;
-					}
-				} else {
-					this._dynamicType = opts.type;
-				}
-			}
-		}
-		if (!opts?.noPropagate) {
-			this.node.getGraph()?.update(this.node.id);
-		}
-	}
-
-	/**
-	 * Resets the value of the input to the default value
-	 */
-	reset() {
-		this._dynamicType = null;
-		return (this._value = getDefaults(this._type) as T);
-	}
-
 	/**
 	 * Returns the underlying class of the input.
 	 * @returns
@@ -107,42 +39,11 @@ export class Input<T extends Node = Node> extends Port<T> {
 		return this.constructor;
 	}
 
-	clone(): Input<T> {
-		const clonedInput = new this.factory({
-			name: this.name,
-			type: this.type,
-			node: this.node,
-			variadic: this.variadic,
-			annotations: { ...this.annotations },
-			value: this.value
-		});
-
-		return clonedInput;
-	}
-
-	fullType(): TypeDefinition {
-		return {
-			type: this._type,
-			variadic: this.variadic
-		};
-	}
-
 	serialize(): SerializedInput {
-		const type = this.fullType();
 		const serialized = {
 			name: this.name,
-			value: this.value,
-			type: type.type
 		} as SerializedInput;
 
-		if (this._dynamicType) {
-			serialized.dynamicType = this._dynamicType;
-		}
-
-		//Try compact the serialization by omitting the value if its the default
-		if (type.variadic) {
-			serialized.variadic = true;
-		}
 		if (Object.keys(this.annotations).length > 0) {
 			serialized.annotations = this.annotations;
 		}
@@ -151,9 +52,8 @@ export class Input<T extends Node = Node> extends Port<T> {
 	}
 
 	deserialize(serialized: SerializedInput) {
-		this._dynamicType = serialized.dynamicType || null;
+		this.name = serialized.name;
 		this.annotations = serialized.annotations || {};
-		this._value = serialized.value;
 	}
 }
 
@@ -168,6 +68,6 @@ export class Input<T extends Node = Node> extends Port<T> {
  * type myInputs = ToInput<myType>
  * ```
  */
-export type ToInput<T> = {
+export type ToInput<T extends Record<string, Node>> = {
 	[P in keyof T]: Input<T[P]>;
 };

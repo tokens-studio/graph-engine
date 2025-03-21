@@ -23,13 +23,13 @@ export default class FlattenNode extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('arrayOfTokens', {
+		this.addInput('arrayOfTokens', {
 			type: {
 				...arrayOf(arrayOf(TokenSchema)),
 				default: []
 			}
 		});
-		this.dataflow.addOutput('tokens', {
+		this.addOutput('tokens', {
 			type: arrayOf(TokenSchema)
 		});
 	}

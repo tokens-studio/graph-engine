@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { NumberSchema } from '../../schemas/index.js';
 import { setToPrecision } from '../../utils/precision.js';
@@ -19,20 +19,20 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.dataflow.addInput('precision', {
+		this.addInput('precision', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: NumberSchema
 		});
 	}

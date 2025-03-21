@@ -2,11 +2,10 @@ import { Annotated } from '../types/annotated.js';
 import { Graph } from '../graph/index.js';
 import { GraphSchema } from '../schemas/index.js';
 import { IDeserializeOpts, SerializedNode } from '../graph/types.js';
-import { Input } from './input.js';
-import { Output } from './output.js';
-import { Port } from './port.js';
 import { action, makeObservable, observable } from 'mobx';
 import { nanoid as uuid } from 'nanoid';
+import type { Input } from './input.js';
+import type { Output } from './output.js';
 
 export interface INodeDefinition<GraphType = Graph, InputType = Input, OutputType = Output> {
 	graph: GraphType;
@@ -40,7 +39,9 @@ export interface TypeDefinition {
 	annotations?: Record<string, unknown>;
 }
 
-export class Node<GraphType extends Graph = Graph, InputType extends Input = Input, OutputType extends Output = Output> extends Annotated {
+export class Node<GraphType extends Graph = Graph, 
+	InputType extends Input<Node<GraphType, any, any>, any> = Input<Node<GraphType, any, any>, any>,
+	OutputType extends Output<Node<GraphType, any, any>, any> = Output<Node<GraphType, any, any>, any>> extends Annotated {
 	/**
 	 * Unique instance specific identifier
 	 */
@@ -52,8 +53,8 @@ export class Node<GraphType extends Graph = Graph, InputType extends Input = Inp
 	/**
 	 * This holds the definitions of the inputs and outputs
 	 */
-	public inputs: Record<string, Port> = {};
-	public outputs: Record<string, Port> = {};
+	public inputs: Record<string, InputType> = {};
+	public outputs: Record<string, OutputType> = {};
 
 	private _graph: GraphType;
 
@@ -115,15 +116,15 @@ export class Node<GraphType extends Graph = Graph, InputType extends Input = Inp
 		delete this.outputs[name];
 	}
 
-	public setGraph(graph: Graph) {
+	public setGraph(graph: GraphType) {
 		this._graph = graph;
 	}
 
-	public getGraph() {
+	public getGraph(): GraphType {
 		return this._graph;
 	}
 
-	public clone(newGraph: Graph): Node {
+	public clone(newGraph: GraphType): Node {
 		// Create a new instance using the constructor
 		const clonedNode = new this.factory({
 			graph: newGraph,

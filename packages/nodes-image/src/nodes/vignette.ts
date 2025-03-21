@@ -26,7 +26,7 @@ export class VignetteNode extends BaseNode {
   }>;
   constructor(props: INodeDefinition) {
     super(props);
-    const df = this.dataflow;
+    const df = this;
     df.addInput("image", {
       type: ImageSchema,
     });

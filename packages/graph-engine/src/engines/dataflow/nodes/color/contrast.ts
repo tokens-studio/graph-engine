@@ -16,33 +16,33 @@ export default class NodeDefinition extends DataflowNode {
 		'Calculates the contrast between two color values. The output is a number representing the contrast ratio between the two colors. The higher the number, the higher the contrast between the two colors. The output is based on the APCA-W3 contrast calculation.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('a', {
+		this.addInput('a', {
 			type: {
 				...ColorSchema,
 				default: '#000000'
 			}
 		});
-		this.dataflow.addInput('b', {
+		this.addInput('b', {
 			type: {
 				...ColorSchema,
 				default: '#ffffff'
 			}
 		});
-		this.dataflow.addInput('algorithm', {
+		this.addInput('algorithm', {
 			type: {
 				...StringSchema,
 				enum: Object.values(ContrastAlgorithm),
 				default: ContrastAlgorithm.APCA
 			}
 		});
-		this.dataflow.addInput('absolute', {
+		this.addInput('absolute', {
 			type: {
 				...BooleanSchema,
 				default: false
 			}
 		});
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: NumberSchema
 		});
 	}

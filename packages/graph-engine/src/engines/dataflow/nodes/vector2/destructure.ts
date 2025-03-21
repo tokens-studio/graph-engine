@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { NumberSchema, Vec2Schema } from '../../schemas/index.js';
 import { Vec2 } from '../../index.js';
@@ -20,13 +20,13 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: Vec2Schema
 		});
-		this.dataflow.addOutput('x', {
+		this.addOutput('x', {
 			type: NumberSchema
 		});
-		this.dataflow.addOutput('y', {
+		this.addOutput('y', {
 			type: NumberSchema
 		});
 	}

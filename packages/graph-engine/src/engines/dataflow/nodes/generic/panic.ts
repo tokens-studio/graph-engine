@@ -1,5 +1,5 @@
 import { AnySchema } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput } from '../../index.js';
 
 /**
@@ -21,7 +21,7 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('trigger', {
+		this.addInput('trigger', {
 			type: AnySchema
 		});
 	}

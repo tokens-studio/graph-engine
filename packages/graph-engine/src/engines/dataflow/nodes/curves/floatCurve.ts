@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { FloatCurve, INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { FloatCurveSchema, NumberSchema } from '../../schemas/index.js';
 
@@ -26,10 +26,10 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('curve', {
+		this.addInput('curve', {
 			type: FloatCurveSchema
 		});
-		this.dataflow.addInput('x', {
+		this.addInput('x', {
 			type: {
 				...NumberSchema,
 				minimum: 0,
@@ -37,7 +37,7 @@ export default class NodeDefinition extends DataflowNode {
 				default: 0
 			}
 		});
-		this.dataflow.addOutput('y', {
+		this.addOutput('y', {
 			type: NumberSchema
 		});
 	}

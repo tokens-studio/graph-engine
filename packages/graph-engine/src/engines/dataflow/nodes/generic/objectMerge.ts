@@ -1,5 +1,5 @@
 import { AnySchema, StringSchema } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { arrayOf } from '../../schemas/utils.js';
 import deepMerge from '@bundled-es-modules/deepmerge';
@@ -41,20 +41,20 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('objects', {
+		this.addInput('objects', {
 			type: {
 				...arrayOf(AnySchema),
 				default: []
 			}
 		});
-		this.dataflow.addInput('concatArray', {
+		this.addInput('concatArray', {
 			type: {
 				...StringSchema,
 				enum: [CONCAT, MERGE, COMBINE],
 				default: CONCAT
 			}
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: AnySchema
 		});
 	}

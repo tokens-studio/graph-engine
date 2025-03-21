@@ -1,30 +1,36 @@
 import { Annotated } from '../types/annotated.js';
-import { Edge } from './edge.js';
-import { action, computed, makeObservable, observable } from 'mobx';
+import { computed, makeObservable, observable } from 'mobx';
+import type { Edge } from './edge.js';
 import type { Node } from './node.js';
 
 export interface IPort<T extends Node> {
 	name: string;
-	visible?: boolean;
 	node: T;
 	annotations?: Record<string, any>;
 }
 
+export const type = {
+	name: 'Unknown'
+}
+
+export type PortType = {
+	name: string;
+}
+
 export class Port<T extends Node = Node> extends Annotated {
 	/**
-	 * Name to show in the side panel.Optional
+	 * The name of the port on the attached node
 	 * */
-	public readonly name: string;
-	public visible: boolean = false;
+	public  name: string;
 	/**
 	 * If the port is variadic, meaning it can accept multiple incoming edges. Useless for outputs
 	 */
 	public variadic?: boolean;
 	public node: T;
 	/**
-	 * Never change this. This is used to dynamicly determine the type of the port
+	 * Some identifier to help identify different ports in a system
 	 */
-	pType = 0;
+	portType: PortType = type;
 
 	/**
 	 * Unless the port is variadic this will always be a single edge on an input port, however on an output port it can be multiple edges
@@ -34,14 +40,11 @@ export class Port<T extends Node = Node> extends Annotated {
 	constructor(props: IPort<T>) {
 		super(props);
 		this.name = props.name;
-		this.visible = props.visible ?? true;
 		this.node = props.node;
 
 		makeObservable(this, {
 			_edges: observable.ref,
-			visible: observable.ref,
 			isConnected: computed,
-			setVisible: action
 		});
 	}
 
@@ -49,9 +52,6 @@ export class Port<T extends Node = Node> extends Annotated {
 		return this._edges.length > 0;
 	}
 
-	setVisible(visible: boolean) {
-		this.visible = visible;
-	}
 	/**
 	 * This is expected to be overriden with the correct implementation to handle cloning your port
 	 * @returns

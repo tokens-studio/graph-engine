@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { NumberSchema } from '../../schemas/index.js';
 import { ToInput } from '../../programmatic/dataflow/input.js';
@@ -31,21 +31,21 @@ export default class NodeDefinition extends DataflowNode {
 		'Generates an arithmetic f(n)= c + (f(n-1)) series of numbers based on the base value, steps down, steps and increment.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('base', {
+		this.addInput('base', {
 			type: {
 				...NumberSchema,
 				default: 16
 			},
 			visible: true
 		});
-		this.dataflow.addInput('stepsDown', {
+		this.addInput('stepsDown', {
 			type: {
 				...NumberSchema,
 				default: 0
 			},
 			visible: true
 		});
-		this.dataflow.addInput('stepsUp', {
+		this.addInput('stepsUp', {
 			type: {
 				...NumberSchema,
 				default: 1
@@ -53,23 +53,23 @@ export default class NodeDefinition extends DataflowNode {
 			visible: true
 		});
 
-		this.dataflow.addInput('increment', {
+		this.addInput('increment', {
 			type: {
 				...NumberSchema,
 				default: 1
 			}
 		});
 
-		this.dataflow.addInput('precision', {
+		this.addInput('precision', {
 			type: {
 				...NumberSchema,
 				default: 2
 			}
 		});
-		this.dataflow.addOutput('array', {
+		this.addOutput('array', {
 			type: arrayOf(NumberSchema)
 		});
-		this.dataflow.addOutput('indexed', {
+		this.addOutput('indexed', {
 			type: {
 				$id: `https://schemas.tokens.studio/studio.tokens.series.arithmetic/indexed.json`,
 				type: 'object',

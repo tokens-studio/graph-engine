@@ -1,6 +1,7 @@
 import { DataFlowCapability } from '@/engines/dataflow/index.js';
 import { DataFlowPort } from './base.js';
 import { GraphSchema } from '@/schemas/index.js';
+import { ISerializable } from '@/programmatic/serializable.js';
 import { Node, TypeDefinition } from '@/programmatic/node.js';
 import { Output } from './output.js';
 import { SerializedInput } from '@/graph/types.js';
@@ -21,7 +22,14 @@ export interface ISetValue {
 	type?: GraphSchema;
 }
 
-export class Input<V = any, T extends Node = Node> extends DataFlowPort<V, T> {
+export class Input<V = any, T extends Node = Node> extends DataFlowPort<V, T> implements ISerializable<SerializedInput> {
+
+
+	/**
+	 * Expects to have connections to this node done by enqueing the edge
+	 */
+	public readonly variadic: boolean;
+
 	constructor(props: IInputProps<V, T>) {
 		super(props);
 

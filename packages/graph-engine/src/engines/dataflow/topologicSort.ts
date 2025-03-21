@@ -10,7 +10,7 @@ import { Graph } from '../../graph/graph.js';
  * @param graph
  * @returns
  */
-export function topologicalSort(graph: Graph): string[] {
+export function topologicalSort<GraphType extends Graph>(graph: GraphType): string[] {
 	const visited = new Set<string>();
 	const stack: string[] = [];
 

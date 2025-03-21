@@ -1,6 +1,5 @@
 
-import { DATAFLOW_PORT } from './types/base.js';
-import { DataflowNode } from '@/engines/dataflow/types/node.js';
+import { DataflowNode } from './types/node.js';
 import { Graph, IGraph } from '../../graph/index.js';
 import { GraphSchema } from '@/schemas/index.js';
 import { ISetValue, Output } from '@/programmatic/index.js';
@@ -69,7 +68,7 @@ export interface BatchExecution {
 }
 
 
-export class DataFlowGraph extends Graph {
+export class DataFlowGraph extends Graph<DataflowNode> {
 
 	constructor(input: IGraph) {
 		super(input);
@@ -251,7 +250,7 @@ export const execute = async (
 			}
 			const port = input.inputs[key] as Input;
 
-			if (port && port.pType == DATAFLOW_PORT) {
+			if (port) {
 				port.setValue(value.value, opts);
 			}
 
@@ -273,7 +272,7 @@ export const execute = async (
 			continue;
 		}
 		//Execute the node
-		const res = await (node as DataflowNode).dataflow?.run();
+		const res = await node?.run();
 		if (res.error) {
 			//@ts-ignore
 			(res.error as BatchRunError).nodeId = nodeId;
@@ -300,7 +299,6 @@ export const execute = async (
 		output = Object.fromEntries(
 			Object.entries(outputNode.inputs)
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				.filter(([_, v]) => v.pType == DATAFLOW_PORT)
 				.map(([key, value]: [string, Output]) => {
 					return [
 						key,

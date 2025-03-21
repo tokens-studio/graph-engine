@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { StringSchema } from '../../schemas/index.js';
 import { ToInput, ToOutput } from '../../programmatic';
@@ -25,11 +25,11 @@ export default class StringInterpolationNode extends DataflowNode {
 
 		this.annotations[annotatedDynamicInputs] = true;
 
-		this.dataflow.addInput('template', {
+		this.addInput('template', {
 			type: StringSchema
 		});
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: StringSchema
 		});
 	}

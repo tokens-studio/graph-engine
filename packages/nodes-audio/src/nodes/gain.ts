@@ -23,7 +23,7 @@ export class AudioGainNode extends AudioBaseNode {
 		'Modifies an audio source to provide a gain (volume) control.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('gain', {
+		this.addInput('gain', {
 			type: {
 				...NumberSchema,
 				default: 1,
@@ -35,12 +35,12 @@ export class AudioGainNode extends AudioBaseNode {
 				'ui.control': 'slider'
 			}
 		});
-		this.dataflow.addInput('input', {
+		this.addInput('input', {
 			type: NodeSchema,
 			visible: true
 		});
 
-		this.dataflow.addOutput('node', {
+		this.addOutput('node', {
 			visible: true,
 			type: {
 				...NodeSchema,

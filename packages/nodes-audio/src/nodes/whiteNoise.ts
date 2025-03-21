@@ -29,21 +29,21 @@ export class AudioWhiteNoiseNode extends AudioBaseNode {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.dataflow.addInput('channels', {
+		this.addInput('channels', {
 			type: {
 				...NumberSchema,
 				default: 1
 			},
 			visible: true
 		});
-		this.dataflow.addInput('length', {
+		this.addInput('length', {
 			type: {
 				...NumberSchema,
 				default: 3
 			},
 			visible: true
 		});
-		this.dataflow.addOutput('buffer', {
+		this.addOutput('buffer', {
 			type: AudioBufferSchema,
 			visible: true
 		});

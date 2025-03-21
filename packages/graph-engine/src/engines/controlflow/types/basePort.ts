@@ -3,11 +3,14 @@ import { ControlFlowNode } from './node.js';
 import { IPort, Port } from '@/programmatic/port.js';
 import { Node, TypeDefinition } from '@/programmatic/node.js';
 
-export const CONTROL_PORT = 1;
-
 export interface IControlflowPort<T extends Node = Node> extends IPort<T> {
 	type?: GraphSchema;
 }
+
+export const CONTROL_PORT_TYPE = {
+	name: 'Controlflow'
+};
+
 
 export class ControlFlowPort<
 	T extends ControlFlowNode = ControlFlowNode
@@ -16,7 +19,7 @@ export class ControlFlowPort<
 	protected _dynamicType?: GraphSchema = undefined;
 	protected _type: GraphSchema;
 
-	pType = CONTROL_PORT;
+	portType = CONTROL_PORT_TYPE;
 	constructor(props: IControlflowPort<T>) {
 		super(props);
 		this._type = props.type || AnySchema;

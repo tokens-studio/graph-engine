@@ -21,14 +21,14 @@ export default class NodeDefinition<T> extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('items', {
+		this.addInput('items', {
 			type: {
 				...createVariadicSchema(AnySchema),
 				default: []
 			},
 			variadic: true
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: AnyArraySchema
 		});
 	}

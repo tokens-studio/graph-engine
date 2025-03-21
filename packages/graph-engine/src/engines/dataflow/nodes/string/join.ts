@@ -1,5 +1,5 @@
 import { AnyArraySchema, StringSchema } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 export default class NodeDefinition<T> extends DataflowNode {
 	static title = 'Join Array';
@@ -18,16 +18,16 @@ export default class NodeDefinition<T> extends DataflowNode {
 		'Join node allows you to join an array into a string using a delimiter.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('array', {
+		this.addInput('array', {
 			type: AnyArraySchema
 		});
-		this.dataflow.addInput('delimiter', {
+		this.addInput('delimiter', {
 			type: {
 				...StringSchema,
 				default: '-'
 			}
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: StringSchema
 		});
 	}

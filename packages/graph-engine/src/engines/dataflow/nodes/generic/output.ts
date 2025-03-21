@@ -49,7 +49,7 @@ export default class NodeDefinition extends DataflowNode {
 			const rawInput = this.inputs[input];
 
 			if (!(input in outputs)) {
-				this.dataflow.addOutput(input, {
+				this.addOutput(input, {
 					type: rawInput.type,
 					visible: false
 				});

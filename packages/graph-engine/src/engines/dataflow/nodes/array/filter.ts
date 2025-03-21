@@ -115,7 +115,7 @@ export default class ArraySubgraph<T> extends DataflowNode {
 				//If the key doesn't exist in the existing inputs, add it
 				if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
 					//Always add it as visible
-					this.dataflow.addInput(key, {
+					this.addInput(key, {
 						type: value.type,
 						visible: true
 					});
@@ -142,14 +142,14 @@ export default class ArraySubgraph<T> extends DataflowNode {
 			});
 		});
 
-		this.dataflow.addInput('array', {
+		this.addInput('array', {
 			type: AnyArraySchema,
 			visible: true
 		});
 
 		this.inputs['array'].annotations['ui.editable'] = false;
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: AnyArraySchema,
 			visible: true
 		});

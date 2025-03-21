@@ -1,8 +1,4 @@
 import {
-	ControlFlow,
-	IControlFlowNode
-} from '@/engines/controlflow/nodeType/node.js';
-import {
 	Dataflow,
 	IDataflowNode,
 	INodeDefinition,
@@ -44,11 +40,11 @@ export default class NodeDefinition
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.dataflow.addInput('apiKey', {
+		this.addInput('apiKey', {
 			type: StringSchema
 		});
 
-		this.dataflow.addInput('model', {
+		this.addInput('model', {
 			type: {
 				...StringSchema,
 				default: 'claude-3-opus-20240229'

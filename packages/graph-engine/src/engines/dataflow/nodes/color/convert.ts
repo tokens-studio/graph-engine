@@ -20,17 +20,17 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('color', {
+		this.addInput('color', {
 			type: ColorSchema
 		});
-		this.dataflow.addInput('space', {
+		this.addInput('space', {
 			type: {
 				...StringSchema,
 				enum: colorSpaces,
 				default: 'srgb'
 			}
 		});
-		this.dataflow.addOutput('color', {
+		this.addOutput('color', {
 			type: ColorSchema
 		});
 	}

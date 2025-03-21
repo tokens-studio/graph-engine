@@ -1,6 +1,6 @@
 import { ColorSchema, StringSchema } from '../../schemas/index.js';
 import { ContrastAlgorithm } from '../../types/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition } from '../../index.js';
 import { arrayOf } from '../../schemas/utils.js';
 import { sortTokens } from './lib/sortColors.js';
@@ -13,20 +13,20 @@ export default class SortByDistanceNode extends DataflowNode {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.dataflow.addInput('colors', {
+		this.addInput('colors', {
 			type: arrayOf(ColorSchema)
 		});
-		this.dataflow.addInput('compareColor', {
+		this.addInput('compareColor', {
 			type: ColorSchema
 		});
-		this.dataflow.addInput('type', {
+		this.addInput('type', {
 			type: {
 				...StringSchema,
 				default: 'Hue',
 				enum: ['Contrast', 'Hue', 'Lightness', 'Saturation', 'Distance']
 			}
 		});
-		this.dataflow.addInput('algorithm', {
+		this.addInput('algorithm', {
 			type: {
 				...StringSchema,
 				enum: Object.values(ContrastAlgorithm),
@@ -34,7 +34,7 @@ export default class SortByDistanceNode extends DataflowNode {
 			}
 		});
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: arrayOf(ColorSchema)
 		});
 	}

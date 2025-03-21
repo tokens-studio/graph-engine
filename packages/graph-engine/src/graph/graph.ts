@@ -70,8 +70,8 @@ export type SubscriptionLookup = {
 export type ListenerType<T> = [T] extends [(...args: infer U) => any]
 	? U
 	: [T] extends [void]
-		? []
-		: [T];
+	? []
+	: [T];
 
 export type SubscriptionExecutor<T extends keyof SubscriptionLookup> = (
 	data: SubscriptionLookup[T]
@@ -98,7 +98,7 @@ const defaultGraphOpts: IGraph = {
 /**
  * This is our internal graph representation that we use to perform transformations on
  */
-export class Graph {
+export class Graph<NodeType extends Node = Node> {
 	finalizers: Record<string, any[]> = {};
 	listeners: Record<string, any[]> = {};
 	public annotations: Annotations = {};
@@ -108,7 +108,7 @@ export class Graph {
 	 */
 	registeredCapabilities: CapabilityFactory[] = [];
 
-	nodes: Record<string, Node>;
+	nodes: Record<string, NodeType>;
 	edges: Record<string, Edge>;
 	capabilities: Capabilities;
 
@@ -123,7 +123,7 @@ export class Graph {
 	 */
 	successorNodes: Record<string, string[]> = {};
 
-	constructor(input: IGraph = defaultGraphOpts) { 
+	constructor(input: IGraph = defaultGraphOpts) {
 		this.annotations = input.annotations || {};
 		this.nodes = {};
 		this.edges = {};
@@ -144,7 +144,7 @@ export class Graph {
 		this.getNodeIds().forEach(x => this.removeNode(x));
 	}
 
-	addNode(node: Node) {
+	addNode(node: NodeType) {
 		this.nodes[node.id] = node;
 		this.emit('nodeAdded', node);
 	}
@@ -167,7 +167,7 @@ export class Graph {
 		outEdges.forEach(edge => this.removeEdge(edge.id));
 
 		//Cleanup the node
-		node.dispose();
+		node.dispose(null);
 		//Remove from the lookup
 		delete this.nodes[nodeId];
 
@@ -507,7 +507,7 @@ export class Graph {
 	 * @param target
 	 * @param data
 	 */
-	createEdge(opts: EdgeOpts): Edge {
+	createEdge(opts: EdgeOpts): EdgeType {
 		const { source, target, sourceHandle, targetHandle, id } = opts;
 		const edge = new Edge(opts);
 
@@ -575,7 +575,7 @@ export class Graph {
 	 * @param nodeId
 	 * @returns
 	 */
-	getNode(nodeId: string): Node | undefined {
+	getNode(nodeId: string): NodeType | undefined {
 		return this.nodes[nodeId];
 	}
 

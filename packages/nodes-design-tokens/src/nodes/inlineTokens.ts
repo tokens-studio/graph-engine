@@ -24,11 +24,11 @@ export default class InlineTokenNode extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: arrayOf(TokenSchema),
 			visible: false
 		});
-		this.dataflow.addOutput('tokens', {
+		this.addOutput('tokens', {
 			type: arrayOf(TokenSchema)
 		});
 	}

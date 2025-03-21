@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { SecretCapability } from '../../capabilities/secret.js';
 import { StringSchema } from '../../schemas/index.js';
 
@@ -16,13 +16,13 @@ export default class NodeDefinition extends DataflowNode {
 	constructor(props) {
 		super(props);
 
-		this.dataflow.addInput('secret', {
+		this.addInput('secret', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('key', {
+		this.addInput('key', {
 			type: StringSchema
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: StringSchema
 		});
 	}

@@ -1,7 +1,7 @@
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 
 import { AnyArraySchema, NumberSchema } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 
 export default class NodeDefinition extends DataflowNode {
 	static title = 'Count';
@@ -17,10 +17,10 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: AnyArraySchema
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: NumberSchema
 		});
 	}

@@ -2,7 +2,7 @@ import { Black, toColor, toColorObject } from './lib/utils.js';
 import { ColorSchema, NumberSchema } from '../../schemas/index.js';
 import { ColorSpace } from './lib/types.js';
 import { Color as ColorType } from '../../types.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 export { ColorModifierTypes } from '@tokens-studio/types';
 
@@ -23,13 +23,13 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('color', {
+		this.addInput('color', {
 			type: {
 				...ColorSchema,
 				default: Black
 			}
 		});
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: {
 				...NumberSchema,
 				default: 0.5,
@@ -37,7 +37,7 @@ export default class NodeDefinition extends DataflowNode {
 			}
 		});
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: ColorSchema
 		});
 	}

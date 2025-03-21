@@ -98,14 +98,14 @@ export class ComposeNode extends BaseNode {
 
   constructor(props: INodeDefinition) {
     super(props);
-    this.dataflow.addInput("a", {
+    this.addInput("a", {
       type: ImageSchema,
     });
-    this.dataflow.addInput("b", {
+    this.addInput("b", {
       type: ImageSchema,
     });
 
-    this.dataflow.addInput("operator", {
+    this.addInput("operator", {
       type: {
         ...StringSchema,
         enum: Object.keys(CompositeOperatorLookup),
@@ -113,7 +113,7 @@ export class ComposeNode extends BaseNode {
       },
     });
 
-    this.dataflow.addOutput("image", {
+    this.addOutput("image", {
       type: ImageSchema,
     });
   }

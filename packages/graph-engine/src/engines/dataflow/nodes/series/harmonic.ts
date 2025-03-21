@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { NumberSchema } from '../../schemas/index.js';
 import { arrayOf } from '../../schemas/utils.js';
@@ -32,48 +32,48 @@ export default class NodeDefinition extends DataflowNode {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.dataflow.addInput('base', {
+		this.addInput('base', {
 			type: {
 				...NumberSchema,
 				default: 16
 			}
 		});
-		this.dataflow.addInput('stepsDown', {
+		this.addInput('stepsDown', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.dataflow.addInput('stepsUp', {
+		this.addInput('stepsUp', {
 			type: {
 				...NumberSchema,
 				default: 5
 			}
 		});
-		this.dataflow.addInput('notes', {
+		this.addInput('notes', {
 			type: {
 				...NumberSchema,
 				default: 5
 			}
 		});
 
-		this.dataflow.addInput('ratio', {
+		this.addInput('ratio', {
 			type: {
 				...NumberSchema,
 				default: 2
 			}
 		});
 
-		this.dataflow.addInput('precision', {
+		this.addInput('precision', {
 			type: {
 				...NumberSchema,
 				default: 2
 			}
 		});
-		this.dataflow.addOutput('array', {
+		this.addOutput('array', {
 			type: arrayOf(NumberSchema)
 		});
-		this.dataflow.addOutput('indexed', {
+		this.addOutput('indexed', {
 			type: {
 				$id: `https://schemas.tokens.studio/studio.tokens.series.harmonic/indexed.json`,
 				type: 'object',

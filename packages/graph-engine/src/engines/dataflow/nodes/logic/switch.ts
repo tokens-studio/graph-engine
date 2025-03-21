@@ -1,5 +1,5 @@
 import { AnySchema, StringSchema } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { ToInput } from '../../programmatic/dataflow/input.js';
 import { ToOutput } from '../../programmatic/dataflow/output.js';
@@ -42,15 +42,15 @@ export default class NodeDefinition<T> extends DataflowNode {
 
 		this.annotations[annotatedDynamicInputs] = true;
 
-		this.dataflow.addInput('default', {
+		this.addInput('default', {
 			type: AnySchema
 		});
 
-		this.dataflow.addInput('condition', {
+		this.addInput('condition', {
 			type: StringSchema
 		});
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: AnySchema
 		});
 	}

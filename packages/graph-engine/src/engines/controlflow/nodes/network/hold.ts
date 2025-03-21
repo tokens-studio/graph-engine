@@ -39,9 +39,9 @@ export default class NodeDefinition<T>
 		this.controlflow.addInput('value', (val, type) => {
 			this.outputs.value.set(val, type);
 			//Trigger the dataflow so it knows it can update
-			this.dataflow.run();
+			this.run();
 		});
-		this.dataflow.addOutput('value', { type: AnySchema });
+		this.addOutput('value', { type: AnySchema });
 	}
 	execute() {}
 }

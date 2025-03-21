@@ -1,4 +1,4 @@
-import { DataFlowPort } from './base.js';
+import { DataFlowPort } from './port.js';
 import { GraphSchema } from '@/schemas/index.js';
 import { Input } from './input.js';
 import { Node } from '@/programmatic/node.js';
@@ -72,18 +72,3 @@ export class Output<V = any, T extends Node = Node> extends DataFlowPort<V, T> {
 		return clonedOutput;
 	}
 }
-
-/**
- * Converts a type definition to a map of inputs
- * @example
- * ```ts
- * type myType = {
- * a: number,
- * b: string
- * }
- * type myInputs = ToInput<myType>
- * ```
- */
-export type ToOutput<T> = {
-	[P in keyof T]: Output<T[P]>;
-};

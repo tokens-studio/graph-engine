@@ -30,20 +30,20 @@ export class AudioOscillatorNode extends AudioBaseNode {
 		'Creates an oscillator node, a source representing a periodic waveform. It basically generates a constant tone.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('type', {
+		this.addInput('type', {
 			type: {
 				...StringSchema,
 				enum: ['sawtooth', 'sine', 'square', 'triangle'],
 				default: 'sine'
 			}
 		});
-		this.dataflow.addInput('frequency', {
+		this.addInput('frequency', {
 			type: {
 				...NumberSchema,
 				default: 3000
 			}
 		});
-		this.dataflow.addOutput('node', {
+		this.addOutput('node', {
 			type: {
 				...NodeSchema,
 				description: 'The generated oscillator node'

@@ -47,11 +47,11 @@ export class FetchNode extends BaseNode {
   static description = "Loads an image externally";
   constructor(props: INodeDefinition) {
     super(props);
-    this.dataflow.addInput("url", {
+    this.addInput("url", {
       type: StringSchema,
     });
 
-    this.dataflow.addOutput("image", {
+    this.addOutput("image", {
       type: ImageSchema,
     });
   }

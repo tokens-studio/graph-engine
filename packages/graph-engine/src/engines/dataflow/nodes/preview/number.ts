@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { NumberSchema } from '../../schemas/index.js';
 
 export default class NodeDefinition extends DataflowNode {
@@ -10,11 +10,11 @@ export default class NodeDefinition extends DataflowNode {
 	constructor(props) {
 		super(props);
 
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: { ...NumberSchema, default: 0 }
 		});
 
-		this.dataflow.addInput('precision', {
+		this.addInput('precision', {
 			type: { ...NumberSchema, default: 2 }
 		});
 	}

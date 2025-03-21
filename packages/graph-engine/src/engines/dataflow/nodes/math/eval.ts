@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { NumberSchema, StringSchema } from '../../schemas/index.js';
 import { Parser } from 'expr-eval';
@@ -26,16 +26,16 @@ export default class NodeDefinition extends DataflowNode {
 		super(props);
 
 		this.annotations[annotatedDynamicInputs] = true;
-		this.dataflow.addInput('expression', {
+		this.addInput('expression', {
 			type: StringSchema
 		});
 
 		//We expect users to expose the variables they want to use in the expression as inputs
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: NumberSchema
 		});
-		this.dataflow.addOutput('expression', {
+		this.addOutput('expression', {
 			type: StringSchema
 		});
 	}

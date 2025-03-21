@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { NumberSchema, StringSchema } from '../../schemas/index.js';
 import valueParser from 'postcss-value-parser-esm';
@@ -21,13 +21,13 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: StringSchema
 		});
-		this.dataflow.addOutput('unit', {
+		this.addOutput('unit', {
 			type: StringSchema
 		});
-		this.dataflow.addOutput('number', {
+		this.addOutput('number', {
 			type: NumberSchema
 		});
 	}

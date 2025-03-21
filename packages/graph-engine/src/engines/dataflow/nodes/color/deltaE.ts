@@ -4,7 +4,7 @@ import {
 	NumberSchema,
 	StringSchema
 } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition } from '../../index.js';
 import { setToPrecision } from '../../utils/precision.js';
 
@@ -20,25 +20,25 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('colorA', {
+		this.addInput('colorA', {
 			type: {
 				...ColorSchema,
 				default: White
 			}
 		});
-		this.dataflow.addInput('colorB', {
+		this.addInput('colorB', {
 			type: {
 				...ColorSchema,
 				default: Black
 			}
 		});
-		this.dataflow.addInput('precision', {
+		this.addInput('precision', {
 			type: {
 				...NumberSchema,
 				default: 4
 			}
 		});
-		this.dataflow.addInput('algorithm', {
+		this.addInput('algorithm', {
 			type: {
 				...StringSchema,
 				enum: algorithms,
@@ -46,7 +46,7 @@ export default class NodeDefinition extends DataflowNode {
 			}
 		});
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: NumberSchema
 		});
 	}

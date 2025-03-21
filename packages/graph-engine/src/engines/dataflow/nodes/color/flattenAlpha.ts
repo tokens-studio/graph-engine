@@ -1,5 +1,5 @@
 import { ColorSchema } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition } from '../../index.js';
 import { flattenAlpha } from './lib/flattenAlpha.js';
 import { toColor, toColorObject } from './lib/utils.js';
@@ -12,18 +12,18 @@ export default class NodeDefinition extends DataflowNode {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.dataflow.addInput('foreground', {
+		this.addInput('foreground', {
 			type: {
 				...ColorSchema
 			}
 		});
-		this.dataflow.addInput('background', {
+		this.addInput('background', {
 			type: {
 				...ColorSchema
 			}
 		});
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: ColorSchema
 		});
 	}

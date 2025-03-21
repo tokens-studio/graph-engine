@@ -1,6 +1,6 @@
 import { ColorSchema, StringSchema } from '../../schemas/index.js';
 import { Color as ColorType } from '../../types.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { toColorObject } from './lib/utils.js';
 import Color from 'colorjs.io';
@@ -21,11 +21,11 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('color', {
+		this.addInput('color', {
 			type: StringSchema
 		});
 
-		this.dataflow.addOutput('color', {
+		this.addOutput('color', {
 			type: ColorSchema
 		});
 	}

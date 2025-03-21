@@ -1,5 +1,5 @@
 import { AnySchema, BooleanSchema } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 
 export default class NodeDefinition<T, V> extends DataflowNode {
@@ -20,16 +20,16 @@ export default class NodeDefinition<T, V> extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('condition', {
+		this.addInput('condition', {
 			type: BooleanSchema
 		});
-		this.dataflow.addInput('a', {
+		this.addInput('a', {
 			type: AnySchema
 		});
-		this.dataflow.addInput('b', {
+		this.addInput('b', {
 			type: AnySchema
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: AnySchema
 		});
 	}

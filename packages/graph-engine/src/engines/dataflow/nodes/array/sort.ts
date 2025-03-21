@@ -35,20 +35,20 @@ export default class NodeDefinition<T> extends DataflowNode {
 	static description = 'Sorts an array';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('array', {
+		this.addInput('array', {
 			type: AnyArraySchema
 		});
-		this.dataflow.addInput('order', {
+		this.addInput('order', {
 			type: {
 				...StringSchema,
 				enum: [Order.ASC, Order.DESC],
 				default: Order.ASC
 			}
 		});
-		this.dataflow.addInput('sortBy', {
+		this.addInput('sortBy', {
 			type: StringSchema
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: AnyArraySchema
 		});
 	}

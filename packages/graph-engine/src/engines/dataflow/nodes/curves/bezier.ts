@@ -1,6 +1,6 @@
 import { Curve } from '../../types.js';
 import { CurveSchema, NumberSchema } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { ToInput, ToOutput } from '@/programmatic/index.js';
 
@@ -23,7 +23,7 @@ export default class BezierCurveNode extends DataflowNode {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.dataflow.addInput('x1', {
+		this.addInput('x1', {
 			type: {
 				...NumberSchema,
 				default: 0.5,
@@ -31,7 +31,7 @@ export default class BezierCurveNode extends DataflowNode {
 				maximum: 1
 			}
 		});
-		this.dataflow.addInput('y1', {
+		this.addInput('y1', {
 			type: {
 				...NumberSchema,
 				default: 0,
@@ -39,7 +39,7 @@ export default class BezierCurveNode extends DataflowNode {
 				maximum: 1
 			}
 		});
-		this.dataflow.addInput('x2', {
+		this.addInput('x2', {
 			type: {
 				...NumberSchema,
 				default: 0.5,
@@ -47,7 +47,7 @@ export default class BezierCurveNode extends DataflowNode {
 				maximum: 1
 			}
 		});
-		this.dataflow.addInput('y2', {
+		this.addInput('y2', {
 			type: {
 				...NumberSchema,
 				default: 1,
@@ -56,7 +56,7 @@ export default class BezierCurveNode extends DataflowNode {
 			}
 		});
 
-		this.dataflow.addOutput('curve', {
+		this.addOutput('curve', {
 			type: CurveSchema
 		});
 	}

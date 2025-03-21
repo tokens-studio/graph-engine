@@ -31,29 +31,29 @@ export class ImageProperties extends BaseNode {
 
   constructor(props: INodeDefinition) {
     super(props);
-    this.dataflow.addInput("image", {
+    this.addInput("image", {
       type: ImageSchema,
     });
 
-    this.dataflow.addOutput("width", {
+    this.addOutput("width", {
       type: NumberSchema,
     });
-    this.dataflow.addOutput("height", {
+    this.addOutput("height", {
       type: NumberSchema,
     });
-    this.dataflow.addOutput("channelCount", {
+    this.addOutput("channelCount", {
       type: NumberSchema,
     });
-    this.dataflow.addOutput("format", {
+    this.addOutput("format", {
       type: StringSchema,
     });
-    this.dataflow.addOutput("gamma", {
+    this.addOutput("gamma", {
       type: NumberSchema,
     });
-    this.dataflow.addOutput("hasAlpha", {
+    this.addOutput("hasAlpha", {
       type: BooleanSchema,
     });
-    this.dataflow.addOutput("quality", {
+    this.addOutput("quality", {
       type: NumberSchema,
     });
   }

@@ -26,19 +26,19 @@ export class ResizeNode extends BaseNode {
 
   constructor(props: INodeDefinition) {
     super(props);
-    this.dataflow.addInput("image", {
+    this.addInput("image", {
       type: ImageSchema,
     });
-    this.dataflow.addInput("width", {
+    this.addInput("width", {
       type: NumberSchema,
     });
-    this.dataflow.addInput("height", {
+    this.addInput("height", {
       type: NumberSchema,
     });
-    this.dataflow.addInput("asPercent", {
+    this.addInput("asPercent", {
       type: BooleanSchema,
     });
-    this.dataflow.addOutput("image", {
+    this.addOutput("image", {
       type: ImageSchema,
     });
   }

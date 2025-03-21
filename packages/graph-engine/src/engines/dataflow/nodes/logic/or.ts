@@ -3,7 +3,7 @@ import {
 	BooleanSchema,
 	createVariadicSchema
 } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 
 export default class NodeDefinition<T = any> extends DataflowNode {
@@ -21,14 +21,14 @@ export default class NodeDefinition<T = any> extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('inputs', {
+		this.addInput('inputs', {
 			type: {
 				...createVariadicSchema(AnySchema),
 				default: []
 			},
 			variadic: true
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: BooleanSchema
 		});
 	}

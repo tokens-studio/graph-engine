@@ -22,17 +22,17 @@ export class AudioConnectNode extends AudioBaseNode {
 	static description = 'An explicit connection between audio nodes';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('source', {
+		this.addInput('source', {
 			type: {
 				...createVariadicSchema(NodeSchema),
 				default: []
 			},
 			variadic: true
 		});
-		this.dataflow.addInput('destination', {
+		this.addInput('destination', {
 			type: NodeSchema
 		});
-		this.dataflow.addOutput('destination', {
+		this.addOutput('destination', {
 			type: NodeSchema
 		});
 	}

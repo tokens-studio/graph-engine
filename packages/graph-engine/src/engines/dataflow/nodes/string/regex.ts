@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { StringSchema } from '../../schemas/index.js';
 
@@ -22,28 +22,28 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('input', {
+		this.addInput('input', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('match', {
+		this.addInput('match', {
 			type: {
 				...StringSchema,
 				default: ''
 			}
 		});
-		this.dataflow.addInput('flags', {
+		this.addInput('flags', {
 			type: {
 				...StringSchema,
 				default: ''
 			}
 		});
-		this.dataflow.addInput('replace', {
+		this.addInput('replace', {
 			type: {
 				...StringSchema,
 				default: ''
 			}
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: StringSchema
 		});
 	}

@@ -1,5 +1,5 @@
 import { AnySchema, BooleanSchema, StringSchema } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { SchemaObject } from 'ajv';
 import { ToInput } from '../../programmatic/dataflow/input.js';
@@ -57,19 +57,19 @@ export default class NodeDefinition extends DataflowNode {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.dataflow.addInput('object', {
+		this.addInput('object', {
 			type: AnySchema
 		});
 
-		this.dataflow.addInput('path', {
+		this.addInput('path', {
 			type: StringSchema
 		});
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: AnySchema
 		});
 
-		this.dataflow.addOutput('missing', {
+		this.addOutput('missing', {
 			type: BooleanSchema
 		});
 	}

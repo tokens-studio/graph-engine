@@ -6,7 +6,7 @@ import {
 } from '../../schemas/index.js';
 import { ColorSpace, colorSpaces } from './lib/types.js';
 import { Color as ColorType } from '../../types.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import Color from 'colorjs.io';
 
@@ -28,26 +28,26 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('colorA', {
+		this.addInput('colorA', {
 			type: {
 				...ColorSchema,
 				default: White
 			}
 		});
-		this.dataflow.addInput('colorB', {
+		this.addInput('colorB', {
 			type: {
 				...ColorSchema,
 				default: Black
 			}
 		});
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: {
 				...NumberSchema,
 				default: 0.5,
 				description: 'Value to apply to the modifier'
 			}
 		});
-		this.dataflow.addInput('space', {
+		this.addInput('space', {
 			type: {
 				...StringSchema,
 				default: 'srgb',
@@ -56,7 +56,7 @@ export default class NodeDefinition extends DataflowNode {
 			}
 		});
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: ColorSchema
 		});
 	}

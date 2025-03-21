@@ -1,5 +1,5 @@
+import { BehaviourPort } from './port.js';
 import { DataFlowCapability } from '@/engines/dataflow/index.js';
-import { DataFlowPort } from './base.js';
 import { GraphSchema } from '@/schemas/index.js';
 import { Node, TypeDefinition } from '@/programmatic/node.js';
 import { Output } from './output.js';
@@ -21,11 +21,10 @@ export interface ISetValue {
 	type?: GraphSchema;
 }
 
-export class Input<V = any, T extends Node = Node> extends DataFlowPort<V, T> {
+export class Input<V = any, T extends Node = Node> extends BehaviourPort<V, T> {
 	constructor(props: IInputProps<V, T>) {
 		super(props);
 
-		this.variadic = props.variadic || false;
 		makeObservable(this, {
 			setValue: action,
 			reset: action,

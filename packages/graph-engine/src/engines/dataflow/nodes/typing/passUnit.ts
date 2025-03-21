@@ -1,6 +1,6 @@
 import valueParser from 'postcss-value-parser-esm';
 
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { StringSchema } from '../../schemas/index.js';
 import { ToInput } from '../../programmatic/input.js';
@@ -19,16 +19,16 @@ export default class NodeDefinition extends DataflowNode {
 	static description = "Adds a unit to a value if it doesn't already have one";
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('fallback', {
+		this.addInput('fallback', {
 			type: {
 				...StringSchema,
 				default: 'px'
 			}
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: StringSchema
 		});
 	}

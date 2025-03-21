@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { StringSchema } from '../../schemas/index.js';
 import { ToInput } from '../../programmatic/dataflow/input.js';
@@ -18,16 +18,16 @@ export default class NodeDefinition extends DataflowNode {
 	static description = 'Converts a string to lowercase';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: StringSchema
 		});
-		this.dataflow.addInput('separator', {
+		this.addInput('separator', {
 			type: {
 				...StringSchema,
 				default: ','
 			}
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: arrayOf(StringSchema)
 		});
 	}

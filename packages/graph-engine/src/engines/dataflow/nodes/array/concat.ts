@@ -17,13 +17,13 @@ export default class NodeDefinition<T> extends DataflowNode {
 	static description = 'Performs an array join using a string delimiter';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('a', {
+		this.addInput('a', {
 			type: AnyArraySchema
 		});
-		this.dataflow.addInput('b', {
+		this.addInput('b', {
 			type: AnyArraySchema
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: AnyArraySchema
 		});
 	}

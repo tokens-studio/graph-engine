@@ -41,3 +41,5 @@ export class PlayControls<T extends Node> {
 export interface IPlayControlNode<T extends Node = Node> {
     playControls: PlayControls<T>
 }
+
+export type NodeWithPlayControl<T extends Node = Node> = T & IPlayControlNode<T>;

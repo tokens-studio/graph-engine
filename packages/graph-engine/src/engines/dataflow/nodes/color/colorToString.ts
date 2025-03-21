@@ -19,13 +19,13 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('color', {
+		this.addInput('color', {
 			type: {
 				...ColorSchema,
 				default: Black
 			}
 		});
-		this.dataflow.addInput('space', {
+		this.addInput('space', {
 			type: {
 				...StringSchema,
 				enum: ['srgb', 'hsl', 'hex'],
@@ -33,7 +33,7 @@ export default class NodeDefinition extends DataflowNode {
 			},
 			visible: false
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: StringSchema
 		});
 	}

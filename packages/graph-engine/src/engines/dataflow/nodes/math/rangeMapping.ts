@@ -1,7 +1,7 @@
 // src/nodes/math/dataMapping.ts
 
 import { BooleanSchema, NumberSchema } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { ToInput, ToOutput } from '@/programmatic/index.js';
 
@@ -26,44 +26,44 @@ export default class RangeMappingNode extends DataflowNode {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.dataflow.addInput('inputValue', {
+		this.addInput('inputValue', {
 			type: {
 				...NumberSchema,
 				default: 5
 			}
 		});
-		this.dataflow.addInput('inputMin', {
+		this.addInput('inputMin', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.dataflow.addInput('inputMax', {
+		this.addInput('inputMax', {
 			type: {
 				...NumberSchema,
 				default: 100
 			}
 		});
-		this.dataflow.addInput('outputMin', {
+		this.addInput('outputMin', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.dataflow.addInput('outputMax', {
+		this.addInput('outputMax', {
 			type: {
 				...NumberSchema,
 				default: 1
 			}
 		});
-		this.dataflow.addInput('clamp', {
+		this.addInput('clamp', {
 			type: {
 				...BooleanSchema,
 				default: true
 			}
 		});
 
-		this.dataflow.addOutput('mappedValue', {
+		this.addOutput('mappedValue', {
 			type: NumberSchema
 		});
 	}

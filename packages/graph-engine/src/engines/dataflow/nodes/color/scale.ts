@@ -1,6 +1,6 @@
 import { Color } from '../../types.js';
 import { ColorSchema, NumberSchema } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Red, toColor, toColorObject } from './lib/utils.js';
 import { arrayOf } from '../../schemas/utils.js';
@@ -22,25 +22,25 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('color', {
+		this.addInput('color', {
 			type: {
 				...ColorSchema,
 				default: Red
 			}
 		});
-		this.dataflow.addInput('stepsUp', {
+		this.addInput('stepsUp', {
 			type: {
 				...NumberSchema,
 				default: 5
 			}
 		});
-		this.dataflow.addInput('stepsDown', {
+		this.addInput('stepsDown', {
 			type: {
 				...NumberSchema,
 				default: 5
 			}
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: arrayOf(ColorSchema)
 		});
 	}

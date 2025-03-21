@@ -52,13 +52,13 @@ export default class ResolveNode extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('inputs', {
+		this.addInput('inputs', {
 			type: arrayOf(arrayOf(TokenSchema))
 		});
-		this.dataflow.addInput('context', {
+		this.addInput('context', {
 			type: arrayOf(arrayOf(TokenSchema))
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: arrayOf(TokenSchema)
 		});
 	}

@@ -1,6 +1,6 @@
 import { Curve } from '../../types.js';
 import { CurveSchema, NumberSchema, Vec2Schema } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 
 const scaleVec = (vec, scale) => vec.map(v => v * scale);
@@ -43,22 +43,22 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('curve', {
+		this.addInput('curve', {
 			type: CurveSchema
 		});
-		this.dataflow.addInput('sample', {
+		this.addInput('sample', {
 			type: {
 				...NumberSchema,
 				default: 0.5
 			}
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: Vec2Schema
 		});
-		this.dataflow.addOutput('x', {
+		this.addOutput('x', {
 			type: NumberSchema
 		});
-		this.dataflow.addOutput('y', {
+		this.addOutput('y', {
 			type: NumberSchema
 		});
 	}

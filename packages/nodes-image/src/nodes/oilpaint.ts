@@ -23,15 +23,15 @@ export class Oilpaint extends BaseNode {
 
   constructor(props: INodeDefinition) {
     super(props);
-    this.dataflow.addInput("image", {
+    this.addInput("image", {
       type: ImageSchema,
     });
 
-    this.dataflow.addInput("radius", {
+    this.addInput("radius", {
       type: NumberSchema,
     });
 
-    this.dataflow.addOutput("image", {
+    this.addOutput("image", {
       type: ImageSchema,
     });
   }

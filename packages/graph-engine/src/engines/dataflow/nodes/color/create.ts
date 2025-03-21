@@ -44,26 +44,26 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('space', {
+		this.addInput('space', {
 			type: {
 				...StringSchema,
 				enum: colorSpaces,
 				default: 'srgb'
 			}
 		});
-		this.dataflow.addInput('a', {
+		this.addInput('a', {
 			type: {
 				...NumberSchema,
 				default: '0'
 			}
 		});
-		this.dataflow.addInput('b', {
+		this.addInput('b', {
 			type: {
 				...NumberSchema,
 				default: '0'
 			}
 		});
-		this.dataflow.addInput('c', {
+		this.addInput('c', {
 			type: {
 				...NumberSchema,
 				default: '0'
@@ -71,13 +71,13 @@ export default class NodeDefinition extends DataflowNode {
 		});
 
 		//No default on alpha as this might result in Hex8 colors which are not always desired
-		this.dataflow.addInput('alpha', {
+		this.addInput('alpha', {
 			type: {
 				...NumberSchema
 			}
 		});
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: ColorSchema
 		});
 	}

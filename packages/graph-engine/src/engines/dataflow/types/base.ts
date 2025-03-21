@@ -4,7 +4,9 @@ import { Node } from '@/programmatic/node.js';
 import { computed, makeObservable, observable } from 'mobx';
 
 
-export const DATAFLOW_PORT = 2;
+export const DATAFLOW_PORT_TYPE = {
+	name: 'Dataflow'
+};
 
 export interface IDataflowPort<V = any, T extends Node = Node>
 	extends IPort<T> {
@@ -16,7 +18,7 @@ export class DataFlowPort<V = any, T extends Node = Node> extends Port<T> {
 	protected _dynamicType: GraphSchema | null = null;
 	protected _type: GraphSchema = AnySchema;
 	protected _value: V;
-	pType = DATAFLOW_PORT;
+	portType = DATAFLOW_PORT_TYPE;
 
 	constructor(props: IDataflowPort<V, T>) {
 		super(props);

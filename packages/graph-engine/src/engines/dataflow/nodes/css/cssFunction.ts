@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { StringSchema } from '../../schemas/index.js';
 import cssFunctionsData from 'mdn-data/css/functions.json' with { type: 'json' };
@@ -22,16 +22,16 @@ export default class NodeDefinition extends DataflowNode {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.dataflow.addInput('functionName', {
+		this.addInput('functionName', {
 			type: {
 				...StringSchema,
 				enum: FUNCTION_NAMES
 			}
 		});
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: StringSchema
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: StringSchema
 		});
 	}

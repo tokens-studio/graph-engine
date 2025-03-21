@@ -35,46 +35,46 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('a', {
+		this.addInput('a', {
 			type: {
 				...ColorSchema,
 				default: White
 			}
 		});
-		this.dataflow.addInput('b', {
+		this.addInput('b', {
 			type: {
 				...ColorSchema,
 				default: Black
 			}
 		});
-		this.dataflow.addInput('background', {
+		this.addInput('background', {
 			type: {
 				...ColorSchema,
 				default: White
 			}
 		});
 
-		this.dataflow.addInput('algorithm', {
+		this.addInput('algorithm', {
 			type: {
 				...StringSchema,
 				enum: Object.values(ContrastAlgorithm),
 				default: ContrastAlgorithm.APCA
 			}
 		});
-		this.dataflow.addInput('threshold', {
+		this.addInput('threshold', {
 			type: {
 				...NumberSchema,
 				default: 60
 			}
 		});
 
-		this.dataflow.addOutput('sufficient', {
+		this.addOutput('sufficient', {
 			type: BooleanSchema
 		});
-		this.dataflow.addOutput('color', {
+		this.addOutput('color', {
 			type: ColorSchema
 		});
-		this.dataflow.addOutput('contrast', {
+		this.addOutput('contrast', {
 			type: NumberSchema
 		});
 	}

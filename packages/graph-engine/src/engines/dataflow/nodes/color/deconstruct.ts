@@ -46,23 +46,23 @@ export default class DestructColorNode extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('color', {
+		this.addInput('color', {
 			type: ColorSchema
 		});
 
-		this.dataflow.addOutput('space', {
+		this.addOutput('space', {
 			type: StringSchema
 		});
-		this.dataflow.addOutput('a', {
+		this.addOutput('a', {
 			type: NumberSchema
 		});
-		this.dataflow.addOutput('b', {
+		this.addOutput('b', {
 			type: NumberSchema
 		});
-		this.dataflow.addOutput('c', {
+		this.addOutput('c', {
 			type: NumberSchema
 		});
-		this.dataflow.addOutput('alpha', {
+		this.addOutput('alpha', {
 			type: NumberSchema
 		});
 	}

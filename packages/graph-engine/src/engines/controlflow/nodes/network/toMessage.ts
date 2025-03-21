@@ -41,7 +41,7 @@ export default class NodeDefinition<T>
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: AnySchema
 		});
 

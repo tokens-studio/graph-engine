@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { NumberSchema, createVariadicSchema } from '../../schemas/index.js';
 
@@ -16,14 +16,14 @@ export default class NodeDefinition extends DataflowNode {
 	}>;
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('inputs', {
+		this.addInput('inputs', {
 			type: {
 				...createVariadicSchema(NumberSchema),
 				default: []
 			},
 			variadic: true
 		});
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: NumberSchema
 		});
 	}

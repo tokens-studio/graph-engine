@@ -1,6 +1,15 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { NumberSchema, StringSchema } from '../../schemas/index.js';
+
+
+
+
+function execute(top:number | string, right:number =5, bottom:number =2, left:number =3 , value:boolean): void {
+	value.set(`${top} ${right} ${bottom} ${left}`);
+}
+
+
 
 export default class NodeDefinition extends DataflowNode {
 	static title = 'CSS Box';
@@ -20,32 +29,32 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('top', {
+		this.addInput('top', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.dataflow.addInput('right', {
+		this.addInput('right', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.dataflow.addInput('bottom', {
+		this.addInput('bottom', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
-		this.dataflow.addInput('left', {
+		this.addInput('left', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: StringSchema
 		});
 	}

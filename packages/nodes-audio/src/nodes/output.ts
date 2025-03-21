@@ -16,7 +16,7 @@ export class AudioOutputNode extends AudioBaseNode {
 		'Provides access to the output of a the audio context. This is the final node in the audio graph.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('input', {
+		this.addInput('input', {
 			visible: true,
 			type: NodeSchema
 		});

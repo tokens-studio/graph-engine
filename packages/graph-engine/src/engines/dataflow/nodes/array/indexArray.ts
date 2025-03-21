@@ -31,17 +31,17 @@ export default class NodeDefinition<T> extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('array', {
+		this.addInput('array', {
 			type: AnyArraySchema
 		});
-		this.dataflow.addInput('index', {
+		this.addInput('index', {
 			type: {
 				...NumberSchema,
 				default: 0
 			}
 		});
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: AnySchema
 		});
 	}

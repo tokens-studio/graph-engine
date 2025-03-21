@@ -22,13 +22,13 @@ export default class NodeDefinition extends DataflowNode {
 
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('color', {
+		this.addInput('color', {
 			type: {
 				...ColorSchema,
 				default: White
 			}
 		});
-		this.dataflow.addInput('value', {
+		this.addInput('value', {
 			type: {
 				...NumberSchema,
 				default: 0.5,
@@ -36,7 +36,7 @@ export default class NodeDefinition extends DataflowNode {
 			}
 		});
 
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: ColorSchema
 		});
 	}

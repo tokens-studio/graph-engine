@@ -62,7 +62,6 @@ export class Output<V = any, T extends Node = Node> extends DataFlowPort<V, T> {
 			name: this.name,
 			type: this.type,
 			value: this._value,
-			visible: this.visible,
 			node: this.node
 		});
 

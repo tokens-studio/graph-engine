@@ -1,4 +1,4 @@
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { ObjectSchema } from '../../schemas/index.js';
 import { ToInput } from '../../programmatic/dataflow/input.js';
@@ -23,7 +23,7 @@ export default class NodeDefinition extends DataflowNode {
 
 		this.annotations[annotatedDynamicInputs] = true;
 		//Purely runtime inputs
-		this.dataflow.addOutput('value', {
+		this.addOutput('value', {
 			type: ObjectSchema
 		});
 	}

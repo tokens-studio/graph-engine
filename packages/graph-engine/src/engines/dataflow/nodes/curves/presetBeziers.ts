@@ -1,6 +1,6 @@
 import { Curve } from '../../types.js';
 import { CurveSchema, StringSchema } from '../../schemas/index.js';
-import { DataflowNode } from '@/programmatic/nodes/dataflow.js';
+import { DataflowNode } from '@/engines/dataflow/types/node.js';
 import { INodeDefinition } from '../../programmatic/nodes/node.js';
 import { ToInput, ToOutput } from '@/programmatic/index.js';
 
@@ -49,7 +49,7 @@ export default class BezierCurveNode extends DataflowNode {
 	constructor(props: INodeDefinition) {
 		super(props);
 
-		this.dataflow.addInput('name', {
+		this.addInput('name', {
 			type: {
 				...StringSchema,
 				enum: Object.keys(presetBeziers),
@@ -57,7 +57,7 @@ export default class BezierCurveNode extends DataflowNode {
 			}
 		});
 
-		this.dataflow.addOutput('curve', {
+		this.addOutput('curve', {
 			type: CurveSchema
 		});
 	}

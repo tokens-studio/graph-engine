@@ -16,11 +16,11 @@ export class GetTextNode extends DataflowNode {
 	static description = 'Reads the text context of a file from the file system.';
 	constructor(props: INodeDefinition) {
 		super(props);
-		this.dataflow.addInput('file', {
+		this.addInput('file', {
 			type: FileSchema
 		});
 
-		this.dataflow.addOutput('contents', {
+		this.addOutput('contents', {
 			type: StringSchema
 		});
 	}
