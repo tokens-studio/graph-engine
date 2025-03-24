@@ -10,9 +10,10 @@ import type { SerializedGraph } from '@tokens-studio/graph-engine';
 export const router = tsr.router<typeof aiContract, Context>(aiContract, {
 	getAISummary: {
 		middleware: [authMiddleware, rateLimitMiddleware],
-		handler: async ({ body }) => {
+		handler: async ({ body }, { request }) => {
 			const { graph } = body;
-			const summary = await summarizeGraph(graph as SerializedGraph);
+			const userId = request.session.user?.id;
+			const summary = await summarizeGraph(graph as SerializedGraph, userId);
 			return {
 				status: 200,
 				body: {

@@ -757,6 +757,7 @@ export const EditorApp = React.forwardRef<
             display: 'flex',
             flexDirection: 'row',
             flexGrow: 1,
+            overscrollBehaviorX: 'none',
           }}
         >
           <HotKeys>
