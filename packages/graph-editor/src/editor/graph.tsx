@@ -429,7 +429,10 @@ export const EditorApp = React.forwardRef<
       },
       loadRaw: async (serializedGraph) => {
         if (internalRef.current) {
+          // First deserialize the graph without triggering a full reload
           await graph.deserialize(serializedGraph, fullNodeLookup);
+
+          // Then load the graph into the UI without re-deserializing
           internalRef?.current.load(graph);
         }
       },

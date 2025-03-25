@@ -1,5 +1,6 @@
 import { HotKeys as HotKeysComp } from 'react-hotkeys';
 import { deleteSelectedNodes } from '@/editor/actions/deleteSelectedNodes.js';
+import { focusReactFlowPane } from './utils.js';
 import {
   inlineTypes,
   inlineValues,
@@ -135,12 +136,14 @@ export const useHotkeys = () => {
       DELETE: (event) => {
         event.preventDefault();
         deleteSelectedNodes(reactFlowInstance, graph, deleteNode, trigger);
+        focusReactFlowPane();
       },
       CUT: (event) => {
         event.stopPropagation();
         event.preventDefault();
         copySelectedNodes();
         deleteSelectedNodes(reactFlowInstance, graph, deleteNode, trigger);
+        focusReactFlowPane();
       },
       COPY: (event) => {
         event.stopPropagation();
@@ -150,6 +153,7 @@ export const useHotkeys = () => {
       PASTE: (event) => {
         event.preventDefault();
         pasteFromClipboard();
+        focusReactFlowPane();
       },
       SELECT_ALL: (event) => {
         event.stopPropagation();
