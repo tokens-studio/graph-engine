@@ -223,6 +223,8 @@ export const useHotkeys = () => {
       inlineTypesValue,
       inlineValuesValue,
       trigger,
+      copySelectedNodes,
+      pasteFromClipboard,
     ],
   );
 
