@@ -36,6 +36,7 @@
     "format:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --write",
     "test:e2e": "cypress run",
     "test:e2e:manual": "cypress open",
+    "test": "vitest run",
     "lint": "npm run lint:prettier && npm run lint:eslint",
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier \"**/*.{tsx,ts,js,md,json}\" --check",
