@@ -1,4 +1,5 @@
 import { HotKeys as HotKeysComp } from 'react-hotkeys';
+import { currentPanelIdSelector } from '@/redux/selectors/graph.js';
 import { deleteSelectedNodes } from '@/editor/actions/deleteSelectedNodes.js';
 import { focusReactFlowPane } from './utils.js';
 import {
@@ -94,6 +95,13 @@ export const useHotkeys = () => {
 
   const graph = useLocalGraph();
   const reactFlowInstance = useReactFlow();
+
+  // create a specific selector for the active ReactFlow instance
+  const activeGraphId = useSelector(currentPanelIdSelector);
+  const flowSelector = activeGraphId
+    ? `#${activeGraphId} .react-flow`
+    : '.react-flow';
+
   const handlers = useMemo(
     () => ({
       SAVE_VIEWPORT: (event) => {
@@ -136,14 +144,14 @@ export const useHotkeys = () => {
       DELETE: (event) => {
         event.preventDefault();
         deleteSelectedNodes(reactFlowInstance, graph, deleteNode, trigger);
-        focusReactFlowPane();
+        focusReactFlowPane(flowSelector);
       },
       CUT: (event) => {
         event.stopPropagation();
         event.preventDefault();
         copySelectedNodes();
         deleteSelectedNodes(reactFlowInstance, graph, deleteNode, trigger);
-        focusReactFlowPane();
+        focusReactFlowPane(flowSelector);
       },
       COPY: (event) => {
         event.stopPropagation();
@@ -153,7 +161,7 @@ export const useHotkeys = () => {
       PASTE: (event) => {
         event.preventDefault();
         pasteFromClipboard();
-        focusReactFlowPane();
+        focusReactFlowPane(flowSelector);
       },
       SELECT_ALL: (event) => {
         event.stopPropagation();
@@ -218,6 +226,7 @@ export const useHotkeys = () => {
       graph,
       layout,
       reactFlowInstance,
+      flowSelector,
       showGridValue,
       snapGridValue,
       inlineTypesValue,

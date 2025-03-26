@@ -403,15 +403,16 @@ function useCopyPaste() {
       return node && Object.values(node.inputs).some((input) => input.variadic);
     });
 
-    // execute variadic nodes first
-    for (const nodeId of variadicNodes) {
+    // execute all variadic nodes
+    const variadicPromises = variadicNodes.map(async (nodeId) => {
       executedNodes.add(nodeId as string);
       try {
         await graph.update(nodeId as string);
       } catch (error) {
         console.error(`Error executing variadic node ${nodeId}:`, error);
       }
-    }
+    });
+    await Promise.all(variadicPromises);
 
     // find direct dependencies of variadic nodes
     const directDependencies = new Set<string>();
@@ -424,26 +425,29 @@ function useCopyPaste() {
       }
     }
 
-    // execute direct dependencies
-    for (const nodeId of directDependencies) {
+    // execute all direct dependencies
+    const dependencyPromises = [...directDependencies].map(async (nodeId) => {
       executedNodes.add(nodeId);
       try {
         await graph.update(nodeId);
       } catch (error) {
         console.error(`Error executing dependency node ${nodeId}:`, error);
       }
-    }
+    });
+    await Promise.all(dependencyPromises);
 
-    // execute remaining nodes
-    for (const nodeId of validNodeIds) {
-      if (!executedNodes.has(nodeId as string)) {
-        try {
-          await graph.update(nodeId as string);
-        } catch (error) {
-          console.error(`Error executing node ${nodeId}:`, error);
-        }
+    // execute all remaining nodes
+    const remainingNodes = [...validNodeIds].filter(
+      (nodeId) => !executedNodes.has(nodeId as string),
+    );
+    const remainingPromises = remainingNodes.map(async (nodeId) => {
+      try {
+        await graph.update(nodeId as string);
+      } catch (error) {
+        console.error(`Error executing node ${nodeId}:`, error);
       }
-    }
+    });
+    await Promise.all(remainingPromises);
   }, []);
 
   const updateFlowUI = useCallback(
