@@ -1,5 +1,11 @@
 # @tokens-studio/graph-engine
 
+## 7.2.1
+
+### Patch Changes
+
+- 116141a: Renamed Destruct Token to Deconstruct Token
+
 ## 7.2.0
 
 ### Minor Changes
