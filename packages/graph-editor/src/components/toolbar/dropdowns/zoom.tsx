@@ -31,8 +31,10 @@ export const ZoomDropdown = () => {
   const onSetZoom = useCallback(
     (e) => {
       const zoom = parseFloat(e.currentTarget.dataset.value);
+      // Ensure zoom is within valid range
+      const safeZoom = Math.max(0.1, Math.min(zoom, 10));
 
-      reactFlow.zoomTo(zoom, {
+      reactFlow.zoomTo(safeZoom, {
         duration: 0.1,
       });
     },
@@ -41,12 +43,14 @@ export const ZoomDropdown = () => {
 
   const zoomIn = useCallback(() => {
     const viewport = reactFlow.getViewport();
-    reactFlow.setViewport({ ...viewport, zoom: viewport.zoom + 0.1 });
+    const newZoom = Math.min(viewport.zoom + 0.1, 10); // Cap at max zoom
+    reactFlow.setViewport({ ...viewport, zoom: newZoom });
   }, [reactFlow]);
 
   const zoomOut = useCallback(() => {
     const viewport = reactFlow.getViewport();
-    reactFlow.setViewport({ ...viewport, zoom: viewport.zoom - 0.1 });
+    const newZoom = Math.max(viewport.zoom - 0.1, 0.1); // Prevent going below min zoom
+    reactFlow.setViewport({ ...viewport, zoom: newZoom });
   }, [reactFlow]);
 
   const onSaveViewPort = useCallback(

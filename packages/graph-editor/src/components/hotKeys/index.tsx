@@ -208,12 +208,20 @@ export const useHotkeys = () => {
       ZOOM_IN: (event) => {
         event.stopPropagation();
         event.preventDefault();
-        reactFlowInstance.zoomIn({ duration: 300 });
+        const viewport = reactFlowInstance.getViewport();
+        // Don't allow zooming beyond max zoom
+        if (viewport.zoom < 10) {
+          reactFlowInstance.zoomIn({ duration: 300 });
+        }
       },
       ZOOM_OUT: (event) => {
         event.preventDefault();
         event.stopPropagation();
-        reactFlowInstance.zoomOut({ duration: 300 });
+        const viewport = reactFlowInstance.getViewport();
+        // Don't allow zooming below min zoom
+        if (viewport.zoom > 0.1) {
+          reactFlowInstance.zoomOut({ duration: 300 });
+        }
       },
       RESET_ZOOM: () => {
         const existing = reactFlowInstance.getViewport();
