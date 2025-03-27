@@ -804,11 +804,11 @@ export const EditorApp = React.forwardRef<
               onDragOver={onDragOver}
               selectionOnDrag={true}
               panOnDrag={panOnDrag}
-              minZoom={-Infinity}
+              minZoom={0.1}
               zoomOnDoubleClick={false}
               defaultViewport={defaultViewport}
               onlyRenderVisibleElements={true}
-              maxZoom={Infinity}
+              maxZoom={10}
               proOptions={proOptions}
             >
               {showGridValue && (
