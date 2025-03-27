@@ -1,5 +1,24 @@
 # @tokens-studio/graph-engine-ui
 
+## 3.3.3
+
+### Patch Changes
+
+- f58fbb1: Fixed: Accidental Browser Navigation on macOS
+
+  Fixed an issue where horizontal swipe gestures on trackpads/Magic Mouse would accidentally trigger browser back/forward navigation while working on the canvas. You can now work with your graphs without unexpected navigation issues.
+
+- 5c400eb: Adds langfuse tracing for AI features for observability
+- Updated dependencies [f58fbb1]
+- Updated dependencies [e3610cb]
+- Updated dependencies [c3a673c]
+- Updated dependencies [d11bff4]
+- Updated dependencies [523c463]
+- Updated dependencies [116141a]
+  - @tokens-studio/graph-editor@4.4.2
+  - @tokens-studio/graph-engine@4.7.0
+  - @tokens-studio/graph-engine-nodes-design-tokens@7.2.1
+
 ## 3.3.2
 
 ### Patch Changes

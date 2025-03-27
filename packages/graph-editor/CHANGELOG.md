@@ -1,5 +1,22 @@
 # @tokens-studio/graph-editor
 
+## 4.4.2
+
+### Patch Changes
+
+- f58fbb1: Fixed: Accidental Browser Navigation on macOS
+
+  Fixed an issue where horizontal swipe gestures on trackpads/Magic Mouse would accidentally trigger browser back/forward navigation while working on the canvas. You can now work with your graphs without unexpected navigation issues.
+
+- e3610cb: Fixed: Infinite Zooming and Negative Zoom Crashes
+
+  Fixed an issue where rapidly scrolling the mouse wheel could cause the graph editor to freeze or crash. The graph canvas now has proper zoom limits (10% to 1000%) to ensure stable performance and prevent application freezes when working with complex graphs.
+
+- c3a673c: Added copy/paste to the graph editor.
+- Updated dependencies [d11bff4]
+- Updated dependencies [523c463]
+  - @tokens-studio/graph-engine@4.7.0
+
 ## 4.4.1
 
 ### Patch Changes
