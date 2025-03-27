@@ -301,17 +301,12 @@ function useCopyPaste() {
           const sourcePort = sourceNode?.outputs[edge.sourceHandle];
 
           if (sourceNode && sourcePort) {
-            const variadicIndex =
-              edge.annotations?.['engine.index'] !== undefined
-                ? edge.annotations['engine.index']
-                : idx;
-
             const newEdge = graph.connect(
               sourceNode,
               sourcePort,
               targetNode,
               targetPort,
-              variadicIndex,
+              idx,
             );
 
             edgeIdMap.set(edge.id, newEdge.id);
@@ -579,7 +574,22 @@ function useCopyPaste() {
         const updatedEdgesWithNewIds = updatedEdges.map((edge) => {
           const newId = newEdgeIdsMap.get(edge.id);
           if (newId) {
-            return { ...edge, id: newId };
+            // get the new edge from the graph with the correct new index
+            const newEdge = currentGraph.edges[newId];
+            if (!newEdge) return edge;
+
+            // create a new edge that uses the original edge's handles but with the new edge's index
+            return {
+              ...edge,
+              id: newId,
+              source: newEdge.source,
+              target: newEdge.target,
+              sourceHandle: newEdge.sourceHandle,
+              targetHandle: newEdge.targetHandle,
+              annotations: {
+                ...newEdge.annotations,
+              },
+            };
           }
           return edge;
         });
