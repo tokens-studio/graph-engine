@@ -110,6 +110,7 @@
     "@storybook/addon-mdx-gfm": "^8.0.9",
     "@storybook/react": "^8.0.9",
     "@storybook/react-vite": "^8.0.9",
+    "@testing-library/react": "^14.2.0",
     "@tokens-studio/eslint-config-custom": "*",
     "@tokens-studio/prettier-config-custom": "*",
     "@types/graphlib": "^2.1.8",
@@ -137,7 +138,8 @@
     "typescript": "^5.4.5",
     "typescript-transform-paths": "^3.5.1",
     "vite": "^5.2.10",
-    "vite-tsconfig-paths": "^4.2.2"
+    "vite-tsconfig-paths": "^4.2.2",
+    "vitest": "^1.2.0"
   },
   "publishConfig": {
     "access": "public"
