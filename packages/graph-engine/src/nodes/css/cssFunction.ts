@@ -1,7 +1,9 @@
+import * as mdnData from 'mdn-data';
 import { INodeDefinition, ToInput, ToOutput } from '../../index.js';
 import { Node } from '../../programmatic/node.js';
 import { StringSchema } from '../../schemas/index.js';
-import cssFunctionsData from 'mdn-data/css/functions.json' with { type: 'json' };
+// @ts-ignore
+const cssFunctionsData = mdnData.css.functions;
 
 const FUNCTION_NAMES = Object.keys(cssFunctionsData);
 
@@ -38,6 +40,6 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { functionName, value } = this.getAllInputs();
-		this.outputs.value.set(functionName.replace('()', `(${value})`));
+		this.outputs.value.set(String(functionName).replace('()', `(${value})`));
 	}
 }
