@@ -105,8 +105,7 @@ describe('nodeUsage', () => {
 							$id: 'https://schemas.tokens.studio/string.json',
 							title: 'String',
 							type: 'string'
-						},
-						value: 'black'
+						}
 					}
 				],
 				type: 'studio.tokens.generic.output'

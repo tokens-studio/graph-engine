@@ -19,6 +19,7 @@ export interface IInputProps<T = any> {
 export interface ISetValue {
 	noPropagate?: boolean;
 	type?: GraphSchema;
+	forceStore?: boolean;
 }
 
 export class Input<T = any> extends Port<T> {
@@ -43,52 +44,68 @@ export class Input<T = any> extends Port<T> {
 	 * @param value
 	 */
 	setValue(value: T, opts?: ISetValue) {
-		this._value = value;
-		// debugger;
-		if (opts?.type !== undefined) {
-			if (this._type?.$id !== undefined) {
-				if (this._type?.$id !== opts.type.$id) {
-					this._dynamicType = opts.type;
-				}
+		if (this.isConnected && !this.variadic && !opts?.forceStore) {
+			if (opts?.type !== undefined) {
+				this.handleTypeUpdate(opts.type);
 			}
-			//Otherwise do a structural comparison
-			else if (JSON.stringify(this._type) !== JSON.stringify(opts.type)) {
-				const { variadic, _dynamicType } = this;
 
-				// for variadic ports, we need to set the dynamic type depending on all the other connected types
-				if (
-					variadic &&
-					_dynamicType &&
-					JSON.stringify(_dynamicType) !== JSON.stringify(opts.type)
-				) {
-					const graph = this.node.getGraph();
-					const sourceNodesOutputTypes = this._edges.map(edge => {
-						const outputs = graph.getNode(edge.source)!.outputs;
-						return outputs[edge.sourceHandle].type;
-					});
-
-					const firstNodeTypeStringValue = JSON.stringify(
-						sourceNodesOutputTypes[0]
-					);
-					if (
-						sourceNodesOutputTypes.every(
-							type => JSON.stringify(type) === firstNodeTypeStringValue
-						)
-					) {
-						this._dynamicType = {
-							type: 'array',
-							items: sourceNodesOutputTypes[0]
-						};
-					} else {
-						this._dynamicType = null;
-					}
-				} else {
-					this._dynamicType = opts.type;
-				}
+			if (!opts?.noPropagate) {
+				this.node.getGraph()?.update(this.node.id);
 			}
+			return;
 		}
+
+		this._value = value;
+
+		if (opts?.type !== undefined) {
+			this.handleTypeUpdate(opts.type);
+		}
+
 		if (!opts?.noPropagate) {
 			this.node.getGraph()?.update(this.node.id);
+		}
+	}
+
+	private handleTypeUpdate(type: GraphSchema) {
+		if (this._type?.$id !== undefined) {
+			if (this._type?.$id !== type.$id) {
+				this._dynamicType = type;
+			}
+		}
+		//Otherwise do a structural comparison
+		else if (JSON.stringify(this._type) !== JSON.stringify(type)) {
+			const { variadic, _dynamicType } = this;
+
+			// for variadic ports, we need to set the dynamic type depending on all the other connected types
+			if (
+				variadic &&
+				_dynamicType &&
+				JSON.stringify(_dynamicType) !== JSON.stringify(type)
+			) {
+				const graph = this.node.getGraph();
+				const sourceNodesOutputTypes = this._edges.map(edge => {
+					const outputs = graph.getNode(edge.source)!.outputs;
+					return outputs[edge.sourceHandle].type;
+				});
+
+				const firstNodeTypeStringValue = JSON.stringify(
+					sourceNodesOutputTypes[0]
+				);
+				if (
+					sourceNodesOutputTypes.every(
+						type => JSON.stringify(type) === firstNodeTypeStringValue
+					)
+				) {
+					this._dynamicType = {
+						type: 'array',
+						items: sourceNodesOutputTypes[0]
+					};
+				} else {
+					this._dynamicType = null;
+				}
+			} else {
+				this._dynamicType = type;
+			}
 		}
 	}
 
@@ -135,9 +152,14 @@ export class Input<T = any> extends Port<T> {
 		const type = this.fullType();
 		const serialized = {
 			name: this.name,
-			value: this.value,
 			type: type.type
 		} as SerializedInput;
+
+		// Only include value in serialization if not a connected non-variadic input
+		// This prevents redundant data storage in the serialized format
+		if (!this.isConnected || this.variadic) {
+			serialized.value = this.value;
+		}
 
 		if (this._dynamicType) {
 			serialized.dynamicType = this._dynamicType;
@@ -147,7 +169,7 @@ export class Input<T = any> extends Port<T> {
 		if (type.variadic) {
 			serialized.variadic = true;
 		}
-		if (type.visible == false) {
+		if (!type.visible) {
 			serialized.visible = false;
 		}
 
@@ -162,7 +184,27 @@ export class Input<T = any> extends Port<T> {
 		this.visible = serialized.visible ?? true;
 		this._dynamicType = serialized.dynamicType || null;
 		this.annotations = serialized.annotations || {};
-		this._value = serialized.value;
+
+		// Only set the value if it's explicitly defined in the serialized data
+		// This maintains compatibility with our optimization to not store values for connected inputs
+		if ('value' in serialized) {
+			this._value = serialized.value;
+		}
+	}
+
+	override get value(): T {
+		// for connected non-variadic inputs, values should come from connected outputs
+		if (this.isConnected && !this.variadic && this._edges.length > 0) {
+			const graph = this.node.getGraph();
+			if (graph) {
+				const edge = this._edges[0];
+				return (
+					graph.getNode(edge.source)?.outputs?.[edge.sourceHandle]?.value ??
+					this._value
+				);
+			}
+		}
+		return this._value;
 	}
 }
 

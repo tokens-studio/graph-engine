@@ -94,8 +94,8 @@ export type SubscriptionLookup = {
 export type ListenerType<T> = [T] extends [(...args: infer U) => any]
 	? U
 	: [T] extends [void]
-		? []
-		: [T];
+	? []
+	: [T];
 
 export type SubscriptionExecutor<T extends keyof SubscriptionLookup> = (
 	data: SubscriptionLookup[T]
@@ -528,6 +528,15 @@ export class Graph {
 			return acc;
 		}, {});
 
+		// clear redundant values for connected non-variadic inputs
+		Object.values(this.nodes).forEach(node => {
+			Object.values(node.inputs).forEach(input => {
+				if (!input.variadic && input._edges.length > 0) {
+					input.setValue(undefined, { forceStore: true, noPropagate: true });
+				}
+			});
+		});
+
 		return this;
 	}
 
@@ -847,7 +856,7 @@ export class Graph {
 				if (!output) {
 					return;
 				}
-				const value = node.outputs[edge.sourceHandle].value;
+
 				//write the value to the input port of the target
 				const target = this.getNode(edge.target);
 				if (!target) {
@@ -868,16 +877,10 @@ export class Graph {
 						noPropagate: true
 					});
 				} else {
-					//Ignore
-					if (input.value === value) {
-						return;
-					}
-
-					input.setValue(value, {
-						type: node.outputs[edge.sourceHandle].type,
-						//We are controlling propagation
-						noPropagate: true
-					});
+					// For connected non-variadic inputs, we don't need to store the value
+					// as it will be directly read from the source output.
+					// Skip value comparison for connected inputs since we don't store the value.
+					// Just trigger the target node update.
 				}
 
 				return edge.target;
@@ -934,6 +937,9 @@ export class Graph {
 					items: sourcePort.type
 				}
 			});
+		} else {
+			// don't set a value for non-variadic connected inputs, it will be read
+			// from the source port directly when needed
 		}
 
 		sourcePort?._edges.push(edge);

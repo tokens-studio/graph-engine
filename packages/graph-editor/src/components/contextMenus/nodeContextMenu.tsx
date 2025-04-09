@@ -38,13 +38,10 @@ const findAllDownstream = (id: string, graph: Graph) => {
 };
 
 const createNodeLookup = (nodes: string[]) => {
-  return nodes.reduce(
-    (acc, node) => {
-      acc[node] = true;
-      return acc;
-    },
-    {} as Record<string, boolean>,
-  );
+  return nodes.reduce((acc, node) => {
+    acc[node] = true;
+    return acc;
+  }, {} as Record<string, boolean>);
 };
 
 const applyFilters = (
