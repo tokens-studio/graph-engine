@@ -19,22 +19,22 @@ function generateScale(config: ScaleConfig): string[] {
 				{ size: 'medium', value: 0 },
 				{ size: 'large', value: 1 },
 				{ size: 'x-large', value: 2 }
-			]
+		  ]
 		: shortNames
-			? [
-					{ size: 'xs', value: -2 },
-					{ size: 's', value: -1 },
-					{ size: 'm', value: 0 },
-					{ size: 'l', value: 1 },
-					{ size: 'xl', value: 2 }
-				]
-			: [
-					{ size: 'xs', value: -2 },
-					{ size: 'sm', value: -1 },
-					{ size: 'md', value: 0 },
-					{ size: 'lg', value: 1 },
-					{ size: 'xl', value: 2 }
-				];
+		? [
+				{ size: 'xs', value: -2 },
+				{ size: 's', value: -1 },
+				{ size: 'm', value: 0 },
+				{ size: 'l', value: 1 },
+				{ size: 'xl', value: 2 }
+		  ]
+		: [
+				{ size: 'xs', value: -2 },
+				{ size: 'sm', value: -1 },
+				{ size: 'md', value: 0 },
+				{ size: 'lg', value: 1 },
+				{ size: 'xl', value: 2 }
+		  ];
 
 	sizes.push(...baseSizes);
 
