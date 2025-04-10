@@ -4,6 +4,71 @@ import { ReactFlowInstance } from 'reactflow';
 import type { DockLayout, TabData } from 'rc-dock';
 import type { MutableRefObject } from 'react';
 
+interface NodeWithInnerGraph {
+  _innerGraph: {
+    annotations?: Record<string, unknown>;
+  };
+}
+
+function hasInnerGraph(node: unknown): node is NodeWithInnerGraph {
+  return Boolean(
+    node &&
+      typeof node === 'object' &&
+      node !== null &&
+      '_innerGraph' in node &&
+      node._innerGraph &&
+      typeof node._innerGraph === 'object',
+  );
+}
+
+function removeInnerGraphTabs(node: NodeWithInnerGraph): void {
+  const state = store.getState();
+  const dockerRef = state?.refs?.docker as
+    | MutableRefObject<DockLayout>
+    | undefined;
+
+  if (!dockerRef?.current) return;
+
+  const innerGraph = node._innerGraph;
+  if (!innerGraph?.annotations) return;
+
+  const graphId = innerGraph.annotations?.['engine.id'];
+  if (typeof graphId !== 'string') return;
+
+  try {
+    const existing = dockerRef.current.find(graphId) as TabData | null;
+    if (existing) {
+      dockerRef.current.dockMove(existing, null, 'remove');
+    }
+  } catch (error) {
+    console.error(`Error removing tab for graph ${graphId}:`, error);
+  }
+}
+
+function removeNodeFromGraph(graph: Graph, id: string): void {
+  try {
+    graph.removeNode(id);
+  } catch (error) {
+    console.error(`Error removing node ${id}:`, error);
+  }
+}
+
+function removeReactFlowElements(
+  reactFlowInstance: ReactFlowInstance,
+  id: string,
+  inEdges: Array<{ id: string }>,
+  outEdges: Array<{ id: string }>,
+): void {
+  try {
+    reactFlowInstance.deleteElements({
+      nodes: [{ id }],
+      edges: inEdges.concat(outEdges).map((edge) => ({ id: edge.id })),
+    });
+  } catch (error) {
+    console.error(`Error deleting ReactFlow elements for node ${id}:`, error);
+  }
+}
+
 export const deleteNode = (
   graph: Graph,
   dispatch: Dispatch,
@@ -12,51 +77,14 @@ export const deleteNode = (
   return (id: string) => {
     const inEdges = graph.inEdges(id);
     const outEdges = graph.outEdges(id);
-
     const node = graph.getNode(id);
 
-    if (node && '_innerGraph' in node) {
-      const dockerRef = store.getState().refs
-        .docker as MutableRefObject<DockLayout>;
-
-      if (dockerRef?.current) {
-        const innerGraph = node['_innerGraph'] as {
-          annotations: Record<string, unknown>;
-        };
-        const graphId = innerGraph.annotations['engine.id'];
-
-        // find and remove the tab if it exists
-        if (graphId && typeof graphId === 'string') {
-          const existing = dockerRef.current.find(graphId) as TabData;
-          if (existing) {
-            dockerRef.current.dockMove(existing, null, 'remove');
-          }
-        }
-      }
+    if (node && hasInnerGraph(node)) {
+      removeInnerGraphTabs(node);
     }
 
-    graph.removeNode(id);
-
-    //Delete from the node as well
+    removeNodeFromGraph(graph, id);
     dispatch.graph.checkClearSelectedNode(id);
-
-    //Delete from the react flow instance
-    reactFlowInstance.deleteElements({
-      nodes: [{ id }],
-      edges: inEdges.concat(outEdges).map((edge) => ({ id: edge.id })),
-    });
-
-    //We also need to delete any edges that are connected to this node
-
-    if (node) {
-      dispatch.graph.appendLog({
-        time: new Date(),
-        type: 'info',
-        data: {
-          id: id,
-          msg: `Node deleted`,
-        },
-      });
-    }
+    removeReactFlowElements(reactFlowInstance, id, inEdges, outEdges);
   };
 };

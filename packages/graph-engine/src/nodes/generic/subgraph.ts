@@ -21,9 +21,9 @@ export interface ISubgraphNode extends INodeDefinition {
 }
 
 export default class SubgraphNode extends Node {
-	static title = 'Subgraph';
-	static type = 'studio.tokens.generic.subgraph';
-	static description = 'Allows you to run another subgraph internally';
+	static readonly title = 'Subgraph';
+	static readonly type = 'studio.tokens.generic.subgraph';
+	static readonly description = 'Allows you to run another subgraph internally';
 
 	_innerGraph: Graph;
 
