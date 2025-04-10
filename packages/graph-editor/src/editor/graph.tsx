@@ -178,10 +178,13 @@ export const EditorApp = React.forwardRef<
     graph.onFinalize('serialize', (serialized) => {
       const nodes = reactFlowInstance.getNodes();
 
-      const lookup = nodes.reduce((acc, node) => {
-        acc[node.id] = node;
-        return acc;
-      }, {} as Record<string, Node>);
+      const lookup = nodes.reduce(
+        (acc, node) => {
+          acc[node.id] = node;
+          return acc;
+        },
+        {} as Record<string, Node>,
+      );
 
       serialized.nodes.forEach((node) => {
         const flowNode = lookup[node.id];

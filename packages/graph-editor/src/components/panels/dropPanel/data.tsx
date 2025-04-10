@@ -101,31 +101,34 @@ function CapitalCase(string) {
 
 export const defaultPanelGroupsFactory = (): DropPanelStore => {
   const auto = Object.values<PanelGroup>(
-    nodes.reduce((acc, node) => {
-      const defaultGroup = node.type.split('.');
-      const groups = node.groups || [defaultGroup[defaultGroup.length - 2]];
+    nodes.reduce(
+      (acc, node) => {
+        const defaultGroup = node.type.split('.');
+        const groups = node.groups || [defaultGroup[defaultGroup.length - 2]];
 
-      groups.forEach((group) => {
-        //If the group does not exist, create it
-        if (!acc[group]) {
-          acc[group] = new PanelGroup({
-            title: CapitalCase(group),
-            key: group,
-            items: [],
-          });
-        }
-        acc[group].items.push(
-          new PanelItem({
-            type: node.type,
-            text: CapitalCase(
-              node.title || defaultGroup[defaultGroup.length - 1],
-            ),
-            description: node.description,
-          }),
-        );
-      });
-      return acc;
-    }, {} as Record<string, PanelGroup>),
+        groups.forEach((group) => {
+          //If the group does not exist, create it
+          if (!acc[group]) {
+            acc[group] = new PanelGroup({
+              title: CapitalCase(group),
+              key: group,
+              items: [],
+            });
+          }
+          acc[group].items.push(
+            new PanelItem({
+              type: node.type,
+              text: CapitalCase(
+                node.title || defaultGroup[defaultGroup.length - 1],
+              ),
+              description: node.description,
+            }),
+          );
+        });
+        return acc;
+      },
+      {} as Record<string, PanelGroup>,
+    ),
   );
 
   return new DropPanelStore(auto);

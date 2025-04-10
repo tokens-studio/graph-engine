@@ -58,10 +58,13 @@ export const flatten = (
  * @returns
  */
 export const flatTokensToMap = (tokens: IResolvedToken[]) => {
-	return tokens.reduce((acc, token) => {
-		acc[token.name] = token;
-		return acc;
-	}, {} as Record<string, IResolvedToken>);
+	return tokens.reduce(
+		(acc, token) => {
+			acc[token.name] = token;
+			return acc;
+		},
+		{} as Record<string, IResolvedToken>
+	);
 };
 
 /**

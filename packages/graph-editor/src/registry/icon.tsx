@@ -29,4 +29,4 @@ export const icons = () =>
     [NUMBER]: <Hashtag />,
     [OBJECT]: <Cube />,
     [ANY]: <SelectPoint3d />,
-  } as Record<string, React.ReactNode>);
+  }) as Record<string, React.ReactNode>;
