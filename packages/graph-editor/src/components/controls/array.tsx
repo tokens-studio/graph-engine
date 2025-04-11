@@ -68,7 +68,7 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
       <JSONTree
         data={{ items: toJS(value) }}
         hideRoot
-        shouldExpandNodeInitially={() => true}
+        shouldExpandNodeInitially={() => false}
       />
     );
   }, [value]);
