@@ -44,7 +44,9 @@ export const parameters = {
 const ThemeBlock = ({ children, fill, left, ...props }) => {
   return (
     <div
-      className={`${styles.themeBlock} ${fill ? styles.fill : ''} ${left ? styles.left : ''}`}
+      className={`${styles.themeBlock} ${fill ? styles.fill : ''} ${
+        left ? styles.left : ''
+      }`}
       {...props}
     >
       <div className={styles.inner}>{children}</div>
