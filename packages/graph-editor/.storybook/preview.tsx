@@ -11,6 +11,7 @@ import {
   Controls,
   Stories,
 } from '@storybook/blocks';
+import clsx from 'clsx';
 
 import '../src/index.scss';
 import styles from './preview.module.css';
@@ -44,9 +45,10 @@ export const parameters = {
 const ThemeBlock = ({ children, fill, left, ...props }) => {
   return (
     <div
-      className={`${styles.themeBlock} ${fill ? styles.fill : ''} ${
-        left ? styles.left : ''
-      }`}
+      className={clsx(styles.themeBlock, {
+        [styles.fill]: fill,
+        [styles.left]: left,
+      })}
       {...props}
     >
       <div className={styles.inner}>{children}</div>
