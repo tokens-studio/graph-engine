@@ -5,7 +5,11 @@ import {
 	SchemaObject
 } from '../../schemas/index.js';
 import { Graph } from '../../graph/graph.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import {
+	INodeDefinition,
+	ISubgraphContainer,
+	Node
+} from '../../programmatic/node.js';
 import { Input, ToInput, ToOutput } from '../../programmatic/index.js';
 import {
 	annotatedDeleteable,
@@ -14,6 +18,7 @@ import {
 } from '../../annotations/index.js';
 import { arrayOf, extractArray } from '../../schemas/utils.js';
 import { autorun } from 'mobx';
+import { cloneInnerGraph } from '../../utils/node.js';
 import InputNode from '../generic/input.js';
 import OutputNode from '../generic/output.js';
 
@@ -21,10 +26,13 @@ export interface IArraySubgraph extends INodeDefinition {
 	innerGraph?: Graph;
 }
 
-export default class ArraySubgraph<T, V> extends Node {
-	static title = 'Array Map';
-	static type = 'tokens.studio.array.map';
-	static description =
+export default class ArraySubgraph<T, V>
+	extends Node
+	implements ISubgraphContainer
+{
+	static readonly title = 'Array Map';
+	static readonly type = 'tokens.studio.array.map';
+	static readonly description =
 		"Execute a graph for every item in an Array (list of items). The output is an array of the same length as the input array. The inner graph is executed for each item in the array (list). The inner graph automatically has an input node with the name 'value' and an output node with the name 'value' as well. The inner graph also has an input node with the name 'index' and an input node with the name 'length' to get the current index and length of the array.";
 
 	_innerGraph: Graph;
@@ -241,5 +249,15 @@ export default class ArraySubgraph<T, V> extends Node {
 			innerGraph
 		});
 		return node;
+	}
+
+	getSubgraphs(): Graph[] {
+		return [this._innerGraph];
+	}
+
+	override clone(newGraph: Graph): ArraySubgraph<T, V> {
+		const cloned = super.clone(newGraph) as ArraySubgraph<T, V>;
+		cloneInnerGraph(this, cloned);
+		return cloned;
 	}
 }

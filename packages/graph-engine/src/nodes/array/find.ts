@@ -5,7 +5,11 @@ import {
 	NumberSchema
 } from '../../schemas/index.js';
 import { Graph } from '../../graph/graph.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import {
+	INodeDefinition,
+	ISubgraphContainer,
+	Node
+} from '../../programmatic/node.js';
 import { Input, ToInput, ToOutput } from '../../programmatic/index.js';
 import {
 	annotatedDeleteable,
@@ -13,6 +17,7 @@ import {
 	hideFromParentSubgraph
 } from '../../annotations/index.js';
 import { autorun } from 'mobx';
+import { cloneInnerGraph } from '../../utils/node.js';
 import { extractArray } from '../../schemas/utils.js';
 import InputNode from '../generic/input.js';
 import OutputNode from '../generic/output.js';
@@ -21,10 +26,13 @@ export interface IArraySubgraph extends INodeDefinition {
 	innerGraph?: Graph;
 }
 
-export default class ArraySubgraph<T extends undefined> extends Node {
-	static title = 'Array find';
-	static type = 'tokens.studio.array.find';
-	static description = 'Finds an item in an array';
+export default class ArraySubgraph<T extends undefined>
+	extends Node
+	implements ISubgraphContainer
+{
+	static readonly title = 'Array find';
+	static readonly type = 'tokens.studio.array.find';
+	static readonly description = 'Finds an item in an array';
 	_innerGraph: Graph;
 
 	declare inputs: ToInput<
@@ -236,5 +244,15 @@ export default class ArraySubgraph<T extends undefined> extends Node {
 			innerGraph
 		});
 		return node;
+	}
+
+	getSubgraphs(): Graph[] {
+		return [this._innerGraph];
+	}
+
+	override clone(newGraph: Graph): ArraySubgraph<T> {
+		const cloned = super.clone(newGraph) as ArraySubgraph<T>;
+		cloneInnerGraph(this, cloned);
+		return cloned;
 	}
 }

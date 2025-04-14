@@ -4,12 +4,17 @@ import {
 	SerializedGraph,
 	SerializedNode
 } from '../../graph/types.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import {
+	INodeDefinition,
+	ISubgraphContainer,
+	Node
+} from '../../programmatic/node.js';
 import {
 	annotatedDeleteable,
 	hideFromParentSubgraph
 } from '../../annotations/index.js';
 import { autorun } from 'mobx';
+import { cloneInnerGraph } from '../../utils/node.js';
 import InputNode from './input.js';
 import OutputNode from './output.js';
 
@@ -20,7 +25,7 @@ export interface ISubgraphNode extends INodeDefinition {
 	innergraph?: Graph;
 }
 
-export default class SubgraphNode extends Node {
+export default class SubgraphNode extends Node implements ISubgraphContainer {
 	static readonly title = 'Subgraph';
 	static readonly type = 'studio.tokens.generic.subgraph';
 	static readonly description = 'Allows you to run another subgraph internally';
@@ -71,7 +76,7 @@ export default class SubgraphNode extends Node {
 			//Get the existing inputs
 			const existing = this.inputs;
 			//Iterate through the inputs of the input node in the inner graph
-			Object.entries(input!.inputs).map(([key, value]) => {
+			Object.entries(input!.inputs).forEach(([key, value]) => {
 				//If the key doesn't exist in the existing inputs, add it
 				if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
 					//Always add it as visible
@@ -120,6 +125,10 @@ export default class SubgraphNode extends Node {
 		});
 	}
 
+	getSubgraphs(): Graph[] {
+		return [this._innerGraph];
+	}
+
 	override serialize(): SerializedSubgraphNode {
 		const serialized = super.serialize();
 		return {
@@ -158,5 +167,11 @@ export default class SubgraphNode extends Node {
 		Object.entries(result.output || {}).forEach(([key, value]) => {
 			this.outputs[key].set(value.value, value.type);
 		});
+	}
+
+	override clone(newGraph: Graph): SubgraphNode {
+		const cloned = super.clone(newGraph) as SubgraphNode;
+		cloneInnerGraph(this, cloned);
+		return cloned;
 	}
 }

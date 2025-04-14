@@ -9,6 +9,18 @@ import { v4 as uuid } from 'uuid';
 import getDefaults from 'json-schema-defaults-esm';
 import type { NodeRun } from '../types.js';
 
+export interface ISubgraphContainer {
+	getSubgraphs(): Graph[];
+}
+
+export function isSubgraphContainer(
+	node: unknown
+): node is Node & ISubgraphContainer {
+	return (
+		node instanceof Node && typeof (node as any).getSubgraphs === 'function'
+	);
+}
+
 export interface INodeDefinition {
 	graph: Graph;
 	id?: string;
@@ -250,13 +262,6 @@ export class Node {
 		});
 
 		clonedNode.annotations = { ...this.annotations };
-
-		// Clone inner graph if it exists
-		// @ts-expect-error
-		if (this._innerGraph) {
-			// @ts-expect-error
-			clonedNode._innerGraph = this._innerGraph.clone();
-		}
 
 		return clonedNode;
 	}
