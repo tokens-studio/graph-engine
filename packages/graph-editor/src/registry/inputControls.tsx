@@ -6,9 +6,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useMemo } from 'react';
 
 // prettier-ignore
-import * as mdnData from 'mdn-data';
-// @ts-ignore
-const properties = mdnData.css.properties;
+import properties from 'mdn-data/css/properties.json' with { type: 'json' };
 
 const CSSProperties = Object.keys(properties);
 

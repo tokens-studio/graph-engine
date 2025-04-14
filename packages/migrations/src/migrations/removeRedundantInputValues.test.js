@@ -49,6 +49,35 @@ describe('removeRedundantInputValues', () => {
 		expect(result.nodes.node1.serialized.inputs[2].value).toBe('value3');
 	});
 
+	it('should remove value for connected, non-variadic dynamically created inputs', async () => {
+		// simulate an input that might be created dynamically (like a subgraph input)
+		// and ensure its value is removed correctly if it's connected and non-variadic
+		const graph = {
+			annotations: {},
+			nodes: {
+				dynamicNode: {
+					inputs: {
+						dynamicInput: {
+							_value: 'dynamicValue',
+							_edges: ['someEdgeId'], // mark as connected
+							variadic: false
+						}
+					},
+					serialized: {
+						inputs: [{ name: 'dynamicInput', value: 'dynamicValue' }]
+					}
+				}
+			}
+		};
+
+		const result = await removeRedundantInputValues(graph);
+
+		expect(result.nodes.dynamicNode.inputs.dynamicInput._value).toBeUndefined();
+		expect('value' in result.nodes.dynamicNode.serialized.inputs[0]).toBe(
+			false
+		);
+	});
+
 	it('should handle null or undefined nodes and inputs', async () => {
 		const graph = {
 			annotations: {},

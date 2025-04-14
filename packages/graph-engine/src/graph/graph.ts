@@ -528,15 +528,6 @@ export class Graph {
 			return acc;
 		}, {});
 
-		// clear redundant values for connected non-variadic inputs
-		Object.values(this.nodes).forEach(node => {
-			Object.values(node.inputs).forEach(input => {
-				if (!input.variadic && input._edges.length > 0) {
-					input.setValue(undefined, { forceStore: true, noPropagate: true });
-				}
-			});
-		});
-
 		return this;
 	}
 

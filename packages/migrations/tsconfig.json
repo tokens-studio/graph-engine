@@ -1,10 +1,6 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
-	"include": [
-		"src",
-		"package.json",
-		"src/migrations/removeRedundantInputValues.test.js"
-	],
+	"include": ["src", "package.json"],
 	"exclude": ["cypress.config.ts", "cypress", "node_modules"],
 	"compilerOptions": {
 		"composite": false,
