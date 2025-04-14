@@ -8,7 +8,7 @@ import { ErrorBoundaryContent } from '@/components/ErrorBoundaryContent.js';
 import { GraphEditor } from '@/editor/graphEditor.js';
 import { ImperativeEditorRef } from '../index.js';
 import { MathExpression } from '@/components/preview/mathExpression.js';
-import { Node } from '@tokens-studio/graph-engine';
+import { Node, isSubgraphContainer } from '@tokens-studio/graph-engine';
 import { title as annotatedTitle } from '@/annotations/index.js';
 import { dockerSelector } from '@/redux/selectors/refs.js';
 import { observer } from 'mobx-react-lite';
@@ -18,13 +18,21 @@ import React, { useCallback } from 'react';
 
 const SubgraphExplorer = ({ node }) => {
   const dockerRef = useSelector(dockerSelector);
+
+  const innerGraph = React.useMemo(() => {
+    if (isSubgraphContainer(node)) {
+      const graphs = node.getSubgraphs();
+      return graphs.length > 0 ? graphs[0] : null;
+    }
+    return null;
+  }, [node]);
+
   const onToggle = useCallback(() => {
-    if (!dockerRef?.current) {
+    if (!dockerRef?.current || !innerGraph || !innerGraph.annotations) {
       return;
     }
 
     let oneShot = false;
-    const innerGraph = node._innerGraph;
     const graphId = innerGraph.annotations['engine.id'];
     const title =
       node.annotations[annotatedTitle] ||
@@ -58,7 +66,11 @@ const SubgraphExplorer = ({ node }) => {
     } else {
       dockerRef.current.updateTab(graphId, null, true);
     }
-  }, [dockerRef, node._innerGraph, node.annotations]);
+  }, [dockerRef, innerGraph, node.annotations]);
+
+  if (!innerGraph) {
+    return null;
+  }
 
   return (
     <Button emphasis="high" icon={<Eye />} onClick={onToggle}>

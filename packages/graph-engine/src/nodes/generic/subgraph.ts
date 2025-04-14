@@ -4,7 +4,11 @@ import {
 	SerializedGraph,
 	SerializedNode
 } from '../../graph/types.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import {
+	INodeDefinition,
+	ISubgraphContainer,
+	Node
+} from '../../programmatic/node.js';
 import {
 	annotatedDeleteable,
 	hideFromParentSubgraph
@@ -20,10 +24,10 @@ export interface ISubgraphNode extends INodeDefinition {
 	innergraph?: Graph;
 }
 
-export default class SubgraphNode extends Node {
-	static title = 'Subgraph';
-	static type = 'studio.tokens.generic.subgraph';
-	static description = 'Allows you to run another subgraph internally';
+export default class SubgraphNode extends Node implements ISubgraphContainer {
+	static readonly title = 'Subgraph';
+	static readonly type = 'studio.tokens.generic.subgraph';
+	static readonly description = 'Allows you to run another subgraph internally';
 
 	_innerGraph: Graph;
 
@@ -71,7 +75,7 @@ export default class SubgraphNode extends Node {
 			//Get the existing inputs
 			const existing = this.inputs;
 			//Iterate through the inputs of the input node in the inner graph
-			Object.entries(input!.inputs).map(([key, value]) => {
+			Object.entries(input!.inputs).forEach(([key, value]) => {
 				//If the key doesn't exist in the existing inputs, add it
 				if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
 					//Always add it as visible
@@ -96,7 +100,7 @@ export default class SubgraphNode extends Node {
 		autorun(() => {
 			const existing = this.outputs;
 			const existingPorts = Object.keys(existing);
-			Object.entries(output!.inputs).map(([key, value]) => {
+			Object.entries(output!.inputs).forEach(([key, value]) => {
 				//If the key doesn't exist in the existing inputs, add it
 				if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
 					//Always add it as visible
@@ -118,6 +122,14 @@ export default class SubgraphNode extends Node {
 				}
 			});
 		});
+	}
+
+	getSubgraphs(): Graph[] {
+		return [this._innerGraph];
+	}
+
+	getGraphProperties(): Record<string, Graph | undefined> {
+		return { _innerGraph: this._innerGraph };
 	}
 
 	override serialize(): SerializedSubgraphNode {

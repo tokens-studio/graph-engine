@@ -1,4 +1,4 @@
-import { Edge, Graph } from '@tokens-studio/graph-engine';
+import { Edge, Graph, isSubgraphContainer } from '@tokens-studio/graph-engine';
 import { Item, Menu, Separator } from 'react-contexify';
 import { Node, getRectOfNodes, useReactFlow, useStoreApi } from 'reactflow';
 import { NodeTypes } from '../flow/types.js';
@@ -27,12 +27,10 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
   const deleteNode = useAction('deleteNode');
   const duplicateNodes = useAction('duplicateNodes');
   const { copySelectedNodes } = useCopyPaste();
-  const trigger = useToast();
+  const toast = useToast();
 
   //Note that we use a filter here to prevent getting nodes that have a parent node, ie are part of a group
-  const selectedNodes = nodes.filter(
-    (node) => node.selected && !node.parentNode,
-  );
+  const selectedNodes = nodes.filter((node) => node.selected && !node.parentId);
   const selectedNodeIds = selectedNodes.map((node) => node.id);
 
   const onGroup = useCallback(() => {
@@ -70,7 +68,7 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
                 y: node.position.y - parentPosition.y + padding,
               },
               extent: 'parent' as const,
-              parentNode: groupId,
+              parentId: groupId,
             };
           }
 
@@ -114,8 +112,18 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
 
     const { graphNode, flowNode } = nodes;
 
-    //@ts-expect-error
-    const internalGraph = graphNode._innerGraph as unknown as Graph;
+    let internalGraph: Graph | null = null;
+    if (isSubgraphContainer(graphNode)) {
+      const graphs = graphNode.getSubgraphs();
+      if (graphs.length > 0) {
+        internalGraph = graphs[0];
+      }
+    }
+
+    if (!internalGraph) {
+      toast({ title: 'Error', description: 'Could not access subgraph.' });
+      return;
+    }
 
     //Get the graph nodes from the existing graph
     const internalNodes = selectedNodeIds
@@ -299,11 +307,18 @@ export const SelectionContextMenu = ({ id, nodes }: INodeContextMenuProps) => {
     );
 
     //We then need to find all the downstream nodes from those nodes for the output
-  }, [createNode, graph, reactFlowInstance, selectedNodeIds, selectedNodes]);
+  }, [
+    createNode,
+    graph,
+    reactFlowInstance,
+    selectedNodeIds,
+    selectedNodes,
+    toast,
+  ]);
 
   const onCut = () => {
     copySelectedNodes();
-    deleteSelectedNodes(reactFlowInstance, graph, deleteNode, trigger);
+    deleteSelectedNodes(reactFlowInstance, graph, deleteNode, toast);
   };
 
   const onCopy = () => {

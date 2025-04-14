@@ -5,7 +5,11 @@ import {
 	NumberSchema
 } from '../../schemas/index.js';
 import { Graph } from '../../graph/graph.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import {
+	INodeDefinition,
+	ISubgraphContainer,
+	Node
+} from '../../programmatic/node.js';
 import { Input, ToInput, ToOutput } from '../../programmatic/index.js';
 import {
 	annotatedDeleteable,
@@ -21,10 +25,13 @@ export interface IArraySubgraph extends INodeDefinition {
 	innerGraph?: Graph;
 }
 
-export default class ArraySubgraph<T extends undefined> extends Node {
-	static title = 'Array find';
-	static type = 'tokens.studio.array.find';
-	static description = 'Finds an item in an array';
+export default class ArraySubgraph<T extends undefined>
+	extends Node
+	implements ISubgraphContainer
+{
+	static readonly title = 'Array find';
+	static readonly type = 'tokens.studio.array.find';
+	static readonly description = 'Finds an item in an array';
 	_innerGraph: Graph;
 
 	declare inputs: ToInput<
@@ -236,5 +243,13 @@ export default class ArraySubgraph<T extends undefined> extends Node {
 			innerGraph
 		});
 		return node;
+	}
+
+	getSubgraphs(): Graph[] {
+		return [this._innerGraph];
+	}
+
+	getGraphProperties(): Record<string, Graph | undefined> {
+		return { _innerGraph: this._innerGraph };
 	}
 }

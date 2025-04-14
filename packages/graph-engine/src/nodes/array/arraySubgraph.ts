@@ -5,7 +5,11 @@ import {
 	SchemaObject
 } from '../../schemas/index.js';
 import { Graph } from '../../graph/graph.js';
-import { INodeDefinition, Node } from '../../programmatic/node.js';
+import {
+	INodeDefinition,
+	ISubgraphContainer,
+	Node
+} from '../../programmatic/node.js';
 import { Input, ToInput, ToOutput } from '../../programmatic/index.js';
 import {
 	annotatedDeleteable,
@@ -21,10 +25,13 @@ export interface IArraySubgraph extends INodeDefinition {
 	innerGraph?: Graph;
 }
 
-export default class ArraySubgraph<T, V> extends Node {
-	static title = 'Array Map';
-	static type = 'tokens.studio.array.map';
-	static description =
+export default class ArraySubgraph<T, V>
+	extends Node
+	implements ISubgraphContainer
+{
+	static readonly title = 'Array Map';
+	static readonly type = 'tokens.studio.array.map';
+	static readonly description =
 		"Execute a graph for every item in an Array (list of items). The output is an array of the same length as the input array. The inner graph is executed for each item in the array (list). The inner graph automatically has an input node with the name 'value' and an output node with the name 'value' as well. The inner graph also has an input node with the name 'index' and an input node with the name 'length' to get the current index and length of the array.";
 
 	_innerGraph: Graph;
@@ -115,7 +122,7 @@ export default class ArraySubgraph<T, V> extends Node {
 			const existing = this.inputs;
 			const existingKeys = Object.keys(existing);
 			//Iterate through the inputs of the input node in the inner graph
-			Object.entries(input.inputs).map(([key, value]) => {
+			Object.entries(input.inputs).forEach(([key, value]) => {
 				//If the key doesn't exist in the existing inputs, add it
 				if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
 					//Always add it as visible
@@ -241,5 +248,13 @@ export default class ArraySubgraph<T, V> extends Node {
 			innerGraph
 		});
 		return node;
+	}
+
+	getSubgraphs(): Graph[] {
+		return [this._innerGraph];
+	}
+
+	getGraphProperties(): Record<string, Graph | undefined> {
+		return { _innerGraph: this._innerGraph };
 	}
 }
