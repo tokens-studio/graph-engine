@@ -18,7 +18,6 @@ import {
 } from '../../annotations/index.js';
 import { arrayOf, extractArray } from '../../schemas/utils.js';
 import { autorun } from 'mobx';
-import { cloneInnerGraph } from '../../utils/node.js';
 import InputNode from '../generic/input.js';
 import OutputNode from '../generic/output.js';
 
@@ -123,7 +122,7 @@ export default class ArraySubgraph<T, V>
 			const existing = this.inputs;
 			const existingKeys = Object.keys(existing);
 			//Iterate through the inputs of the input node in the inner graph
-			Object.entries(input.inputs).map(([key, value]) => {
+			Object.entries(input.inputs).forEach(([key, value]) => {
 				//If the key doesn't exist in the existing inputs, add it
 				if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
 					//Always add it as visible
@@ -255,9 +254,7 @@ export default class ArraySubgraph<T, V>
 		return [this._innerGraph];
 	}
 
-	override clone(newGraph: Graph): ArraySubgraph<T, V> {
-		const cloned = super.clone(newGraph) as ArraySubgraph<T, V>;
-		cloneInnerGraph(this, cloned);
-		return cloned;
+	getGraphProperties(): Record<string, Graph | undefined> {
+		return { _innerGraph: this._innerGraph };
 	}
 }

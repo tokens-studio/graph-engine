@@ -11,6 +11,7 @@ import type { NodeRun } from '../types.js';
 
 export interface ISubgraphContainer {
 	getSubgraphs(): Graph[];
+	getGraphProperties(): Record<string, Graph | undefined>;
 }
 
 export function isSubgraphContainer(
@@ -262,6 +263,27 @@ export class Node {
 		});
 
 		clonedNode.annotations = { ...this.annotations };
+
+		if (isSubgraphContainer(this)) {
+			const graphProps = this.getGraphProperties();
+			for (const propertyName in graphProps) {
+				if (Object.hasOwn(graphProps, propertyName)) {
+					const graphInstance = graphProps[propertyName];
+					if (
+						graphInstance instanceof Graph &&
+						typeof graphInstance.clone === 'function'
+					) {
+						const clonedGraph = graphInstance.clone();
+						// assign cloned graph to the same property on the cloned node
+						(clonedNode as any)[propertyName] = clonedGraph;
+						// update internal node references in the cloned graph
+						Object.values(clonedGraph.nodes).forEach(node => {
+							node.setGraph(clonedGraph);
+						});
+					}
+				}
+			}
+		}
 
 		return clonedNode;
 	}

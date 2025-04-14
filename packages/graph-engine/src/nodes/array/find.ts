@@ -17,7 +17,6 @@ import {
 	hideFromParentSubgraph
 } from '../../annotations/index.js';
 import { autorun } from 'mobx';
-import { cloneInnerGraph } from '../../utils/node.js';
 import { extractArray } from '../../schemas/utils.js';
 import InputNode from '../generic/input.js';
 import OutputNode from '../generic/output.js';
@@ -250,9 +249,7 @@ export default class ArraySubgraph<T extends undefined>
 		return [this._innerGraph];
 	}
 
-	override clone(newGraph: Graph): ArraySubgraph<T> {
-		const cloned = super.clone(newGraph) as ArraySubgraph<T>;
-		cloneInnerGraph(this, cloned);
-		return cloned;
+	getGraphProperties(): Record<string, Graph | undefined> {
+		return { _innerGraph: this._innerGraph };
 	}
 }

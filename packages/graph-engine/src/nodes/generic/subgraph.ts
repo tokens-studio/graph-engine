@@ -14,7 +14,6 @@ import {
 	hideFromParentSubgraph
 } from '../../annotations/index.js';
 import { autorun } from 'mobx';
-import { cloneInnerGraph } from '../../utils/node.js';
 import InputNode from './input.js';
 import OutputNode from './output.js';
 
@@ -101,7 +100,7 @@ export default class SubgraphNode extends Node implements ISubgraphContainer {
 		autorun(() => {
 			const existing = this.outputs;
 			const existingPorts = Object.keys(existing);
-			Object.entries(output!.inputs).map(([key, value]) => {
+			Object.entries(output!.inputs).forEach(([key, value]) => {
 				//If the key doesn't exist in the existing inputs, add it
 				if (!existing[key] && !value.annotations[hideFromParentSubgraph]) {
 					//Always add it as visible
@@ -127,6 +126,10 @@ export default class SubgraphNode extends Node implements ISubgraphContainer {
 
 	getSubgraphs(): Graph[] {
 		return [this._innerGraph];
+	}
+
+	getGraphProperties(): Record<string, Graph | undefined> {
+		return { _innerGraph: this._innerGraph };
 	}
 
 	override serialize(): SerializedSubgraphNode {
@@ -167,11 +170,5 @@ export default class SubgraphNode extends Node implements ISubgraphContainer {
 		Object.entries(result.output || {}).forEach(([key, value]) => {
 			this.outputs[key].set(value.value, value.type);
 		});
-	}
-
-	override clone(newGraph: Graph): SubgraphNode {
-		const cloned = super.clone(newGraph) as SubgraphNode;
-		cloneInnerGraph(this, cloned);
-		return cloned;
 	}
 }
