@@ -2,10 +2,14 @@ import {
   DropdownMenu,
   IconButton,
   Label,
+  Message,
   Stack,
   Tooltip,
 } from '@tokens-studio/ui';
-import { Port as GraphPort } from '@tokens-studio/graph-engine';
+import {
+  Port as GraphPort,
+  annotatedInputError,
+} from '@tokens-studio/graph-engine';
 import { Input } from '@tokens-studio/graph-engine';
 import { observer } from 'mobx-react-lite';
 import { useSelector } from 'react-redux';
@@ -47,6 +51,9 @@ export const PortPanel = observer(({ ports, readOnly }: IPortPanel) => {
 export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
   const readOnly = isReadOnly || port.isConnected;
   const controlSelector = useSelector(controls);
+  const hasError = Boolean(port.annotations[annotatedInputError]);
+  const errorMessage = port.annotations[annotatedInputError]?.message;
+
   const graph = useGraph();
   const isInput = 'studio.tokens.generic.input' === port.node.factory.type;
   const isDynamicInput = Boolean(port.annotations[deletable]);
@@ -166,6 +173,7 @@ export const Port = observer(({ port, readOnly: isReadOnly }: IField) => {
         </Stack>
       </Stack>
       {inner}
+      {hasError && <Message appearance="danger">{errorMessage}</Message>}
     </Stack>
   );
 });
