@@ -276,10 +276,6 @@ export class Node {
 						const clonedGraph = graphInstance.clone();
 						// assign cloned graph to the same property on the cloned node
 						(clonedNode as any)[propertyName] = clonedGraph;
-						// update internal node references in the cloned graph
-						Object.values(clonedGraph.nodes).forEach(node => {
-							node.setGraph(clonedGraph);
-						});
 					}
 				}
 			}

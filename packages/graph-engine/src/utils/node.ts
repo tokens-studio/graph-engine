@@ -1,3 +1,7 @@
+import {
+	ISubgraphContainer,
+	isSubgraphContainer
+} from '@/programmatic/node.js';
 import { Node } from '@/programmatic/node.js';
 import { Output } from '@/programmatic/output.js';
 
@@ -13,20 +17,24 @@ export const getAllOutputs = <T extends Node>(node: T) => {
 	) as UnwrapOutput<T['outputs']>;
 };
 
-export function cloneInnerGraph(originalNode: Node, clonedNode: Node) {
-	const original = originalNode as any;
-	const cloned = clonedNode as any;
+export function cloneSubgraphs(originalNode: Node, clonedNode: Node) {
+	if (isSubgraphContainer(originalNode)) {
+		const container = originalNode as ISubgraphContainer;
+		const graphProperties = container.getGraphProperties();
 
-	if (
-		original._innerGraph &&
-		typeof original._innerGraph.clone === 'function'
-	) {
-		cloned._innerGraph = original._innerGraph.clone();
+		Object.entries(graphProperties).forEach(([key, graph]) => {
+			if (graph && typeof graph.clone === 'function') {
+				const clonedGraph = graph.clone();
 
-		// ensure nodes within the cloned inner graph point to it
-		Object.values(cloned._innerGraph.nodes).forEach((node: any) => {
-			if (typeof node.setGraph === 'function') {
-				node.setGraph(cloned._innerGraph);
+				// assign the cloned graph to the corresponding property on the cloned node
+				(clonedNode as any)[key] = clonedGraph;
+
+				// ensure nodes within the cloned inner graph point back to the cloned graph
+				Object.values(clonedGraph.nodes).forEach((node: any) => {
+					if (typeof node.setGraph === 'function') {
+						node.setGraph(clonedGraph);
+					}
+				});
 			}
 		});
 	}
