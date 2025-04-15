@@ -169,7 +169,9 @@ export class Input<T = any> extends Port<T> {
 		if (type.variadic) {
 			serialized.variadic = true;
 		}
-		if (!type.visible) {
+		// ignore SQ warning to refactor "== false", because visible could be undefined,
+		// and we only want to store if it's explicitly not visible
+		if (type.visible == false) {
 			serialized.visible = false;
 		}
 

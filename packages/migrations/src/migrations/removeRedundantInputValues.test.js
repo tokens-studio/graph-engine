@@ -78,6 +78,40 @@ describe('removeRedundantInputValues', () => {
 		);
 	});
 
+	it('should keep value for connected, variadic dynamically created inputs', async () => {
+		const graph = {
+			annotations: {},
+			nodes: {
+				dynamicVariadicNode: {
+					inputs: {
+						dynamicVarInput: {
+							_value: ['dynamicValue1', 'dynamicValue2'],
+							_edges: ['someEdgeId'], // mark as connected
+							variadic: true
+						}
+					},
+					serialized: {
+						inputs: [
+							{
+								name: 'dynamicVarInput',
+								value: ['dynamicValue1', 'dynamicValue2']
+							}
+						]
+					}
+				}
+			}
+		};
+
+		const result = await removeRedundantInputValues(graph);
+
+		expect(
+			result.nodes.dynamicVariadicNode.inputs.dynamicVarInput._value
+		).toEqual(['dynamicValue1', 'dynamicValue2']);
+		expect(result.nodes.dynamicVariadicNode.serialized.inputs[0].value).toEqual(
+			['dynamicValue1', 'dynamicValue2']
+		);
+	});
+
 	it('should handle null or undefined nodes and inputs', async () => {
 		const graph = {
 			annotations: {},
