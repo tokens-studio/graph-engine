@@ -1,3 +1,7 @@
 declare module '@tokens-studio/graph-engine-migration' {
-  export function updateGraph(graph: any, opts?: { verbose?: boolean }): Promise<any>;
-} 
+  import { SerializedGraph } from '@tokens-studio/graph-engine';
+  export function updateGraph(
+    graph: SerializedGraph,
+    opts?: { verbose?: boolean },
+  ): Promise<SerializedGraph>;
+}
