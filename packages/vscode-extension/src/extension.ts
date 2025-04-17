@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 //@ts-expect-error ESM in CJS
 import { Graph, nodeLookup } from '@tokens-studio/graph-engine';
 import { TSGraphProvider } from './graphProvider.js';
+import { updateGraph } from '@tokens-studio/graph-engine-migration';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -26,7 +27,9 @@ export function activate(context: vscode.ExtensionContext) {
         const text = new TextDecoder().decode(data);
         const raw = JSON.parse(text);
 
-        const graph = await new Graph().deserialize(raw, nodeLookup);
+        const migratedGraph = await updateGraph(raw, { verbose: false });
+
+        const graph = await new Graph().deserialize(migratedGraph, nodeLookup);
         const result = await graph.execute();
         //Create a new tab and display the result
         const document = await vscode.workspace.openTextDocument({
