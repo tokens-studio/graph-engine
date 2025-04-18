@@ -4,4 +4,4 @@ declare module '@tokens-studio/graph-engine-migration' {
     graph: SerializedGraph,
     opts?: { verbose?: boolean },
   ): Promise<SerializedGraph>;
-} 
+}
