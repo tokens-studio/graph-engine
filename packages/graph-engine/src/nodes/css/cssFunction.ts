@@ -38,6 +38,6 @@ export default class NodeDefinition extends Node {
 
 	execute(): void | Promise<void> {
 		const { functionName, value } = this.getAllInputs();
-		this.outputs.value.set(functionName.replace('()', `(${value})`));
+		this.outputs.value.set(String(functionName).replace('()', `(${value})`));
 	}
 }

@@ -56,6 +56,7 @@
     "@reactflow/node-resizer": "^2.2.8",
     "@rematch/core": "2.2.0",
     "@tokens-studio/graph-engine": "*",
+    "@tokens-studio/graph-engine-migration": "*",
     "@tokens-studio/icons": "^0.1.4",
     "@tokens-studio/tokens": "^0.3.7",
     "@tokens-studio/types": "^0.5.1",
