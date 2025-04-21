@@ -4,6 +4,7 @@ import { marketplaceContract } from '../contracts/marketplace.ts';
 import { prisma } from '@/lib/prisma/index.ts';
 import { randomUUID } from 'crypto';
 import { tsr } from '@ts-rest/serverless/next';
+import { updateGraph } from '@tokens-studio/graph-engine-migration';
 import { withCursor } from '../utils/common.ts';
 import type { Context } from '../utils/types.ts';
 
@@ -422,10 +423,14 @@ export const router = tsr.router<typeof marketplaceContract, Context>(
 				//Now that we have the graph, we need to duplicate it for the user
 				const owner = request.user;
 
+				const migratedGraph = await updateGraph(latestVersion.graph as any, {
+					verbose: false
+				});
+
 				const newGraph = await prisma.graph.create({
 					data: {
 						name: graph.name,
-						graph: latestVersion.graph as string,
+						graph: migratedGraph as unknown as string,
 						owner
 					}
 				});

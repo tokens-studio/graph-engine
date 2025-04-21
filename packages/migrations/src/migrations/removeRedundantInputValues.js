@@ -1,8 +1,4 @@
-import { annotatedVersion } from '@tokens-studio/graph-engine';
-
 export const removeRedundantInputValues = async graph => {
-	graph.annotations[annotatedVersion] = '0.9.11';
-
 	if (graph.nodes) {
 		Object.values(graph.nodes).forEach(node => {
 			if (node.serialized?.inputs) {

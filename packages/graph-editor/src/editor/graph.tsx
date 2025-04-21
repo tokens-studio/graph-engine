@@ -82,7 +82,6 @@ import {
   ypos,
 } from '@/annotations/index.js';
 import { duplicateNodes } from './actions/duplicate.js';
-import { updateGraph } from '@tokens-studio/graph-engine-migration';
 import { useContextMenu } from 'react-contexify';
 import { useExternalLoader } from '@/context/ExternalLoaderContext.js';
 import { useSelectAddedNodes } from '@/hooks/useSelectAddedNodes.js';
@@ -430,11 +429,8 @@ export const EditorApp = React.forwardRef<
       },
       loadRaw: async (serializedGraph) => {
         if (internalRef.current) {
-          const migratedGraph = await updateGraph(serializedGraph, {
-            verbose: false,
-          });
           // First deserialize the graph without triggering a full reload
-          await graph.deserialize(migratedGraph, fullNodeLookup);
+          await graph.deserialize(serializedGraph, fullNodeLookup);
 
           // Then load the graph into the UI without re-deserializing
           internalRef?.current.load(graph);
