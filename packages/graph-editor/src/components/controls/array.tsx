@@ -135,6 +135,10 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
       return <Text>{'<Error, no items detected>'}</Text>;
     }
 
+    if (!Array.isArray(value)) {
+      return <Text>{'<Error, input is not an array>'}</Text>;
+    }
+
     return value.map((val: unknown, index: number) => {
       let value;
       switch (itemsType) {
