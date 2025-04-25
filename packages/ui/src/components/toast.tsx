@@ -1,4 +1,4 @@
-import { Toast } from '@tokens-studio/ui/Toast.js';
+import { toast } from '@tokens-studio/ui/Toast.js';
 import React from 'react';
 
 export interface TriggeredToastProps {
@@ -8,27 +8,15 @@ export interface TriggeredToastProps {
 }
 
 export const TriggeredToast = React.forwardRef((props, ref) => {
-	const [toasts, setToasts] = React.useState<TriggeredToastProps[]>([]);
-
 	React.useImperativeHandle(ref, () => ({
 		publish: (props: TriggeredToastProps) => {
-			setToasts(toasts => [...toasts, props]);
+			toast(props.title, {
+				description: props.description
+			});
 		}
 	}));
 
-	return (
-		<>
-			{toasts.map(val => (
-				<Toast.Root open={true}>
-					<Toast.Title>{val.title}</Toast.Title>
-					<Toast.Description>{val.description}</Toast.Description>
-					{/* <Toast.Action className="ToastAction" asChild altText="Goto schedule to undo">
-                        <button className="Button small green">Undo</button>
-                    </Toast.Action> */}
-				</Toast.Root>
-			))}
-		</>
-	);
+	return null;
 });
 
 TriggeredToast.displayName = 'TriggeredToast';
