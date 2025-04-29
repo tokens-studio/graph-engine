@@ -1,4 +1,4 @@
-'use-client';
+'use client';
 
 import { Toast } from '@tokens-studio/ui/Toast.js';
 import React, { createContext, useCallback, useEffect, useRef } from 'react';
@@ -32,7 +32,7 @@ export const ToastProvider = (props: IToastProviderProps) => {
 	const enqueueToast = useCallback(({ title, description }) => {
 		const id = Date.now();
 		const onChange = () => {
-			ref.current.toasts = ref.current.toasts.filter(x => x.key != String(id));
+			ref.current.toasts = ref.current.toasts.filter(x => x.key !== String(id));
 			setToasts(ref.current.toasts);
 		};
 
@@ -70,7 +70,7 @@ export const useToast = () => {
 	return context.enqueueToast;
 };
 
-export const useErrorToast = error => {
+export const useErrorToast = (error: any) => {
 	const makeToast = useToast();
 	useEffect(() => {
 		if (error) {

@@ -8,7 +8,9 @@ import React from 'react';
 
 const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
 
-export default function Contexts({ children }) {
+export default function Contexts({
+	children
+}: Readonly<{ children: React.ReactNode }>) {
 	return (
 		<QueryProvider>
 			<ToastProvider>
