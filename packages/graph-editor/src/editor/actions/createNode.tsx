@@ -69,9 +69,6 @@ export const createNode = ({
 
     const finalPos = position || { x: 0, y: 0 };
 
-    node.annotations['xpos'] = finalPos.x;
-    node.annotations['ypos'] = finalPos.y;
-
     if (customUI[nodeRequest.type]) {
       node.annotations['uiNodeType'] = customUI[nodeRequest.type];
     }

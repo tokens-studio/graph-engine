@@ -210,6 +210,10 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
     });
   };
 
+  if (readOnly || !inputItemTypes.includes(itemsType)) {
+    return getJSONTree();
+  }
+
   if (itemsType === ANY) {
     return (
       <Stack direction="column" gap={3}>
@@ -230,10 +234,6 @@ export const ArrayField = observer(({ port, readOnly }: IField) => {
         </Stack>
       </Stack>
     );
-  }
-
-  if (readOnly || !inputItemTypes.includes(itemsType)) {
-    return getJSONTree();
   }
 
   const flexDirection = itemsType === COLOR ? 'row' : 'column';

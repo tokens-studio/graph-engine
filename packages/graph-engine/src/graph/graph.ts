@@ -871,7 +871,8 @@ export class Graph {
 					// For connected non-variadic inputs, we don't need to store the value
 					// as it will be directly read from the source output.
 					// Skip value comparison for connected inputs since we don't store the value.
-					// Just trigger the target node update.
+					// Just trigger the target node update, and explicitly update the type from the source output.
+					input.setType(output.type);
 				}
 
 				return edge.target;
