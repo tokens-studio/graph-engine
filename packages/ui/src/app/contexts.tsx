@@ -12,7 +12,7 @@ export default function Contexts({ children }) {
 	return (
 		<QueryProvider>
 			{children}
-			<TooltipContainer id="default-tooltip-id" />
+			<TooltipContainer id='default-tooltip-id' />
 			<Toaster />
 			{inDevEnvironment && <ReactQueryDevtools />}
 		</QueryProvider>

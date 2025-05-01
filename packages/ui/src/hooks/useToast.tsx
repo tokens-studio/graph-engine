@@ -12,7 +12,7 @@ interface IToast {
 export enum ToastAppearance {
 	Error = 'error',
 	Success = 'success',
-	Message = 'message',
+	Message = 'message'
 }
 
 export const useErrorToast = (error: any) => {
@@ -22,27 +22,27 @@ export const useErrorToast = (error: any) => {
 			makeToast({
 				title: 'Error',
 				description: error,
-				appearance: ToastAppearance.Error,
+				appearance: ToastAppearance.Error
 			});
 		} else if (error instanceof Error) {
 			makeToast({
 				title: 'Error',
 				description: error.message,
-				appearance: ToastAppearance.Error,
+				appearance: ToastAppearance.Error
 			});
 		} else if (error.errors) {
 			error.errors.forEach((element: any) => {
 				makeToast({
 					title: 'Error',
 					description: element.message,
-					appearance: ToastAppearance.Error,
+					appearance: ToastAppearance.Error
 				});
 			});
 		} else if (error.body && error.body.message) {
 			makeToast({
 				title: 'Error',
 				description: error.body.message,
-				appearance: ToastAppearance.Error,
+				appearance: ToastAppearance.Error
 			});
 		}
 	}
@@ -53,17 +53,17 @@ export const useToast = () => {
 		switch (props.appearance) {
 			case ToastAppearance.Error:
 				toast.error(props.title, {
-					description: props.description,
+					description: props.description
 				});
 				break;
 			case ToastAppearance.Success:
 				toast.success(props.title, {
-					description: props.description,
+					description: props.description
 				});
 				break;
 			default:
 				toast.message(props.title, {
-					description: props.description,
+					description: props.description
 				});
 				break;
 		}
