@@ -1,93 +1,72 @@
 'use-client';
 
-import { Toast } from '@tokens-studio/ui/Toast.js';
-import React, { createContext, useCallback, useEffect, useRef } from 'react';
+import { type ReactElement, useCallback } from 'react';
+import { toast } from '@tokens-studio/ui/Toast.js';
 
-export interface IToast {
+interface IToast {
 	title: string;
-	description: string;
+	description: string | ReactElement;
+	appearance?: ToastAppearance;
 }
 
-export interface IToastProviderContext {
-	enqueueToast: (toast: IToast) => void;
+export enum ToastAppearance {
+	Error = 'error',
+	Success = 'success',
+	Message = 'message'
 }
 
-export const ToastProviderContext = createContext<IToastProviderContext>({
-	enqueueToast: () => {
-		/**/
+export const useErrorToast = (error: any) => {
+	const makeToast = useToast();
+	if (error) {
+		if (typeof error === 'string') {
+			makeToast({
+				title: 'Error',
+				description: error,
+				appearance: ToastAppearance.Error
+			});
+		} else if (error instanceof Error) {
+			makeToast({
+				title: 'Error',
+				description: error.message,
+				appearance: ToastAppearance.Error
+			});
+		} else if (error.errors) {
+			error.errors.forEach((element: any) => {
+				makeToast({
+					title: 'Error',
+					description: element.message,
+					appearance: ToastAppearance.Error
+				});
+			});
+		} else if (error.body && error.body.message) {
+			makeToast({
+				title: 'Error',
+				description: error.body.message,
+				appearance: ToastAppearance.Error
+			});
+		}
 	}
-});
-
-export interface IToastProviderProps {
-	children: React.ReactNode;
-}
-
-export const ToastProvider = (props: IToastProviderProps) => {
-	const { children } = props;
-	const [toasts, setToasts] = React.useState([] as JSX.Element[]);
-	const ref = useRef({
-		toasts: [] as JSX.Element[]
-	});
-
-	const enqueueToast = useCallback(({ title, description }) => {
-		const id = Date.now();
-		const onChange = () => {
-			ref.current.toasts = ref.current.toasts.filter(x => x.key != String(id));
-			setToasts(ref.current.toasts);
-		};
-
-		setTimeout(() => {
-			onChange();
-		}, 8000);
-
-		const ele = (
-			<Toast.Root key={id} open onOpenChange={onChange}>
-				<Toast.Message>
-					<Toast.Title>{title}</Toast.Title>
-					<Toast.Description>{description}</Toast.Description>
-				</Toast.Message>
-			</Toast.Root>
-		);
-
-		setToasts([...ref.current.toasts, ele]);
-		// @ts-ignore
-		ref.current.toasts.push(ele);
-	}, []);
-
-	return (
-		<Toast.Provider>
-			<ToastProviderContext.Provider value={{ enqueueToast }}>
-				{children}
-				{toasts}
-			</ToastProviderContext.Provider>
-			<Toast.Viewport />
-		</Toast.Provider>
-	);
 };
 
 export const useToast = () => {
-	const context = React.useContext(ToastProviderContext);
-	return context.enqueueToast;
-};
-
-export const useErrorToast = error => {
-	const makeToast = useToast();
-	useEffect(() => {
-		if (error) {
-			if ((error as Error).message) {
-				makeToast({
-					title: 'Error',
-					description: error.message
+	const makeToast = useCallback((props: IToast) => {
+		switch (props.appearance) {
+			case ToastAppearance.Error:
+				toast.error(props.title, {
+					description: props.description
 				});
-			} else if (error.errors) {
-				// @ts-ignore
-				error.errors.forEach(element => {
-					makeToast({
-						title: 'Error',
-						description: element.message
-					});
+				break;
+			case ToastAppearance.Success:
+				toast.success(props.title, {
+					description: props.description
 				});
-			}
+				break;
+			default:
+				toast.message(props.title, {
+					description: props.description
+				});
+				break;
 		}
-	}, [error, makeToast]);
+	}, []);
+	return makeToast;
 };
