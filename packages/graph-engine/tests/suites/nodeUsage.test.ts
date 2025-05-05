@@ -100,13 +100,17 @@ describe('nodeUsage', () => {
 				id: '442854d8-b1a2-4261-a310-8cf7cfaa25fd',
 				inputs: [
 					{
+						dynamicType: {
+							$id: 'https://schemas.tokens.studio/string.json',
+							title: 'String',
+							type: 'string'
+						},
 						name: 'input',
 						type: {
 							$id: 'https://schemas.tokens.studio/string.json',
 							title: 'String',
 							type: 'string'
-						},
-						value: 'black'
+						}
 					}
 				],
 				type: 'studio.tokens.generic.output'

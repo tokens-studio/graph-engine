@@ -1,6 +1,7 @@
 import { IconButton, Tooltip } from '@tokens-studio/ui';
 import { ImperativeEditorRef } from '@/editor/editorTypes.js';
 import { mainGraphSelector } from '@/redux/selectors/graph.js';
+import { updateGraph } from '@tokens-studio/graph-engine-migration';
 import { useSelector } from 'react-redux';
 import React from 'react';
 import Upload from '@tokens-studio/icons/Upload.js';
@@ -21,11 +22,13 @@ export const UploadToolbarButton = () => {
       const file = e.target.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
+      reader.onload = async (e: ProgressEvent<FileReader>) => {
         const text = e.target?.result as string;
         const data = JSON.parse(text);
 
-        graphRef.loadRaw(data);
+        const migratedGraph = await updateGraph(data, { verbose: true });
+
+        graphRef.loadRaw(migratedGraph);
       };
       reader.readAsText(file);
     };

@@ -21,10 +21,12 @@ export const updateGraph = async (
 	const copiedGraph = JSON.parse(JSON.stringify(graph));
 
 	const newGraph = await findUpgrades(version).reduce(
-		async (accP, [version, upgrader]) => {
+		async (accP, [migrationVersion, upgrader]) => {
 			const acc = await accP;
 			if (verbose) {
-				console.log(`Upgrading to ${version}`);
+				console.log(
+					`Applying migration to version ${version} -> ${migrationVersion}`
+				);
 			}
 			return await upgrader(acc);
 		},
