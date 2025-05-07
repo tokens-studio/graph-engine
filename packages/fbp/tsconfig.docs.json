@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.prod.json",
+  "compilerOptions": {
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.test.ts", "cypress/**"]
+}
