@@ -1,5 +1,25 @@
 # @tokens-studio/graph-engine
 
+## 4.7.0
+
+### Minor Changes
+
+- d11bff4: Added new Vector2 operation nodes:
+
+  - `add`: Vector addition
+  - `subtract`: Vector subtraction
+  - `scale`: Scalar multiplication
+  - `dot`: Dot product calculation
+  - `length`: Vector magnitude calculation
+  - `normalize`: Unit vector conversion
+
+  Each node includes comprehensive tests covering basic operations, edge cases, and numerical precision. All operations preserve input vector immutability and handle special cases like zero vectors appropriately.
+
+### Patch Changes
+
+- 73cd3d8: Removed redundant values from connected inputs.
+- 523c463: fixed Color Blindness node always returning #000
+
 ## 4.6.0
 
 ### Minor Changes
