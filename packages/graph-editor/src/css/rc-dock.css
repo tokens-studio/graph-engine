@@ -16,6 +16,7 @@
     background: transparent;
     border-bottom: none;
     z-index: 10;
+    transition: background-color 0.2s, border-bottom 0.2s, font-weight 0.2s; /* Smooth transition for tab states */
 }
 
 .dock-tab>div {
@@ -58,6 +59,16 @@
 
 .dock-tab {
     background: var(--color-neutral-canvas-default-bg);
+}
+
+.dock-tab-active,
+.dock-tab-active:hover {
+    color: var(--color-neutral-canvas-minimal-fg-default);
+    background: var(--color-neutral-canvas-subtle-bg);
+    border-bottom: 2px solid var(--color-accent-stroke-default);
+    font-weight: var(--fontWeights-sansMedium);
+    position: relative;
+    z-index: 1; /* Ensure the active tab is above the ink-bar */
 }
 
 .dock-panel.dock-style-main .dock-bar {
