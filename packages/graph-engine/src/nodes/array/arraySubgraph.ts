@@ -116,6 +116,11 @@ export default class ArraySubgraph<T, V>
 			if (!input) throw new Error('No input node found');
 		}
 
+		const outputNode = Object.values(this._innerGraph.nodes).find(
+			x => x.factory.type == OutputNode.type
+		) as OutputNode;
+		if (!outputNode) throw new Error('No output node found');
+
 		// Attach listeners
 		autorun(() => {
 			//Get the existing inputs
@@ -151,6 +156,17 @@ export default class ArraySubgraph<T, V>
 					delete this.inputs[key];
 				}
 			});
+		});
+
+		autorun(() => {
+			// Read the inner graph's output value to establish a dependency
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const _ = outputNode.inputs.value.value;
+
+			// When the inner graph's output changes, trigger an update of this node
+			if (this.getGraph() && !this.isRunning) {
+				this.getGraph()?.update(this.id);
+			}
 		});
 
 		this.addInput('array', {
