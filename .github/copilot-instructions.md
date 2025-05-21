@@ -45,6 +45,12 @@ The Tokens Studio Graph Engine is a visual node-based editor where users build w
 - Vitest is used for testing in most packages
 - Run tests with `yarn test`
 
+### UI Components
+
+- Use components from `@tokens-studio/ui` package for all UI development
+- Leverage existing UI components rather than creating new ones or using external libraries
+- The UI package provides consistent styling and behavior aligned with the Graph Engine design system
+
 ### Node Creation
 
 1. Use reverse-domain-notation for namespacing (e.g., `studio.tokens.math.add`)
