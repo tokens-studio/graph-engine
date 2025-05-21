@@ -1,5 +1,15 @@
 # @tokens-studio/graph-engine
 
+## 0.14.1
+
+### Patch Changes
+
+- 73cd3d8: Removed redundant values from connected inputs.
+- Updated dependencies [73cd3d8]
+- Updated dependencies [d11bff4]
+- Updated dependencies [523c463]
+  - @tokens-studio/graph-engine@4.7.0
+
 ## 0.14.0
 
 ### Minor Changes

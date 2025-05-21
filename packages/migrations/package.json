@@ -1,6 +1,6 @@
 {
   "name": "@tokens-studio/graph-engine-migration",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "description": "A package to upgrade old graph engine files to the new format",
   "license": "MPL-2.0",
   "author": "andrew@hyma.io",
