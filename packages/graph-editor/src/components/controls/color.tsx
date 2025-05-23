@@ -58,14 +58,24 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
     );
   }
 
+  // When delayed updates are enabled, show the actual port value for the color ball
+  // but allow the text input to show the temporary value
+  const colorBallValue = useDelayed ? (() => {
+    try {
+      return toHex(toColor(port.value));
+    } catch {
+      return val;
+    }
+  })() : val;
+
   return (
     <Stack direction="row" justify="between" align="center" gap={2}>
-      <ColorPickerPopover value={val} onChange={onChange} />
+      <ColorPickerPopover value={colorBallValue} onChange={onChange} textValue={val} />
       <Text muted>{val}</Text>
       {useDelayed && (
         <IconButton
           icon={<FloppyDisk />}
-          onClick={() => (port as Input).setValue(val)}
+          onClick={() => (port as Input).setValue(hexToColor(val))}
         />
       )}
     </Stack>
