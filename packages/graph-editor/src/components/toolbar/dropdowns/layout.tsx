@@ -59,6 +59,9 @@ export const LayoutDropdown = () => {
           <DropdownMenu.Item onSelect={() => onClick('outputs')}>
             Output
           </DropdownMenu.Item>
+          <DropdownMenu.Item onSelect={() => onClick('nodePanel')}>
+            Node Panel
+          </DropdownMenu.Item>
           <DropdownMenu.Item onSelect={() => onClick('nodeSettings')}>
             Node Settings
           </DropdownMenu.Item>

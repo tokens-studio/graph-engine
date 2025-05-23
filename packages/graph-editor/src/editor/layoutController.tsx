@@ -19,6 +19,7 @@ import { IconButton, Stack, Tooltip } from '@tokens-studio/ui';
 import { Inputsheet } from '@/components/panels/inputs/index.js';
 import { MAIN_GRAPH_ID } from '@/constants.js';
 import { MenuBar, defaultMenuDataFactory } from '@/components/menubar/index.js';
+import { NodePanel } from '@/components/panels/node/index.js';
 import { OutputSheet } from '@/components/panels/output/index.js';
 import { dockerSelector } from '@/redux/selectors/refs.js';
 import { useDispatch } from '@/hooks/useDispatch.js';
@@ -197,18 +198,9 @@ const defaultLayout: LayoutBase = {
                     mode: 'vertical',
                     children: [
                       {
-                        size: 12,
                         tabs: [
                           {
-                            id: 'input',
-                          },
-                        ],
-                      },
-                      {
-                        size: 12,
-                        tabs: [
-                          {
-                            id: 'outputs',
+                            id: 'nodePanel',
                           },
                         ],
                       },
@@ -273,6 +265,20 @@ const layoutLoader = (tab: TabBase, props, ref): TabData => {
         content: (
           <ErrorBoundary fallback={<ErrorBoundaryContent />}>
             <OutputSheet />
+          </ErrorBoundary>
+        ),
+      };
+
+    case 'nodePanel':
+      return {
+        closable: true,
+        cached: true,
+        group: 'popout',
+        title: 'Node Panel',
+        ...tab,
+        content: (
+          <ErrorBoundary fallback={<ErrorBoundaryContent />}>
+            <NodePanel />
           </ErrorBoundary>
         ),
       };
