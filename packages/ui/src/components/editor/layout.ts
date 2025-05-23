@@ -52,18 +52,9 @@ export const defaultLayout: LayoutBase = {
 										mode: 'vertical',
 										children: [
 											{
-												size: 12,
 												tabs: [
 													{
-														id: 'input'
-													}
-												]
-											},
-											{
-												size: 12,
-												tabs: [
-													{
-														id: 'outputs'
+														id: 'nodePanel'
 													}
 												]
 											}
