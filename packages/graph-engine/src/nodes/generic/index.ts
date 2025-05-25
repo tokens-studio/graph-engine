@@ -10,6 +10,7 @@ import panic from './panic.js';
 import passthrough from './passthrough.js';
 import subgraph from './subgraph.js';
 import time from './time.js';
+import typeConverter from './typeConverter.js';
 
 export const nodes = [
 	constant,
@@ -23,5 +24,6 @@ export const nodes = [
 	objectPath,
 	objectMerge,
 	time,
-	delay
+	delay,
+	typeConverter
 ];
