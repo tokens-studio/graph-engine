@@ -109,7 +109,7 @@ jobs:
       - name: Install turbo
         run: yarn global add turbo@1.13.3
       - name: prune
-        run: turbo prune ${{ needs.changes.outputs.flat }} 
+        run: turbo prune ${{ needs.changes.outputs.flat }}
         working-directory: ./
 
       - name: Turbo Cache
