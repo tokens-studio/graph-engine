@@ -1,6 +1,7 @@
 import { Connection, Edge } from 'reactflow';
 import { Dispatch } from '@/redux/store.js';
-import { Graph } from '@tokens-studio/graph-engine';
+import { Graph, canConvertSchemaTypesExtended } from '@tokens-studio/graph-engine';
+import { TYPE_CONVERTER } from '@/ids.js';
 import { deletable } from '@/annotations/index.js';
 import { getVariadicIndex, stripVariadic } from '@/utils/stripVariadic.js';
 
@@ -9,10 +10,14 @@ export const connectNodes =
     graph,
     setEdges,
     dispatch,
+    nodeLookup,
+    reactFlowInstance,
   }: {
     graph: Graph;
     setEdges: React.Dispatch<React.SetStateAction<Edge[]>>;
     dispatch: Dispatch;
+    nodeLookup: Record<string, any>;
+    reactFlowInstance: any;
   }) =>
   (params: Connection) => {
     //Create the connection in the underlying graph
@@ -68,6 +73,107 @@ export const connectNodes =
     else if (targetPort.isConnected) {
       //We need to disconnect the existing connection
       graph.removeEdge(targetPort._edges[0].id);
+    }
+
+    // Check if types are compatible and need conversion
+    const sourceType = sourcePort.type;
+    const targetType = targetPort.type;
+    const needsConversion = sourceType.$id !== targetType.$id &&
+                           canConvertSchemaTypesExtended(sourceType, targetType) &&
+                           sourceType.$id !== 'https://schemas.tokens.studio/any.json' &&
+                           targetType.$id !== 'https://schemas.tokens.studio/any.json';
+
+    if (needsConversion) {
+      // Create a type converter node
+      const TypeConverterClass = nodeLookup[TYPE_CONVERTER];
+      if (TypeConverterClass) {
+        const converterNode = new TypeConverterClass({ graph });
+
+        // Set the conversion types
+        converterNode.setConversionTypes(sourceType, targetType);
+
+        // Calculate position between source and target
+        const sourcePosition = reactFlowInstance?.getNode(params.source!)?.position || { x: 0, y: 0 };
+        const targetPosition = reactFlowInstance?.getNode(params.target!)?.position || { x: 100, y: 0 };
+        const converterPosition = {
+          x: (sourcePosition.x + targetPosition.x) / 2,
+          y: (sourcePosition.y + targetPosition.y) / 2
+        };
+
+        // Add the converter node to the graph
+        graph.addNode(converterNode);
+
+        // Add the converter node to React Flow
+        const converterFlowNode = {
+          id: converterNode.id,
+          type: TYPE_CONVERTER,
+          position: converterPosition,
+          data: {},
+        };
+
+        reactFlowInstance?.addNodes(converterFlowNode);
+
+        // Connect source to converter
+        const sourceToConverterEdge = graph.connect(
+          sourceNode,
+          sourcePort,
+          converterNode,
+          converterNode.inputs.value
+        );
+
+        // Connect converter to target
+        const converterToTargetEdge = graph.connect(
+          converterNode,
+          converterNode.outputs.value,
+          targetNode,
+          targetPort
+        );
+
+        // Create React Flow edges
+        const sourceToConverterFlowEdge = {
+          id: sourceToConverterEdge.id,
+          source: params.source!,
+          sourceHandle: params.sourceHandle!,
+          target: converterNode.id,
+          targetHandle: 'value',
+          type: 'custom',
+        };
+
+        const converterToTargetFlowEdge = {
+          id: converterToTargetEdge.id,
+          source: converterNode.id,
+          sourceHandle: 'value',
+          target: params.target!,
+          targetHandle: params.targetHandle!,
+          type: 'custom',
+        };
+
+        dispatch.graph.appendLog({
+          time: new Date(),
+          type: 'info',
+          data: {
+            msg: `Type converter inserted between ${sourceType.$id} and ${targetType.$id}`,
+          },
+        });
+
+        return setEdges((eds) => {
+          const newEdgs = eds.reduce(
+            (acc, edge) => {
+              //All our inputs take a single input only, disconnect if we have a connection already
+              if (
+                edge.targetHandle == params.targetHandle &&
+                edge.target === params.target
+              ) {
+                return acc;
+              }
+              acc.push(edge);
+              return acc;
+            },
+            [sourceToConverterFlowEdge, converterToTargetFlowEdge] as Edge[],
+          );
+          return newEdgs;
+        });
+      }
     }
 
     const newGraphEdge = graph.connect(

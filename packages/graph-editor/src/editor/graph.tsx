@@ -49,12 +49,13 @@ import { GraphContextProvider } from '@/context/graph.js';
 import { GraphEditorProps, ImperativeEditorRef } from './editorTypes.js';
 import { GraphToolbar } from '@/components/toolbar/index.js';
 import { HotKeys } from '@/components/hotKeys/index.js';
-import { NOTE, PASSTHROUGH } from '@/ids.js';
+import { NOTE, PASSTHROUGH, TYPE_CONVERTER } from '@/ids.js';
 import { NodeContextMenu } from '../components/contextMenus/nodeContextMenu.js';
 import { NodeV2 } from '@/components/index.js';
 import { PaneContextMenu } from '../components/contextMenus/paneContextMenu.js';
 import { PassthroughNode } from '@/components/flow/nodes/passthroughNode.js';
 import { SelectionContextMenu } from '@/components/contextMenus/selectionContextMenu.js';
+import { TypeConverterNode } from '@/components/flow/nodes/typeConverterNode.js';
 import {
   capabilitiesSelector,
   nodeTypesSelector,
@@ -373,6 +374,7 @@ export const EditorApp = React.forwardRef<
     ...customNodeUI,
     GenericNode: NodeV2,
     [PASSTHROUGH]: PassthroughNode,
+    [TYPE_CONVERTER]: TypeConverterNode,
     [EditorNodeTypes.GROUP]: groupNode,
     [NOTE]: noteNode,
   });
@@ -530,8 +532,15 @@ export const EditorApp = React.forwardRef<
   }, []);
 
   const onConnect = useMemo(
-    () => connectNodes({ graph, setEdges, dispatch }),
-    [dispatch, graph, setEdges],
+    () =>
+      connectNodes({
+        graph,
+        setEdges,
+        dispatch,
+        nodeLookup: fullNodeLookup,
+        reactFlowInstance,
+      }),
+    [dispatch, graph, setEdges, fullNodeLookup, reactFlowInstance],
   );
 
   const onNodeDragStop = useCallback(
