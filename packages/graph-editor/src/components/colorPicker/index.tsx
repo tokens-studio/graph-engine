@@ -17,6 +17,7 @@ export function ColorPicker({ value, onChange }) {
 
 type ColorPickerPopoverProps = {
   value: string;
+  textValue?: string; // Optional separate value for text input
   defaultOpen?: boolean;
   onChange: (value: string) => void;
   showRemoveButton?: boolean;
@@ -25,11 +26,14 @@ type ColorPickerPopoverProps = {
 
 export function ColorPickerPopover({
   value,
+  textValue,
   defaultOpen = false,
   onChange,
   showRemoveButton = false,
   onRemove,
 }: ColorPickerPopoverProps) {
+  // Use textValue for the input if provided, otherwise use value
+  const inputValue = textValue ?? value;
   return (
     <InputPopover
       defaultOpen={defaultOpen}
@@ -44,7 +48,7 @@ export function ColorPickerPopover({
     >
       <ColorPicker value={value} onChange={onChange} />
       <TextInput
-        value={value}
+        value={inputValue}
         onChange={(event) => onChange(event.target.value)}
       />
       {showRemoveButton && (
