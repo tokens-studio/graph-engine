@@ -1,0 +1,7 @@
+.stack {
+  background: var(--color-neutral-canvas-minimal-bg);
+  border-right: 1px solid var(--color-neutral-stroke-default);
+  color: var(--color-neutral-canvas-minimal-fg-default);
+  height: 100%;
+  padding: var(--component-spacing-xl) var(--component-spacing-md) var(--component-spacing-md);
+  }
