@@ -5,6 +5,7 @@ import scopeByType from './scopeByType.js';
 import scopeColor from './scopeColor.js';
 import scopeNumber from './scopeNumber.js';
 import scopeString from './scopeString.js';
+import scopeTokenArrayByType from './scopeTokenArrayByType.js';
 
 export const nodes = [
 	codeSyntax,
@@ -13,5 +14,6 @@ export const nodes = [
 	scopeByType,
 	scopeColor,
 	scopeNumber,
-	scopeString
+	scopeString,
+	scopeTokenArrayByType
 ];
