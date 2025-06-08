@@ -42,3 +42,10 @@ export const annotatedNodeRunning = 'engine.nodeRunning';
  * Unique id of the entity
  */
 export const annotatedId = 'engine.id';
+
+/**
+ * Indicates that the node failed to load resources
+ */
+export const annotatedInputError = 'engine.inputError';
+
+
