@@ -3109,7 +3109,7 @@
 
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
-  resolved "https://registry.npmjs.org/@isaacs/cliui/-/cliui-8.0.2.tgz"
+  resolved "https://registry.yarnpkg.com/@isaacs/cliui/-/cliui-8.0.2.tgz#b37667b7bc181c168782259bab42474fbf52b550"
   integrity sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==
   dependencies:
     string-width "^5.1.2"
@@ -10868,7 +10868,7 @@ esbuild-register@^3.5.0:
   dependencies:
     debug "^4.3.4"
 
-"esbuild@^0.18.0 || ^0.19.0 || ^0.20.0", "esbuild@^0.18.0 || ^0.19.0 || ^0.20.0 || ^0.21.0 || ^0.22.0 || ^0.23.0 || ^0.24.0 || ^0.25.0":
+"esbuild@^0.18.0 || ^0.19.0 || ^0.20.0":
   version "0.20.2"
   resolved "https://registry.npmjs.org/esbuild/-/esbuild-0.20.2.tgz"
   integrity sha512-WdOOppmUNU+IbZ0PaDiTst80zjnrOkyJNHoKupIcVyU8Lvla3Ugx94VzkQ32Ijqd7UhHJy75gNWDMUekcrSJ6g==
@@ -10897,7 +10897,7 @@ esbuild-register@^3.5.0:
     "@esbuild/win32-ia32" "0.20.2"
     "@esbuild/win32-x64" "0.20.2"
 
-esbuild@^0.21.3, esbuild@^0.21.5, esbuild@~0.21.4:
+"esbuild@^0.18.0 || ^0.19.0 || ^0.20.0 || ^0.21.0 || ^0.22.0 || ^0.23.0 || ^0.24.0 || ^0.25.0", esbuild@^0.21.3, esbuild@^0.21.5, esbuild@~0.21.4:
   version "0.21.5"
   resolved "https://registry.npmjs.org/esbuild/-/esbuild-0.21.5.tgz"
   integrity sha512-mg3OPMV4hXywwpoDxu3Qda5xCKQi+vCTZq8S9J/EpkhB2HzKXq4SNFZE3+NK93JYxc8VMSep+lOUSC/RVKaBqw==
@@ -13807,7 +13807,7 @@ itty-router@^5.0.9:
 
 jackspeak@^3.1.2:
   version "3.4.3"
-  resolved "https://registry.npmjs.org/jackspeak/-/jackspeak-3.4.3.tgz"
+  resolved "https://registry.yarnpkg.com/jackspeak/-/jackspeak-3.4.3.tgz#8833a9d89ab4acde6188942bd1c53b6390ed5a8a"
   integrity sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/cgwhnhFMDbsQFeZYoJJ7bIZBS9BcamUW96asq/npPWugM+RQBw==
   dependencies:
     "@isaacs/cliui" "^8.0.2"
@@ -13815,9 +13815,9 @@ jackspeak@^3.1.2:
     "@pkgjs/parseargs" "^0.11.0"
 
 jackspeak@^4.0.1:
-  version "4.0.2"
-  resolved "https://registry.npmjs.org/jackspeak/-/jackspeak-4.0.2.tgz"
-  integrity sha512-bZsjR/iRjl1Nk1UkjGpAzLNfQtzuijhn2g+pbZb98HQ1Gk8vM9hfbxeMBP+M2/UUdwj0RqGG3mlvk2MsAqwvEw==
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/jackspeak/-/jackspeak-4.1.1.tgz#96876030f450502047fc7e8c7fcf8ce8124e43ae"
+  integrity sha512-zptv57P3GpL+O0I7VdMJNBZCu+BPHVQUk55Ft8/QCJjTVxrnJHuVuX/0Bl2A6/+2oyR/ZMEuFKwmzqqZ/U5nPQ==
   dependencies:
     "@isaacs/cliui" "^8.0.2"
 
@@ -15959,7 +15959,7 @@ nano-css@^5.3.1:
     stacktrace-js "^2.0.2"
     stylis "^4.3.0"
 
-nanoid@^3.3.6, nanoid@^3.3.7, nanoid@^3.3.8:
+nanoid@^3.3.6, nanoid@^3.3.8:
   version "3.3.11"
   resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.11.tgz"
   integrity sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==
@@ -17831,7 +17831,7 @@ postcss@8.4.31:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-postcss@^8.3.7, postcss@^8.4.43, postcss@^8.4.47:
+postcss@^8.3.7, postcss@^8.4.21, postcss@^8.4.24, postcss@^8.4.26, postcss@^8.4.33, postcss@^8.4.38, postcss@^8.4.43, postcss@^8.4.47:
   version "8.5.3"
   resolved "https://registry.npmjs.org/postcss/-/postcss-8.5.3.tgz"
   integrity sha512-dle9A3yYxlBSrt8Fu+IpjGT8SY8hN0mlaA6GY8t0P5PjIOZemULz/E2Bnm/2dcUOena75OTNkHI76uZBNUUq3A==
@@ -17839,15 +17839,6 @@ postcss@^8.3.7, postcss@^8.4.43, postcss@^8.4.47:
     nanoid "^3.3.8"
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
-
-postcss@^8.4.21, postcss@^8.4.24, postcss@^8.4.26, postcss@^8.4.33, postcss@^8.4.38:
-  version "8.4.38"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.38.tgz"
-  integrity sha512-Wglpdk03BSfXkHoQa3b/oulrotAkwrlLDRSOb9D0bN86FdRyE9lppSp33aHNPgBa0JKCoB+drFLZkQoRRYae5A==
-  dependencies:
-    nanoid "^3.3.7"
-    picocolors "^1.0.0"
-    source-map-js "^1.2.0"
 
 preact-render-to-string@5.2.3:
   version "5.2.3"
@@ -19421,7 +19412,7 @@ responselike@^3.0.0:
 
 resq@1.10.2:
   version "1.10.2"
-  resolved "https://registry.npmjs.org/resq/-/resq-1.10.2.tgz"
+  resolved "https://registry.yarnpkg.com/resq/-/resq-1.10.2.tgz#cedf4f20d53f6e574b1e12afbda446ad9576c193"
   integrity sha512-HmgVS3j+FLrEDBTDYysPdPVF9/hioDMJ/otOiQDKqk77YfZeeLOj0qi34yObumcud1gBpk+wpBTEg4kMicD++A==
   dependencies:
     fast-deep-equal "^2.0.1"
@@ -20145,7 +20136,7 @@ sort-css-media-queries@2.2.0:
   resolved "https://registry.npmjs.org/sort-css-media-queries/-/sort-css-media-queries-2.2.0.tgz"
   integrity sha512-0xtkGhWCC9MGt/EzgnvbbbKhqWjl1+/rncmhTh5qCpbYguXh6S/qwePfv/JQ8jePXXmqingylxoC49pCkSPIbA==
 
-"source-map-js@>=0.6.2 <2.0.0", source-map-js@^1.0.1, source-map-js@^1.0.2, source-map-js@^1.2.0:
+"source-map-js@>=0.6.2 <2.0.0", source-map-js@^1.0.1, source-map-js@^1.0.2:
   version "1.2.0"
   resolved "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.0.tgz"
   integrity sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==
@@ -20440,7 +20431,7 @@ string-to-arraybuffer@^1.0.0:
 
 "string-width-cjs@npm:string-width@^4.2.0":
   version "4.2.3"
-  resolved "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
   dependencies:
     emoji-regex "^8.0.0"
@@ -20572,7 +20563,7 @@ stringify-object@^3.3.0:
 
 "strip-ansi-cjs@npm:strip-ansi@^6.0.1":
   version "6.0.1"
-  resolved "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
   dependencies:
     ansi-regex "^5.0.1"
@@ -21920,10 +21911,10 @@ vite-tsconfig-paths@^4.2.2:
     globrex "^0.1.2"
     tsconfck "^3.0.3"
 
-vite@^5.0.0, vite@^5.2.10:
-  version "5.4.14"
-  resolved "https://registry.npmjs.org/vite/-/vite-5.4.14.tgz"
-  integrity sha512-EK5cY7Q1D8JNhSaPKVK4pwBFvaTmZxEnoKXLG/U9gmdDcihQGNzFlgIvaxezFR4glP1LsuiedwMBqCXH3wZccA==
+vite@^5.0.0, vite@^5.4.19:
+  version "5.4.19"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-5.4.19.tgz#20efd060410044b3ed555049418a5e7d1998f959"
+  integrity sha512-qO3aKv3HoQC8QKiNSTuUM1l9o/XX3+c+VTgLHbJWHZGeTPVAg2XwazI9UWzoxjIJCGCV2zU60uqMzjeLZuULqA==
   dependencies:
     esbuild "^0.21.3"
     postcss "^8.4.43"
@@ -22382,7 +22373,7 @@ workerpool@^6.5.1:
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
   version "7.0.0"
-  resolved "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
   dependencies:
     ansi-styles "^4.0.0"
