@@ -97,11 +97,6 @@ const edgeTypes = {
   custom: CustomEdge,
 } as unknown as EdgeTypes;
 
-const proOptions = {
-  account: 'paid-pro',
-  hideAttribution: true,
-};
-
 const defaultEdgeOptions = {
   style: {
     strokeWidth: 2,
@@ -809,7 +804,6 @@ export const EditorApp = React.forwardRef<
               defaultViewport={defaultViewport}
               onlyRenderVisibleElements={true}
               maxZoom={10}
-              proOptions={proOptions}
             >
               {showGridValue && (
                 <Background
