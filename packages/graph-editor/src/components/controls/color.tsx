@@ -23,6 +23,10 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
     }
   }, [port.value]);
 
+  const isValidHexColor = (hex: string): boolean => {
+    return /^#([0-9A-Fa-f]{3}){1,2}$/.test(hex);
+  };
+
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement> | string) => {
       let col;
@@ -38,7 +42,15 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
       }
 
       //We need to convert from hex
-      (port as Input).setValue(hexToColor(col));
+      try {
+        // Only convert if the hex color is valid
+        if (isValidHexColor(col)) {
+          (port as Input).setValue(hexToColor(col));
+        }
+      } catch (error) {
+        console.error('Error converting hex color:', error);
+        // Don't set invalid value to port, just update the display value
+      }
     },
     [port, useDelayed],
   );
@@ -65,7 +77,15 @@ export const ColorField = observer(({ port, readOnly }: IField) => {
       {useDelayed && (
         <IconButton
           icon={<FloppyDisk />}
-          onClick={() => (port as Input).setValue(val)}
+          onClick={() => {
+            try {
+              if (isValidHexColor(val)) {
+                (port as Input).setValue(hexToColor(val));
+              }
+            } catch (error) {
+              console.error('Error saving hex color:', error);
+            }
+          }}
         />
       )}
     </Stack>

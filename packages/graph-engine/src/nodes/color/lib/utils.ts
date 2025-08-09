@@ -18,7 +18,13 @@ export const toHex = (color: Color): string =>
 	color.to('srgb').toString({ format: 'hex' });
 
 export const hexToColor = (hex: string): ColorType => {
-	return toColorObject(new Color(hex));
+	try {
+		return toColorObject(new Color(hex));
+	} catch (error) {
+		console.error('Invalid hex color:', error);
+		// Return black as a fallback
+		return Black;
+	}
 };
 
 export const Black = {
